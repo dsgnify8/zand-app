@@ -1,0 +1,43 @@
+import type { T } from '@/lib/i18n';
+
+// Home screen. Farsi written to sound like a person, not a translation.
+export const HOME: Record<string, T> = {
+  greeting:    { en: 'Welcome back', fa: 'خوش برگشتی' },
+
+  today:       { en: 'TODAY', fa: 'امروز' },
+  tapToRead:   { en: 'tap to read', fa: 'برای خواندن بزن' },
+
+  stories:     { en: 'STORIES', fa: 'روایت‌ها' },
+  allOfThem:   { en: 'all of them', fa: 'همه' },
+
+  explore:     { en: 'EXPLORE', fa: 'بگرد و ببین' },
+  newThisWeek: { en: 'NEW THIS WEEK', fa: 'تازه‌های این هفته' },
+  typical:     { en: 'TYPICAL PERSIAN', fa: 'ایرانی که هست' },
+  jumpBackIn:  { en: 'JUMP BACK IN', fa: 'از همون‌جا ادامه بده' },
+
+  keepReading: { en: 'KEEP READING', fa: 'ادامه بده' },
+
+  falAsk:      { en: 'Ask the book a question', fa: 'یه چیزی از دلت بپرس' },
+  falOpen:     { en: 'OPEN IT', fa: 'بازش کن' },
+
+  wordOfDay:   { en: 'WORD OF THE DAY',  fa: 'واژهٔ امروز' },
+  verseOfDay:  { en: 'VERSE OF THE DAY', fa: 'بیت امروز' },
+  factOfDay:   { en: 'FACT OF THE DAY',  fa: 'دانستنی امروز' },
+  cardOfDay:   { en: 'CARD OF THE DAY',  fa: 'کارت امروز' },
+  dishOfDay:   { en: 'DISH OF THE DAY',  fa: 'غذای امروز' },
+
+  minRead:     { en: 'min read', fa: 'دقیقه خواندن' },
+  min:         { en: 'min', fa: 'دقیقه' },
+
+  history:     { en: 'HISTORY', fa: 'تاریخ' },
+  traditions:  { en: 'TRADITIONS', fa: 'آیین‌ها' },
+  literature:  { en: 'LITERATURE', fa: 'ادبیات' },
+  language:    { en: 'LANGUAGE', fa: 'زبان' },
+
+  yearTurns:   { en: 'the year turns', fa: 'سال نو می‌شود' },
+  longestNight:{ en: 'the longest night', fa: 'بلندترین شب سال' },
+
+  sentYouWord: { en: 'sent you a word', fa: 'یه واژه برات فرستاده' },
+  sentYouTopic:{ en: 'sent you a topic', fa: 'یه موضوع برات فرستاده' },
+  moreWaiting: { en: 'more waiting', fa: 'تای دیگه منتظره' },
+};

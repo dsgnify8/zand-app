@@ -1,0 +1,808 @@
+import { useRef, useState, useEffect } from 'react';
+import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { router, useLocalSearchParams } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
+import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS } from '@/constants/profile';
+import { useSaved } from '@/lib/saved-store';
+import { useAuth } from '@/lib/auth';
+import { useFriends, acceptRequest, removeFriendship } from '@/lib/friends';
+import { useInbox, markLearned } from '@/lib/inbox';
+import { FriendsSheet } from '@/components/friends-sheet';
+import { FramedImage } from '@/components/framed-image';
+import { CultureCover } from '@/components/culture-cover';
+import { ARTICLES } from '@/constants/articles';
+import { resolveMany } from '@/lib/resolve-saved';
+import { useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
+import { AchievementsSheet } from '@/components/achievements-sheet';
+import { eduImage } from '@/constants/education-images';
+import { StreakPlant } from '@/components/streak-plant';
+import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
+
+type Tab = 'you' | 'library' | 'friends' | 'progress';
+
+const KIND_LABEL: Record<string, string> = {
+  word: 'a word', topic: 'a topic', poet: 'a poet', place: 'a place', article: 'a story',
+};
+const KIND_ICON_IN: Record<string, any> = {
+  topic: 'book-outline', poet: 'book', place: 'location-outline', article: 'newspaper-outline',
+};
+
+
+function useSavedItems() {
+  const { saved } = useSaved();
+  return resolveMany(saved);
+}
+
+const TABS: { k: Tab; label: string; icon: string }[] = [
+  { k: 'you', label: 'You', icon: 'sparkles' },
+  { k: 'library', label: 'Library', icon: 'bookmark' },
+  { k: 'friends', label: 'Friends', icon: 'people' },
+  { k: 'progress', label: 'Progress', icon: 'leaf' },
+];
+
+/* ---------------- You ---------------- */
+
+function StreakCard() {
+  return (
+    <View style={s.streak}>
+      <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+      <View style={s.streakRow}>
+        <View style={s.streakLeft}>
+          <Text style={s.streakN}>{ME.streak}</Text>
+          <Text style={s.streakL}>DAYS IN A ROW</Text>
+          <View style={s.streakDays}>
+            {DAYS.slice(-7).map((d, i) => (
+              <View key={i} style={[s.dayPip, d && s.dayPipOn]} />
+            ))}
+          </View>
+          <Text style={s.streakNote}>{ME.freezes} rest days left this month</Text>
+        </View>
+        <StreakPlant streak={ME.streak} />
+      </View>
+    </View>
+  );
+}
+
+function KeepReading() {
+  return (
+    <View>
+      <Text style={s.sectionLabel}>PICK UP WHERE YOU LEFT OFF</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.rail}>
+        {READING.map((r) => {
+          const src = eduImage(r.image);
+          const pct = Math.round((r.page / r.total) * 100);
+          return (
+            <Pressable key={r.key} style={s.readCard} onPress={() => router.navigate(r.route as any)}>
+              {src ? <Image source={src} style={s.readImg} resizeMode="cover" /> : <View style={[s.readImg, s.phDark]} />}
+              <LinearGradient colors={['transparent', 'rgba(24,18,12,0.55)', 'rgba(24,18,12,0.93)']} locations={[0, 0.45, 1]} style={StyleSheet.absoluteFill as any} />
+              <View style={s.readBody}>
+                <Text style={s.readTitle}>{r.title}</Text>
+                <Text style={s.readSub}>{r.chapter}</Text>
+                <View style={s.readTrack}><View style={[s.readFill, { width: (pct + '%') as any }]} /></View>
+                <Text style={s.readPct}>page {r.page} of {r.total}</Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}
+
+function DiscoverRow() {
+  return (
+    <View style={{ marginTop: spacing.xl }}>
+      <Text style={s.sectionLabel}>SOMETHING YOU HAVE NOT SEEN</Text>
+      <View style={{ gap: spacing.md }}>
+        {DISCOVER.map((d) => {
+          const src = eduImage(d.image);
+          return (
+            <Pressable key={d.key} style={s.disc} onPress={() => router.navigate(d.route as any)}>
+              {src ? <Image source={src} style={s.discImg} resizeMode="cover" /> : <View style={[s.discImg, s.phDark]} />}
+              <LinearGradient colors={[d.tint + 'E6', d.tint + '99', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill as any} />
+              <View style={s.discBody}>
+                <Text style={s.discKicker}>{d.kicker}</Text>
+                <Text style={s.discTitle}>{d.title}</Text>
+                <Text style={s.discX}>{d.x}</Text>
+              </View>
+              <Ionicons name="arrow-forward" size={16} color="#FFF" style={s.discArrow} />
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
+function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLibrary: () => void }) {
+  const pending = INBOX.filter((i) => !i.done);
+  return (
+    <>
+      {pending.length > 0 ? (
+        <Pressable style={s.alert} onPress={onGoFriends}>
+          <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+          <View style={s.alertDot} />
+          <View style={{ flex: 1 }}>
+            <Text style={s.alertT}>
+              {pending[0].from} sent you {pending[0].kind === 'word' ? 'a word' : 'a topic'}
+            </Text>
+            <Text style={s.alertX}>
+              {pending.length > 1 ? 'and ' + (pending.length - 1) + ' more waiting' : pending[0].note}
+            </Text>
+          </View>
+          <Ionicons name="arrow-forward" size={16} color={pr.friendA} />
+        </Pressable>
+      ) : null}
+
+      <StreakCard />
+      <KeepReading />
+      <SavedStrip onSeeAll={onGoLibrary} />
+      <DiscoverRow />
+    </>
+  );
+}
+
+function SavedStrip({ onSeeAll }: { onSeeAll: () => void }) {
+  const items = useSavedItems();
+  return (
+    <View style={{ marginTop: spacing.xl }}>
+      <View style={s.labelRow}>
+        <Text style={s.sectionLabelInline}>MY SAVED</Text>
+        <Pressable onPress={onSeeAll} hitSlop={8}>
+          <Text style={s.seeAll}>see all {items.length}</Text>
+        </Pressable>
+      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.rail}>
+        {items.slice(0, 4).map((it) => (
+          <Pressable key={it.key} style={s.savedChip} onPress={() => (it as any).route && router.navigate((it as any).route)}>
+            <Ionicons name={KIND_ICON[it.kind] as any} size={13} color={pr.saveA} />
+            <Text style={s.savedChipT} numberOfLines={1}>{it.title}</Text>
+            <Text style={s.savedChipX} numberOfLines={1}>{it.sub}</Text>
+          </Pressable>
+        ))}
+        <Pressable style={s.savedMore} onPress={onSeeAll}>
+          <Ionicons name="arrow-forward" size={15} color={pr.saveA} />
+          <Text style={s.savedMoreT}>All saved</Text>
+        </Pressable>
+      </ScrollView>
+    </View>
+  );
+}
+
+/* ---------------- Library ---------------- */
+
+const KIND_ICON: Record<string, string> = { word: 'language-outline', topic: 'book-outline', verse: 'sparkles-outline', article: 'newspaper-outline' };
+
+function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watched' | 'saved'; onBack: () => void }) {
+  const { liked, saved, recent, toggleLike } = useSaved();
+  const keys = view === 'favourites' ? liked : view === 'saved' ? saved : view === 'history' ? recent : [];
+  const arts = resolveMany(keys);
+
+  const TITLE: Record<string, string> = { history: 'History', favourites: 'Favourites', watched: 'Watched', saved: 'Save for later' };
+  const EMPTY: Record<string, string> = {
+    history: 'Nothing opened yet. Start reading and it shows up here.',
+    favourites: 'No favourites yet. Tap the heart on anything you love.',
+    watched: 'No videos watched yet.',
+    saved: 'Nothing saved yet. Tap the bookmark to keep something for later.',
+  };
+
+  return (
+    <View>
+      <Pressable style={s.subBack} hitSlop={10} onPress={onBack}>
+        <Ionicons name="chevron-back" size={20} color={pr.ink} />
+        <Text style={s.subBackT}>Library</Text>
+      </Pressable>
+      <Text style={s.subTitle}>{TITLE[view]}</Text>
+
+      {arts.length === 0 ? (
+        <View style={s.emptyWrap}>
+          <Ionicons name={view === 'favourites' ? 'heart-outline' : view === 'saved' ? 'bookmark-outline' : view === 'watched' ? 'play-circle-outline' : 'time-outline'} size={30} color={pr.dim} />
+          <Text style={s.emptyT}>{EMPTY[view]}</Text>
+        </View>
+      ) : view === 'favourites' ? (
+        // pinterest-style masonry-ish two-column grid with a heart top-right
+        <View style={s.pinGrid}>
+          {[0, 1].map((col) => (
+            <View key={col} style={s.pinCol}>
+              {arts.filter((_, i) => i % 2 === col).map((a) => (
+                <Pressable key={a.key} style={s.pinCard} onPress={() => router.navigate(('/article?article=' + a.key) as any)}>
+                  <View style={[s.pinImg, { height: 130 + ((a.title.length * 7) % 90) }]}>
+                    {a.kind === 'culture' && a.accent && a.glyph && !eduImage(a.image) ? (
+                      <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
+                    ) : (
+                      <FramedImage name={a.image ?? a.key} source={a.image ? eduImage(a.image) : undefined} style={StyleSheet.absoluteFill as any}
+                        onPress={() => router.navigate(a.route as any)} />
+                    )}
+                    <Pressable style={s.pinHeart} hitSlop={8} onPress={() => toggleLike(a.key)}>
+                      <Ionicons name="heart" size={15} color="#fff" />
+                    </Pressable>
+                  </View>
+                  <Text style={s.pinTitle} numberOfLines={2}>{a.title}</Text>
+                  <Text style={s.pinMeta}>{a.sub}</Text>
+                </Pressable>
+              ))}
+            </View>
+          ))}
+        </View>
+      ) : (
+        <View style={{ gap: spacing.sm }}>
+          {arts.map((a) => (
+            <Pressable key={a.key} style={s.saveRow} onPress={() => router.navigate(a.route as any)}>
+              <View style={s.saveThumb}>
+                {a.kind === 'culture' && a.accent && a.glyph && !eduImage(a.image) ? (
+                  <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
+                ) : (
+                  <FramedImage name={a.image ?? a.key} source={a.image ? eduImage(a.image) : undefined} style={StyleSheet.absoluteFill as any}
+                    onPress={() => router.navigate(a.route as any)} />
+                )}
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={s.saveT} numberOfLines={2}>{a.title}</Text>
+                <Text style={s.saveS}>{a.sub}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={15} color={pr.dim} />
+            </Pressable>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+}
+
+function LibraryTab() {
+  const items = useSavedItems();
+  const [filter, setFilter] = useState<'all' | 'article' | 'word' | 'topic' | 'verse'>('all');
+  const [libView, setLibView] = useState<null | 'history' | 'favourites' | 'watched' | 'saved'>(null);
+  const list = filter === 'all' ? items : items.filter((x) => x.kind === filter);
+
+  if (libView) return <LibrarySub view={libView} onBack={() => setLibView(null)} />;
+
+  return (
+    <>
+      <View style={s.libHero}>
+        <LinearGradient colors={[pr.saveA, pr.saveB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+        <Text style={s.libN}>{items.length}</Text>
+        <Text style={s.libL}>THINGS YOU KEPT</Text>
+        <Text style={s.libX}>Everything you tapped save on, in one place.</Text>
+      </View>
+
+      <Text style={s.sectionLabel}>YOUR LIBRARY</Text>
+      <View style={s.grid}>
+        {[
+          { key: 'history', i: 'time-outline', t: 'History', x: 'everything you have opened' },
+          { key: 'favourites', i: 'heart-outline', t: 'Favourites', x: 'the ones you loved' },
+          { key: 'watched', i: 'play-circle-outline', t: 'Watched', x: 'videos you watched' },
+          { key: 'saved', i: 'bookmark-outline', t: 'Save for later', x: 'to come back to' },
+        ].map((g) => (
+          <Pressable key={g.key} style={s.gridCell} onPress={() => setLibView(g.key)}>
+            <Ionicons name={g.i as any} size={19} color={pr.saveA} />
+            <Text style={s.gridT}>{g.t}</Text>
+            <Text style={s.gridX}>{g.x}</Text>
+          </Pressable>
+        ))}
+      </View>
+
+      <Text style={s.sectionLabel}>MY SAVED</Text>
+      <View style={s.chipsTight}>
+        {(['all', 'article', 'word', 'verse', 'topic'] as const).map((f) => (
+          <Pressable key={f} style={[s.chip, filter === f && s.chipOn]} onPress={() => setFilter(f)}>
+            <Text style={[s.chipT, filter === f && s.chipTOn]}>{f === 'all' ? 'All' : f + 's'}</Text>
+          </Pressable>
+        ))}
+      </View>
+
+      <View style={{ gap: spacing.sm }}>
+        {list.map((it) => (
+          <Pressable key={it.key} style={s.saveRow} onPress={() => (it as any).route && router.navigate((it as any).route)}>
+            <View style={s.saveIcon}>
+              <Ionicons name={KIND_ICON[it.kind] as any} size={15} color={pr.saveA} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={s.saveT} numberOfLines={1}>{it.title}</Text>
+              <Text style={s.saveS}>{it.sub}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={15} color={pr.dim} />
+          </Pressable>
+        ))}
+      </View>
+
+    </>
+  );
+}
+
+/* ---------------- Friends ---------------- */
+
+function FriendsTab() {
+  const { user } = useAuth();
+  const { accepted, incoming, refresh } = useFriends(user?.id);
+  const { items: inbox, refresh: refreshInbox } = useInbox(user?.id);
+  const [friendsOpen, setFriendsOpen] = useState(false);
+  const [sendTo, setSendTo] = useState<{ name: string; id: string } | null>(null);
+
+  const hasFriends = accepted.length > 0;
+  const hasActivity = hasFriends || inbox.length > 0;
+
+  return (
+    <>
+      <View style={s.frHero}>
+        <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+        <Text style={s.frHeroFa}>بفرست</Text>
+        <Text style={s.frHeroT}>Teach each other</Text>
+        <Text style={s.frHeroX}>Send a friend anything worth learning: a word, a poet, a place, a story. They learn it, then send one back.</Text>
+      </View>
+
+      <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
+        <Ionicons name="person-add" size={17} color="#FFF" />
+        <Text style={s.frMainBtnT}>Find &amp; add friends</Text>
+        {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
+      </Pressable>
+
+      {/* Real incoming requests (always live) */}
+      {incoming.length > 0 ? (
+        <>
+          <Text style={s.sectionLabel}>REQUESTS</Text>
+          <View style={{ gap: spacing.sm }}>
+            {incoming.map((r) => (
+              <View key={r.id} style={s.friendRow}>
+                <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.friendN}>{r.profile.name}</Text>
+                  <Text style={s.friendL}>wants to connect</Text>
+                </View>
+                <Pressable style={s.acceptBtn} onPress={async () => { await acceptRequest(r.id); refresh(); }}>
+                  <Text style={s.acceptT}>Accept</Text>
+                </Pressable>
+                <Pressable hitSlop={8} onPress={async () => { await removeFriendship(r.id); refresh(); }}>
+                  <Ionicons name="close" size={16} color={pr.dim} />
+                </Pressable>
+              </View>
+            ))}
+          </View>
+        </>
+      ) : null}
+
+      {/* Real inbox: things friends actually sent me */}
+      {inbox.length > 0 ? (
+        <>
+          <Text style={s.sectionLabel}>WAITING FOR YOU</Text>
+          <View style={{ gap: spacing.md }}>
+            {inbox.map((it) => (
+              <View key={it.id} style={[s.inbox, it.learned && s.inboxDone]}>
+                <View style={s.inboxTop}>
+                  <View style={s.avatar}><Text style={s.avatarT}>{(it.senderName || '?')[0].toUpperCase()}</Text></View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={s.inboxFrom}>{it.senderName} sent you {KIND_LABEL[it.kind] ?? 'something'}</Text>
+                  </View>
+                  {it.learned ? <Ionicons name="checkmark-circle" size={19} color={pr.streakA} /> : <View style={s.newDot} />}
+                </View>
+                <View style={s.inboxCard}>
+                  {it.kind === 'word' ? (
+                    <>
+                      {it.fa ? <Text style={s.wordFa}>{it.fa}</Text> : null}
+                      {it.tr ? <Text style={s.wordTr}>{it.tr}</Text> : null}
+                      <View style={s.wordRule} />
+                      {it.en ? <Text style={s.wordEn}>{it.en}</Text> : null}
+                    </>
+                  ) : (
+                    <>
+                      <Ionicons name={KIND_ICON_IN[it.kind] ?? 'sparkles'} size={20} color={pr.friendA} />
+                      <Text style={[s.wordTr, { marginTop: 6 }]}>{it.title}</Text>
+                    </>
+                  )}
+                </View>
+                {it.note ? <Text style={s.inboxNote}>“{it.note}”</Text> : null}
+                {it.learned ? (
+                  <Pressable style={s.sendBack} onPress={() => setSendTo({ name: it.senderName ?? '', id: it.sender })}>
+                    <Ionicons name="arrow-undo" size={13} color={pr.friendA} />
+                    <Text style={s.sendBackT}>Send one back</Text>
+                  </Pressable>
+                ) : (
+                  <Pressable style={s.complete} onPress={async () => { await markLearned(it.id); refreshInbox(); }}>
+                    <Text style={s.completeT}>Mark as learned</Text>
+                    <Ionicons name="checkmark" size={14} color="#FFF" />
+                  </Pressable>
+                )}
+              </View>
+            ))}
+          </View>
+        </>
+      ) : null}
+
+      {/* Real accepted friends (if any) */}
+      {hasFriends ? (
+        <>
+          <Text style={s.sectionLabel}>YOUR PEOPLE</Text>
+          <View style={{ gap: spacing.sm }}>
+            {accepted.map((r) => (
+              <Pressable key={r.id} style={s.friendRow} onPress={() => setSendTo({ name: r.profile.name, id: r.profile.id })}>
+                <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.friendN}>{r.profile.name}</Text>
+                  <Text style={s.friendL}>Tap to send something</Text>
+                </View>
+                <Ionicons name="paper-plane-outline" size={16} color={pr.friendA} />
+              </Pressable>
+            ))}
+          </View>
+        </>
+      ) : null}
+
+      {/* Preview of what the page becomes — locked when you have no friends,
+          shown as a labelled example once you do. */}
+      <View style={hasActivity ? undefined : s.previewWrap} pointerEvents={hasActivity ? 'auto' : 'none'}>
+        <Text style={s.sectionLabel}>{hasActivity ? 'AN EXAMPLE OF WHAT YOU CAN SEND' : 'A PREVIEW'}</Text>
+        <View style={{ gap: spacing.md, opacity: hasActivity ? 1 : 0.9 }}>
+          {INBOX.filter((x) => x.kind === 'word').slice(0, 1).map((i) => (
+            <View key={i.key} style={s.inbox}>
+              <View style={s.inboxTop}>
+                <View style={s.avatar}><Text style={s.avatarT}>{i.fromFa[0]}</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.inboxFrom}>{i.from} sent you {KIND_LABEL[i.kind] ?? 'something'}</Text>
+                  <Text style={s.inboxWhen}>{i.when}</Text>
+                </View>
+                <View style={s.newDot} />
+              </View>
+              <View style={s.inboxCard}>
+                {i.kind === 'word' ? (
+                  <>
+                    <Text style={s.wordFa}>{i.fa}</Text>
+                    <Text style={s.wordTr}>{i.tr}</Text>
+                    <View style={s.wordRule} />
+                    <Text style={s.wordEn}>{i.en}</Text>
+                    <Text style={s.wordUse}>A word to slip into your next conversation.</Text>
+                  </>
+                ) : (
+                  <>
+                    <Ionicons name={KIND_ICON_IN[i.kind] ?? 'sparkles'} size={20} color={pr.friendA} />
+                    <Text style={[s.wordTr, { marginTop: 6 }]}>{i.title}</Text>
+                  </>
+                )}
+              </View>
+              <Text style={s.inboxNote}>“{i.note}”</Text>
+            </View>
+          ))}
+          <View style={{ gap: spacing.sm }}>
+            {FRIENDS.slice(0, 2).map((f) => (
+              <View key={f.key} style={s.friendRow}>
+                <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{f.persian[0]}</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.friendN}>{f.name}</Text>
+                  <Text style={s.friendL}>{f.last}</Text>
+                </View>
+                <View style={s.friendStreak}>
+                  <Ionicons name="leaf" size={11} color={pr.streakA} />
+                  <Text style={s.friendStreakT}>{f.streak}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        {!hasActivity ? (
+          <View style={s.previewOverlay} pointerEvents="box-none">
+            <Pressable style={s.previewCard} onPress={() => setFriendsOpen(true)}>
+              <Ionicons name="people" size={22} color={pr.friendA} />
+              <Text style={s.previewT}>This is what friends looks like</Text>
+              <Text style={s.previewX}>A friend sends you a word to learn. You learn it, then send one back. Add someone to begin.</Text>
+              <View style={s.previewBtn}><Text style={s.previewBtnT}>Find &amp; add friends</Text></View>
+            </Pressable>
+          </View>
+        ) : null}
+      </View>
+
+      <SendSheet open={sendTo !== null} onClose={() => setSendTo(null)} to={sendTo?.name ?? ''} toId={sendTo?.id} />
+      <FriendsSheet open={friendsOpen} onClose={() => { setFriendsOpen(false); refresh(); }} />
+    </>
+  );
+}
+
+
+function timeAgo(at: number) {
+  const d = Math.floor((Date.now() - at) / 86400000);
+  if (d <= 0) return 'today';
+  if (d === 1) return 'yesterday';
+  if (d < 7) return d + ' days ago';
+  if (d < 30) return Math.floor(d / 7) + 'w ago';
+  return Math.floor(d / 30) + 'mo ago';
+}
+
+function ProgressTab() {
+  const stats = useStats();
+  const [showAllFinished, setShowAllFinished] = useState(false);
+  const [achvOpen, setAchvOpen] = useState(false);
+  const miles = milestoneStatus(stats);
+  const unlocked = miles.filter((m) => m.achieved).length;
+  useEffect(() => { setStreak(ME.streak); }, []);
+  const finished = stats.finished;
+  const shown = showAllFinished ? finished : finished.slice(0, 10);
+
+  return (
+    <>
+      <View style={s.progHero}>
+        <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+        <StreakPlant streak={ME.streak} size={1.25} />
+        <Text style={s.progN}>{ME.streak} days</Text>
+        <Text style={s.progX}>Longest you have ever gone: {ME.longest}</Text>
+      </View>
+
+      <Text style={s.sectionLabel}>WHAT YOU HAVE BEEN DOING</Text>
+      <View style={s.statGrid}>
+        {[
+          { v: stats.topicsFinished, k: 'Topics finished', i: 'book' },
+          { v: stats.articlesRead, k: 'Articles read', i: 'newspaper' },
+          { v: stats.pagesRead, k: 'Pages read', i: 'document-text' },
+          { v: stats.videosWatched, k: 'Videos watched', i: 'play-circle' },
+          { v: stats.thingsSaved, k: 'Things saved', i: 'bookmark' },
+          { v: stats.thingsSent, k: 'Sent to friends', i: 'paper-plane' },
+        ].map((st) => (
+          <View key={st.k} style={s.statCell}>
+            <Ionicons name={st.i as any} size={16} color={pr.saveA} />
+            <Text style={s.statV}>{st.v}</Text>
+            <Text style={s.statK}>{st.k}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Pressable style={s.achvCard} onPress={() => setAchvOpen(true)}>
+        <View style={s.achvIcon}><Ionicons name="trophy" size={18} color="#8A6D1F" /></View>
+        <View style={{ flex: 1 }}>
+          <Text style={s.achvT}>Achievements</Text>
+          <Text style={s.achvX}>{unlocked} of {miles.length} unlocked{unlocked > 0 ? '  ·  nice work' : ''}</Text>
+        </View>
+        <Ionicons name="chevron-forward" size={16} color={pr.dim} />
+      </Pressable>
+
+      <View style={s.finHead}>
+        <Text style={s.sectionLabel}>FINISHED</Text>
+        {finished.length > 10 ? (
+          <Pressable hitSlop={8} onPress={() => setShowAllFinished((v) => !v)}>
+            <Text style={s.seeAll}>{showAllFinished ? 'show less' : 'see all ' + finished.length}</Text>
+          </Pressable>
+        ) : null}
+      </View>
+      {finished.length === 0 ? (
+        <Text style={s.finEmpty}>Finish a topic or an article and it lands here.</Text>
+      ) : (
+        <View style={{ gap: spacing.sm }}>
+          {shown.map((f) => (
+            <Pressable key={f.key} style={s.doneRow} onPress={() => f.route && router.navigate(f.route as any)}>
+              <View style={s.doneTick}><Ionicons name="checkmark" size={12} color="#FFF" /></View>
+              <View style={{ flex: 1 }}>
+                <Text style={s.doneT} numberOfLines={1}>{f.title}</Text>
+                <Text style={s.doneS}>{f.sub}</Text>
+              </View>
+              <Text style={s.doneW}>{timeAgo(f.at)}</Text>
+            </Pressable>
+          ))}
+        </View>
+      )}
+
+      <AchievementsSheet open={achvOpen} onClose={() => setAchvOpen(false)} />
+    </>
+  );
+}
+
+/* ---------------- The page ---------------- */
+
+export default function Profile() {
+  const { displayName } = useAuth();
+  const { tab: wantTab } = useLocalSearchParams<{ tab?: string }>();
+  const [tab, setTab] = useState<Tab>((wantTab as Tab) || 'you');
+  const [settings, setSettings] = useState(false);
+  const pending = INBOX.filter((i) => !i.done).length;
+
+  return (
+    <SafeAreaView style={s.safe} edges={['top']}>
+      <View style={s.header}>
+        <View>
+          <Text style={s.hello}>Welcome back</Text>
+          <Text style={s.name}>{displayName}</Text>
+        </View>
+        <Pressable hitSlop={10} onPress={() => setSettings(true)}>
+          <Ionicons name="settings-outline" size={21} color={colors.textPrimary} />
+        </Pressable>
+      </View>
+
+      <View style={s.tabs}>
+        {TABS.map((t) => {
+          const on = t.k === tab;
+          return (
+            <Pressable key={t.k} style={[s.tab, on && s.tabOn]} onPress={() => setTab(t.k)}>
+              <Ionicons name={(t.icon + (on ? '' : '-outline')) as any} size={15} color={on ? colors.surface : pr.dim} />
+              <Text style={[s.tabT, on && s.tabTOn]}>{t.label}</Text>
+              {t.k === 'friends' && pending > 0 && !on ? <View style={s.badge} /> : null}
+            </Pressable>
+          );
+        })}
+      </View>
+
+      <ScrollView contentContainerStyle={s.container} showsVerticalScrollIndicator={false}>
+        {tab === 'you' ? <YouTab onGoFriends={() => setTab('friends')} onGoLibrary={() => setTab('library')} /> : null}
+        {tab === 'library' ? <LibraryTab /> : null}
+        {tab === 'friends' ? <FriendsTab /> : null}
+        {tab === 'progress' ? <ProgressTab /> : null}
+      </ScrollView>
+
+      <SettingsSheet open={settings} onClose={() => setSettings(false)} />
+    </SafeAreaView>
+  );
+}
+
+const s = StyleSheet.create({
+  wordUse: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, textAlign: 'center', marginTop: spacing.sm, fontStyle: 'italic' },
+  previewWrap: { position: 'relative', marginTop: spacing.sm },
+  previewOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: spacing.lg },
+  previewCard: { backgroundColor: 'rgba(255,255,255,0.82)', borderRadius: 18, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg, alignItems: 'center', marginHorizontal: spacing.md, shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 5 },
+  previewT: { fontFamily: fonts.heading, fontSize: 18, color: pr.ink, marginTop: spacing.sm, textAlign: 'center' },
+  previewX: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: pr.dim, textAlign: 'center', marginTop: 6 },
+  previewBtn: { backgroundColor: pr.friendA, borderRadius: 20, paddingVertical: spacing.sm, paddingHorizontal: spacing.xl, marginTop: spacing.lg },
+  previewBtnT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
+  frMainBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, backgroundColor: pr.friendA, borderRadius: 24, paddingVertical: spacing.md, marginTop: spacing.lg },
+  frMainBtnT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },
+  frBadge: { position: 'absolute', right: spacing.lg, backgroundColor: '#C4433F', borderRadius: 10, minWidth: 20, height: 20, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
+  frBadgeT: { fontFamily: fonts.bodyStrong, fontSize: 11, color: '#FFF' },
+  acceptBtn: { backgroundColor: pr.friendA, borderRadius: 16, paddingVertical: 6, paddingHorizontal: spacing.md },
+  acceptT: { fontFamily: fonts.bodyStrong, fontSize: 12, color: '#FFF' },
+  friendEmpty: { fontFamily: fonts.body, fontSize: 13, lineHeight: 20, color: pr.dim, paddingVertical: spacing.md },
+  achvCard: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: '#FBF3DC', borderRadius: 14, borderWidth: 1, borderColor: '#E7CE8E', padding: spacing.lg, marginTop: spacing.xl },
+  achvIcon: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#F0DEA8', alignItems: 'center', justifyContent: 'center' },
+  achvT: { fontFamily: fonts.heading, fontSize: 17, color: '#6E571A' },
+  achvX: { fontFamily: fonts.body, fontSize: 11.5, color: '#8A6D1F', marginTop: 1 },
+  mileRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: '#FFF', borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.md },
+  mileRowOn: { backgroundColor: '#FBF3DC', borderColor: '#E7CE8E' },
+  mileIcon: { width: 30, height: 30, borderRadius: 15, backgroundColor: pr.hair, alignItems: 'center', justifyContent: 'center' },
+  mileIconOn: { backgroundColor: '#F0DEA8' },
+  mileT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: pr.ink },
+  mileTOn: { color: '#6E571A' },
+  mileTag: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.5, color: '#8A6D1F', marginTop: 3 },
+  mileTrack: { height: 4, borderRadius: 2, backgroundColor: pr.hair, marginTop: 6, overflow: 'hidden' },
+  mileFill: { height: 4, borderRadius: 2, backgroundColor: pr.streakA },
+  mileN: { fontFamily: fonts.bodyStrong, fontSize: 12, color: pr.dim },
+  mileNOn: { color: '#8A6D1F' },
+  finHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl },
+  finEmpty: { fontFamily: fonts.body, fontSize: 13, color: pr.dim, paddingVertical: spacing.lg },
+  subBack: { flexDirection: 'row', alignItems: 'center', gap: 3, marginBottom: spacing.md },
+  subBackT: { fontFamily: fonts.body, fontSize: 14, color: pr.ink },
+  subTitle: { fontFamily: fonts.heading, fontSize: 28, color: pr.ink, marginBottom: spacing.lg },
+  emptyWrap: { alignItems: 'center', gap: spacing.md, paddingVertical: spacing.xxl * 1.5 },
+  emptyT: { fontFamily: fonts.body, fontSize: 13, color: pr.dim, textAlign: 'center', paddingHorizontal: spacing.xl, lineHeight: 20 },
+  pinGrid: { flexDirection: 'row', gap: spacing.md },
+  pinCol: { flex: 1, gap: spacing.md },
+  pinCard: {},
+  pinImg: { borderRadius: 14, overflow: 'hidden', backgroundColor: pr.hair },
+  pinHeart: { position: 'absolute', top: 8, right: 8, width: 28, height: 28, borderRadius: 14, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
+  pinTitle: { fontFamily: fonts.heading, fontSize: 15, lineHeight: 19, color: pr.ink, marginTop: spacing.sm },
+  pinMeta: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.2, color: pr.dim, marginTop: 3 },
+  saveThumb: { width: 54, height: 54, borderRadius: 10, overflow: 'hidden', backgroundColor: pr.hair },
+  safe: { flex: 1, backgroundColor: colors.background },
+  header: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.md },
+  hello: { fontFamily: fonts.body, fontSize: 12, color: pr.dim },
+  name: { fontFamily: fonts.heading, fontSize: 30, color: colors.textPrimary },
+
+  tabs: { flexDirection: 'row', marginHorizontal: spacing.lg, backgroundColor: 'rgba(36,28,25,0.05)', borderRadius: 11, padding: 3, gap: 3 },
+  tab: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, paddingVertical: 7, borderRadius: 8 },
+  tabOn: { backgroundColor: colors.textPrimary },
+  tabT: { fontFamily: fonts.bodyStrong, fontSize: 11, color: pr.dim },
+  tabTOn: { color: colors.surface },
+  badge: { position: 'absolute', top: 5, right: 9, width: 6, height: 6, borderRadius: 3, backgroundColor: pr.readA },
+
+  container: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: pr.dim, marginTop: spacing.xl, marginBottom: spacing.md },
+  phDark: { backgroundColor: 'rgba(36,28,25,0.25)' },
+  labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.md },
+  sectionLabelInline: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: pr.dim },
+  seeAll: { fontFamily: fonts.bodyStrong, fontSize: 10.5, color: pr.saveA },
+  savedChip: { width: 132, backgroundColor: colors.surface, borderRadius: 11, borderWidth: 1, borderColor: pr.hair, padding: spacing.md, gap: 3 },
+  savedChipT: { fontFamily: fonts.heading, fontSize: fontSize.base, color: colors.textPrimary },
+  savedChipX: { fontFamily: fonts.body, fontSize: 9.5, color: pr.dim },
+  savedMore: { width: 96, alignItems: 'center', justifyContent: 'center', gap: 4, borderRadius: 11, borderWidth: 1, borderStyle: 'dashed', borderColor: pr.hair },
+  savedMoreT: { fontFamily: fonts.bodyStrong, fontSize: 10.5, color: pr.saveA },
+  chipsTight: { flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.md },
+  friendNRow: { flexDirection: 'row', alignItems: 'baseline', gap: 5 },
+  friendReal: { fontFamily: fonts.body, fontSize: 9.5, color: pr.dim },
+  told: { fontFamily: fonts.body, fontSize: 10.5, color: pr.streakA, textAlign: 'center', marginTop: spacing.sm, fontStyle: 'italic' },
+
+  alert: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg, borderRadius: 13, overflow: 'hidden', marginBottom: spacing.md },
+  alertDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: pr.friendA },
+  alertT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: '#241C19' },
+  alertX: { fontFamily: fonts.body, fontSize: 11, color: 'rgba(36,28,25,0.65)', marginTop: 1 },
+
+  streak: { borderRadius: 15, overflow: 'hidden', padding: spacing.lg },
+  streakRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  streakLeft: { flex: 1 },
+  streakN: { fontFamily: fonts.heading, fontSize: 46, color: '#FFF', lineHeight: 50 },
+  streakL: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 2, color: 'rgba(255,255,255,0.8)' },
+  streakDays: { flexDirection: 'row', gap: 4, marginTop: spacing.md },
+  dayPip: { width: 16, height: 4, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.28)' },
+  dayPipOn: { backgroundColor: '#FFF' },
+  streakNote: { fontFamily: fonts.body, fontSize: 10, color: 'rgba(255,255,255,0.75)', marginTop: spacing.sm },
+
+  rail: { gap: spacing.md, paddingRight: spacing.lg },
+  readCard: { width: 148, height: 196, borderRadius: 13, overflow: 'hidden', backgroundColor: colors.surface, justifyContent: 'flex-end' },
+  readImg: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
+  readBody: { padding: spacing.md },
+  readTitle: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: '#FFF' },
+  readSub: { fontFamily: fonts.body, fontSize: 10, color: 'rgba(255,255,255,0.75)', marginTop: 1 },
+  readTrack: { height: 2, borderRadius: 1, backgroundColor: 'rgba(255,255,255,0.28)', marginTop: spacing.sm },
+  readFill: { height: 2, borderRadius: 1, backgroundColor: '#E0C079' },
+  readPct: { fontFamily: fonts.body, fontSize: 9, color: 'rgba(255,255,255,0.65)', marginTop: 4 },
+
+  disc: { height: 104, borderRadius: 13, overflow: 'hidden', justifyContent: 'center' },
+  discImg: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
+  discBody: { paddingHorizontal: spacing.lg, paddingRight: 46 },
+  discKicker: { fontFamily: fonts.bodyStrong, fontSize: 7.5, letterSpacing: 1.5, color: 'rgba(255,255,255,0.85)' },
+  discTitle: { fontFamily: fonts.heading, fontSize: 21, color: '#FFF', marginTop: 2 },
+  discX: { fontFamily: fonts.body, fontSize: 11, lineHeight: 16, color: 'rgba(255,255,255,0.8)', marginTop: 2 },
+  discArrow: { position: 'absolute', right: spacing.lg },
+
+  libHero: { borderRadius: 15, overflow: 'hidden', padding: spacing.xl, alignItems: 'center' },
+  libN: { fontFamily: fonts.heading, fontSize: 44, color: '#FFF' },
+  libL: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 2, color: 'rgba(255,255,255,0.8)' },
+  libX: { fontFamily: fonts.body, fontSize: 12, color: 'rgba(255,255,255,0.85)', marginTop: spacing.sm, textAlign: 'center' },
+  chips: { flexDirection: 'row', gap: spacing.sm, marginVertical: spacing.lg },
+  chip: { paddingVertical: 5, paddingHorizontal: spacing.md, borderRadius: 20, borderWidth: 1, borderColor: pr.hair },
+  chipOn: { backgroundColor: pr.saveA, borderColor: pr.saveA },
+  chipT: { fontFamily: fonts.bodyStrong, fontSize: 11, color: pr.dim, textTransform: 'capitalize' },
+  chipTOn: { color: '#FFF' },
+  saveRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderRadius: 11, borderWidth: 1, borderColor: pr.hair, padding: spacing.md },
+  saveIcon: { width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(62,110,120,0.1)', alignItems: 'center', justifyContent: 'center' },
+  saveT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
+  saveS: { fontFamily: fonts.body, fontSize: 11, color: pr.dim, marginTop: 1 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
+  gridCell: { width: '47%', backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg, gap: 5 },
+  gridT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
+  gridX: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
+
+  frHero: { borderRadius: 15, overflow: 'hidden', padding: spacing.xl, alignItems: 'center' },
+  frHeroFa: { fontFamily: fonts.persian, fontSize: 30, color: pr.friendA },
+  frHeroT: { fontFamily: fonts.heading, fontSize: 26, color: '#241C19', marginTop: 2 },
+  frHeroX: { fontFamily: fonts.body, fontSize: 12, lineHeight: 19, color: 'rgba(36,28,25,0.68)', marginTop: spacing.sm, textAlign: 'center' },
+  inbox: { backgroundColor: colors.surface, borderRadius: 13, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg },
+  inboxDone: { opacity: 0.62 },
+  inboxTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  avatar: { width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(65,114,112,0.14)', alignItems: 'center', justifyContent: 'center' },
+  avatarSm: { width: 30, height: 30, borderRadius: 15 },
+  avatarT: { fontFamily: fonts.persian, fontSize: 15, color: pr.friendA },
+  inboxFrom: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.textPrimary },
+  inboxWhen: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
+  newDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: pr.friendA },
+  inboxCard: { alignItems: 'center', backgroundColor: 'rgba(65,114,112,0.08)', borderRadius: 10, paddingVertical: spacing.lg, marginTop: spacing.md },
+  wordFa: { fontFamily: fonts.persian, fontSize: 28, color: pr.friendA },
+  wordTr: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary, marginTop: 2 },
+  wordRule: { width: 20, height: 1, backgroundColor: pr.friendA, opacity: 0.5, marginVertical: spacing.sm },
+  wordEn: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, fontStyle: 'italic' },
+  inboxKindTag: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.5, color: pr.friendA, marginTop: 4 },
+  inboxNote: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, fontStyle: 'italic', textAlign: 'center', marginTop: spacing.md },
+  complete: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: pr.friendA, borderRadius: 20, paddingVertical: 9, marginTop: spacing.md },
+  completeT: { fontFamily: fonts.bodyStrong, fontSize: 12, color: '#FFF' },
+  sendBack: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderWidth: 1, borderColor: pr.friendA, borderRadius: 20, paddingVertical: 8, marginTop: spacing.md },
+  sendBackT: { fontFamily: fonts.bodyStrong, fontSize: 11.5, color: pr.friendA },
+  friendRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderRadius: 11, borderWidth: 1, borderColor: pr.hair, padding: spacing.md },
+  friendN: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
+  friendL: { fontFamily: fonts.body, fontSize: 10.5, color: pr.dim },
+  friendStreak: { flexDirection: 'row', alignItems: 'center', gap: 3, backgroundColor: 'rgba(110,140,90,0.12)', borderRadius: 20, paddingHorizontal: 8, paddingVertical: 3 },
+  friendStreakT: { fontFamily: fonts.bodyStrong, fontSize: 11, color: pr.streakA },
+  addFriend: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, borderWidth: 1, borderStyle: 'dashed', borderColor: pr.hair, borderRadius: 11, paddingVertical: spacing.md },
+  addFriendT: { fontFamily: fonts.bodyStrong, fontSize: 12, color: pr.friendA },
+
+  progHero: { borderRadius: 15, overflow: 'hidden', padding: spacing.xl, alignItems: 'center' },
+  progN: { fontFamily: fonts.heading, fontSize: 34, color: '#FFF', marginTop: spacing.md },
+  progX: { fontFamily: fonts.body, fontSize: 11.5, color: 'rgba(255,255,255,0.85)', marginTop: 2 },
+  calRow: { flexDirection: 'row', gap: 4, justifyContent: 'space-between' },
+  calPip: { flex: 1, height: 34, borderRadius: 5, backgroundColor: 'rgba(36,28,25,0.07)' },
+  calPipOn: { backgroundColor: pr.streakA },
+  statGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginTop: spacing.xl },
+  statCell: { width: '47%', backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg },
+  statV: { fontFamily: fonts.heading, fontSize: 28, color: colors.textPrimary },
+  statK: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textPrimary, marginTop: 2 },
+  statS: { fontFamily: fonts.body, fontSize: 10, color: pr.dim, marginTop: 1 },
+  doneRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderRadius: 11, borderWidth: 1, borderColor: pr.hair, padding: spacing.md },
+  doneTick: { width: 22, height: 22, borderRadius: 11, backgroundColor: pr.streakA, alignItems: 'center', justifyContent: 'center' },
+  doneT: { fontFamily: fonts.heading, fontSize: fontSize.base, color: colors.textPrimary },
+  doneS: { fontFamily: fonts.body, fontSize: 10.5, color: pr.dim },
+  doneW: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
+});

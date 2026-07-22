@@ -1,0 +1,130 @@
+const hafez: Author = {
+  key: 'hafez',
+  name: 'Hafez',
+  persian: 'حافظ',
+  epithet: 'The Tongue of the Unseen',
+  years: 'c. 1315 - 1390',
+  essence: 'The poet of Shiraz whose book sits in almost every Iranian home, opened at the turning of the year and at every crossroads of a life, still answering after six hundred years.',
+  cover: 'lit-hafez-cover',
+  closing: 'hafez-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'hz1',
+      title: 'The One Who Remembered',
+      subtitle: 'SHIRAZ, c. 1315',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'There are two books in almost every Iranian home. One is holy. The other is Hafez.' },
+          { t: 'p', x: 'He was born Shams al Din Mohammad, in Shiraz, in a century when the city passed from one ruler to the next like a coin. His father died when he was young. The family had little. He worked, by the old accounts, in a bakery, and delivered bread to the wealthy quarters of the city.' },
+          { t: 'p', x: 'And somewhere in those years he memorised the Quran, entirely, word for word. That is what his name means. Hafez is not a name at all. It is a title given to one who holds the whole book in memory. The boy who carried bread through Shiraz was carrying something else as well.' },
+          { t: 'motif', symbol: 'book', caption: 'حافظ, the one who holds it all in memory.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A city worth loving' },
+          { t: 'p', x: 'Shiraz was already the city of Saadi, already famous for its gardens, its wine, its roses and its nightingales. Hafez almost never left it. In a century of conquerors, when Timur was burning his way across the world, this poet stayed in one city and wrote about one city, and became universal by doing so.' },
+          { t: 'aside', x: 'He is the least travelled of the great Persian poets, and the most widely read.' },
+          { t: 'p', x: 'There is a story, and it may even be true, that when Timur took Shiraz he summoned Hafez to answer for a famous line, the one offering Samarkand and Bukhara, Timur own cities, for the mole on a beautiful face. How dare you, the conqueror asked, give away my cities for a mole. Hafez, old and poor and standing before the most feared man alive, replied that it was precisely such extravagance that had reduced him to this poverty. Timur laughed, and let him go.' },
+          { t: 'illumin', x: 'A poet with nothing disarmed the conqueror of the world with a joke.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz2',
+      title: 'The Art of Saying Two Things',
+      subtitle: 'HOW HE WRITES',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'To read Hafez is to learn that a line can hold two meanings at once and mean both of them completely. This is the whole art, and it is why he has never been exhausted in six hundred years of reading.' },
+          { t: 'p', x: 'When he writes of wine, he means wine, and he means the intoxication of the divine. When he writes of the beloved, he means a person, and he means God. When he mocks the hypocrite preacher, he means that preacher, and he means every hollow authority that has ever lived. He never chooses. The choice is left to you, and what you choose reveals you.' },
+          { t: 'veil', surface: 'Come, for the palace of hope is built on sand. Bring wine, for the foundation of life is wind.', hidden: 'On the surface, a drinking song. Beneath, one of the oldest truths there is: everything you are building will not hold, so stop clutching at permanence and be present in the hour you actually have.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why the double meaning mattered' },
+          { t: 'p', x: 'This was not a game. Hafez lived under rulers who policed piety, and one of them, Mobarez al Din, was so severe that Hafez and his circle called him the police officer. To say the true thing plainly was dangerous. To say it in a way that could always mean something else was survival, and it was art.' },
+          { t: 'p', x: 'So the tavern in his poems is the mosque and it is not the mosque. The wine cup is a real cup and it is the whole world. He wrote in a language that authority could not convict, and everyone understood him anyway.' },
+          { t: 'veil', surface: 'Last night I saw the angels knocking at the tavern door, kneading the clay of Adam and casting it into a cup.', hidden: 'The sacred is not in the place the pious told you to look. It is in the tavern, the ruined place, the disreputable corner. God is being made where the respectable would never think to search.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The form he perfected' },
+          { t: 'p', x: 'He wrote the ghazal, a form of independent couplets bound by rhyme and a single mood rather than a single argument. Each couplet stands alone and could be quoted alone, which is exactly why his lines travel so easily into ordinary speech. A ghazal is not a story. It is a scattering of jewels that somehow make a necklace.' },
+          { t: 'ghazal', couplets: [
+            { a: 'Do not grieve. The lost Joseph will return to Canaan.', b: 'The house of sorrow will become a garden. Do not grieve.' },
+            { a: 'Do not grieve, sorrowing heart, your state will mend.', b: 'That head will find its calm again. Do not grieve.' },
+            { a: 'The dark night and the fear of waves and the terrible whirlpool,', b: 'what do they know of our state, those light on the shore.' },
+          ], note: 'From the most beloved ghazal in the Persian language. Every Iranian knows the refrain.' },
+          { t: 'p', x: 'That refrain, gham makhor, do not grieve, has been said by mothers to children and by strangers to strangers for six hundred years. It is not advice. It is a hand on the shoulder.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz3',
+      title: 'The Book That Answers',
+      subtitle: 'FAL E HAFEZ',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Here is what no other poet in the world has. Iranians do not only read Hafez. They ask him.' },
+          { t: 'p', x: 'The custom is called fal e Hafez, the omen of Hafez. You hold a question in your heart, a real one, the kind you have been carrying. You touch the book. You open it at random. And the verse your eye falls on is read as the answer, not as a prediction of what will happen, but as a mirror held up to what you already know and have not admitted.' },
+          { t: 'aside', x: 'It happens at Nowruz around the Haft Seen, at Yalda in the long night, and any evening a family needs it.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why him' },
+          { t: 'p', x: 'No one decided this. It grew. It happened because his double meanings mean the verse will always have something to say to whatever you brought to it, and because the country trusted him. He is called Lisan al Ghayb, the Tongue of the Unseen, and the title was not given lightly. Iranians believe, or half believe, or enjoy believing, that he sees.' },
+          { t: 'p', x: 'And the reading is never literal. A verse about wine answers a question about a marriage. A verse about a rose answers a question about leaving the country. This is not a failure of the method. It is the method. Hafez does not tell you what to do. He tells you what you already think, in words beautiful enough that you can finally hear it.' },
+          { t: 'illumin', x: 'It is not fortune telling. It is a nation using poetry as a mirror.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'Ask him yourself. Hold your question, and open the book.' },
+          { t: 'fal' },
+          { t: 'aside', x: 'Ask once, and sit with what you are given. That is the whole tradition.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz4',
+      title: 'What He Believed',
+      subtitle: 'HIS MIND',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Beneath the wine and the roses there is a philosophy, and it is fierce. Hafez spent his life attacking one thing above all others, and it was not sin. It was hypocrisy.' },
+          { t: 'p', x: 'He goes after the preacher who tells others to fast while eating, the judge who sells verdicts, the ascetic whose piety is a performance. In his poems the honest drunk is closer to God than the dishonest saint, because the drunk at least is not pretending. This was not blasphemy. It was a demand that the sacred be real.' },
+          { t: 'ghazal', couplets: [
+            { a: 'Preachers who make their display in pulpit and prayer niche,', b: 'do other work when they are alone behind the door.' },
+            { a: 'I have a question. Ask the learned of the assembly:', b: 'why do those who order repentance so seldom repent.' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Love as the only law' },
+          { t: 'p', x: 'Against the hypocrite he sets one thing: love. Not sentiment, but love as a discipline that dissolves the self and its calculations. He holds that a heart alive with love does not die, that the lover who counts the cost has not loved, and that this is the only path that leads anywhere true.' },
+          { t: 'veil', surface: 'I am the slave of the spirit that has no colour of attachment, not to disbelief, not to faith, not to certainty, not to doubt.', hidden: 'He refuses every camp, including the ones that would claim him. Not the pious side, not the sceptical side. The freedom he wants is outside the argument entirely, and this line has protected him from six centuries of people trying to enlist him.' },
+          { t: 'p', x: 'And through it all runs a tenderness toward human failure. Hafez never condemns the weak. He condemns only those who condemn the weak. That is why a nation has trusted him with its questions.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz5',
+      title: 'Still Answering',
+      subtitle: 'HIS LEGACY',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He was buried in a garden in Shiraz, and the garden is still there. It is called the Hafezieh, and it is one of the few tombs in the world that people visit not to mourn but to sit. They read to each other. They drink tea. They open the book, and ask, and go home lighter.' },
+          { t: 'imgframe', key: 'hafez-tomb', cap: 'The Hafezieh in Shiraz, where people come to read rather than to grieve.' },
+          { t: 'p', x: 'His reach went far beyond Persian. Goethe read him in translation and was so shaken that he wrote an entire book in answer, calling Hafez his twin. Emerson translated him. Nietzsche praised him. And every one of them was reading a shadow of the original, because his wordplay does not survive the crossing.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The guide' },
+          { t: 'p', x: 'What matters most is smaller than any of that. It is that an ordinary family, on the longest night of the year, opens a book of poems and asks it what to do. Six hundred years after his death, a poet is still the household oracle of a nation, consulted about marriages and moves and grief.' },
+          { t: 'p', x: 'No other literature on earth has quite this. Not one poet in one country holding this position for this long, in homes that have nothing else in common. Hafez is not read in Iran. He is consulted.' },
+          { t: 'illumin', x: 'A country that has lost much has never once lost him.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Hafez, the orphan of Shiraz who memorised one book and then wrote another, and who taught a whole civilization how to say the forbidden thing beautifully enough to survive saying it.' },
+          { t: 'p', x: 'He offered no doctrine and demanded no belief. He only insisted that hypocrisy is the sin, that love is the law, and that the moment in your hand is the only one you were ever given. Iranians have been opening his book for six hundred years, and it has not run out of answers yet.' },
+          { t: 'illumin', x: 'Ask him a question, and he will give you back your own heart, in better words than you had.' },
+          { t: 'motif', symbol: 'moon', caption: 'حافظ' },
+        ] },
+      ],
+    },
+  ],
+};

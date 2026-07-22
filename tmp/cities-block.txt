@@ -1,0 +1,53 @@
+  {
+    key: 'g5',
+    title: 'The Great Cities',
+    subtitle: 'WHERE THE PEOPLE ARE',
+    pages: [
+      { blocks: [
+        { t: 'p', x: 'A country is its cities, and Iran cities were placed by water and by road. Where a mountain stream could be tapped, or a trade route had to pass, a city grew. Some have stood so long that their founding is myth rather than record.' },
+        { t: 'facts', items: [
+          { k: 'Tehran', v: 'Capital, and one of the largest cities in western Asia' },
+          { k: 'Mashhad', v: 'The great pilgrimage city of the east' },
+          { k: 'Isfahan', v: 'Once called half the world' },
+          { k: 'Shiraz', v: 'City of poets, roses, and gardens' },
+          { k: 'Tabriz', v: 'The north western gate, and its ancient bazaar' },
+          { k: 'Yazd', v: 'The desert city of wind towers' },
+        ] },
+      ] },
+      { blocks: [
+        { t: 'h', x: 'Why they stand where they stand' },
+        { t: 'p', x: 'Look closely and a pattern appears. Almost every great Iranian city sits at the foot of a mountain, not on a river. Tehran against the Alborz, Shiraz and Isfahan in the folds of the Zagros, Mashhad below the hills of Khorasan. The mountains held the snow, the snow fed the springs, and the qanats carried that water out to the plain.' },
+        { t: 'mark', x: 'Iranian cities were not built on rivers. They were built on the memory of snow.' },
+        { t: 'p', x: 'This is why the map of Iran cities is really a map of its mountains. Where the ranges run, the cities follow, strung along the inner edge of the highlands like beads on a thread, with the empty deserts held at the centre.' },
+      ] },
+    ],
+  },
+  {
+    key: 'g6',
+    title: 'Small Places, Long Shadows',
+    subtitle: 'THE UNEXPECTED ONES',
+    pages: [
+      { blocks: [
+        { t: 'p', x: 'Beyond the great cities are smaller places whose names carry further than their size would suggest. Some gave the world a fruit, some a building, some a person whose words outlived every empire of their age.' },
+      ] },
+      { blocks: [
+        { t: 'h', x: 'Tus' },
+        { t: 'p', x: 'A modest town in Khorasan, and the home of Ferdowsi. For thirty years he sat here and wrote the Shahnameh, and in doing so saved the Persian language. No city of millions has done more for Iran than this one town did through one man.' },
+        { t: 'h', x: 'Kashan' },
+        { t: 'p', x: 'A desert town that turned water and roses into an art. Its rosewater is distilled each spring in a ritual centuries old, its carpets are famous, and its merchant houses hide vast cool courtyards behind plain mud walls, an entire world turned inward away from the heat.' },
+        { t: 'h', x: 'Maragheh' },
+        { t: 'p', x: 'Here, under the Ilkhanids, an observatory was built that mapped the heavens with an accuracy that reached Europe and helped reshape how the world understood the sky.' },
+      ] },
+      { blocks: [
+        { t: 'h', x: 'Masuleh' },
+        { t: 'p', x: 'A village in the Gilan mountains built so steeply that the roof of one house is the courtyard of the house above, and the whole settlement is a staircase. Cars cannot enter. They were never designed for.' },
+        { t: 'h', x: 'Bam' },
+        { t: 'p', x: 'A citadel of mud brick in the Kerman desert, once the largest such structure on earth, and the country around it gives the sweetest dates in Iran.' },
+        { t: 'h', x: 'Neyshabur' },
+        { t: 'p', x: 'Home of Omar Khayyam, poet and mathematician both, and the source of the turquoise that coloured the domes and the jewellery of half the world.' },
+        { t: 'div' },
+        { t: 'p', x: 'This is the pattern of the land. A country of extremes, held between mountain and desert, placed at the centre of everything, whose people learned to draw water from under the sand and beauty from the driest places. The geography made the history, and the history made the nation.' },
+      ] },
+    ],
+  },
+];

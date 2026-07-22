@@ -1,0 +1,25 @@
+
+export type Dish = { key: string; fa: string; name: string; tag: string; x: string; image: string };
+
+export const DISHES: Dish[] = [
+  { key: 'ghormeh', fa: 'قرمه سبزی', name: 'Ghormeh Sabzi', tag: 'THE NATIONAL DISH', image: 'food-ghormeh-sabzi',
+    x: 'If Iran has one dish, this is it. A dark green stew of herbs fried down for hours, with lamb, kidney beans, and dried lime that gives it a sourness nothing else on earth has. It takes most of a day. Every family thinks their mother made it best, and every family is correct.' },
+  { key: 'fesenjan', fa: 'فسنجان', name: 'Fesenjan', tag: 'THE STRANGE ONE', image: 'food-fesenjan',
+    x: 'Chicken or duck in ground walnuts and pomegranate molasses, cooked until the walnut oil separates and the sauce goes almost black. Dark, sour, sweet, and completely unlike anything in any other cuisine. It is the dish that surprises people most.' },
+  { key: 'zereshk', fa: 'زرشک پلو', name: 'Zereshk Polo', tag: 'THE JEWELLED ONE', image: 'food-zereshk-polo',
+    x: 'Saffron rice scattered with barberries, tiny sour red jewels, served with chicken. It is what appears at weddings and at every occasion that matters, because it is beautiful before anyone has tasted it. The barberries are sharp enough to make you blink.' },
+  { key: 'lobia', fa: 'لوبیا پلو', name: 'Lobia Polo', tag: 'THE WEEKNIGHT ONE', image: 'food-lobia-polo',
+    x: 'Green beans and minced meat cooked with tomato and cinnamon and folded through the rice, so the rice is the dish rather than a bed for it. Homely, quick by Persian standards, and the one that Iranians abroad make when they are homesick and short of time.' },
+  { key: 'koobideh', fa: 'کوبیده', name: 'Kabab Koobideh', tag: 'THE EVERYDAY ONE', image: 'food-koobideh',
+    x: 'Minced lamb and onion pressed by hand onto a flat wide skewer and grilled over coal. Eaten with rice, a grilled tomato, raw onion, and sumac. It looks simple and it is not. If the mix is wrong it falls off the skewer into the fire, and the whole skill is in the hands.' },
+  { key: 'ash', fa: 'آش رشته', name: 'Ash Reshte', tag: 'THE ONE YOU GIVE AWAY', image: 'food-ash-reshte',
+    x: 'Thick soup of herbs, beans, and noodles, finished with kashk, a tart dried whey. Made in enormous pots, and traditionally made to be given away: cooked as a vow and handed out to neighbours and strangers. Making ash for the whole street is an act of charity with its own name.' },
+  { key: 'abgoosht', fa: 'آبگوشت', name: 'Abgoosht', tag: 'TWO MEALS, ONE POT', image: 'food-abgoosht',
+    x: 'Lamb, chickpeas, and potato slow cooked in a stone crock, and then you take it apart. First you strain off the broth and eat it with torn bread. Then you take a pestle and mash everything left in the pot into a paste and eat that as a second course. One pot, two dishes, and a tool at the table.' },
+  { key: 'kale', fa: 'کله پاچه', name: 'Kale Pache', tag: 'BREAKFAST, AND A TEST', image: 'food-kale-pache',
+    x: 'Sheep head and trotters, simmered all night, and eaten at dawn. The brain, the tongue, the cheek, in a clear broth with lemon and cinnamon. It is a breakfast, it is a delicacy, and it is the thing Iranians use to find out whether you are serious. The men who eat it will tell you there is nothing better.' },
+  { key: 'tahdig', fa: 'ته دیگ', name: 'Tahdig', tag: 'THE PRIZE', image: 'food-tahdig',
+    x: 'The golden crust from the bottom of the rice pot. Sometimes plain rice, sometimes with potato or flatbread laid underneath. It is turned out at the table and it is gone within a minute, and there has never in the history of Iran been enough of it.' },
+  { key: 'sabzi', fa: 'سبزی خوردن', name: 'Sabzi Khordan', tag: 'ON EVERY TABLE', image: 'food-sabzi-khordan',
+    x: 'A plate of raw herbs. Mint, tarragon, basil, radish, spring onion. Eaten by the handful with bread, white cheese, and walnuts, throughout the meal, not before it. Iranians eat more raw herbs than almost anyone, and it is the flavour they miss most abroad.' },
+];

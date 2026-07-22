@@ -1,0 +1,15 @@
+
+export const SWEETS: Dish[] = [
+  { key: 'bastani', fa: 'بستنی سنتی', name: 'Bastani Sonnati', tag: 'SAFFRON ICE CREAM', image: 'food-bastani',
+    x: 'Saffron, rosewater, and pistachio, with chunks of frozen clotted cream running through it. It stretches when you pull it, because of the salep in it, and that pull is how you know it is the real thing. Eat it pressed between two thin wafers, as bastani nooni, and it is the best ice cream in the world. That is not a Persian opinion. Ask anyone who has had it.' },
+  { key: 'faloodeh', fa: 'فالوده', name: 'Faloodeh', tag: 'OLDER THAN YOU THINK', image: 'food-faloodeh',
+    x: 'Thin frozen rice noodles in a rosewater syrup, served with lime squeezed over the top so it is sour and cold at once. Shiraz is famous for it. And it is ancient. Persians were making frozen desserts more than two thousand years ago, packing ice into yakhchals in the desert to have it in summer, which is its own piece of engineering.' },
+  { key: 'lavashak', fa: 'لواشک', name: 'Lavashak', tag: 'EVERY PERSIAN CHILDHOOD', image: 'food-lavashak',
+    x: 'Fruit pulp, plum or apricot or pomegranate, spread thin and dried in the sun into a sheet of sour leather. Sometimes salted. Every Iranian child has torn a piece off a sheet of this, and every Iranian adult still wants it. It is sour enough to make your jaw ache and nobody has ever been able to stop at one strip.' },
+  { key: 'gaz', fa: 'گز', name: 'Gaz', tag: 'FROM ISFAHAN', image: 'food-gaz',
+    x: 'Nougat, white and soft and heavy with pistachios, made from the sap that a small insect leaves on tamarisk trees in the hills near Isfahan. Nobody who eats it thinks about that. It is what you bring back from Isfahan, and you bring back a lot of it, because you will be asked.' },
+  { key: 'sohan', fa: 'سوهان', name: 'Sohan', tag: 'FROM QOM', image: 'food-sohan',
+    x: 'A saffron brittle of wheat sprout, butter, and sugar, studded with pistachio and almond, snapped from a wheel. Deep gold, hard, and dangerous to a filling. Qom makes it, and a tin of it travels back with everyone who passes through.' },
+  { key: 'ajil', fa: 'آجیل', name: 'Ajil', tag: 'THE BOWL ON THE TABLE', image: 'food-ajil',
+    x: 'The nut mix, and it is not a snack, it is an institution. Pistachios, almonds, roasted chickpeas, hazelnuts, dried figs, mulberries, sour cherries, and seeds. Every house has a bowl of it out. It appears at Nowruz and at Yalda and on any evening at all. Iranians eat it constantly and the shells pile up in a second bowl beside it.' },
+];

@@ -1,0 +1,210 @@
+const seljuk: Topic = {
+  key: 'seljuk-empire',
+  category: 'history',
+  name: 'The Seljuk Empire',
+  persian: 'سلجوقیان',
+  years: '1037 - 1194',
+  essence: 'The Turkic dynasty that ruled a vast Islamic empire from Iran, and under whom Persian culture, art, and learning reached a brilliant new height.',
+  cover: 'seljuk-cover',
+  closing: 'seljuk-cover',
+  status: 'ready',
+  sources: [
+    'The historical record of the Seljuk era',
+    'Contemporary Persian and Arabic accounts',
+    'The Rubaiyat of Omar Khayyam',
+  ],
+  chapters: [
+    {
+      key: 'sj1',
+      title: 'Horsemen from the Steppe',
+      subtitle: '11th century',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'From the wide grasslands of Central Asia came a people of nomadic Turkic horsemen, the Seljuks, named for a chieftain of old. Hardy, warlike, and newly devoted to Islam, they swept south and west into the Iranian world in the eleventh century, and within a single generation had built one of the great empires of the age.' },
+          { t: 'p', x: 'In 1040 they shattered the armies of the reigning power at the battle of Dandanaqan, and the road into Iran lay open. Under their leader Tughril, they took city after city, until at last Tughril entered Baghdad itself and was named Sultan, protector of the Islamic world.' },
+          { t: 'splitimg', key: 'seljuk-tughril', title: 'Tughril Beg', x: 'Tughril led the Seljuks from the steppe into Iran and beyond, founding an empire that stretched from Central Asia to the Mediterranean.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Conquerors who became Persians' },
+          { t: 'p', x: 'Here a pattern repeated that runs through all of Iran\'s history. The Seljuks came as foreign conquerors, but they were swiftly captivated by the older and more sophisticated Persian civilization they had overrun. They adopted its language of culture, its arts, its ways of government, and its administrators.' },
+          { t: 'markline', x: 'They conquered Iran with the sword, and Iran conquered them with its culture.' },
+          { t: 'p', x: 'The conquerors became patrons of Persian civilization, and under their rule, though the sultans were Turks, the soul of the state was Persian. It was a marriage of the vigour of the steppe and the refinement of Iran, and it produced a golden age.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sj2',
+      title: 'The Great Vizier and the Golden Age',
+      subtitle: '1063 - 1092',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The true architect of the Seljuk golden age was not a sultan but a Persian statesman, one of the greatest administrators in the history of Iran: Nizam al-Mulk, the great vizier who guided the empire at its height for thirty years.' },
+          { t: 'splitimg', key: 'seljuk-nizam', title: 'Nizam al-Mulk', x: 'The brilliant Persian vizier who ran the Seljuk Empire for three decades and wrote a famous book on the art of governing.' },
+          { t: 'p', x: 'A master of statecraft, he organized the sprawling empire, built roads and institutions, and wrote a celebrated book on the art of government that was studied for centuries. Above all, he founded a network of great colleges, the Nizamiyya, across the empire, among the finest centers of learning in the world of their day.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The age of Khayyam' },
+          { t: 'p', x: 'This was an age of extraordinary Persian genius. At the Seljuk court worked Omar Khayyam, one of the most remarkable minds of any age: a brilliant mathematician who advanced algebra, and an astronomer who reformed the calendar into one more accurate than any then known in the world.' },
+          { t: 'p', x: 'And Khayyam was also a poet, whose quatrains, the Rubaiyat, meditating on life, time, and the fleeting beauty of the world, would one day be loved across the entire earth. That one man could be at once a great scientist and a great poet is a wonder that captures the spirit of this golden age.' },
+          { t: 'numstat', items: [
+            { n: 'Algebra', label: 'Khayyam advanced its foundations' },
+            { n: 'Calendar', label: 'A reform of astonishing accuracy' },
+            { n: 'Rubaiyat', label: 'Poetry beloved around the world' },
+            { n: 'One mind', label: 'Scientist and poet at once' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'But the golden age carried the seeds of its own troubles. Nizam al-Mulk was assassinated in 1092, struck down, it is said, by the daggers of a shadowy new sect, the Assassins, who from their mountain fortresses would haunt the region for generations. Soon after, the great sultan died too, and the empire began to fracture among rival heirs.' },
+          { t: 'markline', x: 'A golden age of Persian art and science bloomed under the Turkish sultans.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sj3',
+      title: 'The Empire Divides',
+      subtitle: '1092 - 1194',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'After the deaths of the great sultan and his great vizier, the vast Seljuk empire, held together by their skill, began to come apart. It split into smaller kingdoms ruled by rival branches of the family, each holding a piece of the once mighty realm.' },
+          { t: 'p', x: 'These successor states carried on the Seljuk legacy for another century, and in places like Anatolia the Seljuk name endured even longer, laying foundations for the Turkish presence there that continues to this day. But the unity of the great empire was gone.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of the Seljuks, Turkic conquerors who became the great patrons of Persian civilization. Under their rule, Iran\'s culture, art, architecture, and science flourished brilliantly, and its influence spread across a vast empire from Central Asia to the Mediterranean.' },
+          { t: 'p', x: 'They showed, as others had before and would again, the deep power of Iranian civilization to absorb and transform its conquerors. The steppe warriors who rode in as foreign masters became, within a generation, the proud custodians of Persian art and learning. It is one of the recurring wonders of Iran\'s long story.' },
+          { t: 'pull', x: 'The conquerors came as masters, and stayed as students of Iran.' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const ilkhanate: Topic = {
+  key: 'ilkhanate',
+  category: 'history',
+  name: 'The Ilkhanate',
+  persian: 'ایلخانان',
+  years: '1256 - 1335',
+  essence: 'The age of the Mongol storm, when Iran suffered one of the greatest catastrophes in its history, and then, astonishingly, tamed and civilized its conquerors.',
+  cover: 'ilkhanate-cover',
+  closing: 'ilkhanate-cover',
+  status: 'ready',
+  sources: [
+    'The historical record of the Mongol era',
+    'Persian chronicles of the age',
+    'Rashid al-Din, Compendium of Chronicles',
+  ],
+  chapters: [
+    {
+      key: 'il1',
+      title: 'The Storm from the East',
+      subtitle: '1219 - 1258',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In the early thirteenth century, out of the steppes of Mongolia, came the most terrible conquerors the world had ever known. Under Genghis Khan, the Mongols built a war machine of unmatched speed and ferocity, and when their fury turned toward Iran, it fell upon the land like the end of the world.' },
+          { t: 'p', x: 'The devastation was almost beyond describing. Great and ancient cities, centers of learning and beauty that had stood for centuries, were destroyed utterly, their people slaughtered, their libraries and canals and treasures reduced to ash and rubble. It was one of the darkest hours in all of Iran\'s long history.' },
+          { t: 'markline', x: 'The Mongol storm was one of the greatest catastrophes Iran ever endured.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A wound to a civilization' },
+          { t: 'p', x: 'The scale of the ruin was staggering. Cities like Nishapur, Merv, and Rey, jewels of the Persian world, were laid waste, some never to recover. The intricate irrigation systems that had made the land bloom for millennia were shattered, and whole regions were depopulated. A brilliant civilization was struck a blow from which it would take generations to recover.' },
+          { t: 'p', x: 'In 1258 the Mongols under Hulagu, grandson of Genghis, took Baghdad, the great seat of the Islamic world, and destroyed it in an orgy of violence that shocked the age. The old order of the Islamic east was swept away, and Iran lay prostrate beneath the conquerors.' },
+        ] },
+      ],
+    },
+    {
+      key: 'il2',
+      title: 'The Taming of the Conquerors',
+      subtitle: '1258 - 1335',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'And then, one of the most remarkable transformations in all of history unfolded. The Mongol rulers of Iran, called the Ilkhans, settled into the land they had ruined, and slowly, over the generations, the ancient magic of Persian civilization worked upon them. The destroyers became rebuilders. The pagan nomads became Persian kings.' },
+          { t: 'markline', x: 'The civilization they had nearly destroyed rose up and remade them in its image.' },
+          { t: 'p', x: 'The turning point came when the Ilkhan Ghazan converted to Islam and embraced the ways of the land he ruled. Guided by a brilliant Persian vizier, he set about rebuilding what his ancestors had destroyed, reforming the government, restoring the ruined lands, and becoming a patron of Persian art and learning.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A flowering from the ashes' },
+          { t: 'p', x: 'What followed was, astonishingly, a cultural golden age. The vizier Rashid al-Din, one of the great minds of the age, composed a monumental history of the world, perhaps the first truly global history ever written, drawing on the knowledge the vast Mongol empire had gathered from China to Europe.' },
+          { t: 'p', x: 'Persian painting, enriched now by contact with the art of China, entered one of its most beautiful periods. Architecture, history, and science flourished under Mongol patronage. From the ashes of the greatest catastrophe, Iran had conjured a new flowering of its genius.' },
+          { t: 'splitimg', key: 'ilkhanate-rashid', title: 'Rashid al-Din', x: 'The Persian vizier and scholar who wrote a history of the world, and helped transform the Mongol conquerors into patrons of Persian civilization.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of the Ilkhanate, the age of the Mongols in Iran, a story of catastrophe and, against all odds, of renewal. The Mongol invasion was among the most destructive events the nation ever suffered, and its wounds were deep and lasting.' },
+          { t: 'p', x: 'Yet even this could not extinguish the Iranian spirit. Within a few generations, Iran had absorbed and transformed even the terrible Mongols, turning destroyers into patrons and drawing from the darkest of times a new age of beauty. It stands as perhaps the greatest testament of all to the deathless resilience of Persian civilization.' },
+          { t: 'pull', x: 'Even the Mongols, in the end, were conquered by the soul of Iran.' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const timurid: Topic = {
+  key: 'timurid-empire',
+  category: 'history',
+  name: 'The Timurid Empire',
+  persian: 'تیموریان',
+  years: '1370 - 1507',
+  essence: 'The dynasty of Tamerlane, a conqueror as terrible as any in history, whose descendants presided over one of the most dazzling cultural renaissances the Persian world ever knew.',
+  cover: 'timurid-cover',
+  closing: 'timurid-cover',
+  status: 'ready',
+  sources: [
+    'The historical record of the Timurid era',
+    'Contemporary Persian accounts',
+    'Studies of Timurid art and architecture',
+  ],
+  chapters: [
+    {
+      key: 'tm1',
+      title: 'The Last Great Conqueror',
+      subtitle: '1370 - 1405',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In the fourteenth century, out of Central Asia, rose the last of the great steppe conquerors, a man the Persians called Timur and the West would call Tamerlane. Claiming the mantle of Genghis Khan, he built an empire by the sword across the Persian world and far beyond, and his name became a byword for both brilliance and terror.' },
+          { t: 'p', x: 'Timur was a military genius who was never once defeated in battle across a lifetime of war, and he was also fearsomely cruel, leaving towers of skulls in the wake of his conquests. He carved out a vast empire centered on the Persian world, from India to the edge of Europe, in a career of almost ceaseless campaigning.' },
+          { t: 'splitimg', key: 'timurid-timur', title: 'Timur (Tamerlane)', x: 'A conqueror never defeated in battle, and one of the most feared men in history, Timur built a vast empire across the Persian world.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The jewel of Samarkand' },
+          { t: 'p', x: 'Yet this terrible conqueror was also a great patron of beauty. He gathered to his capital of Samarkand the finest artists, architects, and craftsmen from across all the lands he conquered, and adorned the city with monuments of breathtaking splendour, blue-domed and shimmering, among the wonders of the world.' },
+          { t: 'markline', x: 'The hand that raised towers of skulls also raised the shimmering domes of Samarkand.' },
+          { t: 'p', x: 'It is one of history\'s great contradictions, that a man of such cruelty should also be the founder of one of the most beautiful cultural ages the East ever knew. But so it was, and the splendour he began would blossom fully under his descendants.' },
+        ] },
+      ],
+    },
+    {
+      key: 'tm2',
+      title: 'The Timurid Renaissance',
+      subtitle: '1405 - 1507',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'After Timur\'s death, his descendants gave up the endless conquering and turned instead to the cultivation of beauty, and under them the Persian world entered one of the most brilliant cultural renaissances in its entire history, a flowering compared by many to the Italian Renaissance of the same age.' },
+          { t: 'p', x: 'His son Shahrukh and grandson Ulugh Beg, and later the court at Herat, made their cities into dazzling centers of art, learning, and refinement, where the Persian genius reached new summits in almost every field.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A king who mapped the stars' },
+          { t: 'p', x: 'Timur\'s grandson Ulugh Beg was that rarest of things, a king who was also a great scientist. At his capital of Samarkand he built one of the finest astronomical observatories of the medieval world, and there he and his scholars mapped the stars with an accuracy that would not be surpassed for centuries. A ruler of an empire spent his nights charting the heavens.' },
+          { t: 'numstat', items: [
+            { n: 'Herat', label: 'A capital of dazzling art and poetry' },
+            { n: 'Samarkand', label: 'An observatory that mapped the stars' },
+            { n: 'Painting', label: 'The golden age of the Persian miniature' },
+            { n: 'Renaissance', label: 'A flowering to rival Italy\'s' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The summit of Persian art' },
+          { t: 'p', x: 'This was the golden age of the Persian miniature, the exquisite art of painting in books, which reached under the Timurids a delicacy and beauty never surpassed. It was the age of the great poet Jami and of the master painter Behzad, whose works are treasures of world art. In poetry, painting, calligraphy, and architecture, the Timurid renaissance stands as one of the summits of Persian civilization.' },
+          { t: 'splitimg', key: 'timurid-miniature', title: 'The Persian miniature', x: 'Under the Timurids, the art of the miniature reached a delicacy and beauty that has never been surpassed.' },
+          { t: 'p', x: 'The legacy reached even further. A prince of this house, Babur, would journey to India and found the great Mughal Empire, carrying the refined Persian culture of the Timurids to the subcontinent, where it would shape a whole civilization and raise wonders like the Taj Mahal.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of the Timurids, whose story holds the strange and beautiful contradiction that runs through so much of this age, the terror of the conqueror and the glory of the culture he made possible. From the cruelty of Timur grew one of the most luminous cultural ages the Persian world ever knew.' },
+          { t: 'p', x: 'In the shimmering domes of Samarkand, the exquisite paintings of Herat, and the poetry and science of their courts, the Timurids left a legacy of beauty that still shines across the centuries, and carried the light of Persian civilization to the ends of the earth.' },
+          { t: 'pull', x: 'From the harshest of ages, the Persian world raised a renaissance of pure beauty.' },
+        ] },
+      ],
+    },
+  ],
+};

@@ -1,0 +1,75 @@
+// Articles: longer reads about Iranian people and ideas.
+// Where a piece draws on someone else's reporting, the source is credited
+// and links out. Clean, book-like reading surface, minimal colour.
+
+export const ar = {
+  bg: '#FBF9F4',
+  ink: '#221E1A',
+  soft: '#6E655C',
+  faint: '#A79E93',
+  hair: '#E6DFD3',
+  rule: '#CDbfa8',
+  accent: '#8C6A3F',
+};
+
+export type ArBlock =
+  | { t: 'lead'; x: string }
+  | { t: 'p'; x: string }
+  | { t: 'h'; x: string }
+  | { t: 'quote'; x: string; who?: string }
+  | { t: 'img'; key: string; cap?: string }
+  | { t: 'pull'; x: string };
+
+export type Source = { label: string; url: string };
+
+export type Article = {
+  key: string;
+  kicker: string;          // small line above the title
+  title: string;
+  standfirst: string;      // the deck under the title
+  author?: string;         // who wrote it for ZAND, if original
+  readMins: number;
+  cover: string;
+  hero?: string;           // optional portrait inside
+  tag: 'ARCHITECTURE' | 'ART' | 'SCIENCE' | 'PROFILE' | 'ESSAY';
+  blocks: ArBlock[];
+  source?: Source;         // faded credit at the foot, links out
+};
+
+export const ARTICLES: Article[] = [
+  {
+    key: 'khalili',
+    kicker: 'ARCHITECTURE  ·  A LIFE',
+    title: 'The Iranian Architect Already Building for Mars',
+    standfirst: 'Nader Khalili believed the future of building was hidden in its oldest ideas: earth, geometry, and a pair of hands. NASA agreed.',
+    readMins: 6,
+    cover: 'article-khalili-cover',
+    hero: 'article-khalili-face',
+    tag: 'ARCHITECTURE',
+    blocks: [
+      { t: 'lead', x: 'Nader Khalili spent his life on a single, stubborn idea: that the architecture of the future was already here, buried in the oldest traditions humanity has.' },
+      { t: 'p', x: 'He was born in Iran in 1936, and later became an American architect, and somewhere between those two facts he arrived at a conviction that would carry him from the deserts of the Middle East to the planning rooms of NASA. The way forward, he thought, was not more. It was less.' },
+      { t: 'p', x: 'Looking at the earthen buildings of his own part of the world, the mud domes and vaults that had sheltered people for thousands of years, Khalili stripped construction back to the few things it truly needs. Earth. Geometry. Human hands. Everything else, he came to believe, was decoration on top of those three.' },
+      { t: 'pull', x: 'The way forward was not more. It was less.' },
+      { t: 'h', x: 'A method the space agencies noticed' },
+      { t: 'p', x: 'That radical return to first principles is exactly what caught the attention of NASA. If a shelter could be built from little more than the soil beneath it, arranged by geometry that had been understood for millennia, then the same logic might work somewhere with no supply chain at all. On the Moon. On Mars. Places where the only building material worth counting on is the ground you land on.' },
+      { t: 'p', x: 'Khalili called his system SuperAdobe: long tubes packed with earth, coiled into domes, bound with a little barbed wire, raised by hand. No heavy machinery. No imported steel. A structure that grows out of its own site and, crucially, that ordinary people can build themselves.' },
+      { t: 'img', key: 'article-khalili-face', cap: 'Nader Khalili, 1936 to 2008.' },
+      { t: 'h', x: 'From the Omani desert to a California dome' },
+      { t: 'p', x: 'The idea reads most beautifully in the built work. At the Junoot Eco Resort in Oman, SuperAdobe domes rise from the desert as though the landscape had simply decided to stand up. They do not sit on the land so much as continue it.' },
+      { t: 'p', x: 'The method was developed and tested at Cal-Earth, the institute Khalili founded in Hesperia, California. Its Eco Dome is the idea in its quietest, most essential form: beneath a single earthen shell, light and simplicity produce a calm that is hard to describe and harder to forget. It is proof that the most elemental materials can make architecture of real dignity.' },
+      { t: 'quote', x: 'Architecture begins with the earth beneath our feet, and the people who build with it.', who: 'The spirit of Khalili\u2019s work' },
+      { t: 'h', x: 'Why it matters now' },
+      { t: 'p', x: 'Cal-Earth still tests and teaches the system as a way to put shelter within reach of communities across the world. And at a moment when millions of people face climate disaster, displacement, and the slow disappearance of cheap materials, Khalili\u2019s vision has stopped feeling like nostalgia and started feeling like a plan.' },
+      { t: 'p', x: 'That is his real legacy, and it is a profoundly human one. Not a signature building. A belief: that the architecture of tomorrow can grow from the simplest ideas, and that it can belong to everyone.' },
+    ],
+    source: {
+      label: 'Drawn in part from “The Adventures of Super Adobe” on Bidoun. Read the original',
+      url: 'https://www.bidoun.org/articles/the-adventures-of-super-adobe',
+    },
+  },
+];
+
+export function articleByKey(k?: string) {
+  return ARTICLES.find((a) => a.key === k);
+}

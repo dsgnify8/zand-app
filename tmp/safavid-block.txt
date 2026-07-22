@@ -1,0 +1,148 @@
+const safavid: Topic = {
+  key: 'safavid-empire',
+  category: 'history',
+  name: 'The Safavid Empire',
+  persian: 'صفویان',
+  years: '1501 - 1736',
+  essence: 'The dynasty that reunited Iran, made it a great power once more, and raised Isfahan into one of the most beautiful cities the world has ever seen.',
+  cover: 'safavid-cover',
+  closing: 'safavid-isfahan',
+  status: 'ready',
+  sources: [
+    'The historical record of the Safavid era',
+    'Contemporary Persian and European accounts',
+    'Roger Savory, Iran Under the Safavids',
+  ],
+  chapters: [
+    {
+      key: 'sf1',
+      title: 'A Boy King and a New Faith',
+      subtitle: '1501',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'For centuries after the Mongol storm, Iran had been a patchwork of rival lords and warring tribes, with no single ruler and no single soul. Then, at the very dawn of the sixteenth century, a boy of fourteen changed the course of the nation forever.' },
+          { t: 'p', x: 'His name was Ismail, and he was the young leader of the Safavid order, a devoted religious brotherhood from the northwest of Iran. Around him gathered fierce and loyal warriors, and at their head he swept across the land, defeating all who stood against him.' },
+          { t: 'imgsm', key: 'safavid-ismail', cap: 'Shah Ismail I, founder of the Safavid dynasty, who took the throne at fourteen.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The crown at fourteen' },
+          { t: 'p', x: 'In 1501 Ismail entered the city of Tabriz in triumph and had himself proclaimed Shah, the king of kings, taking the ancient title of the Persian monarchs. A boy still, he had founded a dynasty that would rule Iran for more than two centuries and restore it to greatness.' },
+          { t: 'keyvalue', items: [
+            { k: 'Founded', v: '1501, in Tabriz' },
+            { k: 'Founder', v: 'Shah Ismail I, aged 14' },
+            { k: 'Duration', v: 'Over 200 years' },
+            { k: 'Legacy', v: 'A reunified, reborn Iran' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A faith that shaped a nation' },
+          { t: 'p', x: 'Ismail did something that would define Iran to this very day. He made Shia Islam the faith of his realm, setting Iran apart from its powerful Sunni neighbours and giving the nation a distinct religious identity that has endured for five hundred years.' },
+          { t: 'p', x: 'It was a decision of enormous consequence. It unified the many peoples of Iran under one faith and one crown, forged a strong sense of a single nation, and shaped the character of the country for all the centuries that followed. Modern Iran, in its faith and its borders, was born in these years.' },
+          { t: 'pull', x: 'From a fractured land, a single nation was reborn.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sf2',
+      title: 'The Struggle for the Realm',
+      subtitle: '1514 - 1587',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'A reborn Iran did not go unchallenged. To the west lay the mighty Ottoman Empire, the greatest power of the age, and between the two great empires there began a long and bitter rivalry that would last for generations.' },
+          { t: 'p', x: 'In 1514, at the battle of Chaldiran, the young Safavid state met the Ottomans in the field. The Ottomans had cannon and firearms, weapons the Safavid cavalry lacked, and the day went against Iran. It was a hard and early lesson that valour alone could not win a modern war.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A kingdom tested' },
+          { t: 'p', x: 'The decades that followed were difficult ones. The dynasty was pressed on its frontiers by the Ottomans in the west and the Uzbeks in the east, and troubled at home by the rivalries of the powerful tribal chiefs on whom the throne depended.' },
+          { t: 'img', key: 'safavid-battle', cap: 'The Safavids faced the great powers of their age on every frontier.' },
+          { t: 'p', x: 'Yet the young state endured. Through hard years and capable rulers it held together, waiting, though it did not yet know it, for the king who would raise it to its height.' },
+        ] },
+        { blocks: [
+          { t: 'era', value: '1587', label: 'The year everything changed' },
+          { t: 'p', x: 'In 1587 the throne passed to a prince who would become the greatest of all the Safavid kings, and one of the greatest rulers in the whole history of Iran. His name was Abbas.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sf3',
+      title: 'Shah Abbas the Great',
+      subtitle: '1587 - 1629',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Shah Abbas came to the throne of a troubled kingdom, hemmed in by enemies and weakened by division within. Over the course of his long reign he transformed it utterly, and left Iran stronger, richer, and more glorious than it had been in a thousand years.' },
+          { t: 'imgsm', key: 'safavid-abbas', cap: 'Shah Abbas the Great, under whom the Safavid Empire reached its height.' },
+          { t: 'p', x: 'He was a ruler of rare gifts: a brilliant soldier, a shrewd statesman, and a great patron of art and architecture. He was also, at times, a hard and suspicious man, as the great kings of that age often were. But his vision for Iran was without equal.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The remaking of an army' },
+          { t: 'p', x: 'Abbas understood the lesson of Chaldiran. He built a new standing army, no longer dependent on the fickle tribal cavalry, equipped with muskets and cannon in the modern way. With it he became master in his own house and a match for his enemies abroad.' },
+          { t: 'p', x: 'Then he turned that army against the empires that had pressed Iran for so long. He drove back the Uzbeks in the east, and he won back from the Ottomans the great western lands they had taken, restoring Iran to its full strength and its rightful borders.' },
+          { t: 'steps', items: [
+            { title: 'A modern army', x: 'A standing force with muskets and cannon, loyal to the crown alone.' },
+            { title: 'Enemies driven back', x: 'The Uzbeks in the east and the Ottomans in the west were defeated.' },
+            { title: 'Trade and wealth', x: 'He welcomed merchants from across the world and made Iran rich.' },
+            { title: 'A new capital', x: 'He made Isfahan his capital and adorned it beyond compare.' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A door opened to the world' },
+          { t: 'p', x: 'Abbas welcomed the world to Iran. He invited European merchants and ambassadors, encouraged the silk trade that was the treasure of his realm, and made his country a crossroads of commerce between East and West. Iranian silk and carpets travelled to the courts of Europe, and the wealth of the world flowed into Iran.' },
+          { t: 'p', x: 'Under his hand, Iran was not only strong but prosperous, respected among the great powers of the earth, and open to the world in a way it had not been for centuries.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sf4',
+      title: 'Isfahan, Half the World',
+      subtitle: 'The jewel of the empire',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Of all that Shah Abbas achieved, none endures more beautifully than his capital. He made Isfahan the seat of his empire and set out to make it the most beautiful city on earth, and by the judgment of many who saw it, he succeeded.' },
+          { t: 'img', key: 'safavid-isfahan', cap: 'Isfahan, the capital of Shah Abbas, one of the most beautiful cities ever built.' },
+          { t: 'p', x: 'So great was its splendour that a saying arose, repeated by travellers across the world, that captured the wonder of all who beheld it.' },
+        ] },
+        { blocks: [
+          { t: 'quotebig', x: 'Isfahan is half the world.', by: 'A SAYING OF THE AGE' },
+          { t: 'p', x: 'At the heart of the city he laid out a vast royal square, the Naqsh-e Jahan, the Image of the World, one of the largest and most magnificent public squares ever built. Around it he raised buildings of such beauty that they remain, to this day, among the treasures of all humanity.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Wonders in tile and stone' },
+          { t: 'p', x: 'On the square rose the great Shah Mosque, its dome and portals covered in dazzling blue tilework, a masterpiece of Persian architecture. Nearby stood the exquisite Sheikh Lotfollah Mosque, the graceful Ali Qapu palace, and the entrance to the endless royal bazaar.' },
+          { t: 'imgrow', keys: ['safavid-mosque-1', 'safavid-mosque-2'], cap: 'The great mosques of Isfahan, masterpieces of blue tilework raised under Shah Abbas.' },
+          { t: 'p', x: 'He built bridges across the river that were themselves works of art, and gardens and avenues that made the city a paradise. The mastery of the Persian artist reached its very summit here, in colour, in geometry, and in grace.' },
+        ] },
+        { blocks: [
+          { t: 'keyvalue', items: [
+            { k: 'The square', v: 'Naqsh-e Jahan, the Image of the World' },
+            { k: 'The great mosque', v: 'The Shah Mosque, in blue tile' },
+            { k: 'The saying', v: 'Isfahan is half the world' },
+            { k: 'Today', v: 'A treasure of world heritage' },
+          ] },
+          { t: 'p', x: 'The Isfahan of Shah Abbas still stands, and still takes the breath away. To walk its great square is to step into the golden age of Iran, and to see what the Persian genius could raise when it reached its height.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sf5',
+      title: 'The Long Twilight',
+      subtitle: '1629 - 1736',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'No golden age lasts forever. After the death of Shah Abbas the Great in 1629, the empire he had built lived on for another century, still rich, still cultured, still magnificent to behold. But its strength slowly ebbed away.' },
+          { t: 'p', x: 'The later kings were, too often, men raised in the ease of the palace rather than the hardship of the field. Some were gifted, but few had the iron of Abbas, and the vigour that had carried the dynasty to greatness gradually faded.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The fall of Isfahan' },
+          { t: 'p', x: 'The end, when it came, was sudden and sorrowful. In 1722 an army of Afghan rebels marched on the heart of the empire and laid siege to Isfahan itself. After months of terrible hunger, the jewel of Iran, the city that was half the world, fell.' },
+          { t: 'p', x: 'It was a bitter blow to a proud nation, and it marked the effective end of Safavid power. The dynasty lingered a few years more in name, but its greatness was gone.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of the Safavids, the dynasty that raised Iran from division into unity, and from weakness into one of the golden ages of its long history. They gave the nation its faith, its renewed strength, and in Isfahan a beauty that has never been surpassed.' },
+          { t: 'p', x: 'For two centuries they made Iran a great power and a wonder of the world, and though their empire fell, what they built endures. In the blue domes of Isfahan, the golden age of the Safavids still shines.' },
+          { t: 'pull', x: 'They made Iran whole again, and left it a beauty that still shines.' },
+        ] },
+      ],
+    },
+  ],
+};

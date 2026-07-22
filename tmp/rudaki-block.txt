@@ -1,0 +1,144 @@
+const rudaki: Author = {
+  key: 'rudaki',
+  name: 'Rudaki',
+  persian: 'رودکی',
+  epithet: 'The Adam of Poets',
+  years: 'c. 858 - 941',
+  essence: 'The first. Before Ferdowsi, before Hafez, before any of them, a blind singer from a mountain village proved that Persian could be a language of poetry. Of the hundred thousand verses he is said to have written, about a thousand survive.',
+  cover: 'lit-rudaki-cover',
+  closing: 'rudaki-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'rd1',
+      title: 'Before Anyone',
+      nav: 'The First',
+      subtitle: 'PANJRUD, c. 858',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'Someone has to be first. Someone has to write in a language before anyone knows it can be written in.' },
+          { t: 'p', x: 'When Rudaki was born, around 858, Persian had been silent for two hundred years. The conquest had made Arabic the language of everything that counted, of law, of learning, of poetry. Persian survived in kitchens and villages. Nobody wrote serious literature in it. There was no reason to think anyone could.' },
+          { t: 'p', x: 'He came from a village called Panjrud, in the mountains east of Samarkand, in what is now Tajikistan. Rudaki is not a name either. It means from Rudak, the place of the little river. He is the poet from the stream village.' },
+          { t: 'motif', symbol: 'harp', caption: 'رودکی' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The court that made a language' },
+          { t: 'p', x: 'The Samanids ruled Bukhara, and they made a deliberate and world changing decision. They were Persians, they were proud of it, and they chose to have their court speak and write and celebrate in Persian while the whole Islamic world around them ran on Arabic. They paid for it. They defended it. It was policy.' },
+          { t: 'p', x: 'Rudaki was their poet, and he was the proof. If Persian could produce this, at this level, then Persian was a literary language, and the argument was over. Everything that follows in this section stands on that.' },
+          { t: 'mark', x: 'Ferdowsi saved the language. Rudaki proved there was something worth saving.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The singer' },
+          { t: 'p', x: 'He was not only a poet. He was a musician, and by every account a great one. He played the chang, the Persian harp, and he sang his own verses. Persian poetry did not begin on a page. It began as a voice with strings under it, in a room, in front of people.' },
+          { t: 'chang' },
+          { t: 'p', x: 'That is worth remembering when you read any of it. These were songs. The rhythm is not decoration. It is the missing music.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd2',
+      title: 'The Poem That Moved a King',
+      nav: 'The Ride',
+      subtitle: 'BUKHARA, c. 930',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'This is the most famous story in Persian literature, and it is about the practical power of a poem.' },
+          { t: 'p', x: 'The Samanid king, Nasr II, took his court to Herat one summer. He liked it. He stayed. A season became a year, and a year became four, and the entire court was homesick for Bukhara and could not say so, because you do not tell a king he is wrong.' },
+          { t: 'p', x: 'So they went to Rudaki and offered him money to do something. He waited for a morning when the king was drinking, took up his harp, and sang.' },
+        ] },
+        { blocks: [
+          { t: 'ghazal', couplets: [
+            { a: 'The scent of the Muliyan stream comes to me,', b: 'the memory of a kind friend comes to me.' },
+            { a: 'The sands of the Oxus, and all its rough road,', b: 'come soft as silk beneath my feet.' },
+            { a: 'The waters of the Jayhun, in joy at the friend face,', b: 'rise to our horse belly as we cross.' },
+            { a: 'O Bukhara, rejoice, and live long,', b: 'the prince comes to you in gladness.' },
+            { a: 'The prince is the moon and Bukhara the sky,', b: 'the moon is coming to the sky.' },
+            { a: 'The prince is the cypress and Bukhara the garden,', b: 'the cypress is coming to the garden.' },
+          ], note: 'Buy e Juy e Muliyan. Plain rendering. The Persian rhymes on a single repeated sound that falls like a footstep.' },
+          { t: 'p', x: 'The king got up. He did not send for his boots. He got onto his horse barefoot and rode for Bukhara, and the court scrambled after him, and someone caught up with him two stages down the road to put his boots on him.' },
+          { t: 'illumin', x: 'A poem got a king onto a horse without his boots.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why it worked' },
+          { t: 'p', x: 'Look at what he actually did, because it is a masterclass. He never says come home. He never mentions the court, or duty, or the four wasted years. He does not argue at all.' },
+          { t: 'p', x: 'He starts with a smell. The scent of a particular stream, the Muliyan, that ran through Bukhara. Not a description of the city, a smell of it, which goes past the reasoning part of a man entirely. Then he makes the hard road home feel like silk underfoot, so returning is not effort. Then he turns the king into the moon and Bukhara into the sky.' },
+          { t: 'veil', surface: 'The prince is the moon and Bukhara the sky. The moon is coming to the sky.', hidden: 'This is the whole trick. Going home is no longer a retreat or an admission. It is the moon returning to where the moon belongs, a movement of nature, inevitable and dignified. Rudaki gave the king a way to change his mind without losing face, and he did it in eight words.' },
+          { t: 'p', x: 'Persians have told this story for a thousand years because of what it claims: that a poem is not decoration, it is a lever, and applied to the right man at the right hour it moves the world.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd3',
+      title: 'What Was Lost',
+      nav: 'The Loss',
+      subtitle: 'A HUNDRED THOUSAND VERSES',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'And now the hard part. Rudaki was enormously prolific. The old sources give numbers, and the numbers are impossible to verify and impossible to ignore. A hundred thousand verses is the figure usually given. One medieval writer claimed over a million, which nobody believes.' },
+          { t: 'p', x: 'What survives is about a thousand lines. Roughly one percent. Everything else is gone, into fires and floods and the Mongols and simple neglect, and it is not coming back.' },
+          { t: 'lostverses' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'That grid is the honest picture. Every mark is a hundred verses. The gold ones are what we have.' },
+          { t: 'p', x: 'We know he wrote a Kalila and Dimna in verse, the great book of animal fables, because people quote it. The book itself is gone. We have fragments of odes to patrons whose names mean nothing now. We have single couplets, quoted in other men books to make a point about grammar, floating free of whatever poem they came from.' },
+          { t: 'mark', x: 'We are reading the father of Persian poetry through the footnotes of other people.' },
+          { t: 'p', x: 'It is worth sitting with what that means. The judgement that he was the greatest of his age was made by people who could read all of it. We are agreeing with a verdict on evidence we do not have.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd4',
+      title: 'The Old Man',
+      nav: 'The Fall',
+      subtitle: 'HOW IT ENDED',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He did not die at court. Somewhere near the end the politics turned, his patron fell, and Rudaki was expelled. He went back to the village he came from, poor, and died there around 941.' },
+          { t: 'p', x: 'And he was blind. The sources agree on that much and on nothing else about it. Some say from birth, though he writes about colour with an accuracy that makes that hard to believe. When Soviet archaeologists opened what they believed was his grave in 1965, they reported that the skull showed the sockets had been burned, which would mean he was blinded with hot iron, late, deliberately, by someone.' },
+          { t: 'aside', x: 'The identification of the grave is not certain, and the finding has been questioned. It may be true. We will probably never know.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The teeth' },
+          { t: 'p', x: 'And then, at the end, old and poor and back in the mountains, he wrote the poem that is the reason he is not just a historical first.' },
+          { t: 'p', x: 'It begins with his teeth. It is about his teeth falling out. It is one of the great poems about growing old in any language on earth.' },
+          { t: 'ghazal', couplets: [
+            { a: 'Every tooth I had has worn away and fallen.', b: 'They were not teeth. They were shining lamps.' },
+            { a: 'They were rows of silver, they were pearl and coral,', b: 'they were the morning star, they were drops of rain.' },
+            { a: 'Not one is left of all of them now.', b: 'What bad luck was this. It was the bad luck of Saturn.' },
+          ], note: 'From the late poem on old age. Plain rendering.' },
+          { t: 'p', x: 'It goes on. He remembers when he was young and the world was open, when he had wine and music and women and everything was easy and he never once thought to be grateful for it. He does not moralise about this. He is not building to a lesson. He is an old blind man in a village listing what he had, and the list is the poem.' },
+          { t: 'illumin', x: 'The first poet of the Persian language used it, at the end, to say that he misses being young.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'There is no consolation in it, no God, no wisdom earned. Persian poetry begins with a man refusing to pretend that losing everything was worth it. That is a remarkable thing for a literature to start with, and it may be why the literature never became sentimental.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd5',
+      title: 'The Adam of Poets',
+      nav: 'Legacy',
+      subtitle: 'HIS PLACE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Iranians call him Adam al Shoara, the Adam of Poets. The first man of the tribe. Everyone in this section is descended from him.' },
+          { t: 'imgframe', key: 'rudaki-tomb', cap: 'The tomb at Panjrud, in the mountains of Tajikistan, where the first Persian poet went home to die.' },
+          { t: 'p', x: 'He is buried in Tajikistan, which is worth pausing on, because it says something true about Persian. The language is bigger than the country. It began in Bukhara and Samarkand, cities that are not in Iran and have not been for centuries, and the first great poet of Iran lies outside it. Persian was never contained by a border.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What he handed forward' },
+          { t: 'p', x: 'He set the forms. The qasida, the ghazal, the rubai, the masnavi. Everything Ferdowsi and Hafez and Saadi and Khayyam used was already shaped and waiting for them, and Rudaki is the one who shaped it. They inherited a working instrument because he built it.' },
+          { t: 'p', x: 'And he set the tone. Direct, musical, unashamed of pleasure, unashamed of loss. Persian poetry could have gone in any direction at the start. It went in his.' },
+          { t: 'mark', x: 'Every poet in this section is standing on a man whose work we have almost entirely lost.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Rudaki, the blind singer from the stream village, who took a language that nobody wrote poems in and wrote enough of them to settle the question forever.' },
+          { t: 'p', x: 'He sang a king off his cushion and onto a barefoot horse. He wrote a hundred thousand verses and kept a thousand. He was thrown out of the court he had made famous, and went home to the mountains, and wrote about his teeth.' },
+          { t: 'illumin', x: 'The first voice in Persian, and we can only hear one word of it in a hundred.' },
+          { t: 'motif', symbol: 'harp', caption: 'رودکی' },
+        ] },
+      ],
+    },
+  ],
+};

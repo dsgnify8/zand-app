@@ -1,0 +1,33 @@
+  sofreh: [
+    { key: 's1', nav: 'The Spread', title: 'Everything, All at Once', eyebrow: 'سفره',
+      blocks: [
+        { t: 'lead', x: 'A Persian table is not laid with a meal. It is laid with everything you could possibly need, and then more, in case you need that too.' },
+        { t: 'p', x: 'The sofreh is the spread. And the rule of it is abundance: the rice, the stew, the kabab, the bread, the yoghurt, the pickles, the raw herbs, the salad, the butter, the extra plate of rice nobody asked for. It is all there before you sit, and it stays there until you leave.' },
+        { t: 'p', x: 'Nothing arrives in courses. Nothing is portioned out for you. Everything is in the middle, within reach, and you take what you want and go back for more, and the bowls are refilled while you are still eating out of them.' },
+        { t: 'mark', x: 'A guest should never have to ask for anything. That is the whole design of the table.' },
+        { t: 'p', x: 'That is why it looks like too much. It is supposed to. A table with exactly enough on it is a table that was calculated, and calculating what a guest needs is the one thing a host must never be caught doing.' },
+      ] },
+    { key: 's2', nav: 'Rice', title: 'Rice Is Not a Side Dish', eyebrow: 'THE CENTRE',
+      blocks: [
+        { t: 'p', x: 'Understand this and you understand the kitchen. In Iran, rice is not something served alongside the meal. Rice is the meal. Everything else is an accompaniment to it, including the meat.' },
+        { t: 'p', x: 'And it is not boiled. Persian rice is a two stage operation: parboiled, drained, then steamed slowly under a cloth wrapped lid until every grain is separate, long, and standing on its own. A cook is judged on whether the grains stick. It takes real skill and everyone knows who has it.' },
+        { t: 'rice' },
+        { t: 'h', x: 'And the crust' },
+        { t: 'p', x: 'At the bottom of the pot, where the rice meets the oil, a golden crust forms. Tahdig, the bottom of the pot. It is crunchy, it is the best thing on the table, and there is never enough of it.' },
+        { t: 'p', x: 'It is fought over. Not metaphorically. Guests are given it first, which is obligatory, and then the family fights over what is left. Iranians raised abroad will tell you that tahdig is the single food they would choose as their last meal, over anything else on earth.' },
+        { t: 'mark', x: 'The greatest thing in Persian cooking is the accident at the bottom of the pot.' },
+      ] },
+    { key: 's3', nav: 'The Dishes', title: 'What Is On It', eyebrow: 'THE FOOD',
+      blocks: [
+        { t: 'p', x: 'Touch a dish to see it.' },
+        { t: 'dishes' },
+      ] },
+    { key: 's4', nav: 'The Flavour', title: 'Sour, Slow, and Never Hot', eyebrow: 'HOW IT TASTES',
+      blocks: [
+        { t: 'p', x: 'Persian cooking is built on sourness, which is unusual, and on things most kitchens never touch. Dried limes, sour cherries, pomegranate molasses, barberries, unripe grapes, and above all saffron, which is measured in fear because of what it costs.' },
+        { t: 'p', x: 'It is almost never hot. Iranians do not do chilli. The complexity comes from time and from sour, not from heat, and a stew that has not cooked for four hours is not finished. Ask an Iranian how long ghormeh sabzi takes and the honest answer is most of a day.' },
+        { t: 'mark', x: 'No heat, no rush, and no shortcuts. Persian food is slow on purpose.' },
+        { t: 'p', x: 'And there is one more thing on every table that is not a dish at all. Sabzi khordan, a plate of raw herbs: mint, tarragon, basil, radish, spring onion, eaten by the handful with bread and white cheese and walnuts, all the way through the meal. It is not a garnish. Nobody in Iran has ever thought of it as a garnish.' },
+        { t: 'close', x: 'A cuisine of long slow sourness, built around a grain, whose greatest achievement is the crust at the bottom of the pot, laid out all at once so that nobody has to ask for anything.' },
+      ] },
+  ],

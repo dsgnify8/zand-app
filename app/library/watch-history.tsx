@@ -1,0 +1,43 @@
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Pressable } from 'react-native';
+import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+
+import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
+import { ZandHeader } from '@/components/zand-header';
+import { VideoCard } from '@/components/video-card';
+import { useProgress } from '@/lib/progress-store';
+
+export default function WatchHistoryScreen() {
+  const { history } = useProgress();
+  const videos = history.filter((h) => h.type === 'video');
+
+  return (
+    <SafeAreaView style={styles.safe} edges={['top']}>
+      <ZandHeader />
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+        <Pressable style={styles.backBtn} onPress={() => router.back()}>
+          <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
+          <Text style={styles.backBtnText}>Profile</Text>
+        </Pressable>
+        <Text style={styles.title}>Watch history</Text>
+        {videos.length === 0 ? (
+          <Text style={styles.empty}>Videos you open will appear here.</Text>
+        ) : (
+          videos.map((v) => <VideoCard key={v.id} id={v.id} />)
+        )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.background },
+  scroll: { flex: 1 },
+  container: { paddingBottom: spacing.xxl },
+  backBtn: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.sm, marginBottom: spacing.sm, paddingHorizontal: spacing.lg },
+  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary },
+  title: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: colors.textPrimary, paddingHorizontal: spacing.lg, marginTop: spacing.md, marginBottom: spacing.lg },
+  empty: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary, paddingHorizontal: spacing.lg, marginTop: spacing.xl },
+});

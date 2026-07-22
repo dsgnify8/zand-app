@@ -1,0 +1,141 @@
+const nizami: Author = {
+  key: 'nizami',
+  name: 'Nizami',
+  persian: 'نظامی',
+  epithet: 'The Master of Romance',
+  years: 'c. 1141 - 1209',
+  essence: 'He wrote the greatest love stories in the Persian language, and buried every woman he loved. Layli and Majnun, Khosrow and Shirin, and seven domes of seven colours are all his.',
+  cover: 'lit-nizami-cover',
+  closing: 'nizami-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'nz1',
+      title: 'The Quiet Man of Ganja',
+      nav: 'Ganja',
+      subtitle: 'GANJA, c. 1141',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'The man who taught a civilization how to write about love was widowed three times.' },
+          { t: 'p', x: 'Nizami was born around 1141 in Ganja, in the Caucasus, and appears to have almost never left it. No travels like Saadi, no court like Rudaki. He turned down invitations from kings. He stayed in one provincial city, orphaned young, raised by an uncle, and quietly wrote five long poems that changed what Persian could do.' },
+          { t: 'p', x: 'He wrote in Persian, entirely. Ganja is in Azerbaijan today, and Rudaki is buried in Tajikistan, and this is simply what Persian was: a language of a whole region, never contained by any one border.' },
+          { t: 'motif', symbol: 'rose', caption: 'نظامی' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Afaq' },
+          { t: 'p', x: 'A ruler sent him a gift: a Kipchak slave girl named Afaq. Nizami freed her and married her, and by every trace he left, he loved her without reservation. She bore him a son. And while he was writing Khosrow and Shirin, the great romance, she died.' },
+          { t: 'p', x: 'He put her death into the poem. In the middle of the love story he was writing, he stops, and mourns his wife, and then goes on. It is one of the most unguarded moments in classical Persian literature.' },
+          { t: 'p', x: 'He married again. That wife died as he finished Layli and Majnun. He married a third time. She died as he finished the Haft Peykar. Three books, three wives, each one gone as the ink dried.' },
+          { t: 'illumin', x: 'He wrote, half joking and not joking at all, asking God why a wife must be taken for every poem finished.' },
+          { t: 'mark', x: 'Every great love story in this language was written by a man burying the woman he loved.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The five' },
+          { t: 'p', x: 'His life work is called the Khamsa, the Quintet. Five long narrative poems, around thirty thousand couplets in total. Before him, Persian narrative meant Ferdowsi and kings and war. Nizami turned the epic inward and pointed it at two people in a room.' },
+          { t: 'p', x: 'And he did something nobody had done: he gave the women interior lives. Shirin argues, refuses, negotiates, and is often the most intelligent person in the poem. Layli is not a prize. She speaks, and what she says is sharper than anything the men manage.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz2',
+      title: 'The Man Who Carved a Mountain',
+      nav: 'Farhad',
+      subtitle: 'KHOSROW AND SHIRIN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Khosrow and Shirin takes a real Sasanian king, Khosrow Parviz, and a real queen, and builds around them a long, difficult, adult romance of pride and delay and missed chances. It is not a fairy tale. Khosrow is vain and often a coward, and Shirin is better than him, and both of them know it.' },
+          { t: 'p', x: 'And then Nizami invents a character who was not in any history, and the invention swallows the poem.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Farhad' },
+          { t: 'p', x: 'Farhad is a stonecutter. He sees Shirin once and loves her with a completeness that the king, with all his armies, cannot match. He is not noble, he is not rich, and he is not going to stop.' },
+          { t: 'p', x: 'Khosrow, jealous of a labourer, sets him an impossible task. Cut a channel through Mount Bisotun, and Shirin is yours. It cannot be done. That is why it is offered.' },
+          { t: 'mountain' },
+          { t: 'p', x: 'He does it. That is the turn nobody expects. Farhad takes his axe to the mountain and begins to cut, and he does not stop, and the mountain begins to give way.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'And then the lie' },
+          { t: 'p', x: 'Khosrow panics. He is a king, and he has been beaten by a man with a hammer, so he does the thing a king can always do. He sends a messenger with false news: Shirin is dead.' },
+          { t: 'p', x: 'Farhad, standing in the wound he has cut through a mountain for her, hears it, and throws his axe into the air, and follows it down.' },
+          { t: 'illumin', x: 'The mountain could be beaten. A lie could not.' },
+          { t: 'p', x: 'Every Iranian knows Farhad, and knows he is not in the histories, and does not care. He became the word for a certain kind of love: the kind that does the impossible thing and is destroyed by something small and cheap. To call a man Farhad is to say he loved past all reason and it cost him everything.' },
+          { t: 'aside', x: 'Bisotun is real. Darius carved his inscription into that cliff fifteen hundred years before Nizami. Iranians will tell you the marks on the rock are Farhad work, and they will smile when they tell you.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz3',
+      title: 'The Madman',
+      nav: 'Majnun',
+      subtitle: 'LAYLI AND MAJNUN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'It began as an Arab desert legend, thin and old. Nizami rewrote it in 1188, and his version became the definitive one across half the world, from Istanbul to Delhi. It is the Persian love story, and it is four hundred years older than Romeo and Juliet.' },
+          { t: 'p', x: 'A boy called Qays loves a girl called Layli at school. Their families forbid it. He does not recover. He begins reciting poems about her in the street, and the shame of that public love is exactly what makes the marriage impossible forever. People start calling him Majnun, which is not a name. It means possessed. Madman.' },
+          { t: 'p', x: 'He goes into the desert. He stops eating, stops washing, stops speaking to people. Wild animals gather around him and do not run, because there is nothing left of him to fear. Layli is married off to a man she will not touch. Both of them die apart.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The line every Iranian knows' },
+          { t: 'p', x: 'A ruler hears about this famous madness and has Layli brought to him. He looks at her, and he is unimpressed, and he says so: are you the one who drove that man out of his mind? You are not so beautiful.' },
+          { t: 'veil', surface: 'Be silent. You are not Majnun.', hidden: 'Layli answer, and it ends the argument permanently. Beauty is not a property of the object. It is an event between two people. The caliph cannot see it because he lacks the instrument, not because it is not there. She is not defending her looks. She is telling the most powerful man present that he is blind.' },
+          { t: 'p', x: 'That reply is quoted in Iran to this day, by people who have never read the poem, at anyone who dismisses something they cannot feel.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What the story is actually about' },
+          { t: 'p', x: 'Late in the poem, someone offers Majnun a way to reach Layli, and he refuses. This is the moment the whole thing turns on, and it is why the poem has lasted.' },
+          { t: 'p', x: 'The love has outgrown its object. He does not want Layli anymore. He wants the state of loving her, which has become larger and more real than the woman ever was. She has become a door, and he is no longer interested in what is behind it, because he is standing in the light coming through.' },
+          { t: 'mark', x: 'He loved her until she was no longer necessary.' },
+          { t: 'p', x: 'Sufis read this as the whole path: love a person completely enough and the person dissolves and you are left loving God, who was the object the entire time. Others read it as a straightforward tragedy about a boy who went mad and died in a desert. Nizami permits both, and never once tells you which.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz4',
+      title: 'Seven Domes',
+      nav: 'The Domes',
+      subtitle: 'HAFT PEYKAR',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'And then he built the strangest thing in Persian literature.' },
+          { t: 'p', x: 'King Bahram Gur builds seven domed pavilions. Each is a single colour. Each belongs to a planet and a day of the week. In each lives a princess from a different country of the world. On each day he goes to the dome of that day, dressed in that colour, and the princess tells him a story.' },
+          { t: 'haftpeykar' },
+          { t: 'p', x: 'Touch a dome.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why this is not decoration' },
+          { t: 'p', x: 'The colours are a sequence and they are going somewhere. He begins in black, the dome of Saturn, and the tale told there is the darkest. He ends in white, the dome of Venus, and the tale is the simplest and cleanest. The week is a journey out of darkness into light, and the king walks it one day at a time without noticing.' },
+          { t: 'p', x: 'And the stories are not moral lessons. They are strange, erotic, funny, cruel, and they refuse to resolve neatly. Nizami is doing something no one else in Persian was doing: building a structure where the shape is the argument.' },
+          { t: 'mark', x: 'Seven colours, seven planets, seven days, seven countries. Nothing in it is accidental.' },
+          { t: 'p', x: 'And there is a sting. While Bahram spends his week moving from dome to dome, his kingdom is being ruined by a corrupt minister, and he does not notice. The king perfecting himself through beauty is failing at the only job he has. Nizami lets the reader work that out alone.' },
+          { t: 'illumin', x: 'He built the most beautiful structure in the language, and then quietly asked what it cost.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz5',
+      title: 'What He Left',
+      nav: 'Legacy',
+      subtitle: 'HIS PLACE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He died in Ganja around 1209, in the city he never left, and is buried there.' },
+          { t: 'imgframe', key: 'nizami-tomb', cap: 'The tomb at Ganja, for the man who wrote the loves everyone else would spend eight centuries painting.' },
+          { t: 'p', x: 'His afterlife is enormous. Every miniature painter for the next six hundred years painted his scenes: Shirin at the pool, Farhad on the mountain, Majnun among the animals, the seven domes. Walk any museum with Persian art and you are looking at Nizami, whether the label says so or not. Poets from Turkey to India rewrote his five poems in their own languages as a test of skill.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The inventor of the interior' },
+          { t: 'p', x: 'Here is the claim for him. Before Nizami, Persian narrative was about what people did. After Nizami, it was about what people felt while doing it. He is the one who turned the camera around.' },
+          { t: 'p', x: 'And he gave the language its vocabulary of love. Not the mystical love of Hafez, and not the ethical love of Saadi. The other one. Wanting a specific person, being refused, and what that does to a life. Farhad and Majnun are still the two words Iranians reach for, and both of them are his.' },
+          { t: 'mark', x: 'Hafez taught Iran how to love God. Nizami taught it how to love a person.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Nizami of Ganja, who stayed in one small city, refused the courts, and wrote five poems that gave a civilization its picture of what love is.' },
+          { t: 'p', x: 'He made a stonecutter who cut through a mountain and died of a rumour. He made a boy who loved a girl until she was no longer necessary. He made seven domes of seven colours and a king too busy being perfected to notice his kingdom falling. And he wrote all of it while burying, one by one, every woman he loved.' },
+          { t: 'illumin', x: 'He knew what he was writing about. That is the whole problem.' },
+          { t: 'motif', symbol: 'rose', caption: 'نظامی' },
+        ] },
+      ],
+    },
+  ],
+};

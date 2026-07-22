@@ -1,0 +1,21 @@
+export type City = { name: string; persian: string; x: number; y: number; blurb: string; images: string[] };
+
+export const CITIES: City[] = [
+  { name: 'Tehran', persian: 'تهران', x: 0.3861, y: 0.2876, blurb: 'Capital, and one of the largest cities in western Asia. A modest town the Qajars chose, now millions strong against the snow line of the Alborz.', images: ['demo-1','demo-2','demo-3'] },
+  { name: 'Mashhad', persian: 'مشهد', x: 0.7969, y: 0.2482, blurb: 'The great pilgrimage city of the east, drawing millions each year, and the largest city of Khorasan.', images: ['demo-1','demo-2','demo-3'] },
+  { name: 'Isfahan', persian: 'اصفهان', x: 0.4, y: 0.4848, blurb: 'Once called half the world. Shah Abbas laid out a square here that remains among the most beautiful ever built.', images: ['demo-1','demo-2','demo-3'] },
+  { name: 'Shiraz', persian: 'شیراز', x: 0.4432, y: 0.6833, blurb: 'City of poets, roses, and gardens. Hafez and Saadi are buried here, and Karim Khan made it his capital.', images: ['demo-1','demo-2','demo-3'] },
+  { name: 'Tabriz', persian: 'تبریز', x: 0.1314, y: 0.1325, blurb: 'The north western gate, holding one of the oldest and largest covered bazaars on earth.', images: ['demo-1','demo-2','demo-3'] },
+  { name: 'Yazd', persian: 'یزد', x: 0.535, y: 0.5336, blurb: 'A desert city of mud brick and wind towers, and a living centre of Zoroastrian faith.', images: ['demo-1','demo-2','demo-3'] },
+];
+
+export type Place = { name: string; persian: string; x: number; y: number; text: string };
+
+export const PLACES: Place[] = [
+  { name: 'Tus', persian: 'توس', x: 0.7941, y: 0.2363, text: 'A modest town in Khorasan, and the home of {{ferdowsi|Ferdowsi}}. For thirty years he sat here and wrote the Shahnameh, and in doing so saved the Persian language. No city of millions has done more for Iran than this one town did through one man.' },
+  { name: 'Kashan', persian: 'کاشان', x: 0.3885, y: 0.3983, text: 'A desert town that turned water and roses into an art. Its rosewater is distilled each spring in a ritual centuries old, its carpets are famous, and its merchant houses hide vast cool courtyards behind plain mud walls.' },
+  { name: 'Maragheh', persian: 'مراغه', x: 0.1287, y: 0.1772, text: 'Here, under the Ilkhanids, an observatory was built that mapped the heavens with an accuracy that reached Europe and helped reshape how the world understood the sky.' },
+  { name: 'Masuleh', persian: 'ماسوله', x: 0.2662, y: 0.1928, text: 'A village in the Gilan mountains built so steeply that the roof of one house is the courtyard of the house above, and the whole settlement is a staircase. Cars cannot enter.' },
+  { name: 'Bam', persian: 'بم', x: 0.7344, y: 0.7147, text: 'A citadel of mud brick in the Kerman desert, once the largest such structure on earth, and the country around it gives the sweetest dates in Iran.' },
+  { name: 'Neyshabur', persian: 'نیشابور', x: 0.7564, y: 0.2536, text: 'Home of {{khayyam|Omar Khayyam}}, poet and mathematician both, and the source of the turquoise that coloured the domes and the jewellery of half the world.' },
+];

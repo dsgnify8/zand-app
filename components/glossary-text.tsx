@@ -1,0 +1,77 @@
+import { useState } from 'react';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
+import { dark } from '@/constants/education';
+import { findTerm } from '@/constants/glossary';
+import { useGlossary } from '@/lib/glossary-store';
+
+// Renders a paragraph where {{term-id|visible text}} becomes a tappable link.
+export function GlossaryText({ text }: { text: string }) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const { isSaved, toggleSaved } = useGlossary();
+
+  // Parse into segments
+  const segments: { t: 'text' | 'link'; s: string; id?: string }[] = [];
+  const re = /\{\{([^|}]+)\|([^}]+)\}\}/g;
+  let last = 0; let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) segments.push({ t: 'text', s: text.slice(last, m.index) });
+    segments.push({ t: 'link', s: m[2], id: m[1] });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) segments.push({ t: 'text', s: text.slice(last) });
+
+  const term = findTerm(openId ?? undefined);
+  const saved = term ? isSaved(term.id) : false;
+
+  return (
+    <>
+      <Text style={styles.p}>
+        {segments.map((seg, i) =>
+          seg.t === 'text'
+            ? <Text key={i}>{seg.s}</Text>
+            : <Text key={i} style={styles.link} onPress={() => setOpenId(seg.id!)}>{seg.s}</Text>
+        )}
+      </Text>
+
+      <Modal visible={!!term} transparent animationType="fade" onRequestClose={() => setOpenId(null)}>
+        <Pressable style={styles.backdrop} onPress={() => setOpenId(null)}>
+          <Pressable style={styles.card} onPress={(e) => e.stopPropagation()}>
+            <View style={styles.cardHead}>
+              <Text style={styles.cardEyebrow}>WHO WAS</Text>
+              <Pressable hitSlop={10} onPress={() => setOpenId(null)}>
+                <Ionicons name="close" size={22} color={dark.textDim} />
+              </Pressable>
+            </View>
+            <Text style={styles.cardTitle}>{term?.title}</Text>
+            <Text style={styles.cardDesc}>{term?.description}</Text>
+            <Pressable
+              style={[styles.saveBtn, saved && styles.saveBtnOn]}
+              onPress={() => term && toggleSaved(term.id)}
+            >
+              <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={18} color={saved ? dark.bg : dark.text} />
+              <Text style={[styles.saveText, saved && styles.saveTextOn]}>{saved ? 'Saved to read later' : 'Save to read later'}</Text>
+            </Pressable>
+          </Pressable>
+        </Pressable>
+      </Modal>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  p: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 28, color: dark.text, marginTop: spacing.md, opacity: 0.92 },
+  link: { color: dark.gold, textDecorationLine: 'underline' },
+  backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', alignItems: 'center', justifyContent: 'center', padding: spacing.lg },
+  card: { width: '86%', maxWidth: 300, backgroundColor: dark.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: dark.hair, padding: spacing.md },
+  cardHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  cardEyebrow: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.5, color: dark.gold },
+  cardTitle: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: dark.text, marginTop: spacing.xs },
+  cardDesc: { fontFamily: fonts.body, fontSize: fontSize.sm, lineHeight: 20, color: dark.text, opacity: 0.9, marginTop: spacing.xs },
+  saveBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, borderWidth: 1, borderColor: dark.hair, borderRadius: radius.pill, paddingVertical: spacing.sm, marginTop: spacing.md },
+  saveBtnOn: { backgroundColor: dark.gold, borderColor: dark.gold },
+  saveText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: dark.text },
+  saveTextOn: { color: dark.bg },
+});

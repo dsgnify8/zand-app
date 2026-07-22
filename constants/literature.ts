@@ -1,0 +1,1084 @@
+// Literature: a light, poetic reading world. Its own theme, model, and illustration blocks
+// (distinct from the dark History reader). Author -> Chapters -> Pages -> Blocks.
+
+export const lit = {
+  bg: '#F7F4EF',        // soft ivory
+  surface: '#FFFFFF',
+  raised: '#FBF9F5',
+  text: '#2E2A26',      // deep ink
+  textDim: '#8C8378',
+  hair: '#E6DFD4',
+  gold: '#B08A46',      // antique gold
+  goldSoft: '#EFE6D4',
+  ink: '#3A4A5A',       // slate blue accent
+  inkSoft: '#E4E9EE',
+  rose: '#A8586E',
+};
+
+// Bespoke Literature blocks — poetic, symbol-led. NOT shared with history.
+export type LitBlock =
+  | { t: 'p'; x: string }                                   // body prose
+  | { t: 'lead'; x: string; mark?: string }                                // large opening line
+  | { t: 'verse'; lines: string[]; by?: string }            // a poem, centered, elegant
+  | { t: 'couplet'; a: string; b: string }                  // two balanced lines
+  | { t: 'illumin'; x: string }                             // an illuminated pull-quote with ornament
+  | { t: 'gloss'; term: string; meaning: string }           // a soft word-and-meaning
+  | { t: 'motif'; symbol: string; caption?: string }        // a decorative symbol beat
+  | { t: 'scene'; title: string; x: string }                // a named tale/scene card
+  | { t: 'aside'; x: string }                                // a soft margin note
+  | { t: 'ptext'; x: string }                               // prose w/ glossary links
+  | { t: 'img'; key: string; cap?: string }
+  | { t: 'imgframe'; key: string; cap?: string }            // an ornately framed image
+  | { t: 'fal' }
+  | { t: 'baniadam' }
+  | { t: 'drift' }
+  | { t: 'chang' }
+  | { t: 'mountain' }
+  | { t: 'sama' }
+  | { t: 'reed' }
+  | { t: 'haftpeykar' }
+  | { t: 'lostverses' }
+  | { t: 'rubai'; lines: string[]; note?: string }
+  | { t: 'twotrans'; a: { label: string; x: string }; b: { label: string; x: string } }
+  | { t: 'story'; title: string; x: string; moral: string }
+  | { t: 'ghazal'; couplets: { a: string; b: string }[]; note?: string }
+  | { t: 'veil'; surface: string; hidden: string }
+  | { t: 'rule' };                                          // a decorative divider
+
+export type LitPage = { blocks: LitBlock[] };
+export type LitChapter = { key: string; title: string; nav?: string; subtitle?: string; pages: LitPage[] };
+
+export type Author = {
+  key: string;
+  name: string;
+  persian: string;
+  epithet: string;      // "Father of the Persian Language"
+  years: string;
+  essence: string;
+  cover?: string;
+  closing?: string;
+  chapters: LitChapter[];
+  status: 'ready' | 'soon';
+};
+
+// Placeholder authors for the hub; Ferdowsi content comes next turn.
+const ferdowsi: Author = {
+  key: 'ferdowsi',
+  name: 'Ferdowsi',
+  persian: 'فردوسی',
+  epithet: 'Father of the Persian Language',
+  years: 'c. 940 - 1020',
+  essence: 'The poet who spent thirty years writing the Shahnameh, and in doing so saved the Persian language and gave a nation back its soul.',
+  cover: 'lit-ferdowsi-cover',
+  closing: 'lit-ferdowsi-cover',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'fd1',
+      title: 'The Poet of Tus',
+      nav: 'Tus',
+      subtitle: 'HIS WORLD',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'To understand Iran, you must first know its poet.', mark: 'crown' },
+          { t: 'p', x: 'He was born around the year 940 in a village near Tus, in the green province of Khorasan in the northeast of Iran. His name was Abul-Qasim, and the world would come to know him as Ferdowsi, a name that means, fittingly, the man of paradise.' },
+          { t: 'p', x: 'He came from the dehqans, the old landed gentry of Iran, a class that took special pride in preserving the ancient traditions, the stories, and the memory of Persia as it had been before the Arab conquest. From childhood he breathed in the old tales of kings and heroes, and they never left him.' },
+          { t: 'motif', symbol: 'pen', caption: 'The reed pen of Tus that would write a nation into being.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'The Iran of his birth was a land two centuries removed from the fall of its empire. Arabic had become the language of religion, of scholarship, and of prestige, and the Persian tongue, though still spoken everywhere, had been pushed from the halls of learning and power. To many, it seemed a lesser language, unfit for great works.' },
+          { t: 'p', x: 'But in the east, in Khorasan, a quiet revival was stirring. Persian princes ruled again, and at their courts the old language was cherished. A few brave poets had begun to write in Persian once more, and one had even begun to set the ancient national stories into verse, before death cut his work short. It was this unfinished task that would find its true master in Ferdowsi.' },
+          { t: 'aside', x: 'He was heir to a thousand-year memory, born at the very moment his people needed someone to write it down.' },
+        ] },
+      ],
+    },
+    {
+      key: 'fd2',
+      title: 'The Great Task',
+      nav: 'The Task',
+      subtitle: 'HIS DEVOTION',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Around the age of forty, Ferdowsi took up a task so vast it would consume the rest of his life. He set out to gather every ancient story of Iran, its myths and legends, its kings and champions, from the first man to the last Sasanian king, and to weave them all into a single great epic, written in pure and noble Persian verse.' },
+          { t: 'p', x: 'He would call it the Shahnameh, the Book of Kings. It would take him more than thirty years.' },
+          { t: 'illumin', x: 'A single man set out to hold a thousand years of memory in his hands, and would not let it fall.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'It was a labor of staggering devotion. Year after year, through the seasons and the decades, he worked, gathering the old sources, shaping the verse, refining every line. He poured his fortune, his health, and his youth into the work, and as the years passed he grew old over his pages, watching his wealth dwindle and his hair turn white in service of the task.' },
+          { t: 'p', x: 'He was driven not by hope of riches, but by something deeper: the conviction that if he did not save these stories, and the language that carried them, they might be lost forever. He was fighting, alone at his desk, to keep the soul of a nation alive.' },
+          { t: 'couplet', a: 'I have toiled these thirty years in pain and strife,', b: 'to bring the Persians back to a Persian life.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'He wrote in a Persian deliberately purified, reaching for the old and native words, turning away wherever he could from the Arabic that had flooded the tongue. It was a conscious act. He would prove that Persian could carry the whole weight of a nation\'s glory, that it needed to borrow from no one.' },
+          { t: 'p', x: 'In this he succeeded beyond all measure. The language of the Shahnameh became a wellspring from which Persian would flow, renewed and unbroken, for a thousand years to come.' },
+          { t: 'scene', title: 'A poet\'s sacrifice', x: 'It is said that Ferdowsi was promised a great reward for his work, a gold coin for every verse. But when the treasure finally came, it was silver, not gold, and far too little. Proud and wounded, the old poet gave the money away, to a bath keeper and a seller of drinks, and asked for nothing. He had not written for gold.' },
+        ] },
+      ],
+    },
+    {
+      key: 'fd3',
+      title: 'The Book of Kings',
+      nav: 'Shahnameh',
+      subtitle: 'HIS MASTERWORK',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The Shahnameh is one of the longest epic poems ever written by a single hand: nearly sixty thousand couplets, a whole universe of story. It carries the reader across the entire sweep of Iranian legend and history, from the creation of the world and the first king, through the age of heroes, to the fall of the last Persian empire.' },
+          { t: 'p', x: 'It is myth and history, tragedy and triumph, woven together into a single vast tapestry. And running through it all is a set of deep and abiding themes: the eternal struggle of good against evil, the glory and the burden of kingship, the workings of fate, and above all, the love of Iran.' },
+        ] },
+        { blocks: [
+          { t: 'scene', title: 'Zahhak, the Serpent King', x: 'In the ancient days, the tyrant Zahhak was tricked by the devil, who kissed his shoulders, from which sprang two hungry serpents that fed upon the brains of the young. For a thousand years his cruelty darkened the world, until a blacksmith named Kaveh raised his leather apron as a banner of revolt and rallied the people to overthrow him. It is one of the oldest tales of tyranny undone by the courage of ordinary people.' },
+          { t: 'aside', x: 'The blacksmith\'s apron became a banner of freedom, a symbol Iranians would remember for a thousand years.' },
+        ] },
+        { blocks: [
+          { t: 'scene', title: 'Rostam, the Greatest Hero', x: 'Towering over the whole epic is Rostam, the mightiest champion of Iran, a warrior of superhuman strength who serves king after king across centuries, riding his faithful horse Rakhsh through impossible trials. He is the heart of the Shahnameh, the very image of loyalty, courage, and might in service of his homeland.' },
+          { t: 'p', x: 'But even the greatest hero cannot escape the cruelty of fate, and it is in Rostam\'s story that Ferdowsi reaches the deepest and most heartbreaking note in all his work.' },
+        ] },
+        { blocks: [
+          { t: 'scene', title: 'Rostam and Sohrab', x: 'Rostam had a son he had never known, Sohrab, born and raised far away. Grown into a mighty warrior himself, Sohrab set out to find his father. But fate is cruel: the two met not as father and son but as champions of opposing armies, neither knowing the other. They fought, and Rostam, the greater warrior, struck the fatal blow. Only as the young man lay dying did the truth emerge, in a token Rostam had once given the boy\'s mother. The mightiest hero in the world had killed his own son, and no strength on earth could undo it.' },
+          { t: 'illumin', x: 'The greatest hero of all could conquer any foe, but not the fate that made him slay his own child.' },
+          { t: 'p', x: 'The tale of Rostam and Sohrab is among the most powerful tragedies in all of world literature, a meditation on fate, on the gulf between fathers and sons, and on the sorrow woven into even the greatest of lives. Through it, Ferdowsi shows us that his epic is not only about glory, but about the deep and human sadness at the heart of things.' },
+        ] },
+      ],
+    },
+    {
+      key: 'fd4',
+      title: 'His Mind and His Ideals',
+      nav: 'Philosophy',
+      subtitle: 'HIS PHILOSOPHY',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Ferdowsi was far more than a teller of tales. Woven through the Shahnameh is a whole vision of life, a philosophy of wisdom, justice, and the right way to live and to rule. He speaks often, in his own voice, pausing the story to reflect on what it means.' },
+          { t: 'p', x: 'Above all he prized wisdom and knowledge, which he held to be the highest of all human goods, the light by which a life should be led.' },
+          { t: 'verse', lines: ['Seek wisdom, for wisdom will guide you well;', 'the wise alone are truly free.'], by: 'THE SHAHNAMEH' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'He believed deeply in justice, and held that the worth of a king lay not in his power but in his fairness and his care for his people. A ruler who was cruel or unjust, however mighty, was in Ferdowsi\'s eyes no true king at all, and was doomed to fall. Kingship, for him, was a sacred trust, not a possession.' },
+          { t: 'p', x: 'And he wrote, again and again, of the fleeting nature of the world, of how kings and heroes and empires all pass away, how fortune turns and glory fades, and how only good deeds and a good name endure beyond the grave. His epic is filled with a wise and gentle sorrow at the passing of all things.' },
+          { t: 'couplet', a: 'The world is a tale, and we are the telling;', b: 'only the word remains when we are gone.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'Through all his reflection runs a profound and tender love of Iran, its land, its people, its honor, and its ancient glory. This love is the beating heart of the Shahnameh, the reason he gave thirty years of his life to it. He wrote to remind his people who they were, and to make sure they never forgot.' },
+          { t: 'illumin', x: 'He gave his life to a single belief: that a people who remember who they are can never truly be conquered.' },
+        ] },
+      ],
+    },
+    {
+      key: 'fd5',
+      title: 'The Immortal',
+      nav: 'Legacy',
+      subtitle: 'HIS LEGACY',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Ferdowsi died around the year 1020, an old man, in the same town of Tus where he had been born. Legend tells that as his funeral procession left the city, the long-promised reward from the court arrived at last at the gate, too late for the poet to ever see it. He had died without earthly reward.' },
+          { t: 'p', x: 'But he had won something far greater than gold. He had known, even as he finished his great work, exactly what he had achieved, and he said so, in words that have proven truer than perhaps any poet has ever spoken of his own work.' },
+          { t: 'verse', lines: ['I shall not die, these seeds I\'ve sown will save', 'my name and reputation from the grave,', 'and men of sense and wisdom will proclaim,', 'when I have gone, my praises and my fame.'], by: 'FERDOWSI, THE SHAHNAMEH' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'He was right. Because of the Shahnameh, the Persian language did not fade but flourished, and became one of the great literary tongues of the world. Every poet who came after, Rumi, Saadi, Hafez, Khayyam, wrote in the language that Ferdowsi had preserved and ennobled. He is, in the truest sense, the father of them all.' },
+          { t: 'p', x: 'For a thousand years his verses have been recited in palaces and in village homes, memorized by the learned and the humble alike, told to children and treasured by kings. The Shahnameh became, and remains, the national epic of Iran, the book that holds the nation\'s soul.' },
+          { t: 'imgframe', key: 'tomb-ferdowsi', cap: 'The tomb of Ferdowsi at Tus, a place of pilgrimage for lovers of Persian poetry.' },
+          { t: 'rule' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'This has been a glimpse of Ferdowsi, the poet of Tus, one of the greatest who ever lived. He was a man who gave everything he had, his fortune, his years, his very life, to a single, magnificent purpose: to save the language and the memory of his people, and to give them back their voice.' },
+          { t: 'p', x: 'He succeeded beyond any dream. In giving Iran the Shahnameh, he gave it back itself. And so, just as he foretold, he did not die. In every Persian word of beauty spoken in the thousand years since, Ferdowsi lives on.' },
+          { t: 'illumin', x: 'He said he would not die. A thousand years later, he speaks still.' },
+          { t: 'motif', symbol: 'star', caption: 'فردوسی' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const hafez: Author = {
+  key: 'hafez',
+  name: 'Hafez',
+  persian: 'حافظ',
+  epithet: 'The Tongue of the Unseen',
+  years: 'c. 1315 - 1390',
+  essence: 'The poet of Shiraz whose book sits in almost every Iranian home, opened at the turning of the year and at every crossroads of a life, still answering after six hundred years.',
+  cover: 'lit-hafez-cover',
+  closing: 'hafez-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'hz1',
+      title: 'The One Who Remembered',
+      nav: 'Shiraz',
+      subtitle: 'SHIRAZ, c. 1315',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'There are two books in almost every Iranian home. One is holy. The other is Hafez.', mark: 'cup' },
+          { t: 'p', x: 'He was born Shams al Din Mohammad, in Shiraz, in a century when the city passed from one ruler to the next like a coin. His father died when he was young. The family had little. He worked, by the old accounts, in a bakery, and delivered bread to the wealthy quarters of the city.' },
+          { t: 'p', x: 'And somewhere in those years he memorised the Quran, entirely, word for word. That is what his name means. Hafez is not a name at all. It is a title given to one who holds the whole book in memory. The boy who carried bread through Shiraz was carrying something else as well.' },
+          { t: 'motif', symbol: 'book', caption: 'حافظ, the one who holds it all in memory.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A city worth loving' },
+          { t: 'p', x: 'Shiraz was already the city of Saadi, already famous for its gardens, its wine, its roses and its nightingales. Hafez almost never left it. In a century of conquerors, when Timur was burning his way across the world, this poet stayed in one city and wrote about one city, and became universal by doing so.' },
+          { t: 'aside', x: 'He is the least travelled of the great Persian poets, and the most widely read.' },
+          { t: 'p', x: 'There is a story, and it may even be true, that when Timur took Shiraz he summoned Hafez to answer for a famous line, the one offering Samarkand and Bukhara, Timur own cities, for the mole on a beautiful face. How dare you, the conqueror asked, give away my cities for a mole. Hafez, old and poor and standing before the most feared man alive, replied that it was precisely such extravagance that had reduced him to this poverty. Timur laughed, and let him go.' },
+          { t: 'illumin', x: 'A poet with nothing disarmed the conqueror of the world with a joke.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz2',
+      title: 'The Art of Saying Two Things',
+      nav: 'His Art',
+      subtitle: 'HOW HE WRITES',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'To read Hafez is to learn that a line can hold two meanings at once and mean both of them completely. This is the whole art, and it is why he has never been exhausted in six hundred years of reading.' },
+          { t: 'p', x: 'When he writes of wine, he means wine, and he means the intoxication of the divine. When he writes of the beloved, he means a person, and he means God. When he mocks the hypocrite preacher, he means that preacher, and he means every hollow authority that has ever lived. He never chooses. The choice is left to you, and what you choose reveals you.' },
+          { t: 'veil', surface: 'Come, for the palace of hope is built on sand. Bring wine, for the foundation of life is wind.', hidden: 'On the surface, a drinking song. Beneath, one of the oldest truths there is: everything you are building will not hold, so stop clutching at permanence and be present in the hour you actually have.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why the double meaning mattered' },
+          { t: 'p', x: 'This was not a game. Hafez lived under rulers who policed piety, and one of them, Mobarez al Din, was so severe that Hafez and his circle called him the police officer. To say the true thing plainly was dangerous. To say it in a way that could always mean something else was survival, and it was art.' },
+          { t: 'p', x: 'So the tavern in his poems is the mosque and it is not the mosque. The wine cup is a real cup and it is the whole world. He wrote in a language that authority could not convict, and everyone understood him anyway.' },
+          { t: 'veil', surface: 'Last night I saw the angels knocking at the tavern door, kneading the clay of Adam and casting it into a cup.', hidden: 'The sacred is not in the place the pious told you to look. It is in the tavern, the ruined place, the disreputable corner. God is being made where the respectable would never think to search.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The form he perfected' },
+          { t: 'p', x: 'He wrote the ghazal, a form of independent couplets bound by rhyme and a single mood rather than a single argument. Each couplet stands alone and could be quoted alone, which is exactly why his lines travel so easily into ordinary speech. A ghazal is not a story. It is a scattering of jewels that somehow make a necklace.' },
+          { t: 'ghazal', couplets: [
+            { a: 'Do not grieve. The lost Joseph will return to Canaan.', b: 'The house of sorrow will become a garden. Do not grieve.' },
+            { a: 'Do not grieve, sorrowing heart, your state will mend.', b: 'That head will find its calm again. Do not grieve.' },
+            { a: 'The dark night and the fear of waves and the terrible whirlpool,', b: 'what do they know of our state, those light on the shore.' },
+          ], note: 'From the most beloved ghazal in the Persian language. Every Iranian knows the refrain.' },
+          { t: 'p', x: 'That refrain, gham makhor, do not grieve, has been said by mothers to children and by strangers to strangers for six hundred years. It is not advice. It is a hand on the shoulder.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz3',
+      title: 'The Book That Answers',
+      nav: 'The Fal',
+      subtitle: 'FAL E HAFEZ',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Here is what no other poet in the world has. Iranians do not only read Hafez. They ask him.' },
+          { t: 'p', x: 'The custom is called fal e Hafez, the omen of Hafez. You hold a question in your heart, a real one, the kind you have been carrying. You touch the book. You open it at random. And the verse your eye falls on is read as the answer, not as a prediction of what will happen, but as a mirror held up to what you already know and have not admitted.' },
+          { t: 'aside', x: 'It happens at Nowruz around the Haft Seen, at Yalda in the long night, and any evening a family needs it.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why him' },
+          { t: 'p', x: 'No one decided this. It grew. It happened because his double meanings mean the verse will always have something to say to whatever you brought to it, and because the country trusted him. He is called Lisan al Ghayb, the Tongue of the Unseen, and the title was not given lightly. Iranians believe, or half believe, or enjoy believing, that he sees.' },
+          { t: 'p', x: 'And the reading is never literal. A verse about wine answers a question about a marriage. A verse about a rose answers a question about leaving the country. This is not a failure of the method. It is the method. Hafez does not tell you what to do. He tells you what you already think, in words beautiful enough that you can finally hear it.' },
+          { t: 'illumin', x: 'It is not fortune telling. It is a nation using poetry as a mirror.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'Ask him yourself. Hold your question, and open the book.' },
+          { t: 'fal' },
+          { t: 'aside', x: 'Ask once, and sit with what you are given. That is the whole tradition.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz4',
+      title: 'What He Believed',
+      nav: 'His Mind',
+      subtitle: 'HIS MIND',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Beneath the wine and the roses there is a philosophy, and it is fierce. Hafez spent his life attacking one thing above all others, and it was not sin. It was hypocrisy.' },
+          { t: 'p', x: 'He goes after the preacher who tells others to fast while eating, the judge who sells verdicts, the ascetic whose piety is a performance. In his poems the honest drunk is closer to God than the dishonest saint, because the drunk at least is not pretending. This was not blasphemy. It was a demand that the sacred be real.' },
+          { t: 'ghazal', couplets: [
+            { a: 'Preachers who make their display in pulpit and prayer niche,', b: 'do other work when they are alone behind the door.' },
+            { a: 'I have a question. Ask the learned of the assembly:', b: 'why do those who order repentance so seldom repent.' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Love as the only law' },
+          { t: 'p', x: 'Against the hypocrite he sets one thing: love. Not sentiment, but love as a discipline that dissolves the self and its calculations. He holds that a heart alive with love does not die, that the lover who counts the cost has not loved, and that this is the only path that leads anywhere true.' },
+          { t: 'veil', surface: 'I am the slave of the spirit that has no colour of attachment, not to disbelief, not to faith, not to certainty, not to doubt.', hidden: 'He refuses every camp, including the ones that would claim him. Not the pious side, not the sceptical side. The freedom he wants is outside the argument entirely, and this line has protected him from six centuries of people trying to enlist him.' },
+          { t: 'p', x: 'And through it all runs a tenderness toward human failure. Hafez never condemns the weak. He condemns only those who condemn the weak. That is why a nation has trusted him with its questions.' },
+        ] },
+      ],
+    },
+    {
+      key: 'hz5',
+      title: 'Still Answering',
+      nav: 'Legacy',
+      subtitle: 'HIS LEGACY',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He was buried in a garden in Shiraz, and the garden is still there. It is called the Hafezieh, and it is one of the few tombs in the world that people visit not to mourn but to sit. They read to each other. They drink tea. They open the book, and ask, and go home lighter.' },
+          { t: 'imgframe', key: 'hafez-tomb', cap: 'The Hafezieh in Shiraz, where people come to read rather than to grieve.' },
+          { t: 'p', x: 'His reach went far beyond Persian. Goethe read him in translation and was so shaken that he wrote an entire book in answer, calling Hafez his twin. Emerson translated him. Nietzsche praised him. And every one of them was reading a shadow of the original, because his wordplay does not survive the crossing.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The guide' },
+          { t: 'p', x: 'What matters most is smaller than any of that. It is that an ordinary family, on the longest night of the year, opens a book of poems and asks it what to do. Six hundred years after his death, a poet is still the household oracle of a nation, consulted about marriages and moves and grief.' },
+          { t: 'p', x: 'No other literature on earth has quite this. Not one poet in one country holding this position for this long, in homes that have nothing else in common. Hafez is not read in Iran. He is consulted.' },
+          { t: 'illumin', x: 'A country that has lost much has never once lost him.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Hafez, the orphan of Shiraz who memorised one book and then wrote another, and who taught a whole civilization how to say the forbidden thing beautifully enough to survive saying it.' },
+          { t: 'p', x: 'He offered no doctrine and demanded no belief. He only insisted that hypocrisy is the sin, that love is the law, and that the moment in your hand is the only one you were ever given. Iranians have been opening his book for six hundred years, and it has not run out of answers yet.' },
+          { t: 'illumin', x: 'Ask him a question, and he will give you back your own heart, in better words than you had.' },
+          { t: 'motif', symbol: 'moon', caption: 'حافظ' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const saadi: Author = {
+  key: 'saadi',
+  name: 'Saadi',
+  persian: 'سعدی',
+  epithet: 'The Master of Speech',
+  years: 'c. 1210 - 1291',
+  essence: 'The traveller of Shiraz who spent thirty years walking the world and came home to write how to live in it. His lines are quoted in Iranian kitchens every day, and one of them hangs in the United Nations.',
+  cover: 'lit-saadi-cover',
+  closing: 'saadi-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'sd1',
+      title: 'The Long Road Home',
+      nav: 'The Road',
+      subtitle: 'SHIRAZ, c. 1210',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'Hafez asked the questions. Saadi answered them.', mark: 'rose' },
+          { t: 'p', x: 'They were born in the same city, a century apart, and Iran has kept them both. But they are not the same kind of poet at all. Hafez writes about the soul in love. Saadi writes about how to behave on a Tuesday, among difficult people, when you are tired.' },
+          { t: 'p', x: 'He was born in Shiraz around 1210, lost his father young, and was sent to Baghdad to study at the Nizamiyya, the finest school in the Islamic world. And then the world he was studying began to end.' },
+          { t: 'motif', symbol: 'rose', caption: 'سعدی' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Thirty years of walking' },
+          { t: 'p', x: 'The Mongols were coming. Saadi left, and did not come back for roughly thirty years. He went to Anatolia, to Syria, to Egypt, to Arabia and the Hejaz, and by some accounts as far as India. He was not travelling for pleasure. He was a man whose country was being destroyed behind him.' },
+          { t: 'p', x: 'He preached in mosques, worked, went hungry, and watched. And unlike almost every other great Persian poet, he wrote about ordinary people, because he had spent three decades among them, at their level, with nothing.' },
+          { t: 'aside', x: 'He tells us he was captured by Crusaders near Acre and set to digging trenches, until a merchant of Aleppo recognised him and paid his ransom.' },
+          { t: 'p', x: 'Then the merchant offered him his daughter in marriage, and the marriage was miserable. Saadi tells this story about himself, including the part where the wife reminds him he was bought. He is the only one of the great poets who is consistently, deliberately funny about his own humiliations.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The city that survived' },
+          { t: 'p', x: 'He came home around 1257, and found something remarkable. Shiraz was standing. Its rulers had read the situation, submitted to the Mongols, paid, and spared the city the fate of Baghdad and Nishapur. It was not glorious. It saved everything.' },
+          { t: 'p', x: 'In 1258 the Mongols took Baghdad and killed the caliph and put the greatest library in the world into the river. That same year, in the one Persian city still intact, Saadi finished the Golestan.' },
+          { t: 'illumin', x: 'The world was burning. He sat in a garden and wrote about kindness.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sd2',
+      title: 'The Rose Garden',
+      nav: 'Golestan',
+      subtitle: 'HIS TWO BOOKS',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He wrote two books that Iranians have not stopped reading since. The Bustan, the Orchard, all in verse, on how a good life should be lived. And the Golestan, the Rose Garden, which is stranger and greater.' },
+          { t: 'p', x: 'The Golestan is short stories. Real ones, about kings and beggars and thieves and fools, told in a few lines of prose, each ending in a couplet that lands the point like a hand on a table. Nothing else in Persian literature is built this way.' },
+          { t: 'story', title: 'The King and the Frightened Slave', x: 'A slave on a ship panics and will not stop screaming. Nothing calms him. A wise man tells the crew to throw him into the sea, and they do, and after he has swallowed water and been hauled back aboard, he sits quietly in a corner. Asked why, the wise man says: he had never known the danger of drowning, so he never valued the safety of the boat.', moral: 'You will not know what you have while you have it.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why it is taught to children' },
+          { t: 'p', x: 'For seven hundred years the Golestan was the first book Persian children learned to read properly. Not because it was simple, but because its prose is the most graceful ever written in the language, and because every story teaches something without ever quite lecturing.' },
+          { t: 'p', x: 'Saadi is never pious about it. His moral is often uncomfortable. He tells you that a lie which prevents harm is better than a truth that causes it, which is not what a holy man is supposed to say.' },
+          { t: 'ghazal', couplets: [
+            { a: 'A falsehood mixed with good intent', b: 'is better than a truth that stirs up strife.' },
+          ], note: 'From the Golestan. It has been quoted by Iranians in arguments for seven centuries.' },
+          { t: 'story', title: 'The Man Who Boasted of His Piety', x: 'A man tells Saadi how much he prays, how much he fasts, how little he eats. Saadi says nothing. Later the man asks why he was silent. Because, Saadi tells him, the one who truly does these things does not keep the accounts.', moral: 'Goodness announced is goodness spent.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Speech as the art' },
+          { t: 'p', x: 'His title is Ostad e Sokhan, the Master of Speech, and it is not decoration. Persian prose was not really a literary art before him. He made it one, and set a standard so high that Iranians still measure sentences against it.' },
+          { t: 'p', x: 'And he understood silence as part of speech. A whole chapter of the Golestan is on knowing when not to talk, which is a strange subject for a man who lived by talking.' },
+          { t: 'veil', surface: 'Whoever gives advice to a self willed man is himself in need of advice.', hidden: 'Not cynicism. A working rule: you cannot teach someone who has decided they already know, and the effort damages you rather than them. Saadi spent thirty years learning this on the road.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sd3',
+      title: 'Of One Body',
+      nav: 'Bani Adam',
+      subtitle: 'THE FAMOUS LINES',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Somewhere in the Golestan, without warning, in the middle of a chapter about kings, Saadi writes four lines that will outlive everything else he made.' },
+          { t: 'baniadam' },
+          { t: 'p', x: 'Touch it. That is the poem, and that is also the argument.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What it actually says' },
+          { t: 'p', x: 'Read it carefully, because it is more radical than it first sounds. It does not say we should be kind to one another. It says we are not separate. Your pain is in my body already, and if I do not feel it, the failure is not moral, it is anatomical. Something in me is not working.' },
+          { t: 'p', x: 'And the last line is a threat, gently delivered. If you do not feel the suffering of others, you do not deserve to be called human. Saadi does not ask. He defines.' },
+          { t: 'illumin', x: 'He wrote it in the decade the Mongols were emptying the cities of Iran.' },
+          { t: 'p', x: 'That is the part worth holding. This is not the work of a comfortable man in a peaceful century. It was written by someone who had watched the world tear itself apart and concluded, from inside the wreckage, that humanity is a single body.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Where it went' },
+          { t: 'p', x: 'A carpet bearing these lines hangs in the United Nations building in New York, given by Iran. Secretaries General have quoted it. So have presidents. It is often said in Iran that it is carved over the entrance, which is not quite the case, but the pride behind the claim is understandable enough.' },
+          { t: 'aside', x: 'The truth is smaller and better: an eight hundred year old Persian couplet is hanging in the room where the world argues.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sd4',
+      title: 'The Stolen Chapter',
+      nav: 'The West',
+      subtitle: 'SAADI ABROAD',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Saadi reached Europe long before most Persian poets, and one episode is too good not to tell.' },
+          { t: 'p', x: 'Benjamin Franklin loved a story from the Bustan. Abraham refuses to feed an old traveller who will not worship his God, and drives him out into the night. Then God asks Abraham: I have fed and tolerated that man for a hundred years, and you could not manage one night.' },
+          { t: 'story', title: 'The Parable Against Persecution', x: 'Franklin liked it so much that he printed it in the style of scripture, in biblical language, and passed it off as a missing chapter of Genesis. He would keep it in his Bible and read it aloud to guests, waiting to see how long it took anyone to notice it was not there.', moral: 'A founding father of America used a Persian poem to prank his friends about tolerance.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The others who found him' },
+          { t: 'p', x: 'Voltaire knew him. Goethe read him alongside Hafez. Emerson wrote an essay about him and put him among the small handful of writers who belong to everyone. Diderot and Rousseau read him. For a long stretch of European history, Saadi was the Persian poet, better known in the West than Hafez or Rumi.' },
+          { t: 'p', x: 'What travelled was not the beauty, because the prose does not survive translation. It was the ethics. Saadi was the one who made the most sense in a foreign room.' },
+        ] },
+      ],
+    },
+    {
+      key: 'sd5',
+      title: 'The Garden Still Open',
+      nav: 'Legacy',
+      subtitle: 'HIS PLACE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He died in Shiraz, very old, and was buried there. His tomb is called the Saadieh, and it sits a short distance from the Hafezieh, so that the two poets of that city lie almost within sight of one another, the teacher and the mystic, the road and the wine.' },
+          { t: 'imgframe', key: 'saadi-tomb', cap: 'The Saadieh in Shiraz, where the master of speech is buried.' },
+          { t: 'p', x: 'Hafez was born after Saadi died and grew up reading him. Every Persian poet after Saadi grew up reading him. He is the foundation the others are standing on.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The poet of the ordinary day' },
+          { t: 'p', x: 'Here is his real position, and it is unusual. Iranians quote Hafez when they need an answer from beyond. They quote Saadi when they are talking to each other. His lines come out in arguments about money, about neighbours, about ungrateful children and difficult bosses. He is in the language itself now, and most people using him have stopped noticing.' },
+          { t: 'p', x: 'That is a rarer immortality than being famous. Ferdowsi saved the language. Hafez became its soul. Saadi became its common sense.' },
+          { t: 'illumin', x: 'The highest thing a writer can become is a thing people say without remembering they read it.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Saadi, who lost his country young, walked the world for thirty years, and came home to a surviving city to write down what he had learned about people.' },
+          { t: 'p', x: 'He watched the Mongols end the world he was raised in, and what he took from it was not bitterness. It was a rose garden, a set of stories, and four lines saying that the human race is one body and that anyone who cannot feel the pain of a stranger has something wrong with them.' },
+          { t: 'illumin', x: 'He had every reason to write about cruelty. He wrote about kindness instead.' },
+          { t: 'motif', symbol: 'rose', caption: 'سعدی' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const khayyam: Author = {
+  key: 'khayyam',
+  name: 'Omar Khayyam',
+  persian: 'عمر خیام',
+  epithet: 'The Measurer of Time',
+  years: 'c. 1048 - 1131',
+  essence: 'The mathematician of Neyshabur who built a calendar more accurate than the one the world uses today, and who became world famous for poetry he may not have written, in a translation that was not accurate.',
+  cover: 'lit-khayyam-cover',
+  closing: 'khayyam-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'kh1',
+      title: 'The Tentmaker Son',
+      nav: 'Neyshabur',
+      subtitle: 'NEYSHABUR, c. 1048',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'He is the most famous Persian poet in the English language, and he was not a poet.', mark: 'star' },
+          { t: 'p', x: 'That is not a riddle. In his own lifetime, in his own country, Omar Khayyam was known as one of the finest mathematicians and astronomers alive. Nobody called him a poet. The quatrains that made him a household name in London seven centuries later were not what he was for.' },
+          { t: 'p', x: 'He was born in Neyshabur, in Khorasan, around 1048. Khayyam is not a family name in the way we mean it. It means tentmaker, and it was almost certainly his father trade. The boy who would measure the length of the year was the son of a man who stitched canvas.' },
+          { t: 'motif', symbol: 'star', caption: 'خیام' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A good century to be a scholar' },
+          { t: 'p', x: 'He grew up under the Seljuks, and this was the one thing the Seljuks did superbly. Turkic warlords by origin, they had adopted Persian culture completely and they paid for science with an open hand. Nizam al Mulk, the great Persian vizier, built the observatories and the schools.' },
+          { t: 'p', x: 'So Khayyam went to Isfahan, and the sultan Malik Shah gave him an observatory and a team and a question: fix the calendar. He was around thirty. What he did with that assignment is the reason his name should be spoken alongside anyone in the history of science.' },
+          { t: 'aside', x: 'The famous story that he studied alongside Nizam al Mulk and Hassan e Sabbah of the Assassins is almost certainly a later legend. The dates do not work.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh2',
+      title: 'The Measure of a Year',
+      nav: 'The Science',
+      subtitle: 'WHAT HE ACTUALLY DID',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In 1079 Khayyam and his team delivered a calendar. To build it, they had to answer one question with terrible precision: exactly how long is a year.' },
+          { t: 'p', x: 'They measured it as 365.24219858 days. The real figure, as we know it now with satellites and atomic clocks, is 365.242190. He was working with instruments made of brass and wood, and he was wrong by about a millionth of a day.' },
+          { t: 'drift' },
+          { t: 'p', x: 'The calendar Europe adopted five centuries after him, the Gregorian, is less accurate than the one he made. That is not Iranian pride talking. It is arithmetic.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'And it is still running' },
+          { t: 'p', x: 'This is the part that surprises people. His calendar was not a curiosity that was admired and abandoned. It is the calendar of Iran today. The Solar Hijri calendar, still official, still used for every date in the country, descends directly from the one Khayyam built in 1079.' },
+          { t: 'mark', x: 'Iran has been keeping time by a mathematician quatrain of a calendar for nine hundred and fifty years.' },
+          { t: 'p', x: 'And it is why Nowruz is exact. Persian new year does not fall on a date someone chose. It falls at the precise instant the sun crosses the equator, and the whole calendar is anchored to that moment. Every Iranian family sitting at the Haft Seen, watching the clock turn, is using Khayyam.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The mathematics' },
+          { t: 'p', x: 'The calendar was not even his deepest work. Khayyam wrote a treatise on algebra that classified cubic equations, the ones with a cube in them, and solved them. Nobody had done this systematically before.' },
+          { t: 'p', x: 'His method is beautiful. He could not solve them with numbers, because the algebra to do that would not exist for another five hundred years. So he solved them with shapes. He drew a parabola and a circle, arranged so that where they crossed was the answer, and read the solution off the geometry. He turned algebra into a picture.' },
+          { t: 'illumin', x: 'When numbers could not reach it, he drew it instead.' },
+          { t: 'p', x: 'He also pushed at Euclid parallel postulate, the assumption that troubled geometers for two thousand years, and got closer to breaking it than anyone before him. When European mathematicians finally cracked it open in the nineteenth century and found non Euclidean geometry, they were walking a road Khayyam had already been down.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh3',
+      title: 'The Quatrains',
+      nav: 'Rubaiyat',
+      subtitle: 'WHAT HE MAY HAVE WRITTEN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'A rubai is a quatrain, four lines, rhyming AABA. The third line breaks the pattern and the fourth closes it, so the whole thing turns on a hinge. It is a small, hard, complete form, like an epigram with a blade in it.' },
+          { t: 'p', x: 'Khayyam wrote them, we think, privately. They were not published, not performed, not part of his reputation. They surfaced slowly after his death, and here is the honest problem: nobody knows how many are his. Manuscripts written centuries later attribute anywhere from a dozen to a thousand quatrains to him. Scholars who have spent lifetimes on it think perhaps a hundred are genuine, and disagree about which hundred.' },
+          { t: 'aside', x: 'A quatrain is easy to write and easy to attribute. For centuries, anonymous verses that were too sceptical to sign got filed under Khayyam.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What the voice says' },
+          { t: 'p', x: 'Whoever wrote them, they share one mind, and it is a mind unlike anything else in Persian poetry. It is the mind of a scientist who has looked hard at the evidence for what happens after death and found the file empty.' },
+          { t: 'rubai', lines: ['Into this universe, and why not knowing,', 'nor whence, like water willy nilly flowing.', 'And out of it, as wind along the waste,', 'I know not whither, willy nilly blowing.'], note: 'FitzGerald rendering, 1859.' },
+          { t: 'p', x: 'He does not rage at heaven and he does not deny it. He says he does not know, that nobody who claims to know has been there, and that the only thing certainly in your hands is this hour. He is the least mystical of the great Persian poets. Where Hafez sees a beloved behind the veil, Khayyam sees a veil.' },
+          { t: 'veil', surface: 'The moving finger writes, and having writ moves on. Nor all your piety nor wit shall lure it back to cancel half a line.', hidden: 'This is FitzGerald most quoted line, and it is more or less Khayyam. It says the past is closed. Not that it should be accepted, that it is closed, as a matter of fact, the way a proof is closed. It is a mathematician way of describing regret.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The wine question' },
+          { t: 'p', x: 'His quatrains are full of wine, and Iranians have argued about this for nine hundred years. The pious read it as Sufi symbol, the divine intoxication, as it is in Hafez. The plain reading is that Khayyam meant wine.' },
+          { t: 'p', x: 'The plain reading is probably right, and it is not a scandal. His argument is consistent: the beyond is unverifiable, the moment is verifiable, so attend to the moment. Wine is the moment. It is not blasphemy. It is empiricism with a cup in its hand.' },
+          { t: 'rubai', lines: ['Ah, make the most of what we yet may spend,', 'before we too into the dust descend.', 'Dust into dust, and under dust, to lie,', 'sans wine, sans song, sans singer, and, sans end.'], note: 'FitzGerald, 1859.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh4',
+      title: 'The Englishman',
+      nav: 'FitzGerald',
+      subtitle: 'HOW THE WEST MADE HIM',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In 1859 an eccentric English gentleman named Edward FitzGerald privately printed two hundred and fifty copies of a small book of verses translated from Persian. Nobody bought it. The copies ended up in a bargain box outside a London bookshop, marked down to a penny.' },
+          { t: 'p', x: 'Someone found one. It reached Rossetti, then Swinburne, then everyone, and within a decade Omar Khayyam was one of the most quoted poets in the English speaking world. He stayed there for a century. There were Khayyam clubs and Khayyam wallpaper and quatrains carved on gravestones.' },
+          { t: 'p', x: 'And FitzGerald was not translating. He said so himself, cheerfully, that he took whatever liberties he liked with these Persians. He merged quatrains, invented lines, dropped what bored him, and shaped the whole into an English poem with a mood of his own.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What he did to the mutton' },
+          { t: 'p', x: 'The most famous lines he ever produced run: a book of verses underneath the bough, a jug of wine, a loaf of bread, and thou beside me singing in the wilderness. Millions of people know it. It is on a thousand greeting cards.' },
+          { t: 'twotrans', a: { label: 'FITZGERALD, 1859', x: 'A Book of Verses underneath the Bough, a Jug of Wine, a Loaf of Bread, and Thou beside me singing in the Wilderness.' }, b: { label: 'WHAT THE PERSIAN SAYS', x: 'A loaf of bread, a gourd of wine, a thigh of mutton, and you and I sitting in the wilderness. That is a pleasure beyond any sultan kingdom.' } },
+          { t: 'p', x: 'FitzGerald removed the leg of lamb and put a book of poetry in its place. That single edit is the whole story of how the West received Persia. A blunt, physical, funny Persian picnic became a soft Victorian daydream, and the daydream is what the world memorised.' },
+          { t: 'illumin', x: 'The mutton became a book of verses, and nobody noticed for a hundred years.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Was it a theft or a gift' },
+          { t: 'p', x: 'Both, honestly, and it is worth holding both. FitzGerald misrepresented him. He also made a genuinely great English poem, and he made the world care about a Persian name at a moment when the West cared about very little east of Athens. Iranians tend to feel the two things at once, and that is the correct response.' },
+          { t: 'p', x: 'The strange result is that the Khayyam the world loves is a collaboration between an eleventh century Iranian mathematician and a nineteenth century Suffolk bachelor, and neither of them could have made him alone.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh5',
+      title: 'Where the Blossoms Fall',
+      nav: 'Legacy',
+      subtitle: 'NEYSHABUR, AGAIN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'There is a story, and unusually for such stories it comes from someone who knew him. Nizami Aruzi wrote that Khayyam once said his grave would lie in a place where the north wind would scatter blossoms over it.' },
+          { t: 'p', x: 'Years after Khayyam died, Aruzi went to Neyshabur and found the tomb. It sat at the foot of a garden wall, and pear and peach trees leaned over that wall, and the ground was so buried in fallen blossom that the grave was hidden beneath it. He wrote that he wept.' },
+          { t: 'imgframe', key: 'khayyam-tomb', cap: 'The tomb at Neyshabur, rebuilt in 1963 as a lattice of interlocking geometry, for a man who solved equations with shapes.' },
+          { t: 'illumin', x: 'The man who would not predict the afterlife predicted his own grave, and got it right.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The double injustice' },
+          { t: 'p', x: 'Here is where he sits, and it is a strange seat. In the West he is a famous poet and an unknown scientist. In Iran he is respected as a scientist and argued about as a poet. Almost nobody, anywhere, holds both halves at once.' },
+          { t: 'p', x: 'The full man is better than either half. He measured the year to six decimal places with brass instruments. He solved cubic equations by drawing them. He built the calendar Iran still lives by. And in his private hours he wrote four line poems saying that none of it can tell you what happens next, so pour the wine.' },
+          { t: 'mark', x: 'The most precise mind of his century spent its evenings writing about how little can be known.' },
+          { t: 'p', x: 'That is not a contradiction. It is the same man. Precision about what can be measured, and honesty about what cannot. The quatrains are what a scientist writes when the instruments run out.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Omar Khayyam, the tentmaker son of Neyshabur, who was asked to fix a calendar and fixed it so well that it is still running, and who is loved around the world for a book he did not quite write.' },
+          { t: 'p', x: 'Every Nowruz, at the exact second the sun crosses the equator, an entire country checks the clock. That instant is his. It is the most widely used and least credited piece of Persian science on earth, and it happens once a year, in every Iranian home, forever.' },
+          { t: 'illumin', x: 'He gave Iran the moment its year turns, and the world forgot he was a scientist at all.' },
+          { t: 'motif', symbol: 'star', caption: 'خیام' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const rudaki: Author = {
+  key: 'rudaki',
+  name: 'Rudaki',
+  persian: 'رودکی',
+  epithet: 'The Adam of Poets',
+  years: 'c. 858 - 941',
+  essence: 'The first. Before Ferdowsi, before Hafez, before any of them, a blind singer from a mountain village proved that Persian could be a language of poetry. Of the hundred thousand verses he is said to have written, about a thousand survive.',
+  cover: 'lit-rudaki-cover',
+  closing: 'rudaki-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'rd1',
+      title: 'Before Anyone',
+      nav: 'The First',
+      subtitle: 'PANJRUD, c. 858',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'Someone has to be first. Someone has to write in a language before anyone knows it can be written in.', mark: 'strings' },
+          { t: 'p', x: 'When Rudaki was born, around 858, Persian had been silent for two hundred years. The conquest had made Arabic the language of everything that counted, of law, of learning, of poetry. Persian survived in kitchens and villages. Nobody wrote serious literature in it. There was no reason to think anyone could.' },
+          { t: 'p', x: 'He came from a village called Panjrud, in the mountains east of Samarkand, in what is now Tajikistan. Rudaki is not a name either. It means from Rudak, the place of the little river. He is the poet from the stream village.' },
+          { t: 'motif', symbol: 'harp', caption: 'رودکی' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The court that made a language' },
+          { t: 'p', x: 'The Samanids ruled Bukhara, and they made a deliberate and world changing decision. They were Persians, they were proud of it, and they chose to have their court speak and write and celebrate in Persian while the whole Islamic world around them ran on Arabic. They paid for it. They defended it. It was policy.' },
+          { t: 'p', x: 'Rudaki was their poet, and he was the proof. If Persian could produce this, at this level, then Persian was a literary language, and the argument was over. Everything that follows in this section stands on that.' },
+          { t: 'mark', x: 'Ferdowsi saved the language. Rudaki proved there was something worth saving.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The singer' },
+          { t: 'p', x: 'He was not only a poet. He was a musician, and by every account a great one. He played the chang, the Persian harp, and he sang his own verses. Persian poetry did not begin on a page. It began as a voice with strings under it, in a room, in front of people.' },
+          { t: 'chang' },
+          { t: 'p', x: 'That is worth remembering when you read any of it. These were songs. The rhythm is not decoration. It is the missing music.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd2',
+      title: 'The Poem That Moved a King',
+      nav: 'The Ride',
+      subtitle: 'BUKHARA, c. 930',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'This is the most famous story in Persian literature, and it is about the practical power of a poem.' },
+          { t: 'p', x: 'The Samanid king, Nasr II, took his court to Herat one summer. He liked it. He stayed. A season became a year, and a year became four, and the entire court was homesick for Bukhara and could not say so, because you do not tell a king he is wrong.' },
+          { t: 'p', x: 'So they went to Rudaki and offered him money to do something. He waited for a morning when the king was drinking, took up his harp, and sang.' },
+        ] },
+        { blocks: [
+          { t: 'ghazal', couplets: [
+            { a: 'The scent of the Muliyan stream comes to me,', b: 'the memory of a kind friend comes to me.' },
+            { a: 'The sands of the Oxus, and all its rough road,', b: 'come soft as silk beneath my feet.' },
+            { a: 'The waters of the Jayhun, in joy at the friend face,', b: 'rise to our horse belly as we cross.' },
+            { a: 'O Bukhara, rejoice, and live long,', b: 'the prince comes to you in gladness.' },
+            { a: 'The prince is the moon and Bukhara the sky,', b: 'the moon is coming to the sky.' },
+            { a: 'The prince is the cypress and Bukhara the garden,', b: 'the cypress is coming to the garden.' },
+          ], note: 'Buy e Juy e Muliyan. Plain rendering. The Persian rhymes on a single repeated sound that falls like a footstep.' },
+          { t: 'p', x: 'The king got up. He did not send for his boots. He got onto his horse barefoot and rode for Bukhara, and the court scrambled after him, and someone caught up with him two stages down the road to put his boots on him.' },
+          { t: 'illumin', x: 'A poem got a king onto a horse without his boots.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why it worked' },
+          { t: 'p', x: 'Look at what he actually did, because it is a masterclass. He never says come home. He never mentions the court, or duty, or the four wasted years. He does not argue at all.' },
+          { t: 'p', x: 'He starts with a smell. The scent of a particular stream, the Muliyan, that ran through Bukhara. Not a description of the city, a smell of it, which goes past the reasoning part of a man entirely. Then he makes the hard road home feel like silk underfoot, so returning is not effort. Then he turns the king into the moon and Bukhara into the sky.' },
+          { t: 'veil', surface: 'The prince is the moon and Bukhara the sky. The moon is coming to the sky.', hidden: 'This is the whole trick. Going home is no longer a retreat or an admission. It is the moon returning to where the moon belongs, a movement of nature, inevitable and dignified. Rudaki gave the king a way to change his mind without losing face, and he did it in eight words.' },
+          { t: 'p', x: 'Persians have told this story for a thousand years because of what it claims: that a poem is not decoration, it is a lever, and applied to the right man at the right hour it moves the world.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd3',
+      title: 'What Was Lost',
+      nav: 'The Loss',
+      subtitle: 'A HUNDRED THOUSAND VERSES',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'And now the hard part. Rudaki was enormously prolific. The old sources give numbers, and the numbers are impossible to verify and impossible to ignore. A hundred thousand verses is the figure usually given. One medieval writer claimed over a million, which nobody believes.' },
+          { t: 'p', x: 'What survives is about a thousand lines. Roughly one percent. Everything else is gone, into fires and floods and the Mongols and simple neglect, and it is not coming back.' },
+          { t: 'lostverses' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'That grid is the honest picture. Every mark is a hundred verses. The gold ones are what we have.' },
+          { t: 'p', x: 'We know he wrote a Kalila and Dimna in verse, the great book of animal fables, because people quote it. The book itself is gone. We have fragments of odes to patrons whose names mean nothing now. We have single couplets, quoted in other men books to make a point about grammar, floating free of whatever poem they came from.' },
+          { t: 'mark', x: 'We are reading the father of Persian poetry through the footnotes of other people.' },
+          { t: 'p', x: 'It is worth sitting with what that means. The judgement that he was the greatest of his age was made by people who could read all of it. We are agreeing with a verdict on evidence we do not have.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd4',
+      title: 'The Old Man',
+      nav: 'The Fall',
+      subtitle: 'HOW IT ENDED',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He did not die at court. Somewhere near the end the politics turned, his patron fell, and Rudaki was expelled. He went back to the village he came from, poor, and died there around 941.' },
+          { t: 'p', x: 'And he was blind. The sources agree on that much and on nothing else about it. Some say from birth, though he writes about colour with an accuracy that makes that hard to believe. When Soviet archaeologists opened what they believed was his grave in 1965, they reported that the skull showed the sockets had been burned, which would mean he was blinded with hot iron, late, deliberately, by someone.' },
+          { t: 'aside', x: 'The identification of the grave is not certain, and the finding has been questioned. It may be true. We will probably never know.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The teeth' },
+          { t: 'p', x: 'And then, at the end, old and poor and back in the mountains, he wrote the poem that is the reason he is not just a historical first.' },
+          { t: 'p', x: 'It begins with his teeth. It is about his teeth falling out. It is one of the great poems about growing old in any language on earth.' },
+          { t: 'ghazal', couplets: [
+            { a: 'Every tooth I had has worn away and fallen.', b: 'They were not teeth. They were shining lamps.' },
+            { a: 'They were rows of silver, they were pearl and coral,', b: 'they were the morning star, they were drops of rain.' },
+            { a: 'Not one is left of all of them now.', b: 'What bad luck was this. It was the bad luck of Saturn.' },
+          ], note: 'From the late poem on old age. Plain rendering.' },
+          { t: 'p', x: 'It goes on. He remembers when he was young and the world was open, when he had wine and music and women and everything was easy and he never once thought to be grateful for it. He does not moralise about this. He is not building to a lesson. He is an old blind man in a village listing what he had, and the list is the poem.' },
+          { t: 'illumin', x: 'The first poet of the Persian language used it, at the end, to say that he misses being young.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'There is no consolation in it, no God, no wisdom earned. Persian poetry begins with a man refusing to pretend that losing everything was worth it. That is a remarkable thing for a literature to start with, and it may be why the literature never became sentimental.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rd5',
+      title: 'The Adam of Poets',
+      nav: 'Legacy',
+      subtitle: 'HIS PLACE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Iranians call him Adam al Shoara, the Adam of Poets. The first man of the tribe. Everyone in this section is descended from him.' },
+          { t: 'imgframe', key: 'rudaki-tomb', cap: 'The tomb at Panjrud, in the mountains of Tajikistan, where the first Persian poet went home to die.' },
+          { t: 'p', x: 'He is buried in Tajikistan, which is worth pausing on, because it says something true about Persian. The language is bigger than the country. It began in Bukhara and Samarkand, cities that are not in Iran and have not been for centuries, and the first great poet of Iran lies outside it. Persian was never contained by a border.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What he handed forward' },
+          { t: 'p', x: 'He set the forms. The qasida, the ghazal, the rubai, the masnavi. Everything Ferdowsi and Hafez and Saadi and Khayyam used was already shaped and waiting for them, and Rudaki is the one who shaped it. They inherited a working instrument because he built it.' },
+          { t: 'p', x: 'And he set the tone. Direct, musical, unashamed of pleasure, unashamed of loss. Persian poetry could have gone in any direction at the start. It went in his.' },
+          { t: 'mark', x: 'Every poet in this section is standing on a man whose work we have almost entirely lost.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Rudaki, the blind singer from the stream village, who took a language that nobody wrote poems in and wrote enough of them to settle the question forever.' },
+          { t: 'p', x: 'He sang a king off his cushion and onto a barefoot horse. He wrote a hundred thousand verses and kept a thousand. He was thrown out of the court he had made famous, and went home to the mountains, and wrote about his teeth.' },
+          { t: 'illumin', x: 'The first voice in Persian, and we can only hear one word of it in a hundred.' },
+          { t: 'motif', symbol: 'harp', caption: 'رودکی' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const nizami: Author = {
+  key: 'nizami',
+  name: 'Nizami',
+  persian: 'نظامی',
+  epithet: 'The Master of Romance',
+  years: 'c. 1141 - 1209',
+  essence: 'He wrote the greatest love stories in the Persian language, and buried every woman he loved. Layli and Majnun, Khosrow and Shirin, and seven domes of seven colours are all his.',
+  cover: 'lit-nizami-cover',
+  closing: 'nizami-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'nz1',
+      title: 'The Quiet Man of Ganja',
+      nav: 'Ganja',
+      subtitle: 'GANJA, c. 1141',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'The man who taught a civilization how to write about love was widowed three times.', mark: 'domes' },
+          { t: 'p', x: 'Nizami was born around 1141 in Ganja, in the Caucasus, and appears to have almost never left it. No travels like Saadi, no court like Rudaki. He turned down invitations from kings. He stayed in one provincial city, orphaned young, raised by an uncle, and quietly wrote five long poems that changed what Persian could do.' },
+          { t: 'p', x: 'He wrote in Persian, entirely. Ganja is in Azerbaijan today, and Rudaki is buried in Tajikistan, and this is simply what Persian was: a language of a whole region, never contained by any one border.' },
+          { t: 'motif', symbol: 'rose', caption: 'نظامی' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Afaq' },
+          { t: 'p', x: 'A ruler sent him a gift: a Kipchak slave girl named Afaq. Nizami freed her and married her, and by every trace he left, he loved her without reservation. She bore him a son. And while he was writing Khosrow and Shirin, the great romance, she died.' },
+          { t: 'p', x: 'He put her death into the poem. In the middle of the love story he was writing, he stops, and mourns his wife, and then goes on. It is one of the most unguarded moments in classical Persian literature.' },
+          { t: 'p', x: 'He married again. That wife died as he finished Layli and Majnun. He married a third time. She died as he finished the Haft Peykar. Three books, three wives, each one gone as the ink dried.' },
+          { t: 'illumin', x: 'He wrote, half joking and not joking at all, asking God why a wife must be taken for every poem finished.' },
+          { t: 'mark', x: 'Every great love story in this language was written by a man burying the woman he loved.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The five' },
+          { t: 'p', x: 'His life work is called the Khamsa, the Quintet. Five long narrative poems, around thirty thousand couplets in total. Before him, Persian narrative meant Ferdowsi and kings and war. Nizami turned the epic inward and pointed it at two people in a room.' },
+          { t: 'p', x: 'And he did something nobody had done: he gave the women interior lives. Shirin argues, refuses, negotiates, and is often the most intelligent person in the poem. Layli is not a prize. She speaks, and what she says is sharper than anything the men manage.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz2',
+      title: 'The Man Who Carved a Mountain',
+      nav: 'Farhad',
+      subtitle: 'KHOSROW AND SHIRIN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Khosrow and Shirin takes a real Sasanian king, Khosrow Parviz, and a real queen, and builds around them a long, difficult, adult romance of pride and delay and missed chances. It is not a fairy tale. Khosrow is vain and often a coward, and Shirin is better than him, and both of them know it.' },
+          { t: 'p', x: 'And then Nizami invents a character who was not in any history, and the invention swallows the poem.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Farhad' },
+          { t: 'p', x: 'Farhad is a stonecutter. He sees Shirin once and loves her with a completeness that the king, with all his armies, cannot match. He is not noble, he is not rich, and he is not going to stop.' },
+          { t: 'p', x: 'Khosrow, jealous of a labourer, sets him an impossible task. Cut a channel through Mount Bisotun, and Shirin is yours. It cannot be done. That is why it is offered.' },
+          { t: 'mountain' },
+          { t: 'p', x: 'He does it. That is the turn nobody expects. Farhad takes his axe to the mountain and begins to cut, and he does not stop, and the mountain begins to give way.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'And then the lie' },
+          { t: 'p', x: 'Khosrow panics. He is a king, and he has been beaten by a man with a hammer, so he does the thing a king can always do. He sends a messenger with false news: Shirin is dead.' },
+          { t: 'p', x: 'Farhad, standing in the wound he has cut through a mountain for her, hears it, and throws his axe into the air, and follows it down.' },
+          { t: 'illumin', x: 'The mountain could be beaten. A lie could not.' },
+          { t: 'p', x: 'Every Iranian knows Farhad, and knows he is not in the histories, and does not care. He became the word for a certain kind of love: the kind that does the impossible thing and is destroyed by something small and cheap. To call a man Farhad is to say he loved past all reason and it cost him everything.' },
+          { t: 'aside', x: 'Bisotun is real. Darius carved his inscription into that cliff fifteen hundred years before Nizami. Iranians will tell you the marks on the rock are Farhad work, and they will smile when they tell you.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz3',
+      title: 'The Madman',
+      nav: 'Majnun',
+      subtitle: 'LAYLI AND MAJNUN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'It began as an Arab desert legend, thin and old. Nizami rewrote it in 1188, and his version became the definitive one across half the world, from Istanbul to Delhi. It is the Persian love story, and it is four hundred years older than Romeo and Juliet.' },
+          { t: 'p', x: 'A boy called Qays loves a girl called Layli at school. Their families forbid it. He does not recover. He begins reciting poems about her in the street, and the shame of that public love is exactly what makes the marriage impossible forever. People start calling him Majnun, which is not a name. It means possessed. Madman.' },
+          { t: 'p', x: 'He goes into the desert. He stops eating, stops washing, stops speaking to people. Wild animals gather around him and do not run, because there is nothing left of him to fear. Layli is married off to a man she will not touch. Both of them die apart.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The line every Iranian knows' },
+          { t: 'p', x: 'A ruler hears about this famous madness and has Layli brought to him. He looks at her, and he is unimpressed, and he says so: are you the one who drove that man out of his mind? You are not so beautiful.' },
+          { t: 'veil', surface: 'Be silent. You are not Majnun.', hidden: 'Layli answer, and it ends the argument permanently. Beauty is not a property of the object. It is an event between two people. The caliph cannot see it because he lacks the instrument, not because it is not there. She is not defending her looks. She is telling the most powerful man present that he is blind.' },
+          { t: 'p', x: 'That reply is quoted in Iran to this day, by people who have never read the poem, at anyone who dismisses something they cannot feel.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What the story is actually about' },
+          { t: 'p', x: 'Late in the poem, someone offers Majnun a way to reach Layli, and he refuses. This is the moment the whole thing turns on, and it is why the poem has lasted.' },
+          { t: 'p', x: 'The love has outgrown its object. He does not want Layli anymore. He wants the state of loving her, which has become larger and more real than the woman ever was. She has become a door, and he is no longer interested in what is behind it, because he is standing in the light coming through.' },
+          { t: 'mark', x: 'He loved her until she was no longer necessary.' },
+          { t: 'p', x: 'Sufis read this as the whole path: love a person completely enough and the person dissolves and you are left loving God, who was the object the entire time. Others read it as a straightforward tragedy about a boy who went mad and died in a desert. Nizami permits both, and never once tells you which.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz4',
+      title: 'Seven Domes',
+      nav: 'The Domes',
+      subtitle: 'HAFT PEYKAR',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'And then he built the strangest thing in Persian literature.' },
+          { t: 'p', x: 'King Bahram Gur builds seven domed pavilions. Each is a single colour. Each belongs to a planet and a day of the week. In each lives a princess from a different country of the world. On each day he goes to the dome of that day, dressed in that colour, and the princess tells him a story.' },
+          { t: 'haftpeykar' },
+          { t: 'p', x: 'Touch a dome.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Why this is not decoration' },
+          { t: 'p', x: 'The colours are a sequence and they are going somewhere. He begins in black, the dome of Saturn, and the tale told there is the darkest. He ends in white, the dome of Venus, and the tale is the simplest and cleanest. The week is a journey out of darkness into light, and the king walks it one day at a time without noticing.' },
+          { t: 'p', x: 'And the stories are not moral lessons. They are strange, erotic, funny, cruel, and they refuse to resolve neatly. Nizami is doing something no one else in Persian was doing: building a structure where the shape is the argument.' },
+          { t: 'mark', x: 'Seven colours, seven planets, seven days, seven countries. Nothing in it is accidental.' },
+          { t: 'p', x: 'And there is a sting. While Bahram spends his week moving from dome to dome, his kingdom is being ruined by a corrupt minister, and he does not notice. The king perfecting himself through beauty is failing at the only job he has. Nizami lets the reader work that out alone.' },
+          { t: 'illumin', x: 'He built the most beautiful structure in the language, and then quietly asked what it cost.' },
+        ] },
+      ],
+    },
+    {
+      key: 'nz5',
+      title: 'What He Left',
+      nav: 'Legacy',
+      subtitle: 'HIS PLACE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He died in Ganja around 1209, in the city he never left, and is buried there.' },
+          { t: 'imgframe', key: 'nizami-tomb', cap: 'The tomb at Ganja, for the man who wrote the loves everyone else would spend eight centuries painting.' },
+          { t: 'p', x: 'His afterlife is enormous. Every miniature painter for the next six hundred years painted his scenes: Shirin at the pool, Farhad on the mountain, Majnun among the animals, the seven domes. Walk any museum with Persian art and you are looking at Nizami, whether the label says so or not. Poets from Turkey to India rewrote his five poems in their own languages as a test of skill.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The inventor of the interior' },
+          { t: 'p', x: 'Here is the claim for him. Before Nizami, Persian narrative was about what people did. After Nizami, it was about what people felt while doing it. He is the one who turned the camera around.' },
+          { t: 'p', x: 'And he gave the language its vocabulary of love. Not the mystical love of Hafez, and not the ethical love of Saadi. The other one. Wanting a specific person, being refused, and what that does to a life. Farhad and Majnun are still the two words Iranians reach for, and both of them are his.' },
+          { t: 'mark', x: 'Hafez taught Iran how to love God. Nizami taught it how to love a person.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Nizami of Ganja, who stayed in one small city, refused the courts, and wrote five poems that gave a civilization its picture of what love is.' },
+          { t: 'p', x: 'He made a stonecutter who cut through a mountain and died of a rumour. He made a boy who loved a girl until she was no longer necessary. He made seven domes of seven colours and a king too busy being perfected to notice his kingdom falling. And he wrote all of it while burying, one by one, every woman he loved.' },
+          { t: 'illumin', x: 'He knew what he was writing about. That is the whole problem.' },
+          { t: 'motif', symbol: 'rose', caption: 'نظامی' },
+        ] },
+      ],
+    },
+  ],
+};
+
+const rumi: Author = {
+  key: 'rumi',
+  name: 'Rumi',
+  persian: 'مولانا',
+  epithet: 'The Reed Cut from the Bed',
+  years: '1207 - 1273',
+  essence: 'The best selling poet in America is a thirteenth century Muslim jurist from Balkh who lost his closest friend and turned the grief into forty thousand verses, and signed the greatest of them with the dead man name.',
+  cover: 'lit-rumi-cover',
+  closing: 'rumi-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'rm1',
+      title: 'The Road Out',
+      nav: 'The Road',
+      subtitle: 'BALKH, 1207',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'He was a respectable man. That is the part people forget.', mark: 'spiral' },
+          { t: 'p', x: 'Jalal al Din was born in 1207 in Balkh, in the far east of the Persian world, in what is now Afghanistan. His father was a serious scholar with a serious following. The boy was raised to inherit that, and he did.' },
+          { t: 'p', x: 'Then the Mongols came. The family left, ahead of the destruction, and never went back. Balkh was erased behind them. Rumi spent his whole life as a man from a city that no longer existed.' },
+          { t: 'motif', symbol: 'moon', caption: 'مولانا' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A prophecy on the road' },
+          { t: 'p', x: 'They travelled for years. Nishapur, Baghdad, Mecca, Damascus, and finally Konya in Anatolia, deep in the old Byzantine lands, which Persians called Rum. That is where his name comes from. Rumi means simply the one from Rum, the Roman. The most Persian of poets is named after the Roman empire.' },
+          { t: 'p', x: 'And in Nishapur, the story goes, the family met Attar, the old master of Persian mysticism. Attar looked at the boy, gave him a copy of his book, and told the father that his son would one day set the lovers of the world on fire.' },
+          { t: 'aside', x: 'The story may well be later invention. It is also too good to leave out, and Iranians have never left it out.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The life he was living' },
+          { t: 'p', x: 'By his late thirties Rumi was the most respected religious authority in Konya. He taught law. He issued rulings. He preached to crowds. He had hundreds of students and a household and a reputation, and he was, by every account, excellent at all of it.' },
+          { t: 'p', x: 'He had written almost no poetry. There was no reason to think he ever would. He was a scholar in a turban, forty years old, at the top of his profession, and his life was finished being decided.' },
+          { t: 'mark', x: 'Everything he is famous for happened after he was forty, and none of it was planned.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rm2',
+      title: 'The Meeting',
+      nav: 'Shams',
+      subtitle: 'KONYA, 1244',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In 1244 a wandering dervish came to Konya. His name was Shams e Tabrizi, Shams meaning the sun. He was old, poor, rude, and by every account extraordinarily difficult. He had spent his life looking for someone who could bear his company, and had not found one.' },
+          { t: 'p', x: 'He found Rumi. Accounts differ on how. The most repeated one has Shams pushing through a crowd to ask the great scholar a question.' },
+          { t: 'story', title: 'The Question', x: 'Who was greater, Shams asked, the Prophet Muhammad or Bayazid Bastami? Rumi answered as any scholar would: the Prophet, without question. Then why, said Shams, did the Prophet say we have not known You as You should be known, while Bayazid said glory be to me, how great is my majesty?', moral: 'Rumi understood, and by some accounts fell to the ground.' },
+          { t: 'p', x: 'The point being made was that the Prophet had gone so far he knew how far there was left to go, while Bayazid had glimpsed a little and mistaken it for everything. It is a question about the difference between an experience and the truth. It undid a man who had spent forty years being certain.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What followed' },
+          { t: 'p', x: 'They went into seclusion together, and for months nobody saw them. Rumi stopped teaching. He stopped issuing rulings. He stopped appearing. The most eminent man in the city vanished into a room with a homeless dervish and did not come out.' },
+          { t: 'p', x: 'His students were humiliated, then angry, and the anger was aimed at Shams. This ragged nobody had stolen their master. Shams left once, for Damascus, and Rumi fell apart so completely that he sent his own son to beg him back.' },
+          { t: 'p', x: 'And then in 1248 Shams disappeared for good.' },
+          { t: 'illumin', x: 'Nobody knows what happened to him. That is not a mystery the sources are being coy about. It is genuinely unknown.' },
+          { t: 'p', x: 'The likeliest reading is that he was murdered, quietly, by people close to Rumi who wanted their teacher back, possibly with the knowledge of Rumi own son. There is a well in Konya they will show you. There is no body, and there never was.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The search' },
+          { t: 'p', x: 'Rumi did not accept it. He went to Damascus looking for him. He went twice. He asked everyone. He walked the streets of a foreign city calling for a man everyone else knew was dead.' },
+          { t: 'p', x: 'And somewhere in that, something broke open. He stopped looking, and wrote that he had searched and searched and had finally found Shams inside himself. Not as consolation. As a discovery. The thing he had loved in the man was not the man.' },
+          { t: 'mark', x: 'He went out to find his friend and found him in his own chest, and then he began to sing.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rm3',
+      title: 'The Reed Cut from the Bed',
+      nav: 'The Voice',
+      subtitle: 'WHAT THE GRIEF MADE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'What came out of him after Shams is one of the strangest events in the history of literature. A man who had written almost nothing produced, in the remaining twenty five years of his life, roughly seventy thousand lines of poetry.' },
+          { t: 'p', x: 'And he did not write them, in the way we mean. He spoke them. Walking, turning, in the middle of conversation, at any hour, and a devoted man named Husam al Din wrote them down as fast as they came.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The book with the wrong name' },
+          { t: 'p', x: 'The first is a collection of ghazals, around forty thousand verses of them, and it is his greatest lyric work. It is called the Divan e Shams e Tabrizi. The Divan of Shams of Tabriz.' },
+          { t: 'p', x: 'He signed the dead man name to his own poems. Not as dedication, as authorship. At the end of a ghazal, where a Persian poet puts his own name and always has, Rumi put Shams.' },
+          { t: 'illumin', x: 'He wrote the best poetry of his life and gave the credit to a man who was probably murdered by his own household.' },
+          { t: 'p', x: 'And it is not humility, or not only. It is the actual claim. He believed the voice was not his. The self that would have signed it was the thing that dissolved in that room in 1244, and what was left did not have a name to put down.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The Masnavi' },
+          { t: 'p', x: 'The second book is the Masnavi, twenty six thousand couplets across six volumes, and Persians have called it the Quran in the Persian tongue for seven hundred years. It is stories, digressions, jokes, arguments, jurisprudence, and long passages of the purest mysticism in the language, and it wanders like a conversation because it was one.' },
+          { t: 'p', x: 'It opens with eighteen lines about a flute, and those eighteen lines contain the entire thesis.' },
+          { t: 'reed' },
+          { t: 'p', x: 'A reed is cut from the reed bed to make a ney. The music the flute makes is the sound of a plant crying for the water it was taken from. It only sings because it was wounded, and what it sings about is the wound.' },
+          { t: 'mark', x: 'You are the reed. You were cut from something. Everything you have ever wanted is that.' },
+          { t: 'p', x: 'That is the Masnavi in one image, delivered in the first minute, and the remaining twenty six thousand couplets are elaboration. It is also, unmistakably, a man explaining what happened to him when he lost Shams and discovering that it explains the universe.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rm4',
+      title: 'The Turning',
+      nav: 'Sama',
+      subtitle: 'WHY HE SPINS',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The story is that he was walking through the goldsmiths quarter of Konya, and the hammers were beating on the metal, and in the rhythm he heard something, and he raised his arms and began to turn in the street, and did not stop.' },
+          { t: 'sama' },
+          { t: 'p', x: 'Touch it, and let it turn.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Nothing about it is arbitrary' },
+          { t: 'p', x: 'Every part of the sama means something, and it was formalised into an order after his death by his son. The white robe is a shroud. The black cloak is the tomb, and it is dropped at the beginning, because the dervish is stepping out of his grave. The tall felt hat is a headstone.' },
+          { t: 'p', x: 'The right hand turns up to receive from heaven. The left hand turns down to give to the earth. Nothing is kept. The dervish is a pipe, not a cup, and whatever comes through goes straight out the other side into the world.' },
+          { t: 'p', x: 'And the turn is counterclockwise, around the heart, in the same direction as the pilgrims around the Kaaba, and the planets, and everything else that goes around a centre.' },
+          { t: 'illumin', x: 'A man spinning in a room is doing what the solar system is doing, and knows it.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What it is not' },
+          { t: 'p', x: 'It is not a dance, and it is not a performance, whatever the tourist shows in Konya have made of it. It is a prayer with the body in it, and its purpose is to spin the self out of the way so that something else can occupy the room.' },
+          { t: 'p', x: 'Rumi did not found the order. He simply could not stop turning, and after he died the people who loved him built a discipline around what he had done instinctively in the street.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rm5',
+      title: 'What Was Taken Out',
+      nav: 'The West',
+      subtitle: 'RUMI IN ENGLISH',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Rumi is, by a wide margin, the best selling poet in the United States. He has been for years. He is read at weddings, printed on cards, tattooed, quoted by people who could not name a single other poet born before 1900.' },
+          { t: 'p', x: 'Almost all of them are reading Coleman Barks, an American poet who does not read Persian. He works from older English translations and reshapes them into free verse, and he has said plainly that this is what he does.' },
+          { t: 'p', x: 'He made millions of people love a Persian name, and that is not nothing. But something specific was removed on the way, and it is worth naming exactly.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The scholar disappears' },
+          { t: 'p', x: 'Rumi was a Muslim jurist. He knew the Quran the way you know your own hands, and the Masnavi is soaked in it, quoting it, arguing with it, building on it in nearly every section. He led prayers. He issued legal rulings. Islam is not the background of his poetry. It is the material.' },
+          { t: 'p', x: 'In the popular English versions, most of that is gone. The Quranic citations, the references to the Prophet, the specifically Islamic frame, thinned out or removed, leaving a warm and boundless spiritual figure who could have come from anywhere.' },
+          { t: 'twotrans', a: { label: 'THE POPULAR ENGLISH', x: 'Out beyond ideas of wrongdoing and rightdoing, there is a field. I will meet you there.' }, b: { label: 'WHAT THE PERSIAN SAYS', x: 'Beyond belief and unbelief there is a plain. I will meet you there.' } },
+          { t: 'p', x: 'Look at the swap. Belief and unbelief, iman and kufr, are precise theological terms in Islam, and Rumi is making a bold and specifically religious claim about a place past both of them. In English they became wrongdoing and rightdoing, which is a claim about ethics, which is not what he said at all.' },
+          { t: 'mark', x: 'A Muslim scholar saying something daring about faith was turned into a life coach saying something safe about judgement.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Holding both' },
+          { t: 'p', x: 'The fair verdict is uncomfortable, and it is the same one Khayyam earned. The English Rumi is not the real Rumi. The English Rumi also made the world care, and some of the people it reached went and found the real one.' },
+          { t: 'p', x: 'The loss is not that he was made too spiritual. It is that he was made too easy. The real Rumi is harder, funnier, dirtier, more argumentative, and immeasurably stranger than the one on the greeting card, and he is right there, in the Persian, unread.' },
+        ] },
+      ],
+    },
+    {
+      key: 'rm6',
+      title: 'The Wedding Night',
+      nav: 'Legacy',
+      subtitle: 'KONYA, 1273',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He died on the seventeenth of December, 1273, in Konya.' },
+          { t: 'p', x: 'The funeral is the thing to know about him. Christians came. Jews came. Greeks and Armenians and Turks and Persians came, and when they were asked why, the answer that survives is that each of them had found their own prophet in him. The procession took hours to pass.' },
+          { t: 'imgframe', key: 'rumi-tomb', cap: 'The green dome at Konya, where they still come, seven hundred and fifty years on.' },
+          { t: 'p', x: 'And he had told them not to mourn. He called the night of his death Shab e Arus, the wedding night, because dying was the reunion, the reed going back to the water. It is still marked in Konya every December, on the anniversary, as a wedding.' },
+          { t: 'illumin', x: 'He named the night of his own death the wedding night, and they have kept the name.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The six of them' },
+          { t: 'p', x: 'This is the last of them, so it is worth standing back. Rudaki proved the language could hold poetry. Ferdowsi saved the language itself. Nizami taught it to look inward at love. Saadi taught it how to live among people. Khayyam measured the sky and doubted everything above it. Hafez became its soul.' },
+          { t: 'p', x: 'And Rumi took one man grief at losing one friend and made it the sound of everything that has ever been separated from what it came from.' },
+          { t: 'mark', x: 'Six men, four hundred years, one language. No other tongue has a spine like it.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Rumi, the scholar from a city the Mongols erased, who was respectable and certain and forty years old when a rude old dervish walked into his life and took it apart.' },
+          { t: 'p', x: 'He lost the man. He looked for him in two countries and found him in his own chest instead. And then, for twenty five years, he spoke poems into the air and other people wrote them down, and he signed the best of them with the dead man name, because he did not believe the voice had ever been his.' },
+          { t: 'p', x: 'He said we are all reeds, cut from the bed, and that every sound we make is about the water. He would say it about this too.' },
+          { t: 'illumin', x: 'Listen to the reed, how it complains. Since they cut me from the reed bed, everyone has wept at my cry.' },
+          { t: 'motif', symbol: 'moon', caption: 'مولانا' },
+        ] },
+      ],
+    },
+  ],
+};
+
+export const AUTHORS: Author[] = [ferdowsi, hafez, saadi, khayyam, rudaki, nizami, rumi];
+
+export function findAuthor(key?: string) {
+  return AUTHORS.find((a) => a.key === key);
+}
+
+export const LITERATURE_FIGURES = [
+  { name: 'Ferdowsi', persian: 'فردوسی', epithet: 'Father of the Persian Language', years: 'c. 940 – 1020', authorKey: 'ferdowsi', status: 'ready' as const },
+  { name: 'Rudaki', persian: 'رودکی', epithet: 'The First Great Poet of Persian', years: 'c. 858 – 941', authorKey: 'rudaki', tag: 'THE FIRST POET', status: 'ready' as const },
+  { name: 'Omar Khayyam', persian: 'خیام', epithet: 'Poet of the Fleeting Moment', years: '1048 – 1131', authorKey: 'khayyam', tag: 'THE CALENDAR INSIDE', status: 'ready' as const },
+  { name: 'Nizami', persian: 'نظامی', epithet: 'Master of the Romance', years: '1141 – 1209', authorKey: 'nizami', tag: 'SEVEN DOMES INSIDE', status: 'ready' as const },
+  { name: 'Saadi', persian: 'سعدی', epithet: 'The Voice of Wisdom', years: 'c. 1210 – 1291', authorKey: 'saadi', tag: 'BANI ADAM INSIDE', status: 'ready' as const },
+  { name: 'Rumi', persian: 'مولانا', epithet: 'The Poet of the Soul', years: '1207 – 1273', authorKey: 'rumi', tag: 'THE WHIRLING INSIDE', status: 'ready' as const },
+  { name: 'Hafez', persian: 'حافظ', epithet: 'The Tongue of the Unseen', years: 'c. 1315 – 1390', authorKey: 'hafez', tag: 'FAL E HAFEZ INSIDE', status: 'ready' as const },
+];

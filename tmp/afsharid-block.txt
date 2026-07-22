@@ -1,0 +1,125 @@
+const afsharid: Topic = {
+  key: 'afsharid-dynasty',
+  category: 'history',
+  name: 'The Afsharid Dynasty',
+  persian: 'افشاریان',
+  years: '1736 - 1796',
+  essence: 'The dynasty of Nader Shah, the shepherd boy who became the last great conqueror of the East, and one of the most brilliant and terrible military minds in history.',
+  cover: 'afsharid-cover',
+  closing: 'afsharid-cover',
+  status: 'ready',
+  sources: [
+    'The historical record of the Afsharid era',
+    'Contemporary Persian and European accounts',
+    'Michael Axworthy, The Sword of Persia',
+  ],
+  chapters: [
+    {
+      key: 'af1',
+      title: 'From Shepherd to Warlord',
+      subtitle: 'c. 1698 - 1729',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'He was born into poverty in the northern lands of Khorasan, a boy of a humble tribe named Afshar, in a time of chaos. As a child, it is said, he and his mother were carried off by raiders and enslaved, and he escaped to make his own way in a broken world. From these lowest of beginnings would rise the most feared conqueror of his age.' },
+          { t: 'p', x: 'His name was Nader. Tall, powerful, and possessed of a will of iron and a genius for war, he rose through sheer ability in a land that had fallen into anarchy. When the Safavid Empire collapsed and Afghan invaders seized the throne of Iran, it was Nader, a warlord commanding his own band of fighters, who would answer the call to save the nation.' },
+          { t: 'splitimg', key: 'afsharid-nader-young', title: 'Nader of the Afshar', x: 'Born in poverty and once a captive, Nader rose by his genius for war to command armies and, in time, an empire.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The savior of Iran' },
+          { t: 'p', x: 'Iran in the 1720s was a nation on its knees. The proud Safavid Empire had fallen to a band of Afghan rebels, foreign powers circled to seize its lands, and the country lay open to ruin. Into this darkness stepped Nader, offering his sword to a Safavid prince and swiftly becoming the true power behind the throne.' },
+          { t: 'p', x: 'With a reborn army trained to his own exacting standard, he drove the Afghan occupiers out of Iran, then turned on the Ottomans and the Russians who had seized Iranian lands in the time of weakness, and won them back one by one. In a few short years, he had raised Iran from the grave.' },
+          { t: 'markline', x: 'A shepherd boy had become the sword that saved a nation.' },
+        ] },
+      ],
+    },
+    {
+      key: 'af2',
+      title: 'The Crown and the Conqueror',
+      subtitle: '1736',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Having saved Iran, Nader saw no reason to hand it back. In 1736, on a great plain where he summoned the nobles of the realm, he had himself proclaimed Shah, setting aside the last of the Safavids and founding his own dynasty, the Afsharid. The captive shepherd boy now wore the crown of the kings of kings.' },
+          { t: 'keyvalue', items: [
+            { k: 'Crowned', v: '1736, on the Moghan plain' },
+            { k: 'Origin', v: 'A humble tribe of Khorasan' },
+            { k: 'Genius', v: 'One of history\'s great commanders' },
+            { k: 'Ambition', v: 'To rival the conquerors of old' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The Napoleon of Persia' },
+          { t: 'p', x: 'Historians have called him the Napoleon of Persia, and the comparison is fitting. Like that later conqueror, Nader rose from obscurity by pure military genius, remade the army of his nation, and led it to victories that astonished the world. He was a master of speed, of surprise, and of the bold stroke that broke his enemies before they could gather.' },
+          { t: 'p', x: 'His soldiers, hardened by constant campaign and devoted to a leader who shared their every hardship, became the most formidable fighting force in Asia. Under Nader, the armies of Iran marched from victory to victory, and the name of the Persian Shah was feared from the Caucasus to the plains of India.' },
+          { t: 'markline', x: 'He remade the army of Iran into the terror of the East.' },
+        ] },
+      ],
+    },
+    {
+      key: 'af3',
+      title: 'The March on India',
+      subtitle: '1738 - 1739',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Nader\'s most famous campaign was his boldest. In 1738 he led his army eastward, through Afghanistan and over the mountains, and descended upon the vast and fabulously wealthy Mughal Empire of India, the richest realm on earth.' },
+          { t: 'p', x: 'At the battle of Karnal, his smaller, hardened army shattered the enormous but unwieldy Mughal host in a single day. The road to Delhi, the jewel of the East, lay open before him.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The treasure of the world' },
+          { t: 'p', x: 'Nader entered Delhi in triumph, and the wealth he carried away from it was almost beyond counting, the accumulated treasure of the Mughal emperors gathered over two centuries. The plunder was so immense that, upon his return, he is said to have exempted the people of Iran from taxes for years.' },
+          { t: 'numstat', items: [
+            { n: '1739', label: 'Nader captures Delhi' },
+            { n: 'Karnal', label: 'The Mughal army destroyed in a day' },
+            { n: '3 years', label: 'Taxes he waived in Iran from the plunder' },
+            { n: 'Untold', label: 'Riches carried home from India' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The Peacock Throne and a mountain of light' },
+          { t: 'p', x: 'Among the treasures he took were the most legendary jewels in the world. He carried away the fabled Peacock Throne of the Mughal emperors, glittering with gems, which became the very symbol of the Persian monarchy for centuries after.' },
+          { t: 'p', x: 'And among the jewels were two of the most famous diamonds ever known: the Darya-ye Noor, the Sea of Light, which remains in Iran to this day, and the Koh-i-Noor, the Mountain of Light, whose later journey would carry it, in time, to the crown jewels of England. The treasures of Nader\'s Indian campaign became legends in their own right.' },
+          { t: 'splitimg', key: 'afsharid-peacock-throne', title: 'The Peacock Throne', x: 'From Delhi, Nader carried home the jewelled Peacock Throne and the legendary diamonds of the Mughals, treasures still spoken of today.' },
+        ] },
+      ],
+    },
+    {
+      key: 'af4',
+      title: 'The Genius and the Shadow',
+      subtitle: 'The two faces of Nader',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Nader was a man of dazzling gifts, and his mind ranged far beyond the battlefield. He was a military innovator who understood artillery and the modern arts of war better than almost anyone in the East, and he even sought to build a navy for Iran on the Persian Gulf, a rare and forward-looking ambition.' },
+          { t: 'p', x: 'He was also, in matters of faith, a pragmatist who tried to heal the ancient rift between the Sunni and Shia branches of Islam, hoping to unite them and end centuries of division, a strikingly bold idea for his age.' },
+          { t: 'duo', left: { title: 'The genius', x: 'A brilliant general and innovator who saved Iran, conquered India, and dreamed of a navy and religious peace.' }, right: { title: 'The shadow', x: 'A ruler who grew ever more cruel, suspicious, and tyrannical as the years and the wars wore on.' } },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The darkening of a great mind' },
+          { t: 'p', x: 'But there was a shadow over his greatness, and it grew darker with the years. The endless wars and the burdens of rule seemed to poison his mind. He grew suspicious, harsh, and terribly cruel, crushing his own people with heavy taxes to fund his campaigns and answering the smallest disloyalty with horrifying punishment.' },
+          { t: 'p', x: 'In a fit of paranoia he had his own son blinded, suspecting him of treason, a deed he is said to have regretted for the rest of his life. The savior of Iran had become its tormentor, and the brilliant mind that had raised the nation now cast a long and terrible shadow over it.' },
+          { t: 'markline', x: 'The sword that saved Iran turned, in the end, against its own people.' },
+        ] },
+      ],
+    },
+    {
+      key: 'af5',
+      title: 'The Fall of the Sword',
+      subtitle: '1747',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In the end, the fear he inspired was his undoing. By 1747, his cruelty had made him enemies even among his own most trusted officers, who came to believe that none of them was safe from his suspicion. Rather than wait to be struck down, they resolved to strike first.' },
+          { t: 'p', x: 'In the night, a band of his own commanders crept into his tent and killed him as he slept. The greatest warrior of the age, who had conquered from the Caucasus to Delhi and whom no enemy could defeat in the field, fell at last to the daggers of his own men.' },
+          { t: 'markline', x: 'No enemy could defeat him. Only his own could bring him down.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'With Nader\'s death, the empire he had built by the sheer force of his will fell apart almost at once. He had conquered vast lands, but he had not built the institutions to hold them, and without him at their head, they scattered. His dynasty clung to a fragment of power in Khorasan for a few decades more, but its glory had died with its founder.' },
+          { t: 'p', x: 'From the chaos that followed his death, in time, would rise the gentle Karim Khan of the Zand, who gave Iran the peace that Nader, for all his conquests, never could.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of Nader Shah and the Afsharids, one of the most extraordinary and complex stories in all of Iranian history. Nader was a shepherd boy who became a conqueror to rival the greatest of the ancient world, a military genius who saved his nation from ruin and carried its banners to the gates of the East.' },
+          { t: 'p', x: 'He was also a warning, of how the very brilliance and will that can save a nation can, unchecked, turn to darkness. He remains one of history\'s most dazzling and troubling figures, a comet that blazed across the sky of Iran, brilliant and terrible, and was gone almost as swiftly as it had come.' },
+          { t: 'pull', x: 'A shepherd who conquered an empire, and a genius undone by his own shadow.' },
+        ] },
+      ],
+    },
+  ],
+};

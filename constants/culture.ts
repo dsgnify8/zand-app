@@ -1,0 +1,358 @@
+// Culture: the social operating system. The unwritten rules.
+// Its own world. Warm taupe ground, each chapter with its own accent.
+
+export const cu = {
+  bg: '#3D3730',
+  bgLift: '#494139',
+  surface: '#4E463C',
+  raised: '#584E44',
+  text: '#F1E9DD',
+  textDim: '#A99C8C',
+  hair: '#665C50',
+  gold: '#D9A94C',
+  saffron: '#E0A63C',
+  pomegranate: '#B4434F',
+  pistachio: '#8FA86B',
+  turquoise: '#4E9AA0',
+  rose: '#C4808B',
+};
+
+export type CultureTopic = {
+  key: string;
+  title: string;
+  persian: string;
+  tag: string;
+  blurb: string;
+  accent: string;
+  glyph: string;
+  image?: string;
+};
+
+export const CULTURE_TOPICS: CultureTopic[] = [
+  { key: 'taarof', title: 'Taarof', persian: 'تعارف', tag: 'THE RULE NOBODY EXPLAINS', blurb: 'Offering what you will not give. Refusing what you want. The most confusing thing about Iranians, to everyone including Iranians.', accent: '#E0A63C', glyph: 'swap-horizontal' },
+  { key: 'del', title: 'The Heart', persian: 'دل', tag: 'ONE WORD, A WHOLE LIFE', blurb: 'Persian runs its entire emotional life through a single organ. Miss someone and your heart goes tight.', accent: '#B4434F', glyph: 'heart' },
+  { key: 'mehmun', title: 'The Guest', persian: 'مهمان', tag: 'HOSPITALITY AS COMBAT', blurb: 'The guest is beloved of God, and you will be fed until you suffer, and you are not permitted to leave.', accent: '#C4808B', glyph: 'home' },
+  { key: 'javanmardi', title: 'Javanmardi', persian: 'جوانمردی', tag: 'THE HOUSE OF STRENGTH', blurb: 'A thousand year old code of chivalry, and a pit where men swing clubs while a drummer chants Ferdowsi at them.', accent: '#8FA86B', glyph: 'shield' },
+  { key: 'sofreh', title: 'The Table', persian: 'سفره', tag: 'FOOD, AND WHAT IT MEANS', blurb: 'Rice is not a side dish. The crust at the bottom of the pot is fought over. Nobody eats alone if it can be helped.', accent: '#4E9AA0', glyph: 'restaurant' },
+  { key: 'chai', title: 'Chai', persian: 'چای', tag: 'THE SHAPE OF AN EVENING', blurb: 'The samovar, the small glass, the sugar cube held in the teeth. Never a drink. Always an occasion.', accent: '#D9A94C', glyph: 'cafe' },
+  { key: 'typical', title: 'Typical Persian', persian: 'ایرانی', tag: 'YOU KNOW THE ONES', blurb: 'Persian Standard Time. The gold at birth. The forty minute goodbye at the door. Tap a card and find the truth underneath the joke.', accent: '#4E9AA0', glyph: 'happy' },
+];
+
+export type CuBlock =
+  | { t: 'p'; x: string }
+  | { t: 'h'; x: string }
+  | { t: 'lead'; x: string }
+  | { t: 'mark'; x: string }
+  | { t: 'aside'; x: string }
+  | { t: 'phrase'; fa: string; tr: string; lit: string; means: string }
+  | { t: 'taarofsim' }
+  | { t: 'delmap' }
+  | { t: 'cards' }
+  | { t: 'zurkhaneh' }
+  | { t: 'rice' }
+  | { t: 'steps'; items: { n: string; x: string }[] }
+  | { t: 'close'; x: string };
+
+export type CuPage = { key: string; nav: string; title: string; eyebrow?: string; blocks: CuBlock[] };
+
+export const CULTURE_PAGES: Record<string, CuPage[]> = {
+
+  taarof: [
+    { key: 't1', nav: 'The Dance', title: 'The Offer You Must Refuse', eyebrow: 'WHAT TAAROF IS',
+      blocks: [
+        { t: 'lead', x: 'Everything is offered. Almost nothing is meant. And everyone in the room knows exactly which is which.' },
+        { t: 'p', x: 'Taarof is the ritual of not saying the thing. You offer what you would rather keep. You refuse what you badly want. You insist, and are refused, and insist again, and the whole exchange is a piece of theatre both people are performing perfectly while appearing to mean every word.' },
+        { t: 'p', x: 'To an outsider it looks like lying. It is closer to the opposite. It is a system for protecting people from ever having to be humiliated by a direct no.' },
+        { t: 'taarofsim' },
+      ] },
+    { key: 't2', nav: 'The Rules', title: 'Three Times', eyebrow: 'HOW IT WORKS',
+      blocks: [
+        { t: 'p', x: 'The engine is the rule of three. Nothing is real until it has been offered three times, and nothing is refused until it has been refused three times. Accept on the first offer and you have revealed that you were waiting for it. Refuse a third genuine offer and you have insulted the person giving it.' },
+        { t: 'steps', items: [
+          { n: 'The first offer', x: 'Almost always empty. It is politeness. Take it and you have misread the room.' },
+          { n: 'The second offer', x: 'Getting warmer. Still refuse. This is where the other person shows they meant it.' },
+          { n: 'The third offer', x: 'Now it is real. Now you may accept, and everyone is satisfied, and nobody was ever exposed.' },
+        ] },
+        { t: 'mark', x: 'The rule of three exists so that nobody ever has to hear a real no.' },
+        { t: 'h', x: 'The shopkeeper' },
+        { t: 'p', x: 'The purest form. You buy something, you ask the price, and the shopkeeper waves his hand and tells you it is worthless, take it, be my guest. He does not mean it. You do not for one second think he means it. You insist on paying. He refuses. You insist again. He names a price.' },
+        { t: 'phrase', fa: 'قابل نداره', tr: 'ghabel nadare', lit: 'it has no worth', means: 'The shopkeeper is not giving you the rug. He is saying that money is beneath the dignity of this moment between us. Then you pay him.' },
+      ] },
+    { key: 't3', nav: 'The Cost', title: 'What It Is For', eyebrow: 'AND WHAT IT COSTS',
+      blocks: [
+        { t: 'p', x: 'The argument for taarof is that it makes a hierarchy survivable. In a society where status is real and refusing your superior openly is dangerous, taarof gives everyone a way to decline without ever having declined, to negotiate without ever appearing to want anything.' },
+        { t: 'p', x: 'It is also, genuinely, a form of care. The offer is a way of saying you matter more to me than the thing. Even when it is empty, the shape of it is generous, and the shape is the message.' },
+        { t: 'h', x: 'And it costs' },
+        { t: 'p', x: 'It is exhausting. Two Iranians can spend eleven minutes at a doorway arguing about who goes first. Restaurant bills are physically fought over, and there are stories of people slipping the waiter money in advance to avoid the fight and being resented for it anyway.' },
+        { t: 'p', x: 'And it is a real problem in the diaspora. A child raised abroad hears the offer, accepts it, and watches the adults freeze. Nobody explained it to them, because nobody explains it. You are supposed to absorb it, and if you did not grow up inside it you spend your life half a beat behind.' },
+        { t: 'aside', x: 'This is the thing most Iranians abroad say they get wrong with their own relatives.' },
+        { t: 'close', x: 'It is not dishonesty. It is a language in which the words are not the message and everybody fluent knows it. The only people it fools are the ones taking it literally.' },
+      ] },
+  ],
+
+  del: [
+    { key: 'd1', nav: 'The Word', title: 'Everything Is in the Heart', eyebrow: 'دل',
+      blocks: [
+        { t: 'lead', x: 'Persian did not build a vocabulary for feeling. It built one word, and then built everything out of it.' },
+        { t: 'p', x: 'Del means heart. Not the romantic heart of English, which mostly handles love and courage. The Persian del is the seat of the entire inner life: longing, courage, worry, kindness, grief, nerve, and the thing that goes tight when someone is far away.' },
+        { t: 'p', x: 'And it compounds. Tap it.' },
+        { t: 'delmap' },
+      ] },
+    { key: 'd2', nav: 'The Tightness', title: 'When the Heart Goes Tight', eyebrow: 'THE ONE THEY MISS',
+      blocks: [
+        { t: 'phrase', fa: 'دلم برات تنگ شده', tr: 'delam barat tang shode', lit: 'my heart has gone tight for you', means: 'I miss you. But the English is a flat report of an absence. The Persian is a physical event happening in your chest right now, and it is happening because of a specific person, and you are telling them.' },
+        { t: 'p', x: 'Ask any Iranian abroad which phrase does not survive translation and this is the one they name. I miss you is information. Delam barat tang shode is a symptom.' },
+        { t: 'h', x: 'And the other one' },
+        { t: 'phrase', fa: 'دل به دل راه داره', tr: 'del be del rah dare', lit: 'heart has a road to heart', means: 'Said when two people feel the same thing without saying it, or when you were thinking of someone the moment they called. Not mysticism. A quiet claim that hearts are connected by roads and that traffic moves on them.' },
+        { t: 'mark', x: 'A language that gave the heart its own road system.' },
+        { t: 'h', x: 'What they tell their sons' },
+        { t: 'p', x: 'And there is one line that Persian mothers and fathers say to their boys, and it is not advice about behaviour. It is a warning about the value of a thing.' },
+        { t: 'phrase', fa: 'دل دختر ایرانی رو هیچ وقت نشکن', tr: 'dele dokhtare irani ro hich vaght nashkan', lit: 'never break the heart of an Iranian girl', means: 'It is said as though describing an object of great worth that you have been trusted with. Not do not hurt her, which would be about you. This is about what she is carrying, and the assumption underneath it is that a Persian girl heart is precious enough that breaking it is not a mistake, it is damage.' },
+      ] },
+    { key: 'd3', nav: 'Why', title: 'Why One Word', eyebrow: 'WHAT IT MEANS',
+      blocks: [
+        { t: 'p', x: 'Because Persian does not put much distance between the body and the feeling. English says I am sad, which is a fact about a state. Persian says my heart is tight, which is a fact about an organ, and it is more accurate, because that is where you feel it.' },
+        { t: 'p', x: 'It also means that in Persian you cannot really talk about emotion without talking about the heart, which means the poets and the grandmothers and the taxi drivers are all using the same instrument. Hafez did not invent a special vocabulary. He used del, like everyone else, better.' },
+        { t: 'close', x: 'One word, doing the work that other languages spread across fifty. Everything a Persian feels, they feel in the same place, and they say so.' },
+      ] },
+  ],
+
+  mehmun: [
+    { key: 'm1', nav: 'The Guest', title: 'Beloved of God', eyebrow: 'مهمان',
+      blocks: [
+        { t: 'lead', x: 'The guest is beloved of God. This is not a saying. It is an instruction, and it will be carried out.' },
+        { t: 'p', x: 'Persian hospitality is not gentle. It is a campaign. You will be sat in the best seat, which you will try to refuse and fail. You will be given tea within ninety seconds of arriving. You will be fed past the point of comfort and then fed again, and every refusal will be treated as taarof and overruled.' },
+        { t: 'phrase', fa: 'مهمان روزی خودش را با خود می‌آورد', tr: 'mehman ruzi ye khodesh ra ba khod miavarad', lit: 'the guest brings his own sustenance with him', means: 'The oldest answer to the oldest worry. You are never a cost. Whatever is eaten in your honour was never the host to begin with, it arrived with you, so there is nothing to weigh and nothing to be careful about. It is a sentence designed to make it impossible for a guest to feel expensive.' },
+      ] },
+    { key: 'm2', nav: 'The Siege', title: 'You Are Not Leaving', eyebrow: 'HOW IT GOES',
+      blocks: [
+        { t: 'steps', items: [
+          { n: 'You arrive', x: 'Shoes off at the door, always, without discussion. Tea appears before you have sat down. Fruit is cut, whether or not anyone wants fruit.' },
+          { n: 'You are fed', x: 'More than anyone could eat. If you clear your plate it means you were not given enough, and it is refilled. If you leave food, you are asked what is wrong with it. There is no correct move.' },
+          { n: 'You say you are full', x: 'This is heard as taarof and dismissed. You will be served again. Say it three times and possibly, possibly, you will be believed.' },
+          { n: 'You try to leave', x: 'This takes forty minutes. You stand. You are told to sit. You reach the hallway. A conversation begins in the hallway. You reach the door. A new conversation begins at the door.' },
+          { n: 'You reach the car', x: 'Someone comes out with food for you to take home. This is not optional either.' },
+        ] },
+        { t: 'mark', x: 'The Persian goodbye is not the end of the visit. It is a distinct event, and it is longer than most meetings.' },
+      ] },
+    { key: 'm3', nav: 'Why', title: 'What Is Actually Happening', eyebrow: 'UNDERNEATH IT',
+      blocks: [
+        { t: 'p', x: 'Some of it is old. Iran is a country of deserts and long roads, and for most of its history a traveller who was turned away could die. Hospitality was not a nicety, it was infrastructure, and the caravanserais on every route were built on exactly this principle.' },
+        { t: 'p', x: 'And some of it is simpler. Feeding people is how affection is expressed in a culture where saying it outright is difficult. The plate that keeps being refilled is a sentence that nobody in the room is able to say.' },
+        { t: 'aside', x: 'This is why Persian mothers send you home with food. It is not about the food.' },
+        { t: 'p', x: 'And look at what all of it is actually doing. Eat more. Take this. Sit down. Stay a little longer. It is called friendliness, and it is not friendliness. It is a refusal to let anyone be alone in our presence, carried out by force if necessary.' },
+        { t: 'mark', x: 'It is not that Iranians are welcoming. It is that we will not permit you to be lonely in front of us.' },
+        { t: 'close', x: 'You will be fed until you suffer, kept at the door for forty minutes, and sent home with a bag you did not ask for. All of it is one message, delivered in the only vocabulary available.' },
+      ] },
+  ],
+
+  javanmardi: [
+    { key: 'j1', nav: 'The Code', title: 'The Young Man Way', eyebrow: 'جوانمردی',
+      blocks: [
+        { t: 'lead', x: 'Persian chivalry. A thousand years old, still the highest compliment you can pay a man in Iran, and almost unknown outside it.' },
+        { t: 'p', x: 'Javanmardi means, literally, young manliness, and it means almost the opposite of what that sounds like. It is not swagger. It is the opposite of swagger. Its core is strength that refuses to be used on anyone weaker, generosity that does not announce itself, and keeping your word when it costs you.' },
+        { t: 'p', x: 'The javanmard does not humiliate an opponent he has beaten. He does not take from someone who cannot refuse. He does not mention what he gave. Iranians will describe a man as javanmard the way the English might say a man is decent, except with far more weight in it.' },
+        { t: 'phrase', fa: 'مرام', tr: 'maram', lit: 'the way one goes', means: 'A related word, and the one you will actually hear. He has maram means he behaves properly toward people when nothing forces him to, and everyone can tell.' },
+      ] },
+    { key: 'j2', nav: 'The Pit', title: 'The House of Strength', eyebrow: 'ZURKHANEH',
+      blocks: [
+        { t: 'p', x: 'And then there is the building. The zurkhaneh, the house of strength, is one of the strangest and best institutions Iran has produced, and it is roughly a thousand years old.' },
+        { t: 'p', x: 'It is a low domed room with a pit in the middle, sunk below the floor, so that everyone who enters must step down. Men train in that pit. They swing enormous wooden clubs, they lift a wooden shield, they turn in place, they wrestle.' },
+        { t: 'zurkhaneh' },
+        { t: 'h', x: 'The drum and the poem' },
+        { t: 'p', x: 'And here is the part nobody expects. In a raised seat at the edge sits the morshed, the master, with a goblet drum and a bell. He drums the rhythm the men move to, and while he drums, he chants. He chants Ferdowsi. He chants Hafez and Rumi and Saadi.' },
+        { t: 'mark', x: 'It is a gym where the poetry is played over the sound system, live, by a man with a drum, and the poetry is eight hundred years old.' },
+        { t: 'p', x: 'So the men in the pit are not only training. They are being told, in rhythm, in verse, what a man is for. The physical culture and the ethical culture and the literature are the same activity, in the same room, at the same time. Nothing else in the world quite works like this.' },
+        { t: 'aside', x: 'The pit is sunk below floor level for a reason. You step down to enter. Nobody stands above anybody.' },
+      ] },
+    { key: 'j3', nav: 'Takhti', title: 'The Man They Loved', eyebrow: 'THE MODERN SAINT',
+      blocks: [
+        { t: 'p', x: 'If you want to know what Iranians mean by javanmard, they will not explain. They will tell you about Takhti.' },
+        { t: 'p', x: 'Gholamreza Takhti was a wrestler, an Olympic champion, and the most beloved athlete in Iranian history. But that is not why he is beloved. The stories are all about the same thing.' },
+        { t: 'story', title: 'The Injured Leg', x: 'Wrestling a Russian opponent who had an injured right leg, Takhti did not touch it once. He wrestled the man honestly, on his strength, and won without exploiting the injury. The opponent mother is said to have kissed him afterward.', moral: 'He could have won faster. He would rather have won properly.' },
+        { t: 'p', x: 'And when an earthquake destroyed a town, Takhti went into the streets of Tehran with a collection tin himself, in person, and people gave him everything they had because it was him. He died in 1968, and the circumstances are still argued about, and his funeral filled the city.' },
+        { t: 'h', x: 'And it is still in the room' },
+        { t: 'p', x: 'This is not history. Ask around any Iranian family and you will hear the same thing said with total confidence: give it to a Persian man and it will get done. Whatever it is. The car, the paperwork, the impossible favour, the thing that officially cannot be arranged.' },
+        { t: 'p', x: 'And the pride in it is real. To be the one who was relied on and delivered is, quietly, the whole thing a Persian man is playing for. It is javanmardi with the poetry taken off: not being asked twice, not making a fuss, and not letting the person who trusted you down.' },
+        { t: 'mark', x: 'You do not have to ask a second time. That is the entire compliment, and it is the highest one available.' },
+        { t: 'close', x: 'A country that has produced conquerors and kings and poets chose, as the man it loves most, a wrestler who would not touch an injured leg.' },
+      ] },
+  ],
+
+  sofreh: [
+    { key: 's1', nav: 'The Spread', title: 'Everything, All at Once', eyebrow: 'سفره',
+      blocks: [
+        { t: 'lead', x: 'A Persian table is not laid with a meal. It is laid with everything you could possibly need, and then more, in case you need that too.' },
+        { t: 'p', x: 'The sofreh is the spread. And the rule of it is abundance: the rice, the stew, the kabab, the bread, the yoghurt, the pickles, the raw herbs, the salad, the butter, the extra plate of rice nobody asked for. It is all there before you sit, and it stays there until you leave.' },
+        { t: 'p', x: 'Nothing arrives in courses. Nothing is portioned out for you. Everything is in the middle, within reach, and you take what you want and go back for more, and the bowls are refilled while you are still eating out of them.' },
+        { t: 'mark', x: 'A guest should never have to ask for anything. That is the whole design of the table.' },
+        { t: 'p', x: 'That is why it looks like too much. It is supposed to. A table with exactly enough on it is a table that was calculated, and calculating what a guest needs is the one thing a host must never be caught doing.' },
+      ] },
+    { key: 's2', nav: 'Rice', title: 'Rice Is Not a Side Dish', eyebrow: 'THE CENTRE',
+      blocks: [
+        { t: 'p', x: 'Understand this and you understand the kitchen. In Iran, rice is not something served alongside the meal. Rice is the meal. Everything else is an accompaniment to it, including the meat.' },
+        { t: 'p', x: 'And it is not boiled. Persian rice is a two stage operation: parboiled, drained, then steamed slowly under a cloth wrapped lid until every grain is separate, long, and standing on its own. A cook is judged on whether the grains stick. It takes real skill and everyone knows who has it.' },
+        { t: 'rice' },
+        { t: 'h', x: 'And the crust' },
+        { t: 'p', x: 'At the bottom of the pot, where the rice meets the oil, a golden crust forms. Tahdig, the bottom of the pot. It is crunchy, it is the best thing on the table, and there is never enough of it.' },
+        { t: 'p', x: 'It is fought over. Not metaphorically. Guests are given it first, which is obligatory, and then the family fights over what is left. Iranians raised abroad will tell you that tahdig is the single food they would choose as their last meal, over anything else on earth.' },
+        { t: 'mark', x: 'The greatest thing in Persian cooking is the accident at the bottom of the pot.' },
+      ] },
+    { key: 's3', nav: 'The Dishes', title: 'What Is On It', eyebrow: 'THE FOOD',
+      blocks: [
+        { t: 'p', x: 'Touch a dish to see it.' },
+        { t: 'dishes' },
+      ] },
+    { key: 's4', nav: 'The Flavour', title: 'Sour, Slow, and Never Hot', eyebrow: 'HOW IT TASTES',
+      blocks: [
+        { t: 'p', x: 'Persian cooking is built on sourness, which is unusual, and on things most kitchens never touch. Dried limes, sour cherries, pomegranate molasses, barberries, unripe grapes, and above all saffron, which is measured in fear because of what it costs.' },
+        { t: 'p', x: 'It is almost never hot. Iranians do not do chilli. The complexity comes from time and from sour, not from heat, and a stew that has not cooked for four hours is not finished. Ask an Iranian how long ghormeh sabzi takes and the honest answer is most of a day.' },
+        { t: 'mark', x: 'No heat, no rush, and no shortcuts. Persian food is slow on purpose.' },
+        { t: 'p', x: 'And there is one more thing on every table that is not a dish at all. Sabzi khordan, a plate of raw herbs: mint, tarragon, basil, radish, spring onion, eaten by the handful with bread and white cheese and walnuts, all the way through the meal. It is not a garnish. Nobody in Iran has ever thought of it as a garnish.' },
+        { t: 'close', x: 'A cuisine of long slow sourness, built around a grain, whose greatest achievement is the crust at the bottom of the pot, laid out all at once so that nobody has to ask for anything.' },
+      ] },
+    { key: 's5', nav: 'The Sweet', title: 'After, and In Between', eyebrow: 'SHIRINI',
+      blocks: [
+        { t: 'p', x: 'Persian sweetness is not the sugar of a European dessert. It runs on saffron, rosewater, pistachio, and sour, and quite a lot of it is not really a dessert at all. It is the thing that is out on the table permanently, for anyone who walks in.' },
+        { t: 'sweets' },
+        { t: 'mark', x: 'The ice cream stretches, the fruit leather is sour enough to hurt, and there is always a bowl of nuts already out.' },
+        { t: 'p', x: 'And the ice cream deserves its own note. Iranians are quietly, completely certain that bastani is the best ice cream on earth, and they are not being patriotic about it. Saffron, rosewater, pistachio, and frozen cream, invented in a country that was storing ice in the desert two thousand years ago.' },
+      ] },
+  ],
+
+  chai: [
+    { key: 'c1', nav: 'The Glass', title: 'Never Just a Drink', eyebrow: 'چای',
+      blocks: [
+        { t: 'lead', x: 'Nobody in Iran has ever had a cup of tea. They have had an occasion, and there was tea in it.' },
+        { t: 'p', x: 'It arrives when you arrive, before anything is said. It arrives when a deal is being discussed, and again when it is done. It arrives at the end of every meal. Refusing it is not really available to you.' },
+        { t: 'p', x: 'And it is served in a small glass, never a mug, because the colour matters. Iranians judge tea by looking at it. It should be deep amber and clear, dark enough to be serious, and you can see straight through it. Tea you cannot see is a failure.' },
+      ] },
+    { key: 'c2', nav: 'The Cube', title: 'The Sugar Goes in Your Mouth', eyebrow: 'GHAND',
+      blocks: [
+        { t: 'p', x: 'The thing visitors never forget. The sugar does not go in the glass. You take a hard cube of sugar, ghand, put it between your front teeth, and drink the hot tea through it.' },
+        { t: 'p', x: 'The cube dissolves slowly as the tea passes over it, so the sweetness is at the front and the tea stays clean behind it. One cube can last most of a glass. Watch an old man do it and you will see it is a technique.' },
+        { t: 'phrase', fa: 'چای دبش', tr: 'chai e dabash', lit: 'strong, dark tea', means: 'The good stuff. Dark, hot, and strong enough to mean it. Saying someone made chai e dabash is a compliment about more than the tea.' },
+        { t: 'h', x: 'The samovar' },
+        { t: 'p', x: 'The samovar sits and stays hot all day. On top of it sits a small pot of concentrated brew, and the samovar below holds the water. You pour a little of the concentrate and dilute it to the strength you want, which means everyone in the room gets their tea exactly as they like it from the same pot.' },
+        { t: 'p', x: 'And it means the tea is always ready. There is no putting the kettle on in an Iranian house. There is no delay between someone arriving and being handed something. That is the entire point of the object.' },
+        { t: 'close', x: 'A samovar kept hot all day so that no one who walks in ever has to wait. That is not a tea habit. That is a statement about how a house should treat whoever comes through the door.' },
+      ] },
+  ],
+
+  typical: [
+    { key: 'tp1', nav: 'The Cards', title: 'You Know the Ones', eyebrow: 'TYPICAL PERSIAN',
+      blocks: [
+        { t: 'p', x: 'Every Iranian recognises these instantly, and every one of them is a joke with something true sitting underneath it. Tap a card to turn it over.' },
+        { t: 'cards' },
+      ] },
+  ],
+};
+
+export type TypicalCard = { front: string; fa?: string; back: string; isNew?: boolean };
+
+export const TYPICAL_CARDS: TypicalCard[] = [
+  { front: 'Persian Standard Time is a real unit of measurement.',
+    fa: 'ساعت ایرانی',
+    back: 'The party starts at eight, which means arrive at ten, and the host will still be in the shower. Turning up on time is genuinely rude, because it means you have caught them unprepared. Every Iranian knows the conversion rate and nobody has ever written it down.' },
+  { front: 'Every Persian knows someone who knows someone.',
+    back: 'Need a surgeon, a visa, a plumber, a spare part they stopped making in 1994? Someone will make a phone call. It is called ashnabazi, and it grew in a place where official channels often did not work, so people built a second network out of relatives and favours. It has never stopped running.' },
+  { front: 'A Persian girl first gift was gold.',
+    fa: 'طلا',
+    back: 'A coin, a bangle, a tiny necklace, given at birth or soon after. Partly beauty, mostly economics. In a country that has been through revolutions, wars, sanctions and currency collapse, gold is the one thing that does not evaporate. Iranians give their daughters something that will still be worth something when the money is not.' },
+  { front: 'Nobody has ever successfully paid a bill at a Persian restaurant.',
+    back: 'The fight is physical. Two grown men wrestling over a card machine while the waiter waits. Some people bribe the waiter in advance and are resented for it anyway. This is taarof in its most extreme form: paying is a way of establishing that you are the more generous person, so it must be contested.' },
+  { front: 'The Persian goodbye takes forty minutes.',
+    back: 'You stand up. You are told to sit. You reach the hallway and a new conversation starts. You reach the door and someone remembers something. You reach the car and food is brought out. The goodbye is not the end of the visit. It is its own event, and rushing it says you wanted to leave.' },
+  { front: 'Your mother thinks you are too thin.',
+    back: 'You have always been too thin. You will be too thin at every weight you ever are. This is not about your body. Feeding you is how she says the thing she was never taught to say out loud, and as long as you are too thin, there is more of it to say.' },
+  { front: 'Everyone is your amoo or khaleh.',
+    fa: 'عمو، خاله',
+    back: 'Your father friend is uncle. Your mother friend is aunt. The neighbour is aunt. Nobody is related to anybody. Persian has no comfortable word for an adult who is simply a stranger to a child, so it does not have strangers. It has relatives who happen not to be.' },
+  { front: 'The tahdig will be gone before you get there.',
+    fa: 'ته دیگ',
+    back: 'The golden crust at the bottom of the rice pot. Guests are offered it first, which is obligatory, and then the family goes to war over the remainder. Iranians abroad name it, more than anything else, as the food they would choose for a last meal.' },
+  { front: 'Have you eaten is a greeting, not a question.',
+    back: 'It means hello. It also means are you all right, and are you being looked after, and I am checking. In a culture where you do not ask someone directly how they are doing, you ask about the one thing that would show it.' },
+  { front: 'There is a room in the house nobody is allowed to sit in.',
+    back: 'The good room, kept immaculate for guests who might arrive. Sometimes with the furniture still covered. It is not vanity. It is readiness. The house is permanently prepared for someone to walk in, because someone might, and they must find it perfect.' },
+  { front: 'You will leave with food you did not ask for.',
+    back: 'In a container that must be returned, which means you must come back. It is a very old trick and it is not remotely accidental. Nobody has ever returned a Persian container empty, either, so the whole thing loops forever, which is the design.' },
+  { front: 'Shoes come off. This is not negotiable.',
+    back: 'Not a preference, not a house rule, not a request. It happens at the door without anyone saying anything. Persians sit on floors, eat on floors, sleep on floors. The floor is not the ground, it is furniture, and you do not stand on furniture in your shoes.' },
+  { front: 'Saffron is measured in fear.',
+    fa: 'زعفران',
+    back: 'The most expensive spice on earth, grown in Khorasan, and a Persian kitchen uses it constantly. It is ground with a pestle, bloomed in a spoonful of hot water, and poured over rice like something being administered. Nobody is casual with it. Nobody ever has been.' },
+  { front: 'Your cousin is a doctor. You will hear about it.',
+    back: 'Everyone has the cousin. The comparison is relentless and it is not really about you. It comes from a generation that lost a great deal and rebuilt from nothing, for whom a child professional standing was the visible proof it was worth it. It lands badly. It was meant as love.' },
+];
+
+export type Dish = { key: string; fa: string; name: string; tag: string; x: string; image: string };
+
+export const DISHES: Dish[] = [
+  { key: 'ghormeh', fa: 'قرمه سبزی', name: 'Ghormeh Sabzi', tag: 'THE NATIONAL DISH', image: 'food-ghormeh-sabzi',
+    x: 'If Iran has one dish, this is it. A dark green stew of herbs fried down for hours, with lamb, kidney beans, and dried lime that gives it a sourness nothing else on earth has. It takes most of a day. Every family thinks their mother made it best, and every family is correct.' },
+  { key: 'fesenjan', fa: 'فسنجان', name: 'Fesenjan', tag: 'THE STRANGE ONE', image: 'food-fesenjan',
+    x: 'Chicken or duck in ground walnuts and pomegranate molasses, cooked until the walnut oil separates and the sauce goes almost black. Dark, sour, sweet, and completely unlike anything in any other cuisine. It is the dish that surprises people most.' },
+  { key: 'zereshk', fa: 'زرشک پلو', name: 'Zereshk Polo', tag: 'THE JEWELLED ONE', image: 'food-zereshk-polo',
+    x: 'Saffron rice scattered with barberries, tiny sour red jewels, served with chicken. It is what appears at weddings and at every occasion that matters, because it is beautiful before anyone has tasted it. The barberries are sharp enough to make you blink.' },
+  { key: 'lobia', fa: 'لوبیا پلو', name: 'Lobia Polo', tag: 'THE WEEKNIGHT ONE', image: 'food-lobia-polo',
+    x: 'Green beans and minced meat cooked with tomato and cinnamon and folded through the rice, so the rice is the dish rather than a bed for it. Homely, quick by Persian standards, and the one that Iranians abroad make when they are homesick and short of time.' },
+  { key: 'koobideh', fa: 'کوبیده', name: 'Kabab Koobideh', tag: 'THE EVERYDAY ONE', image: 'food-koobideh',
+    x: 'Minced lamb and onion pressed by hand onto a flat wide skewer and grilled over coal. Eaten with rice, a grilled tomato, raw onion, and sumac. It looks simple and it is not. If the mix is wrong it falls off the skewer into the fire, and the whole skill is in the hands.' },
+  { key: 'ash', fa: 'آش رشته', name: 'Ash Reshte', tag: 'THE ONE YOU GIVE AWAY', image: 'food-ash-reshte',
+    x: 'Thick soup of herbs, beans, and noodles, finished with kashk, a tart dried whey. Made in enormous pots, and traditionally made to be given away: cooked as a vow and handed out to neighbours and strangers. Making ash for the whole street is an act of charity with its own name.' },
+  { key: 'abgoosht', fa: 'آبگوشت', name: 'Abgoosht', tag: 'TWO MEALS, ONE POT', image: 'food-abgoosht',
+    x: 'Lamb, chickpeas, and potato slow cooked in a stone crock, and then you take it apart. First you strain off the broth and eat it with torn bread. Then you take a pestle and mash everything left in the pot into a paste and eat that as a second course. One pot, two dishes, and a tool at the table.' },
+  { key: 'kale', fa: 'کله پاچه', name: 'Kale Pache', tag: 'BREAKFAST, AND A TEST', image: 'food-kale-pache',
+    x: 'Sheep head and trotters, simmered all night, and eaten at dawn. The brain, the tongue, the cheek, in a clear broth with lemon and cinnamon. It is a breakfast, it is a delicacy, and it is the thing Iranians use to find out whether you are serious. The men who eat it will tell you there is nothing better.' },
+  { key: 'tahdig', fa: 'ته دیگ', name: 'Tahdig', tag: 'THE PRIZE', image: 'food-tahdig',
+    x: 'The golden crust from the bottom of the rice pot. Sometimes plain rice, sometimes with potato or flatbread laid underneath. It is turned out at the table and it is gone within a minute, and there has never in the history of Iran been enough of it.' },
+  { key: 'sabzi', fa: 'سبزی خوردن', name: 'Sabzi Khordan', tag: 'ON EVERY TABLE', image: 'food-sabzi-khordan',
+    x: 'A plate of raw herbs. Mint, tarragon, basil, radish, spring onion. Eaten by the handful with bread, white cheese, and walnuts, throughout the meal, not before it. Iranians eat more raw herbs than almost anyone, and it is the flavour they miss most abroad.' },
+];
+
+export const SWEETS: Dish[] = [
+  { key: 'bastani', fa: 'بستنی سنتی', name: 'Bastani Sonnati', tag: 'SAFFRON ICE CREAM', image: 'food-bastani',
+    x: 'Saffron, rosewater, and pistachio, with chunks of frozen clotted cream running through it. It stretches when you pull it, because of the salep in it, and that pull is how you know it is the real thing. Eat it pressed between two thin wafers, as bastani nooni, and it is the best ice cream in the world. That is not a Persian opinion. Ask anyone who has had it.' },
+  { key: 'faloodeh', fa: 'فالوده', name: 'Faloodeh', tag: 'OLDER THAN YOU THINK', image: 'food-faloodeh',
+    x: 'Thin frozen rice noodles in a rosewater syrup, served with lime squeezed over the top so it is sour and cold at once. Shiraz is famous for it. And it is ancient. Persians were making frozen desserts more than two thousand years ago, packing ice into yakhchals in the desert to have it in summer, which is its own piece of engineering.' },
+  { key: 'lavashak', fa: 'لواشک', name: 'Lavashak', tag: 'EVERY PERSIAN CHILDHOOD', image: 'food-lavashak',
+    x: 'Fruit pulp, plum or apricot or pomegranate, spread thin and dried in the sun into a sheet of sour leather. Sometimes salted. Every Iranian child has torn a piece off a sheet of this, and every Iranian adult still wants it. It is sour enough to make your jaw ache and nobody has ever been able to stop at one strip.' },
+  { key: 'gaz', fa: 'گز', name: 'Gaz', tag: 'FROM ISFAHAN', image: 'food-gaz',
+    x: 'Nougat, white and soft and heavy with pistachios, made from the sap that a small insect leaves on tamarisk trees in the hills near Isfahan. Nobody who eats it thinks about that. It is what you bring back from Isfahan, and you bring back a lot of it, because you will be asked.' },
+  { key: 'sohan', fa: 'سوهان', name: 'Sohan', tag: 'FROM QOM', image: 'food-sohan',
+    x: 'A saffron brittle of wheat sprout, butter, and sugar, studded with pistachio and almond, snapped from a wheel. Deep gold, hard, and dangerous to a filling. Qom makes it, and a tin of it travels back with everyone who passes through.' },
+  { key: 'ajil', fa: 'آجیل', name: 'Ajil', tag: 'THE BOWL ON THE TABLE', image: 'food-ajil',
+    x: 'The nut mix, and it is not a snack, it is an institution. Pistachios, almonds, roasted chickpeas, hazelnuts, dried figs, mulberries, sour cherries, and seeds. Every house has a bowl of it out. It appears at Nowruz and at Yalda and on any evening at all. Iranians eat it constantly and the shells pile up in a second bowl beside it.' },
+];
+
+
+/* A different order every visit, and one card carried to the front each week. */
+export function weekNumber(d = new Date()) {
+  const start = new Date(d.getFullYear(), 0, 1);
+  return Math.floor((d.getTime() - start.getTime()) / 604800000);
+}
+
+export function typicalDeck(): TypicalCard[] {
+  const deck = TYPICAL_CARDS.map((c) => ({ ...c }));
+
+  // this week's card, rotating steadily through the pack
+  const wk = weekNumber() % deck.length;
+  deck[wk].isNew = true;
+  const fresh = deck.splice(wk, 1)[0];
+
+  // shuffle the rest
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+
+  return [fresh, ...deck];
+}
+
+
+// A different card each day for the home screen, deterministic by date.
+export function typicalOfDay(d = new Date()): TypicalCard {
+  const day = Math.floor(d.getTime() / 86400000);
+  return TYPICAL_CARDS[day % TYPICAL_CARDS.length];
+}

@@ -1,0 +1,139 @@
+const khayyam: Author = {
+  key: 'khayyam',
+  name: 'Omar Khayyam',
+  persian: 'عمر خیام',
+  epithet: 'The Measurer of Time',
+  years: 'c. 1048 - 1131',
+  essence: 'The mathematician of Neyshabur who built a calendar more accurate than the one the world uses today, and who became world famous for poetry he may not have written, in a translation that was not accurate.',
+  cover: 'lit-khayyam-cover',
+  closing: 'khayyam-tomb',
+  status: 'ready',
+  chapters: [
+    {
+      key: 'kh1',
+      title: 'The Tentmaker Son',
+      nav: 'Neyshabur',
+      subtitle: 'NEYSHABUR, c. 1048',
+      pages: [
+        { blocks: [
+          { t: 'lead', x: 'He is the most famous Persian poet in the English language, and he was not a poet.' },
+          { t: 'p', x: 'That is not a riddle. In his own lifetime, in his own country, Omar Khayyam was known as one of the finest mathematicians and astronomers alive. Nobody called him a poet. The quatrains that made him a household name in London seven centuries later were not what he was for.' },
+          { t: 'p', x: 'He was born in Neyshabur, in Khorasan, around 1048. Khayyam is not a family name in the way we mean it. It means tentmaker, and it was almost certainly his father trade. The boy who would measure the length of the year was the son of a man who stitched canvas.' },
+          { t: 'motif', symbol: 'star', caption: 'خیام' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A good century to be a scholar' },
+          { t: 'p', x: 'He grew up under the Seljuks, and this was the one thing the Seljuks did superbly. Turkic warlords by origin, they had adopted Persian culture completely and they paid for science with an open hand. Nizam al Mulk, the great Persian vizier, built the observatories and the schools.' },
+          { t: 'p', x: 'So Khayyam went to Isfahan, and the sultan Malik Shah gave him an observatory and a team and a question: fix the calendar. He was around thirty. What he did with that assignment is the reason his name should be spoken alongside anyone in the history of science.' },
+          { t: 'aside', x: 'The famous story that he studied alongside Nizam al Mulk and Hassan e Sabbah of the Assassins is almost certainly a later legend. The dates do not work.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh2',
+      title: 'The Measure of a Year',
+      nav: 'The Science',
+      subtitle: 'WHAT HE ACTUALLY DID',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In 1079 Khayyam and his team delivered a calendar. To build it, they had to answer one question with terrible precision: exactly how long is a year.' },
+          { t: 'p', x: 'They measured it as 365.24219858 days. The real figure, as we know it now with satellites and atomic clocks, is 365.242190. He was working with instruments made of brass and wood, and he was wrong by about a millionth of a day.' },
+          { t: 'drift' },
+          { t: 'p', x: 'The calendar Europe adopted five centuries after him, the Gregorian, is less accurate than the one he made. That is not Iranian pride talking. It is arithmetic.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'And it is still running' },
+          { t: 'p', x: 'This is the part that surprises people. His calendar was not a curiosity that was admired and abandoned. It is the calendar of Iran today. The Solar Hijri calendar, still official, still used for every date in the country, descends directly from the one Khayyam built in 1079.' },
+          { t: 'mark', x: 'Iran has been keeping time by a mathematician quatrain of a calendar for nine hundred and fifty years.' },
+          { t: 'p', x: 'And it is why Nowruz is exact. Persian new year does not fall on a date someone chose. It falls at the precise instant the sun crosses the equator, and the whole calendar is anchored to that moment. Every Iranian family sitting at the Haft Seen, watching the clock turn, is using Khayyam.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The mathematics' },
+          { t: 'p', x: 'The calendar was not even his deepest work. Khayyam wrote a treatise on algebra that classified cubic equations, the ones with a cube in them, and solved them. Nobody had done this systematically before.' },
+          { t: 'p', x: 'His method is beautiful. He could not solve them with numbers, because the algebra to do that would not exist for another five hundred years. So he solved them with shapes. He drew a parabola and a circle, arranged so that where they crossed was the answer, and read the solution off the geometry. He turned algebra into a picture.' },
+          { t: 'illumin', x: 'When numbers could not reach it, he drew it instead.' },
+          { t: 'p', x: 'He also pushed at Euclid parallel postulate, the assumption that troubled geometers for two thousand years, and got closer to breaking it than anyone before him. When European mathematicians finally cracked it open in the nineteenth century and found non Euclidean geometry, they were walking a road Khayyam had already been down.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh3',
+      title: 'The Quatrains',
+      nav: 'Rubaiyat',
+      subtitle: 'WHAT HE MAY HAVE WRITTEN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'A rubai is a quatrain, four lines, rhyming AABA. The third line breaks the pattern and the fourth closes it, so the whole thing turns on a hinge. It is a small, hard, complete form, like an epigram with a blade in it.' },
+          { t: 'p', x: 'Khayyam wrote them, we think, privately. They were not published, not performed, not part of his reputation. They surfaced slowly after his death, and here is the honest problem: nobody knows how many are his. Manuscripts written centuries later attribute anywhere from a dozen to a thousand quatrains to him. Scholars who have spent lifetimes on it think perhaps a hundred are genuine, and disagree about which hundred.' },
+          { t: 'aside', x: 'A quatrain is easy to write and easy to attribute. For centuries, anonymous verses that were too sceptical to sign got filed under Khayyam.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What the voice says' },
+          { t: 'p', x: 'Whoever wrote them, they share one mind, and it is a mind unlike anything else in Persian poetry. It is the mind of a scientist who has looked hard at the evidence for what happens after death and found the file empty.' },
+          { t: 'rubai', lines: ['Into this universe, and why not knowing,', 'nor whence, like water willy nilly flowing.', 'And out of it, as wind along the waste,', 'I know not whither, willy nilly blowing.'], note: 'FitzGerald rendering, 1859.' },
+          { t: 'p', x: 'He does not rage at heaven and he does not deny it. He says he does not know, that nobody who claims to know has been there, and that the only thing certainly in your hands is this hour. He is the least mystical of the great Persian poets. Where Hafez sees a beloved behind the veil, Khayyam sees a veil.' },
+          { t: 'veil', surface: 'The moving finger writes, and having writ moves on. Nor all your piety nor wit shall lure it back to cancel half a line.', hidden: 'This is FitzGerald most quoted line, and it is more or less Khayyam. It says the past is closed. Not that it should be accepted, that it is closed, as a matter of fact, the way a proof is closed. It is a mathematician way of describing regret.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The wine question' },
+          { t: 'p', x: 'His quatrains are full of wine, and Iranians have argued about this for nine hundred years. The pious read it as Sufi symbol, the divine intoxication, as it is in Hafez. The plain reading is that Khayyam meant wine.' },
+          { t: 'p', x: 'The plain reading is probably right, and it is not a scandal. His argument is consistent: the beyond is unverifiable, the moment is verifiable, so attend to the moment. Wine is the moment. It is not blasphemy. It is empiricism with a cup in its hand.' },
+          { t: 'rubai', lines: ['Ah, make the most of what we yet may spend,', 'before we too into the dust descend.', 'Dust into dust, and under dust, to lie,', 'sans wine, sans song, sans singer, and, sans end.'], note: 'FitzGerald, 1859.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh4',
+      title: 'The Englishman',
+      nav: 'FitzGerald',
+      subtitle: 'HOW THE WEST MADE HIM',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In 1859 an eccentric English gentleman named Edward FitzGerald privately printed two hundred and fifty copies of a small book of verses translated from Persian. Nobody bought it. The copies ended up in a bargain box outside a London bookshop, marked down to a penny.' },
+          { t: 'p', x: 'Someone found one. It reached Rossetti, then Swinburne, then everyone, and within a decade Omar Khayyam was one of the most quoted poets in the English speaking world. He stayed there for a century. There were Khayyam clubs and Khayyam wallpaper and quatrains carved on gravestones.' },
+          { t: 'p', x: 'And FitzGerald was not translating. He said so himself, cheerfully, that he took whatever liberties he liked with these Persians. He merged quatrains, invented lines, dropped what bored him, and shaped the whole into an English poem with a mood of his own.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'What he did to the mutton' },
+          { t: 'p', x: 'The most famous lines he ever produced run: a book of verses underneath the bough, a jug of wine, a loaf of bread, and thou beside me singing in the wilderness. Millions of people know it. It is on a thousand greeting cards.' },
+          { t: 'twotrans', a: { label: 'FITZGERALD, 1859', x: 'A Book of Verses underneath the Bough, a Jug of Wine, a Loaf of Bread, and Thou beside me singing in the Wilderness.' }, b: { label: 'WHAT THE PERSIAN SAYS', x: 'A loaf of bread, a gourd of wine, a thigh of mutton, and you and I sitting in the wilderness. That is a pleasure beyond any sultan kingdom.' } },
+          { t: 'p', x: 'FitzGerald removed the leg of lamb and put a book of poetry in its place. That single edit is the whole story of how the West received Persia. A blunt, physical, funny Persian picnic became a soft Victorian daydream, and the daydream is what the world memorised.' },
+          { t: 'illumin', x: 'The mutton became a book of verses, and nobody noticed for a hundred years.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Was it a theft or a gift' },
+          { t: 'p', x: 'Both, honestly, and it is worth holding both. FitzGerald misrepresented him. He also made a genuinely great English poem, and he made the world care about a Persian name at a moment when the West cared about very little east of Athens. Iranians tend to feel the two things at once, and that is the correct response.' },
+          { t: 'p', x: 'The strange result is that the Khayyam the world loves is a collaboration between an eleventh century Iranian mathematician and a nineteenth century Suffolk bachelor, and neither of them could have made him alone.' },
+        ] },
+      ],
+    },
+    {
+      key: 'kh5',
+      title: 'Where the Blossoms Fall',
+      nav: 'Legacy',
+      subtitle: 'NEYSHABUR, AGAIN',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'There is a story, and unusually for such stories it comes from someone who knew him. Nizami Aruzi wrote that Khayyam once said his grave would lie in a place where the north wind would scatter blossoms over it.' },
+          { t: 'p', x: 'Years after Khayyam died, Aruzi went to Neyshabur and found the tomb. It sat at the foot of a garden wall, and pear and peach trees leaned over that wall, and the ground was so buried in fallen blossom that the grave was hidden beneath it. He wrote that he wept.' },
+          { t: 'imgframe', key: 'khayyam-tomb', cap: 'The tomb at Neyshabur, rebuilt in 1963 as a lattice of interlocking geometry, for a man who solved equations with shapes.' },
+          { t: 'illumin', x: 'The man who would not predict the afterlife predicted his own grave, and got it right.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The double injustice' },
+          { t: 'p', x: 'Here is where he sits, and it is a strange seat. In the West he is a famous poet and an unknown scientist. In Iran he is respected as a scientist and argued about as a poet. Almost nobody, anywhere, holds both halves at once.' },
+          { t: 'p', x: 'The full man is better than either half. He measured the year to six decimal places with brass instruments. He solved cubic equations by drawing them. He built the calendar Iran still lives by. And in his private hours he wrote four line poems saying that none of it can tell you what happens next, so pour the wine.' },
+          { t: 'mark', x: 'The most precise mind of his century spent its evenings writing about how little can be known.' },
+          { t: 'p', x: 'That is not a contradiction. It is the same man. Precision about what can be measured, and honesty about what cannot. The quatrains are what a scientist writes when the instruments run out.' },
+        ] },
+        { blocks: [
+          { t: 'rule' },
+          { t: 'p', x: 'This has been a glimpse of Omar Khayyam, the tentmaker son of Neyshabur, who was asked to fix a calendar and fixed it so well that it is still running, and who is loved around the world for a book he did not quite write.' },
+          { t: 'p', x: 'Every Nowruz, at the exact second the sun crosses the equator, an entire country checks the clock. That instant is his. It is the most widely used and least credited piece of Persian science on earth, and it happens once a year, in every Iranian home, forever.' },
+          { t: 'illumin', x: 'He gave Iran the moment its year turns, and the world forgot he was a scientist at all.' },
+          { t: 'motif', symbol: 'star', caption: 'خیام' },
+        ] },
+      ],
+    },
+  ],
+};

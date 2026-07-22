@@ -1,0 +1,142 @@
+const sasanian: Topic = {
+  key: 'sasanian-empire',
+  category: 'history',
+  name: 'The Sasanian Empire',
+  persian: 'ساسانیان',
+  years: '224 - 651 CE',
+  essence: 'The last great empire of pre-Islamic Iran, a rival of Rome and a golden age of Persian culture, faith, and art, until the coming of Islam changed the nation forever.',
+  cover: 'sasanian-cover',
+  closing: 'sasanian-cover',
+  status: 'ready',
+  sources: [
+    'The historical record of the Sasanian era',
+    'Roman and Persian accounts of the age',
+    'The Shahnameh of Ferdowsi',
+    'Touraj Daryaee, Sasanian Persia',
+  ],
+  chapters: [
+    {
+      key: 'ss1',
+      title: 'The Rebirth of Persia',
+      subtitle: '224 CE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'For nearly five centuries after Alexander, the glory of Cyrus and Darius had faded. Iran was ruled first by Greek kings and then by the Parthians, a capable but loosely bound dynasty. The memory of the great Persian Empire lived on, but its full splendour had dimmed.' },
+          { t: 'p', x: 'Then, in 224 CE, a prince from the south, from the very heartland of Persia where Cyrus had once ruled, rose up and restored the ancient glory. His name was Ardashir, and he founded the Sasanian dynasty, the last and one of the greatest of the pre-Islamic Persian empires.' },
+          { t: 'splitimg', key: 'sasanian-ardashir', title: 'Ardashir I', x: 'Ardashir overthrew the Parthians and founded a new empire that consciously looked back to the Achaemenids of Cyrus and Darius, seeking to restore the true glory of Persia.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A conscious return to greatness' },
+          { t: 'p', x: 'The Sasanians saw themselves as the true heirs of the ancient Persian kings. They revived the old titles, the old glory, and the old faith, and set out to build an empire worthy of the Achaemenid name. Under them, Persia was reborn as a great power of the world.' },
+          { t: 'markline', x: 'After five centuries, the true glory of Persia rose again.' },
+          { t: 'p', x: 'For more than four hundred years the Sasanians would rule a vast and brilliant empire, stretching across the Iranian plateau and beyond, a civilization of magnificent cities, learning, and art that shaped the world far beyond its borders.' },
+        ] },
+      ],
+    },
+    {
+      key: 'ss2',
+      title: 'The Faith of the Sacred Fire',
+      subtitle: 'The soul of Sasanian Iran',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'At the very heart of the Sasanian world lay a faith of great antiquity and beauty: Zoroastrianism, the religion of the prophet Zarathustra, which the Persians had followed for more than a thousand years. Under the Sasanians it became the official faith of the empire, woven into the state itself.' },
+          { t: 'p', x: 'It is one of the oldest revealed religions in the world, and among the most influential. It taught of a single supreme God, Ahura Mazda, the Wise Lord, and of the eternal struggle between truth and light on one side, and falsehood and darkness on the other, a struggle in which every person must choose their part.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'Good thoughts, good words, good deeds' },
+          { t: 'p', x: 'At the core of the faith was a simple and beautiful ideal, that a good life is built on three things: good thoughts, good words, and good deeds. Fire, as the symbol of divine light and purity, was honored in great fire temples that burned across the land, tended by priests and never allowed to go out.' },
+          { t: 'markline', x: 'Good thoughts, good words, good deeds.' },
+          { t: 'splitimg', key: 'sasanian-fire-temple', title: 'The sacred fire', x: 'Great fire temples burned across the empire, their flames a symbol of the divine light. Some, it was said, had burned without pause for centuries.' },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'The influence of this ancient faith reached far beyond Iran. Its ideas of a single God, of heaven and hell, of angels, of a final judgment, and of a savior to come, are believed by many scholars to have shaped the great religions that followed. The spiritual legacy of Zoroastrian Persia lives on in the faith of much of the world to this day.' },
+          { t: 'call', title: 'A faith worthy of its own telling', x: 'Zoroastrianism is one of the great treasures of Iranian heritage, and its full story, its prophet, its scripture, and its enduring influence, deserves a telling all its own, which it will one day have.' },
+        ] },
+      ],
+    },
+    {
+      key: 'ss3',
+      title: 'The Rival of Rome',
+      subtitle: '3rd - 6th century',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'For over four hundred years, the Sasanian Empire stood as the great rival of Rome, and later of its successor, the Byzantine Empire. These were the two superpowers of the ancient world, and between them stretched a frontier contested in war after war across the centuries.' },
+          { t: 'p', x: 'It was a rivalry of equals, and Persia gave as good as it got. In one of the most famous moments of the age, the Sasanian king Shapur the Great defeated and captured the Roman emperor Valerian himself, an almost unthinkable humiliation for Rome, and a triumph carved in stone in the cliffs of Iran, where it can still be seen today.' },
+        ] },
+        { blocks: [
+          { t: 'splitimg', key: 'sasanian-shapur', title: 'Shapur I', x: 'Shapur the Great defeated three Roman emperors and captured one, Valerian, in battle. His victories are carved into the rock reliefs of Persia, where they endure to this day.' },
+          { t: 'numstat', items: [
+            { n: '3', label: 'Roman emperors defeated by Shapur I' },
+            { n: '260 CE', label: 'The Roman emperor Valerian captured' },
+            { n: '400+', label: 'Years as a great world power' },
+            { n: 'Rome', label: 'Its equal and rival for centuries' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A golden age of civilization' },
+          { t: 'p', x: 'The Sasanian centuries were a golden age of Persian civilization. Their capital, Ctesiphon, was one of the greatest cities in the world, home to the mighty arch of Taq Kasra, the largest brick vault ever built, which still stands after seventeen hundred years.' },
+          { t: 'p', x: 'They were patrons of learning who welcomed scholars from across the world, gathered and translated the knowledge of Greece, India, and beyond, and advanced medicine, astronomy, and philosophy. Persian art, music, silverwork, and textiles of this age were treasured from Rome to China. It was one of the summits of the ancient world.' },
+          { t: 'markline', x: 'From Rome to China, the world knew the splendour of Sasanian Persia.' },
+        ] },
+      ],
+    },
+    {
+      key: 'ss4',
+      title: 'The Last Glory and the Long War',
+      subtitle: '531 - 628 CE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The empire reached its final height under the great king Khosrow the First, remembered as Anushirvan, the Immortal Soul, a byword for justice and wisdom for centuries after. Under him the empire was reformed, learning flourished, and Persia stood at the very peak of its power and prestige.' },
+          { t: 'splitimg', key: 'sasanian-khosrow', title: 'Khosrow Anushirvan', x: 'Khosrow the First was remembered across the East as the model of the just and wise king. Under him, Sasanian Persia reached its golden height.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The war that exhausted two empires' },
+          { t: 'p', x: 'But the long rivalry with the Romans was to prove fatal to both. In the early seventh century, the Sasanians under Khosrow the Second launched a vast war against the Byzantine Empire, and at first they triumphed spectacularly, conquering Egypt, Syria, and the Holy Land, and reaching the very walls of Constantinople.' },
+          { t: 'ribbon', items: [
+            { year: '602', label: 'The last great war with Byzantium begins' },
+            { year: '614', label: 'Persia conquers Jerusalem and the Holy Land' },
+            { year: '626', label: 'The Sasanian army reaches Constantinople' },
+            { year: '628', label: 'The war collapses; both empires lie exhausted' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'Then the tide turned. The Byzantine emperor struck back and carried the war deep into the heart of Persia. When at last the fighting ended, after twenty six years, both great empires were utterly exhausted, their treasuries empty, their armies bled white, their people weary of endless war.' },
+          { t: 'markline', x: 'The two great powers of the world had fought each other to the point of ruin.' },
+          { t: 'p', x: 'Neither empire knew it, but a new power was rising in the deserts of Arabia to the south, one that would sweep away the exhausted old order and change the world forever.' },
+        ] },
+      ],
+    },
+    {
+      key: 'ss5',
+      title: 'The Coming of Islam',
+      subtitle: '633 - 651 CE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'In the deserts of Arabia, a new faith had been born. Islam had united the Arab tribes as never before, and filled them with a burning purpose. In the 630s, the armies of the young Muslim state burst out of Arabia, and they turned toward the two exhausted empires to the north.' },
+          { t: 'p', x: 'The Sasanian Empire, drained by its long war with Byzantium and weakened by years of turmoil at its court, was not the power it had been. Yet few could have imagined how swiftly the ancient empire would fall.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The battle that decided an empire' },
+          { t: 'p', x: 'The decisive blow came at the battle of Qadisiyyah, around the year 636, where the main Sasanian army met the Arab forces. After days of hard fighting, the Persian army was broken. The road to the capital lay open, and the great city of Ctesiphon fell to the conquerors.' },
+          { t: 'numstat', items: [
+            { n: '636', label: 'The battle of Qadisiyyah breaks the Persian army' },
+            { n: '637', label: 'The capital, Ctesiphon, falls' },
+            { n: '642', label: 'The battle of Nahavand, the final defeat' },
+            { n: '651', label: 'The last Sasanian king dies; the empire ends' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The end of an age' },
+          { t: 'p', x: 'The last Sasanian king, Yazdegerd the Third, fled eastward across his crumbling empire, seeking in vain to raise an army to turn back the tide. He was pursued from city to city, and in 651, abandoned and alone, he was killed near the far eastern city of Merv. With his death, four centuries of Sasanian rule, and more than a thousand years of the Persian Zoroastrian empire, came to an end.' },
+          { t: 'markline', x: 'An empire that had rivalled Rome for four hundred years had fallen in a single generation.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'The conquest changed Iran forever. Over the generations that followed, Islam gradually became the faith of the Iranian people, and the sacred fires of Zoroastrianism, which had burned for over a thousand years, slowly dimmed. The old faith did not vanish, and its communities endure to this day, but it was no longer the soul of the state.' },
+          { t: 'p', x: 'What followed was a long and difficult age, sometimes called the two centuries of silence, when the Persian language and the Persian voice seemed to grow quiet under the new order. Yet Iran did not disappear. Its language, its poetry, its memory, and its spirit endured beneath the surface, and in time they would rise again, transformed, to shape a new and lasting Iranian civilization.' },
+          { t: 'pull', x: 'The empire fell, but the soul of Iran endured, and would one day speak again.' },
+        ] },
+      ],
+    },
+  ],
+};

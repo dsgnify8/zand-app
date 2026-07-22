@@ -1,0 +1,118 @@
+const parthian: Topic = {
+  key: 'parthian-empire',
+  category: 'history',
+  name: 'The Parthian Empire',
+  persian: 'اشکانیان',
+  years: '247 BCE - 224 CE',
+  essence: 'The empire of horsemen and archers that reclaimed Iran from Greek rule, held Rome at bay for centuries, and kept the Persian spirit alive between two golden ages.',
+  cover: 'parthian-cover',
+  closing: 'parthian-cover',
+  status: 'ready',
+  sources: [
+    'Greek and Roman accounts of the age',
+    'The historical record of the Parthian era',
+    'The Shahnameh of Ferdowsi',
+  ],
+  chapters: [
+    {
+      key: 'pt1',
+      title: 'Iran Under Foreign Kings',
+      subtitle: 'After Alexander',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'When Alexander of Macedon defeated the last Achaemenid king, the empire that Cyrus had built passed into foreign hands. After Alexander\'s death his generals divided his conquests, and Iran fell to the Seleucids, a Greek dynasty who ruled the ancient land of Persia as outsiders.' },
+          { t: 'p', x: 'For a time, Greek kings sat where the Persian kings of kings had ruled. Greek became the language of the court, Greek cities rose across the plateau, and the proud heartland of Cyrus and Darius answered to masters from a distant western land.' },
+          { t: 'markline', x: 'The land of Cyrus, for the first time, obeyed foreign kings.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A people from the steppe' },
+          { t: 'p', x: 'But Iran would not stay in foreign hands. From the northeast, from the wide grasslands beyond the Caspian, came a people of hardy nomadic horsemen: the Parni, led by a chief named Arsaces. Around the middle of the third century BCE, they swept into the region of Parthia and threw off Greek rule.' },
+          { t: 'p', x: 'From that homeland the dynasty took its name, and Arsaces gave his to the line of kings who followed, the Arsacids. From these beginnings, a small rebellion on the edge of a Greek empire, would grow one of the great powers of the ancient world.' },
+          { t: 'splitimg', key: 'parthian-arsaces', title: 'Arsaces I', x: 'Arsaces, chief of the Parni, founded the dynasty that would drive the Greeks from Iran and rule for nearly five centuries.' },
+        ] },
+      ],
+    },
+    {
+      key: 'pt2',
+      title: 'The Reconquest of a Homeland',
+      subtitle: '2nd century BCE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'What began as a frontier revolt became, over the generations, the reconquest of an entire empire. The Parthian kings pushed steadily westward and southward, city by city and province by province, driving back the weakening Greek Seleucids and restoring Iranian rule over the ancient Persian lands.' },
+          { t: 'p', x: 'The greatest of these early kings was Mithridates the First, who in the second century BCE transformed the Parthian realm from a kingdom into an empire, taking the rich lands of Mesopotamia and the title, once more, of a great Iranian king.' },
+        ] },
+        { blocks: [
+          { t: 'ribbon', items: [
+            { year: '247 BCE', label: 'Arsaces founds the Parthian state' },
+            { year: '171 BCE', label: 'Mithridates I begins the great expansion' },
+            { year: '141 BCE', label: 'The Parthians take Mesopotamia and Babylon' },
+            { year: '1st c. BCE', label: 'Parthia stands as a great world power' },
+          ] },
+          { t: 'p', x: 'Under the Parthians, Iran was Iranian once more. Though they had absorbed much from the Greek world, and long kept Greek styles at their court, they revived the old Iranian ways, honored the ancient faith, and cherished the memory of the Achaemenid past. The Persian spirit, which had bent under Greek rule, straightened again.' },
+          { t: 'markline', x: 'From horsemen of the steppe rose the empire that made Iran Iranian again.' },
+        ] },
+      ],
+    },
+    {
+      key: 'pt3',
+      title: 'The Wall Against Rome',
+      subtitle: '53 BCE onward',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'As Parthia rose in the east, a new power was rising in the west: Rome, the greatest empire the Mediterranean world had ever known. The two great powers met at the river Euphrates, and there began one of the longest rivalries in ancient history, Rome and Parthia, west and east, for nearly three hundred years.' },
+          { t: 'p', x: 'Rome, used to conquering all before it, found in Parthia an equal it could not overcome. Again and again the legions marched east, and again and again the Parthians turned them back. The Euphrates became the wall against which Roman ambition broke.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The disaster at Carrhae' },
+          { t: 'p', x: 'The most famous clash came in 53 BCE at Carrhae, where the Roman general Crassus, one of the richest and most powerful men in Rome, invaded with a mighty army. There the Parthians taught Rome a lesson it never forgot. Their horse archers rained arrows upon the legions, and their heavy armored cavalry shattered them. The Roman army was destroyed, and Crassus was killed.' },
+          { t: 'numstat', items: [
+            { n: '53 BCE', label: 'The battle of Carrhae' },
+            { n: 'Crassus', label: 'The Roman commander slain' },
+            { n: '~300', label: 'Years Parthia held Rome at bay' },
+            { n: 'Euphrates', label: 'The frontier Rome could not cross' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The Parthian shot' },
+          { t: 'p', x: 'The Parthians were among the finest horsemen the world had ever seen, and they gave the world a phrase still used today. Their riders would feign retreat at a gallop, then twist backward in the saddle to loose a deadly arrow at the pursuing enemy. This maneuver, the Parthian shot, was so famous it entered the languages of Europe, a parting blow delivered in the very act of withdrawal.' },
+          { t: 'markline', x: 'They mastered the art of striking hardest at the moment they seemed to flee.' },
+        ] },
+      ],
+    },
+    {
+      key: 'pt4',
+      title: 'Crossroads of the World',
+      subtitle: 'The Parthian peace',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The Parthian Empire sat astride the greatest trade route in the world: the Silk Road, the long ribbon of commerce that linked the empires of Rome and China. Through Parthian lands passed the silk of the east and the gold of the west, and the empire grew rich as the great middleman of the world.' },
+          { t: 'p', x: 'The Parthians guarded and profited from this trade, and their cities flourished as bustling crossroads where the goods, ideas, and peoples of half the world met and mingled. Iran was, once again, a bridge between civilizations, as it had been under Cyrus and would be again.' },
+          { t: 'splitimg', key: 'parthian-silkroad', title: 'The Silk Road', x: 'The wealth of the Silk Road flowed through Parthian hands, linking Rome and China through the heart of Iran.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A looser kind of empire' },
+          { t: 'p', x: 'Parthia was not a tightly centralized realm like the empires before and after it. It was more a family of kingdoms and noble houses, bound in loyalty to the Arsacid king of kings, with powerful local lords holding great sway. This gave the empire resilience, but also, in the end, a certain fragility, as the great houses and rival claimants fought among themselves.' },
+          { t: 'p', x: 'For all its strength against Rome, the empire was often divided within, and its long centuries were marked by civil wars and contested successions that slowly wore at its foundations.' },
+        ] },
+      ],
+    },
+    {
+      key: 'pt5',
+      title: 'The Passing of the Torch',
+      subtitle: '224 CE',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'After nearly five hundred years, the Parthian Empire grew weary. Weakened by endless wars with Rome and by its own internal divisions, the once mighty realm was ripe for change. And change came, as it so often did in Iran, from the ancient heartland of Persia in the south.' },
+          { t: 'p', x: 'There, a prince named Ardashir rose in rebellion. In 224 CE he defeated the last Parthian king in battle, and upon the ruins of the Arsacid realm he raised a new empire, the Sasanian, which would carry Persia to fresh heights of glory.' },
+          { t: 'markline', x: 'One Iranian empire gave way to another, and the flame passed on.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of the Parthians, an empire too often overlooked, standing as it does between the dazzling glory of Cyrus and the splendour of the Sasanians. Yet their achievement was immense. In an age when Iran might have been swallowed by the Greek and Roman west, they reclaimed the homeland, revived the Iranian spirit, and stood for centuries as the unbreakable wall of the east.' },
+          { t: 'p', x: 'They kept the flame of Iran burning through the long centuries between two golden ages, and they handed it on, undimmed, to those who followed. Without the horsemen of Parthia, the story of Iran might have ended long ago.' },
+          { t: 'pull', x: 'They kept the flame of Iran alive, and passed it on undimmed.' },
+        ] },
+      ],
+    },
+  ],
+};

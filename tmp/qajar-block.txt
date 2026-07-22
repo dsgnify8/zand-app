@@ -1,0 +1,136 @@
+const qajar: Topic = {
+  key: 'qajar-dynasty',
+  category: 'history',
+  name: 'The Qajar Dynasty',
+  persian: 'قاجاریان',
+  years: '1789 - 1925',
+  essence: 'The dynasty that ruled Iran through a long and difficult century, caught between the great powers, until the ground was laid for a new age.',
+  cover: 'qajar-cover',
+  closing: 'qajar-cover',
+  status: 'ready',
+  sources: [
+    'The historical record of the Qajar era',
+    'Contemporary Persian and European accounts',
+    'Abbas Amanat, Pivot of the Universe',
+  ],
+  chapters: [
+    {
+      key: 'qj1',
+      title: 'A New Dynasty from the North',
+      subtitle: '1789 - 1834',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'After the gentle Zand dynasty fell, a harder power rose to take its place. Agha Mohammad Khan, chief of the Qajar tribe of the north, fought his way to mastery over Iran and had himself crowned Shah in the last years of the eighteenth century.' },
+          { t: 'p', x: 'He was a ruler of iron will and, by all accounts, fearsome cruelty, forged in a lifetime of struggle and captivity. But he reunited a country that had again fallen into division, and he founded a dynasty that would rule Iran for well over a century.' },
+          { t: 'splitimg', key: 'qajar-agha-mohammad', title: 'The founder', x: 'Agha Mohammad Khan reunited Iran by force and founded the Qajar line, though he did not live long to enjoy his throne. He was assassinated in 1797, soon after his coronation.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A capital named Tehran' },
+          { t: 'p', x: 'It was the Qajars who chose as their capital a modest town in the north of Iran, one that would grow, over their long rule and the ages after, into the great metropolis of the nation. That town was Tehran, and it has been the heart of Iran ever since.' },
+          { t: 'markline', x: 'Under the Qajars, Tehran became the capital it remains to this day.' },
+          { t: 'p', x: 'The crown passed to Fath Ali Shah, whose long reign was famous for its splendour and ceremony, its jewelled court and its portraits of a bearded king in golden robes. But beyond the glitter of the court, storm clouds were gathering on the horizon.' },
+        ] },
+      ],
+    },
+    {
+      key: 'qj2',
+      title: 'Caught Between Empires',
+      subtitle: '1804 - 1828',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The nineteenth century was the age of the great European empires, and Iran found itself caught between two of the hungriest. To the north loomed the vast and expanding empire of Russia. To the east and south stretched the power of the British, masters of India.' },
+          { t: 'p', x: 'Between these two giants, Iran was squeezed, courted, and pressured, its fate bound up in a great game of empires that it had not the strength to control. It was a hard and humbling position for a proud and ancient nation.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The wars with Russia' },
+          { t: 'p', x: 'Twice in the early century Iran went to war with Russia over the lands of the Caucasus, and twice it was defeated by the superior arms and organization of the Russian armies. The cost of those defeats was severe, and it was paid in Iranian soil.' },
+          { t: 'numstat', items: [
+            { n: '1813', label: 'The Treaty of Gulistan, after the first war' },
+            { n: '1828', label: 'The Treaty of Turkmenchay, after the second' },
+            { n: 'Caucasus', label: 'Georgia, and much of the Caucasus, lost' },
+            { n: 'Capitulations', label: 'Special rights granted to foreign powers' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'By the Treaty of Turkmenchay, one of the most painful in Iranian history, Iran gave up its claims to the rich lands of the Caucasus and granted Russia sweeping privileges. It was a wound to national pride that would not soon heal, and a sign of how far the balance had tipped against Iran.' },
+          { t: 'markline', x: 'A proud nation learned, painfully, that valour alone could not stand against modern empires.' },
+        ] },
+      ],
+    },
+    {
+      key: 'qj3',
+      title: 'The Reformer Who Was Lost',
+      subtitle: '1848 - 1851',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'Not everyone accepted Iran\'s decline. In the middle of the century there rose a man who saw clearly what his country needed, and who tried, in a few short years, to drag it into the modern world. His name was Amir Kabir, and he was the chief minister of the young Shah, Naser al-Din.' },
+          { t: 'splitimg', key: 'qajar-amir-kabir', title: 'Amir Kabir', x: 'A brilliant and honest statesman, Amir Kabir set out to reform Iran root and branch: its army, its finances, its industry, and its schools. He is remembered as one of the greatest reformers in the nation\'s history.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A vision of a modern Iran' },
+          { t: 'p', x: 'In his brief time in power, Amir Kabir accomplished a remarkable amount. He founded the Dar ol-Fonun, the first modern institution of higher learning in Iran, a school of science, engineering, and medicine that would shape generations. He reformed the treasury, curbed corruption, and worked to build modern industry.' },
+          { t: 'duo', left: { title: 'His vision', x: 'A modern, independent, educated Iran, strong enough to stand on its own among the nations.' }, right: { title: 'His enemies', x: 'A jealous court that feared his power and honesty, and whispered against him to the young king.' } },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'But his very success made him enemies. The courtiers whose corruption he threatened, and who feared his influence over the young Shah, turned the king against him. In 1851 he was dismissed, exiled, and soon after put to death on the Shah\'s order, in a bath house in Kashan.' },
+          { t: 'markline', x: 'Iran lost, in one stroke, the greatest reformer of its age. It is one of history\'s saddest what-ifs.' },
+          { t: 'p', x: 'What Iran might have become, had Amir Kabir been allowed to finish his work, is one of the great questions of the nation\'s history. His death was a tragedy, and the reforms he began were largely undone.' },
+        ] },
+      ],
+    },
+    {
+      key: 'qj4',
+      title: 'The Awakening of a Nation',
+      subtitle: '1890 - 1911',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'As the century wore on, the kings sold ever more of the nation\'s wealth and rights to foreign powers and companies, granting concessions over tobacco, banking, oil, and more, to fill an empty treasury. But the people of Iran were beginning to stir.' },
+          { t: 'h', x: 'The Tobacco Protest' },
+          { t: 'p', x: 'In 1890 the Shah granted a sweeping monopoly over all Iranian tobacco to a British company. The nation erupted. Led by the clergy and the merchants, Iranians of every class joined a boycott so complete that, it is said, even the women of the royal harem refused to smoke. The Shah was forced to cancel the concession.' },
+          { t: 'markline', x: 'For the first time, the people had spoken with one voice, and the throne had been made to listen.' },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'The Constitutional Revolution' },
+          { t: 'p', x: 'The Tobacco Protest was only the beginning. The demand grew for a government of laws rather than the whim of kings, and in 1906 the movement triumphed. The Shah was compelled to grant a constitution and to establish the Majles, the national parliament, the first in Iranian history.' },
+          { t: 'ribbon', items: [
+            { year: '1890', label: 'The Tobacco Protest unites the nation against a foreign monopoly' },
+            { year: '1906', label: 'The Constitutional Revolution wins a constitution and a parliament' },
+            { year: '1908', label: 'The Shah strikes back, and the parliament is bombarded' },
+            { year: '1909', label: 'The constitutionalists retake Tehran and restore the Majles' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'p', x: 'It was a hard-won and fragile victory, and the struggle between the crown and the constitution would go on for years, with the parliament even bombarded at one point by Russian-officered forces. But something fundamental had changed. The idea had taken root that the people, not the king alone, were the source of authority in Iran.' },
+          { t: 'markline', x: 'A nation had awoken to the idea that it belonged to its people.' },
+        ] },
+      ],
+    },
+    {
+      key: 'qj5',
+      title: 'The End of an Age',
+      subtitle: '1911 - 1925',
+      pages: [
+        { blocks: [
+          { t: 'p', x: 'The final years of the Qajars were the hardest of all. During the First World War, though Iran declared its neutrality, the armies of Russia, Britain, and the Ottomans marched across its soil at will, and famine and disorder swept the land. The Qajar state had become too weak to protect its own people.' },
+          { t: 'numstat', items: [
+            { n: 'WWI', label: 'Foreign armies cross a neutral Iran' },
+            { n: 'Famine', label: 'Disorder and hunger grip the land' },
+            { n: '1921', label: 'A coup led by Reza Khan' },
+            { n: '1925', label: 'The Qajar dynasty ends' },
+          ] },
+        ] },
+        { blocks: [
+          { t: 'h', x: 'A soldier steps forward' },
+          { t: 'p', x: 'Out of this chaos, in 1921, stepped a commander of the Cossack Brigade named Reza Khan, who marched on Tehran and seized the initiative. For a few years he ruled in the shadow of the last, powerless Qajar king. Then, in 1925, the parliament set the old dynasty aside and raised him to the throne as Reza Shah Pahlavi.' },
+          { t: 'markline', x: 'The Qajar century closed, and the Pahlavi age of modern Iran began.' },
+        ] },
+        { blocks: [
+          { t: 'div' },
+          { t: 'p', x: 'This has been a glimpse of the Qajars, who ruled Iran through a long and testing century. It was, in many ways, an age of hardship and decline, of lost wars and foreign pressure. Yet it was also the age in which the Iranian nation awoke, demanded a voice in its own affairs, and won its first constitution.' },
+          { t: 'p', x: 'From the trials of the Qajar century, a new and modern Iran was struggling to be born. And when at last it emerged, it would carry forward both the wounds and the awakenings of these long and difficult years.' },
+          { t: 'pull', x: 'In its century of hardship, the nation found its own voice.' },
+        ] },
+      ],
+    },
+  ],
+};
