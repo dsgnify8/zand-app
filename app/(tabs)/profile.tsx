@@ -8,6 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS } from '@/constants/profile';
 import { useSaved } from '@/lib/saved-store';
+import { t, useLang } from '@/lib/i18n';
+import { PROFILE } from '@/constants/i18n/profile';
 import { ContinueReading } from '@/components/continue-reading';
 import { useAuth } from '@/lib/auth';
 import { useFriends, acceptRequest, removeFriendship } from '@/lib/friends';
@@ -39,10 +41,10 @@ function useSavedItems() {
 }
 
 const TABS: { k: Tab; label: string; icon: string }[] = [
-  { k: 'you', label: 'You', icon: 'sparkles' },
-  { k: 'library', label: 'Library', icon: 'bookmark' },
-  { k: 'friends', label: 'Friends', icon: 'people' },
-  { k: 'progress', label: 'Progress', icon: 'leaf' },
+  { k: 'you', label: t(PROFILE.you), icon: 'sparkles' },
+  { k: 'library', label: t(PROFILE.library), icon: 'bookmark' },
+  { k: 'friends', label: t(PROFILE.friends), icon: 'people' },
+  { k: 'progress', label: t(PROFILE.progress), icon: 'leaf' },
 ];
 
 /* ---------------- You ---------------- */
@@ -54,7 +56,7 @@ function StreakCard() {
       <View style={s.streakRow}>
         <View style={s.streakLeft}>
           <Text style={s.streakN}>{ME.streak}</Text>
-          <Text style={s.streakL}>DAYS IN A ROW</Text>
+          <Text style={s.streakL}>{t(PROFILE.daysRow)}</Text>
           <View style={s.streakDays}>
             {DAYS.slice(-7).map((d, i) => (
               <View key={i} style={[s.dayPip, d && s.dayPipOn]} />
@@ -74,7 +76,7 @@ function KeepReading() {
 function DiscoverRow() {
   return (
     <View style={{ marginTop: spacing.xl }}>
-      <Text style={s.sectionLabel}>SOMETHING YOU HAVE NOT SEEN</Text>
+      <Text style={s.sectionLabel}>{t(PROFILE.notSeen)}</Text>
       <View style={{ gap: spacing.md }}>
         {DISCOVER.map((d) => {
           const src = eduImage(d.image);
@@ -244,17 +246,17 @@ function LibraryTab() {
       <View style={s.libHero}>
         <LinearGradient colors={[pr.saveA, pr.saveB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <Text style={s.libN}>{items.length}</Text>
-        <Text style={s.libL}>THINGS YOU KEPT</Text>
+        <Text style={s.libL}>{t(PROFILE.thingsKept)}</Text>
         <Text style={s.libX}>Everything you tapped save on, in one place.</Text>
       </View>
 
-      <Text style={s.sectionLabel}>YOUR LIBRARY</Text>
+      <Text style={s.sectionLabel}>{t(PROFILE.yourLibrary)}</Text>
       <View style={s.grid}>
         {[
-          { key: 'history', i: 'time-outline', t: 'History', x: 'everything you have opened' },
-          { key: 'favourites', i: 'heart-outline', t: 'Favourites', x: 'the ones you loved' },
-          { key: 'watched', i: 'play-circle-outline', t: 'Watched', x: 'videos you watched' },
-          { key: 'saved', i: 'bookmark-outline', t: 'Save for later', x: 'to come back to' },
+          { key: 'history', i: 'time-outline', t: t(PROFILE.history), x: t(PROFILE.historyX) },
+          { key: 'favourites', i: 'heart-outline', t: t(PROFILE.favourites), x: t(PROFILE.favouritesX) },
+          { key: 'watched', i: 'play-circle-outline', t: t(PROFILE.watched), x: t(PROFILE.watchedX) },
+          { key: 'saved', i: 'bookmark-outline', t: t(PROFILE.saveLater), x: t(PROFILE.saveLaterX) },
         ].map((g) => (
           <Pressable key={g.key} style={s.gridCell} onPress={() => setLibView(g.key)}>
             <Ionicons name={g.i as any} size={19} color={pr.saveA} />
@@ -264,7 +266,7 @@ function LibraryTab() {
         ))}
       </View>
 
-      <Text style={s.sectionLabel}>MY SAVED</Text>
+      <Text style={s.sectionLabel}>{t(PROFILE.mySaved)}</Text>
       <View style={s.chipsTight}>
         {(['all', 'article', 'word', 'verse', 'topic'] as const).map((f) => (
           <Pressable key={f} style={[s.chip, filter === f && s.chipOn]} onPress={() => setFilter(f)}>
@@ -309,14 +311,14 @@ function FriendsTab() {
       <View style={s.frHero}>
         <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <Text style={s.frHeroFa}>بفرست</Text>
-        <Text style={s.frHeroT}>Teach each other</Text>
+        <Text style={s.frHeroT}>{t(PROFILE.teachEachOther)}</Text>
         <Text style={s.frHeroX}>Send a friend anything worth learning: a word, a poet, a place, a story. They learn it, then send one back.</Text>
       </View>
 
       {hasActivity ? (
         <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
           <Ionicons name="person-add" size={17} color="#FFF" />
-          <Text style={s.frMainBtnT}>Find &amp; add friends</Text>
+          <Text style={s.frMainBtnT}>{t(PROFILE.findFriends)}</Text>
           {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
         </Pressable>
       ) : null}
@@ -324,17 +326,17 @@ function FriendsTab() {
       {/* Real incoming requests (always live) */}
       {incoming.length > 0 ? (
         <>
-          <Text style={s.sectionLabel}>REQUESTS</Text>
+          <Text style={s.sectionLabel}>{t(PROFILE.requests)}</Text>
           <View style={{ gap: spacing.sm }}>
             {incoming.map((r) => (
               <View key={r.id} style={s.friendRow}>
                 <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
                 <View style={{ flex: 1 }}>
                   <Text style={s.friendN}>{r.profile.name}</Text>
-                  <Text style={s.friendL}>wants to connect</Text>
+                  <Text style={s.friendL}>{t(PROFILE.wantsConnect)}</Text>
                 </View>
                 <Pressable style={s.acceptBtn} onPress={async () => { await acceptRequest(r.id); refresh(); }}>
-                  <Text style={s.acceptT}>Accept</Text>
+                  <Text style={s.acceptT}>{t(PROFILE.accept)}</Text>
                 </Pressable>
                 <Pressable hitSlop={8} onPress={async () => { await removeFriendship(r.id); refresh(); }}>
                   <Ionicons name="close" size={16} color={pr.dim} />
@@ -348,7 +350,7 @@ function FriendsTab() {
       {/* Real inbox: things friends actually sent me */}
       {inbox.length > 0 ? (
         <>
-          <Text style={s.sectionLabel}>WAITING FOR YOU</Text>
+          <Text style={s.sectionLabel}>{t(PROFILE.waitingForYou)}</Text>
           <View style={{ gap: spacing.md }}>
             {inbox.map((it) => (
               <View key={it.id} style={[s.inbox, it.learned && s.inboxDone]}>
@@ -378,11 +380,11 @@ function FriendsTab() {
                 {it.learned ? (
                   <Pressable style={s.sendBack} onPress={() => setSendTo({ name: it.senderName ?? '', id: it.sender })}>
                     <Ionicons name="arrow-undo" size={13} color={pr.friendA} />
-                    <Text style={s.sendBackT}>Send one back</Text>
+                    <Text style={s.sendBackT}>{t(PROFILE.sendBack)}</Text>
                   </Pressable>
                 ) : (
                   <Pressable style={s.complete} onPress={async () => { await markLearned(it.id); refreshInbox(); }}>
-                    <Text style={s.completeT}>Mark as learned</Text>
+                    <Text style={s.completeT}>{t(PROFILE.markLearned)}</Text>
                     <Ionicons name="checkmark" size={14} color="#FFF" />
                   </Pressable>
                 )}
@@ -395,7 +397,7 @@ function FriendsTab() {
       {/* Real accepted friends (if any) */}
       {hasFriends ? (
         <>
-          <Text style={s.sectionLabel}>YOUR PEOPLE</Text>
+          <Text style={s.sectionLabel}>{t(PROFILE.yourPeople)}</Text>
           <View style={{ gap: spacing.sm }}>
             {accepted.map((r) => (
               <Pressable key={r.id} style={s.friendRow} onPress={() => setSendTo({ name: r.profile.name, id: r.profile.id })}>
@@ -416,11 +418,11 @@ function FriendsTab() {
       {!hasActivity ? (
         <View style={s.previewOverlay} pointerEvents="box-none">
             <Pressable style={s.previewCard} onPress={() => setFriendsOpen(true)}>
-              <Text style={s.previewT}>Nobody here yet</Text>
+              <Text style={s.previewT}>{t(PROFILE.nobodyYet)}</Text>
               <Text style={s.previewX}>A friend sends you a word. You learn it, then send one back. Here is what that looks like.</Text>
               <View style={s.previewBtn}>
                 <Ionicons name="person-add" size={15} color="#FFF" />
-                <Text style={s.previewBtnT}>Find &amp; add friends</Text>
+                <Text style={s.previewBtnT}>{t(PROFILE.findFriends)}</Text>
               </View>
             </Pressable>
           </View>
@@ -511,7 +513,7 @@ function ProgressTab() {
         <Text style={s.progX}>Longest you have ever gone: {ME.longest}</Text>
       </View>
 
-      <Text style={s.sectionLabel}>WHAT YOU HAVE BEEN DOING</Text>
+      <Text style={s.sectionLabel}>{t(PROFILE.whatDoing)}</Text>
       <View style={s.statGrid}>
         {[
           { v: stats.topicsFinished, k: 'Topics finished', i: 'book' },
@@ -532,14 +534,14 @@ function ProgressTab() {
       <Pressable style={s.achvCard} onPress={() => setAchvOpen(true)}>
         <View style={s.achvIcon}><Ionicons name="trophy" size={18} color="#8A6D1F" /></View>
         <View style={{ flex: 1 }}>
-          <Text style={s.achvT}>Achievements</Text>
+          <Text style={s.achvT}>{t(PROFILE.achievements)}</Text>
           <Text style={s.achvX}>{unlocked} of {miles.length} unlocked{unlocked > 0 ? '  ·  nice work' : ''}</Text>
         </View>
         <Ionicons name="chevron-forward" size={16} color={pr.dim} />
       </Pressable>
 
       <View style={s.finHead}>
-        <Text style={s.sectionLabel}>FINISHED</Text>
+        <Text style={s.sectionLabel}>{t(PROFILE.finished)}</Text>
         {finished.length > 10 ? (
           <Pressable hitSlop={8} onPress={() => setShowAllFinished((v) => !v)}>
             <Text style={s.seeAll}>{showAllFinished ? 'show less' : 'see all ' + finished.length}</Text>
@@ -581,7 +583,7 @@ export default function Profile() {
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.header}>
         <View>
-          <Text style={s.hello}>Welcome back</Text>
+          <Text style={s.hello}>{t(PROFILE.welcome)}</Text>
           <Text style={s.name}>{displayName}</Text>
         </View>
         <Pressable hitSlop={10} onPress={() => setSettings(true)}>

@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { t as tr, useLang } from '@/lib/i18n';
+import { SECTIONS } from '@/constants/i18n/sections';
 import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -21,15 +23,15 @@ type Topic = {
 };
 
 const TOPICS: Topic[] = [
-  { key: 'history', title: 'History', persian: 'تاریخ', description: 'From ancient empires to the modern age.', image: 'cyrus-cover', status: 'ready', route: '/education/history' },
-  { key: 'geography', title: 'Geography', persian: 'جغرافیا', description: 'Land, cities, and landscapes.', image: 'iran-crossroads', status: 'ready', route: '/geography' },
-  { key: 'traditions', title: 'Traditions', persian: 'آیین‌ها', description: 'The customs and celebrations of the Persian year.', image: 'nowruz-cover', status: 'ready', route: '/traditions' },
-  { key: 'literature', title: 'Literature', persian: 'ادبیات', description: 'The poets and writers who shaped the Persian soul.', image: 'lit-ferdowsi-cover', status: 'ready', route: '/literature' },
-  { key: 'language', title: 'Language', persian: 'زبان', description: 'The roots and life of Persian.', image: 'silence-cover', status: 'ready', route: '/language' },
-  { key: 'culture', title: 'Culture', persian: 'فرهنگ', description: 'Taarof, the guest, the table, and the rules nobody explains.', image: 'zand-vakil-bazaar', status: 'ready', route: '/culture' },
-  { key: 'art', title: 'Art', persian: 'هنر', description: 'Miniature, calligraphy, and beyond.', image: 'timurid-miniature', status: 'soon' },
-  { key: 'architecture', title: 'Architecture', persian: 'معماری', description: 'Domes, gardens, and sacred geometry.', image: 'safavid-mosque-1', status: 'soon' },
-  { key: 'science-philosophy', title: 'Science & Philosophy', persian: 'علم و فلسفه', description: 'Thinkers and mystics, and contributions to math, medicine, and the stars.', status: 'soon' },
+  { key: 'history', title: 'History', titleT: SECTIONS.history, descT: SECTIONS.historyX, persian: 'تاریخ', description: 'From ancient empires to the modern age.', image: 'cyrus-cover', status: 'ready', route: '/education/history' },
+  { key: 'geography', title: 'Geography', titleT: SECTIONS.geography, descT: SECTIONS.geographyX, persian: 'جغرافیا', description: 'Land, cities, and landscapes.', image: 'iran-crossroads', status: 'ready', route: '/geography' },
+  { key: 'traditions', title: 'Traditions', titleT: SECTIONS.traditions, descT: SECTIONS.traditionsX, persian: 'آیین‌ها', description: 'The customs and celebrations of the Persian year.', image: 'nowruz-cover', status: 'ready', route: '/traditions' },
+  { key: 'literature', title: 'Literature', titleT: SECTIONS.literature, descT: SECTIONS.literatureX, persian: 'ادبیات', description: 'The poets and writers who shaped the Persian soul.', image: 'lit-ferdowsi-cover', status: 'ready', route: '/literature' },
+  { key: 'language', title: 'Language', titleT: SECTIONS.language, descT: SECTIONS.languageX, persian: 'زبان', description: 'The roots and life of Persian.', image: 'silence-cover', status: 'ready', route: '/language' },
+  { key: 'culture', title: 'Culture', titleT: SECTIONS.culture, descT: SECTIONS.cultureX, persian: 'فرهنگ', description: 'Taarof, the guest, the table, and the rules nobody explains.', image: 'zand-vakil-bazaar', status: 'ready', route: '/culture' },
+  { key: 'art', title: 'Art', titleT: SECTIONS.art, descT: SECTIONS.artX, persian: 'هنر', description: 'Miniature, calligraphy, and beyond.', image: 'timurid-miniature', status: 'soon' },
+  { key: 'architecture', title: 'Architecture', titleT: SECTIONS.architecture, descT: SECTIONS.architectureX, persian: 'معماری', description: 'Domes, gardens, and sacred geometry.', image: 'safavid-mosque-1', status: 'soon' },
+  { key: 'science-philosophy', title: 'Science & Philosophy', titleT: SECTIONS.sciencePhil, descT: SECTIONS.sciencePhilX, persian: 'علم و فلسفه', description: 'Thinkers and mystics, and contributions to math, medicine, and the stars.', status: 'soon' },
 ];
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
@@ -73,10 +75,10 @@ function TopicCard({ t }: { t: Topic }) {
 
       <View style={styles.textSide}>
         <View style={styles.headRow}>
-          <Text style={styles.cardTitle}>{t.title}</Text>
-          {!open ? <Text style={styles.soon}>SOON</Text> : null}
+          <Text style={styles.cardTitle}>{(t as any).titleT ? tr((t as any).titleT) : t.title}</Text>
+          {!open ? <Text style={styles.soon}>{tr(SECTIONS.soon)}</Text> : null}
         </View>
-        <Text style={styles.cardDescription}>{t.description}</Text>
+        <Text style={styles.cardDescription}>{(t as any).descT ? tr((t as any).descT) : t.description}</Text>
         <Text style={styles.cardGlyph}>{t.persian}</Text>
       </View>
 
@@ -101,7 +103,7 @@ export default function EducationScreen() {
 
         <FadeIn>
           <View style={styles.titleRow}>
-            <Text style={styles.title}>Education</Text>
+            <Text style={styles.title}>{tr(SECTIONS.education)}</Text>
             <Text style={styles.glyph}>آموزش</Text>
           </View>
           <Text style={styles.subtitle}>The story of Persian heritage, one theme at a time.</Text>

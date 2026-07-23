@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { t } from '@/lib/i18n';
+import { EXPLORE } from '@/constants/i18n/explore';
 import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -10,6 +12,8 @@ import { ZandHeader } from '@/components/zand-header';
 import { eduImage } from '@/constants/education-images';
 
 type Section = {
+  titleT?: any;
+  descT?: any;
   key: string;
   title: string;
   persian: string;
@@ -19,9 +23,9 @@ type Section = {
 };
 
 const SECTIONS: Section[] = [
-  { key: 'education', title: 'Education', persian: 'آموزش', description: 'History, culture, art, architecture, and more.', image: 'safavid-isfahan', route: '/section/education' },
-  { key: 'articles', title: 'Articles', persian: 'مقاله‌ها', description: 'The people behind the work.', image: 'article-khalili-cover', route: '/section/articles' },
-  { key: 'videos', title: 'Videos', persian: 'ویدیوها', description: 'Watch stories, lessons, and interviews.', image: 'cyrus-pasargadae', route: '/section/videos' },
+  { key: 'education', title: 'Education', titleT: EXPLORE.educationTitle, descT: EXPLORE.educationDesc, persian: 'آموزش', description: 'History, culture, art, architecture, and more.', image: 'safavid-isfahan', route: '/section/education' },
+  { key: 'articles', title: 'Articles', titleT: EXPLORE.articlesTitle, descT: EXPLORE.articlesDesc, persian: 'مقاله‌ها', description: 'The people behind the work.', image: 'article-khalili-cover', route: '/section/articles' },
+  { key: 'videos', title: 'Videos', titleT: EXPLORE.videosTitle, descT: EXPLORE.videosDesc, persian: 'ویدیوها', description: 'Watch stories, lessons, and interviews.', image: 'cyrus-pasargadae', route: '/section/videos' },
 ];
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
@@ -56,12 +60,12 @@ function SectionCard({ s }: { s: Section }) {
 
       <View style={styles.body}>
         <View style={styles.headRow}>
-          <Text style={styles.cardTitle}>{s.title}</Text>
+          <Text style={styles.cardTitle}>{t(s.titleT)}</Text>
           <Text style={styles.cardGlyph}>{s.persian}</Text>
         </View>
-        <Text style={styles.cardDescription}>{s.description}</Text>
+        <Text style={styles.cardDescription}>{t(s.descT)}</Text>
         <View style={styles.cta}>
-          <Text style={styles.ctaText}>OPEN</Text>
+          <Text style={styles.ctaText}>{t(EXPLORE.open)}</Text>
           <Ionicons name="arrow-forward" size={15} color={colors.accent} />
         </View>
       </View>
@@ -76,10 +80,10 @@ export default function ExploreScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <FadeIn>
           <View style={styles.titleRow}>
-            <Text style={styles.title}>Explore</Text>
+            <Text style={styles.title}>{t(EXPLORE.title)}</Text>
             <Text style={styles.glyph}>کاوش</Text>
           </View>
-          <Text style={styles.subtitle}>Persian heritage and modern creativity, in every form.</Text>
+          <Text style={styles.subtitle}>{t(EXPLORE.subtitle)}</Text>
         </FadeIn>
 
         <View style={styles.list}>

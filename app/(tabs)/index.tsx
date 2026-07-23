@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { HOME } from '@/constants/i18n/home';
 import { Animated, Image, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -257,6 +259,7 @@ function BandCard({ card }: { card: Card }) {
 }
 
 export default function HomeScreen() {
+  useLang();
   const fact = getDailyFact();
   useHidden();
   const dailyArticle = articleOfDay();
@@ -297,7 +300,7 @@ export default function HomeScreen() {
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
         >
-          <FadeIn><Text style={styles.greeting}>Welcome back</Text></FadeIn>
+          <FadeIn><Text style={styles.greeting}>{t(HOME.greeting)}</Text></FadeIn>
 
           {pending.length > 0 ? (
             <FadeIn delay={40}>
@@ -316,7 +319,7 @@ export default function HomeScreen() {
           ) : null}
 
           <FadeIn delay={60}>
-            <Text style={styles.sectionLabel}>TODAY</Text>
+            <Text style={styles.sectionLabel}>{t(HOME.today)}</Text>
             <Pressable style={styles.daily} onPress={() => daily.route ? setDailyOpen((v) => !v) : undefined}>
               <View style={styles.dailyHead}>
                 <View style={styles.dailyRule} />
@@ -365,7 +368,7 @@ export default function HomeScreen() {
             {ARTICLES.filter((a) => !isHidden(a.key)).slice(0, 8).map((a) => <ArticleStoryCard key={a.key} a={a} />)}
           </ScrollView>
 
-          <FadeIn delay={180}><Text style={styles.sectionLabel}>EXPLORE</Text></FadeIn>
+          <FadeIn delay={180}><Text style={styles.sectionLabel}>{t(HOME.explore)}</Text></FadeIn>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabScroll} contentContainerStyle={styles.tabRow}>
             {PILLARS.map((p) => {
@@ -385,7 +388,7 @@ export default function HomeScreen() {
 
           {dailyArticle ? (
           <FadeIn delay={240}>
-            <Text style={styles.sectionLabel}>NEW THIS WEEK</Text>
+            <Text style={styles.sectionLabel}>{t(HOME.newThisWeek)}</Text>
             <Pressable style={styles.featuredCard} onPress={() => router.navigate(('/article?article=' + dailyArticle.key) as any)}>
               <View style={styles.formatTag}><Text style={styles.formatTagText}>{dailyArticle.tag}</Text></View>
               <Text style={styles.featuredTitle}>{dailyArticle.title}</Text>
@@ -402,7 +405,7 @@ export default function HomeScreen() {
           ) : null}
 
           <FadeIn delay={270}>
-            <Text style={styles.sectionLabel}>JUMP BACK IN</Text>
+            <Text style={styles.sectionLabel}>{t(HOME.jumpBackIn)}</Text>
             <Pressable style={styles.resumeCard} onPress={() => router.navigate('/learn/alphabet')}>
               <View style={styles.resumeIcon}><Ionicons name="book-outline" size={22} color={colors.surface} /></View>
               <View style={styles.resumeText}>
@@ -414,7 +417,7 @@ export default function HomeScreen() {
           </FadeIn>
 
           <FadeIn delay={300}>
-            <Text style={styles.sectionLabel}>TYPICAL PERSIAN</Text>
+            <Text style={styles.sectionLabel}>{t(HOME.typical)}</Text>
             <Pressable style={styles.tp} onPress={() => setFlipped((v) => !v)}>
               {!flipped ? (
                 <>
