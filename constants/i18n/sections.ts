@@ -45,6 +45,7 @@ export const SECTIONS: Record<string, T> = {
   keepWatching: { en: 'Keep Watching', fa: 'ادامهٔ تماشا' },
 
   // shared
+  explore: { en: 'Explore', fa: 'کشف' },
   back: { en: 'Back', fa: 'برگرد' },
   seeAll: { en: 'see all', fa: 'همه را ببین' },
   showLess: { en: 'show less', fa: 'کمتر' },

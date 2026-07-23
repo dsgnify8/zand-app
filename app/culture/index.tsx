@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { PAGES } from '@/constants/i18n/pages';
 import { Animated, Easing, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -95,7 +97,7 @@ export default function CultureHub() {
           <Pressable hitSlop={10} onPress={() => router.back()}>
             <Ionicons name="chevron-back" size={24} color={cu.text} />
           </Pressable>
-          <Text style={styles.topTitle}>Culture</Text>
+          <Text style={styles.topTitle}>{t(PAGES.culture)}</Text>
           <View style={{ width: 24 }} />
         </View>
 
@@ -107,7 +109,7 @@ export default function CultureHub() {
                 <View style={styles.headBar} />
                 <Text style={styles.headEyebrow}>THE SOCIAL CODE</Text>
               </View>
-              <Text style={styles.title}>The{'\n'}Unwritten{'\n'}Rules</Text>
+              <Text style={styles.title}>{t(PAGES.cultureHead)}</Text>
               <Text style={styles.sub}>
                 Nobody sits you down and explains any of this. You are supposed to absorb it, and if you did not grow up inside it, you spend your life half a beat behind.
               </Text>

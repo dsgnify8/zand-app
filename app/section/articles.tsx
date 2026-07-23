@@ -1,4 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { PAGES } from '@/constants/i18n/pages';
+import { SECTIONS } from '@/constants/i18n/sections';
 import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -109,7 +112,7 @@ export default function ArticlesScreen() {
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
         <Pressable style={s.back} hitSlop={10} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={22} color={ar.ink} />
-          <Text style={s.backT}>Explore</Text>
+          <Text style={s.backT}>{t(SECTIONS.explore ?? PAGES.culture)}</Text>
         </Pressable>
 
         <ScrollView contentContainerStyle={s.container} showsVerticalScrollIndicator={false}>
@@ -117,10 +120,10 @@ export default function ArticlesScreen() {
             <View style={s.head}>
               <Text style={s.watermark}>مقاله‌ها</Text>
               <View style={s.headRow}>
-                <Text style={s.title}>Articles</Text>
+                <Text style={s.title}>{t(SECTIONS.articles)}</Text>
                 <View style={s.headRule} />
               </View>
-              <Text style={s.headSub}>The people behind the work</Text>
+              <Text style={s.headSub}>{t(SECTIONS.articlesSub)}</Text>
             </View>
           </Rise>
 

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { PAGES } from '@/constants/i18n/pages';
 import { SaveHeart } from '@/components/save-heart';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -159,7 +161,7 @@ export default function LanguageScreen() {
         <Pressable hitSlop={10} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color={lang.text} />
         </Pressable>
-        <Text style={styles.topTitle}>Language</Text>
+        <Text style={styles.topTitle}>{t(PAGES.language)}</Text>
         <SaveHeart itemKey="section-language" size={19} tint={lang.text} />
       </View>
 
@@ -191,7 +193,7 @@ export default function LanguageScreen() {
         <FadeIn>
           <View style={styles.head}>
             <Text style={styles.glyph}>فارسی</Text>
-            <Text style={styles.title}>The Tongue</Text>
+            <Text style={styles.title}>{t(PAGES.langHead)}</Text>
             <Text style={styles.sub}>Where Persian came from, and how it survived.</Text>
           </View>
         </FadeIn>

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { PAGES } from '@/constants/i18n/pages';
 import { SaveHeart } from '@/components/save-heart';
 import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -142,7 +144,7 @@ export default function GeographyScreen() {
         <Pressable hitSlop={10} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color={dark.text} />
         </Pressable>
-        <Text style={styles.topTitle}>Geography</Text>
+        <Text style={styles.topTitle}>{t(PAGES.geography)}</Text>
         <SaveHeart itemKey="section-geography" size={19} tint={dark.text} />
       </View>
 
@@ -174,7 +176,7 @@ export default function GeographyScreen() {
         <FadeIn>
           <View style={styles.head}>
             <Text style={styles.glyph}>جغرافیا</Text>
-            <Text style={styles.title}>The Land</Text>
+            <Text style={styles.title}>{t(PAGES.geoHead)}</Text>
             <Text style={styles.sub}>Where Iran sits, and what that has meant.</Text>
           </View>
         </FadeIn>

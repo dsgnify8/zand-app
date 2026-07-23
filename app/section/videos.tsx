@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { SECTIONS } from '@/constants/i18n/sections';
+import { PAGES } from '@/constants/i18n/pages';
 import { syncVideosWatched } from '@/lib/stats-store';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -71,7 +74,7 @@ export default function VideosScreen() {
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Videos</Text>
+          <Text style={styles.title}>{t(SECTIONS.videos)}</Text>
           <Text style={styles.glyph}>ویدیوها</Text>
         </View>
 
