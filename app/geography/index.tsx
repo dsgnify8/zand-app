@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { SaveHeart } from '@/components/save-heart';
 import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -142,7 +143,7 @@ export default function GeographyScreen() {
           <Ionicons name="chevron-back" size={24} color={dark.text} />
         </Pressable>
         <Text style={styles.topTitle}>Geography</Text>
-        <View style={{ width: 24 }} />
+        <SaveHeart itemKey="section-geography" size={19} tint={dark.text} />
       </View>
 
       <ScrollView

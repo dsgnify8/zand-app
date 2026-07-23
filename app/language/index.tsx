@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { SaveHeart } from '@/components/save-heart';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -159,7 +160,7 @@ export default function LanguageScreen() {
           <Ionicons name="chevron-back" size={24} color={lang.text} />
         </Pressable>
         <Text style={styles.topTitle}>Language</Text>
-        <View style={{ width: 24 }} />
+        <SaveHeart itemKey="section-language" size={19} tint={lang.text} />
       </View>
 
       <ScrollView

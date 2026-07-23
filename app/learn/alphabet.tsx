@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Animated, Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -82,12 +82,63 @@ function FlipCard({ letter, index, width, height, letterSize, compact, flipped, 
   );
 }
 
+function LetterSheet({ letter, onClose }: { letter: PersianLetter | null; onClose: () => void }) {
+  if (!letter) return null;
+  const forms = positionalForms(letter.char);
+  const rows = [
+    { label: 'INITIAL', glyph: forms.initial, note: 'at the start of a word' },
+    { label: 'MEDIAL', glyph: forms.medial, note: 'in the middle' },
+    { label: 'FINAL ATTACHED', glyph: forms.final, note: 'at the end, joined' },
+    { label: 'FINAL DETACHED', glyph: forms.isolated, note: 'standing alone' },
+  ];
+  return (
+    <Modal transparent visible={!!letter} animationType="fade" onRequestClose={onClose}>
+      <Pressable style={sheetS.backdrop} onPress={onClose}>
+        <Pressable style={sheetS.card} onPress={() => {}}>
+          <Text style={sheetS.big}>{letter.char}</Text>
+          <Text style={sheetS.name}>{letter.name}</Text>
+          <Text style={sheetS.sound}>/ {letter.sound} /</Text>
+          <View style={sheetS.rule} />
+          {rows.map((r) => (
+            <View key={r.label} style={sheetS.row}>
+              <Text style={sheetS.glyph}>{r.glyph}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={sheetS.rowLabel}>{r.label}</Text>
+                <Text style={sheetS.rowNote}>{r.note}</Text>
+              </View>
+            </View>
+          ))}
+          <Pressable style={sheetS.close} onPress={onClose}>
+            <Text style={sheetS.closeT}>Close</Text>
+          </Pressable>
+        </Pressable>
+      </Pressable>
+    </Modal>
+  );
+}
+
+const sheetS = StyleSheet.create({
+  backdrop: { flex: 1, backgroundColor: 'rgba(20,16,12,0.5)', alignItems: 'center', justifyContent: 'center', padding: spacing.lg },
+  card: { backgroundColor: colors.background, borderRadius: 20, paddingVertical: spacing.lg, paddingHorizontal: spacing.lg, width: '100%', maxWidth: 320, alignItems: 'center' },
+  big: { fontFamily: fonts.persian, fontSize: 62, color: colors.textPrimary, lineHeight: 80 },
+  name: { fontFamily: fonts.heading, fontSize: 20, color: colors.textPrimary, marginTop: 2 },
+  sound: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary, marginTop: 2 },
+  rule: { height: 1, alignSelf: 'stretch', backgroundColor: colors.border, marginVertical: spacing.md },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, alignSelf: 'stretch', paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border },
+  glyph: { fontFamily: fonts.persian, fontSize: 30, color: colors.accent, width: 48, textAlign: 'center' },
+  rowLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, letterSpacing: 1.5, color: colors.textPrimary },
+  rowNote: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, marginTop: 2 },
+  close: { marginTop: spacing.md, paddingVertical: spacing.sm, paddingHorizontal: spacing.xl },
+  closeT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: colors.accent },
+});
+
 export default function AlphabetScreen() {
   const { width } = useWindowDimensions();
   const { learnedLetters, markLetterLearned } = useProgress();
   const [flipped, setFlipped] = useState<Set<number>>(new Set());
 
-  const [view, setView] = useState<'list' | 'grid'>('list');
+  const [view, setView] = useState<'list' | 'grid'>('grid');
+  const [sheetLetter, setSheetLetter] = useState<PersianLetter | null>(null);
 
   const autoColumns = width >= 1024 ? 3 : width >= 700 ? 2 : 1;
   const columns = view === 'grid' ? 2 : autoColumns;
@@ -130,11 +181,10 @@ export default function AlphabetScreen() {
             <Text style={styles.headerTitle}>Persian Alphabet</Text>
             <Text style={styles.headerGlyph}>الفبا</Text>
           </View>
-          <Text style={styles.headerSub}>34 letters · four positional forms · tap a card to flip</Text>
+          <Text style={styles.headerSub}>34 letters · four positional forms</Text>
           <View style={styles.progressTrack}>
             <View style={[styles.progressFill, { width: (pct + '%') as any }]} />
           </View>
-          <Text style={styles.progressText}>{learnedCount} of {total} learned</Text>
         </View>
 
         <View style={styles.toggles}>
@@ -170,6 +220,7 @@ export default function AlphabetScreen() {
               letterSize={letterSize}
               flipped={flipped.has(i)}
               onPress={() => toggle(i, letter.char)}
+              onLongPress={() => setSheetLetter(letter)}
             />
           ))}
         </View>
@@ -181,6 +232,7 @@ export default function AlphabetScreen() {
           </Text>
         </View>
       </ScrollView>
+      <LetterSheet letter={sheetLetter} onClose={() => setSheetLetter(null)} />
     </SafeAreaView>
   );
 }

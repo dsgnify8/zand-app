@@ -70,7 +70,7 @@ export function KeepReading() {
         {items.map((it) => (
           <Pressable key={it.key} style={styles.card} onPress={() => router.navigate(it.route as any)}>
             <View style={styles.thumb}>
-              {it.framed ? (
+              {it.framed && it.kind !== 'topic' ? (
                 <FramedImage name={it.image!} source={it.image ? eduImage(it.image) : undefined} style={StyleSheet.absoluteFill as any} onPress={() => router.navigate(it.route as any)} />
               ) : it.image && eduImage(it.image) ? (
                 <Image source={eduImage(it.image)} style={StyleSheet.absoluteFill as any} resizeMode="cover" />

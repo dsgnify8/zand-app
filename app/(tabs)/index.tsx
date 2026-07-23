@@ -11,7 +11,7 @@ import { getNewThisWeek, initials } from '@/constants/featured';
 import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
-import { KeepReading } from '@/components/keep-reading';
+import { ContinueReading } from '@/components/continue-reading';
 import { TOPICS } from '@/constants/education';
 import { TRADITIONS } from '@/constants/traditions';
 import { LITERATURE_FIGURES, AUTHORS } from '@/constants/literature';
@@ -351,7 +351,7 @@ export default function HomeScreen() {
 
           <FadeIn delay={120}><Countdown /></FadeIn>
 
-          <FadeIn delay={150}><KeepReading /></FadeIn>
+          <FadeIn delay={150}><ContinueReading label="KEEP READING" /></FadeIn>
 
           <FadeIn delay={210}>
             <View style={styles.labelRow}>

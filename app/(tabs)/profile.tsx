@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS } from '@/constants/profile';
 import { useSaved } from '@/lib/saved-store';
+import { ContinueReading } from '@/components/continue-reading';
 import { useAuth } from '@/lib/auth';
 import { useFriends, acceptRequest, removeFriendship } from '@/lib/friends';
 import { useInbox, markLearned } from '@/lib/inbox';
@@ -68,31 +69,8 @@ function StreakCard() {
 }
 
 function KeepReading() {
-  return (
-    <View>
-      <Text style={s.sectionLabel}>PICK UP WHERE YOU LEFT OFF</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.rail}>
-        {READING.map((r) => {
-          const src = eduImage(r.image);
-          const pct = Math.round((r.page / r.total) * 100);
-          return (
-            <Pressable key={r.key} style={s.readCard} onPress={() => router.navigate(r.route as any)}>
-              {src ? <Image source={src} style={s.readImg} resizeMode="cover" /> : <View style={[s.readImg, s.phDark]} />}
-              <LinearGradient colors={['transparent', 'rgba(24,18,12,0.55)', 'rgba(24,18,12,0.93)']} locations={[0, 0.45, 1]} style={StyleSheet.absoluteFill as any} />
-              <View style={s.readBody}>
-                <Text style={s.readTitle}>{r.title}</Text>
-                <Text style={s.readSub}>{r.chapter}</Text>
-                <View style={s.readTrack}><View style={[s.readFill, { width: (pct + '%') as any }]} /></View>
-                <Text style={s.readPct}>page {r.page} of {r.total}</Text>
-              </View>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
+  return <ContinueReading label="PICK UP WHERE YOU LEFT OFF" />;
 }
-
 function DiscoverRow() {
   return (
     <View style={{ marginTop: spacing.xl }}>
@@ -335,11 +313,13 @@ function FriendsTab() {
         <Text style={s.frHeroX}>Send a friend anything worth learning: a word, a poet, a place, a story. They learn it, then send one back.</Text>
       </View>
 
-      <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
-        <Ionicons name="person-add" size={17} color="#FFF" />
-        <Text style={s.frMainBtnT}>Find &amp; add friends</Text>
-        {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
-      </Pressable>
+      {hasActivity ? (
+        <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
+          <Ionicons name="person-add" size={17} color="#FFF" />
+          <Text style={s.frMainBtnT}>Find &amp; add friends</Text>
+          {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
+        </Pressable>
+      ) : null}
 
       {/* Real incoming requests (always live) */}
       {incoming.length > 0 ? (
@@ -433,6 +413,18 @@ function FriendsTab() {
 
       {/* Preview of what the page becomes — locked when you have no friends,
           shown as a labelled example once you do. */}
+      {!hasActivity ? (
+        <View style={s.previewOverlay} pointerEvents="box-none">
+            <Pressable style={s.previewCard} onPress={() => setFriendsOpen(true)}>
+              <Text style={s.previewT}>Nobody here yet</Text>
+              <Text style={s.previewX}>A friend sends you a word. You learn it, then send one back. Here is what that looks like.</Text>
+              <View style={s.previewBtn}>
+                <Ionicons name="person-add" size={15} color="#FFF" />
+                <Text style={s.previewBtnT}>Find &amp; add friends</Text>
+              </View>
+            </Pressable>
+          </View>
+        ) : null}
       <View style={hasActivity ? undefined : s.previewWrap} pointerEvents={hasActivity ? 'auto' : 'none'}>
         <Text style={s.sectionLabel}>{hasActivity ? 'AN EXAMPLE OF WHAT YOU CAN SEND' : 'A PREVIEW'}</Text>
         <View style={{ gap: spacing.md, opacity: hasActivity ? 1 : 0.9 }}>
@@ -482,16 +474,6 @@ function FriendsTab() {
           </View>
         </View>
 
-        {!hasActivity ? (
-          <View style={s.previewOverlay} pointerEvents="box-none">
-            <Pressable style={s.previewCard} onPress={() => setFriendsOpen(true)}>
-              <Ionicons name="people" size={22} color={pr.friendA} />
-              <Text style={s.previewT}>This is what friends looks like</Text>
-              <Text style={s.previewX}>A friend sends you a word to learn. You learn it, then send one back. Add someone to begin.</Text>
-              <View style={s.previewBtn}><Text style={s.previewBtnT}>Find &amp; add friends</Text></View>
-            </Pressable>
-          </View>
-        ) : null}
       </View>
 
       <SendSheet open={sendTo !== null} onClose={() => setSendTo(null)} to={sendTo?.name ?? ''} toId={sendTo?.id} />
@@ -635,11 +617,11 @@ export default function Profile() {
 const s = StyleSheet.create({
   wordUse: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, textAlign: 'center', marginTop: spacing.sm, fontStyle: 'italic' },
   previewWrap: { position: 'relative', marginTop: spacing.sm },
-  previewOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: spacing.lg },
-  previewCard: { backgroundColor: 'rgba(255,255,255,0.82)', borderRadius: 18, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg, alignItems: 'center', marginHorizontal: spacing.md, shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 5 },
+  previewOverlay: { marginBottom: spacing.lg },
+  previewCard: { backgroundColor: '#FFF', borderRadius: 18, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg, alignItems: 'center', marginHorizontal: spacing.md, shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 5 },
   previewT: { fontFamily: fonts.heading, fontSize: 18, color: pr.ink, marginTop: spacing.sm, textAlign: 'center' },
   previewX: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: pr.dim, textAlign: 'center', marginTop: 6 },
-  previewBtn: { backgroundColor: pr.friendA, borderRadius: 20, paddingVertical: spacing.sm, paddingHorizontal: spacing.xl, marginTop: spacing.lg },
+  previewBtn: { flexDirection: 'row', alignItems: 'center', gap: 7, backgroundColor: pr.friendA, borderRadius: 20, paddingVertical: spacing.sm, paddingHorizontal: spacing.xl, marginTop: spacing.lg },
   previewBtnT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
   frMainBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, backgroundColor: pr.friendA, borderRadius: 24, paddingVertical: spacing.md, marginTop: spacing.lg },
   frMainBtnT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },

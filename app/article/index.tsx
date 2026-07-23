@@ -5,28 +5,32 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
-import { ar, articleByKey, type ArBlock } from '@/constants/articles';
+import { ar, articleByKey, type ArBlock, hasFarsi } from '@/constants/articles';
 import { eduImage } from '@/constants/education-images';
 import { FramedImage } from '@/components/framed-image';
 import { useSaved, markRead, saveScroll, getScroll } from '@/lib/saved-store';
+import { useLang } from '@/lib/i18n';
 import { bump, recordFinished } from '@/lib/stats-store';
 import { logEvent } from '@/lib/admin';
 import { SendArticleSheet } from '@/components/send-article-sheet';
 
-function Block({ b }: { b: ArBlock }) {
+function Block({ b, fa }: { b: ArBlock; fa?: boolean }) {
+  // when Farsi is on, use the translation if the block has one
+  const t = (blk: any) => (fa && blk.fa ? blk.fa : blk.x);
+  const rtl = fa ? s.rtl : undefined;
   switch (b.t) {
-    case 'lead': return <Text style={s.lead}>{b.x}</Text>;
-    case 'p': return <Text style={s.p}>{b.x}</Text>;
-    case 'h': return <Text style={s.h}>{b.x}</Text>;
+    case 'lead': return <Text style={[s.lead, rtl, fa && s.faLead]}>{t(b)}</Text>;
+    case 'p': return <Text style={[s.p, rtl, fa && s.faBody]}>{t(b)}</Text>;
+    case 'h': return <Text style={[s.h, rtl, fa && s.faHead]}>{t(b)}</Text>;
     case 'pull': return (
       <View style={s.pull}>
         <View style={s.pullRule} />
-        <Text style={s.pullText}>{b.x}</Text>
+        <Text style={[s.pullText, rtl, fa && s.faBody]}>{t(b)}</Text>
       </View>
     );
     case 'line': return (
       <View style={s.lineWrap}>
-        <Text style={s.lineText}>{b.x}</Text>
+        <Text style={[s.lineText, rtl, fa && s.faBody]}>{t(b)}</Text>
       </View>
     );
     case 'divider': return (
@@ -38,8 +42,8 @@ function Block({ b }: { b: ArBlock }) {
     );
     case 'quote': return (
       <View style={s.quote}>
-        <Text style={s.quoteText}>{b.x}</Text>
-        {b.who ? <Text style={s.quoteWho}>{b.who}</Text> : null}
+        <Text style={[s.quoteText, rtl, fa && s.faBody]}>{t(b)}</Text>
+        {b.who ? <Text style={[s.quoteWho, rtl]}>{fa && b.whoFa ? b.whoFa : b.who}</Text> : null}
       </View>
     );
     case 'img': {
@@ -47,7 +51,7 @@ function Block({ b }: { b: ArBlock }) {
       return (
         <View style={s.imgWrap}>
           <FramedImage name={b.key} source={src} style={s.img} />
-          {b.cap ? <Text style={s.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={[s.cap, rtl]}>{fa && b.capFa ? b.capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -72,6 +76,11 @@ export default function ArticleScreen() {
 
   const { isLiked, isSaved, toggleLike, toggleSave } = useSaved();
   const [sendOpen, setSendOpen] = useState(false);
+  const { lang } = useLang();
+  // Farsi follows the app language; the toggle is an override for this article only.
+  const [faOverride, setFaOverride] = useState<boolean | null>(null);
+  const faOn = faOverride ?? lang === 'fa';
+  const setFaOn = (fn: any) => setFaOverride(typeof fn === 'function' ? fn(faOn) : fn);
   const scrollRef = useRef<ScrollView>(null);
   useEffect(() => { if (a) { markRead(a.key); bump('articlesRead'); logEvent('article', a.key); recordFinished({ key: 'art-' + a.key, title: a.title, sub: a.tag + '  ·  read', route: '/article?article=' + a.key }); } }, [a?.key]);
   const heroKey = a.hero ?? (a.cover + '-hero');
@@ -86,6 +95,11 @@ export default function ArticleScreen() {
             <Text style={s.backT}>Articles</Text>
           </Pressable>
           <View style={s.topActions}>
+            {hasFarsi(a) ? (
+              <Pressable style={[s.langBtn, faOn && s.langBtnOn]} hitSlop={6} onPress={() => setFaOn((v) => !v)}>
+                <Text style={[s.langBtnT, faOn && s.langBtnTOn]}>{faOn ? 'EN' : 'فا'}</Text>
+              </Pressable>
+            ) : null}
             <Pressable hitSlop={8} onPress={() => toggleLike(a.key)} style={s.actBtn}>
               <Ionicons name={isLiked(a.key) ? 'heart' : 'heart-outline'} size={20} color={isLiked(a.key) ? '#C4433F' : ar.ink} />
             </Pressable>
@@ -106,9 +120,9 @@ export default function ArticleScreen() {
           <FramedImage name={heroKey} source={cover} style={s.cover} />
 
           <View style={s.body}>
-            <Text style={s.kicker}>{a.kicker}</Text>
-            <Text style={s.title}>{a.title}</Text>
-            <Text style={s.standfirst}>{a.standfirst}</Text>
+            <Text style={[s.kicker, faOn && s.rtl]}>{faOn && a.kickerFa ? a.kickerFa : a.kicker}</Text>
+            <Text style={[s.title, faOn && s.rtl, faOn && s.faTitle]}>{faOn && a.titleFa ? a.titleFa : a.title}</Text>
+            <Text style={[s.standfirst, faOn && s.rtl, faOn && s.faStand]}>{faOn && a.standfirstFa ? a.standfirstFa : a.standfirst}</Text>
 
             <View style={s.meta}>
               <Text style={s.metaT}>{a.author ? a.author : 'ZAND'}</Text>
@@ -118,7 +132,7 @@ export default function ArticleScreen() {
 
             <View style={s.divide} />
 
-            {a.blocks.map((b, i) => <Block key={i} b={b} />)}
+            {a.blocks.map((b, i) => <Block key={i} b={b} fa={faOn} />)}
 
             <View style={s.iconRow}>
               <Pressable style={s.iconBtn} hitSlop={8} onPress={() => toggleLike(a.key)}>
@@ -153,6 +167,16 @@ export default function ArticleScreen() {
 }
 
 const s = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faTitle: { fontFamily: fonts.persian, fontSize: 30, lineHeight: 50 },
+  faStand: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 32 },
+  faBody: { fontFamily: fonts.persian, fontSize: 17, lineHeight: 34 },
+  faLead: { fontFamily: fonts.persian, fontSize: 20, lineHeight: 38 },
+  faHead: { fontFamily: fonts.persian, fontSize: 22, lineHeight: 36 },
+  langBtn: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingVertical: 5, paddingHorizontal: 10, borderRadius: 14, borderWidth: 1, borderColor: ar.hair },
+  langBtnOn: { backgroundColor: ar.accent, borderColor: ar.accent },
+  langBtnT: { fontFamily: fonts.bodyStrong, fontSize: 11, letterSpacing: 0.5, color: ar.soft },
+  langBtnTOn: { color: '#FFF' },
   safe: { flex: 1, backgroundColor: ar.bg },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingRight: spacing.lg },
   topActions: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
