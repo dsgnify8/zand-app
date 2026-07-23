@@ -12,8 +12,8 @@ import { ZandHeader } from '@/components/zand-header';
 const CARD_HEIGHT = 300;
 const FORM_LABELS = [['FINAL', 'DETACHED'], ['FINAL', 'ATTACHED'], ['MEDIAL', ''], ['INITIAL', '']];
 
-function FlipCard({ letter, index, width, letterSize, flipped, onPress }: {
-  letter: PersianLetter; index: number; width: number; letterSize: number; flipped: boolean; onPress: () => void;
+function FlipCard({ letter, index, width, height, letterSize, compact, flipped, onPress, onLongPress }: {
+  letter: PersianLetter; index: number; width: number; height?: number; letterSize: number; compact?: boolean; flipped: boolean; onPress: () => void; onLongPress?: () => void;
 }) {
   const anim = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -28,7 +28,7 @@ function FlipCard({ letter, index, width, letterSize, flipped, onPress }: {
   const number = String(index + 1).padStart(2, '0');
 
   return (
-    <Pressable onPress={onPress} style={[styles.cardContainer, { width, height: CARD_HEIGHT }]}>
+    <Pressable onPress={onPress} onLongPress={onLongPress} delayLongPress={280} style={[styles.cardContainer, { width, height: height ?? CARD_HEIGHT }]}>
       <Animated.View style={[styles.face, styles.front, { transform: [{ perspective: 1000 }, { rotateY: frontRotate }] }]}>
         <View style={styles.frontTop}>
           <View style={styles.badge}><Text style={styles.badgeText}>{number}</Text></View>
@@ -37,15 +37,19 @@ function FlipCard({ letter, index, width, letterSize, flipped, onPress }: {
         <View style={styles.letterWrap}>
           <Text style={[styles.bigLetter, { fontSize: letterSize }]}>{letter.char}</Text>
         </View>
-        <View style={styles.formsRow}>
-          {formValues.map((form, i) => (
-            <View key={i} style={[styles.formCol, i > 0 && styles.formColBorder]}>
-              <Text style={styles.formLabelTop}>{FORM_LABELS[i][0]}</Text>
-              {FORM_LABELS[i][1] ? <Text style={styles.formLabelBot}>{FORM_LABELS[i][1]}</Text> : null}
-              <Text style={styles.formGlyph}>{form}</Text>
-            </View>
-          ))}
-        </View>
+        {compact ? (
+          <Text style={styles.compactName} numberOfLines={1}>{letter.name}</Text>
+        ) : (
+          <View style={styles.formsRow}>
+            {formValues.map((form, i) => (
+              <View key={i} style={[styles.formCol, i > 0 && styles.formColBorder]}>
+                <Text style={styles.formLabelTop}>{FORM_LABELS[i][0]}</Text>
+                {FORM_LABELS[i][1] ? <Text style={styles.formLabelBot}>{FORM_LABELS[i][1]}</Text> : null}
+                <Text style={styles.formGlyph}>{form}</Text>
+              </View>
+            ))}
+          </View>
+        )}
       </Animated.View>
 
       <Animated.View style={[styles.face, styles.back, { transform: [{ perspective: 1000 }, { rotateY: backRotate }] }]}>
@@ -55,10 +59,11 @@ function FlipCard({ letter, index, width, letterSize, flipped, onPress }: {
         </View>
         <Text style={styles.name}>{letter.name}</Text>
         <Text style={styles.sound}>/ {letter.sound} /</Text>
-        <Text style={styles.backLabel}>HOW IT SOUNDS</Text>
-        {letter.note ? <Text style={styles.noteText}>{letter.note}</Text> : null}
-        <View style={styles.backDivider} />
-        {letter.exampleWord ? (
+        {compact ? <Text style={styles.holdHint}>hold for the forms</Text> : null}
+        {!compact ? <Text style={styles.backLabel}>HOW IT SOUNDS</Text> : null}
+        {!compact && letter.note ? <Text style={styles.noteText}>{letter.note}</Text> : null}
+        {!compact ? <View style={styles.backDivider} /> : null}
+        {compact ? null : letter.exampleWord ? (
           <>
             <Text style={styles.backLabel}>ENGLISH EXAMPLE</Text>
             <Text style={styles.exampleText}>
@@ -82,11 +87,15 @@ export default function AlphabetScreen() {
   const { learnedLetters, markLetterLearned } = useProgress();
   const [flipped, setFlipped] = useState<Set<number>>(new Set());
 
-  const columns = width >= 1024 ? 3 : width >= 700 ? 2 : 1;
+  const [view, setView] = useState<'list' | 'grid'>('list');
+
+  const autoColumns = width >= 1024 ? 3 : width >= 700 ? 2 : 1;
+  const columns = view === 'grid' ? 2 : autoColumns;
   const gap = spacing.md;
   const contentWidth = width - spacing.lg * 2;
   const cardWidth = (contentWidth - gap * (columns - 1)) / columns;
-  const letterSize = columns === 1 ? 110 : columns === 2 ? 82 : 68;
+  const letterSize = view === 'grid' ? 76 : columns === 1 ? 110 : columns === 2 ? 82 : 68;
+  const cardHeight = view === 'grid' ? 190 : undefined;
 
   const total = PERSIAN_ALPHABET.length;
   const learnedCount = PERSIAN_ALPHABET.filter((l) => learnedLetters.includes(l.char)).length;
@@ -137,7 +146,17 @@ export default function AlphabetScreen() {
           </Pressable>
         </View>
 
-        <Text style={styles.helper}>Tap any card to flip it</Text>
+        <View style={styles.viewRow}>
+          <Text style={styles.helper}>Tap any card to flip it</Text>
+          <View style={styles.viewToggle}>
+            <Pressable style={[styles.viewBtn, view === 'list' && styles.viewBtnOn]} onPress={() => setView('list')}>
+              <Ionicons name="square-outline" size={15} color={view === 'list' ? colors.surface : colors.textSecondary} />
+            </Pressable>
+            <Pressable style={[styles.viewBtn, view === 'grid' && styles.viewBtnOn]} onPress={() => setView('grid')}>
+              <Ionicons name="grid-outline" size={15} color={view === 'grid' ? colors.surface : colors.textSecondary} />
+            </Pressable>
+          </View>
+        </View>
 
         <View style={[styles.grid, { gap }]}>
           {PERSIAN_ALPHABET.map((letter, i) => (
@@ -146,6 +165,8 @@ export default function AlphabetScreen() {
               letter={letter}
               index={i}
               width={cardWidth}
+              height={cardHeight}
+              compact={view === 'grid'}
               letterSize={letterSize}
               flipped={flipped.has(i)}
               onPress={() => toggle(i, letter.char)}
@@ -165,6 +186,12 @@ export default function AlphabetScreen() {
 }
 
 const styles = StyleSheet.create({
+  holdHint: { fontFamily: fonts.body, fontSize: 10, color: colors.textSecondary, opacity: 0.6, marginTop: spacing.sm },
+  compactName: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 0.5, color: colors.textSecondary, textAlign: 'center', paddingBottom: spacing.md },
+  viewRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  viewToggle: { flexDirection: 'row', gap: 4, backgroundColor: colors.surface, borderRadius: 10, padding: 3, borderWidth: 1, borderColor: colors.border },
+  viewBtn: { paddingVertical: 5, paddingHorizontal: 9, borderRadius: 8 },
+  viewBtnOn: { backgroundColor: colors.accent },
   safe: { flex: 1, backgroundColor: colors.background },
   scroll: { flex: 1 },
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },

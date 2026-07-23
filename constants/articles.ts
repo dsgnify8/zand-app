@@ -13,13 +13,13 @@ export const ar = {
 };
 
 export type ArBlock =
-  | { t: 'lead'; x: string }
-  | { t: 'p'; x: string }
-  | { t: 'h'; x: string }
-  | { t: 'quote'; x: string; who?: string }
-  | { t: 'img'; key: string; cap?: string }
-  | { t: 'pull'; x: string }
-  | { t: 'line'; x: string }
+  | { t: 'lead'; x: string; fa?: string }
+  | { t: 'p'; x: string; fa?: string }
+  | { t: 'h'; x: string; fa?: string }
+  | { t: 'quote'; x: string; who?: string; fa?: string; whoFa?: string }
+  | { t: 'img'; key: string; cap?: string; capFa?: string }
+  | { t: 'pull'; x: string; fa?: string }
+  | { t: 'line'; x: string; fa?: string }
   | { t: 'divider' };
 
 export type Source = { label: string; url: string };
@@ -31,6 +31,13 @@ export type Article = {
   standfirst: string;      // the deck under the title
   excerpt?: string;        // short catchy line for the cards
   author?: string;         // who wrote it for ZAND, if original
+  // Farsi. Optional throughout: an article shows the toggle only when titleFa exists,
+  // and any block without fa falls back to its English text.
+  titleFa?: string;
+  kickerFa?: string;
+  standfirstFa?: string;
+  excerptFa?: string;
+  subjectFa?: string;
   readMins: number;
   cover: string;
   hero?: string;           // optional portrait inside
@@ -189,7 +196,7 @@ export const ARTICLES: Article[] = [
       { t: 'h', x: 'Ten years in' },
       { t: 'p', x: 'A decade later, Milk Makeup is an established name in a crowded field, and Rassi has spoken about how the brand’s commitment to creativity still feels fresh to him. That staying power comes from the same place the brand did: a real community, a clear point of view, and a founder who understood culture because he had been running the room where it lived.' },
       { t: 'line', x: 'He built the infrastructure of an industry first, then built a product on top of his own understanding of it.' },
-      { t: 'p', x: 'It is a rare sequence, and the order is the entire story. Most founders study a market from the outside and guess. Rassi helped build the place the market was made, and only then made something to sell inside it. He had the map because he had drawn it.' }, ebi, omid],
+      { t: 'p', x: 'It is a rare sequence, and the order is the entire story. Most founders study a market from the outside and guess. Rassi helped build the place the market was made, and only then made something to sell inside it. He had the map because he had drawn it.' }],
     source: {
       label: 'Drawn in part from WWD\u2019s profile of Mazdack Rassi. Read the original',
       url: 'https://wwd.com/beauty-industry-news/beauty-features/feature/mazdack-rassi-milk-studios-beauty-community-1202679311/',
@@ -613,4 +620,10 @@ export function articleOfDay(d = new Date()) {
   if (all.length === 0) return undefined;
   const day = Math.floor(d.getTime() / 86400000);
   return all[day % all.length];
+}
+
+
+// True when an article has been translated (the reader shows the toggle only then).
+export function hasFarsi(a: Article) {
+  return Boolean(a.titleFa);
 }

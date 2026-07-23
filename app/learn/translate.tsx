@@ -8,6 +8,7 @@ import * as Clipboard from 'expo-clipboard';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { speak } from '@/lib/speak';
+import { supabase } from '@/lib/supabase';
 
 const LANGS: { code: string; label: string; native: string }[] = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -27,13 +28,14 @@ const LANGS: { code: string; label: string; native: string }[] = [
 const labelOf = (c: string) => LANGS.find((l) => l.code === c)?.label ?? c;
 const K_HISTORY = 'translate:history';
 
-type Entry = { q: string; a: string; from: string; to: string };
+type Entry = { q: string; a: string; tr?: string | null; from: string; to: string };
 
 export default function TranslateScreen() {
   const [from, setFrom] = useState('en');
   const [to, setTo] = useState('fa');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
+  const [translit, setTranslit] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [picking, setPicking] = useState<null | 'from' | 'to'>(null);
@@ -60,16 +62,18 @@ export default function TranslateScreen() {
     const q = input.trim();
     if (!q) return;
     Keyboard.dismiss();
-    setLoading(true); setError(null); setOutput(''); setCopied(false);
+    setLoading(true); setError(null); setOutput(''); setTranslit(null); setCopied(false);
     try {
-      const res = await fetch(
-        'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(q) +
-        '&langpair=' + encodeURIComponent(from + '|' + to)
-      );
-      const d = await res.json();
-      const text = d?.responseData?.translatedText;
-      if (text) { setOutput(String(text)); remember({ q, a: String(text), from, to }); }
-      else setError('Could not translate that. Try rephrasing it.');
+      const { data, error: fnError } = await supabase.functions.invoke('translate', {
+        body: { text: q, from, to },
+      });
+      if (fnError || !data?.translation) {
+        setError('Could not translate that. Try again in a moment.');
+      } else {
+        setOutput(String(data.translation));
+        setTranslit(data.translit ?? null);
+        remember({ q, a: String(data.translation), tr: data.translit ?? null, from, to });
+      }
     } catch {
       setError('No connection. Check your network and try again.');
     } finally {
@@ -146,6 +150,7 @@ export default function TranslateScreen() {
           <View style={s.result}>
             <Text style={s.resultLabel}>{labelOf(to).toUpperCase()}</Text>
             <Text style={[s.resultText, isFa(to) && s.resultRtl]}>{output}</Text>
+            {translit ? <Text style={[s.translit, isFa(to) && { textAlign: 'right' }]}>{translit}</Text> : null}
             <View style={s.actions}>
               <Pressable style={s.action} hitSlop={8} onPress={() => speak(output, to)}>
                 <Ionicons name="volume-high-outline" size={19} color={colors.textSecondary} />
@@ -159,11 +164,11 @@ export default function TranslateScreen() {
 
         {/* recents */}
         {history.length > 0 && !output ? (
-          <View style={{ marginTop: spacing.xxl }}>
+          <View style={{ marginTop: spacing.xxl * 2.5 }}>
             <Text style={s.recentLabel}>RECENT</Text>
             {history.map((h, i) => (
               <Pressable key={i} style={s.recentRow}
-                onPress={() => { setFrom(h.from); setTo(h.to); setInput(h.q); setOutput(h.a); }}>
+                onPress={() => { setFrom(h.from); setTo(h.to); setInput(h.q); setOutput(h.a); setTranslit(h.tr ?? null); }}>
                 <View style={{ flex: 1 }}>
                   <Text style={s.recentQ} numberOfLines={1}>{h.q}</Text>
                   <Text style={[s.recentA, isFa(h.to) && s.resultRtl]} numberOfLines={1}>{h.a}</Text>
@@ -234,6 +239,7 @@ const s = StyleSheet.create({
   resultLabel: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 1.8, color: colors.textSecondary },
   resultText: { fontFamily: fonts.body, fontSize: 28, lineHeight: 40, color: colors.textPrimary, marginTop: spacing.md },
   resultRtl: { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' },
+  translit: { fontFamily: fonts.body, fontSize: 15, color: colors.textSecondary, marginTop: spacing.sm, opacity: 0.65 },
   actions: { flexDirection: 'row', gap: spacing.xl, marginTop: spacing.xl },
   action: { padding: 2 },
 
