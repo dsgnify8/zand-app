@@ -60,7 +60,7 @@ function Block({ b, fa }: { b: ArBlock; fa?: boolean }) {
 }
 
 export default function ArticleScreen() {
-  const { article } = useLocalSearchParams<{ article: string }>();
+  const { article, resume } = useLocalSearchParams<{ article: string; resume?: string }>();
   const a = articleByKey(article);
 
   if (!a) {
@@ -115,7 +115,7 @@ export default function ArticleScreen() {
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={200}
           onScroll={(e) => { if (a) saveScroll(a.key, e.nativeEvent.contentOffset.y); }}
-          onLayout={() => { if (a) { const y = getScroll(a.key); if (y > 0) setTimeout(() => scrollRef.current?.scrollTo({ y, animated: false }), 60); } }}
+          onLayout={() => { if (a && resume === '1') { const y = getScroll(a.key); if (y > 0) setTimeout(() => scrollRef.current?.scrollTo({ y, animated: false }), 60); } }}
         >
           <FramedImage name={heroKey} source={cover} style={s.cover} />
 

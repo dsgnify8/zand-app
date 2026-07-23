@@ -34,7 +34,23 @@ function Sheet({ open, onClose, children }: any) {
 export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [panel, setPanel] = useState<null | 'account' | 'language' | 'notifications' | 'help' | 'terms'>(null);
   const { lang: curLang } = useLang();
-  const { displayName, user, signOut } = useAuth();
+  const { displayName, user, signOut, updateName, updateEmail, updatePhone } = useAuth();
+  const phone = (user?.user_metadata?.phone as string) ?? '';
+  const [editField, setEditField] = useState<null | 'name' | 'email' | 'phone'>(null);
+  const [editVal, setEditVal] = useState('');
+  const [editMsg, setEditMsg] = useState('');
+  const [editBusy, setEditBusy] = useState(false);
+  const startEdit = (f: 'name' | 'email' | 'phone', cur: string) => { setEditField(f); setEditVal(cur); setEditMsg(''); };
+  const saveEdit = async () => {
+    if (!editField) return;
+    setEditBusy(true); setEditMsg('');
+    const fn = editField === 'name' ? updateName : editField === 'email' ? updateEmail : updatePhone;
+    const { error } = await fn(editVal.trim());
+    setEditBusy(false);
+    if (error) { setEditMsg(error); return; }
+    setEditMsg(editField === 'email' ? 'Check your new email to confirm the change.' : 'Saved.');
+    if (editField !== 'email') setTimeout(() => setEditField(null), 700);
+  };
   const isAdmin = useIsAdmin();
   const [inviteOpen, setInviteOpen] = useState(false);
   const email = user?.email ?? '';

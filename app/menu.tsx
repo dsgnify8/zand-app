@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getLang, useLang } from '@/lib/i18n';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -7,19 +8,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 
 const EXPLORE_SECTIONS = [
-  { label: 'Education', route: '/section/education', icon: 'school-outline' },
-  { label: 'Videos', route: '/section/videos', icon: 'play-circle-outline' },
-  { label: 'Articles', route: '/section/articles', icon: 'newspaper-outline' },
+  { label: 'Education', fa: 'آموزش', route: '/section/education', icon: 'school-outline' },
+  { label: 'Videos', fa: 'ویدیوها', route: '/section/videos', icon: 'play-circle-outline' },
+  { label: 'Articles', fa: 'مقاله‌ها', route: '/section/articles', icon: 'newspaper-outline' },
 ] as const;
 
 const LINKS = [
   { key: 'home', label: 'Home', persian: 'خانه', route: '/', icon: 'home-outline' },
-  { key: 'learn', label: 'Learn Persian', persian: 'فارسی', route: '/learn', icon: 'book-outline' },
+  { key: 'learn', label: 'Learn Persian', persian: 'فارسی یاد بگیر', route: '/learn', icon: 'book-outline' },
   { key: 'explore', label: 'Explore', persian: 'کشف', route: '/explore', icon: 'compass-outline', expandable: true },
   { key: 'profile', label: 'Profile', persian: 'حساب', route: '/profile', icon: 'person-outline' },
 ] as const;
 
 export default function MenuScreen() {
+  useLang();
+  const fa = getLang() === 'fa';
   const [openExplore, setOpenExplore] = useState(false);
 
   const go = (route: string) => {
@@ -51,11 +54,11 @@ export default function MenuScreen() {
                   onPress={() => (l as any).expandable ? setOpenExplore((v) => !v) : go(l.route)}
                 >
                   <Ionicons name={l.icon as any} size={20} color={colors.textSecondary} />
-                  <Text style={styles.rowLabel}>{l.label}</Text>
+                  <Text style={styles.rowLabel}>{fa ? l.persian : l.label}</Text>
                   {(l as any).expandable ? (
                     <Ionicons name={openExplore ? 'chevron-up' : 'chevron-down'} size={18} color={colors.textSecondary} />
                   ) : (
-                    <Text style={styles.rowGlyph}>{l.persian}</Text>
+                    <Text style={styles.rowGlyph}>{fa ? '' : l.persian}</Text>
                   )}
                 </Pressable>
 
@@ -64,7 +67,7 @@ export default function MenuScreen() {
                     {EXPLORE_SECTIONS.map((sct) => (
                       <Pressable key={sct.route} style={styles.subRow} onPress={() => go(sct.route)}>
                         <Ionicons name={sct.icon as any} size={18} color={colors.textSecondary} />
-                        <Text style={styles.subLabel}>{sct.label}</Text>
+                        <Text style={styles.subLabel}>{fa ? (sct as any).fa : sct.label}</Text>
                         <Ionicons name="arrow-forward" size={15} color={colors.textSecondary} />
                       </Pressable>
                     ))}

@@ -8,6 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS } from '@/constants/profile';
 import { useSaved } from '@/lib/saved-store';
+import { useProgress } from '@/lib/progress-store';
+import { VideoTile } from '@/components/video-tile';
 import { t, useLang } from '@/lib/i18n';
 import { PROFILE } from '@/constants/i18n/profile';
 import { ContinueReading } from '@/components/continue-reading';
@@ -159,6 +161,9 @@ const KIND_ICON: Record<string, string> = { word: 'language-outline', topic: 'bo
 
 function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watched' | 'saved'; onBack: () => void }) {
   const { liked, saved, recent, toggleLike } = useSaved();
+  const { history } = useProgress();
+  // newest-first, already ordered by the progress store
+  const watchedIds = history.filter((h: any) => h.type === 'video').map((h: any) => h.id);
   const keys = view === 'favourites' ? liked : view === 'saved' ? saved : view === 'history' ? recent : [];
   const arts = resolveMany(keys);
 
@@ -178,7 +183,18 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
       </Pressable>
       <Text style={s.subTitle}>{TITLE[view]}</Text>
 
-      {arts.length === 0 ? (
+      {view === 'watched' ? (
+        watchedIds.length === 0 ? (
+          <View style={s.emptyWrap}>
+            <Ionicons name="play-circle-outline" size={30} color={pr.dim} />
+            <Text style={s.emptyT}>No videos watched yet.</Text>
+          </View>
+        ) : (
+          <View style={s.watchGrid}>
+            {watchedIds.map((id: string) => <VideoTile key={id} id={id} />)}
+          </View>
+        )
+      ) : arts.length === 0 ? (
         <View style={s.emptyWrap}>
           <Ionicons name={view === 'favourites' ? 'heart-outline' : view === 'saved' ? 'bookmark-outline' : view === 'watched' ? 'play-circle-outline' : 'time-outline'} size={30} color={pr.dim} />
           <Text style={s.emptyT}>{EMPTY[view]}</Text>
@@ -315,13 +331,11 @@ function FriendsTab() {
         <Text style={s.frHeroX}>Send a friend anything worth learning: a word, a poet, a place, a story. They learn it, then send one back.</Text>
       </View>
 
-      {hasActivity ? (
-        <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
-          <Ionicons name="person-add" size={17} color="#FFF" />
-          <Text style={s.frMainBtnT}>{t(PROFILE.findFriends)}</Text>
-          {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
-        </Pressable>
-      ) : null}
+      <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
+        <Ionicons name="person-add" size={17} color="#FFF" />
+        <Text style={s.frMainBtnT}>{t(PROFILE.findFriends)}</Text>
+        {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
+      </Pressable>
 
       {/* Real incoming requests (always live) */}
       {incoming.length > 0 ? (
@@ -415,20 +429,8 @@ function FriendsTab() {
 
       {/* Preview of what the page becomes — locked when you have no friends,
           shown as a labelled example once you do. */}
-      {!hasActivity ? (
-        <View style={s.previewOverlay} pointerEvents="box-none">
-            <Pressable style={s.previewCard} onPress={() => setFriendsOpen(true)}>
-              <Text style={s.previewT}>{t(PROFILE.nobodyYet)}</Text>
-              <Text style={s.previewX}>A friend sends you a word. You learn it, then send one back. Here is what that looks like.</Text>
-              <View style={s.previewBtn}>
-                <Ionicons name="person-add" size={15} color="#FFF" />
-                <Text style={s.previewBtnT}>{t(PROFILE.findFriends)}</Text>
-              </View>
-            </Pressable>
-          </View>
-        ) : null}
       <View style={hasActivity ? undefined : s.previewWrap} pointerEvents={hasActivity ? 'auto' : 'none'}>
-        <Text style={s.sectionLabel}>{hasActivity ? 'AN EXAMPLE OF WHAT YOU CAN SEND' : 'A PREVIEW'}</Text>
+        <Text style={s.sectionLabel}>{hasActivity ? t(PROFILE.exampleSend) : t(PROFILE.aPreview)}</Text>
         <View style={{ gap: spacing.md, opacity: hasActivity ? 1 : 0.9 }}>
           {INBOX.filter((x) => x.kind === 'word').slice(0, 1).map((i) => (
             <View key={i.key} style={s.inbox}>
@@ -516,17 +518,17 @@ function ProgressTab() {
       <Text style={s.sectionLabel}>{t(PROFILE.whatDoing)}</Text>
       <View style={s.statGrid}>
         {[
-          { v: stats.topicsFinished, k: 'Topics finished', i: 'book' },
-          { v: stats.articlesRead, k: 'Articles read', i: 'newspaper' },
-          { v: stats.pagesRead, k: 'Pages read', i: 'document-text' },
-          { v: stats.videosWatched, k: 'Videos watched', i: 'play-circle' },
-          { v: stats.thingsSaved, k: 'Things saved', i: 'bookmark' },
-          { v: stats.thingsSent, k: 'Sent to friends', i: 'paper-plane' },
+          { v: stats.topicsFinished, k: 'Topics finished', kT: PROFILE.topicsFinished, i: 'book' },
+          { v: stats.articlesRead, k: 'Articles read', kT: PROFILE.articlesRead, i: 'newspaper' },
+          { v: stats.pagesRead, k: 'Pages read', kT: PROFILE.pagesRead, i: 'document-text' },
+          { v: stats.videosWatched, k: 'Videos watched', kT: PROFILE.videosWatched, i: 'play-circle' },
+          { v: stats.thingsSaved, k: 'Things saved', kT: PROFILE.thingsSaved, i: 'bookmark' },
+          { v: stats.thingsSent, k: 'Sent to friends', kT: PROFILE.sentToFriends, i: 'paper-plane' },
         ].map((st) => (
           <View key={st.k} style={s.statCell}>
             <Ionicons name={st.i as any} size={16} color={pr.saveA} />
             <Text style={s.statV}>{st.v}</Text>
-            <Text style={s.statK}>{st.k}</Text>
+            <Text style={s.statK}>{st.kT ? t(st.kT) : st.k}</Text>
           </View>
         ))}
       </View>
@@ -617,6 +619,7 @@ export default function Profile() {
 }
 
 const s = StyleSheet.create({
+  watchGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
   wordUse: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, textAlign: 'center', marginTop: spacing.sm, fontStyle: 'italic' },
   previewWrap: { position: 'relative', marginTop: spacing.sm },
   previewOverlay: { marginBottom: spacing.lg },

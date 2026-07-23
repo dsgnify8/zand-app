@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { SECTIONS } from '@/constants/i18n/sections';
 import { t, useLang } from '@/lib/i18n';
 import { HOME } from '@/constants/i18n/home';
 import { Animated, Image, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
@@ -37,6 +38,10 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 
 type Card = { key: string; title: string; sub: string; image?: string; route: string; kind?: string; accent?: string; glyph?: string; persian?: string; geoKey?: string };
 
+const PILLAR_T: Record<string, any> = {
+  History: SECTIONS.history, Culture: SECTIONS.culture, Geography: SECTIONS.geography,
+  Literature: SECTIONS.literature, Language: SECTIONS.language, Articles: SECTIONS.articles,
+};
 const PILLARS = ['History', 'Culture', 'Geography', 'Literature', 'Language', 'Articles'] as const;
 type Pillar = (typeof PILLARS)[number];
 
@@ -375,7 +380,7 @@ export default function HomeScreen() {
               const on = p === pillar;
               return (
                 <Pressable key={p} onPress={() => setPillar(p)} style={styles.tab}>
-                  <Text style={[styles.tabText, on && styles.tabTextOn]}>{p.toUpperCase()}</Text>
+                  <Text style={[styles.tabText, on && styles.tabTextOn]}>{PILLAR_T[p] ? t(PILLAR_T[p]) : p.toUpperCase()}</Text>
                   <View style={[styles.tabRule, on && styles.tabRuleOn]} />
                 </Pressable>
               );

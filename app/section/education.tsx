@@ -31,7 +31,6 @@ const TOPICS: Topic[] = [
   { key: 'culture', title: 'Culture', titleT: SECTIONS.culture, descT: SECTIONS.cultureX, persian: 'فرهنگ', description: 'Taarof, the guest, the table, and the rules nobody explains.', image: 'zand-vakil-bazaar', status: 'ready', route: '/culture' },
   { key: 'art', title: 'Art', titleT: SECTIONS.art, descT: SECTIONS.artX, persian: 'هنر', description: 'Miniature, calligraphy, and beyond.', image: 'timurid-miniature', status: 'soon' },
   { key: 'architecture', title: 'Architecture', titleT: SECTIONS.architecture, descT: SECTIONS.architectureX, persian: 'معماری', description: 'Domes, gardens, and sacred geometry.', image: 'safavid-mosque-1', status: 'soon' },
-  { key: 'science-philosophy', title: 'Science & Philosophy', titleT: SECTIONS.sciencePhil, descT: SECTIONS.sciencePhilX, persian: 'علم و فلسفه', description: 'Thinkers and mystics, and contributions to math, medicine, and the stars.', status: 'soon' },
 ];
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {

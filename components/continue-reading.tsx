@@ -56,9 +56,9 @@ export function ContinueReading({ label = 'PICK UP WHERE YOU LEFT OFF' }: { labe
 }
 
 const s = StyleSheet.create({
-  label: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 2, color: colors.textSecondary, marginBottom: spacing.md },
+  label: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 2, color: colors.textSecondary, marginTop: spacing.xxl, marginBottom: spacing.lg },
   rail: { gap: spacing.md, paddingRight: spacing.lg },
-  card: { width: 148, height: 196, borderRadius: 13, overflow: 'hidden', backgroundColor: colors.surface, justifyContent: 'flex-end' },
+  card: { width: 148, height: 176, borderRadius: 13, overflow: 'hidden', backgroundColor: colors.surface, justifyContent: 'flex-end' },
   img: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   ph: { backgroundColor: 'rgba(36,28,25,0.25)' },
   body: { padding: spacing.md },

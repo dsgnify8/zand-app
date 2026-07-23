@@ -215,7 +215,7 @@ export default function LitReader() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <View style={styles.topBar}>
-        <Pressable hitSlop={10} onPress={() => p > 0 ? goto(p - 1) : router.back()}><Ionicons name="chevron-back" size={24} color={lit.text} /></Pressable>
+        <Pressable hitSlop={10} onPress={() => router.back()}><Ionicons name="chevron-back" size={24} color={lit.text} /></Pressable>
         <Text style={styles.topTitle}>{author.name}</Text>
         <SaveHeart itemKey={'poet-' + author.key} size={20} tint={lit.text} />
       </View>

@@ -58,7 +58,11 @@ export default function VideosScreen() {
     [history]
   );
 
-  const watched = useMemo(() => ALL_IDS.filter((id) => watchedSet.has(id)), [watchedSet]);
+  // history is newest-first, so this keeps most-recently-watched at the front
+  const watched = useMemo(
+    () => history.filter((h) => h.type === 'video').map((h) => h.id).filter((id) => ALL_IDS.includes(id)),
+    [history]
+  );
   useEffect(() => { syncVideosWatched(watched.length); }, [watched.length]);
 
   const tabs = [{ key: 'all', title: 'All' }, ...PLAYLISTS.map((p) => ({ key: p.key, title: p.title }))];
