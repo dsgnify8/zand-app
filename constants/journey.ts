@@ -325,6 +325,8 @@ export const STAGES: Stage[] = [
       { key: 'joining', kind: 'lesson', title: 'Making longer sentences', titleFa: 'جمله‌سازی',
         sub: 'ke, vali, chun, agar', route: '/learn/lesson?unit=joining&lesson=joining',
         unit: 'joining', lesson: 'joining' },
+      { key: 'read-1', kind: 'lesson', title: 'Read something real', titleFa: 'خواندن',
+        sub: 'Whole texts, with every word one tap away', route: '/learn/read' },
       { key: 'review-5', kind: 'review', title: 'Review everything', titleFa: 'مرور',
         sub: 'Every word you have met', route: '/learn/review' },
     ],
