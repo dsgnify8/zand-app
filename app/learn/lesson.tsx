@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { lessonByKey } from '@/constants/curriculum';
-import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep, LetterStep, VowelStep, GapStep } from '@/components/lesson-steps';
+import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep, LetterStep, VowelStep, GapStep, TypeStep } from '@/components/lesson-steps';
 import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
 import { markLessonDone } from '@/lib/learn-progress';
@@ -40,7 +40,7 @@ export default function LessonScreen() {
   }, [l.key]);
 
   const step = l.steps[i];
-  const isQuiz = step.t === 'choose' || step.t === 'listen' || step.t === 'build' || step.t === 'write' || step.t === 'gap';
+  const isQuiz = step.t === 'choose' || step.t === 'listen' || step.t === 'build' || step.t === 'write' || step.t === 'gap' || step.t === 'type';
   const canGo = !isQuiz || answered;
   const pct = Math.round(((i + (answered ? 1 : 0)) / l.steps.length) * 100);
 
@@ -134,6 +134,7 @@ export default function LessonScreen() {
           {step.t === 'gap' ? <GapStep s={step} onResolve={resolve} /> : null}
           {step.t === 'build' ? <BuildStep s={step} onResolve={resolve} /> : null}
           {step.t === 'write' ? <WriteStep s={step} onResolve={resolve} /> : null}
+          {step.t === 'type' ? <TypeStep s={step} onResolve={resolve} /> : null}
         </Animated.View>
       </ScrollView>
 

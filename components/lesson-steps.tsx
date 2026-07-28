@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { speak } from '@/lib/speak';
+import { PersianKeyboard } from '@/components/persian-keyboard';
 import type { Step } from '@/constants/curriculum';
 
 /* A word, its sound, its meaning. The quiet foundation of everything. */
@@ -502,4 +503,75 @@ const gp = StyleSheet.create({
   whyRight: { backgroundColor: lw.greenWash },
   whyWrong: { backgroundColor: '#F6ECE9' },
   whyT: { fontFamily: fonts.body, fontSize: 13.5, lineHeight: 21, color: lw.inkSoft, textAlign: 'center' },
+});
+
+/* Type it yourself, on a Persian keyboard drawn in the app.
+   No system keyboard to install, and the layout is the Iranian one. */
+export function TypeStep({ s: st, onResolve }: { s: any; onResolve: (right: boolean) => void }) {
+  const [typed, setTyped] = useState('');
+  const [checked, setChecked] = useState(false);
+
+  const clean = (x: string) => x.replace(/[\u200c\s]/g, '');
+  const right = clean(typed) === clean(st.fa);
+
+  return (
+    <View>
+      <Text style={ty.label}>WRITE IT YOURSELF</Text>
+      <Text style={ty.en}>{st.en}</Text>
+      <Text style={ty.tr}>{st.tr}</Text>
+
+      <View style={ty.line}>
+        <Text style={ty.typed}>{typed || ' '}</Text>
+      </View>
+
+      {st.hint && !checked ? <Text style={ty.hint}>{st.hint}</Text> : null}
+
+      {checked ? (
+        <View style={[ty.why, right ? ty.whyRight : ty.whyWrong]}>
+          {right ? (
+            <Text style={ty.whyT}>Exactly right.</Text>
+          ) : (
+            <>
+              <Text style={ty.whyT}>The answer is</Text>
+              <Text style={ty.answerFa}>{st.fa}</Text>
+            </>
+          )}
+        </View>
+      ) : null}
+
+      {!checked ? (
+        <>
+          <PersianKeyboard
+            onKey={(k) => setTyped((v) => v + k)}
+            onBackspace={() => setTyped((v) => v.slice(0, -1))}
+            onSpace={() => setTyped((v) => v + ' ')}
+          />
+          <Pressable
+            style={[ty.check, typed.length === 0 && ty.checkOff]}
+            disabled={typed.length === 0}
+            onPress={() => { setChecked(true); onResolve(clean(typed) === clean(st.fa)); }}
+          >
+            <Text style={ty.checkT}>Check</Text>
+          </Pressable>
+        </>
+      ) : null}
+    </View>
+  );
+}
+
+const ty = StyleSheet.create({
+  label: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 2.5, color: lw.muted },
+  en: { fontFamily: fonts.body, fontSize: 21, lineHeight: 29, color: lw.ink, marginTop: spacing.sm },
+  tr: { fontFamily: fonts.body, fontSize: 14, color: lw.muted, marginTop: 4 },
+  line: { minHeight: 74, borderBottomWidth: 1, borderBottomColor: lw.rule, justifyContent: 'center', marginTop: spacing.xl, marginBottom: spacing.md },
+  typed: { fontFamily: fonts.persian, fontSize: 34, lineHeight: 58, color: lw.ink, textAlign: 'right' },
+  hint: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted, marginBottom: spacing.md },
+  why: { borderRadius: 12, padding: spacing.lg, marginTop: spacing.md, alignItems: 'center' },
+  whyRight: { backgroundColor: lw.greenWash },
+  whyWrong: { backgroundColor: '#F6ECE9' },
+  whyT: { fontFamily: fonts.body, fontSize: 13.5, color: lw.inkSoft },
+  answerFa: { fontFamily: fonts.persian, fontSize: 28, lineHeight: 48, color: lw.green, marginTop: 4 },
+  check: { backgroundColor: lw.green, borderRadius: 26, paddingVertical: 14, alignItems: 'center', marginTop: spacing.md },
+  checkOff: { backgroundColor: lw.greenPale },
+  checkT: { fontFamily: fonts.bodyStrong, fontSize: 15, color: '#FFF' },
 });

@@ -25,6 +25,7 @@ export type Step =
   | { t: 'choose'; prompt: string; answer: string; options: string[]; why?: string; optionTrs?: Record<string, string> }
   | { t: 'gap'; before: string; after: string; answer: string; tr: string; en: string;
       options: string[]; optionTrs?: Record<string, string>; why?: string }
+  | { t: 'type'; fa: string; tr: string; en: string; hint?: string }
   | { t: 'note'; title: string; body: string }
   | { t: 'letter'; letter: string; name: string; sound: string; like: string;
       positions: { pos: string; form: string; word: string; tr: string; en: string }[];
@@ -1311,7 +1312,7 @@ const pastTense: Lesson = {
     { t: 'listen', fa: 'دیروز به بازار رفتم', tr: 'diruz be b\u0101z\u0101r raftam', en: 'Yesterday I went to the bazaar',
       options: ['دیروز به بازار رفتم', 'فردا به بازار می‌روم', 'نان خوردم', 'او گفت'],
       optionTrs: { 'دیروز به بازار رفتم': 'diruz be b\u0101z\u0101r raftam', 'فردا به بازار می‌روم': 'fard\u0101 be b\u0101z\u0101r miravam', 'نان خوردم': 'n\u0101n khordam', 'او گفت': 'u goft' } },
-    { t: 'write', fa: 'رفتم', tr: 'raftam', en: 'I went' },
+    { t: 'type', fa: 'رفتم', tr: 'raftam', en: 'I went', hint: 'Four letters. The keyboard is the Iranian layout.' },
   ],
 };
 
@@ -1406,7 +1407,7 @@ const joining: Lesson = {
         'نیامدم چون مریض بودم': 'nay\u0101madam chun mariz budam',
         'گفتم که می‌آیم': 'goftam ke mi\u0101yam',
         'اگر وقت داشته باشم': 'agar vaght d\u0101shte b\u0101sham' } },
-    { t: 'write', fa: 'ولی', tr: 'vali', en: 'but' },
+    { t: 'type', fa: 'ولی', tr: 'vali', en: 'but' },
   ],
 };
 
