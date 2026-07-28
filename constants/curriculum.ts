@@ -402,6 +402,85 @@ const numbersUse: Lesson = {
 };
 
 
+
+/* ------------------------------------------------------------------ */
+/* UNIT IV — the table                                                 */
+/* ------------------------------------------------------------------ */
+
+const tableWords: Lesson = {
+  key: 'table-words',
+  title: 'Bread, water, tea',
+  titleFa: 'نان و آب و چای',
+  blurb: 'The things always on a Persian table.',
+  minutes: 7,
+  steps: [
+    { t: 'meet', fa: 'نان', tr: 'n\u0101n', en: 'bread' },
+    { t: 'meet', fa: 'آب', tr: '\u0101b', en: 'water' },
+    { t: 'meet', fa: 'چای', tr: 'ch\u0101y', en: 'tea' },
+    { t: 'note', title: 'Tea is not a drink, it is a fixture',
+      body: 'ch\u0101y arrives whether you asked or not, before the conversation, during it, and after. Refusing the first glass is close to refusing the house. Persian tea is black, drunk from a small glass called an est\u0113k\u0101n, and taken with a sugar cube held between the teeth rather than stirred in.' },
+    { t: 'meet', fa: 'برنج', tr: 'berenj', en: 'rice' },
+    { t: 'meet', fa: 'غذا', tr: 'ghaz\u0101', en: 'food' },
+    { t: 'sense', fa: 'نان و پنیر', tr: 'n\u0101n-o panir', en: 'bread and cheese',
+      body: 'n\u0101n-o panir is bread and cheese, and it means far more than the sum of it: breakfast, a quick meal, what you eat when there is nothing else and it is still enough. There is a well known song by that name. Some phrases are food and memory at once.' },
+    { t: 'choose', prompt: 'Which one is water?',
+      answer: 'آب',
+      options: ['آب', 'نان', 'چای', 'برنج'],
+      optionTrs: { 'آب': '\u0101b', 'نان': 'n\u0101n', 'چای': 'ch\u0101y', 'برنج': 'berenj' },
+      why: '\u0101b, water. The \u0101 is long, like the a in father.' },
+    { t: 'listen', fa: 'چای', tr: 'ch\u0101y', en: 'tea',
+      options: ['چای', 'آب', 'نان', 'غذا'],
+      optionTrs: { 'چای': 'ch\u0101y', 'آب': '\u0101b', 'نان': 'n\u0101n', 'غذا': 'ghaz\u0101' } },
+    { t: 'meet', fa: 'گرسنه', tr: 'gorosne', en: 'hungry' },
+    { t: 'sentence', fa: 'من گرسنه‌ام', tr: 'man gorosne-am', en: 'I am hungry', focus: 'گرسنه' },
+    { t: 'build', fa: 'من گرسنه‌ام', tr: 'man gorosne-am', en: 'I am hungry',
+      parts: ['من', 'گرسنه‌ام', 'آب', 'چای'],
+      partTrs: { 'من': 'man', 'گرسنه‌ام': 'gorosne-am', 'آب': '\u0101b', 'چای': 'ch\u0101y' } },
+    { t: 'write', fa: 'آب', tr: '\u0101b', en: 'water' },
+  ],
+};
+
+const tableManners: Lesson = {
+  key: 'table-manners',
+  title: 'Offering and refusing',
+  titleFa: 'تعارف سر سفره',
+  blurb: 'The ritual nobody explains, and everybody follows.',
+  minutes: 8,
+  steps: [
+    { t: 'meet', fa: 'نوش جان', tr: 'nush-e j\u0101n', en: 'enjoy your meal', literal: 'may it nourish your soul' },
+    { t: 'sense', fa: 'نوش جان', tr: 'nush-e j\u0101n', en: 'enjoy your meal',
+      body: 'Said to someone who is eating, and said warmly. There is no exact English for it. Bon app\u00e9tit is close but colder: nush-e j\u0101n is about the soul, not the appetite.' },
+    { t: 'meet', fa: 'دستت درد نکنه', tr: 'dastet dard nakone', en: 'thank you for the food', literal: 'may your hand not hurt' },
+    { t: 'note', title: 'Thanking the hands, not the person',
+      body: 'You do not thank the cook. You wish their hand no pain, because the hand did the work. Persian is full of this: gratitude aimed sideways at the part that did the labour rather than straight at the person, which would be too direct.' },
+    { t: 'sentence', fa: 'خیلی خوشمزه است', tr: 'kheyli khoshmaze ast', en: 'it is delicious', focus: 'خوشمزه' },
+    { t: 'meet', fa: 'سیر شدم', tr: 'sir shodam', en: 'I am full' },
+    { t: 'note', title: 'Refusing takes three tries',
+      body: 'You will be offered more. You will say no. You will be offered again, and again. This is taarof, and both sides know the script: the host must insist, the guest must decline, and somewhere around the third round the truth is settled. Accepting the first offer looks greedy. Refusing once and being believed means the host was not really offering.' },
+    { t: 'choose', prompt: 'Your aunt has filled your plate for the third time. You genuinely cannot eat more. What do you say?',
+      answer: 'سیر شدم، دستت درد نکنه',
+      options: ['سیر شدم، دستت درد نکنه', 'نوش جان', 'من گرسنه‌ام', 'خیلی خوشمزه است'],
+      optionTrs: {
+        'سیر شدم، دستت درد نکنه': 'sir shodam, dastet dard nakone',
+        'نوش جان': 'nush-e j\u0101n',
+        'من گرسنه‌ام': 'man gorosne-am',
+        'خیلی خوشمزه است': 'kheyli khoshmaze ast' },
+      why: 'You say you are full and you thank the hands. Saying only that you are full can read as a complaint about the food.' },
+    { t: 'listen', fa: 'دستت درد نکنه', tr: 'dastet dard nakone', en: 'thank you for the food',
+      options: ['دستت درد نکنه', 'نوش جان', 'سیر شدم', 'خیلی خوشمزه است'],
+      optionTrs: {
+        'دستت درد نکنه': 'dastet dard nakone',
+        'نوش جان': 'nush-e j\u0101n',
+        'سیر شدم': 'sir shodam',
+        'خیلی خوشمزه است': 'kheyli khoshmaze ast' } },
+    { t: 'build', fa: 'خیلی خوشمزه است', tr: 'kheyli khoshmaze ast', en: 'it is delicious',
+      parts: ['خیلی', 'خوشمزه', 'است', 'سیر'],
+      partTrs: { 'خیلی': 'kheyli', 'خوشمزه': 'khoshmaze', 'است': 'ast', 'سیر': 'sir' } },
+    { t: 'write', fa: 'نان', tr: 'n\u0101n', en: 'bread' },
+  ],
+};
+
+
 export const UNITS: Unit[] = [
   {
     key: 'first-words',
@@ -429,6 +508,15 @@ export const UNITS: Unit[] = [
     blurb: 'One to a hundred, age, price, and the Persian numerals.',
     level: 'beginner',
     lessons: [numbersOne, numbersUse],
+  },
+  {
+    key: 'table',
+    roman: 'IV',
+    title: 'The table',
+    titleFa: 'سفره',
+    blurb: 'Food, and the manners that come with it.',
+    level: 'beginner',
+    lessons: [tableWords, tableManners],
   },
 ];
 
