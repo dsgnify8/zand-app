@@ -73,6 +73,8 @@ export const STAGES: Stage[] = [
       { key: 'family-talk', kind: 'lesson', title: 'Talking about them', titleFa: 'حرف زدن',
         sub: 'This is my mother. I have one sister.', route: '/learn/lesson?unit=family&lesson=family-talk',
         unit: 'family', lesson: 'family-talk' },
+      { key: 'blanks-1', kind: 'quiz', title: 'Finish the sentence', titleFa: 'جای خالی',
+        sub: 'Fill the gap from what you have learned', route: '/learn/blanks?stage=family' },
       { key: 'review-1', kind: 'review', title: 'Review', titleFa: 'مرور',
         sub: 'Ten words from everything so far', route: '/learn/review' },
     ],
@@ -92,6 +94,8 @@ export const STAGES: Stage[] = [
         unit: 'table', lesson: 'table-manners' },
       { key: 'cards-2', kind: 'flashcards', title: 'Drill the table', titleFa: 'تمرین',
         sub: 'Everything from stage four', route: '/learn/cards?stage=table' },
+      { key: 'blanks-2', kind: 'quiz', title: 'Finish the sentence', titleFa: 'جای خالی',
+        sub: 'The table, without the words in front of you', route: '/learn/blanks?stage=table' },
     ],
   },
 ];
