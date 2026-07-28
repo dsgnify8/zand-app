@@ -10,6 +10,14 @@ import { STAGES, SIDE_QUESTS, type JourneyStep } from '@/constants/journey';
 import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 
+// Where each level joins the route. Shown as a marker between stages.
+const LEVEL_BAND: Record<string, { label: string; sub: string }> = {
+  beginner:     { label: 'FROM THE BEGINNING', sub: 'Letters first. Nothing here assumes anything.' },
+  elementary:   { label: 'IF YOU KNOW SOME WORDS', sub: 'Start here. Verbs are where the language opens up.' },
+  intermediate: { label: 'IF YOU CAN HOLD A CONVERSATION', sub: 'Feeling, nuance, and staying afloat.' },
+  advanced:     { label: 'READING AND WRITING', sub: 'Longer texts, and writing it yourself.' },
+};
+
 const ICON: Record<string, string> = {
   lesson: 'chatbubble-ellipses-outline',
   alphabet: 'text-outline',
@@ -91,8 +99,20 @@ export default function MapScreen() {
         <Text style={s.eyebrow}>YOUR ROUTE</Text>
         <Text style={s.title}>Persian,{'\n'}step by step</Text>
 
-        {STAGES.map((stage) => (
+        {STAGES.map((stage, si) => {
+          const prev = si > 0 ? STAGES[si - 1].level : undefined;
+          const showBand = stage.level && stage.level !== prev;
+          const band = showBand ? LEVEL_BAND[stage.level as string] : null;
+          return (
           <View key={stage.key} style={s.stage}>
+            {band ? (
+              <View style={s.band}>
+                <View style={s.bandRule} />
+                <Text style={s.bandT}>{band.label}</Text>
+                <Text style={s.bandX}>{band.sub}</Text>
+                <View style={s.bandRule} />
+              </View>
+            ) : null}
             <View style={s.stageHead}>
               <View style={s.stageLine} />
               <View style={s.stageLabel}>
@@ -114,7 +134,7 @@ export default function MapScreen() {
               );
             })}
           </View>
-        ))}
+        ); })}
 
         <View style={s.side}>
           <Text style={s.sideLabel}>OFF THE ROUTE</Text>
@@ -161,6 +181,10 @@ const s = StyleSheet.create({
   eyebrow: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 3, color: lw.muted },
   title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green, marginTop: spacing.sm },
 
+  band: { alignItems: 'center', marginBottom: spacing.xxl },
+  bandRule: { width: 1, height: 22, backgroundColor: lw.greenPale },
+  bandT: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 2.5, color: lw.green, marginVertical: spacing.sm },
+  bandX: { fontFamily: fonts.body, fontSize: 12, color: lw.muted, textAlign: 'center', marginBottom: spacing.sm, maxWidth: 260 },
   stage: { marginTop: spacing.xxl },
   stageHead: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   stageLine: { flex: 1, height: 1, backgroundColor: lw.hair },

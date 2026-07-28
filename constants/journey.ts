@@ -19,6 +19,7 @@ export type JourneyStep = {
 
 export type Stage = {
   key: string;
+  level?: 'beginner' | 'elementary' | 'intermediate' | 'advanced';
   roman: string;
   title: string;
   titleFa: string;
@@ -29,6 +30,7 @@ export type Stage = {
 export const STAGES: Stage[] = [
   {
     key: 'letters',
+    level: 'beginner',
     roman: 'I',
     title: 'The letters',
     titleFa: 'حروف',
@@ -45,6 +47,7 @@ export const STAGES: Stage[] = [
   },
   {
     key: 'first-words',
+    level: 'beginner',
     roman: 'II',
     title: 'First words',
     titleFa: 'کلمه‌های اول',
@@ -65,6 +68,7 @@ export const STAGES: Stage[] = [
   },
   {
     key: 'family',
+    level: 'beginner',
     roman: 'III',
     title: 'People and sentences',
     titleFa: 'خانواده',
@@ -84,6 +88,7 @@ export const STAGES: Stage[] = [
   },
   {
     key: 'table',
+    level: 'beginner',
     roman: 'IV',
     title: 'The table',
     titleFa: 'سفره',
@@ -101,6 +106,113 @@ export const STAGES: Stage[] = [
         sub: 'The table, without the words in front of you', route: '/learn/blanks?stage=table' },
     ],
   },
+  {
+    key: 'verbs',
+    level: 'elementary',
+    roman: 'V',
+    title: 'Verbs',
+    titleFa: 'فعل‌ها',
+    blurb: 'Learn six endings and every verb opens at once.',
+    steps: [
+      { key: 'verbs-being', kind: 'lesson', title: 'To be, and to have', titleFa: 'بودن',
+        sub: 'The two verbs holding up every sentence', route: '/learn/lesson?unit=verbs&lesson=verbs-being',
+        unit: 'verbs', lesson: 'verbs-being' },
+      { key: 'verbs-doing', kind: 'lesson', title: 'Going, eating, wanting', titleFa: 'فعل‌ها',
+        sub: 'Real verbs, and the mi- that makes them present', route: '/learn/lesson?unit=verbs&lesson=verbs-doing',
+        unit: 'verbs', lesson: 'verbs-doing' },
+      { key: 'cards-3', kind: 'flashcards', title: 'Drill the verbs', titleFa: 'تمرین',
+        sub: 'Every verb form from this stage', route: '/learn/cards?stage=verbs' },
+      { key: 'blanks-3', kind: 'quiz', title: 'Finish the sentence', titleFa: 'جای خالی',
+        sub: 'Put the right verb in the gap', route: '/learn/blanks?stage=verbs' },
+    ],
+  },
+  {
+    key: 'describing',
+    level: 'elementary',
+    roman: 'VI',
+    title: 'Describing things',
+    titleFa: 'صفت‌ها',
+    blurb: 'Good, big, beautiful, and where they sit.',
+    steps: [
+      { key: 'describing', kind: 'lesson', title: 'Good, big, beautiful', titleFa: 'صفت‌ها',
+        sub: 'Adjectives, and the order Persian wants', route: '/learn/lesson?unit=describing&lesson=describing',
+        unit: 'describing', lesson: 'describing' },
+      { key: 'colours', kind: 'lesson', title: 'Colours', titleFa: 'رنگ‌ها',
+        sub: 'And the ones that mean more than a colour', route: '/learn/lesson?unit=describing&lesson=colours',
+        unit: 'describing', lesson: 'colours' },
+      { key: 'more-describing', kind: 'lesson', title: 'Hot, cold, near, far', titleFa: 'بیشتر',
+        sub: 'The adjectives you need every day', route: '/learn/lesson?unit=describing&lesson=more-describing',
+        unit: 'describing', lesson: 'more-describing' },
+      { key: 'review-2', kind: 'review', title: 'Review', titleFa: 'مرور',
+        sub: 'Everything you have met so far', route: '/learn/review' },
+    ],
+  },
+  {
+    key: 'time',
+    level: 'elementary',
+    roman: 'VII',
+    title: 'Time and numbers',
+    titleFa: 'زمان و شمارش',
+    blurb: 'Today, tomorrow, and the year that starts in spring.',
+    steps: [
+      { key: 'time-words', kind: 'lesson', title: 'Today, tomorrow, yesterday', titleFa: 'زمان',
+        sub: 'Placing things in time', route: '/learn/lesson?unit=time&lesson=time-words',
+        unit: 'time', lesson: 'time-words' },
+      { key: 'numbers-one', kind: 'lesson', title: 'One to ten', titleFa: 'شمارش',
+        sub: 'Counting, and the Persian numerals', route: '/learn/lesson?unit=time&lesson=numbers-one',
+        unit: 'time', lesson: 'numbers-one' },
+      { key: 'numbers-use', kind: 'lesson', title: 'Age and price', titleFa: 'چند',
+        sub: 'How old are you, how much is it', route: '/learn/lesson?unit=time&lesson=numbers-use',
+        unit: 'time', lesson: 'numbers-use' },
+      { key: 'cards-4', kind: 'flashcards', title: 'Drill time words', titleFa: 'تمرین',
+        sub: 'Everything from this stage', route: '/learn/cards?stage=time' },
+    ],
+  },
+  {
+    key: 'places',
+    level: 'elementary',
+    roman: 'VIII',
+    title: 'Places',
+    titleFa: 'جاها',
+    blurb: 'Asking where something is, and understanding the answer.',
+    steps: [
+      { key: 'places', kind: 'lesson', title: 'Where things are', titleFa: 'جاها',
+        sub: 'Street, city, bazaar, here and there', route: '/learn/lesson?unit=places&lesson=places',
+        unit: 'places', lesson: 'places' },
+      { key: 'blanks-4', kind: 'quiz', title: 'Finish the sentence', titleFa: 'جای خالی',
+        sub: 'Places, without the words in front of you', route: '/learn/blanks?stage=places' },
+    ],
+  },
+  {
+    key: 'feelings',
+    level: 'intermediate',
+    roman: 'IX',
+    title: 'Feeling',
+    titleFa: 'دل',
+    blurb: 'One small word carries almost every emotion in Persian.',
+    steps: [
+      { key: 'feelings', kind: 'lesson', title: 'The heart does the work', titleFa: 'دل',
+        sub: 'del, and everything built on it', route: '/learn/lesson?unit=feelings&lesson=feelings',
+        unit: 'feelings', lesson: 'feelings' },
+      { key: 'cards-5', kind: 'flashcards', title: 'Drill these', titleFa: 'تمرین',
+        sub: 'The words of feeling', route: '/learn/cards?stage=feelings' },
+    ],
+  },
+  {
+    key: 'conversation',
+    level: 'intermediate',
+    roman: 'X',
+    title: 'Conversation',
+    titleFa: 'گفت‌وگو',
+    blurb: 'Staying afloat when you are out of your depth.',
+    steps: [
+      { key: 'conversation', kind: 'lesson', title: 'Keeping it going', titleFa: 'گفت‌وگو',
+        sub: 'Not understanding, asking again, buying time', route: '/learn/lesson?unit=conversation&lesson=conversation',
+        unit: 'conversation', lesson: 'conversation' },
+      { key: 'review-3', kind: 'review', title: 'Review everything', titleFa: 'مرور',
+        sub: 'Every word you have met', route: '/learn/review' },
+    ],
+  },
 ];
 
 // Flat list, for finding where you are.
@@ -109,19 +221,13 @@ export function allSteps(): JourneyStep[] {
 }
 
 // Side quests: useful, but not on the route.
-export const SIDE_QUESTS: JourneyStep[] = [
-  { key: 'numbers-one', kind: 'lesson', title: 'One to ten', titleFa: 'شمارش',
-    sub: 'Counting, and the Persian numerals', route: '/learn/lesson?unit=numbers&lesson=numbers-one',
-    unit: 'numbers', lesson: 'numbers-one' },
-  { key: 'numbers-use', kind: 'lesson', title: 'Age and price', titleFa: 'چند',
-    sub: 'How old are you, how much is it', route: '/learn/lesson?unit=numbers&lesson=numbers-use',
-    unit: 'numbers', lesson: 'numbers-use' },
-];
+export const SIDE_QUESTS: JourneyStep[] = [];
 
 // Where the level questionnaire drops you in.
+// Which stage each level joins the route at.
 export const LEVEL_ENTRY: Record<string, string> = {
-  beginner: 'alphabet',
-  elementary: 'greetings',
-  intermediate: 'family-words',
-  advanced: 'table-words',
+  beginner: 'letters',
+  elementary: 'verbs',
+  intermediate: 'feelings',
+  advanced: 'conversation',
 };
