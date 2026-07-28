@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLevel } from '@/lib/learn-level';
+import { LearnHero } from '@/components/learn-hero';
 import { UNITS } from '@/constants/curriculum';
 import { Animated, Easing, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,6 +10,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { ALPHABET, LEARN_GROUPS, CONTINUE, LEARN_STATS, type LearnModule } from '@/constants/learn';
+import { useLearnProgress } from '@/lib/learn-progress';
+import { useStats } from '@/lib/stats-store';
+import { STAGES } from '@/constants/journey';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -166,9 +170,15 @@ export default function LearnScreen() {
     setOpen((v) => !v);
   };
 
+  const { done: learnDone } = useLearnProgress();
+  const learnStats = useStats();
+  const allLessons = STAGES.flatMap((st) => st.steps).filter((x) => x.kind === 'lesson' && x.unit && x.lesson);
+  const lessonsLeft = Math.max(0, allLessons.length - learnDone.length);
+
   const stats = [
-    { v: String(ALPHABET.length - known.length), k: 'letters to learn' },
-    ...LEARN_STATS.slice(1),
+    { v: String(lessonsLeft), k: 'lessons to go' },
+    { v: String(learnStats.learnDays ?? 0), k: 'days learning' },
+    { v: String(learnStats.stagesFinished ?? 0), k: 'chapters done' },
   ];
 
   return (
@@ -193,22 +203,12 @@ export default function LearnScreen() {
           </Rise>
 
           <Rise delay={60}>
-            <Pressable style={[s.stats, open && s.statsOpen]} onPress={flip}>
-              {stats.map((st, i) => (
-                <View key={st.k} style={[s.stat, i < stats.length - 1 && s.statDiv]}>
-                  <Text style={s.statV}>{st.v}</Text>
-                  <Text style={s.statK}>{st.k}</Text>
-                </View>
-              ))}
-              <View style={s.chev}>
-                <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={14} color={colors.textSecondary} />
-              </View>
-            </Pressable>
+            <View style={{ marginTop: spacing.lg }}><LearnHero /></View>
           </Rise>
 
-          {open ? <AlphabetPanel known={known} toggle={toggle} /> : null}
 
-          <Rise delay={110}><View style={{ marginTop: spacing.md }}><ContinueCard /></View></Rise>
+
+
 
           {LEARN_GROUPS.map((g, gi) => (
             <View key={g.key} style={{ marginTop: spacing.xxl }}>
@@ -227,14 +227,27 @@ export default function LearnScreen() {
             </View>
           ))}
 
+          <Rise delay={190}>
+            <View style={s.statsWrap}>
+              <View style={s.stats}>
+                {stats.map((st, i) => (
+                  <View key={st.k} style={[s.stat, i < stats.length - 1 && s.statDiv]}>
+                    <Text style={s.statV}>{st.v}</Text>
+                    <Text style={s.statK}>{st.k}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          </Rise>
+
           <Rise delay={200}>
             <Pressable style={s.tie} onPress={() => router.navigate('/language' as any)}>
-              <Ionicons name="book-outline" size={15} color="#B08A46" />
+              <Ionicons name="book-outline" size={15} color="#4A6B50" />
               <View style={{ flex: 1 }}>
                 <Text style={s.tieT}>Where does any of this come from?</Text>
                 <Text style={s.tieX}>The story of the language, in Education.</Text>
               </View>
-              <Ionicons name="arrow-forward" size={14} color="#B08A46" />
+              <Ionicons name="arrow-forward" size={14} color="#4A6B50" />
             </Pressable>
           </Rise>
         </Animated.ScrollView>
@@ -244,6 +257,7 @@ export default function LearnScreen() {
 }
 
 const s = StyleSheet.create({
+  statsWrap: { marginTop: spacing.xxl },
   container: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl },
 
   head: { paddingTop: spacing.lg, paddingBottom: spacing.lg, position: 'relative' },

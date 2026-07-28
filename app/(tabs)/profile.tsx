@@ -26,6 +26,7 @@ import { AchievementsSheet } from '@/components/achievements-sheet';
 import { eduImage } from '@/constants/education-images';
 import { StreakPlant } from '@/components/streak-plant';
 import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
+import { LearnProgressBlock } from '@/components/learn-progress-block';
 
 type Tab = 'you' | 'library' | 'friends' | 'progress';
 
@@ -514,6 +515,9 @@ function ProgressTab() {
         <Text style={s.progN}>{ME.streak} days</Text>
         <Text style={s.progX}>Longest you have ever gone: {ME.longest}</Text>
       </View>
+
+      <Text style={s.sectionLabel}>YOUR PERSIAN</Text>
+      <LearnProgressBlock />
 
       <Text style={s.sectionLabel}>{t(PROFILE.whatDoing)}</Text>
       <View style={s.statGrid}>

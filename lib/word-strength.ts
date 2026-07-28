@@ -92,6 +92,12 @@ export function shakyCount() {
   return Object.values(words).filter((w) => w.strength > 0 && w.strength < 3).length;
 }
 
+// Everything the learner has met that is ready to come round again.
+export function dueNow(): number {
+  const now = Date.now();
+  return Object.values(words).filter((w) => w.strength > 0 && w.strength < 5 && now >= w.due).length;
+}
+
 export function useStrength() {
   const [, tick] = useState(0);
   useEffect(() => {
@@ -99,5 +105,5 @@ export function useStrength() {
     listeners.add(l);
     return () => { listeners.delete(l); };
   }, []);
-  return { solid: solidCount(), shaky: shakyCount() };
+  return { solid: solidCount(), shaky: shakyCount(), due: dueNow() };
 }

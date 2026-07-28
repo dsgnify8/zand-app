@@ -9,6 +9,7 @@ import { lw } from '@/constants/lang-theme';
 import { PERSIAN_ALPHABET, positionalForms, type PersianLetter } from '@/constants/persian-alphabet';
 import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CARD_HEIGHT = 300;
 const FORM_LABELS = [['FINAL', 'DETACHED'], ['FINAL', 'ATTACHED'], ['MEDIAL', ''], ['INITIAL', '']];
@@ -140,6 +141,8 @@ export default function AlphabetScreen() {
 
   const [view, setView] = useState<'list' | 'grid'>('grid');
   const [sheetLetter, setSheetLetter] = useState<PersianLetter | null>(null);
+  const scrollRef = useRef<ScrollView>(null);
+  const savedY = useRef(0);
 
   const autoColumns = width >= 1024 ? 3 : width >= 700 ? 2 : 1;
   const columns = view === 'grid' ? 2 : autoColumns;
@@ -171,7 +174,23 @@ export default function AlphabetScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader />
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollRef}
+        style={styles.scroll}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={250}
+        onScroll={(e) => {
+          savedY.current = e.nativeEvent.contentOffset.y;
+          AsyncStorage.setItem('K_ALPHA_SCROLL', String(savedY.current)).catch(() => {});
+        }}
+        onLayout={() => {
+          AsyncStorage.getItem('K_ALPHA_SCROLL').then((v) => {
+            const y = Number(v ?? 0);
+            if (y > 40) setTimeout(() => scrollRef.current?.scrollTo({ y, animated: false }), 80);
+          }).catch(() => {});
+        }}
+      >
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>

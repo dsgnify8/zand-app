@@ -15,6 +15,7 @@ import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
 import { ContinueReading } from '@/components/continue-reading';
+import { ContinueLearning } from '@/components/continue-learning';
 import { TOPICS } from '@/constants/education';
 import { TRADITIONS } from '@/constants/traditions';
 import { LITERATURE_FIGURES, AUTHORS } from '@/constants/literature';
@@ -411,14 +412,7 @@ export default function HomeScreen() {
 
           <FadeIn delay={270}>
             <Text style={styles.sectionLabel}>{t(HOME.jumpBackIn)}</Text>
-            <Pressable style={styles.resumeCard} onPress={() => router.navigate('/learn/alphabet')}>
-              <View style={styles.resumeIcon}><Ionicons name="book-outline" size={22} color={colors.surface} /></View>
-              <View style={styles.resumeText}>
-                <Text style={styles.resumeTitle}>{resumeTitle}</Text>
-                <Text style={styles.resumeSub}>{resumeSub}</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
-            </Pressable>
+            <ContinueLearning />
           </FadeIn>
 
           <FadeIn delay={300}>

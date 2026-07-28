@@ -12,7 +12,6 @@ import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
 import { markLessonDone } from '@/lib/learn-progress';
 import { markLearnDay } from '@/lib/stats-store';
-import { markLearnDay } from '@/lib/stats-store';
 import { useEffect } from 'react';
 
 export default function LessonScreen() {
