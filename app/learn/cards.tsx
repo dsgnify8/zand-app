@@ -8,6 +8,7 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
+import { prioritise, record } from '@/lib/word-strength';
 
 type Card = { fa: string; tr: string; en: string; literal?: string };
 
@@ -31,7 +32,8 @@ function cardsFor(stage?: string): Card[] {
 
 export default function CardsScreen() {
   const { stage } = useLocalSearchParams<{ stage?: string }>();
-  const cards = useMemo(() => cardsFor(stage), [stage]);
+  // the ones you keep missing come round first
+  const cards = useMemo(() => prioritise(cardsFor(stage)), [stage]);
 
   const [i, setI] = useState(0);
   const [shown, setShown] = useState(false);
@@ -59,6 +61,7 @@ export default function CardsScreen() {
   };
 
   const advance = (gotIt: boolean) => {
+    record(card.fa, gotIt);
     if (gotIt) setKnown((v) => [...v, card.fa]);
     if (i + 1 >= cards.length) { setDone(true); return; }
     Animated.sequence([

@@ -322,3 +322,184 @@ const st = StyleSheet.create({
   checkOff: { backgroundColor: lw.greenPale },
   checkT: { fontFamily: fonts.bodyStrong, fontSize: 15, color: '#FFF' },
 });
+
+/* A letter, its four positional forms, and a real word for each.
+   The shape of a textbook page, which is the right shape for this. */
+export function LetterStep({ s: st }: { s: any }) {
+  return (
+    <View>
+      <View style={stl.letterHead}>
+        <Text style={stl.letterBig}>{st.letter}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={stl.letterName}>{st.name}</Text>
+          <Text style={stl.letterSound}>sounds like {st.sound}</Text>
+          <Text style={stl.letterLike}>{st.like}</Text>
+        </View>
+        <Pressable hitSlop={12} onPress={() => speak(st.letter, 'fa')} style={stl.sayBtn}>
+          <Ionicons name="volume-medium-outline" size={17} color={lw.green} />
+        </Pressable>
+      </View>
+
+      <View style={stl.table}>
+        {st.positions.map((p: any, i: number) => (
+          <Pressable key={p.pos} style={[stl.tRow, i === 0 && stl.tFirst]} onPress={() => speak(p.word, 'fa')}>
+            <Text style={stl.tPos}>{p.pos}</Text>
+            <Text style={stl.tForm}>{p.form}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={stl.tWord}>{p.word}</Text>
+              <Text style={stl.tTr}>{p.tr}  ·  {p.en}</Text>
+            </View>
+            <Ionicons name="volume-low-outline" size={14} color={lw.muted} />
+          </Pressable>
+        ))}
+      </View>
+
+      {st.note ? (
+        <View style={stl.letterNote}>
+          <Text style={stl.body}>{st.note}</Text>
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
+/* A vowel: the mark, what it sounds like, and words that carry it. */
+export function VowelStep({ s: st }: { s: any }) {
+  return (
+    <View>
+      <View style={stl.vowelHead}>
+        <Text style={stl.vowelMark}>{st.mark}</Text>
+        <Text style={stl.vowelName}>{st.name}</Text>
+        <Text style={stl.vowelSound}>{st.sound}</Text>
+        <Text style={stl.vowelLike}>{st.like}</Text>
+      </View>
+      <Text style={stl.body}>{st.body}</Text>
+      <View style={stl.exList}>
+        {st.examples.map((e: any) => (
+          <Pressable key={e.fa} style={stl.exRow} onPress={() => speak(e.fa, 'fa')}>
+            <Text style={stl.exFa}>{e.fa}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={stl.exTr}>{e.tr}</Text>
+              <Text style={stl.exEn}>{e.en}</Text>
+            </View>
+            <Ionicons name="volume-low-outline" size={14} color={lw.muted} />
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+const stl = StyleSheet.create({
+  letterHead: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
+  letterBig: { fontFamily: fonts.persian, fontSize: 64, lineHeight: 92, color: lw.green, width: 74, textAlign: 'center' },
+  letterName: { fontFamily: fonts.body, fontSize: 22, color: lw.ink },
+  letterSound: { fontFamily: fonts.body, fontSize: 13.5, color: lw.inkSoft, marginTop: 2 },
+  letterLike: { fontFamily: fonts.body, fontSize: 12, color: lw.muted, marginTop: 2 },
+  sayBtn: { width: 38, height: 38, borderRadius: 19, borderWidth: 1, borderColor: lw.rule, alignItems: 'center', justifyContent: 'center' },
+
+  table: { marginTop: spacing.xl, borderWidth: 1, borderColor: lw.hair, borderRadius: 14, overflow: 'hidden', backgroundColor: lw.surface },
+  tRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, paddingHorizontal: spacing.md, borderTopWidth: 1, borderTopColor: lw.hair },
+  tFirst: { borderTopWidth: 0 },
+  tPos: { fontFamily: fonts.bodyStrong, fontSize: 8.5, letterSpacing: 1.2, color: lw.muted, width: 52 },
+  tForm: { fontFamily: fonts.persian, fontSize: 26, color: lw.green, width: 46, textAlign: 'center' },
+  tWord: { fontFamily: fonts.persian, fontSize: 20, color: lw.ink, textAlign: 'right' },
+  tTr: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted, marginTop: 2, textAlign: 'right' },
+  letterNote: { backgroundColor: lw.greenWash, borderRadius: 14, padding: spacing.lg, marginTop: spacing.lg },
+
+  vowelHead: { alignItems: 'center', paddingBottom: spacing.lg, borderBottomWidth: 1, borderBottomColor: lw.hair, marginBottom: spacing.lg },
+  vowelMark: { fontFamily: fonts.persian, fontSize: 68, lineHeight: 98, color: lw.green },
+  vowelName: { fontFamily: fonts.body, fontSize: 19, color: lw.ink },
+  vowelSound: { fontFamily: fonts.bodyStrong, fontSize: 15, color: lw.green, marginTop: 4 },
+  vowelLike: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted, marginTop: 2 },
+
+  exList: { marginTop: spacing.lg, borderWidth: 1, borderColor: lw.hair, borderRadius: 14, backgroundColor: lw.surface, overflow: 'hidden' },
+  exRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md, borderTopWidth: 1, borderTopColor: lw.hair },
+  exFa: { fontFamily: fonts.persian, fontSize: 24, color: lw.ink, width: 76, textAlign: 'right' },
+  exTr: { fontFamily: fonts.body, fontSize: 13.5, color: lw.inkSoft },
+  exEn: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted, marginTop: 1 },
+
+  body: { fontFamily: fonts.body, fontSize: 14.5, lineHeight: 25, color: lw.inkSoft },
+});
+
+/* A gap in a sentence, filled from options. The same shape as the
+   standalone exercise, but sitting inside the lesson where it was taught. */
+export function GapStep({ s: st, onResolve }: { s: any; onResolve: (right: boolean) => void }) {
+  const [picked, setPicked] = useState<string | null>(null);
+  const correct = picked === st.answer;
+
+  return (
+    <View>
+      <Text style={gp.label}>FINISH THE SENTENCE</Text>
+      <Text style={gp.en}>{st.en}</Text>
+
+      <View style={gp.sentence}>
+        <Text style={gp.fa}>
+          {st.before}
+          <Text style={picked ? (correct ? gp.gapRight : gp.gapWrong) : gp.gap}>
+            {picked ? ' ' + picked + ' ' : '  ——  '}
+          </Text>
+          {st.after}
+        </Text>
+        {picked ? (
+          <Pressable style={gp.say} onPress={() => speak(st.before + ' ' + st.answer + ' ' + st.after, 'fa')}>
+            <Ionicons name="volume-medium-outline" size={15} color={lw.muted} />
+            <Text style={gp.sayT}>hear it</Text>
+          </Pressable>
+        ) : null}
+      </View>
+
+      <View style={{ gap: spacing.sm, marginTop: spacing.xl }}>
+        {st.options.map((o: string) => {
+          const isAnswer = o === st.answer;
+          const isPicked = o === picked;
+          return (
+            <Pressable
+              key={o}
+              disabled={!!picked}
+              onPress={() => { setPicked(o); onResolve(o === st.answer); }}
+              style={[
+                gp.opt,
+                picked && isAnswer && gp.optRight,
+                picked && isPicked && !isAnswer && gp.optWrong,
+                picked && !isAnswer && !isPicked && gp.optFade,
+              ]}
+            >
+              <Text style={[gp.optT, picked && isAnswer && gp.optTRight]}>{o}</Text>
+              {st.optionTrs?.[o] ? <Text style={gp.optTr}>{st.optionTrs[o]}</Text> : null}
+            </Pressable>
+          );
+        })}
+      </View>
+
+      {picked ? (
+        <View style={[gp.why, correct ? gp.whyRight : gp.whyWrong]}>
+          <Text style={gp.whyT}>{correct ? st.tr : (st.why ?? st.tr)}</Text>
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
+const gp = StyleSheet.create({
+  label: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 2.5, color: lw.muted },
+  en: { fontFamily: fonts.body, fontSize: 19, lineHeight: 27, color: lw.ink, marginTop: spacing.sm },
+  sentence: { backgroundColor: lw.surface, borderWidth: 1, borderColor: lw.hair, borderRadius: 16, padding: spacing.xl, marginTop: spacing.lg, alignItems: 'center' },
+  fa: { fontFamily: fonts.persian, fontSize: 25, lineHeight: 48, color: lw.ink, textAlign: 'center' },
+  gap: { color: lw.muted },
+  gapRight: { color: lw.green },
+  gapWrong: { color: lw.wrong },
+  say: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: spacing.md },
+  sayT: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted },
+  opt: { borderWidth: 1, borderColor: lw.hair, backgroundColor: lw.surface, borderRadius: 14, paddingVertical: 13, paddingHorizontal: spacing.lg },
+  optRight: { borderColor: lw.green, backgroundColor: lw.greenWash },
+  optWrong: { borderColor: lw.wrong },
+  optFade: { opacity: 0.4 },
+  optT: { fontFamily: fonts.persian, fontSize: 20, color: lw.ink, textAlign: 'center' },
+  optTRight: { color: lw.green },
+  optTr: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted, textAlign: 'center', marginTop: 3 },
+  why: { borderRadius: 12, padding: spacing.lg, marginTop: spacing.lg, alignItems: 'center' },
+  whyRight: { backgroundColor: lw.greenWash },
+  whyWrong: { backgroundColor: '#F6ECE9' },
+  whyT: { fontFamily: fonts.body, fontSize: 13.5, lineHeight: 21, color: lw.inkSoft, textAlign: 'center' },
+});

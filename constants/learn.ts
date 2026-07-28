@@ -68,19 +68,6 @@ export const LEARN_GROUPS: LearnGroup[] = [
   {
     key: 'start', label: 'START HERE', note: 'The letters first. Everything else needs them.',
     modules: [
-      { key: 'alphabet', title: 'The Alphabet', persian: 'الفبا', x: 'Thirty two letters, their shapes and their sounds.',
-        icon: 'text-outline', tint: '#4A6B50', route: '/learn/alphabet', done: 0, total: 32, unit: 'letters' },
-    ],
-  },
-  {
-    key: 'practice', label: 'PRACTICE', note: 'Where it actually sticks.',
-    modules: [
-      { key: 'flashcards', title: 'Flashcards', persian: 'کارت‌ها', x: 'Your first words, one card at a time.',
-        icon: 'albums-outline', tint: '#6E8F72', route: '/learn/flashcards', done: 0, total: 120, unit: 'words' },
-      { key: 'fill-blank', title: 'Fill the Blank', persian: 'جای خالی', x: 'Finish the sentence. Harder than it looks.',
-        icon: 'ellipsis-horizontal-outline', tint: '#52785A', route: '/learn/fill-blank', done: 0, total: 40, unit: 'sentences' },
-      { key: 'quizzes', title: 'Quizzes', persian: 'آزمون', x: 'Find out what you actually know.',
-        icon: 'help-circle-outline', tint: '#5C7F63', route: '/learn/quizzes', done: 3, total: 12, unit: 'sets' },
     ],
   },
   {

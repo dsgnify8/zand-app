@@ -9,6 +9,8 @@ import { lw } from '@/constants/lang-theme';
 import { STAGES, SIDE_QUESTS, type JourneyStep } from '@/constants/journey';
 import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
+import { useStrength } from '@/lib/word-strength';
+import { ExpressionCard } from '@/components/expression-card';
 
 // Where each level joins the route. Shown as a marker between stages.
 const LEVEL_BAND: Record<string, { label: string; sub: string }> = {
@@ -77,6 +79,7 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 export default function MapScreen() {
   useLearnProgress();
   const { info } = useLevel();
+  const { solid, shaky } = useStrength();
 
   // the first unfinished step on the route
   const flat = STAGES.flatMap((st) => st.steps);
@@ -98,6 +101,12 @@ export default function MapScreen() {
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
         <Text style={s.eyebrow}>YOUR ROUTE</Text>
         <Text style={s.title}>Persian,{'\n'}step by step</Text>
+        {solid + shaky > 0 ? (
+          <Text style={s.strength}>
+            {solid} word{solid === 1 ? '' : 's'} solid
+            {shaky > 0 ? '  ·  ' + shaky + ' still shaky' : ''}
+          </Text>
+        ) : null}
 
         {STAGES.map((stage, si) => {
           const prev = si > 0 ? STAGES[si - 1].level : undefined;
@@ -185,6 +194,7 @@ const s = StyleSheet.create({
   bandRule: { width: 1, height: 22, backgroundColor: lw.greenPale },
   bandT: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 2.5, color: lw.green, marginVertical: spacing.sm },
   bandX: { fontFamily: fonts.body, fontSize: 12, color: lw.muted, textAlign: 'center', marginBottom: spacing.sm, maxWidth: 260 },
+  strength: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted, marginTop: spacing.sm },
   stage: { marginTop: spacing.xxl },
   stageHead: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   stageLine: { flex: 1, height: 1, backgroundColor: lw.hair },

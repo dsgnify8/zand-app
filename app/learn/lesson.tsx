@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { lessonByKey } from '@/constants/curriculum';
-import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep } from '@/components/lesson-steps';
+import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep, LetterStep, VowelStep, GapStep } from '@/components/lesson-steps';
 import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
 import { markLessonDone } from '@/lib/learn-progress';
@@ -40,7 +40,7 @@ export default function LessonScreen() {
   }, [l.key]);
 
   const step = l.steps[i];
-  const isQuiz = step.t === 'choose' || step.t === 'listen' || step.t === 'build' || step.t === 'write';
+  const isQuiz = step.t === 'choose' || step.t === 'listen' || step.t === 'build' || step.t === 'write' || step.t === 'gap';
   const canGo = !isQuiz || answered;
   const pct = Math.round(((i + (answered ? 1 : 0)) / l.steps.length) * 100);
 
@@ -57,6 +57,17 @@ export default function LessonScreen() {
       Animated.timing(fade, { toValue: 1, duration: 220, useNativeDriver: true }),
     ]).start();
     setTimeout(() => { setI((v) => v + 1); setAnswered(false); }, 120);
+  };
+
+  // Tapping the left edge steps back, but only on teaching screens.
+  // On a question that would let you dodge having answered.
+  const back = () => {
+    if (i === 0) return;
+    Animated.sequence([
+      Animated.timing(fade, { toValue: 0, duration: 120, useNativeDriver: true }),
+      Animated.timing(fade, { toValue: 1, duration: 220, useNativeDriver: true }),
+    ]).start();
+    setTimeout(() => { setI((v) => v - 1); setAnswered(false); }, 120);
   };
 
   const resolve = (right: boolean) => {
@@ -98,18 +109,29 @@ export default function LessonScreen() {
         <Text style={s.count}>{i + 1}/{l.steps.length}</Text>
       </View>
 
+      {!isQuiz && i > 0 ? (
+        <Pressable style={s.backEdge} onPress={back} accessibilityLabel="Previous step">
+          <View style={s.backHint}>
+            <Ionicons name="chevron-back" size={15} color={lw.muted} />
+          </View>
+        </Pressable>
+      ) : null}
+
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
         <Animated.View style={{ opacity: fade }}>
           {step.t === 'meet' ? <MeetStep s={step} /> : null}
           {step.t === 'sense' ? <SenseStep s={step} /> : null}
           {step.t === 'sentence' ? <SentenceStep s={step} /> : null}
           {step.t === 'note' ? <NoteStep s={step} /> : null}
+          {step.t === 'letter' ? <LetterStep s={step} /> : null}
+          {step.t === 'vowel' ? <VowelStep s={step} /> : null}
           {step.t === 'choose' ? (
             <ChoiceStep prompt={step.prompt} options={step.options} answer={step.answer} why={step.why} trs={(step as any).optionTrs} onResolve={resolve} />
           ) : null}
           {step.t === 'listen' ? (
             <ChoiceStep prompt="What did you hear?" options={step.options} answer={step.fa} why={step.tr + '  ·  ' + step.en} audio={step.fa} trs={(step as any).optionTrs} onResolve={resolve} />
           ) : null}
+          {step.t === 'gap' ? <GapStep s={step} onResolve={resolve} /> : null}
           {step.t === 'build' ? <BuildStep s={step} onResolve={resolve} /> : null}
           {step.t === 'write' ? <WriteStep s={step} onResolve={resolve} /> : null}
         </Animated.View>
@@ -134,6 +156,8 @@ const s = StyleSheet.create({
   fill: { height: 3, borderRadius: 2, backgroundColor: lw.green },
   count: { fontFamily: fonts.body, fontSize: 12, color: lw.muted },
 
+  backEdge: { position: 'absolute', left: 0, top: 60, bottom: 90, width: 56, zIndex: 5, justifyContent: 'center', alignItems: 'flex-start', paddingLeft: 4 },
+  backHint: { width: 26, height: 26, borderRadius: 13, backgroundColor: lw.greenWash, alignItems: 'center', justifyContent: 'center', opacity: 0.75 },
   body: { paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: spacing.xxl },
   footer: { paddingHorizontal: spacing.xl, paddingBottom: spacing.md },
 

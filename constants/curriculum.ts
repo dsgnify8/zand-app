@@ -23,7 +23,14 @@ export type Step =
   | { t: 'build'; fa: string; tr: string; en: string; parts: string[]; partTrs?: Record<string, string> }
   | { t: 'write'; fa: string; tr: string; en: string; hint?: string }
   | { t: 'choose'; prompt: string; answer: string; options: string[]; why?: string; optionTrs?: Record<string, string> }
-  | { t: 'note'; title: string; body: string };
+  | { t: 'gap'; before: string; after: string; answer: string; tr: string; en: string;
+      options: string[]; optionTrs?: Record<string, string>; why?: string }
+  | { t: 'note'; title: string; body: string }
+  | { t: 'letter'; letter: string; name: string; sound: string; like: string;
+      positions: { pos: string; form: string; word: string; tr: string; en: string }[];
+      note?: string }
+  | { t: 'vowel'; mark: string; name: string; sound: string; like: string;
+      examples: { fa: string; tr: string; en: string }[]; body: string };
 
 export type Lesson = {
   key: string;
@@ -872,6 +879,538 @@ const conversation: Lesson = {
 };
 
 
+
+/* ------------------------------------------------------------------ */
+/* Letters, one at a time, the way a textbook does it                  */
+/* ------------------------------------------------------------------ */
+
+const vowels: Lesson = {
+  key: 'vowels',
+  title: 'The vowels you see, and the ones you do not',
+  titleFa: 'صداها',
+  blurb: 'The single hardest thing about reading Persian, explained once.',
+  minutes: 9,
+  steps: [
+    { t: 'note', title: 'Persian has six vowels and writes three',
+      body: 'Three long vowels get letters of their own and sit on the page where you can see them. Three short vowels get nothing at all in ordinary writing. Everyone reading Persian is supplying half the vowels from memory, and once you know that, the script stops feeling broken.' },
+    { t: 'vowel', mark: 'ا', name: '\u0101lef', sound: '\u0101', like: 'the a in father',
+      examples: [
+        { fa: 'آب', tr: '\u0101b', en: 'water' },
+        { fa: 'بابا', tr: 'b\u0101b\u0101', en: 'dad' },
+        { fa: 'نان', tr: 'n\u0101n', en: 'bread' },
+      ],
+      body: 'The long \u0101 is written, always. When it opens a word it wears a hat: آ. In the middle or at the end it is bare: ا.' },
+    { t: 'vowel', mark: 'و', name: 'v\u0101v', sound: 'u', like: 'the oo in moon',
+      examples: [
+        { fa: 'دو', tr: 'do', en: 'two' },
+        { fa: 'تو', tr: 'to', en: 'you' },
+        { fa: 'سوت', tr: 'sut', en: 'whistle' },
+      ],
+      body: 'This letter does two jobs: it is the long u, and it is also the consonant v. Which one it is depends on the word, and you learn them as you go.' },
+    { t: 'vowel', mark: 'ی', name: 'ye', sound: 'i', like: 'the ee in see',
+      examples: [
+        { fa: 'سی', tr: 'si', en: 'thirty' },
+        { fa: 'ایرانی', tr: '\u012Br\u0101ni', en: 'Iranian' },
+        { fa: 'چای', tr: 'ch\u0101y', en: 'tea' },
+      ],
+      body: 'Like v\u0101v, this one is both a vowel and a consonant: the long i, and the y sound.' },
+    { t: 'note', title: 'Now the three that are not there',
+      body: 'a as in cat, e as in bed, and o as in more. None of them are written. اسم is spelled with three letters and pronounced esm: the e simply is not on the page. Children learning to read get little marks above the letters to help. Adult books do not.' },
+    { t: 'choose', prompt: 'The word اسم is written with three letters. How many vowels do you hear when it is spoken?',
+      answer: 'One, and it is not written',
+      options: ['One, and it is not written', 'None at all', 'Three, one per letter', 'Two, both written'],
+      why: 'esm. The e is spoken but never appears. This is the whole puzzle of reading Persian, and it is why you learn words as shapes rather than sounding them out letter by letter.' },
+    { t: 'note', title: 'How anyone manages',
+      body: 'You stop decoding and start recognising. A Persian reader does not assemble n-\u0101-n and arrive at bread, they see نان and know it, the way you see the word through without reading t-h-r-o-u-g-h. It takes a few hundred words and then it is automatic.' },
+    { t: 'write', fa: 'آب', tr: '\u0101b', en: 'water', hint: 'The \u0101lef with its hat, then be' },
+  ],
+};
+
+const lettersOne: Lesson = {
+  key: 'letters-one',
+  title: 'che, khe, and heh',
+  titleFa: 'چ خ ه',
+  blurb: 'Three letters, and the sound English does not have.',
+  minutes: 8,
+  steps: [
+    { t: 'letter', letter: 'چ', name: 'che', sound: 'ch', like: 'the ch in chair',
+      positions: [
+        { pos: 'INITIAL', form: 'چـ', word: 'چای', tr: 'ch\u0101y', en: 'tea' },
+        { pos: 'MEDIAL', form: 'ـچـ', word: 'کوچک', tr: 'kuchak', en: 'small' },
+        { pos: 'FINAL', form: 'ـچ', word: 'پنج', tr: 'panj', en: 'five' },
+        { pos: 'ALONE', form: 'چ', word: 'هیچ', tr: 'hich', en: 'nothing' },
+      ],
+      note: 'One of the four letters Persian added to the Arabic alphabet for sounds Arabic does not have. The others are پ, ژ and گ.' },
+    { t: 'letter', letter: 'خ', name: 'khe', sound: 'kh', like: 'the ch in Bach, from the back of the throat',
+      positions: [
+        { pos: 'INITIAL', form: 'خـ', word: 'خوب', tr: 'khub', en: 'good' },
+        { pos: 'MEDIAL', form: 'ـخـ', word: 'بخور', tr: 'bokhor', en: 'eat' },
+        { pos: 'FINAL', form: 'ـخ', word: 'تلخ', tr: 'talkh', en: 'bitter' },
+        { pos: 'ALONE', form: 'خ', word: 'شاخ', tr: 'sh\u0101kh', en: 'horn, branch' },
+      ],
+      note: 'This is the one English speakers dread and it is not that hard: start to say a k, then let the air keep flowing instead of stopping it. You already make this sound at the end of loch.' },
+    { t: 'note', title: 'kh opens a lot of doors',
+      body: 'khub, good. kh\u0101har, sister. khoshmaze, delicious. khod\u0101h\u0101fez, goodbye. khoshbakhtam, pleased to meet you. Get comfortable with this one sound and a large stretch of everyday Persian becomes sayable.' },
+    { t: 'letter', letter: 'ه', name: 'he', sound: 'h', like: 'the h in hat',
+      positions: [
+        { pos: 'INITIAL', form: 'هـ', word: 'هفت', tr: 'haft', en: 'seven' },
+        { pos: 'MEDIAL', form: 'ـهـ', word: 'مهم', tr: 'mohem', en: 'important' },
+        { pos: 'FINAL', form: 'ـه', word: 'ماه', tr: 'm\u0101h', en: 'moon, month' },
+        { pos: 'ALONE', form: 'ه', word: 'راه', tr: 'r\u0101h', en: 'road' },
+      ],
+      note: 'At the end of a word this letter often carries a silent e sound instead of an h: kh\u0101ne, house, ends in it. Persian gives this letter two jobs and lets context sort it out.' },
+    { t: 'choose', prompt: 'Which word starts with the sound at the back of the throat?',
+      answer: 'خوب',
+      options: ['خوب', 'چای', 'هفت', 'نان'],
+      optionTrs: { 'خوب': 'khub', 'چای': 'ch\u0101y', 'هفت': 'haft', 'نان': 'n\u0101n' },
+      why: 'khub. The kh is that scraped sound; the h in haft is a soft ordinary breath.' },
+    { t: 'listen', fa: 'خوب', tr: 'khub', en: 'good',
+      options: ['خوب', 'چای', 'هفت', 'کوچک'],
+      optionTrs: { 'خوب': 'khub', 'چای': 'ch\u0101y', 'هفت': 'haft', 'کوچک': 'kuchak' } },
+    { t: 'write', fa: 'چای', tr: 'ch\u0101y', en: 'tea' },
+  ],
+};
+
+const lettersTwo: Lesson = {
+  key: 'letters-two',
+  title: 'dal, zal, and the letters that will not join',
+  titleFa: 'د ذ',
+  blurb: 'Two letters, and a rule that changes how words look.',
+  minutes: 7,
+  steps: [
+    { t: 'letter', letter: 'د', name: 'd\u0101l', sound: 'd', like: 'the d in door',
+      positions: [
+        { pos: 'INITIAL', form: 'د', word: 'دل', tr: 'del', en: 'heart' },
+        { pos: 'MEDIAL', form: 'ـد', word: 'مادر', tr: 'm\u0101dar', en: 'mother' },
+        { pos: 'FINAL', form: 'ـد', word: 'بد', tr: 'bad', en: 'bad' },
+        { pos: 'ALONE', form: 'د', word: 'دو', tr: 'do', en: 'two' },
+      ],
+      note: 'Notice the form barely changes. That is because d\u0101l is one of the seven letters that never join to what comes after them.' },
+    { t: 'note', title: 'Seven letters that refuse to hold hands',
+      body: 'ا د ذ ر ز ژ و. These seven join to the letter before them but never to the letter after. That is why مادر has a visible gap in the middle: the d\u0101l will not connect forward. When you see a break inside a word, one of these seven is usually the reason, and it is a useful clue when reading.' },
+    { t: 'letter', letter: 'ذ', name: 'z\u0101l', sound: 'z', like: 'the z in zoo',
+      positions: [
+        { pos: 'INITIAL', form: 'ذ', word: 'ذهن', tr: 'zehn', en: 'mind' },
+        { pos: 'MEDIAL', form: 'ـذ', word: 'کاغذ', tr: 'k\u0101ghaz', en: 'paper' },
+        { pos: 'FINAL', form: 'ـذ', word: 'لذت', tr: 'lezzat', en: 'pleasure' },
+        { pos: 'ALONE', form: 'ذ', word: 'غذا', tr: 'ghaz\u0101', en: 'food' },
+      ],
+      note: 'Same shape as d\u0101l with a dot on top, and it sounds nothing like it. Persian has four letters that all make a z sound: ز ذ ض ظ. Only the spelling tells them apart, and you learn which word takes which.' },
+    { t: 'choose', prompt: 'Why does مادر have a gap in the middle?',
+      answer: 'The d\u0101l will not join to what follows it',
+      options: ['The d\u0101l will not join to what follows it', 'It is two separate words', 'A vowel is missing there', 'It is a spelling mistake'],
+      why: 'd\u0101l is one of the seven non-joining letters. The gap is correct, and it is a signal rather than a flaw.' },
+    { t: 'listen', fa: 'مادر', tr: 'm\u0101dar', en: 'mother',
+      options: ['مادر', 'پدر', 'غذا', 'دل'],
+      optionTrs: { 'مادر': 'm\u0101dar', 'پدر': 'pedar', 'غذا': 'ghaz\u0101', 'دل': 'del' } },
+    { t: 'write', fa: 'دل', tr: 'del', en: 'heart' },
+  ],
+};
+
+const lettersThree: Lesson = {
+  key: 'letters-three',
+  title: 'noon, shin, and feh',
+  titleFa: 'ن ش ف',
+  blurb: 'Three more, and you can read most of what you have learned.',
+  minutes: 8,
+  steps: [
+    { t: 'letter', letter: 'ن', name: 'nun', sound: 'n', like: 'the n in nine',
+      positions: [
+        { pos: 'INITIAL', form: 'نـ', word: 'نان', tr: 'n\u0101n', en: 'bread' },
+        { pos: 'MEDIAL', form: 'ـنـ', word: 'خانه', tr: 'kh\u0101ne', en: 'house' },
+        { pos: 'FINAL', form: 'ـن', word: 'من', tr: 'man', en: 'I' },
+        { pos: 'ALONE', form: 'ن', word: 'زن', tr: 'zan', en: 'woman' },
+      ] },
+    { t: 'letter', letter: 'ش', name: 'shin', sound: 'sh', like: 'the sh in ship',
+      positions: [
+        { pos: 'INITIAL', form: 'شـ', word: 'شب', tr: 'shab', en: 'night' },
+        { pos: 'MEDIAL', form: 'ـشـ', word: 'خوشحال', tr: 'khoshh\u0101l', en: 'happy' },
+        { pos: 'FINAL', form: 'ـش', word: 'شش', tr: 'shesh', en: 'six' },
+        { pos: 'ALONE', form: 'ش', word: 'آش', tr: '\u0101sh', en: 'thick soup' },
+      ],
+      note: '\u0101sh is the word behind the English dish name and behind \u0101shpaz, cook: literally soup-maker. The kitchen in Persian is named after this one soup.' },
+    { t: 'letter', letter: 'ف', name: 'fe', sound: 'f', like: 'the f in fine',
+      positions: [
+        { pos: 'INITIAL', form: 'فـ', word: 'فردا', tr: 'fard\u0101', en: 'tomorrow' },
+        { pos: 'MEDIAL', form: 'ـفـ', word: 'سفید', tr: 'sefid', en: 'white' },
+        { pos: 'FINAL', form: 'ـف', word: 'حرف', tr: 'harf', en: 'word, letter' },
+        { pos: 'ALONE', form: 'ف', word: 'کیف', tr: 'kif', en: 'bag' },
+      ] },
+    { t: 'note', title: 'Count what you can read now',
+      body: 'With these three you can read n\u0101n, man, zan, shab, shesh, fard\u0101, sefid and kh\u0101ne, and every one of them is a word you have already met in a lesson. Reading is not a separate skill you add at the end. It arrives quietly, a letter at a time.' },
+    { t: 'choose', prompt: 'Read this: شب',
+      answer: 'night',
+      options: ['night', 'six', 'bread', 'white'],
+      why: 'shab. shin then be. And Shab-e Yald\u0101 is the night of Yalda, which you already knew.' },
+    { t: 'listen', fa: 'فردا', tr: 'fard\u0101', en: 'tomorrow',
+      options: ['فردا', 'سفید', 'شب', 'خانه'],
+      optionTrs: { 'فردا': 'fard\u0101', 'سفید': 'sefid', 'شب': 'shab', 'خانه': 'kh\u0101ne' } },
+    { t: 'write', fa: 'شب', tr: 'shab', en: 'night' },
+  ],
+};
+
+
+
+/* ------------------------------------------------------------------ */
+/* Asking things                                                        */
+/* ------------------------------------------------------------------ */
+
+const questions: Lesson = {
+  key: 'questions',
+  title: 'When, where, what, why, how',
+  titleFa: 'پرسیدن',
+  blurb: 'Five words that turn statements into questions.',
+  minutes: 8,
+  steps: [
+    { t: 'note', title: 'Persian asks at the end',
+      body: 'English moves the words around to make a question: you are going, are you going. Persian usually leaves the sentence exactly as it was and puts the question word in, often near the end. Nothing else has to change, which makes asking things far easier than it is in English.' },
+    { t: 'meet', fa: 'چی', tr: 'chi', en: 'what' },
+    { t: 'meet', fa: 'کی', tr: 'key', en: 'when' },
+    { t: 'meet', fa: 'کجا', tr: 'koj\u0101', en: 'where' },
+    { t: 'meet', fa: 'چرا', tr: 'cher\u0101', en: 'why' },
+    { t: 'meet', fa: 'چطور', tr: 'chetor', en: 'how' },
+    { t: 'sense', fa: 'چی', tr: 'chi', en: 'what',
+      body: 'Written Persian says che. Everyone speaking says chi. You will see چه on a page and hear چی in the room, and both are the same word. This gap between written and spoken runs through the whole language, and this is the first place you meet it.' },
+    { t: 'sentence', fa: 'کی می‌روی؟', tr: 'key miravi?', en: 'when are you going?', focus: 'کی' },
+    { t: 'sentence', fa: 'چرا نمی‌آیی؟', tr: 'cher\u0101 nemi\u0101yi?', en: 'why are you not coming?', focus: 'چرا' },
+    { t: 'note', title: 'chetori is how are you',
+      body: 'chetor is how, and chetori is literally how are you. You have been using a question word since the first lesson without knowing it. Persian builds a lot of everyday phrases this way, out of pieces that are still visible if you look.' },
+    { t: 'choose', prompt: 'You want to ask where the bazaar is. Which word do you need?',
+      answer: 'کجا',
+      options: ['کجا', 'کی', 'چرا', 'چطور'],
+      optionTrs: { 'کجا': 'koj\u0101', 'کی': 'key', 'چرا': 'cher\u0101', 'چطور': 'chetor' },
+      why: 'koj\u0101, where. b\u0101z\u0101r koj\u0101st.' },
+    { t: 'build', fa: 'کی می‌روی؟', tr: 'key miravi?', en: 'when are you going?',
+      parts: ['کی', 'می‌روی؟', 'کجا', 'چرا'],
+      partTrs: { 'کی': 'key', 'می‌روی؟': 'miravi', 'کجا': 'koj\u0101', 'چرا': 'cher\u0101' } },
+    { t: 'listen', fa: 'چرا نمی‌آیی؟', tr: 'cher\u0101 nemi\u0101yi?', en: 'why are you not coming?',
+      options: ['چرا نمی‌آیی؟', 'کی می‌روی؟', 'کجاست؟', 'چطوری؟'],
+      optionTrs: { 'چرا نمی‌آیی؟': 'cher\u0101 nemi\u0101yi?', 'کی می‌روی؟': 'key miravi?', 'کجاست؟': 'koj\u0101st?', 'چطوری؟': 'chetori?' } },
+    { t: 'write', fa: 'کجا', tr: 'koj\u0101', en: 'where' },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* Getting around                                                       */
+/* ------------------------------------------------------------------ */
+
+const transport: Lesson = {
+  key: 'transport',
+  title: 'Getting around',
+  titleFa: 'رفت و آمد',
+  blurb: 'Taxis, buses, and telling a driver where to go.',
+  minutes: 8,
+  steps: [
+    { t: 'meet', fa: 'ماشین', tr: 'm\u0101shin', en: 'car' },
+    { t: 'meet', fa: 'تاکسی', tr: 't\u0101ksi', en: 'taxi' },
+    { t: 'meet', fa: 'اتوبوس', tr: 'otobus', en: 'bus' },
+    { t: 'meet', fa: 'مترو', tr: 'metro', en: 'metro' },
+    { t: 'note', title: 'Half of these are French',
+      body: 'otobus, metro, t\u0101ksi. Persian took its transport vocabulary from French in the early twentieth century, along with mersi and m\u0101m\u0101n. If a modern Persian word sounds European, it usually came through French rather than English.' },
+    { t: 'meet', fa: 'فرودگاه', tr: 'forudg\u0101h', en: 'airport', literal: 'landing-place' },
+    { t: 'sense', fa: 'فرودگاه', tr: 'forudg\u0101h', en: 'airport',
+      body: 'forud is descent, g\u0101h is place. The place of coming down. Persian builds new words out of old Persian pieces rather than borrowing, whenever anyone lets it: d\u0101neshg\u0101h, university, is knowledge-place by the same logic.' },
+    { t: 'meet', fa: 'بلیت', tr: 'belit', en: 'ticket' },
+    { t: 'sentence', fa: 'یک بلیت می‌خواهم', tr: 'yek belit mikh\u0101ham', en: 'I want one ticket', focus: 'بلیت' },
+    { t: 'meet', fa: 'نگه دار', tr: 'negah d\u0101r', en: 'stop, pull over' },
+    { t: 'note', title: 'What to say in a Tehran taxi',
+      body: 'negah d\u0101r is stop here, and it is the phrase you will use most. Shared taxis run fixed routes and you get out wherever you like: you say negah d\u0101r, lotfan, and the driver pulls over. Add dast-e r\u0101st, on the right, if you want to be precise.' },
+    { t: 'sentence', fa: 'اینجا نگه دار، لطفاً', tr: 'inj\u0101 negah d\u0101r, lotfan', en: 'stop here, please', focus: 'نگه دار' },
+    { t: 'choose', prompt: 'You are in a taxi and want to get out at the next corner. What do you say?',
+      answer: 'اینجا نگه دار، لطفاً',
+      options: ['اینجا نگه دار، لطفاً', 'یک بلیت می‌خواهم', 'فرودگاه کجاست؟', 'اتوبوس دور است'],
+      optionTrs: { 'اینجا نگه دار، لطفاً': 'inj\u0101 negah d\u0101r, lotfan', 'یک بلیت می‌خواهم': 'yek belit mikh\u0101ham', 'فرودگاه کجاست؟': 'forudg\u0101h koj\u0101st?', 'اتوبوس دور است': 'otobus dur ast' },
+      why: 'inj\u0101, here, and negah d\u0101r, stop. The two words you met in this lesson doing exactly what you need.' },
+    { t: 'build', fa: 'اینجا نگه دار', tr: 'inj\u0101 negah d\u0101r', en: 'stop here',
+      parts: ['اینجا', 'نگه', 'دار', 'بلیت'],
+      partTrs: { 'اینجا': 'inj\u0101', 'نگه': 'negah', 'دار': 'd\u0101r', 'بلیت': 'belit' } },
+    { t: 'listen', fa: 'فرودگاه کجاست؟', tr: 'forudg\u0101h koj\u0101st?', en: 'where is the airport?',
+      options: ['فرودگاه کجاست؟', 'اینجا نگه دار', 'یک بلیت می‌خواهم', 'مترو نزدیک است'],
+      optionTrs: { 'فرودگاه کجاست؟': 'forudg\u0101h koj\u0101st?', 'اینجا نگه دار': 'inj\u0101 negah d\u0101r', 'یک بلیت می‌خواهم': 'yek belit mikh\u0101ham', 'مترو نزدیک است': 'metro nazdik ast' } },
+    { t: 'write', fa: 'بلیت', tr: 'belit', en: 'ticket' },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* The year                                                             */
+/* ------------------------------------------------------------------ */
+
+const seasons: Lesson = {
+  key: 'seasons',
+  title: 'Seasons and months',
+  titleFa: 'فصل‌ها و ماه‌ها',
+  blurb: 'A year that begins in spring, and the months nobody else uses.',
+  minutes: 8,
+  steps: [
+    { t: 'meet', fa: 'بهار', tr: 'bah\u0101r', en: 'spring' },
+    { t: 'meet', fa: 'تابستان', tr: 't\u0101best\u0101n', en: 'summer' },
+    { t: 'meet', fa: 'پاییز', tr: 'p\u0101yiz', en: 'autumn' },
+    { t: 'meet', fa: 'زمستان', tr: 'zemest\u0101n', en: 'winter' },
+    { t: 'sense', fa: 'تابستان', tr: 't\u0101best\u0101n', en: 'summer',
+      body: 'Look at the ending on two of them: t\u0101best\u0101n and zemest\u0101n. That -st\u0101n means place of, the same ending in Afgh\u0101nist\u0101n, T\u0101jikist\u0101n and Golest\u0101n, the place of flowers. Summer is the place of heat, winter the place of cold.' },
+    { t: 'note', title: 'The year opens in spring',
+      body: 'The Iranian year begins at the spring equinox, not in January. bah\u0101r is the first season, not the second, and Farvardin is the first month. When Iranians talk about the start of the year they mean the moment the earth tilts, which is a more defensible place to begin than an arbitrary winter night.' },
+    { t: 'meet', fa: 'فروردین', tr: 'Farvardin', en: 'the first month', literal: 'late March to late April' },
+    { t: 'meet', fa: 'اسفند', tr: 'Esfand', en: 'the last month', literal: 'late February to late March' },
+    { t: 'note', title: 'The months are Zoroastrian',
+      body: 'Every Iranian month is named after a Zoroastrian divine being: Farvardin for the guardian spirits of the dead, Ordibehesht for best truth, Mehr for the god of covenant and light. This calendar has been running for well over a thousand years, and every date written in Iran still carries those names.' },
+    { t: 'meet', fa: 'ماه', tr: 'm\u0101h', en: 'month, moon' },
+    { t: 'sense', fa: 'ماه', tr: 'm\u0101h', en: 'moon and month',
+      body: 'One word for both, as in English month and moon, and for the same reason: months were moons. m\u0101h is also what you call someone beautiful. Telling a person they are a moon is an ordinary compliment in Persian, not a poetic flourish.' },
+    { t: 'sentence', fa: 'بهار خیلی قشنگ است', tr: 'bah\u0101r kheyli ghashang ast', en: 'spring is very beautiful', focus: 'بهار' },
+    { t: 'choose', prompt: 'Which season does the Iranian year start in?',
+      answer: 'بهار',
+      options: ['بهار', 'زمستان', 'تابستان', 'پاییز'],
+      optionTrs: { 'بهار': 'bah\u0101r', 'زمستان': 'zemest\u0101n', 'تابستان': 't\u0101best\u0101n', 'پاییز': 'p\u0101yiz' },
+      why: 'bah\u0101r, spring. Nowruz falls on the equinox and the new year begins at that exact moment.' },
+    { t: 'listen', fa: 'زمستان سرد است', tr: 'zemest\u0101n sard ast', en: 'winter is cold',
+      options: ['زمستان سرد است', 'بهار قشنگ است', 'تابستان داغ است', 'پاییز'],
+      optionTrs: { 'زمستان سرد است': 'zemest\u0101n sard ast', 'بهار قشنگ است': 'bah\u0101r ghashang ast', 'تابستان داغ است': 't\u0101best\u0101n d\u0101gh ast', 'پاییز': 'p\u0101yiz' } },
+    { t: 'write', fa: 'بهار', tr: 'bah\u0101r', en: 'spring' },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* Written Persian and spoken Persian                                   */
+/* ------------------------------------------------------------------ */
+
+const colloquial: Lesson = {
+  key: 'colloquial',
+  title: 'What books say, what people say',
+  titleFa: 'رسمی و محاوره‌ای',
+  blurb: 'The gap between written Persian and the Persian you will hear.',
+  minutes: 9,
+  steps: [
+    { t: 'note', title: 'Two Persians, and you need both',
+      body: 'Persian is written one way and spoken another, and the difference is bigger than in English. A newspaper says mitav\u0101nam. A person says mitunam. Neither is wrong. If you only learn the written form you will read well and understand nobody; if you only learn the spoken form you cannot read a sign. The good news is that the changes follow patterns.' },
+    { t: 'meet', fa: 'می‌توانم', tr: 'mitav\u0101nam', en: 'I can', literal: 'written form' },
+    { t: 'meet', fa: 'می‌تونم', tr: 'mitunam', en: 'I can', literal: 'spoken form' },
+    { t: 'sense', fa: 'می‌تونم', tr: 'mitunam', en: 'I can',
+      body: 'The pattern: \u0101n in the middle of a word collapses to un. mitav\u0101nam becomes mitunam. kh\u0101ne becomes khune, house. n\u0101n becomes nun, bread. Once you know this one rule you can decode a great deal of spoken Persian that looked unfamiliar.' },
+    { t: 'meet', fa: 'خانه', tr: 'kh\u0101ne', en: 'house', literal: 'written; spoken khune' },
+    { t: 'meet', fa: 'می‌روم', tr: 'miravam', en: 'I go', literal: 'written; spoken miram' },
+    { t: 'note', title: 'The other pattern: things fall out',
+      body: 'Spoken Persian drops sounds. miravam loses its v and becomes miram. ast at the end of a sentence shrinks to a single e: khubast becomes khube. Persian in the mouth is faster and shorter than Persian on the page, in every direction.' },
+    { t: 'meet', fa: 'باشه', tr: 'b\u0101she', en: 'okay, fine', literal: 'let it be' },
+    { t: 'sense', fa: 'باشه', tr: 'b\u0101she', en: 'okay',
+      body: 'Written b\u0101shad, spoken b\u0101she, and it means let it be, so fine, alright, agreed. You will hear it constantly, ending conversations and settling plans. It is the single most useful colloquial word in Persian.' },
+    { t: 'choose', prompt: 'You hear someone say khune. What are they saying?',
+      answer: 'خانه',
+      options: ['خانه', 'خوب', 'خون', 'کجا'],
+      optionTrs: { 'خانه': 'kh\u0101ne, house', 'خوب': 'khub, good', 'خون': 'khun, blood', 'کجا': 'koj\u0101, where' },
+      why: 'kh\u0101ne spoken aloud becomes khune. The \u0101n to un rule again, the same one behind mitunam.' },
+    { t: 'choose', prompt: 'A friend says b\u0101she at the end of a plan. What did they mean?',
+      answer: 'Alright, agreed',
+      options: ['Alright, agreed', 'Where are you', 'I do not understand', 'Thank you'],
+      why: 'b\u0101she, from b\u0101shad, let it be. It closes the matter.' },
+    { t: 'listen', fa: 'باشه', tr: 'b\u0101she', en: 'okay',
+      options: ['باشه', 'خانه', 'می‌تونم', 'کجا'],
+      optionTrs: { 'باشه': 'b\u0101she', 'خانه': 'kh\u0101ne', 'می‌تونم': 'mitunam', 'کجا': 'koj\u0101' } },
+    { t: 'note', title: 'How to hold both',
+      body: 'Read the written form so you can handle a book, a sign or a message. Say the spoken form so you sound like a person rather than a document. Every lesson in this app gives you the written Persian and tells you what it becomes in the mouth, and after a while you stop noticing you are doing two things at once.' },
+    { t: 'write', fa: 'باشه', tr: 'b\u0101she', en: 'okay' },
+  ],
+};
+
+
+
+const emotions: Lesson = {
+  key: 'emotions',
+  title: 'Calm, angry, and everything under it',
+  titleFa: 'حال‌ها',
+  blurb: 'The states Persian names precisely, and English does not.',
+  minutes: 10,
+  steps: [
+    { t: 'meet', fa: 'آروم', tr: '\u0101rum', en: 'calm, quiet, at ease' },
+    { t: 'sense', fa: 'آروم', tr: '\u0101rum', en: 'calm',
+      body: '\u0101rum is calm, but it is also gently, softly, slowly. \u0101rum harf bezan means speak quietly. \u0101rum bor\u014D means go slowly. The same word covers a state of mind and a way of moving through the world, because Persian treats them as the same thing.' },
+    { t: 'meet', fa: 'عصبانی', tr: 'asab\u0101ni', en: 'angry' },
+    { t: 'meet', fa: 'بی‌اعصاب', tr: 'bi-asab', en: 'short-tempered, on edge', literal: 'without nerves' },
+    { t: 'sense', fa: 'بی‌اعصاب', tr: 'bi-asab', en: 'short-tempered',
+      body: 'asab is nerve. asab\u0101ni is angry right now; bi-asab is the person who has no nerves left, who snaps at everything. One is a moment, the other is a condition. English needs a whole phrase for the second and Persian needs one word.' },
+    { t: 'note', title: 'The prefix bi- takes things away',
+      body: 'bi- means without, and it turns any noun into its absence. bi-asab, without nerves. bi-adab, without manners, rude. bi-kh\u0101b, without sleep. bi-hesi, without feeling. Once you have this prefix you can decode dozens of words on sight.' },
+    { t: 'meet', fa: 'دلخور', tr: 'delkhor', en: 'hurt, quietly offended', literal: 'heart-eaten' },
+    { t: 'sense', fa: 'دلخور', tr: 'delkhor', en: 'hurt',
+      body: 'Not angry. Not sad. delkhor is the specific ache of having been let down by someone you care about, and saying nothing. Your heart has been eaten at. It is one of the most useful words in Persian family life and English has no single word for it at all.' },
+    { t: 'meet', fa: 'نگران', tr: 'negar\u0101n', en: 'worried' },
+    { t: 'meet', fa: 'دلواپس', tr: 'delv\u0101pas', en: 'anxious for someone', literal: 'heart hanging back' },
+    { t: 'sense', fa: 'دلواپس', tr: 'delv\u0101pas', en: 'anxious for someone',
+      body: 'negar\u0101n is worried about a thing: an exam, a bill. delv\u0101pas is the worry you carry for a person, the one that sits in you while someone you love is travelling and has not called. Your heart is hanging back, still attached to them. Persian separates these two anxieties and English collapses them into one word.' },
+    { t: 'meet', fa: 'شوکه', tr: 'shoke', en: 'shocked' },
+    { t: 'meet', fa: 'خوشحال', tr: 'khoshh\u0101l', en: 'happy', literal: 'good-state' },
+    { t: 'meet', fa: 'ناراحت', tr: 'n\u0101r\u0101hat', en: 'upset, unwell in yourself', literal: 'not-comfortable' },
+    { t: 'note', title: 'hāl is the state you are in',
+      body: 'h\u0101l means condition, state, how you are. khosh-h\u0101l is good-state, happy. bad-h\u0101l is bad-state, unwell. h\u0101let chetore is how is your state, meaning how are you, and it is warmer than khubi. Persian keeps returning to this one noun for everything about how a person is doing.' },
+    { t: 'choose', prompt: 'Your brother has not answered his phone all evening and you keep checking it. Which word is it?',
+      answer: 'دلواپس',
+      options: ['دلواپس', 'عصبانی', 'دلخور', 'آروم'],
+      optionTrs: { 'دلواپس': 'delv\u0101pas', 'عصبانی': 'asab\u0101ni', 'دلخور': 'delkhor', 'آروم': '\u0101rum' },
+      why: 'delv\u0101pas. Worry attached to a person rather than a thing. negar\u0101n would work but it is colder; this is the one an Iranian would reach for.' },
+    { t: 'choose', prompt: 'A friend forgot your birthday. You are not angry, but something in you has gone quiet. Which word?',
+      answer: 'دلخور',
+      options: ['دلخور', 'عصبانی', 'شوکه', 'ناراحت'],
+      optionTrs: { 'دلخور': 'delkhor', 'عصبانی': 'asab\u0101ni', 'شوکه': 'shoke', 'ناراحت': 'n\u0101r\u0101hat' },
+      why: 'delkhor. Hurt by someone close, and not saying so. This is the word that exists precisely for the feeling you just had.' },
+    { t: 'sentence', fa: 'آروم باش', tr: '\u0101rum b\u0101sh', en: 'calm down', focus: 'آروم' },
+    { t: 'build', fa: 'خیلی نگران هستم', tr: 'kheyli negar\u0101n hastam', en: 'I am very worried',
+      parts: ['خیلی', 'نگران', 'هستم', 'آروم'],
+      partTrs: { 'خیلی': 'kheyli', 'نگران': 'negar\u0101n', 'هستم': 'hastam', 'آروم': '\u0101rum' } },
+    { t: 'listen', fa: 'آروم باش', tr: '\u0101rum b\u0101sh', en: 'calm down',
+      options: ['آروم باش', 'نگران هستم', 'عصبانی است', 'دلخورم'],
+      optionTrs: { 'آروم باش': '\u0101rum b\u0101sh', 'نگران هستم': 'negar\u0101n hastam', 'عصبانی است': 'asab\u0101ni ast', 'دلخورم': 'delkhoram' } },
+    { t: 'write', fa: 'آروم', tr: '\u0101rum', en: 'calm' },
+  ],
+};
+
+
+
+/* ------------------------------------------------------------------ */
+/* The past                                                            */
+/* ------------------------------------------------------------------ */
+
+const pastTense: Lesson = {
+  key: 'past',
+  title: 'Talking about what happened',
+  titleFa: 'گذشته',
+  blurb: 'The past tense, which is easier than the present.',
+  minutes: 10,
+  steps: [
+    { t: 'note', title: 'Persian gives you the past for free',
+      body: 'Every Persian verb has two stems: a present one and a past one. The past stem is the infinitive with its -an removed, and it never changes. raftan, to go, gives raft. khordan, to eat, gives khord. Put the same endings you already know on the back of it and you are speaking in the past. No new endings, no irregular forms to memorise.' },
+    { t: 'meet', fa: 'رفتم', tr: 'raftam', en: 'I went' },
+    { t: 'meet', fa: 'رفتی', tr: 'rafti', en: 'you went' },
+    { t: 'meet', fa: 'رفت', tr: 'raft', en: 'he went, she went' },
+    { t: 'sense', fa: 'رفتم', tr: 'raftam', en: 'I went',
+      body: 'raft-am, raft-i, raft. Exactly the endings from d\u0101ram and hastam. And notice the third person: raft, with nothing on the end at all. The bare past stem is already he went. Persian could not have made this simpler if it tried.' },
+    { t: 'meet', fa: 'خوردم', tr: 'khordam', en: 'I ate' },
+    { t: 'meet', fa: 'دیدم', tr: 'didam', en: 'I saw' },
+    { t: 'meet', fa: 'گفتم', tr: 'goftam', en: 'I said' },
+    { t: 'gap', before: 'دیروز به بازار', after: '', answer: 'رفتم',
+      tr: 'diruz be b\u0101z\u0101r raftam', en: 'Yesterday I went to the bazaar',
+      options: ['رفتم', 'می‌روم', 'رفتی', 'می‌رفت'],
+      optionTrs: { 'رفتم': 'raftam, I went', 'می‌روم': 'miravam, I go', 'رفتی': 'rafti, you went', 'می‌رفت': 'miraft, he was going' },
+      why: 'diruz, yesterday, so the verb has to be past, and the -am makes it I.' },
+    { t: 'note', title: 'The past that was still going on',
+      body: 'Put mi- back on the front of a past verb and it becomes the past that continued: raftam is I went, miraftam is I was going, or I used to go. That one prefix carries the whole difference between a finished action and a habit, and it is the same mi- that makes the present.' },
+    { t: 'meet', fa: 'می‌رفتم', tr: 'miraftam', en: 'I used to go, I was going' },
+    { t: 'sentence', fa: 'هر روز به مدرسه می‌رفتم', tr: 'har ruz be madrese miraftam', en: 'Every day I used to go to school', focus: 'می‌رفتم' },
+    { t: 'choose', prompt: 'You want to say I ate bread yesterday. Which verb?',
+      answer: 'خوردم',
+      options: ['خوردم', 'می‌خورم', 'خوردی', 'می‌خوردم'],
+      optionTrs: { 'خوردم': 'khordam, I ate', 'می‌خورم': 'mikhoram, I eat', 'خوردی': 'khordi, you ate', 'می‌خوردم': 'mikhordam, I used to eat' },
+      why: 'khordam. A finished action, once, in the past. mikhordam would mean you used to eat bread, habitually.' },
+    { t: 'build', fa: 'دیروز نان خوردم', tr: 'diruz n\u0101n khordam', en: 'Yesterday I ate bread',
+      parts: ['دیروز', 'نان', 'خوردم', 'می‌خورم'],
+      partTrs: { 'دیروز': 'diruz', 'نان': 'n\u0101n', 'خوردم': 'khordam', 'می‌خورم': 'mikhoram' } },
+    { t: 'gap', before: 'او به من', after: 'که فردا می‌آید', answer: 'گفت',
+      tr: 'u be man goft ke fard\u0101 mi\u0101yad', en: 'He told me that he is coming tomorrow',
+      options: ['گفت', 'گفتم', 'می‌گویم', 'گفتی'],
+      optionTrs: { 'گفت': 'goft, he said', 'گفتم': 'goftam, I said', 'می‌گویم': 'miguyam, I say', 'گفتی': 'gofti, you said' },
+      why: 'u is he, and the third person past takes no ending at all: goft.' },
+    { t: 'listen', fa: 'دیروز به بازار رفتم', tr: 'diruz be b\u0101z\u0101r raftam', en: 'Yesterday I went to the bazaar',
+      options: ['دیروز به بازار رفتم', 'فردا به بازار می‌روم', 'نان خوردم', 'او گفت'],
+      optionTrs: { 'دیروز به بازار رفتم': 'diruz be b\u0101z\u0101r raftam', 'فردا به بازار می‌روم': 'fard\u0101 be b\u0101z\u0101r miravam', 'نان خوردم': 'n\u0101n khordam', 'او گفت': 'u goft' } },
+    { t: 'write', fa: 'رفتم', tr: 'raftam', en: 'I went' },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* Formality                                                           */
+/* ------------------------------------------------------------------ */
+
+const formality: Lesson = {
+  key: 'formality',
+  title: 'to and shomā',
+  titleFa: 'تو و شما',
+  blurb: 'Choosing how close to stand, in every sentence.',
+  minutes: 9,
+  steps: [
+    { t: 'note', title: 'Persian makes you choose, constantly',
+      body: 'There are two words for you, and you cannot avoid picking one. to is for friends, children, family and anyone younger. shom\u0101 is for elders, strangers, teachers, anyone senior, and anyone you want to hold at a respectful distance. Getting it wrong is not a grammar mistake, it is a social one, and it is the thing heritage speakers most often stumble on.' },
+    { t: 'meet', fa: 'تو', tr: 'to', en: 'you, familiar' },
+    { t: 'meet', fa: 'شما', tr: 'shom\u0101', en: 'you, respectful' },
+    { t: 'sense', fa: 'شما', tr: 'shom\u0101', en: 'you, respectful',
+      body: 'shom\u0101 is grammatically plural, and takes plural verbs even when you are talking to one person. shom\u0101 chetorid, how are you. This is the same instinct as French vous or German Sie: you address one respected person as though they were several.' },
+    { t: 'meet', fa: 'چطوری', tr: 'chetori', en: 'how are you, familiar' },
+    { t: 'meet', fa: 'چطورید', tr: 'chetorid', en: 'how are you, respectful' },
+    { t: 'gap', before: 'سلام آقای احمدی،', after: 'خوب هستید؟',
+      answer: 'شما',
+      tr: 'sal\u0101m \u0101gh\u0101-ye Ahmadi, shom\u0101 khub hastid?',
+      en: 'Hello Mr Ahmadi, are you well?',
+      options: ['شما', 'تو', 'من', 'او'],
+      optionTrs: { 'شما': 'shom\u0101, you respectful', 'تو': 'to, you familiar', 'من': 'man, I', 'او': 'u, he or she' },
+      why: 'You are using his surname and a title, so shom\u0101 is the only possible choice. Using to here would be startling.' },
+    { t: 'note', title: 'When in doubt, use shomā',
+      body: 'Over-formality is a small awkwardness. Under-formality is a real one. An older Iranian will usually invite you to switch by saying to as if we are family, and until they do, stay with shom\u0101. The exception is children and close friends, where shom\u0101 sounds cold or sarcastic.' },
+    { t: 'meet', fa: 'بفرمایید', tr: 'befarm\u0101yid', en: 'please, go ahead, help yourself' },
+    { t: 'sense', fa: 'بفرمایید', tr: 'befarm\u0101yid', en: 'please, go ahead',
+      body: 'The most polite word in daily Persian, and it does everything: come in, sit down, take some, after you, go ahead and speak. It is the respectful form of a verb meaning to command, so you are literally inviting the other person to give the orders. You will hear it fifty times a day in Iran.' },
+    { t: 'choose', prompt: 'You are meeting your friend\u2019s grandmother for the first time. Which do you use?',
+      answer: 'شما',
+      options: ['شما', 'تو', 'either is fine', 'neither'],
+      why: 'shom\u0101, without hesitation. She may well tell you to use to within the hour, and then you switch.' },
+    { t: 'listen', fa: 'بفرمایید', tr: 'befarm\u0101yid', en: 'please, go ahead',
+      options: ['بفرمایید', 'چطورید', 'شما', 'خوش آمدید'],
+      optionTrs: { 'بفرمایید': 'befarm\u0101yid', 'چطورید': 'chetorid', 'شما': 'shom\u0101', 'خوش آمدید': 'khosh \u0101madid' } },
+    { t: 'write', fa: 'شما', tr: 'shom\u0101', en: 'you, respectful' },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* Longer sentences                                                    */
+/* ------------------------------------------------------------------ */
+
+const joining: Lesson = {
+  key: 'joining',
+  title: 'Making longer sentences',
+  titleFa: 'جمله‌های بلندتر',
+  blurb: 'The small words that join two thoughts into one.',
+  minutes: 10,
+  steps: [
+    { t: 'meet', fa: 'که', tr: 'ke', en: 'that, which, who' },
+    { t: 'sense', fa: 'که', tr: 'ke', en: 'that',
+      body: 'ke is the hinge of Persian. It joins any two clauses: I said THAT I am coming, the man WHO was here, the book THAT you gave me. English drops its that all the time; Persian keeps ke in almost every case, so once you can hear it you can hear where one thought ends and the next begins.' },
+    { t: 'sentence', fa: 'گفتم که می‌آیم', tr: 'goftam ke mi\u0101yam', en: 'I said that I am coming', focus: 'که' },
+    { t: 'meet', fa: 'ولی', tr: 'vali', en: 'but' },
+    { t: 'meet', fa: 'چون', tr: 'chun', en: 'because' },
+    { t: 'meet', fa: 'اگر', tr: 'agar', en: 'if' },
+    { t: 'gap', before: 'می‌خواستم بیایم', after: 'وقت نداشتم', answer: 'ولی',
+      tr: 'mikh\u0101stam biy\u0101yam vali vaght nad\u0101shtam',
+      en: 'I wanted to come but I did not have time',
+      options: ['ولی', 'چون', 'اگر', 'که'],
+      optionTrs: { 'ولی': 'vali, but', 'چون': 'chun, because', 'اگر': 'agar, if', 'که': 'ke, that' },
+      why: 'Two things in tension: wanting to come, and not having time. vali holds them against each other.' },
+    { t: 'gap', before: 'نیامدم', after: 'مریض بودم', answer: 'چون',
+      tr: 'nay\u0101madam chun mariz budam',
+      en: 'I did not come because I was ill',
+      options: ['چون', 'ولی', 'اگر', 'و'],
+      optionTrs: { 'چون': 'chun, because', 'ولی': 'vali, but', 'اگر': 'agar, if', 'و': 'va, and' },
+      why: 'The second half explains the first, so chun. And notice nay\u0101madam: the negative na- on a past verb.' },
+    { t: 'note', title: 'Persian stacks clauses happily',
+      body: 'Written Persian, especially older or literary Persian, runs sentences much longer than English tolerates, joined by ke after ke. This is not bad style, it is the shape of the language. When you read something that seems to go on forever, look for the ke and you will find the joints.' },
+    { t: 'sentence', fa: 'اگر وقت داشته باشم، فردا می‌آیم',
+      tr: 'agar vaght d\u0101shte b\u0101sham, fard\u0101 mi\u0101yam',
+      en: 'If I have time, I will come tomorrow', focus: 'اگر' },
+    { t: 'note', title: 'agar wants the subjunctive',
+      body: 'After agar, if, Persian uses a mood for things that have not happened yet: d\u0101shte b\u0101sham rather than d\u0101ram. English does something similar in if I were you. It is the one place Persian grammar gets genuinely fiddly, and recognising it in reading matters more than producing it perfectly.' },
+    { t: 'build', fa: 'گفتم که می‌آیم', tr: 'goftam ke mi\u0101yam', en: 'I said that I am coming',
+      parts: ['گفتم', 'که', 'می‌آیم', 'ولی'],
+      partTrs: { 'گفتم': 'goftam', 'که': 'ke', 'می‌آیم': 'mi\u0101yam', 'ولی': 'vali' } },
+    { t: 'listen', fa: 'می‌خواستم بیایم ولی وقت نداشتم',
+      tr: 'mikh\u0101stam biy\u0101yam vali vaght nad\u0101shtam',
+      en: 'I wanted to come but I did not have time',
+      options: ['می‌خواستم بیایم ولی وقت نداشتم', 'نیامدم چون مریض بودم', 'گفتم که می‌آیم', 'اگر وقت داشته باشم'],
+      optionTrs: {
+        'می‌خواستم بیایم ولی وقت نداشتم': 'mikh\u0101stam biy\u0101yam vali vaght nad\u0101shtam',
+        'نیامدم چون مریض بودم': 'nay\u0101madam chun mariz budam',
+        'گفتم که می‌آیم': 'goftam ke mi\u0101yam',
+        'اگر وقت داشته باشم': 'agar vaght d\u0101shte b\u0101sham' } },
+    { t: 'write', fa: 'ولی', tr: 'vali', en: 'but' },
+  ],
+};
+
+
 export const UNITS: Unit[] = [
   {
     key: 'letters',
@@ -881,6 +1420,15 @@ export const UNITS: Unit[] = [
     blurb: 'Joining letters into words, and the vowels Persian leaves out.',
     level: 'beginner',
     lessons: [reading],
+  },
+  {
+    key: 'script',
+    roman: '0',
+    title: 'The script, letter by letter',
+    titleFa: 'خط',
+    blurb: 'The vowels Persian hides, and the letters one at a time.',
+    level: 'beginner',
+    lessons: [vowels, lettersOne, lettersTwo, lettersThree],
   },
   {
     key: 'first-words',
@@ -952,7 +1500,7 @@ export const UNITS: Unit[] = [
     titleFa: 'دل',
     blurb: 'How Persian says what it feels.',
     level: 'intermediate',
-    lessons: [feelings],
+    lessons: [feelings, emotions],
   },
   {
     key: 'conversation',
@@ -962,6 +1510,69 @@ export const UNITS: Unit[] = [
     blurb: 'Keeping a conversation alive when you are out of your depth.',
     level: 'intermediate',
     lessons: [conversation],
+  },
+  {
+    key: 'questions',
+    roman: 'XI',
+    title: 'Asking things',
+    titleFa: 'پرسیدن',
+    blurb: 'When, where, what, why and how.',
+    level: 'elementary',
+    lessons: [questions],
+  },
+  {
+    key: 'transport',
+    roman: 'XII',
+    title: 'Getting around',
+    titleFa: 'رفت و آمد',
+    blurb: 'Taxis, tickets, and telling a driver where to stop.',
+    level: 'elementary',
+    lessons: [transport],
+  },
+  {
+    key: 'seasons',
+    roman: 'XIII',
+    title: 'The year',
+    titleFa: 'سال',
+    blurb: 'Seasons, months, and a calendar that starts in spring.',
+    level: 'elementary',
+    lessons: [seasons],
+  },
+  {
+    key: 'colloquial',
+    roman: 'XIV',
+    title: 'Written and spoken',
+    titleFa: 'رسمی و محاوره‌ای',
+    blurb: 'The gap between the page and the room.',
+    level: 'intermediate',
+    lessons: [colloquial],
+  },
+  {
+    key: 'past',
+    roman: 'XV',
+    title: 'The past',
+    titleFa: 'گذشته',
+    blurb: 'What happened, and what used to happen.',
+    level: 'intermediate',
+    lessons: [pastTense],
+  },
+  {
+    key: 'formality',
+    roman: 'XVI',
+    title: 'Formality',
+    titleFa: 'تو و شما',
+    blurb: 'Choosing how close to stand, in every sentence.',
+    level: 'advanced',
+    lessons: [formality],
+  },
+  {
+    key: 'joining',
+    roman: 'XVII',
+    title: 'Longer sentences',
+    titleFa: 'جمله‌سازی',
+    blurb: 'Joining thoughts with ke, vali, chun and agar.',
+    level: 'advanced',
+    lessons: [joining],
   },
 ];
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { loadStrength } from '@/lib/word-strength';
 import { loadLearnProgress } from '@/lib/learn-progress';
 import { loadLevel } from '@/lib/learn-level';
 import { useFriendDeepLink } from '@/lib/deep-links';
@@ -63,7 +64,7 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
-  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); }, []);
+  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); }, []);
 
   if (!fontsLoaded) {
     return null;

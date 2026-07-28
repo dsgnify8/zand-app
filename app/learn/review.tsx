@@ -9,6 +9,7 @@ import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
 import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { speak, prewarm } from '@/lib/speak';
+import { prioritise, record } from '@/lib/word-strength';
 
 type Card = { fa: string; tr: string; en: string };
 
@@ -42,7 +43,8 @@ function shuffle<T>(a: T[]) {
 export default function ReviewScreen() {
   useLearnProgress();
   const pool = useMemo(() => harvest(), []);
-  const rounds = useMemo(() => shuffle(pool).slice(0, 10), [pool]);
+  // shakiest and most overdue first, so review targets what is slipping
+  const rounds = useMemo(() => prioritise(pool).slice(0, 10), [pool]);
 
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
@@ -80,7 +82,9 @@ export default function ReviewScreen() {
   const answer = (c: Card) => {
     if (picked) return;
     setPicked(c.fa);
-    if (c.fa === card.fa) setRight((v) => v + 1);
+    const got = c.fa === card.fa;
+    record(card.fa, got);
+    if (got) setRight((v) => v + 1);
   };
 
   const next = () => {
