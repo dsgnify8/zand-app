@@ -17,6 +17,20 @@ export async function loadLearnProgress() {
   } catch {}
 }
 
+// A stage counts as finished when every lesson in it is done.
+async function syncStages() {
+  try {
+    const { STAGES } = await import('@/constants/journey');
+    const { setField } = await import('@/lib/stats-store');
+    const finished = STAGES.filter((st: any) =>
+      st.steps
+        .filter((x: any) => x.kind === 'lesson' && x.unit && x.lesson)
+        .every((x: any) => isLessonDone(x.unit, x.lesson)),
+    ).length;
+    setField('stagesFinished', finished);
+  } catch {}
+}
+
 export async function markLessonDone(unit: string, lesson: string, score: number) {
   const prev = done.find((d) => d.unit === unit && d.lesson === lesson);
   // keep the best score, but always refresh the date
@@ -26,6 +40,7 @@ export async function markLessonDone(unit: string, lesson: string, score: number
   ];
   emit();
   try { await AsyncStorage.setItem(KEY, JSON.stringify(done)); } catch {}
+  syncStages();
 }
 
 export function isLessonDone(unit: string, lesson: string) {

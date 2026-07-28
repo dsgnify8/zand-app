@@ -11,6 +11,8 @@ import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, Wri
 import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
 import { markLessonDone } from '@/lib/learn-progress';
+import { markLearnDay } from '@/lib/stats-store';
+import { markLearnDay } from '@/lib/stats-store';
 import { useEffect } from 'react';
 
 export default function LessonScreen() {
@@ -47,6 +49,8 @@ export default function LessonScreen() {
   const advance = () => {
     if (i + 1 >= l.steps.length) {
       bump('pagesRead');
+      bump('lessonsFinished');
+      markLearnDay();
       const pct = score.total ? Math.round((score.right / score.total) * 100) : 100;
       markLessonDone(String(unit), String(lesson), pct);
       setDone(true);

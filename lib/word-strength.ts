@@ -38,6 +38,14 @@ async function persist() {
   try { await AsyncStorage.setItem(KEY, JSON.stringify(words)); } catch {}
 }
 
+// keep the profile's solid-word count in step
+async function syncSolid() {
+  try {
+    const { setField } = await import('@/lib/stats-store');
+    (setField as any)?.('wordsSolid', solidCount());
+  } catch {}
+}
+
 export function record(fa: string, right: boolean) {
   const w = words[fa] ?? { fa, strength: 0, due: 0, seen: 0, missed: 0 };
   const strength = right ? Math.min(5, w.strength + 1) : 1;
@@ -48,7 +56,7 @@ export function record(fa: string, right: boolean) {
     seen: w.seen + 1,
     missed: w.missed + (right ? 0 : 1),
   };
-  emit(); persist();
+  emit(); persist(); syncSolid();
 }
 
 export function strengthOf(fa: string) {

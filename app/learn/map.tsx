@@ -133,7 +133,13 @@ export default function MapScreen() {
             </View>
             <Text style={s.stageBlurb}>{stage.blurb}</Text>
 
-            {stage.steps.map((st) => {
+            {[...stage.steps, {
+              key: stage.key + '-check',
+              kind: 'quiz' as const,
+              title: 'Chapter check',
+              sub: 'Ten questions on everything in this chapter',
+              route: '/learn/checkpoint?stage=' + stage.key,
+            }].map((st) => {
               n += 1;
               return (
                 <View key={st.key}>
