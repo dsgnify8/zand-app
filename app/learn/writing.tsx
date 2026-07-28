@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
+import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { PERSIAN_ALPHABET, positionalForms } from '@/constants/persian-alphabet';
 import { WRITING } from '@/constants/writing';
@@ -24,7 +25,7 @@ export default function WritingScreen() {
       <ZandHeader />
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
+          <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>
         </Pressable>
 
@@ -66,7 +67,7 @@ export default function WritingScreen() {
         <Text style={styles.tip}>{w.tip}</Text>
         {w.baseline ? (
           <View style={styles.baselineNote}>
-            <Ionicons name="information-circle-outline" size={16} color={colors.textSecondary} />
+            <Ionicons name="information-circle-outline" size={16} color={lw.muted} />
             <Text style={styles.baselineText}>{w.baseline}</Text>
           </View>
         ) : null}
@@ -93,12 +94,12 @@ export default function WritingScreen() {
 
         <View style={styles.nav}>
           <Pressable style={[styles.navBtn, i === 0 && styles.navDisabled]} disabled={i === 0} onPress={() => setI((v) => v - 1)}>
-            <Ionicons name="chevron-back" size={18} color={i === 0 ? colors.border : colors.textPrimary} />
+            <Ionicons name="chevron-back" size={18} color={i === 0 ? lw.hair : lw.ink} />
             <Text style={[styles.navText, i === 0 && styles.navTextDisabled]}>Previous</Text>
           </Pressable>
           <Pressable style={[styles.navBtn, i === total - 1 && styles.navDisabled]} disabled={i === total - 1} onPress={() => setI((v) => v + 1)}>
             <Text style={[styles.navText, i === total - 1 && styles.navTextDisabled]}>Next</Text>
-            <Ionicons name="chevron-forward" size={18} color={i === total - 1 ? colors.border : colors.textPrimary} />
+            <Ionicons name="chevron-forward" size={18} color={i === total - 1 ? lw.hair : lw.ink} />
           </Pressable>
         </View>
       </ScrollView>
@@ -107,60 +108,60 @@ export default function WritingScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.background },
+  safe: { flex: 1, backgroundColor: lw.bg },
   scroll: { flex: 1 },
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   backBtn: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.sm, marginBottom: spacing.sm },
-  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary },
+  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.muted },
   titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md, marginTop: spacing.md },
-  title: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: colors.textPrimary, flexShrink: 1 },
-  glyph: { fontFamily: fonts.persian, fontSize: fontSize.display, color: colors.accent },
-  subtitle: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 24, color: colors.textSecondary, marginTop: spacing.sm },
+  title: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: lw.ink, flexShrink: 1 },
+  glyph: { fontFamily: fonts.persian, fontSize: fontSize.display, color: lw.green },
+  subtitle: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 24, color: lw.muted, marginTop: spacing.sm },
 
   stripScroll: { marginTop: spacing.lg },
   strip: { gap: spacing.sm, paddingRight: spacing.lg },
-  chip: { width: 46, height: 46, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center' },
-  chipActive: { backgroundColor: colors.accent, borderColor: colors.accent },
-  chipText: { fontFamily: fonts.persian, fontSize: 24, color: colors.textPrimary },
-  chipTextActive: { color: colors.surface },
+  chip: { width: 46, height: 46, borderRadius: radius.md, borderWidth: 1, borderColor: lw.hair, backgroundColor: lw.surface, alignItems: 'center', justifyContent: 'center' },
+  chipActive: { backgroundColor: lw.green, borderColor: lw.green },
+  chipText: { fontFamily: fonts.persian, fontSize: 24, color: lw.ink },
+  chipTextActive: { color: lw.surface },
 
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl },
-  letterName: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: colors.textPrimary },
-  letterSound: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, marginTop: 2 },
-  letterNum: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: colors.textSecondary },
+  letterName: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: lw.ink },
+  letterSound: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.muted, marginTop: 2 },
+  letterNum: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: lw.muted },
 
-  model: { height: 220, backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, marginTop: spacing.md, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  model: { height: 220, backgroundColor: lw.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: lw.hair, marginTop: spacing.md, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   guideLine: { position: 'absolute', left: spacing.lg, right: spacing.lg, height: 1 },
-  guideTop: { top: 50, borderTopWidth: 1, borderColor: colors.border, borderStyle: 'dashed' },
-  guideMid: { top: 110, borderTopWidth: 1, borderColor: colors.border, borderStyle: 'dashed' },
-  guideBase: { top: 160, backgroundColor: colors.textSecondary, opacity: 0.4 },
-  modelLetter: { fontFamily: fonts.persian, fontSize: 130, color: colors.textPrimary, marginTop: -6 },
+  guideTop: { top: 50, borderTopWidth: 1, borderColor: lw.hair, borderStyle: 'dashed' },
+  guideMid: { top: 110, borderTopWidth: 1, borderColor: lw.hair, borderStyle: 'dashed' },
+  guideBase: { top: 160, backgroundColor: lw.muted, opacity: 0.4 },
+  modelLetter: { fontFamily: fonts.persian, fontSize: 130, color: lw.ink, marginTop: -6 },
 
   infoRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.lg },
-  infoChip: { flex: 1, backgroundColor: colors.surface, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, padding: spacing.md },
-  infoLabel: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.5, color: colors.textSecondary },
-  infoValue: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: colors.accent, marginTop: 2 },
-  infoValueSm: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textPrimary, marginTop: 4 },
+  infoChip: { flex: 1, backgroundColor: lw.surface, borderRadius: radius.md, borderWidth: 1, borderColor: lw.hair, padding: spacing.md },
+  infoLabel: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.5, color: lw.muted },
+  infoValue: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: lw.green, marginTop: 2 },
+  infoValueSm: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.ink, marginTop: 4 },
 
-  tip: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 24, color: colors.textPrimary, marginTop: spacing.lg },
+  tip: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 24, color: lw.ink, marginTop: spacing.lg },
   baselineNote: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginTop: spacing.sm },
-  baselineText: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, flex: 1 },
+  baselineText: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.muted, flex: 1 },
 
-  sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 2, color: colors.textSecondary, marginTop: spacing.xl, marginBottom: spacing.sm },
-  formsRow: { flexDirection: 'row', backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border },
+  sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 2, color: lw.muted, marginTop: spacing.xl, marginBottom: spacing.sm },
+  formsRow: { flexDirection: 'row', backgroundColor: lw.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: lw.hair },
   formCol: { flex: 1, alignItems: 'center', paddingVertical: spacing.md },
-  formColBorder: { borderLeftWidth: 1, borderLeftColor: colors.border },
-  formGlyph: { fontFamily: fonts.persian, fontSize: 34, color: colors.textPrimary },
-  formLabel: { fontFamily: fonts.bodyStrong, fontSize: 7, letterSpacing: 0.5, color: colors.textSecondary, marginTop: spacing.sm, textAlign: 'center' },
+  formColBorder: { borderLeftWidth: 1, borderLeftColor: lw.hair },
+  formGlyph: { fontFamily: fonts.persian, fontSize: 34, color: lw.ink },
+  formLabel: { fontFamily: fonts.bodyStrong, fontSize: 7, letterSpacing: 0.5, color: lw.muted, marginTop: spacing.sm, textAlign: 'center' },
 
-  practice: { height: 120, backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', overflow: 'hidden' },
-  practiceBase: { position: 'absolute', left: spacing.md, right: spacing.md, top: 88, backgroundColor: colors.textSecondary, opacity: 0.3 },
-  practiceGlyph: { fontFamily: fonts.persian, fontSize: 64, color: colors.textPrimary },
-  practiceCaption: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, marginTop: spacing.sm },
+  practice: { height: 120, backgroundColor: lw.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: lw.hair, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', overflow: 'hidden' },
+  practiceBase: { position: 'absolute', left: spacing.md, right: spacing.md, top: 88, backgroundColor: lw.muted, opacity: 0.3 },
+  practiceGlyph: { fontFamily: fonts.persian, fontSize: 64, color: lw.ink },
+  practiceCaption: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.muted, marginTop: spacing.sm },
 
   nav: { flexDirection: 'row', justifyContent: 'space-between', marginTop: spacing.xl },
-  navBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingVertical: spacing.sm, paddingHorizontal: spacing.md, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface },
+  navBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingVertical: spacing.sm, paddingHorizontal: spacing.md, borderRadius: radius.pill, borderWidth: 1, borderColor: lw.hair, backgroundColor: lw.surface },
   navDisabled: { opacity: 0.5 },
-  navText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: colors.textPrimary },
-  navTextDisabled: { color: colors.border },
+  navText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: lw.ink },
+  navTextDisabled: { color: lw.hair },
 });

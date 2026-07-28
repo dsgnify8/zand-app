@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
+import { lw } from '@/constants/lang-theme';
 import { findCategory } from '@/constants/fill-blank';
 import { useProgress } from '@/lib/progress-store';
 
@@ -77,7 +78,7 @@ export default function FillBlankPlay() {
           <>
             <View style={styles.topBar}>
               <Pressable hitSlop={10} onPress={() => router.back()}>
-                <Ionicons name="close" size={26} color={colors.textSecondary} />
+                <Ionicons name="close" size={26} color={lw.muted} />
               </Pressable>
               <View style={styles.progressTrack}><View style={[styles.progressFill, { width: (Math.round(((checked ? i + 1 : i) / total) * 100) + '%') as any }]} /></View>
               <Text style={styles.counter}>{i + 1}/{total}</Text>
@@ -102,8 +103,8 @@ export default function FillBlankPlay() {
                   return (
                     <Pressable key={opt} style={[styles.option, st === 'selected' && styles.optSelected, st === 'correct' && styles.optCorrect, st === 'wrong' && styles.optWrong, st === 'muted' && styles.optMuted]} disabled={checked} onPress={() => setSelected(opt)}>
                       <Text style={[styles.optText, st === 'selected' && styles.optTextSelected, st === 'correct' && styles.optTextCorrect, st === 'wrong' && styles.optTextWrong, st === 'muted' && styles.optTextMuted]}>{opt}</Text>
-                      {st === 'correct' ? <Ionicons name="checkmark-circle" size={20} color={colors.success} /> : null}
-                      {st === 'wrong' ? <Ionicons name="close-circle" size={20} color={colors.error} /> : null}
+                      {st === 'correct' ? <Ionicons name="checkmark-circle" size={20} color={lw.correct} /> : null}
+                      {st === 'wrong' ? <Ionicons name="close-circle" size={20} color={lw.wrong} /> : null}
                     </Pressable>
                   );
                 })}
@@ -118,13 +119,13 @@ export default function FillBlankPlay() {
               ) : (
                 <Animated.View style={[styles.bannerBox, correct ? styles.bannerGood : styles.bannerBad, { transform: [{ translateY: bannerTranslate }] }]}>
                   <View style={styles.bannerRow}>
-                    <Ionicons name={correct ? 'checkmark-circle' : 'close-circle'} size={26} color={correct ? colors.success : colors.error} />
+                    <Ionicons name={correct ? 'checkmark-circle' : 'close-circle'} size={26} color={correct ? lw.correct : lw.wrong} />
                     <View style={styles.bannerText}>
-                      <Text style={[styles.bannerTitle, { color: correct ? colors.success : colors.error }]}>{correct ? 'Correct!' : 'Not quite'}</Text>
+                      <Text style={[styles.bannerTitle, { color: correct ? lw.correct : lw.wrong }]}>{correct ? 'Correct!' : 'Not quite'}</Text>
                       {!correct ? <Text style={styles.bannerAnswer}>Answer: {q.answer}  ·  {q.translit}</Text> : null}
                     </View>
                   </View>
-                  <Pressable style={[styles.continue, { backgroundColor: correct ? colors.success : colors.error }]} onPress={next}>
+                  <Pressable style={[styles.continue, { backgroundColor: correct ? lw.correct : lw.wrong }]} onPress={next}>
                     <Text style={styles.continueText}>{i + 1 >= total ? 'Finish' : 'Continue'}</Text>
                   </Pressable>
                 </Animated.View>
@@ -146,53 +147,53 @@ export default function FillBlankPlay() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.background },
+  safe: { flex: 1, backgroundColor: lw.bg },
   container: { flex: 1, paddingHorizontal: spacing.lg },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  notFound: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary },
+  notFound: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.muted },
   topBar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingTop: spacing.md },
-  progressTrack: { flex: 1, height: 8, borderRadius: radius.pill, backgroundColor: colors.border, overflow: 'hidden' },
-  progressFill: { height: 8, borderRadius: radius.pill, backgroundColor: colors.accent },
-  counter: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: colors.textSecondary },
+  progressTrack: { flex: 1, height: 8, borderRadius: radius.pill, backgroundColor: lw.hair, overflow: 'hidden' },
+  progressFill: { height: 8, borderRadius: radius.pill, backgroundColor: lw.green },
+  counter: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: lw.muted },
   scroll: { flex: 1 },
   scrollBody: { paddingBottom: spacing.lg },
-  promptLabel: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 2, color: colors.textSecondary, marginTop: spacing.xl },
-  prompt: { fontFamily: fonts.heading, fontSize: 22, color: colors.textPrimary, marginTop: spacing.xs, lineHeight: 28 },
-  sentenceCard: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg, marginTop: spacing.lg },
-  sentence: { fontFamily: fonts.persian, fontSize: 23, lineHeight: 42, color: colors.textPrimary, textAlign: 'center', writingDirection: 'rtl' },
-  blank: { color: colors.textSecondary, letterSpacing: 1 },
-  blankFilled: { color: colors.accent, fontFamily: fonts.persian },
-  sentenceTranslit: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.md },
+  promptLabel: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 2, color: lw.muted, marginTop: spacing.xl },
+  prompt: { fontFamily: fonts.heading, fontSize: 22, color: lw.ink, marginTop: spacing.xs, lineHeight: 28 },
+  sentenceCard: { backgroundColor: lw.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: lw.hair, padding: spacing.lg, marginTop: spacing.lg },
+  sentence: { fontFamily: fonts.persian, fontSize: 23, lineHeight: 42, color: lw.ink, textAlign: 'center', writingDirection: 'rtl' },
+  blank: { color: lw.muted, letterSpacing: 1 },
+  blankFilled: { color: lw.green, fontFamily: fonts.persian },
+  sentenceTranslit: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.muted, textAlign: 'center', marginTop: spacing.md },
   options: { marginTop: spacing.xl, gap: spacing.sm },
-  option: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, backgroundColor: colors.surface, borderRadius: 14, borderWidth: 1, borderColor: colors.border, paddingVertical: 14 },
-  optSelected: { borderColor: colors.accent, backgroundColor: '#F1E7E9' },
-  optCorrect: { borderColor: colors.success, backgroundColor: colors.successSoft },
-  optWrong: { borderColor: colors.error, backgroundColor: colors.errorSoft },
+  option: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, backgroundColor: lw.surface, borderRadius: 14, borderWidth: 1, borderColor: lw.hair, paddingVertical: 14 },
+  optSelected: { borderColor: lw.green, backgroundColor: '#F1E7E9' },
+  optCorrect: { borderColor: lw.correct, backgroundColor: lw.correctSoft },
+  optWrong: { borderColor: lw.wrong, backgroundColor: lw.wrongSoft },
   optMuted: { opacity: 0.45 },
-  optText: { fontFamily: fonts.persian, fontSize: 19, color: colors.textPrimary },
-  optTextSelected: { color: colors.accent },
-  optTextCorrect: { color: colors.success },
-  optTextWrong: { color: colors.error },
-  optTextMuted: { color: colors.textSecondary },
+  optText: { fontFamily: fonts.persian, fontSize: 19, color: lw.ink },
+  optTextSelected: { color: lw.green },
+  optTextCorrect: { color: lw.correct },
+  optTextWrong: { color: lw.wrong },
+  optTextMuted: { color: lw.muted },
   footer: { paddingVertical: spacing.md },
-  cta: { backgroundColor: colors.accent, borderRadius: radius.pill, paddingVertical: spacing.md, alignItems: 'center' },
+  cta: { backgroundColor: lw.green, borderRadius: radius.pill, paddingVertical: spacing.md, alignItems: 'center' },
   ctaDisabled: { opacity: 0.4 },
-  ctaText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: colors.surface },
+  ctaText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: lw.surface },
   bannerBox: { borderRadius: radius.lg, padding: spacing.lg, gap: spacing.md },
-  bannerGood: { backgroundColor: colors.successSoft },
-  bannerBad: { backgroundColor: colors.errorSoft },
+  bannerGood: { backgroundColor: lw.correctSoft },
+  bannerBad: { backgroundColor: lw.wrongSoft },
   bannerRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   bannerText: { flex: 1 },
   bannerTitle: { fontFamily: fonts.heading, fontSize: fontSize.xl },
-  bannerAnswer: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textPrimary, marginTop: 2 },
+  bannerAnswer: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.ink, marginTop: 2 },
   continue: { borderRadius: radius.pill, paddingVertical: spacing.md, alignItems: 'center' },
-  continueText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: colors.surface },
+  continueText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: lw.surface },
   summary: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  summaryGlyph: { fontFamily: fonts.persian, fontSize: fontSize.display, color: colors.accent },
-  summaryTitle: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: colors.textPrimary, marginTop: spacing.sm },
-  summaryLine: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary, marginTop: spacing.xs, marginBottom: spacing.xl },
-  primaryBtn: { backgroundColor: colors.accent, borderRadius: radius.pill, paddingVertical: spacing.md, paddingHorizontal: spacing.xl },
-  primaryText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: colors.surface },
+  summaryGlyph: { fontFamily: fonts.persian, fontSize: fontSize.display, color: lw.green },
+  summaryTitle: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: lw.ink, marginTop: spacing.sm },
+  summaryLine: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.muted, marginTop: spacing.xs, marginBottom: spacing.xl },
+  primaryBtn: { backgroundColor: lw.green, borderRadius: radius.pill, paddingVertical: spacing.md, paddingHorizontal: spacing.xl },
+  primaryText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: lw.surface },
   secondaryBtn: { paddingVertical: spacing.md, paddingHorizontal: spacing.xl, marginTop: spacing.sm },
-  secondaryText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: colors.textSecondary },
+  secondaryText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.base, color: lw.muted },
 });

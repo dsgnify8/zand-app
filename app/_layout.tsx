@@ -94,6 +94,7 @@ export default function RootLayout() {
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/path" options={{ headerShown: false }} />
             <Stack.Screen name="learn/phrasebook" options={{ headerShown: false }} />
+            <Stack.Screen name="learn/review" options={{ headerShown: false }} />
             <Stack.Screen name="learn/alphabet" options={{ headerShown: false }} />
             <Stack.Screen name="learn/flashcards" options={{ headerShown: false }} />
             <Stack.Screen name="learn/flashcard" options={{ headerShown: false }} />

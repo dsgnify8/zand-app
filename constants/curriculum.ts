@@ -328,6 +328,80 @@ const familyTalk: Lesson = {
 };
 
 
+
+/* ------------------------------------------------------------------ */
+/* UNIT III — counting, and the numerals themselves                    */
+/* ------------------------------------------------------------------ */
+
+const numbersOne: Lesson = {
+  key: 'numbers-one',
+  title: 'One to ten',
+  titleFa: 'یک تا ده',
+  blurb: 'The numbers, and the shapes Iran writes them with.',
+  minutes: 8,
+  steps: [
+    { t: 'meet', fa: 'یک', tr: 'yek', en: 'one' },
+    { t: 'meet', fa: 'دو', tr: 'do', en: 'two' },
+    { t: 'meet', fa: 'سه', tr: 'se', en: 'three' },
+    { t: 'note', title: 'You have seen these before',
+      body: 'yek, do, se. Then chah\u0101r, panj, shesh. Compare Spanish uno dos tres, or Hindi ek do teen. Persian, Hindi and every European language except a handful count from the same root. The numbers are the oldest words we still share.' },
+    { t: 'meet', fa: 'چهار', tr: 'chah\u0101r', en: 'four' },
+    { t: 'meet', fa: 'پنج', tr: 'panj', en: 'five' },
+    { t: 'sense', fa: 'پنج', tr: 'panj', en: 'five',
+      body: 'panj is five, and it is hiding inside a word you know. Punjab is panj \u0101b, five waters, for the five rivers running through it. Persian words travelled a long way east.' },
+    { t: 'choose', prompt: 'Which one is five?',
+      answer: 'پنج',
+      options: ['پنج', 'چهار', 'سه', 'دو'],
+      optionTrs: { 'پنج': 'panj', 'چهار': 'chah\u0101r', 'سه': 'se', 'دو': 'do' },
+      why: 'panj. The j is soft, like the j in jam.' },
+    { t: 'meet', fa: 'شش', tr: 'shesh', en: 'six' },
+    { t: 'meet', fa: 'هفت', tr: 'haft', en: 'seven' },
+    { t: 'note', title: 'Seven is everywhere in Persian',
+      body: 'haft, seven. Haft-sin, the seven things on the Nowruz table. Haft khan, the seven trials of Rostam in the Shahnameh. Seven is the number Persian reaches for when it wants to say a complete set of trials, or a whole world.' },
+    { t: 'meet', fa: 'هشت', tr: 'hasht', en: 'eight' },
+    { t: 'meet', fa: 'نه', tr: 'noh', en: 'nine' },
+    { t: 'meet', fa: 'ده', tr: 'dah', en: 'ten' },
+    { t: 'listen', fa: 'هفت', tr: 'haft', en: 'seven',
+      options: ['هفت', 'هشت', 'شش', 'ده'],
+      optionTrs: { 'هفت': 'haft', 'هشت': 'hasht', 'شش': 'shesh', 'ده': 'dah' } },
+    { t: 'note', title: 'The other numerals',
+      body: 'Iran writes numbers with its own digits: \u06f1 \u06f2 \u06f3 \u06f4 \u06f5 \u06f6 \u06f7 \u06f8 \u06f9. You will see them on prices, on number plates, on every page of a Persian newspaper. \u06f2 is two, \u06f3 is three, and \u06f6 looks like a European 7 but means 6. That one catches everybody.' },
+    { t: 'write', fa: 'ده', tr: 'dah', en: 'ten' },
+  ],
+};
+
+const numbersUse: Lesson = {
+  key: 'numbers-use',
+  title: 'Using them',
+  titleFa: 'شمردن',
+  blurb: 'Age, price, and how many.',
+  minutes: 6,
+  steps: [
+    { t: 'meet', fa: 'چند', tr: 'chand', en: 'how many, how much' },
+    { t: 'sentence', fa: 'چند سالته؟', tr: 'chand s\u0101lete?', en: 'How old are you?', focus: 'چند' },
+    { t: 'sense', fa: 'چند سالته؟', tr: 'chand s\u0101lete?', en: 'how old are you?',
+      body: 'Literally how many years is yours. Persian does not say you are twenty, it says twenty years is yours. Age is something you have rather than something you are.' },
+    { t: 'sentence', fa: 'من سی سالمه', tr: 'man si s\u0101lame', en: 'I am thirty', focus: 'سی' },
+    { t: 'meet', fa: 'بیست', tr: 'bist', en: 'twenty' },
+    { t: 'meet', fa: 'سی', tr: 'si', en: 'thirty' },
+    { t: 'meet', fa: 'صد', tr: 'sad', en: 'hundred' },
+    { t: 'build', fa: 'من بیست سالمه', tr: 'man bist s\u0101lame', en: 'I am twenty',
+      parts: ['من', 'بیست', 'سالمه'],
+      partTrs: { 'من': 'man', 'بیست': 'bist', 'سالمه': 's\u0101lame' } },
+    { t: 'sentence', fa: 'چقدر است؟', tr: 'cheghadr ast?', en: 'How much is it?' },
+    { t: 'choose', prompt: 'You are in a shop and want the price. What do you say?',
+      answer: 'چقدر است؟',
+      options: ['چقدر است؟', 'چند سالته؟', 'اسم تو چیه؟', 'خوبی؟'],
+      optionTrs: { 'چقدر است؟': 'cheghadr ast?', 'چند سالته؟': 'chand s\u0101lete?', 'اسم تو چیه؟': 'esme to chi-e?', 'خوبی؟': 'khubi?' },
+      why: 'cheghadr is how much. chand s\u0101lete would be asking the shopkeeper their age.' },
+    { t: 'listen', fa: 'چقدر است؟', tr: 'cheghadr ast?', en: 'how much is it?',
+      options: ['چقدر است؟', 'چند سالته؟', 'من سی سالمه', 'صد'],
+      optionTrs: { 'چقدر است؟': 'cheghadr ast?', 'چند سالته؟': 'chand s\u0101lete?', 'من سی سالمه': 'man si s\u0101lame', 'صد': 'sad' } },
+    { t: 'write', fa: 'یک', tr: 'yek', en: 'one' },
+  ],
+};
+
+
 export const UNITS: Unit[] = [
   {
     key: 'first-words',
@@ -346,6 +420,15 @@ export const UNITS: Unit[] = [
     blurb: 'Family, and how Persian sentences are put together.',
     level: 'beginner',
     lessons: [familyWords, familyTalk],
+  },
+  {
+    key: 'numbers',
+    roman: 'III',
+    title: 'Counting',
+    titleFa: 'شمارش',
+    blurb: 'One to a hundred, age, price, and the Persian numerals.',
+    level: 'beginner',
+    lessons: [numbersOne, numbersUse],
   },
 ];
 

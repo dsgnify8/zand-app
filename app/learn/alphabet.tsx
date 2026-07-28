@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
+import { lw } from '@/constants/lang-theme';
 import { PERSIAN_ALPHABET, positionalForms, type PersianLetter } from '@/constants/persian-alphabet';
 import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
@@ -119,17 +120,17 @@ function LetterSheet({ letter, onClose }: { letter: PersianLetter | null; onClos
 
 const sheetS = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(20,16,12,0.5)', alignItems: 'center', justifyContent: 'center', padding: spacing.lg },
-  card: { backgroundColor: colors.background, borderRadius: 20, paddingVertical: spacing.lg, paddingHorizontal: spacing.lg, width: '100%', maxWidth: 320, alignItems: 'center' },
-  big: { fontFamily: fonts.persian, fontSize: 62, color: colors.textPrimary, lineHeight: 80 },
-  name: { fontFamily: fonts.heading, fontSize: 20, color: colors.textPrimary, marginTop: 2 },
-  sound: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary, marginTop: 2 },
-  rule: { height: 1, alignSelf: 'stretch', backgroundColor: colors.border, marginVertical: spacing.md },
-  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, alignSelf: 'stretch', paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border },
-  glyph: { fontFamily: fonts.persian, fontSize: 30, color: colors.accent, width: 48, textAlign: 'center' },
-  rowLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, letterSpacing: 1.5, color: colors.textPrimary },
-  rowNote: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, marginTop: 2 },
+  card: { backgroundColor: lw.bg, borderRadius: 20, paddingVertical: spacing.lg, paddingHorizontal: spacing.lg, width: '100%', maxWidth: 320, alignItems: 'center' },
+  big: { fontFamily: fonts.persian, fontSize: 62, color: lw.ink, lineHeight: 80 },
+  name: { fontFamily: fonts.heading, fontSize: 20, color: lw.ink, marginTop: 2 },
+  sound: { fontFamily: fonts.body, fontSize: 14, color: lw.muted, marginTop: 2 },
+  rule: { height: 1, alignSelf: 'stretch', backgroundColor: lw.hair, marginVertical: spacing.md },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, alignSelf: 'stretch', paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: lw.hair },
+  glyph: { fontFamily: fonts.persian, fontSize: 30, color: lw.green, width: 48, textAlign: 'center' },
+  rowLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, letterSpacing: 1.5, color: lw.ink },
+  rowNote: { fontFamily: fonts.body, fontSize: 12, color: lw.muted, marginTop: 2 },
   close: { marginTop: spacing.md, paddingVertical: spacing.sm, paddingHorizontal: spacing.xl },
-  closeT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: colors.accent },
+  closeT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: lw.green },
 });
 
 export default function AlphabetScreen() {
@@ -172,7 +173,7 @@ export default function AlphabetScreen() {
       <ZandHeader />
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
+          <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>
         </Pressable>
 
@@ -200,10 +201,10 @@ export default function AlphabetScreen() {
           <Text style={styles.helper}>Tap any card to flip it</Text>
           <View style={styles.viewToggle}>
             <Pressable style={[styles.viewBtn, view === 'list' && styles.viewBtnOn]} onPress={() => setView('list')}>
-              <Ionicons name="square-outline" size={15} color={view === 'list' ? colors.surface : colors.textSecondary} />
+              <Ionicons name="square-outline" size={15} color={view === 'list' ? lw.surface : lw.muted} />
             </Pressable>
             <Pressable style={[styles.viewBtn, view === 'grid' && styles.viewBtnOn]} onPress={() => setView('grid')}>
-              <Ionicons name="grid-outline" size={15} color={view === 'grid' ? colors.surface : colors.textSecondary} />
+              <Ionicons name="grid-outline" size={15} color={view === 'grid' ? lw.surface : lw.muted} />
             </Pressable>
           </View>
         </View>
@@ -238,65 +239,65 @@ export default function AlphabetScreen() {
 }
 
 const styles = StyleSheet.create({
-  holdHint: { fontFamily: fonts.body, fontSize: 10, color: colors.textSecondary, opacity: 0.6, marginTop: spacing.sm },
-  compactName: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 0.5, color: colors.textSecondary, textAlign: 'center', paddingBottom: spacing.md },
+  holdHint: { fontFamily: fonts.body, fontSize: 10, color: lw.muted, opacity: 0.6, marginTop: spacing.sm },
+  compactName: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 0.5, color: lw.muted, textAlign: 'center', paddingBottom: spacing.md },
   viewRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  viewToggle: { flexDirection: 'row', gap: 4, backgroundColor: colors.surface, borderRadius: 10, padding: 3, borderWidth: 1, borderColor: colors.border },
+  viewToggle: { flexDirection: 'row', gap: 4, backgroundColor: lw.surface, borderRadius: 10, padding: 3, borderWidth: 1, borderColor: lw.hair },
   viewBtn: { paddingVertical: 5, paddingHorizontal: 9, borderRadius: 8 },
-  viewBtnOn: { backgroundColor: colors.accent },
-  safe: { flex: 1, backgroundColor: colors.background },
+  viewBtnOn: { backgroundColor: lw.green },
+  safe: { flex: 1, backgroundColor: lw.bg },
   scroll: { flex: 1 },
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   backBtn: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.md },
-  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary },
+  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.muted },
 
-  headerCard: { backgroundColor: colors.accent, borderRadius: radius.lg, padding: spacing.lg },
+  headerCard: { backgroundColor: lw.green, borderRadius: radius.lg, padding: spacing.lg },
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
-  headerGlyph: { fontFamily: fonts.persian, fontSize: fontSize.xxl, color: colors.surface },
-  headerTitle: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: colors.surface, flexShrink: 1 },
+  headerGlyph: { fontFamily: fonts.persian, fontSize: fontSize.xxl, color: lw.surface },
+  headerTitle: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: lw.surface, flexShrink: 1 },
   headerSub: { fontFamily: fonts.body, fontSize: fontSize.sm, color: 'rgba(255,255,255,0.75)', marginTop: spacing.md },
   progressTrack: { height: 6, borderRadius: radius.pill, backgroundColor: 'rgba(255,255,255,0.25)', marginTop: spacing.md, overflow: 'hidden' },
-  progressFill: { height: 6, borderRadius: radius.pill, backgroundColor: colors.surface },
+  progressFill: { height: 6, borderRadius: radius.pill, backgroundColor: lw.surface },
   progressText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 1, color: 'rgba(255,255,255,0.85)', marginTop: spacing.sm },
 
   toggles: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.lg },
-  toggle: { paddingVertical: spacing.sm + 2, paddingHorizontal: spacing.lg, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface },
-  toggleActive: { backgroundColor: colors.accent, borderColor: colors.accent },
-  toggleText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: colors.textSecondary },
-  toggleTextActive: { color: colors.surface },
+  toggle: { paddingVertical: spacing.sm + 2, paddingHorizontal: spacing.lg, borderRadius: radius.pill, borderWidth: 1, borderColor: lw.hair, backgroundColor: lw.surface },
+  toggleActive: { backgroundColor: lw.green, borderColor: lw.green },
+  toggleText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: lw.muted },
+  toggleTextActive: { color: lw.surface },
 
-  helper: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, marginTop: spacing.lg },
+  helper: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.muted, marginTop: spacing.lg },
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: spacing.md },
 
   cardContainer: { marginBottom: 0 },
   face: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: radius.lg, backfaceVisibility: 'hidden', overflow: 'hidden' },
-  front: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, paddingTop: spacing.md },
+  front: { backgroundColor: lw.surface, borderWidth: 1, borderColor: lw.hair, paddingTop: spacing.md },
   frontTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: spacing.md },
-  badge: { backgroundColor: colors.accent, borderRadius: radius.sm, paddingHorizontal: spacing.sm, paddingVertical: 3 },
+  badge: { backgroundColor: lw.green, borderRadius: radius.sm, paddingHorizontal: spacing.sm, paddingVertical: 3 },
   badgeLight: { backgroundColor: 'rgba(255,255,255,0.9)' },
-  badgeText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, color: colors.surface },
-  badgeTextDark: { color: colors.accent },
-  diamond: { width: 8, height: 8, backgroundColor: colors.border, transform: [{ rotate: '45deg' }] },
+  badgeText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, color: lw.surface },
+  badgeTextDark: { color: lw.green },
+  diamond: { width: 8, height: 8, backgroundColor: lw.hair, transform: [{ rotate: '45deg' }] },
   letterWrap: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  bigLetter: { fontFamily: fonts.persian, color: colors.textPrimary },
-  formsRow: { flexDirection: 'row', backgroundColor: colors.background, borderTopWidth: 1, borderTopColor: colors.border },
+  bigLetter: { fontFamily: fonts.persian, color: lw.ink },
+  formsRow: { flexDirection: 'row', backgroundColor: lw.bg, borderTopWidth: 1, borderTopColor: lw.hair },
   formCol: { flex: 1, alignItems: 'center', paddingVertical: spacing.sm },
-  formColBorder: { borderLeftWidth: 1, borderLeftColor: colors.border },
-  formLabelTop: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 0.5, color: colors.accent },
-  formLabelBot: { fontFamily: fonts.body, fontSize: 8, letterSpacing: 0.5, color: colors.textSecondary },
-  formGlyph: { fontFamily: fonts.persian, fontSize: 26, color: colors.textPrimary, marginTop: 4 },
+  formColBorder: { borderLeftWidth: 1, borderLeftColor: lw.hair },
+  formLabelTop: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 0.5, color: lw.green },
+  formLabelBot: { fontFamily: fonts.body, fontSize: 8, letterSpacing: 0.5, color: lw.muted },
+  formGlyph: { fontFamily: fonts.persian, fontSize: 26, color: lw.ink, marginTop: 4 },
 
-  back: { backgroundColor: colors.accent, padding: spacing.lg },
+  back: { backgroundColor: lw.green, padding: spacing.lg },
   backTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   backChar: { fontFamily: fonts.persian, fontSize: fontSize.xl, color: 'rgba(255,255,255,0.5)' },
-  name: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: colors.surface, marginTop: spacing.lg },
-  sound: { fontFamily: fonts.body, fontSize: fontSize.xl, color: colors.surface, marginTop: spacing.md },
+  name: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: lw.surface, marginTop: spacing.lg },
+  sound: { fontFamily: fonts.body, fontSize: fontSize.xl, color: lw.surface, marginTop: spacing.md },
   backLabel: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.5, color: 'rgba(255,255,255,0.6)', marginTop: spacing.xs },
   noteText: { fontFamily: fonts.body, fontSize: fontSize.sm, color: 'rgba(255,255,255,0.8)', marginTop: spacing.xs },
   backDivider: { height: 1, backgroundColor: 'rgba(255,255,255,0.18)', marginVertical: spacing.md },
-  exampleText: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.surface, marginTop: 2 },
+  exampleText: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.surface, marginTop: 2 },
   exampleHint: { color: 'rgba(255,255,255,0.7)' },
 
   rtlNote: { marginTop: spacing.xl, paddingHorizontal: spacing.xs },
-  rtlNoteText: { fontFamily: fonts.body, fontSize: fontSize.sm, lineHeight: 22, color: colors.textSecondary },
+  rtlNoteText: { fontFamily: fonts.body, fontSize: fontSize.sm, lineHeight: 22, color: lw.muted },
 });

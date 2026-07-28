@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
+import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { DECKS } from '@/constants/flashcards';
@@ -47,7 +48,7 @@ export default function PronunciationScreen() {
       <ZandHeader />
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
+          <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>
         </Pressable>
 
@@ -58,17 +59,17 @@ export default function PronunciationScreen() {
         <Text style={styles.subtitle}>Tap the speaker to hear it. Search in English or Persian.</Text>
 
         <View style={styles.field}>
-          <Ionicons name="search" size={18} color={colors.textSecondary} />
+          <Ionicons name="search" size={18} color={lw.muted} />
           <TextInput
             style={styles.input}
             placeholder="Search a letter or word…"
-            placeholderTextColor={colors.textSecondary}
+            placeholderTextColor={lw.muted}
             value={query}
             onChangeText={setQuery}
             autoCorrect={false}
           />
           {query.length > 0 ? (
-            <Pressable onPress={() => setQuery('')} hitSlop={8}><Ionicons name="close-circle" size={18} color={colors.textSecondary} /></Pressable>
+            <Pressable onPress={() => setQuery('')} hitSlop={8}><Ionicons name="close-circle" size={18} color={lw.muted} /></Pressable>
           ) : null}
         </View>
 
@@ -94,7 +95,7 @@ export default function PronunciationScreen() {
               </View>
               <Text style={it.kind === 'Letter' ? styles.rowGlyph : styles.rowGlyphSm}>{it.fa}</Text>
               <View style={[styles.playBtn, active === it.id && styles.playBtnActive]}>
-                <Ionicons name="volume-high" size={18} color={active === it.id ? colors.surface : colors.accent} />
+                <Ionicons name="volume-high" size={18} color={active === it.id ? lw.surface : lw.green} />
               </View>
             </Pressable>
           ))}
@@ -106,32 +107,32 @@ export default function PronunciationScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.background },
+  safe: { flex: 1, backgroundColor: lw.bg },
   scroll: { flex: 1 },
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   backBtn: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.sm, marginBottom: spacing.sm },
-  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary },
+  backBtnText: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.muted },
   titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md, marginTop: spacing.md },
-  title: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: colors.textPrimary, flexShrink: 1 },
-  glyph: { fontFamily: fonts.persian, fontSize: fontSize.display, color: colors.accent },
-  subtitle: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 24, color: colors.textSecondary, marginTop: spacing.sm },
-  field: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, backgroundColor: colors.surface, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.border, paddingHorizontal: spacing.md, height: 46, marginTop: spacing.lg },
-  input: { flex: 1, fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textPrimary, padding: 0 },
+  title: { fontFamily: fonts.heading, fontSize: fontSize.xxl, color: lw.ink, flexShrink: 1 },
+  glyph: { fontFamily: fonts.persian, fontSize: fontSize.display, color: lw.green },
+  subtitle: { fontFamily: fonts.body, fontSize: fontSize.base, lineHeight: 24, color: lw.muted, marginTop: spacing.sm },
+  field: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, backgroundColor: lw.surface, borderRadius: radius.pill, borderWidth: 1, borderColor: lw.hair, paddingHorizontal: spacing.md, height: 46, marginTop: spacing.lg },
+  input: { flex: 1, fontFamily: fonts.body, fontSize: fontSize.base, color: lw.ink, padding: 0 },
   tabs: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.lg },
-  tab: { paddingVertical: spacing.sm, paddingHorizontal: spacing.lg, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface },
-  tabActive: { backgroundColor: colors.accent, borderColor: colors.accent },
-  tabText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: colors.textSecondary },
-  tabTextActive: { color: colors.surface },
-  resultCount: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 1, color: colors.textSecondary, marginTop: spacing.lg },
+  tab: { paddingVertical: spacing.sm, paddingHorizontal: spacing.lg, borderRadius: radius.pill, borderWidth: 1, borderColor: lw.hair, backgroundColor: lw.surface },
+  tabActive: { backgroundColor: lw.green, borderColor: lw.green },
+  tabText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: lw.muted },
+  tabTextActive: { color: lw.surface },
+  resultCount: { fontFamily: fonts.bodyStrong, fontSize: fontSize.xs, letterSpacing: 1, color: lw.muted, marginTop: spacing.lg },
   list: { marginTop: spacing.lg, gap: spacing.sm },
-  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, padding: spacing.md },
-  rowActive: { borderColor: colors.accent },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: lw.surface, borderRadius: radius.md, borderWidth: 1, borderColor: lw.hair, padding: spacing.md },
+  rowActive: { borderColor: lw.green },
   rowText: { flex: 1 },
-  rowName: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
-  rowSub: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, marginTop: 2 },
-  rowGlyph: { fontFamily: fonts.persian, fontSize: 34, color: colors.textPrimary },
-  rowGlyphSm: { fontFamily: fonts.persian, fontSize: 24, color: colors.textPrimary },
-  playBtn: { width: 40, height: 40, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
-  playBtnActive: { backgroundColor: colors.accent },
-  empty: { fontFamily: fonts.body, fontSize: fontSize.base, color: colors.textSecondary, marginTop: spacing.lg },
+  rowName: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: lw.ink },
+  rowSub: { fontFamily: fonts.body, fontSize: fontSize.sm, color: lw.muted, marginTop: 2 },
+  rowGlyph: { fontFamily: fonts.persian, fontSize: 34, color: lw.ink },
+  rowGlyphSm: { fontFamily: fonts.persian, fontSize: 24, color: lw.ink },
+  playBtn: { width: 40, height: 40, borderRadius: radius.pill, borderWidth: 1, borderColor: lw.green, alignItems: 'center', justifyContent: 'center' },
+  playBtnActive: { backgroundColor: lw.green },
+  empty: { fontFamily: fonts.body, fontSize: fontSize.base, color: lw.muted, marginTop: spacing.lg },
 });

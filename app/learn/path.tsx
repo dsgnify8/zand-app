@@ -31,6 +31,15 @@ export default function PathScreen() {
           Work down it, or go anywhere you like. Nothing is locked.
         </Text>
 
+        <Pressable style={s.review} onPress={() => router.navigate('/learn/review' as any)}>
+          <View style={s.reviewIcon}><Ionicons name="repeat" size={17} color={lw.green} /></View>
+          <View style={{ flex: 1 }}>
+            <Text style={s.reviewT}>Review what you know</Text>
+            <Text style={s.reviewX}>Ten words, drawn from everything you have finished.</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={16} color={lw.muted} />
+        </Pressable>
+
         {UNITS.map((u) => {
           const finished = u.lessons.filter((l) => isLessonDone(u.key, l.key)).length;
           return (
@@ -93,6 +102,10 @@ const s = StyleSheet.create({
   title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green, marginTop: spacing.sm },
   sub: { fontFamily: fonts.body, fontSize: 13.5, lineHeight: 20, color: lw.inkSoft, marginTop: spacing.sm },
 
+  review: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: lw.greenWash, borderRadius: 14, padding: spacing.lg, marginTop: spacing.xl },
+  reviewIcon: { width: 34, height: 34, borderRadius: 17, backgroundColor: lw.surface, alignItems: 'center', justifyContent: 'center' },
+  reviewT: { fontFamily: fonts.body, fontSize: 15.5, color: lw.ink },
+  reviewX: { fontFamily: fonts.body, fontSize: 12, color: lw.muted, marginTop: 2 },
   unit: { marginTop: spacing.xxl },
   unitHead: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   roman: { fontFamily: fonts.body, fontSize: 22, color: lw.greenPale, width: 34 },
