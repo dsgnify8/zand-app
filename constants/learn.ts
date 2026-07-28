@@ -8,11 +8,11 @@ export const ln = {
   text: '#EFEAF2',
   textDim: '#A79FB4',
   hair: '#3E3849',
-  gold: '#C9A86A',
+  gold: '#4A6B50',
   violet: '#8B7BB8',
-  jade: '#7FA893',
-  rose: '#C08497',
-  amber: '#D89A5C',
+  jade: '#3F5D46',
+  rose: '#6E8F72',
+  amber: '#52785A',
 };
 
 // The 32 letters, in order. `known` is mock progress for now.
@@ -69,29 +69,31 @@ export const LEARN_GROUPS: LearnGroup[] = [
     key: 'start', label: 'START HERE', note: 'The letters first. Everything else needs them.',
     modules: [
       { key: 'alphabet', title: 'The Alphabet', persian: 'الفبا', x: 'Thirty two letters, their shapes and their sounds.',
-        icon: 'text-outline', tint: '#C9A86A', route: '/learn/alphabet', done: 0, total: 32, unit: 'letters' },
+        icon: 'text-outline', tint: '#4A6B50', route: '/learn/alphabet', done: 0, total: 32, unit: 'letters' },
       { key: 'writing', title: 'Writing', persian: 'نوشتن', x: 'Form each letter by hand. They change shape depending on where they sit.',
-        icon: 'create-outline', tint: '#6B5D50', route: '/learn/writing', done: 0, total: 32, unit: 'letters' },
+        icon: 'create-outline', tint: '#5C7F63', route: '/learn/writing', done: 0, total: 32, unit: 'letters' },
       { key: 'pronunciation', title: 'Pronunciation', persian: 'تلفظ', x: 'Hear it said. The kh and the gh are the ones that catch people.',
-        icon: 'volume-high-outline', tint: '#7FA893', route: '/learn/pronunciation', done: 0, total: 32, unit: 'sounds' },
+        icon: 'volume-high-outline', tint: '#3F5D46', route: '/learn/pronunciation', done: 0, total: 32, unit: 'sounds' },
     ],
   },
   {
     key: 'practice', label: 'PRACTICE', note: 'Where it actually sticks.',
     modules: [
       { key: 'flashcards', title: 'Flashcards', persian: 'کارت‌ها', x: 'Your first words, one card at a time.',
-        icon: 'albums-outline', tint: '#C08497', route: '/learn/flashcards', done: 0, total: 120, unit: 'words' },
+        icon: 'albums-outline', tint: '#6E8F72', route: '/learn/flashcards', done: 0, total: 120, unit: 'words' },
       { key: 'fill-blank', title: 'Fill the Blank', persian: 'جای خالی', x: 'Finish the sentence. Harder than it looks.',
-        icon: 'ellipsis-horizontal-outline', tint: '#D89A5C', route: '/learn/fill-blank', done: 0, total: 40, unit: 'sentences' },
+        icon: 'ellipsis-horizontal-outline', tint: '#52785A', route: '/learn/fill-blank', done: 0, total: 40, unit: 'sentences' },
       { key: 'quizzes', title: 'Quizzes', persian: 'آزمون', x: 'Find out what you actually know.',
-        icon: 'help-circle-outline', tint: '#6B5D50', route: '/learn/quizzes', done: 3, total: 12, unit: 'sets' },
+        icon: 'help-circle-outline', tint: '#5C7F63', route: '/learn/quizzes', done: 3, total: 12, unit: 'sets' },
     ],
   },
   {
     key: 'tools', label: 'TOOLS', note: 'For when you need it, not for study.',
     modules: [
       { key: 'translate', title: 'Translate', persian: 'برگردان', x: 'Any language into Persian, and back.',
-        icon: 'swap-horizontal-outline', tint: '#7FA893', route: '/learn/translate', done: 0, total: 0, unit: '' },
+        icon: 'swap-horizontal-outline', tint: '#3F5D46', route: '/learn/translate', done: 0, total: 0, unit: '' },
+      { key: 'phrasebook', title: 'Phrasebook', persian: 'عبارت‌ها', x: 'Fifty things worth being able to say. Tap any line to hear it.',
+        icon: 'chatbubbles-outline', tint: '#4A6B50', route: '/learn/phrasebook', done: 0, total: 50, unit: 'phrases' },
     ],
   },
 ];

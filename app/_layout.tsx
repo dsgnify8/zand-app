@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { loadLearnProgress } from '@/lib/learn-progress';
+import { loadLevel } from '@/lib/learn-level';
 import { useFriendDeepLink } from '@/lib/deep-links';
 import { loadHidden } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
@@ -61,7 +63,7 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
-  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); }, []);
+  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -88,6 +90,10 @@ export default function RootLayout() {
             <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
             <Stack.Screen name="auth/forgot" options={{ headerShown: false }} />
             <Stack.Screen name="admin" options={{ headerShown: false }} />
+            <Stack.Screen name="learn/level" options={{ headerShown: false }} />
+            <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
+            <Stack.Screen name="learn/path" options={{ headerShown: false }} />
+            <Stack.Screen name="learn/phrasebook" options={{ headerShown: false }} />
             <Stack.Screen name="learn/alphabet" options={{ headerShown: false }} />
             <Stack.Screen name="learn/flashcards" options={{ headerShown: false }} />
             <Stack.Screen name="learn/flashcard" options={{ headerShown: false }} />

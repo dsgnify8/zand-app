@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLevel } from '@/lib/learn-level';
+import { UNITS } from '@/constants/curriculum';
 import { Animated, Easing, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -12,7 +14,7 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const TINTS = ['#B08A46', '#6B5D50', '#7FA893'];
+const TINTS = ['#4A6B50', '#5C7F63', '#3F5D46'];
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
   const a = useRef(new Animated.Value(0)).current;
@@ -26,9 +28,9 @@ function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
 /* The colour under the page shifts as you move down it. */
 function ScrollTint({ y }: { y: Animated.Value }) {
   const bands = [
-    { c: '#B08A46', at: [0, 340, 780] },
-    { c: '#7A6A5B', at: [340, 900, 1500] },
-    { c: '#7FA893', at: [900, 1600, 2600] },
+    { c: '#4A6B50', at: [0, 340, 780] },
+    { c: '#5C7F63', at: [340, 900, 1500] },
+    { c: '#3F5D46', at: [900, 1600, 2600] },
   ];
   return (
     <View style={StyleSheet.absoluteFill as any} pointerEvents="none">
@@ -93,15 +95,21 @@ function AlphabetPanel({ known, toggle }: { known: string[]; toggle: (n: string)
 }
 
 function ContinueCard() {
+  const { asked } = useLevel();
+  // Not chosen a level yet: this card is the way in.
+  const first = UNITS[0]?.lessons[0];
+  const dest = !asked
+    ? '/learn/level'
+    : '/learn/path';
   return (
-    <Pressable style={s.cont} onPress={() => router.navigate(CONTINUE.route as any)}>
-      <LinearGradient colors={['#E7E3C8', '#D3CEA6']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
-      <Text style={s.contFa}>{CONTINUE.fa}</Text>
+    <Pressable style={s.cont} onPress={() => router.navigate(dest as any)}>
+      <LinearGradient colors={['#E3EBE0', '#CBDAC8']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+      <Text style={s.contFa}>{!asked ? 'فا' : (first?.titleFa?.[0] ?? CONTINUE.fa)}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={s.contK}>PICK UP WHERE YOU STOPPED</Text>
-        <Text style={s.contT}>{CONTINUE.module}</Text>
-        <Text style={s.contD}>{CONTINUE.detail}</Text>
-        <Text style={s.contX}>{CONTINUE.x}</Text>
+        <Text style={s.contK}>{!asked ? 'BEGIN HERE' : 'PICK UP WHERE YOU STOPPED'}</Text>
+        <Text style={s.contT}>{!asked ? 'Start Persian' : (first?.title ?? CONTINUE.module)}</Text>
+        <Text style={s.contD}>{!asked ? 'find your level' : (first?.titleFa ?? CONTINUE.detail)}</Text>
+        <Text style={s.contX}>{!asked ? 'Two questions, then we begin where you actually are.' : (first?.blurb ?? CONTINUE.x)}</Text>
       </View>
       <View style={s.contGo}><Ionicons name="arrow-forward" size={17} color="#FFF" /></View>
     </Pressable>
