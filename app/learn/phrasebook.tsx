@@ -8,10 +8,11 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { PHRASE_SETS, type PhraseSet } from '@/constants/phrasebook';
 import { speak } from '@/lib/speak';
+import { SendPhraseSheet } from '@/components/send-phrase-sheet';
 
-function PhraseRow({ p }: { p: { fa: string; tr: string; en: string; note?: string } }) {
+function PhraseRow({ p, onSend }: { p: { fa: string; tr: string; en: string; note?: string }; onSend: (p: any) => void }) {
   return (
-    <Pressable style={s.row} onPress={() => speak(p.fa, 'fa')}>
+    <Pressable style={s.row} onPress={() => speak(p.fa, 'fa')} onLongPress={() => onSend(p)} delayLongPress={600}>
       <View style={{ flex: 1 }}>
         <Text style={s.en}>{p.en}</Text>
         <Text style={s.fa}>{p.fa}</Text>
@@ -26,6 +27,7 @@ function PhraseRow({ p }: { p: { fa: string; tr: string; en: string; note?: stri
 export default function PhrasebookScreen() {
   const [open, setOpen] = useState<PhraseSet | null>(null);
   const [q, setQ] = useState('');
+  const [sending, setSending] = useState<any>(null);
 
   const needle = q.trim().toLowerCase();
   const hits = needle
@@ -53,7 +55,7 @@ export default function PhrasebookScreen() {
         {!open ? (
           <>
             <Text style={s.title}>Say it{'\n'}right away</Text>
-            <Text style={s.sub}>Tap any line to hear it. No lesson required.</Text>
+            <Text style={s.sub}>Tap any line to hear it. Hold it to send to a friend.</Text>
 
             <View style={s.search}>
               <Ionicons name="search" size={15} color={lw.muted} />
@@ -75,7 +77,7 @@ export default function PhrasebookScreen() {
               hits.length === 0 ? (
                 <Text style={s.empty}>Nothing for “{q}”.</Text>
               ) : (
-                <View style={s.list}>{hits.map((p, i) => <PhraseRow key={p.fa + i} p={p} />)}</View>
+                <View style={s.list}>{hits.map((p, i) => <PhraseRow key={p.fa + i} p={p} onSend={setSending} />)}</View>
               )
             ) : (
               <View style={s.sets}>
@@ -95,10 +97,12 @@ export default function PhrasebookScreen() {
         ) : (
           <>
             <Text style={s.setFa}>{open.titleFa}</Text>
-            <View style={s.list}>{open.phrases.map((p, i) => <PhraseRow key={p.fa + i} p={p} />)}</View>
+            <View style={s.list}>{open.phrases.map((p, i) => <PhraseRow key={p.fa + i} p={p} onSend={setSending} />)}</View>
           </>
         )}
       </ScrollView>
+
+      <SendPhraseSheet phrase={sending} onClose={() => setSending(null)} />
     </SafeAreaView>
   );
 }

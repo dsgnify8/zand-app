@@ -100,7 +100,7 @@ function ContinueCard() {
   const first = UNITS[0]?.lessons[0];
   const dest = !asked
     ? '/learn/level'
-    : '/learn/path';
+    : '/learn/map';
   return (
     <Pressable style={s.cont} onPress={() => router.navigate(dest as any)}>
       <LinearGradient colors={['#E3EBE0', '#CBDAC8']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />

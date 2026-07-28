@@ -70,10 +70,6 @@ export const LEARN_GROUPS: LearnGroup[] = [
     modules: [
       { key: 'alphabet', title: 'The Alphabet', persian: 'الفبا', x: 'Thirty two letters, their shapes and their sounds.',
         icon: 'text-outline', tint: '#4A6B50', route: '/learn/alphabet', done: 0, total: 32, unit: 'letters' },
-      { key: 'writing', title: 'Writing', persian: 'نوشتن', x: 'Form each letter by hand. They change shape depending on where they sit.',
-        icon: 'create-outline', tint: '#5C7F63', route: '/learn/writing', done: 0, total: 32, unit: 'letters' },
-      { key: 'pronunciation', title: 'Pronunciation', persian: 'تلفظ', x: 'Hear it said. The kh and the gh are the ones that catch people.',
-        icon: 'volume-high-outline', tint: '#3F5D46', route: '/learn/pronunciation', done: 0, total: 32, unit: 'sounds' },
     ],
   },
   {
