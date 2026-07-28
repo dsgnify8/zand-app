@@ -38,6 +38,9 @@ export const STAGES: Stage[] = [
         sub: 'Thirty two letters, their shapes and sounds', route: '/learn/alphabet' },
       { key: 'writing', kind: 'writing', title: 'Writing them', titleFa: 'نوشتن',
         sub: 'Each letter changes shape by where it sits', route: '/learn/writing' },
+      { key: 'reading', kind: 'lesson', title: 'Reading your first words', titleFa: 'خواندن',
+        sub: 'Letters joined up, and the vowels nobody writes', route: '/learn/lesson?unit=letters&lesson=reading',
+        unit: 'letters', lesson: 'reading' },
     ],
   },
   {

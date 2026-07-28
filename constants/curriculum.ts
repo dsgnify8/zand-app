@@ -481,7 +481,57 @@ const tableManners: Lesson = {
 };
 
 
+
+/* ------------------------------------------------------------------ */
+/* UNIT 0 — reading: turning letters into words                        */
+/* ------------------------------------------------------------------ */
+
+const reading: Lesson = {
+  key: 'reading',
+  title: 'Reading your first words',
+  titleFa: 'خواندن',
+  blurb: 'Letters joined together, and the vowels nobody writes.',
+  minutes: 8,
+  steps: [
+    { t: 'note', title: 'Right to left, and joined up',
+      body: 'Persian runs right to left, and the letters hold hands. Most of them change shape depending on whether they sit at the start of a word, the middle, or the end. It looks like a lot until you notice that the core of each letter never changes: only the tail does.' },
+    { t: 'meet', fa: 'ب', tr: 'b', en: 'the letter b' },
+    { t: 'meet', fa: 'ا', tr: '\u0101', en: 'the letter \u0101', literal: 'a long a, like the a in father' },
+    { t: 'sense', fa: 'بابا', tr: 'b\u0101b\u0101', en: 'dad',
+      body: 'Four letters: b, \u0101, b, \u0101. Read right to left and you get b\u0101-b\u0101. The two b shapes look slightly different because one sits at the start and one in the middle, but it is the same letter. Your first Persian word, and you already knew what it meant.' },
+    { t: 'meet', fa: 'م', tr: 'm', en: 'the letter m' },
+    { t: 'sentence', fa: 'مامان', tr: 'm\u0101m\u0101n', en: 'mum', focus: 'مامان' },
+    { t: 'note', title: 'The vowels are not there',
+      body: 'This is the thing that catches everyone. Persian writes the long vowels but not the short ones. The word for name is written as two letters, esm, but the e is nowhere on the page. Readers supply the short vowels from knowing the word already. It sounds impossible and then one day it is not: you stop reading letters and start recognising shapes.' },
+    { t: 'choose', prompt: 'Read this: بابا',
+      answer: 'dad',
+      options: ['dad', 'mum', 'bread', 'water'],
+      why: 'b\u0101b\u0101. Right to left: b, \u0101, b, \u0101.' },
+    { t: 'meet', fa: 'ن', tr: 'n', en: 'the letter n' },
+    { t: 'choose', prompt: 'Read this: نان',
+      answer: 'bread',
+      options: ['bread', 'dad', 'name', 'tea'],
+      why: 'n\u0101n, bread. n at the start, \u0101 in the middle, n at the end. The two n shapes differ, the letter does not.' },
+    { t: 'listen', fa: 'مامان', tr: 'm\u0101m\u0101n', en: 'mum',
+      options: ['مامان', 'بابا', 'نان', 'آب'],
+      optionTrs: { 'مامان': 'm\u0101m\u0101n', 'بابا': 'b\u0101b\u0101', 'نان': 'n\u0101n', 'آب': '\u0101b' } },
+    { t: 'write', fa: 'بابا', tr: 'b\u0101b\u0101', en: 'dad', hint: 'Right to left: b, \u0101, b, \u0101' },
+    { t: 'note', title: 'What you can do now',
+      body: 'Four letters and you can read three words. That is how it goes from here: each new letter unlocks more words than the last, because the words reuse what you already have. By the twelfth letter you will be reading signs.' },
+  ],
+};
+
+
 export const UNITS: Unit[] = [
+  {
+    key: 'letters',
+    roman: '0',
+    title: 'Reading',
+    titleFa: 'خواندن',
+    blurb: 'Joining letters into words, and the vowels Persian leaves out.',
+    level: 'beginner',
+    lessons: [reading],
+  },
   {
     key: 'first-words',
     roman: 'I',
