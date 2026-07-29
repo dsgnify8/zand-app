@@ -8,8 +8,22 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const BUCKET = 'tts';
-const VOICE_M = 'fa-IR-FaridNeural';
-const VOICE_F = 'fa-IR-DilaraNeural';
+// A voice per language. Persian is the point, but the conversation mode
+// needs the other side spoken properly too.
+const VOICES: Record<string, { locale: string; f: string; m: string }> = {
+  fa: { locale: 'fa-IR', f: 'fa-IR-DilaraNeural', m: 'fa-IR-FaridNeural' },
+  en: { locale: 'en-US', f: 'en-US-JennyNeural', m: 'en-US-GuyNeural' },
+  ar: { locale: 'ar-SA', f: 'ar-SA-ZariyahNeural', m: 'ar-SA-HamedNeural' },
+  fr: { locale: 'fr-FR', f: 'fr-FR-DeniseNeural', m: 'fr-FR-HenriNeural' },
+  es: { locale: 'es-ES', f: 'es-ES-ElviraNeural', m: 'es-ES-AlvaroNeural' },
+  de: { locale: 'de-DE', f: 'de-DE-KatjaNeural', m: 'de-DE-ConradNeural' },
+  tr: { locale: 'tr-TR', f: 'tr-TR-EmelNeural', m: 'tr-TR-AhmetNeural' },
+  sv: { locale: 'sv-SE', f: 'sv-SE-SofieNeural', m: 'sv-SE-MattiasNeural' },
+  ru: { locale: 'ru-RU', f: 'ru-RU-SvetlanaNeural', m: 'ru-RU-DmitryNeural' },
+  ur: { locale: 'ur-PK', f: 'ur-PK-UzmaNeural', m: 'ur-PK-AsadNeural' },
+  hi: { locale: 'hi-IN', f: 'hi-IN-SwaraNeural', m: 'hi-IN-MadhurNeural' },
+  zh: { locale: 'zh-CN', f: 'zh-CN-XiaoxiaoNeural', m: 'zh-CN-YunxiNeural' },
+};
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors() });
@@ -25,7 +39,8 @@ Deno.serve(async (req) => {
     if (!key || !region || !url || !service) return json({ error: 'Server not configured.' }, 500);
 
     const supabase = createClient(url, service);
-    const voiceName = voice === 'm' ? VOICE_M : VOICE_F;
+    const v = VOICES[lang] ?? VOICES.fa;
+    const voiceName = voice === 'm' ? v.m : v.f;
 
     // a stable filename for this exact phrase, speed and voice
     const digest = await crypto.subtle.digest(
@@ -42,7 +57,7 @@ Deno.serve(async (req) => {
 
     // Azure wants SSML. The slow rate is for learners hearing a phrase apart.
     const ssml =
-      '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="fa-IR">' +
+      '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="' + v.locale + '">' +
       '<voice name="' + voiceName + '">' +
       '<prosody rate="' + (slow ? '-35%' : '-8%') + '">' +
       escapeXml(text) +

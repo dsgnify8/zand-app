@@ -12,6 +12,12 @@ export type SearchEntry = {
 
 // Navigable sections, modules, and themes.
 const NAV_ENTRIES: SearchEntry[] = [
+  { id: 's-translate', title: 'Translate', subtitle: 'Tools', category: 'Learn', route: '/learn/translate', keywords: 'translate translator برگردان ترجمه farsi english dictionary speak mic voice' },
+  { id: 's-converse', title: 'Conversation', subtitle: 'Talk to someone', category: 'Learn', route: '/learn/converse', keywords: 'conversation talk speak interpreter two way voice mic گفتگو' },
+  { id: 's-phrasebook', title: 'Phrasebook', subtitle: 'Learn', category: 'Learn', route: '/learn/phrasebook', keywords: 'phrases phrasebook sayings عبارت‌ها common say' },
+  { id: 's-alphabet2', title: 'The Alphabet', subtitle: 'Learn', category: 'Learn', route: '/learn/alphabet', keywords: 'alphabet letters الفبا abc script write' },
+  { id: 's-learnmap', title: 'Learn Persian', subtitle: 'Your route', category: 'Learn', route: '/learn/map', keywords: 'learn persian farsi lessons course route path فارسی' },
+  { id: 's-review', title: 'Review', subtitle: 'Learn', category: 'Learn', route: '/learn/review', keywords: 'review revise practice words مرور' },
   // Learn modules
   { id: 'm-alphabet', title: 'Alphabet', subtitle: 'Learn Persian', category: 'Learn', route: '/learn/alphabet', keywords: 'الفبا letters script abjad' },
   { id: 'm-flashcards', title: 'Flashcards', subtitle: 'Learn Persian', category: 'Learn', route: '/learn', keywords: 'کارت‌ها review spaced repetition' },
