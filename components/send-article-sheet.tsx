@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { pr, FRIENDS } from '@/constants/profile';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 // Sends the specific article the reader is in, to a chosen friend.
 export function SendArticleSheet({ open, onClose, articleTitle }: { open: boolean; onClose: () => void; articleTitle: string }) {
@@ -22,12 +24,12 @@ export function SendArticleSheet({ open, onClose, articleTitle }: { open: boolea
               <Text style={s.sentT}>Sent to {sentTo}</Text>
               <Text style={s.sentX}>“{articleTitle}”</Text>
               <Text style={s.sentNote}>They will get it to read. Now it is their turn.</Text>
-              <Pressable style={s.done} onPress={close}><Text style={s.doneT}>Done</Text></Pressable>
+              <Pressable style={s.done} onPress={close}><Text style={s.doneT}>{t(APP.done)}</Text></Pressable>
             </View>
           ) : (
             <>
               <View style={s.head}>
-                <Text style={s.headT}>Send to a friend</Text>
+                <Text style={s.headT}>{t(APP.sendToFriend)}</Text>
                 <Pressable hitSlop={10} onPress={close}><Ionicons name="close" size={21} color={colors.textPrimary} /></Pressable>
               </View>
               <Text style={s.sub} numberOfLines={2}>Sharing “{articleTitle}”</Text>

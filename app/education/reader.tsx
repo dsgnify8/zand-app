@@ -14,6 +14,8 @@ import { SvgTest } from '@/components/svg-test';
 import { useReading } from '@/lib/reading-store';
 import { useProgress } from '@/lib/progress-store';
 import { useEffect, useState } from 'react';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 function BlockView({ b }: { b: Block }) {
   switch (b.t) {
@@ -315,14 +317,14 @@ export default function ReaderScreen() {
           <View style={styles.endScrim} />
           <View style={styles.endContent}>
             <Ionicons name="checkmark-circle" size={44} color={dark.gold} />
-            <Text style={styles.endTitle}>Reading complete</Text>
+            <Text style={styles.endTitle}>{t(APP.readingComplete)}</Text>
             <Text style={styles.endName}>{topic.name}</Text>
             <Text style={styles.endYears}>{topic.years}</Text>
             <Pressable style={styles.endBtn} onPress={() => router.dismissAll ? router.dismissAll() : router.back()}>
-              <Text style={styles.endBtnText}>Back to topic</Text>
+              <Text style={styles.endBtnText}>{t(APP.backToTopic)}</Text>
             </Pressable>
             <Pressable style={styles.endGhost} onPress={() => goto(0)}>
-              <Text style={styles.endGhostText}>Read again</Text>
+              <Text style={styles.endGhostText}>{t(APP.readAgain)}</Text>
             </Pressable>
           </View>
         </View>
@@ -367,7 +369,7 @@ export default function ReaderScreen() {
         <View style={styles.nav}>
           <Pressable style={[styles.navBtn, p === 0 && styles.navDisabled]} disabled={p === 0} onPress={() => goto(p - 1)}>
             <Ionicons name="chevron-back" size={18} color={p === 0 ? dark.hair : dark.text} />
-            <Text style={[styles.navText, p === 0 && styles.navTextDim]}>Previous</Text>
+            <Text style={[styles.navText, p === 0 && styles.navTextDim]}>{t(APP.previous)}</Text>
           </Pressable>
           <Pressable style={styles.navBtnPrimary} onPress={() => goto(p + 1)}>
             <Text style={styles.navTextPrimary}>{p + 1 >= total ? 'Finish' : 'Next'}</Text>

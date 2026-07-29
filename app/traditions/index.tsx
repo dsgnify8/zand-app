@@ -12,6 +12,8 @@ import { eduImage } from '@/constants/education-images';
 import { GlossaryText } from '@/components/glossary-text';
 import { Tahvil, HaftSeen, Guests, Fire, Knot } from '@/components/nowruz-blocks';
 import { Solstice, Anar, NightArc } from '@/components/yalda-blocks';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 type Tab = 'nowruz' | 'yalda';
 
@@ -179,7 +181,7 @@ export default function Traditions() {
           <Pressable hitSlop={10} onPress={() => router.back()}>
             <Ionicons name="chevron-back" size={24} color={th.text} />
           </Pressable>
-          <Text style={[styles.topTitle, { color: th.text }]}>Traditions</Text>
+          <Text style={[styles.topTitle, { color: th.text }]}>{t(APP.traditions)}</Text>
           <View style={{ width: 24 }} />
         </View>
 

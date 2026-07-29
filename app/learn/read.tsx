@@ -8,6 +8,7 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { READINGS, readingByKey, type Gloss } from '@/constants/readings';
 import { speak } from '@/lib/speak';
+import { Art } from '@/components/lang-art';
 
 export default function ReadScreen() {
   const { text } = useLocalSearchParams<{ text?: string }>();
@@ -25,6 +26,7 @@ export default function ReadScreen() {
           </Pressable>
         </View>
         <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
+          <Art name="book" size={88} style={{ alignSelf: 'flex-end', opacity: 0.5, marginBottom: -4 }} />
           <Text style={s.eyebrow}>READING</Text>
           <Text style={s.title}>Real Persian,{'\n'}a little at a time</Text>
           <Text style={s.sub}>Tap any word you do not know. Nothing is hidden from you.</Text>

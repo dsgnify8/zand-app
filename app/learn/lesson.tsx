@@ -12,6 +12,8 @@ import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
 import { markLessonDone } from '@/lib/learn-progress';
 import { markLearnDay } from '@/lib/stats-store';
+import { Art } from '@/components/lang-art';
+import { refreshTomorrow } from '@/lib/reminders';
 import { useEffect } from 'react';
 
 export default function LessonScreen() {
@@ -50,6 +52,7 @@ export default function LessonScreen() {
       bump('pagesRead');
       bump('lessonsFinished');
       markLearnDay();
+      refreshTomorrow();
       const pct = score.total ? Math.round((score.right / score.total) * 100) : 100;
       markLessonDone(String(unit), String(lesson), pct);
       setDone(true);
@@ -83,6 +86,7 @@ export default function LessonScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
         <View style={s.finish}>
+          <Art name="medallion" size={96} style={{ opacity: 0.55, marginBottom: 4 }} />
           <Text style={s.finishFa}>آفرین</Text>
           <Text style={s.finishT}>{l.title}</Text>
           <View style={s.finishRule} />

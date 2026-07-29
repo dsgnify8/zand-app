@@ -1,10 +1,10 @@
 // Persian audio. Generated once by the speak edge function, cached in
 // Supabase Storage, then played from that URL forever after.
-// Nothing is required of the user: no voices to install, no settings.
-import { Audio } from 'expo-av';
+// Uses expo-audio; expo-av is deprecated and goes away in SDK 54.
+import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from 'expo-audio';
 import { supabase } from '@/lib/supabase';
 
-let current: Audio.Sound | null = null;
+let current: AudioPlayer | null = null;
 let configured = false;
 
 // url cache for this session, so repeat taps are instant
@@ -27,22 +27,17 @@ export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }
   const slow = opts?.slow ?? false;
   try {
     if (!configured) {
-      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+      await setAudioModeAsync({ playsInSilentMode: true });
       configured = true;
     }
-    if (current) { try { await current.unloadAsync(); } catch {} current = null; }
+    if (current) { try { current.remove(); } catch {} current = null; }
 
     const uri = await urlFor(text, slow);
     if (!uri) return;
 
-    const { sound } = await Audio.Sound.createAsync({ uri }, { shouldPlay: true });
-    current = sound;
-    sound.setOnPlaybackStatusUpdate((st) => {
-      if (st.isLoaded && st.didJustFinish) {
-        sound.unloadAsync().catch(() => {});
-        if (current === sound) current = null;
-      }
-    });
+    const player = createAudioPlayer({ uri });
+    current = player;
+    player.play();
   } catch {}
 }
 

@@ -10,6 +10,7 @@ import { STAGES } from '@/constants/journey';
 import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
 import { record } from '@/lib/word-strength';
+import { Art } from '@/components/lang-art';
 
 type Q =
   | { kind: 'meaning'; fa: string; tr: string; answer: string; options: string[] }
@@ -105,6 +106,7 @@ export default function CheckpointScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
         <View style={s.mid}>
+          <Art name="arch" size={96} style={{ opacity: 0.5, marginBottom: 6 }} />
           <Text style={s.finFa}>{passed ? 'قبول' : 'نزدیک بود'}</Text>
           <Text style={s.finT}>{right} of {qs.length}</Text>
           <View style={s.rule} />

@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export default function Forgot() {
   const { resetPassword } = useAuth();
@@ -29,21 +31,21 @@ export default function Forgot() {
         <View style={s.body}>
           <Pressable hitSlop={10} onPress={() => router.back()} style={s.back}>
             <Ionicons name="chevron-back" size={22} color={colors.textPrimary} />
-            <Text style={s.backT}>Back</Text>
+            <Text style={s.backT}>{t(APP.back)}</Text>
           </Pressable>
 
           {done ? (
             <>
               <View style={s.tick}><Ionicons name="mail-outline" size={26} color="#FFF" /></View>
-              <Text style={s.title}>Check your email</Text>
+              <Text style={s.title}>{t(APP.checkYourEmail)}</Text>
               <Text style={s.sub}>If an account exists for {email}, a reset link is on its way.</Text>
               <Pressable style={s.btn} onPress={() => router.replace('/auth/sign-in')}>
-                <Text style={s.btnT}>Back to sign in</Text>
+                <Text style={s.btnT}>{t(APP.backToSignIn)}</Text>
               </Pressable>
             </>
           ) : (
             <>
-              <Text style={s.title}>Reset your password</Text>
+              <Text style={s.title}>{t(APP.resetPassword)}</Text>
               <Text style={s.sub}>Enter your email and we will send a link to set a new password.</Text>
               <TextInput style={s.input} placeholder="Email" placeholderTextColor={colors.textSecondary}
                 autoCapitalize="none" keyboardType="email-address" value={email} onChangeText={setEmail} />

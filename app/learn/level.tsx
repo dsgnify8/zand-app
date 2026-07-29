@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { LEVELS, setLevel, skipLevel, type Level } from '@/lib/learn-level';
+import { Art } from '@/components/lang-art';
 
 export default function LevelScreen() {
   const [picked, setPicked] = useState<Level | null>(null);
@@ -14,12 +15,13 @@ export default function LevelScreen() {
     if (!picked) return;
     await setLevel(picked);
     const dest = LEVELS.find((l) => l.key === picked)?.start ?? '/learn';
-    router.replace(dest as any);
+    router.replace((dest ?? '/learn') as any);
   };
 
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
+        <Art name="cypress" size={92} style={s.art} />
         <Text style={s.eyebrow}>PERSIAN  ·  فارسی</Text>
         <Text style={s.title}>Where do{'\n'}you start?</Text>
         <Text style={s.sub}>
@@ -47,7 +49,7 @@ export default function LevelScreen() {
           <Text style={s.ctaT}>Begin</Text>
         </Pressable>
 
-        <Pressable hitSlop={10} onPress={async () => { await skipLevel(); router.replace('/learn'); }}>
+        <Pressable hitSlop={10} onPress={async () => { await skipLevel(); router.replace('/learn' as any); }}>
           <Text style={s.skip}>I would rather just look around</Text>
         </Pressable>
       </ScrollView>
@@ -59,6 +61,7 @@ const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: lw.bg },
   body: { paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: spacing.lg },
 
+  art: { alignSelf: 'flex-end', opacity: 0.5, marginBottom: -8 },
   eyebrow: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 3, color: lw.muted },
   title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green, marginTop: spacing.md },
   sub: { fontFamily: fonts.body, fontSize: 13.5, lineHeight: 20, color: lw.inkSoft, marginTop: spacing.sm },

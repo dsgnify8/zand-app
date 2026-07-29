@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export default function SignUp() {
   const { signUp } = useAuth();
@@ -32,10 +34,10 @@ export default function SignUp() {
       <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
         <View style={s.body}>
           <View style={s.tick}><Ionicons name="checkmark" size={28} color="#FFF" /></View>
-          <Text style={s.title}>Check your email</Text>
+          <Text style={s.title}>{t(APP.checkYourEmail)}</Text>
           <Text style={s.sub}>We sent a confirmation link to {email}. Tap it, then sign in.</Text>
           <Pressable style={s.btn} onPress={() => router.replace('/auth/sign-in')}>
-            <Text style={s.btnT}>Go to sign in</Text>
+            <Text style={s.btnT}>{t(APP.goToSignIn)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -47,7 +49,7 @@ export default function SignUp() {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.flex}>
         <View style={s.body}>
           <Text style={s.wordmark}>ZAND</Text>
-          <Text style={s.title}>Create your account</Text>
+          <Text style={s.title}>{t(APP.createYourAccount)}</Text>
           <Text style={s.sub}>Keep your progress, save what you love, and learn with friends.</Text>
 
           <TextInput style={s.input} placeholder="Your name" placeholderTextColor={colors.textSecondary}
@@ -71,7 +73,7 @@ export default function SignUp() {
           <View style={s.footer}>
             <Text style={s.footerT}>Already have one? </Text>
             <Pressable hitSlop={8} onPress={() => router.replace('/auth/sign-in')}>
-              <Text style={s.footerLink}>Sign in</Text>
+              <Text style={s.footerLink}>{t(APP.signIn)}</Text>
             </Pressable>
           </View>
         </View>

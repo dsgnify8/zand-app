@@ -10,6 +10,8 @@ import { useSaved } from '@/lib/saved-store';
 import { articleByKey } from '@/constants/articles';
 import { isHidden } from '@/lib/admin';
 import { FramedImage } from '@/components/framed-image';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 type Item = {
   key: string;
@@ -65,7 +67,7 @@ export function KeepReading() {
 
   return (
     <View style={styles.wrap}>
-      <Text style={styles.label}>KEEP READING</Text>
+      <Text style={styles.label}>{t(APP.keepReading)}</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.rail}>
         {items.map((it) => (
           <Pressable key={it.key} style={styles.card} onPress={() => router.navigate(it.route as any)}>

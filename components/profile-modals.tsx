@@ -10,11 +10,13 @@ import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { pr, ME, SEND_CATEGORIES, RECENT, WORD_BANK } from '@/constants/profile';
 import { ARTICLES } from '@/constants/articles';
 import { applyLanguage } from '@/lib/apply-language';
-import { useLang } from '@/lib/i18n';
+import { useLang, t as tset } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { useIsAdmin } from '@/lib/admin';
+import { ReminderRow } from '@/components/reminder-row';
 import { FriendsSheet } from '@/components/friends-sheet';
 import { InviteSheet } from '@/components/invite-sheet';
+import { SETTINGS } from '@/constants/i18n/settings';
 
 function Sheet({ open, onClose, children }: any) {
   return (
@@ -54,16 +56,16 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   const isAdmin = useIsAdmin();
   const [inviteOpen, setInviteOpen] = useState(false);
   const email = user?.email ?? '';
-  const [notif, setNotif] = useState({ streak: true, friends: true, articles: true, product: false });
+  const [notif, setNotif] = useState({ friends: true, articles: true });
 
   const close = () => { setPanel(null); onClose(); };
 
   const rows = [
     ...(isAdmin ? [{ key: 'admin', i: 'construct-outline', t: 'Admin panel', x: 'Manage articles and analytics' }] : []),
-    { key: 'friends', i: 'people-outline', t: 'Invite friends', x: 'Find people and send requests' },
-    { key: 'account', i: 'person-outline', t: 'Account', x: 'Your name and email' },
+    { key: 'friends', i: 'people-outline', t: tset(SETTINGS.inviteFriends), x: tset(SETTINGS.inviteFriendsX) },
+    { key: 'account', i: 'person-outline', t: tset(SETTINGS.account), x: tset(SETTINGS.accountX) },
     { key: 'language', i: 'language-outline', t: 'Language', x: { en: 'English', fa: 'فارسی', es: 'Español', fr: 'Français' }[curLang] ?? 'English' },
-    { key: 'notifications', i: 'notifications-outline', t: 'Notifications', x: 'What we ping you about' },
+    { key: 'notifications', i: 'notifications-outline', t: tset(SETTINGS.notifications), x: tset(SETTINGS.notificationsX) },
     { key: 'help', i: 'help-circle-outline', t: 'Help centre', x: 'Get in touch' },
     { key: 'terms', i: 'document-text-outline', t: 'Terms and privacy', x: 'The legal part' },
   ] as const;
@@ -109,7 +111,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               ))}
             </View>
 
-            <Pressable style={m.signOut} onPress={async () => { await signOut(); onClose(); }}><Ionicons name="log-out-outline" size={16} color={pr.readA} /><Text style={m.signOutT}>Sign out</Text></Pressable>
+            <Pressable style={m.signOut} onPress={async () => { await signOut(); onClose(); }}><Ionicons name="log-out-outline" size={16} color={pr.readA} /><Text style={m.signOutT}>{tset(SETTINGS.signOut)}</Text></Pressable>
             <Text style={m.version}>ZAND  ·  Rooted Living</Text>
           </ScrollView>
         </>
@@ -120,18 +122,18 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
           <Header title="Account" />
           <View style={{ paddingBottom: spacing.xxl }}>
             <Pressable style={m.field} onPress={() => startEdit('name', displayName)}>
-              <Text style={m.fieldL}>NAME</Text>
+              <Text style={m.fieldL}>{tset(SETTINGS.name)}</Text>
               <View style={m.fieldRow}><Text style={m.fieldV}>{displayName}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
             </Pressable>
             <Pressable style={m.field} onPress={() => startEdit('email', email)}>
-              <Text style={m.fieldL}>EMAIL</Text>
+              <Text style={m.fieldL}>{tset(SETTINGS.email)}</Text>
               <View style={m.fieldRow}><Text style={m.fieldV}>{email}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
             </Pressable>
             <Pressable style={m.field} onPress={() => startEdit('phone', phone)}>
-              <Text style={m.fieldL}>PHONE</Text>
+              <Text style={m.fieldL}>{tset(SETTINGS.phone)}</Text>
               <View style={m.fieldRow}><Text style={m.fieldV}>{phone || 'Add your number'}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
             </Pressable>
-            <View style={m.field}><Text style={m.fieldL}>MEMBER SINCE</Text><Text style={m.fieldV}>{ME.since}</Text></View>
+            <View style={m.field}><Text style={m.fieldL}>{tset(SETTINGS.memberSince)}</Text><Text style={m.fieldV}>{ME.since}</Text></View>
 
             {editField ? (
               <View style={m.editBox}>
@@ -142,7 +144,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
                   autoFocus placeholderTextColor={pr.dim} />
                 {editMsg ? <Text style={m.editMsg}>{editMsg}</Text> : null}
                 <View style={m.editBtns}>
-                  <Pressable style={m.editCancel} onPress={() => setEditField(null)}><Text style={m.editCancelT}>Cancel</Text></Pressable>
+                  <Pressable style={m.editCancel} onPress={() => setEditField(null)}><Text style={m.editCancelT}>{tset(SETTINGS.cancel)}</Text></Pressable>
                   <Pressable style={[m.editSave, editBusy && { opacity: 0.6 }]} onPress={saveEdit} disabled={editBusy}>
                     <Text style={m.editSaveT}>{editBusy ? 'Saving…' : 'Save'}</Text>
                   </Pressable>
@@ -181,11 +183,10 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         <>
           <Header title="Notifications" />
           <View style={{ paddingBottom: spacing.xxl }}>
+            <View style={{ marginBottom: spacing.lg }}><ReminderRow /></View>
             {[
-              { k: 'streak', t: 'Streak reminders', x: 'A nudge before your streak slips' },
               { k: 'friends', t: 'Friends', x: 'When someone sends you a word or topic' },
               { k: 'articles', t: 'New articles', x: 'When a new piece goes up' },
-              { k: 'product', t: 'Product news', x: 'Occasional updates from us' },
             ].map((n) => (
               <Pressable key={n.k} style={m.notifRow} onPress={() => setNotif((v) => ({ ...v, [n.k]: !(v as any)[n.k] }))}>
                 <View style={{ flex: 1 }}>
@@ -250,7 +251,7 @@ export function AddFriendSheet({ open, onClose }: { open: boolean; onClose: () =
   return (
     <Sheet open={open} onClose={onClose}>
       <View style={m.head}>
-        <Text style={m.headT}>Add someone</Text>
+        <Text style={m.headT}>{tset(APP.addSomeone)}</Text>
         <Pressable hitSlop={10} onPress={onClose}>
           <Ionicons name="close" size={21} color={colors.textPrimary} />
         </Pressable>
@@ -353,7 +354,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
           <Text style={m.sentX}>{sent}</Text>
           <Text style={m.sentNote}>They will get a notification. Now it is their turn.</Text>
           <Pressable style={m.sentBtn} onPress={close}>
-            <Text style={m.sentBtnT}>Done</Text>
+            <Text style={m.sentBtnT}>{tset(APP.done)}</Text>
           </Pressable>
         </View>
       </Sheet>
@@ -395,7 +396,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
           <>
             <Pressable style={m.back} onPress={() => { setCat(null); setQ(''); }}>
               <Ionicons name="chevron-back" size={15} color={pr.dim} />
-              <Text style={m.backT}>All categories</Text>
+              <Text style={m.backT}>{tset(SETTINGS.allCategories)}</Text>
             </Pressable>
 
             {active.searchable ? (

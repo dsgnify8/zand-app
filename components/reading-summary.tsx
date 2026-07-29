@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { useReading } from '@/lib/reading-store';
 import { TOPICS } from '@/constants/education';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export function ReadingSummary() {
   const { reading, percentFor } = useReading();
@@ -12,11 +14,11 @@ export function ReadingSummary() {
 
   return (
     <View style={styles.wrap}>
-      <Text style={styles.label}>YOUR READING</Text>
+      <Text style={styles.label}>{t(APP.yourReading)}</Text>
       <View style={styles.row}>
-        <View style={styles.stat}><Text style={styles.value}>{started}</Text><Text style={styles.name}>Topics started</Text></View>
-        <View style={styles.stat}><Text style={styles.value}>{finished}</Text><Text style={styles.name}>Finished</Text></View>
-        <View style={styles.stat}><Text style={styles.value}>{pagesRead}</Text><Text style={styles.name}>Pages read</Text></View>
+        <View style={styles.stat}><Text style={styles.value}>{started}</Text><Text style={styles.name}>{t(APP.topicsStarted)}</Text></View>
+        <View style={styles.stat}><Text style={styles.value}>{finished}</Text><Text style={styles.name}>{t(APP.finished)}</Text></View>
+        <View style={styles.stat}><Text style={styles.value}>{pagesRead}</Text><Text style={styles.name}>{t(APP.pagesRead)}</Text></View>
       </View>
     </View>
   );

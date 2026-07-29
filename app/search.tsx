@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { searchZand, type SearchEntry } from '@/constants/search-index';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 const SUGGESTIONS = ['Alphabet', 'History', 'Poetry', 'Nowruz', 'Food', 'Podcasts'];
 
@@ -46,14 +48,14 @@ export default function SearchScreen() {
           ) : null}
         </View>
         <Pressable onPress={() => router.back()} hitSlop={8}>
-          <Text style={styles.cancel}>Cancel</Text>
+          <Text style={styles.cancel}>{t(APP.cancel)}</Text>
         </Pressable>
       </View>
 
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         {query.length === 0 ? (
           <View>
-            <Text style={styles.sectionLabel}>TRY SEARCHING</Text>
+            <Text style={styles.sectionLabel}>{t(APP.trySearching)}</Text>
             <View style={styles.chips}>
               {SUGGESTIONS.map((s) => (
                 <Pressable key={s} style={styles.chip} onPress={() => setQuery(s)}>

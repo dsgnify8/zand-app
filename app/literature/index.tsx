@@ -7,6 +7,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { lit, LITERATURE_FIGURES, AUTHORS } from '@/constants/literature';
 import { eduImage } from '@/constants/education-images';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 function coverFor(authorKey?: string) {
   if (!authorKey) return null;
@@ -20,11 +22,11 @@ export default function LiteratureHub() {
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.back} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={lit.textDim} />
-          <Text style={styles.backText}>Education</Text>
+          <Text style={styles.backText}>{t(APP.education)}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Literature</Text>
+          <Text style={styles.title}>{t(APP.literature)}</Text>
           <Text style={styles.glyph}>ادبیات</Text>
         </View>
         <Text style={styles.subtitle}>The poets and writers whose words became the soul of Iran, across a thousand years.</Text>
@@ -75,7 +77,7 @@ export default function LiteratureHub() {
                       <Ionicons name="arrow-forward" size={13} color="#F3ECDF" />
                     </View>
                   ) : (
-                    <Text style={styles.soon}>SOON</Text>
+                    <Text style={styles.soon}>{t(APP.soon)}</Text>
                   )}
                 </View>
               </Pressable>

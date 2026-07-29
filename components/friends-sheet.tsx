@@ -6,6 +6,8 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
 import { searchProfiles, sendRequest, acceptRequest, removeFriendship, useFriends, type Profile } from '@/lib/friends';
 import { InviteSheet } from '@/components/invite-sheet';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { user } = useAuth();
@@ -47,7 +49,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
         <Pressable style={s.sheet} onPress={() => {}}>
           <View style={s.grab} />
           <View style={s.head}>
-            <Text style={s.title}>Friends</Text>
+            <Text style={s.title}>{t(APP.friends)}</Text>
             <Pressable hitSlop={10} onPress={onClose}><Ionicons name="close" size={22} color={colors.textPrimary} /></Pressable>
           </View>
 
@@ -60,7 +62,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
 
           <Pressable style={s.inviteRow} onPress={() => setInviteOpen(true)}>
             <Ionicons name="link" size={16} color={colors.accent} />
-            <Text style={s.inviteRowT}>Invite by link or email</Text>
+            <Text style={s.inviteRowT}>{t(APP.inviteByLink)}</Text>
             <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
           </Pressable>
 
@@ -77,7 +79,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                     <Text style={s.handle}>{p.email}</Text>
                   </View>
                   {friendIds.has(p.id) ? (
-                    <Text style={s.pending}>Sent</Text>
+                    <Text style={s.pending}>{t(APP.sent)}</Text>
                   ) : (
                     <Pressable style={s.addBtn} onPress={() => invite(p.id)}>
                       <Text style={s.addT}>Add</Text>
@@ -90,7 +92,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                 {/* incoming requests */}
                 {incoming.length > 0 ? (
                   <>
-                    <Text style={s.sectionL}>REQUESTS</Text>
+                    <Text style={s.sectionL}>{t(APP.requests)}</Text>
                     {incoming.map((r) => (
                       <View key={r.id} style={s.row}>
                         <View style={s.avatar}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
@@ -99,7 +101,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                           <Text style={s.handle}>{r.profile.email}</Text>
                         </View>
                         <Pressable style={s.addBtn} onPress={async () => { await acceptRequest(r.id); refresh(); }}>
-                          <Text style={s.addT}>Accept</Text>
+                          <Text style={s.addT}>{t(APP.accept)}</Text>
                         </Pressable>
                         <Pressable hitSlop={8} style={s.decline} onPress={async () => { await removeFriendship(r.id); refresh(); }}>
                           <Ionicons name="close" size={16} color={colors.textSecondary} />
@@ -110,7 +112,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                 ) : null}
 
                 {/* accepted friends */}
-                <Text style={s.sectionL}>YOUR FRIENDS</Text>
+                <Text style={s.sectionL}>{t(APP.yourFriends)}</Text>
                 {accepted.length === 0 ? (
                   <Text style={s.empty}>No friends yet. Search above to add someone.</Text>
                 ) : accepted.map((r) => (
@@ -128,7 +130,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
 
                 {outgoing.length > 0 ? (
                   <>
-                    <Text style={s.sectionL}>PENDING</Text>
+                    <Text style={s.sectionL}>{t(APP.pending)}</Text>
                     {outgoing.map((r) => (
                       <View key={r.id} style={s.row}>
                         <View style={s.avatar}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
@@ -136,7 +138,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                           <Text style={s.name}>{r.profile.name}</Text>
                           <Text style={s.handle}>{r.profile.email}</Text>
                         </View>
-                        <Text style={s.pending}>Sent</Text>
+                        <Text style={s.pending}>{t(APP.sent)}</Text>
                       </View>
                     ))}
                   </>

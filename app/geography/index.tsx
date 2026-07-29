@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { PAGES } from '@/constants/i18n/pages';
 import { SaveHeart } from '@/components/save-heart';
 import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -28,20 +28,24 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b }: { b: GeoBlock }) {
+  // Farsi when the app is in Farsi and the block has been translated.
+  const fa = getLang() === 'fa';
+  const tx = (blk: any) => (fa && blk.fa ? blk.fa : blk.x);
+  const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
-    case 'p': return <Text style={styles.p}>{b.x}</Text>;
-    case 'h': return <Text style={styles.h}>{b.x}</Text>;
+    case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
+    case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
     case 'lead': return (
       <View style={styles.leadWrap}>
         <View style={styles.leadRule} />
-        <Text style={styles.lead}>{b.x}</Text>
+        <Text style={[styles.lead, rtl, fa && (b as any).fa && styles.faLead]}>{tx(b)}</Text>
         <View style={styles.leadRule} />
       </View>
     );
     case 'mark': return (
       <View style={styles.mark}>
         <View style={styles.markBar} />
-        <Text style={styles.markText}>{b.x}</Text>
+        <Text style={[styles.markText, rtl, fa && (b as any).fa && styles.faMark]}>{tx(b)}</Text>
       </View>
     );
     case 'map':
@@ -58,7 +62,7 @@ function Block({ b }: { b: GeoBlock }) {
               <Ionicons name="image-outline" size={22} color={dark.textDim} />
             </View>
           )}
-          {b.cap ? <Text style={styles.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -72,7 +76,7 @@ function Block({ b }: { b: GeoBlock }) {
               : <View key={i} style={[styles.row2Img, styles.ph]}><Ionicons name="image-outline" size={18} color={dark.textDim} /></View>;
           })}
         </View>
-        {b.cap ? <Text style={styles.cap}>{b.cap}</Text> : null}
+        {b.cap ? <Text style={styles.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
       </View>
     );
     case 'provincemap': return <IranProvinceMap />;
@@ -103,7 +107,7 @@ function Block({ b }: { b: GeoBlock }) {
       <View style={styles.close}>
         <View style={styles.closeRule} />
         <Text style={styles.closeGlyph}>{b.glyph}</Text>
-        <Text style={styles.closeText}>{b.x}</Text>
+        <Text style={[styles.closeText, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
         <View style={styles.closeDiamond} />
       </View>
     );
@@ -158,7 +162,7 @@ export default function GeographyScreen() {
           const on = c.key === active;
           return (
             <Pressable key={c.key} onPress={() => jump(c.key)} style={styles.navTab}>
-              <Text style={[styles.navText, on && styles.navTextOn]} numberOfLines={1}>{c.nav ?? c.title}</Text>
+              <Text style={[styles.navText, on && styles.navTextOn]} numberOfLines={1}>{getLang() === 'fa' ? ((c as any).navFa ?? (c as any).titleFa ?? c.nav ?? c.title) : (c.nav ?? c.title)}</Text>
               <View style={[styles.navRule, on && styles.navRuleOn]} />
             </Pressable>
           );
@@ -186,8 +190,8 @@ export default function GeographyScreen() {
           <FadeIn delay={80 + ci * 60}>
             <View style={styles.chapter}>
               <View style={styles.chDiamond} />
-              {c.subtitle ? <Text style={styles.chEyebrow}>{c.subtitle}</Text> : null}
-              <Text style={styles.chTitle}>{c.title}</Text>
+              {c.subtitle ? <Text style={styles.chEyebrow}>{getLang() === 'fa' && (c as any).subtitleFa ? (c as any).subtitleFa : c.subtitle}</Text> : null}
+              <Text style={[styles.chTitle, getLang() === 'fa' && (c as any).titleFa && styles.rtl]}>{getLang() === 'fa' && (c as any).titleFa ? (c as any).titleFa : c.title}</Text>
             </View>
             {c.pages.map((pg, pi) => (
               <View key={pi} style={styles.page}>
@@ -203,6 +207,11 @@ export default function GeographyScreen() {
 }
 
 const styles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 16.5, lineHeight: 34 },
+  faLead: { fontFamily: fonts.persian, fontSize: 20, lineHeight: 38 },
+  faHead: { fontFamily: fonts.persian, fontSize: 21, lineHeight: 36 },
+  faMark: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 36 },
   safe: { flex: 1, backgroundColor: dark.bg },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   topTitle: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: dark.text },

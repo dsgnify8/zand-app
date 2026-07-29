@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export default function SignIn() {
   const { signIn } = useAuth();
@@ -29,7 +31,7 @@ export default function SignIn() {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.flex}>
         <View style={s.body}>
           <Text style={s.wordmark}>ZAND</Text>
-          <Text style={s.title}>Welcome back</Text>
+          <Text style={s.title}>{t(APP.welcomeBack)}</Text>
           <Text style={s.sub}>Sign in to keep your streak, saves, and friends.</Text>
 
           <TextInput style={s.input} placeholder="Email" placeholderTextColor={colors.textSecondary}
@@ -55,7 +57,7 @@ export default function SignIn() {
           <View style={s.footer}>
             <Text style={s.footerT}>New here? </Text>
             <Pressable hitSlop={8} onPress={() => router.replace('/auth/sign-up')}>
-              <Text style={s.footerLink}>Create an account</Text>
+              <Text style={s.footerLink}>{t(APP.createAccount)}</Text>
             </Pressable>
           </View>
         </View>

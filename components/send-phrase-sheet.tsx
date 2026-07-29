@@ -8,6 +8,8 @@ import { useAuth } from '@/lib/auth';
 import { useFriends } from '@/lib/friends';
 import { sendItem } from '@/lib/inbox';
 import { bump } from '@/lib/stats-store';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 type Phrase = { fa: string; tr: string; en: string; note?: string };
 
@@ -54,7 +56,7 @@ export function SendPhraseSheet({ phrase, onClose }: { phrase: Phrase | null; on
                 <Text style={s.sentT}>Sent to {sentTo}</Text>
                 <Text style={s.sentX}>It is waiting in their inbox.</Text>
                 <Pressable style={s.cta} onPress={onClose}>
-                  <Text style={s.ctaT}>Done</Text>
+                  <Text style={s.ctaT}>{t(APP.done)}</Text>
                 </Pressable>
               </View>
             ) : (
@@ -75,7 +77,7 @@ export function SendPhraseSheet({ phrase, onClose }: { phrase: Phrase | null; on
                   multiline
                 />
 
-                <Text style={s.label}>SEND TO</Text>
+                <Text style={s.label}>{t(APP.sendTo)}</Text>
 
                 {accepted.length === 0 ? (
                   <Text style={s.empty}>

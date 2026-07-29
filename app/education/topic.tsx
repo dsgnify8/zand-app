@@ -8,6 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark, findTopic, flattenPages, TOPICS } from '@/constants/education';
 import { eduImage } from '@/constants/education-images';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export default function TopicScreen() {
   const { topic: key } = useLocalSearchParams<{ topic: string }>();
@@ -54,11 +56,11 @@ export default function TopicScreen() {
           </View>
 
           <Pressable style={styles.startBtn} onPress={() => router.navigate('/education/reader?topic=' + topic.key + '&page=0' as any)}>
-            <Text style={styles.startText}>Start reading</Text>
+            <Text style={styles.startText}>{t(APP.startReading)}</Text>
             <Ionicons name="arrow-forward" size={18} color={dark.bg} />
           </Pressable>
 
-          <Text style={styles.sectionLabel}>CHAPTERS</Text>
+          <Text style={styles.sectionLabel}>{t(APP.chapters)}</Text>
           <View style={styles.chapters}>
             {topic.chapters.map((c, i) => {
               const startPage = pageCursor;
@@ -78,12 +80,12 @@ export default function TopicScreen() {
 
           {topic.sources.length ? (
             <>
-              <Text style={styles.sectionLabel}>SOURCES</Text>
+              <Text style={styles.sectionLabel}>{t(APP.sources)}</Text>
               <View style={styles.sources}>{topic.sources.map((s) => <Text key={s} style={styles.source}>· {s}</Text>)}</View>
             </>
           ) : null}
 
-          <Text style={styles.sectionLabel}>CONTINUE EXPLORING</Text>
+          <Text style={styles.sectionLabel}>{t(APP.continueExploring)}</Text>
           <View style={styles.chapters}>
             {others.map((t) => (
               <Pressable key={t.key} style={styles.chRow} disabled={t.status === 'soon'} onPress={() => router.replace('/education/topic?topic=' + t.key as any)}>

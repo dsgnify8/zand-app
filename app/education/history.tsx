@@ -7,6 +7,8 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { ZandHeader } from '@/components/zand-header';
 import { HISTORY_ERAS } from '@/constants/education';
 import { HistoryTimeline } from '@/components/history-timeline';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export default function HistoryHub() {
   return (
@@ -15,11 +17,11 @@ export default function HistoryHub() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
-          <Text style={styles.backBtnText}>Education</Text>
+          <Text style={styles.backBtnText}>{t(APP.education)}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>History</Text>
+          <Text style={styles.title}>{t(APP.history)}</Text>
           <Text style={styles.glyph}>تاریخ</Text>
         </View>
         <Text style={styles.subtitle}>The story of Iran, from the first empires to the modern age, told through the lives and dynasties that shaped it.</Text>
@@ -46,7 +48,7 @@ export default function HistoryHub() {
                       <View style={styles.cardHeader}>
                         <Text style={styles.cardTitle}>{e.name}</Text>
                         {e.status === 'priority' && <Text style={styles.tagNew}>NEW</Text>}
-                        {e.status === 'soon' && <Text style={styles.tagSoon}>SOON</Text>}
+                        {e.status === 'soon' && <Text style={styles.tagSoon}>{t(APP.soon)}</Text>}
                       </View>
                       <Text style={styles.cardYears}>{e.years}{e.persian ? '  ·  ' + e.persian : ''}</Text>
                     </View>

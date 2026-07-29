@@ -9,6 +9,7 @@ import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
+import { Art } from '@/components/lang-art';
 
 type Card = { fa: string; tr: string; en: string; literal?: string };
 
@@ -75,6 +76,7 @@ export default function CardsScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
         <View style={s.mid}>
+          <Art name="pomegranate" size={92} style={{ opacity: 0.5, marginBottom: 6 }} />
           <Text style={s.finFa}>{known.length === cards.length ? 'همه رو بلدی' : 'خوب بود'}</Text>
           <Text style={s.finT}>{known.length} of {cards.length} known</Text>
           <View style={s.rule} />

@@ -17,6 +17,8 @@ import { Chang, LostVerses } from '@/components/rudaki-blocks';
 import { Mountain, HaftPeykar } from '@/components/nizami-blocks';
 import { Sama, Reed } from '@/components/rumi-blocks';
 import { GlossaryText } from '@/components/glossary-text';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 function chapterStarts(a: Author) {
   const out: { key: string; title: string; nav?: string; page: number }[] = [];
@@ -202,8 +204,8 @@ export default function LitReader() {
           <Text style={styles.endTitle}>Fin</Text>
           <Text style={styles.endName}>{author.name}</Text>
           <Text style={styles.endYears}>{author.years}</Text>
-          <Pressable style={styles.endBtn} onPress={() => router.back()}><Text style={styles.endBtnText}>Back</Text></Pressable>
-          <Pressable style={styles.endGhost} onPress={() => goto(0)}><Text style={styles.endGhostText}>Read again</Text></Pressable>
+          <Pressable style={styles.endBtn} onPress={() => router.back()}><Text style={styles.endBtnText}>{t(APP.back)}</Text></Pressable>
+          <Pressable style={styles.endGhost} onPress={() => goto(0)}><Text style={styles.endGhostText}>{t(APP.readAgain)}</Text></Pressable>
         </View>
       </SafeAreaView>
     );
@@ -256,7 +258,7 @@ export default function LitReader() {
         <View style={styles.nav}>
           <Pressable style={[styles.navBtn, p === 0 && styles.navOff]} disabled={p === 0} onPress={() => goto(p - 1)}>
             <Ionicons name="chevron-back" size={18} color={p === 0 ? lit.hair : lit.text} />
-            <Text style={[styles.navText, p === 0 && styles.navTextOff]}>Previous</Text>
+            <Text style={[styles.navText, p === 0 && styles.navTextOff]}>{t(APP.previous)}</Text>
           </Pressable>
           <Pressable style={styles.navPrimary} onPress={() => goto(p + 1)}>
             <Text style={styles.navPrimaryText}>{p + 1 >= total ? 'Finish' : 'Next'}</Text>

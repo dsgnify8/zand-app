@@ -32,6 +32,7 @@ import { YALDA_MOMENTS } from '@/constants/yalda';
 import { typicalDeck, typicalOfDay, CULTURE_TOPICS } from '@/constants/culture';
 import { GEO_CHAPTERS } from '@/constants/geography';
 import { INBOX, pr } from '@/constants/profile';
+import { APP } from '@/constants/i18n/app';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -364,7 +365,7 @@ export default function HomeScreen() {
 
           <FadeIn delay={210}>
             <View style={styles.labelRow}>
-              <Text style={styles.sectionLabelInline}>STORIES</Text>
+              <Text style={styles.sectionLabelInline}>{t(APP.stories)}</Text>
               <Pressable hitSlop={8} onPress={() => router.navigate('/section/articles' as any)}>
                 <Text style={styles.seeAll}>all of them</Text>
               </Pressable>
@@ -438,9 +439,9 @@ export default function HomeScreen() {
           <FadeIn delay={330}>
             <Pressable style={styles.fal} onPress={() => router.navigate('/literature/reader?author=hafez&page=6' as any)}>
               <Text style={styles.falFa}>فال حافظ</Text>
-              <Text style={styles.falT}>Ask the book a question</Text>
+              <Text style={styles.falT}>{t(APP.askTheBook)}</Text>
               <Text style={styles.falX}>Hold something in your heart and open it at random. Iranians have been doing this for six hundred years.</Text>
-              <View style={styles.falBtn}><Text style={styles.falBtnT}>OPEN IT</Text></View>
+              <View style={styles.falBtn}><Text style={styles.falBtnT}>{t(APP.openIt)}</Text></View>
             </Pressable>
           </FadeIn>
         </Animated.ScrollView>

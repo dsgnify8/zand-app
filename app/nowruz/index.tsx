@@ -10,6 +10,8 @@ import { nz, NOWRUZ_CHAPTERS, type NzBlock } from '@/constants/nowruz';
 import { eduImage } from '@/constants/education-images';
 import { Tahvil, HaftSeen, Guests, Fire, Knot } from '@/components/nowruz-blocks';
 import { GlossaryText } from '@/components/glossary-text';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
   const fade = useRef(new Animated.Value(0)).current;
@@ -113,7 +115,7 @@ export default function NowruzScreen() {
         <Pressable hitSlop={10} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color={nz.text} />
         </Pressable>
-        <Text style={styles.topTitle}>Nowruz</Text>
+        <Text style={styles.topTitle}>{t(APP.nowruz)}</Text>
         <View style={{ width: 24 }} />
       </View>
 
@@ -152,7 +154,7 @@ export default function NowruzScreen() {
           <FadeIn>
             <View style={styles.head}>
               <Text style={styles.glyph}>نوروز</Text>
-              <Text style={styles.title}>Nowruz</Text>
+              <Text style={styles.title}>{t(APP.nowruz)}</Text>
               <View style={styles.headRule} />
               <Text style={styles.sub}>The new day. Three thousand years old, and it arrives at a second.</Text>
             </View>

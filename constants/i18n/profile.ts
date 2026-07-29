@@ -49,6 +49,16 @@ export const PROFILE: Record<string, T> = {
   sendBack: { en: 'Send one back', fa: 'یکی بفرست' },
   waitingForYou: { en: 'WAITING FOR YOU', fa: 'منتظر توست' },
 
+  sentYou: { en: 'sent you', fa: 'برایت فرستاد' },
+  aWord: { en: 'a word', fa: 'یک واژه' },
+  aTopic: { en: 'a topic', fa: 'یک موضوع' },
+  aPoet: { en: 'a poet', fa: 'یک شاعر' },
+  aPlace: { en: 'a place', fa: 'یک جا' },
+  anArticle: { en: 'an article', fa: 'یک مقاله' },
+  something: { en: 'something', fa: 'چیزی' },
+  seeAll: { en: 'see all', fa: 'همه را ببین' },
+  showLess: { en: 'show less', fa: 'کمتر' },
+
   // progress
   whatDoing: { en: 'WHAT YOU HAVE BEEN DOING', fa: 'کارهایی که انجام دادی' },
   achievements: { en: 'Achievements', fa: 'دستاوردها' },

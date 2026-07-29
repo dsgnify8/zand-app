@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
 import { FAL_VERSES, type FalVerse } from '@/constants/fal';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export function FalBook() {
   const [open, setOpen] = useState(false);
@@ -49,7 +51,7 @@ export function FalBook() {
 
   return (
     <View style={styles.wrap}>
-      <Text style={styles.kicker}>FAL E HAFEZ</Text>
+      <Text style={styles.kicker}>{t(APP.falTitle)}</Text>
       <Text style={styles.instruction}>Hold your question in your heart, then open the book.</Text>
 
       <Pressable onPress={ask}>
@@ -72,19 +74,19 @@ export function FalBook() {
                 <Text style={styles.medallionGlyph}>حافظ</Text>
               </View>
               <View style={styles.coverRule} />
-              <Text style={styles.coverTitle}>The Divan</Text>
+              <Text style={styles.coverTitle}>{t(APP.theDivan)}</Text>
             </View>
           </Animated.View>
         </Animated.View>
       </Pressable>
 
-      <Text style={styles.hint}>Touch to open</Text>
+      <Text style={styles.hint}>{t(APP.touchToOpen)}</Text>
 
       <Modal transparent visible={open} animationType="fade" onRequestClose={() => setOpen(false)}>
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
           <Pressable style={styles.card} onPress={() => {}}>
             <View style={styles.cardTop}>
-              <Text style={styles.cardKicker}>YOUR OMEN</Text>
+              <Text style={styles.cardKicker}>{t(APP.yourOmen)}</Text>
               <Pressable hitSlop={10} onPress={() => setOpen(false)}>
                 <Ionicons name="close" size={19} color={lit.textDim} />
               </Pressable>
@@ -96,11 +98,11 @@ export function FalBook() {
               <Text key={i} style={styles.line}>{l}</Text>
             ))}
             <View style={styles.rule} />
-            <Text style={styles.readingLabel}>WHAT IT SAYS TO YOU</Text>
+            <Text style={styles.readingLabel}>{t(APP.whatItSays)}</Text>
             <Text style={styles.reading}>{verse?.reading}</Text>
 
             <Pressable style={styles.done} onPress={() => setOpen(false)}>
-              <Text style={styles.doneText}>Close the book</Text>
+              <Text style={styles.doneText}>{t(APP.closeTheBook)}</Text>
             </Pressable>
           </Pressable>
         </Pressable>
@@ -115,7 +117,7 @@ export function FalBook() {
             </Text>
             <Text style={styles.scoldSub}>Come back another day.</Text>
             <Pressable style={styles.done} onPress={() => setScold(false)}>
-              <Text style={styles.doneText}>I understand</Text>
+              <Text style={styles.doneText}>{t(APP.iUnderstand)}</Text>
             </Pressable>
           </Pressable>
         </Pressable>

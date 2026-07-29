@@ -7,6 +7,7 @@ import { dark } from '@/constants/education';
 import { type Place } from '@/constants/geography';
 import { eduImage } from '@/constants/education-images';
 import { GlossaryText } from '@/components/glossary-text';
+import { getLang } from '@/lib/i18n';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -49,7 +50,7 @@ export function PlaceCard({ place }: { place: Place }) {
       ) : null}
 
       <View style={styles.body}>
-        <GlossaryText text={place.text} />
+        <GlossaryText text={getLang() === 'fa' && (place as any).textFa ? (place as any).textFa : place.text} />
       </View>
     </View>
   );

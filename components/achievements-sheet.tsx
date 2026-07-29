@@ -3,6 +3,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useStats, milestoneStatus } from '@/lib/stats-store';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export function AchievementsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const stats = useStats();
@@ -16,7 +18,7 @@ export function AchievementsSheet({ open, onClose }: { open: boolean; onClose: (
           <View style={s.grab} />
           <View style={s.head}>
             <View>
-              <Text style={s.title}>Achievements</Text>
+              <Text style={s.title}>{t(APP.achievements)}</Text>
               <Text style={s.sub}>{unlocked} of {miles.length} unlocked</Text>
             </View>
             <Pressable hitSlop={10} onPress={onClose}><Ionicons name="close" size={22} color={colors.textPrimary} /></Pressable>
@@ -30,7 +32,7 @@ export function AchievementsSheet({ open, onClose }: { open: boolean; onClose: (
                   </View>
                   <Text style={[s.cardT, m.achieved && s.cardTOn]}>{m.label}</Text>
                   {m.achieved ? (
-                    <Text style={s.unlocked}>UNLOCKED</Text>
+                    <Text style={s.unlocked}>{t(APP.unlocked)}</Text>
                   ) : (
                     <>
                       <View style={s.track}><View style={[s.fill, { width: (m.pct + '%') as any }]} /></View>

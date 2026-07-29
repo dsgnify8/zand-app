@@ -7,6 +7,8 @@ import { useReading } from '@/lib/reading-store';
 import { useProgress } from '@/lib/progress-store';
 import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { TOPICS } from '@/constants/education';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export function AchievementsGrid() {
   const { reading, percentFor } = useReading();
@@ -31,7 +33,7 @@ export function AchievementsGrid() {
   return (
     <View style={styles.wrap}>
       <View style={styles.head}>
-        <Text style={styles.label}>ACHIEVEMENTS</Text>
+        <Text style={styles.label}>{t(APP.achievements)}</Text>
         <Text style={styles.count}>{earnedCount} of {ACHIEVEMENTS.length}</Text>
       </View>
       <View style={styles.grid}>

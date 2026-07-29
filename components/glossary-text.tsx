@@ -6,9 +6,11 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { findTerm } from '@/constants/glossary';
 import { useGlossary } from '@/lib/glossary-store';
+import { getLang } from '@/lib/i18n';
 
 // Renders a paragraph where {{term-id|visible text}} becomes a tappable link.
 export function GlossaryText({ text }: { text: string }) {
+  const fa = getLang() === 'fa';
   const [openId, setOpenId] = useState<string | null>(null);
   const { isSaved, toggleSaved } = useGlossary();
 
@@ -36,23 +38,24 @@ export function GlossaryText({ text }: { text: string }) {
         )}
       </Text>
 
+      {null}
       <Modal visible={!!term} transparent animationType="fade" onRequestClose={() => setOpenId(null)}>
         <Pressable style={styles.backdrop} onPress={() => setOpenId(null)}>
           <Pressable style={styles.card} onPress={(e) => e.stopPropagation()}>
             <View style={styles.cardHead}>
-              <Text style={styles.cardEyebrow}>WHO WAS</Text>
+              <Text style={styles.cardEyebrow}>{fa ? 'او که بود' : 'WHO WAS'}</Text>
               <Pressable hitSlop={10} onPress={() => setOpenId(null)}>
                 <Ionicons name="close" size={22} color={dark.textDim} />
               </Pressable>
             </View>
-            <Text style={styles.cardTitle}>{term?.title}</Text>
-            <Text style={styles.cardDesc}>{term?.description}</Text>
+            <Text style={[styles.cardTitle, fa && (term as any)?.titleFa && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' }]}>{fa && (term as any)?.titleFa ? (term as any).titleFa : term?.title}</Text>
+            <Text style={[styles.cardDesc, fa && (term as any)?.descriptionFa && { fontFamily: fonts.persian, fontSize: 14, lineHeight: 28, textAlign: 'right', writingDirection: 'rtl' }]}>{fa && (term as any)?.descriptionFa ? (term as any).descriptionFa : term?.description}</Text>
             <Pressable
               style={[styles.saveBtn, saved && styles.saveBtnOn]}
               onPress={() => term && toggleSaved(term.id)}
             >
               <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={18} color={saved ? dark.bg : dark.text} />
-              <Text style={[styles.saveText, saved && styles.saveTextOn]}>{saved ? 'Saved to read later' : 'Save to read later'}</Text>
+              <Text style={[styles.saveText, saved && styles.saveTextOn]}>{fa ? (saved ? 'ذخیره شد' : 'ذخیره کن برای بعد') : (saved ? 'Saved to read later' : 'Save to read later')}</Text>
             </Pressable>
           </Pressable>
         </Pressable>

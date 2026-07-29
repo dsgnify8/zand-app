@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { cu, CULTURE_TOPICS, type CultureTopic } from '@/constants/culture';
 import { eduImage } from '@/constants/education-images';
+import { APP } from '@/constants/i18n/app';
 
 /* The textured ground. Two tiled layers plus a gradient, so it is never flat. */
 export function CultureGround() {
@@ -107,7 +108,7 @@ export default function CultureHub() {
               <Text style={styles.watermark}>فرهنگ</Text>
               <View style={styles.headRow}>
                 <View style={styles.headBar} />
-                <Text style={styles.headEyebrow}>THE SOCIAL CODE</Text>
+                <Text style={styles.headEyebrow}>{t(APP.theSocialCode)}</Text>
               </View>
               <Text style={styles.title}>{t(PAGES.cultureHead)}</Text>
               <Text style={styles.sub}>

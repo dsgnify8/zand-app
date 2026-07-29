@@ -27,8 +27,14 @@ import { eduImage } from '@/constants/education-images';
 import { StreakPlant } from '@/components/streak-plant';
 import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
 import { LearnProgressBlock } from '@/components/learn-progress-block';
+import { APP } from '@/constants/i18n/app';
 
 type Tab = 'you' | 'library' | 'friends' | 'progress';
+
+const KIND_LABEL_T: Record<string, any> = {
+  word: PROFILE.aWord, topic: PROFILE.aTopic, poet: PROFILE.aPoet,
+  place: PROFILE.aPlace, article: PROFILE.anArticle,
+};
 
 const KIND_LABEL: Record<string, string> = {
   word: 'a word', topic: 'a topic', poet: 'a poet', place: 'a place', article: 'a story',
@@ -111,7 +117,7 @@ function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLib
           <View style={s.alertDot} />
           <View style={{ flex: 1 }}>
             <Text style={s.alertT}>
-              {pending[0].from} sent you {pending[0].kind === 'word' ? 'a word' : 'a topic'}
+              {pending[0].from} {t(PROFILE.sentYou)} {pending[0].kind === 'word' ? t(PROFILE.aWord) : t(PROFILE.aTopic)}
             </Text>
             <Text style={s.alertX}>
               {pending.length > 1 ? 'and ' + (pending.length - 1) + ' more waiting' : pending[0].note}
@@ -136,7 +142,7 @@ function SavedStrip({ onSeeAll }: { onSeeAll: () => void }) {
       <View style={s.labelRow}>
         <Text style={s.sectionLabelInline}>MY SAVED</Text>
         <Pressable onPress={onSeeAll} hitSlop={8}>
-          <Text style={s.seeAll}>see all {items.length}</Text>
+          <Text style={s.seeAll}>{t(PROFILE.seeAll)} {items.length}</Text>
         </Pressable>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.rail}>
@@ -149,7 +155,7 @@ function SavedStrip({ onSeeAll }: { onSeeAll: () => void }) {
         ))}
         <Pressable style={s.savedMore} onPress={onSeeAll}>
           <Ionicons name="arrow-forward" size={15} color={pr.saveA} />
-          <Text style={s.savedMoreT}>All saved</Text>
+          <Text style={s.savedMoreT}>{t(APP.seeAll)}</Text>
         </Pressable>
       </ScrollView>
     </View>
@@ -168,7 +174,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
   const keys = view === 'favourites' ? liked : view === 'saved' ? saved : view === 'history' ? recent : [];
   const arts = resolveMany(keys);
 
-  const TITLE: Record<string, string> = { history: 'History', favourites: 'Favourites', watched: 'Watched', saved: 'Save for later' };
+  const TITLE: Record<string, string> = { history: t(PROFILE.history), favourites: t(PROFILE.favourites), watched: t(PROFILE.watched), saved: t(PROFILE.saveLater) };
   const EMPTY: Record<string, string> = {
     history: 'Nothing opened yet. Start reading and it shows up here.',
     favourites: 'No favourites yet. Tap the heart on anything you love.',
@@ -372,7 +378,7 @@ function FriendsTab() {
                 <View style={s.inboxTop}>
                   <View style={s.avatar}><Text style={s.avatarT}>{(it.senderName || '?')[0].toUpperCase()}</Text></View>
                   <View style={{ flex: 1 }}>
-                    <Text style={s.inboxFrom}>{it.senderName} sent you {KIND_LABEL[it.kind] ?? 'something'}</Text>
+                    <Text style={s.inboxFrom}>{it.senderName} {t(PROFILE.sentYou)} {KIND_LABEL_T[it.kind] ? t(KIND_LABEL_T[it.kind]) : t(PROFILE.something)}</Text>
                   </View>
                   {it.learned ? <Ionicons name="checkmark-circle" size={19} color={pr.streakA} /> : <View style={s.newDot} />}
                 </View>
@@ -419,7 +425,7 @@ function FriendsTab() {
                 <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
                 <View style={{ flex: 1 }}>
                   <Text style={s.friendN}>{r.profile.name}</Text>
-                  <Text style={s.friendL}>Tap to send something</Text>
+                  <Text style={s.friendL}>{t(APP.tapToSend)}</Text>
                 </View>
                 <Ionicons name="paper-plane-outline" size={16} color={pr.friendA} />
               </Pressable>
@@ -438,7 +444,7 @@ function FriendsTab() {
               <View style={s.inboxTop}>
                 <View style={s.avatar}><Text style={s.avatarT}>{i.fromFa[0]}</Text></View>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.inboxFrom}>{i.from} sent you {KIND_LABEL[i.kind] ?? 'something'}</Text>
+                  <Text style={s.inboxFrom}>{i.from} {t(PROFILE.sentYou)} {KIND_LABEL_T[i.kind] ? t(KIND_LABEL_T[i.kind]) : t(PROFILE.something)}</Text>
                   <Text style={s.inboxWhen}>{i.when}</Text>
                 </View>
                 <View style={s.newDot} />
@@ -516,7 +522,7 @@ function ProgressTab() {
         <Text style={s.progX}>Longest you have ever gone: {ME.longest}</Text>
       </View>
 
-      <Text style={s.sectionLabel}>YOUR PERSIAN</Text>
+      <Text style={s.sectionLabel}>{t(APP.yourPersian)}</Text>
       <LearnProgressBlock />
 
       <Text style={s.sectionLabel}>{t(PROFILE.whatDoing)}</Text>
@@ -550,7 +556,7 @@ function ProgressTab() {
         <Text style={s.sectionLabel}>{t(PROFILE.finished)}</Text>
         {finished.length > 10 ? (
           <Pressable hitSlop={8} onPress={() => setShowAllFinished((v) => !v)}>
-            <Text style={s.seeAll}>{showAllFinished ? 'show less' : 'see all ' + finished.length}</Text>
+            <Text style={s.seeAll}>{showAllFinished ? t(PROFILE.showLess) : t(PROFILE.seeAll) + ' ' + finished.length}</Text>
           </Pressable>
         ) : null}
       </View>

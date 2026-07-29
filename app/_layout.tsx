@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { loadReminders } from '@/lib/reminders';
 import { loadStrength } from '@/lib/word-strength';
 import { loadLearnProgress } from '@/lib/learn-progress';
 import { loadLevel } from '@/lib/learn-level';
@@ -64,7 +65,7 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
-  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); }, []);
+  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); }, []);
 
   if (!fontsLoaded) {
     return null;

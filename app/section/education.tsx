@@ -11,6 +11,7 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { dark } from '@/constants/education';
 import { ZandHeader } from '@/components/zand-header';
 import { eduImage } from '@/constants/education-images';
+import { APP } from '@/constants/i18n/app';
 
 type Topic = {
   key: string;
@@ -97,7 +98,7 @@ export default function EducationScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
-          <Text style={styles.backBtnText}>Explore</Text>
+          <Text style={styles.backBtnText}>{tr(APP.explore)}</Text>
         </Pressable>
 
         <FadeIn>

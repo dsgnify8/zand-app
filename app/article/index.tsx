@@ -13,6 +13,7 @@ import { useLang } from '@/lib/i18n';
 import { bump, recordFinished } from '@/lib/stats-store';
 import { logEvent } from '@/lib/admin';
 import { SendArticleSheet } from '@/components/send-article-sheet';
+import { APP } from '@/constants/i18n/app';
 
 function Block({ b, fa }: { b: ArBlock; fa?: boolean }) {
   // when Farsi is on, use the translation if the block has one
@@ -92,7 +93,7 @@ export default function ArticleScreen() {
         <View style={s.topBar}>
           <Pressable style={s.back} hitSlop={10} onPress={() => router.back()}>
             <Ionicons name="chevron-back" size={22} color={ar.ink} />
-            <Text style={s.backT}>Articles</Text>
+            <Text style={s.backT}>{t(APP.articles)}</Text>
           </Pressable>
           <View style={s.topActions}>
             {hasFarsi(a) ? (

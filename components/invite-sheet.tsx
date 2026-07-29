@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
 import { findByEmail, sendRequest } from '@/lib/friends';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { user } = useAuth();
@@ -38,14 +40,14 @@ export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => v
         <Pressable style={s.sheet} onPress={() => {}}>
           <View style={s.grab} />
           <View style={s.head}>
-            <Text style={s.title}>Invite friends</Text>
+            <Text style={s.title}>{t(APP.inviteFriends)}</Text>
             <Pressable hitSlop={10} onPress={onClose}><Ionicons name="close" size={22} color={colors.textPrimary} /></Pressable>
           </View>
 
           <Pressable style={s.linkCard} onPress={shareLink}>
             <View style={s.linkIcon}><Ionicons name="link" size={20} color="#FFF" /></View>
             <View style={{ flex: 1 }}>
-              <Text style={s.linkT}>Share your invite link</Text>
+              <Text style={s.linkT}>{t(APP.shareYourLink)}</Text>
               <Text style={s.linkX}>They tap it, open the app, and you connect.</Text>
             </View>
             <Ionicons name="share-outline" size={20} color={colors.accent} />

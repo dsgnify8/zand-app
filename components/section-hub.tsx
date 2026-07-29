@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { ZandHeader } from '@/components/zand-header';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export type HubItem = {
   key: string;
@@ -50,7 +52,7 @@ export function SectionHub({ glyph, title, subtitle, items, showBack, backLabel 
                 <View style={styles.cardText}>
                   <View style={styles.cardHeader}>
                     <Text style={styles.cardTitle}>{m.title}</Text>
-                    {m.status === 'soon' && <Text style={styles.soon}>SOON</Text>}
+                    {m.status === 'soon' && <Text style={styles.soon}>{t(APP.soon)}</Text>}
                   </View>
                   <Text style={styles.cardDescription}>{m.description}</Text>
                 </View>

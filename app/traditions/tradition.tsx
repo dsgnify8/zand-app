@@ -10,6 +10,8 @@ import { TraditionSymbol } from '@/components/tradition-symbol';
 import { speak } from '@/lib/speak';
 import { eduImage } from '@/constants/education-images';
 import { Image } from 'react-native';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 function ThreadShimmer({ delay }: { delay: number }) {
   const v = useRef(new Animated.Value(0)).current;
@@ -144,7 +146,7 @@ export default function TraditionScreen() {
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.back} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={light.textDim} />
-          <Text style={styles.backText}>Traditions</Text>
+          <Text style={styles.backText}>{t(APP.traditions)}</Text>
         </Pressable>
 
         <AnimatedHeader t={t} />

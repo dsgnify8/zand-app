@@ -6,6 +6,7 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { PROVINCE_DOTS, type ProvinceDot } from '@/constants/geography';
 import { eduImage } from '@/constants/education-images';
+import { getLang } from '@/lib/i18n';
 
 const MAP_RATIO = 1100 / 847;
 
@@ -45,7 +46,7 @@ export function IranProvinceMap() {
               </Pressable>
             </View>
             <View style={styles.rule} />
-            <Text style={styles.cardFact}>{open?.fact}</Text>
+            <Text style={[styles.cardFact, getLang() === 'fa' && (open as any)?.factFa && { textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (open as any)?.factFa ? (open as any).factFa : open?.fact}</Text>
           </Pressable>
         </Pressable>
       </Modal>

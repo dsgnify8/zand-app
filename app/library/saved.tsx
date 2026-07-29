@@ -8,6 +8,8 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { ZandHeader } from '@/components/zand-header';
 import { VideoCard } from '@/components/video-card';
 import { useProgress, type ContentType } from '@/lib/progress-store';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 const TABS: { key: ContentType; label: string }[] = [
   { key: 'video', label: 'Videos' },
@@ -27,11 +29,11 @@ export default function SavedScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
-          <Text style={styles.backBtnText}>Profile</Text>
+          <Text style={styles.backBtnText}>{t(APP.profile)}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Saved items</Text>
+          <Text style={styles.title}>{t(APP.savedItems)}</Text>
           <Text style={styles.glyph}>ذخیره‌ها</Text>
         </View>
 

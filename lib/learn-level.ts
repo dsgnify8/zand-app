@@ -6,13 +6,13 @@ export type Level = 'beginner' | 'elementary' | 'intermediate' | 'advanced';
 
 export const LEVELS: { key: Level; roman: string; name: string; blurb: string; start: string }[] = [
   { key: 'beginner', roman: 'I', name: 'New to Persian',
-    blurb: 'You are starting from the letters.', start: '/learn/map' },
+    blurb: 'You are starting from the letters.', start: '/learn' },
   { key: 'elementary', roman: 'II', name: 'I know some words',
-    blurb: 'You can read a little and know a handful of phrases.', start: '/learn/map' },
+    blurb: 'You can read a little and know a handful of phrases.', start: '/learn' },
   { key: 'intermediate', roman: 'III', name: 'I can hold a conversation',
-    blurb: 'You want sentences, grammar, and more range.', start: '/learn/map' },
+    blurb: 'You want sentences, grammar, and more range.', start: '/learn' },
   { key: 'advanced', roman: 'IV', name: 'I read and write',
-    blurb: 'You want longer texts and real writing practice.', start: '/learn/map' },
+    blurb: 'You want longer texts and real writing practice.', start: '/learn' },
 ];
 
 let level: Level | null = null;

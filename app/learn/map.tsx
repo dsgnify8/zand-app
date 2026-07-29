@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -11,6 +11,8 @@ import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
 import { ExpressionCard } from '@/components/expression-card';
+import { Art, type ArtName } from '@/components/lang-art';
+import { ReminderRow } from '@/components/reminder-row';
 
 // Where each level joins the route. Shown as a marker between stages.
 const LEVEL_BAND: Record<string, { label: string; sub: string }> = {
@@ -19,6 +21,9 @@ const LEVEL_BAND: Record<string, { label: string; sub: string }> = {
   intermediate: { label: 'IF YOU CAN HOLD A CONVERSATION', sub: 'Feeling, nuance, and staying afloat.' },
   advanced:     { label: 'READING AND WRITING', sub: 'Longer texts, and writing it yourself.' },
 };
+
+// one motif per chapter, cycling so neighbours never repeat
+const STAGE_ART: ArtName[] = ['pen', 'tea', 'cypress', 'samovar', 'book', 'arch', 'moon', 'pomegranate', 'bird', 'medallion'];
 
 const ICON: Record<string, string> = {
   lesson: 'chatbubble-ellipses-outline',
@@ -77,6 +82,9 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 }
 
 export default function MapScreen() {
+  const scrollRef = useRef<ScrollView>(null);
+  const stageOffsets = useRef<Record<string, number>>({});
+  const [activeStage, setActiveStage] = useState(0);
   useLearnProgress();
   const { info } = useLevel();
   const { solid, shaky } = useStrength();
@@ -98,7 +106,34 @@ export default function MapScreen() {
         </Pressable>
       </View>
 
-      <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
+      <View style={s.rail}>
+        {STAGES.map((st, i) => (
+          <Pressable
+            key={st.key}
+            hitSlop={6}
+            onPress={() => {
+              const y = stageOffsets.current[st.key];
+              if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 40), animated: true });
+            }}
+          >
+            <View style={[s.tick, i === activeStage && s.tickOn]} />
+          </Pressable>
+        ))}
+      </View>
+
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={s.body}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={120}
+        onScroll={(e) => {
+          const y = e.nativeEvent.contentOffset.y + 80;
+          const entries = Object.entries(stageOffsets.current).sort((a, b) => a[1] - b[1]);
+          let idx = 0;
+          entries.forEach(([k, v], i) => { if (y >= v) idx = STAGES.findIndex((x) => x.key === k); });
+          if (idx !== activeStage) setActiveStage(idx);
+        }}
+      >
         <Text style={s.eyebrow}>YOUR ROUTE</Text>
         <Text style={s.title}>Persian,{'\n'}step by step</Text>
         {solid + shaky > 0 ? (
@@ -113,7 +148,11 @@ export default function MapScreen() {
           const showBand = stage.level && stage.level !== prev;
           const band = showBand ? LEVEL_BAND[stage.level as string] : null;
           return (
-          <View key={stage.key} style={s.stage}>
+          <View
+            key={stage.key}
+            style={s.stage}
+            onLayout={(e) => { stageOffsets.current[stage.key] = e.nativeEvent.layout.y; }}
+          >
             {band ? (
               <View style={s.band}>
                 <View style={s.bandRule} />
@@ -125,6 +164,7 @@ export default function MapScreen() {
             <View style={s.stageHead}>
               <View style={s.stageLine} />
               <View style={s.stageLabel}>
+                <Art name={STAGE_ART[si % STAGE_ART.length]} size={54} style={{ opacity: 0.55, marginBottom: 2 }} />
                 <Text style={s.stageRoman}>{stage.roman}</Text>
                 <Text style={s.stageT}>{stage.title}</Text>
                 <Text style={s.stageFa}>{stage.titleFa}</Text>
@@ -133,7 +173,21 @@ export default function MapScreen() {
             </View>
             <Text style={s.stageBlurb}>{stage.blurb}</Text>
 
-            {[...stage.steps, {
+            {stage.key === 'letters' ? (
+              <View style={s.tiles}>
+                {stage.steps.map((st) => {
+                  const done = stepDone(st);
+                  return (
+                    <Pressable key={st.key} style={s.tile} onPress={() => router.navigate(st.route as any)}>
+                      <View style={[s.tileIcon, done && s.tileIconOn]}>
+                        <Ionicons name={(ICON[st.kind] ?? 'ellipse-outline') as any} size={17} color={done ? '#FFF' : lw.green} />
+                      </View>
+                      <Text style={s.tileT} numberOfLines={2}>{st.title}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            ) : [...stage.steps, {
               key: stage.key + '-check',
               kind: 'quiz' as const,
               title: 'Chapter check',
@@ -192,6 +246,9 @@ const s = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   change: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted },
 
+  rail: { position: 'absolute', right: 6, top: 90, bottom: 40, zIndex: 10, justifyContent: 'center', alignItems: 'center', gap: 5 },
+  tick: { width: 3, height: 14, borderRadius: 2, backgroundColor: lw.greenPale },
+  tickOn: { backgroundColor: lw.green, height: 20 },
   body: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl },
   eyebrow: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 3, color: lw.muted },
   title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green, marginTop: spacing.sm },
@@ -210,6 +267,11 @@ const s = StyleSheet.create({
   stageFa: { fontFamily: fonts.persian, fontSize: 12, color: lw.muted, marginTop: 1 },
   stageBlurb: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted, textAlign: 'center', marginTop: spacing.sm },
 
+  tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.lg, justifyContent: 'center' },
+  tile: { width: '30%', minWidth: 96, alignItems: 'center', backgroundColor: lw.surface, borderWidth: 1, borderColor: lw.hair, borderRadius: 14, paddingVertical: spacing.md, paddingHorizontal: spacing.sm },
+  tileIcon: { width: 34, height: 34, borderRadius: 17, backgroundColor: lw.greenWash, alignItems: 'center', justifyContent: 'center', marginBottom: 6 },
+  tileIconOn: { backgroundColor: lw.green },
+  tileT: { fontFamily: fonts.body, fontSize: 11.5, color: lw.ink, textAlign: 'center', lineHeight: 16 },
   connector: { width: 2, height: 26, backgroundColor: lw.greenPale, alignSelf: 'center', borderRadius: 1 },
 
   nodeRow: { alignItems: 'center' },

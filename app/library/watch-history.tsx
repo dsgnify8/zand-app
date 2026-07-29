@@ -8,6 +8,8 @@ import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { VideoCard } from '@/components/video-card';
 import { useProgress } from '@/lib/progress-store';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 export default function WatchHistoryScreen() {
   const { history } = useProgress();
@@ -19,9 +21,9 @@ export default function WatchHistoryScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
-          <Text style={styles.backBtnText}>Profile</Text>
+          <Text style={styles.backBtnText}>{t(APP.profile)}</Text>
         </Pressable>
-        <Text style={styles.title}>Watch history</Text>
+        <Text style={styles.title}>{t(APP.watchHistory)}</Text>
         {videos.length === 0 ? (
           <Text style={styles.empty}>Videos you open will appear here.</Text>
         ) : (

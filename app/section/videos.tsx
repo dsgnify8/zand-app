@@ -15,6 +15,7 @@ import { VideoCard } from '@/components/video-card';
 import { PLAYLISTS, type Playlist } from '@/constants/videos';
 import { prefetchMeta } from '@/lib/use-youtube-meta';
 import { useProgress } from '@/lib/progress-store';
+import { APP } from '@/constants/i18n/app';
 
 const ALL_IDS = Array.from(new Set(PLAYLISTS.flatMap((p) => p.videos.map((v) => v.id))));
 
@@ -74,7 +75,7 @@ export default function VideosScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
-          <Text style={styles.backBtnText}>Explore</Text>
+          <Text style={styles.backBtnText}>{t(APP.explore)}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>

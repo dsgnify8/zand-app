@@ -8,6 +8,7 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { PHRASE_SETS, type PhraseSet } from '@/constants/phrasebook';
 import { speak } from '@/lib/speak';
+import { Art } from '@/components/lang-art';
 import { SendPhraseSheet } from '@/components/send-phrase-sheet';
 
 function PhraseRow({ p, onSend }: { p: { fa: string; tr: string; en: string; note?: string }; onSend: (p: any) => void }) {
@@ -54,6 +55,7 @@ export default function PhrasebookScreen() {
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         {!open ? (
           <>
+            <Art name="samovar" size={84} style={{ alignSelf: 'flex-end', opacity: 0.45, marginBottom: -6 }} />
             <Text style={s.title}>Say it{'\n'}right away</Text>
             <Text style={s.sub}>Tap any line to hear it. Hold it to send to a friend.</Text>
 

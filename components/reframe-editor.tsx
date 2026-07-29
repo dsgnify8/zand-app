@@ -5,10 +5,13 @@ import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanima
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 import { fonts, spacing } from '@/constants/zand-theme';
 import { ar } from '@/constants/articles';
 import { getFrame, saveFrame, clearFrame } from '@/lib/image-frames';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 const FRAME_W = 320;
 const FRAME_H = 240;
@@ -83,7 +86,23 @@ export function ReframeEditor({ name, source, onClose }: { name: string; source?
       const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!perm.granted) return;
       const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 1 });
-      if (!res.canceled && res.assets?.[0]) setUri(res.assets[0].uri);
+      if (!res.canceled && res.assets?.[0]) {
+        // The picker hands back a cache path, and iOS clears that cache within
+        // days. Copy it into the documents directory, which is permanent.
+        const picked = res.assets[0].uri;
+        try {
+          const dir = (FileSystem.documentDirectory ?? '') + 'frames/';
+          await FileSystem.makeDirectoryAsync(dir, { intermediates: true }).catch(() => {});
+          const ext = (picked.split('.').pop() || 'jpg').split('?')[0].toLowerCase();
+          const safe = ['jpg', 'jpeg', 'png', 'webp', 'heic'].includes(ext) ? ext : 'jpg';
+          const dest = dir + name.replace(/[^a-z0-9-]/gi, '_') + '-' + Date.now() + '.' + safe;
+          await FileSystem.copyAsync({ from: picked, to: dest });
+          setUri(dest);
+        } catch {
+          // if the copy fails, fall back rather than losing the pick entirely
+          setUri(picked);
+        }
+      }
     } catch {}
   };
 
@@ -104,7 +123,7 @@ export function ReframeEditor({ name, source, onClose }: { name: string; source?
         <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
           <View style={s.head}>
             <Pressable hitSlop={10} onPress={onClose}><Ionicons name="close" size={24} color="rgba(255,255,255,0.85)" /></Pressable>
-            <Text style={s.title}>Reframe</Text>
+            <Text style={s.title}>{t(APP.reframe)}</Text>
             <View style={{ width: 24 }} />
           </View>
 
@@ -126,17 +145,17 @@ export function ReframeEditor({ name, source, onClose }: { name: string; source?
           <View style={s.actions}>
             <Pressable style={s.action} onPress={upload}>
               <Ionicons name="cloud-upload-outline" size={17} color={ar.ink} />
-              <Text style={s.actionT}>Upload</Text>
+              <Text style={s.actionT}>{t(APP.upload)}</Text>
             </Pressable>
             <Pressable style={s.action} onPress={reset}>
               <Ionicons name="refresh-outline" size={17} color={ar.ink} />
-              <Text style={s.actionT}>Reset</Text>
+              <Text style={s.actionT}>{t(APP.reset)}</Text>
             </Pressable>
           </View>
 
           <Pressable style={s.saveBtn} onPress={save}>
             <Ionicons name="checkmark" size={18} color="#241C19" />
-            <Text style={s.saveT}>Save this framing</Text>
+            <Text style={s.saveT}>{t(APP.saveFraming)}</Text>
           </Pressable>
 
           <Text style={s.note}>Everyone will see it this way. Editing {name}</Text>

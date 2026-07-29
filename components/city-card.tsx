@@ -7,6 +7,7 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { type City } from '@/constants/geography';
 import { eduImage } from '@/constants/education-images';
+import { getLang } from '@/lib/i18n';
 
 const MAP_RATIO = 700 / 539;
 const MAP_W = 128;
@@ -47,7 +48,7 @@ export function CityCard({ city }: { city: City }) {
       <View style={styles.textCol}>
         <Text style={styles.name}>{city.name}</Text>
         <Text style={styles.fa}>{city.persian}</Text>
-        <Text style={styles.blurb}>{city.blurb}</Text>
+        <Text style={[styles.blurb, getLang() === 'fa' && (city as any).blurbFa && { fontFamily: fonts.persian, fontSize: 13, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (city as any).blurbFa ? (city as any).blurbFa : city.blurb}</Text>
         <Pressable style={styles.seeBtn} onPress={() => setOpen(true)}>
           <Ionicons name="images-outline" size={13} color={dark.gold} />
           <Text style={styles.seeText}>SEE IT</Text>

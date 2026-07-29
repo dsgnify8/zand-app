@@ -158,6 +158,12 @@ function ModuleCard({ mod, i }: { mod: LearnModule; i: number }) {
 }
 
 export default function LearnScreen() {
+  // First time in: the level questionnaire is the whole screen.
+  const { asked: levelAsked } = useLevel();
+  useEffect(() => {
+    if (!levelAsked) router.replace('/learn/level' as any);
+  }, [levelAsked]);
+
   const [open, setOpen] = useState(false);
   const [known, setKnown] = useState<string[]>([]);
   const y = useRef(new Animated.Value(0)).current;

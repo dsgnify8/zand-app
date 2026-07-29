@@ -10,6 +10,7 @@ import { UNITS } from '@/constants/curriculum';
 import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
+import { Art } from '@/components/lang-art';
 
 type Card = { fa: string; tr: string; en: string };
 
@@ -62,6 +63,7 @@ export default function ReviewScreen() {
           </Pressable>
         </View>
         <View style={s.mid}>
+          <Art name="bird" size={104} style={{ opacity: 0.5, marginBottom: 8 }} />
           <Text style={s.emptyFa}>هنوز نه</Text>
           <Text style={s.emptyT}>Nothing to review yet</Text>
           <Text style={s.emptyX}>Finish a lesson or two and your words will collect here.</Text>

@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFrame } from '@/lib/image-frames';
 import { isAdmin } from '@/lib/admin';
 import { ReframeEditor } from '@/components/reframe-editor';
+import { t, useLang } from '@/lib/i18n';
+import { APP } from '@/constants/i18n/app';
 
 // Fills the box with the image (cover, no distortion), then nudges it so the
 // chosen focal point sits in view, optionally zoomed in.
@@ -80,7 +82,7 @@ export function FramedImage({
           {!inner && isAdmin() ? (
             <View style={{ alignItems: 'center', gap: 4 }}>
               <Ionicons name="add-circle-outline" size={22} color="rgba(36,28,25,0.4)" />
-              <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 9, letterSpacing: 1, color: 'rgba(36,28,25,0.4)' }}>HOLD TO ADD</Text>
+              <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 9, letterSpacing: 1, color: 'rgba(36,28,25,0.4)' }}>{t(APP.holdToAdd)}</Text>
             </View>
           ) : null}
         </View>
