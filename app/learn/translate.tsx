@@ -7,8 +7,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
+import { lw } from '@/constants/lang-theme';
 import { speak } from '@/lib/speak';
 import { supabase } from '@/lib/supabase';
+import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib/listen';
 
 const LANGS: { code: string; label: string; native: string }[] = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -42,13 +44,49 @@ export default function TranslateScreen() {
   const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState<Entry[]>([]);
   const inputRef = useRef<TextInput>(null);
+  const recorder = useAudioRecorder(WAV_16K);
+  const [listening, setListening] = useState(false);
+  const [hearing, setHearing] = useState(false);
+  const [allOpen, setAllOpen] = useState(false);
+
+  const forget = (q: string) => {
+    const next = history.filter((h) => h.q !== q);
+    setHistory(next);
+    AsyncStorage.setItem(K_HISTORY, JSON.stringify(next)).catch(() => {});
+  };
+
+  const startListen = async () => {
+    const ok = await askMic();
+    if (!ok) { setError('Microphone permission is needed to speak.'); return; }
+    setError(null);
+    try {
+      await recorder.prepareToRecordAsync();
+      recorder.record();
+      setListening(true);
+    } catch { setError('Could not start recording.'); }
+  };
+
+  const stopListen = async () => {
+    setListening(false);
+    setHearing(true);
+    try {
+      await recorder.stop();
+      await new Promise((r) => setTimeout(r, 350));
+      const uri = recorder.uri;
+      if (!uri) return;
+      const heard = await transcribe(uri, STT_LOCALE[from] ?? 'en-US');
+      if (heard) setInput(heard);
+      else setError('I did not catch that. Try again.');
+    } catch { setError('Something went wrong.'); }
+    finally { setHearing(false); }
+  };
 
   useEffect(() => {
     AsyncStorage.getItem(K_HISTORY).then((v) => { if (v) { try { setHistory(JSON.parse(v)); } catch {} } });
   }, []);
 
   const remember = (e: Entry) => {
-    const next = [e, ...history.filter((h) => h.q !== e.q)].slice(0, 8);
+    const next = [e, ...history.filter((h) => h.q !== e.q)].slice(0, 20);
     setHistory(next);
     AsyncStorage.setItem(K_HISTORY, JSON.stringify(next)).catch(() => {});
   };
@@ -134,6 +172,20 @@ export default function TranslateScreen() {
           onSubmitEditing={translate}
         />
 
+        <View style={s.micRow}>
+          <Pressable
+            style={[s.micBtn, listening && s.micBtnOn]}
+            onPress={() => (listening ? stopListen() : startListen())}
+          >
+            {hearing
+              ? <ActivityIndicator size="small" color={lw.green} />
+              : <Ionicons name="mic" size={17} color={listening ? '#FFF' : lw.green} />}
+            <Text style={[s.micT, listening && s.micTOn]}>
+              {listening ? 'tap to stop' : hearing ? 'thinking…' : 'tap to speak'}
+            </Text>
+          </Pressable>
+        </View>
+
         {input.length > 0 ? (
           <View style={s.inputTools}>
             <Pressable hitSlop={8} onPress={clear}><Text style={s.clearT}>Clear</Text></Pressable>
@@ -162,13 +214,33 @@ export default function TranslateScreen() {
           </View>
         ) : null}
 
-        {/* recents */}
-        {history.length > 0 && !output ? (
-          <View style={{ marginTop: spacing.xxl * 2.5 }}>
-            <Text style={s.recentLabel}>RECENT</Text>
-            {history.map((h, i) => (
-              <Pressable key={i} style={s.recentRow}
-                onPress={() => { setFrom(h.from); setTo(h.to); setInput(h.q); setOutput(h.a); setTranslit(h.tr ?? null); }}>
+        {/* talk to someone */}
+        <Pressable style={s.converse} onPress={() => router.navigate('/learn/converse' as any)}>
+          <Ionicons name="swap-vertical-outline" size={16} color={lw.green} />
+          <View style={{ flex: 1 }}>
+            <Text style={s.converseT}>Talk to someone</Text>
+            <Text style={s.converseX}>Two people, two languages, spoken aloud both ways.</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
+        </Pressable>
+
+        {/* recents, three at a time */}
+        {history.length > 0 ? (
+          <View style={{ marginTop: spacing.xxl }}>
+            <View style={s.recentHead}>
+              <Text style={s.recentLabel}>RECENT</Text>
+              {history.length > 3 ? (
+                <Pressable hitSlop={8} onPress={() => setAllOpen(true)}>
+                  <Text style={s.seeAllT}>see all {history.length}</Text>
+                </Pressable>
+              ) : null}
+            </View>
+            {history.slice(0, 3).map((h, i) => (
+              <Pressable
+                key={i}
+                style={s.recentRow}
+                onPress={() => { setFrom(h.from); setTo(h.to); setInput(h.q); setOutput(h.a); setTranslit(h.tr ?? null); }}
+              >
                 <View style={{ flex: 1 }}>
                   <Text style={s.recentQ} numberOfLines={1}>{h.q}</Text>
                   <Text style={[s.recentA, isFa(h.to) && s.resultRtl]} numberOfLines={1}>{h.a}</Text>
@@ -179,8 +251,48 @@ export default function TranslateScreen() {
           </View>
         ) : null}
 
+
         <Text style={s.note}>Machine translation. Double-check anything that matters.</Text>
       </ScrollView>
+
+      {/* all recent translations */}
+      <Modal transparent visible={allOpen} animationType="slide" onRequestClose={() => setAllOpen(false)}>
+        <Pressable style={s.backdrop} onPress={() => setAllOpen(false)}>
+          <Pressable style={s.sheet} onPress={() => {}}>
+            <View style={s.grab} />
+            <View style={s.recentHead}>
+              <Text style={s.sheetTitle2}>Recent translations</Text>
+              <Pressable
+                hitSlop={8}
+                onPress={() => { setHistory([]); AsyncStorage.removeItem(K_HISTORY).catch(() => {}); setAllOpen(false); }}
+              >
+                <Text style={s.clearAllT}>clear all</Text>
+              </Pressable>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {history.map((h, i) => (
+                <View key={i} style={s.histRow}>
+                  <Pressable
+                    style={{ flex: 1 }}
+                    onPress={() => {
+                      setFrom(h.from); setTo(h.to); setInput(h.q); setOutput(h.a); setTranslit(h.tr ?? null);
+                      setAllOpen(false);
+                    }}
+                  >
+                    <Text style={s.recentQ} numberOfLines={1}>{h.q}</Text>
+                    <Text style={[s.recentA, isFa(h.to) && s.resultRtl]} numberOfLines={1}>{h.a}</Text>
+                  </Pressable>
+                  <Pressable hitSlop={10} onPress={() => forget(h.q)}>
+                    <Ionicons name="close" size={17} color={colors.textSecondary} />
+                  </Pressable>
+                </View>
+              ))}
+              <View style={{ height: 60 }} />
+            </ScrollView>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
 
       {/* language picker */}
       <Modal transparent visible={picking !== null} animationType="slide" onRequestClose={() => setPicking(null)}>
@@ -229,6 +341,19 @@ const s = StyleSheet.create({
   input: { fontFamily: fonts.body, fontSize: 26, lineHeight: 36, color: colors.textPrimary, paddingTop: spacing.xl, minHeight: 120, textAlignVertical: 'top' },
   inputRtl: { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' },
   inputTools: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.md },
+  micRow: { alignItems: 'center', marginTop: spacing.lg },
+  micBtn: { flexDirection: 'row', alignItems: 'center', gap: 7, borderWidth: 1, borderColor: lw.greenPale, borderRadius: 22, paddingVertical: 10, paddingHorizontal: spacing.xl },
+  micBtnOn: { backgroundColor: lw.green, borderColor: lw.green },
+  micT: { fontFamily: fonts.body, fontSize: 13, color: lw.inkSoft },
+  micTOn: { color: '#FFF' },
+  converse: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: lw.greenWash, borderWidth: 1.5, borderColor: lw.green, borderRadius: 14, padding: spacing.md, marginTop: spacing.xxl },
+  converseT: { fontFamily: fonts.body, fontSize: 15, color: colors.textPrimary },
+  converseX: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, marginTop: 2 },
+  recentHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.sm },
+  seeAllT: { fontFamily: fonts.body, fontSize: 12, color: lw.green },
+  clearAllT: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary },
+  sheetTitle2: { fontFamily: fonts.body, fontSize: 20, color: colors.textPrimary },
+  histRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border },
   clearT: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary },
   go: { backgroundColor: colors.accent, borderRadius: 22, paddingVertical: 11, paddingHorizontal: spacing.xl, minWidth: 116, alignItems: 'center' },
   goT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },

@@ -25,7 +25,7 @@ type Topic = {
 
 const TOPICS: Topic[] = [
   { key: 'history', title: 'History', titleT: SECTIONS.history, descT: SECTIONS.historyX, persian: 'تاریخ', description: 'From ancient empires to the modern age.', image: 'cyrus-cover', status: 'ready', route: '/education/history' },
-  { key: 'geography', title: 'Geography', titleT: SECTIONS.geography, descT: SECTIONS.geographyX, persian: 'جغرافیا', description: 'Land, cities, and landscapes.', image: 'iran-crossroads', status: 'ready', route: '/geography' },
+  { key: 'geography', title: 'Geography', titleT: SECTIONS.geography, descT: SECTIONS.geographyX, persian: 'جغرافیا', description: 'Land, cities, and landscapes.', image: 'geo-cover', status: 'ready', route: '/geography' },
   { key: 'traditions', title: 'Traditions', titleT: SECTIONS.traditions, descT: SECTIONS.traditionsX, persian: 'آیین‌ها', description: 'The customs and celebrations of the Persian year.', image: 'nowruz-cover', status: 'ready', route: '/traditions' },
   { key: 'literature', title: 'Literature', titleT: SECTIONS.literature, descT: SECTIONS.literatureX, persian: 'ادبیات', description: 'The poets and writers who shaped the Persian soul.', image: 'lit-ferdowsi-cover', status: 'ready', route: '/literature' },
   { key: 'language', title: 'Language', titleT: SECTIONS.language, descT: SECTIONS.languageX, persian: 'زبان', description: 'The roots and life of Persian.', image: 'silence-cover', status: 'ready', route: '/language' },

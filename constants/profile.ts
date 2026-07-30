@@ -41,7 +41,7 @@ export const READING: ReadingItem[] = [
     chapter: 'The Fal', page: 7, total: 11, route: '/literature/reader?author=hafez&page=6' },
   { key: 'r2', title: 'Cyrus the Great', sub: 'The Shepherd King', image: 'cyrus-cover',
     chapter: 'The Cylinder', page: 12, total: 24, route: '/education/reader?topic=cyrus-the-great&page=11' },
-  { key: 'r3', title: 'Geography', sub: 'The Land', image: 'iran-crossroads',
+  { key: 'r3', title: 'Geography', sub: 'The Land', image: 'geo-cover',
     chapter: 'Provinces', page: 4, total: 7, route: '/geography' },
 ];
 

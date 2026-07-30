@@ -10,13 +10,15 @@ let configured = false;
 // url cache for this session, so repeat taps are instant
 const urls = new Map<string, string>();
 
-async function urlFor(text: string, slow: boolean) {
-  const cacheKey = (slow ? 's|' : 'n|') + text;
+async function urlFor(text: string, slow: boolean, lang: string) {
+  // the language has to be part of the key, or the same words in two
+  // languages collide and one gets served the other's audio
+  const cacheKey = lang + '|' + (slow ? 's' : 'n') + '|' + text;
   const hit = urls.get(cacheKey);
   if (hit) return hit;
 
   const { data, error } = await supabase.functions.invoke('speak', {
-    body: { text, lang: 'fa', slow },
+    body: { text, lang, slow },
   });
   if (error || !data?.url) return null;
   urls.set(cacheKey, data.url);
@@ -32,7 +34,7 @@ export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }
     }
     if (current) { try { current.remove(); } catch {} current = null; }
 
-    const uri = await urlFor(text, slow);
+    const uri = await urlFor(text, slow, lang);
     if (!uri) return;
 
     const player = createAudioPlayer({ uri });
@@ -43,5 +45,5 @@ export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }
 
 // Warm the cache for a lesson's phrases so the first tap is not a wait.
 export function prewarm(texts: string[]) {
-  texts.slice(0, 12).forEach((t) => { urlFor(t, false).catch(() => {}); });
+  texts.slice(0, 12).forEach((t) => { urlFor(t, false, 'fa').catch(() => {}); });
 }

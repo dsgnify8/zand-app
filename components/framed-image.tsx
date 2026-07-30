@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Image, LayoutChangeEvent, Pressable, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -33,19 +33,28 @@ export function FramedImage({
   const [uriBad, setUriBad] = useState(false);
   const src: ImageSourcePropType | undefined = (frame.uri && !uriBad) ? { uri: frame.uri } : source;
 
-  // resolve the image aspect ratio so we can cover-fill precisely
-  if (imgAR === null && src) {
+  // Resolve the image aspect ratio so we can cover-fill precisely.
+  // This has to happen in an effect: setting state during render leaves the
+  // value stale, and a stale ratio with resizeMode stretch distorts the image.
+  useEffect(() => {
+    if (imgAR !== null || !src) return;
     if (frame.uri) {
-      Image.getSize(frame.uri, (w, h) => setImgAR(w / h), () => { setImgAR(1); setUriBad(true); });
+      Image.getSize(
+        frame.uri,
+        (w, h) => setImgAR(w && h ? w / h : null),
+        () => { setUriBad(true); setImgAR(null); },
+      );
     } else if (source) {
       const r = Image.resolveAssetSource(source as any);
       if (r?.width && r?.height) setImgAR(r.width / r.height);
-      else setImgAR(1);
     }
-  }
+  }, [src, frame.uri, imgAR]);
 
   let inner = null;
-  if (src && box.w > 0 && imgAR) {
+  if (src && box.w > 0 && !imgAR) {
+    // ratio not known yet: fill the box properly rather than distorting
+    inner = <Image source={src} style={StyleSheet.absoluteFill as any} resizeMode="cover" />;
+  } else if (src && box.w > 0 && imgAR) {
     const boxAR = box.w / box.h;
     // cover-fill: scale so the image covers the box on its tighter axis
     let dispW: number, dispH: number;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { loadTpmAccess } from '@/lib/tpm-access';
 import { loadReminders } from '@/lib/reminders';
 import { loadStrength } from '@/lib/word-strength';
 import { loadLearnProgress } from '@/lib/learn-progress';
@@ -65,7 +66,7 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
-  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); }, []);
+  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -92,6 +93,8 @@ export default function RootLayout() {
             <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
             <Stack.Screen name="auth/forgot" options={{ headerShown: false }} />
             <Stack.Screen name="admin" options={{ headerShown: false }} />
+            <Stack.Screen name="tpm/post" options={{ headerShown: false }} />
+            <Stack.Screen name="tpm/about" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/path" options={{ headerShown: false }} />
