@@ -1,7 +1,17 @@
 // Tappable glossary terms. Add freely — reused across all education content.
-export type GlossaryTerm = { id: string; term: string; title: string; description: string; titleFa?: string; descriptionFa?: string };
+export type GlossaryTerm = { id: string; term: string; title: string; description: string; titleFa?: string; descriptionFa?: string; video?: string; videoLabel?: string };
 
 export const GLOSSARY: Record<string, GlossaryTerm> = {
+  'hoveyda': {
+    id: 'hoveyda',
+    term: 'Hoveyda',
+    title: 'Amir-Abbas Hoveyda',
+    titleFa: 'امیرعباس هویدا',
+    description: 'Prime Minister from 1965 to 1977, the longest serving in Iranian history. Arrested by the Shah\u2019s own government in late 1978 as a concession to the protests, tried by a revolutionary court and executed on 7 April 1979.',
+    descriptionFa: 'نخست‌وزیر ایران از ۱۹۶۵ تا ۱۹۷۷، طولانی‌ترین دورهٔ نخست‌وزیری در تاریخ ایران. اواخر ۱۹۷۸ به دست دولت خودِ شاه و در پاسخ به اعتراض‌ها بازداشت شد، در دادگاه انقلاب محاکمه و در ۷ آوریل ۱۹۷۹ اعدام شد.',
+    video: '/section/videos?playlist=hoveyda',
+    videoLabel: 'Watch: the life of Hoveyda',
+  },
   'khayyam': {
     id: 'khayyam',
     term: 'Omar Khayyam',

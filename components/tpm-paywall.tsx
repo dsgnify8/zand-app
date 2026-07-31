@@ -69,7 +69,7 @@ export function Paywall({ onDone }: { onDone: () => void }) {
       <Text style={s.small}>
         Billed through the App Store. Renews every two weeks until cancelled.
       </Text>
-      <Text style={s.demo}>Demo — nothing is charged</Text>
+      <Text style={s.demo}>Demo — nothing is charged, and the wall will return</Text>
     </View>
   );
 }

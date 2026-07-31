@@ -33,7 +33,34 @@ export function getFrame(name: string): Frame {
   return cache[name] ?? DEFAULT_FRAME;
 }
 
+// Frames are content decisions, not personal settings: framing an image once
+// should hold for everyone, on every device. Local storage keeps it instant;
+// Supabase makes it permanent.
+async function syncFrameUp(name: string, frame: { fx: number; fy: number; zoom: number }) {
+  try {
+    const { supabase } = await import('@/lib/supabase');
+    await supabase.from('image_frames').upsert({
+      name, fx: frame.fx, fy: frame.fy, zoom: frame.zoom, updated_at: new Date().toISOString(),
+    });
+  } catch {}
+}
+
+export async function loadRemoteFrames() {
+  try {
+    const { supabase } = await import('@/lib/supabase');
+    const { data } = await supabase.from('image_frames').select('name, fx, fy, zoom');
+    if (!data) return;
+    for (const row of data as any[]) {
+      const existing = cache[row.name];
+      // a locally uploaded image wins; only the framing comes from the server
+      cache[row.name] = { ...(existing ?? DEFAULT_FRAME), fx: row.fx, fy: row.fy, zoom: row.zoom };
+    }
+    listeners.forEach((l) => l());
+  } catch {}
+}
+
 export async function saveFrame(name: string, frame: Frame) {
+  syncFrameUp(name, { fx: frame.fx, fy: frame.fy, zoom: frame.zoom });
   cache = { ...cache, [name]: frame };
   listeners.forEach((l) => l());
   try { await AsyncStorage.setItem(KEY(name), JSON.stringify(frame)); } catch {}

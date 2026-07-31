@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
   cardFa: { fontFamily: fonts.persian, fontSize: 13, color: dark.gold, marginTop: 1 },
   shots: { gap: spacing.sm },
   shot: { width: '100%' },
-  shotImg: { width: '100%', height: 128, borderRadius: radius.md, backgroundColor: dark.bg },
+  shotImg: { width: '100%', height: 200, borderRadius: radius.md, backgroundColor: dark.bg },
   shotPh: { alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: dark.hair },
 });

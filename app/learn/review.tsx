@@ -58,7 +58,7 @@ export default function ReviewScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
         <View style={s.top}>
-          <Pressable hitSlop={12} onPress={() => router.back()}>
+          <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
             <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
           </Pressable>
         </View>
@@ -105,7 +105,7 @@ export default function ReviewScreen() {
           <Text style={s.emptyX}>
             {pct >= 80 ? 'These are yours now.' : 'The ones you missed will come round again.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => router.back()}>
+          <Pressable style={s.cta} onPress={() => router.replace('/learn/map' as any)}>
             <Text style={s.ctaT}>Done</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
@@ -121,7 +121,7 @@ export default function ReviewScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.back()}>
+        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>

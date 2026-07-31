@@ -10,12 +10,15 @@ import { eduImage } from '@/constants/education-images';
 import { eduVideo } from '@/constants/education-media';
 import { IranMap } from '@/components/iran-map';
 import { GlossaryText } from '@/components/glossary-text';
+import { CurrencyChart, BasketTable } from '@/components/currency-chart';
+import { Memorial } from '@/components/memorial-flower';
 import { SvgTest } from '@/components/svg-test';
 import { useReading } from '@/lib/reading-store';
 import { useProgress } from '@/lib/progress-store';
 import { useEffect, useState } from 'react';
 import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
+import { FramedImage } from '@/components/framed-image';
 
 function BlockView({ b }: { b: Block }) {
   switch (b.t) {
@@ -23,6 +26,9 @@ function BlockView({ b }: { b: Block }) {
     case 'p': return <Text style={styles.p}>{b.x}</Text>;
     case 'ptext': return <GlossaryText text={b.x} />;
     case 'pull': return <Text style={styles.pull}>{b.x}</Text>;
+    case 'chart': return <CurrencyChart />;
+    case 'basket': return <BasketTable />;
+    case 'memorial': return <Memorial />;
     case 'q': return (
       <View style={styles.quote}>
         <Text style={styles.quoteText}>{b.x}</Text>
@@ -68,12 +74,16 @@ function BlockView({ b }: { b: Block }) {
     );
     case 'img': {
       const src = eduImage(b.key);
-      return src ? (
+      // FramedImage rather than Image, so an admin can long-press to upload
+      // and reframe, and so empty slots still show a placeholder.
+      return (
         <View style={styles.imgWrap}>
-          <Image source={src} style={styles.imgReal} resizeMode="cover" />
+          <View style={styles.imgReal}>
+            <FramedImage name={b.key} source={src} style={StyleSheet.absoluteFill as any} />
+          </View>
           {b.cap ? <Text style={styles.imgCap}>{b.cap}</Text> : null}
         </View>
-      ) : <Placeholder cap={b.cap} tall />;
+      );
     }
     case 'imgwide': {
       const src = eduImage(b.key);

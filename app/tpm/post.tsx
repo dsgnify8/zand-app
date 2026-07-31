@@ -45,7 +45,7 @@ export default function TpmPostScreen() {
           <Pressable hitSlop={12} onPress={() => router.back()}>
             <Ionicons name="chevron-back" size={23} color={tpm.ink} />
           </Pressable>
-          <TpmMark size={17} />
+          <TpmMark size={24} />
           <View style={{ width: 23 }} />
         </View>
         <View style={s.rule} />

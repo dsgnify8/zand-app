@@ -19,10 +19,10 @@ export type Step =
   | { t: 'meet'; fa: string; tr: string; en: string; literal?: string }
   | { t: 'sense'; fa: string; tr: string; en: string; body: string }
   | { t: 'sentence'; fa: string; tr: string; en: string; focus?: string }
-  | { t: 'listen'; fa: string; tr: string; en: string; options: string[]; optionTrs?: Record<string, string> }
-  | { t: 'build'; fa: string; tr: string; en: string; parts: string[]; partTrs?: Record<string, string> }
+  | { t: 'listen'; fa: string; tr: string; en: string; options: string[]; optionTrs?: Record<string, string>; optionEns?: Record<string, string> }
+  | { t: 'build'; fa: string; tr: string; en: string; parts: string[]; partTrs?: Record<string, string>; partEns?: Record<string, string> }
   | { t: 'write'; fa: string; tr: string; en: string; hint?: string }
-  | { t: 'choose'; prompt: string; answer: string; options: string[]; why?: string; optionTrs?: Record<string, string> }
+  | { t: 'choose'; prompt: string; answer: string; options: string[]; why?: string; optionTrs?: Record<string, string>; optionEns?: Record<string, string> }
   | { t: 'gap'; before: string; after: string; answer: string; tr: string; en: string;
       options: string[]; optionTrs?: Record<string, string>; why?: string }
   | { t: 'type'; fa: string; tr: string; en: string; hint?: string }
@@ -116,6 +116,7 @@ const greetings: Lesson = {
       answer: 'خوبم، مرسی. تو خوبی؟',
       options: ['خوبم، مرسی. تو خوبی؟', 'سلام سلام', 'خداحافظ', 'مرسی خداحافظ'],
       optionTrs: { 'خوبم، مرسی. تو خوبی؟': 'khubam, mersi. to khubi?', 'سلام سلام': 'salām salām', 'خداحافظ': 'khodāhāfez', 'مرسی خداحافظ': 'mersi khodāhāfez' },
+      optionEns: { 'خوبم، مرسی. تو خوبی؟': 'I am well, thanks. Are you well?', 'سلام سلام': 'hello hello', 'خداحافظ': 'goodbye', 'مرسی خداحافظ': 'thanks, goodbye' },
       why: 'You answer, you thank them, and you ask back. The return question is the part that matters.',
     },
     {

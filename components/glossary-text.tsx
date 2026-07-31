@@ -7,6 +7,7 @@ import { dark } from '@/constants/education';
 import { findTerm } from '@/constants/glossary';
 import { useGlossary } from '@/lib/glossary-store';
 import { getLang } from '@/lib/i18n';
+import { router } from 'expo-router';
 
 // Renders a paragraph where {{term-id|visible text}} becomes a tappable link.
 export function GlossaryText({ text }: { text: string }) {
@@ -50,13 +51,29 @@ export function GlossaryText({ text }: { text: string }) {
             </View>
             <Text style={[styles.cardTitle, fa && (term as any)?.titleFa && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' }]}>{fa && (term as any)?.titleFa ? (term as any).titleFa : term?.title}</Text>
             <Text style={[styles.cardDesc, fa && (term as any)?.descriptionFa && { fontFamily: fonts.persian, fontSize: 14, lineHeight: 28, textAlign: 'right', writingDirection: 'rtl' }]}>{fa && (term as any)?.descriptionFa ? (term as any).descriptionFa : term?.description}</Text>
-            <Pressable
+            {(term as any)?.video ? (
+              <Pressable
+                style={styles.watchBtn}
+                onPress={() => {
+                  const to = (term as any).video;
+                  setOpenId(null);
+                  setTimeout(() => router.navigate(to as any), 180);
+                }}
+              >
+                <Ionicons name="play-circle" size={18} color={dark.bg} />
+                <Text style={styles.watchT}>{(term as any).videoLabel ?? 'Watch'}</Text>
+              </Pressable>
+            ) : null}
+
+            {!(term as any)?.video ? (
+              <Pressable
               style={[styles.saveBtn, saved && styles.saveBtnOn]}
               onPress={() => term && toggleSaved(term.id)}
             >
               <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={18} color={saved ? dark.bg : dark.text} />
               <Text style={[styles.saveText, saved && styles.saveTextOn]}>{fa ? (saved ? 'ذخیره شد' : 'ذخیره کن برای بعد') : (saved ? 'Saved to read later' : 'Save to read later')}</Text>
             </Pressable>
+            ) : null}
           </Pressable>
         </Pressable>
       </Modal>
@@ -73,6 +90,8 @@ const styles = StyleSheet.create({
   cardEyebrow: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.5, color: dark.gold },
   cardTitle: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: dark.text, marginTop: spacing.xs },
   cardDesc: { fontFamily: fonts.body, fontSize: fontSize.sm, lineHeight: 20, color: dark.text, opacity: 0.9, marginTop: spacing.xs },
+  watchBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7, backgroundColor: dark.gold, borderRadius: 11, paddingVertical: 11, marginBottom: 8 },
+  watchT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: dark.bg },
   saveBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, borderWidth: 1, borderColor: dark.hair, borderRadius: radius.pill, paddingVertical: spacing.sm, marginTop: spacing.md },
   saveBtnOn: { backgroundColor: dark.gold, borderColor: dark.gold },
   saveText: { fontFamily: fonts.bodyStrong, fontSize: fontSize.sm, color: dark.text },

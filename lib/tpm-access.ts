@@ -4,10 +4,15 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const FREE_READS = 5;
+export const FREE_READS = 3;
+
+// While the subscription is a demo, the wall keeps appearing every few reads
+// even after subscribing, so it can be checked without resetting anything.
+export const DEMO_ALWAYS_SHOW = true;
 
 let read: string[] = [];
 let subscribed = false;
+let sinceWall = 0;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 
@@ -29,8 +34,16 @@ export function hasRead(key: string) { return read.includes(key); }
 
 // True when this post can be opened.
 export function canRead(key: string) {
+  // Already opened: never lock something the reader has seen.
+  if (read.includes(key)) return true;
+
+  if (DEMO_ALWAYS_SHOW) {
+    // Demo: the wall returns every FREE_READS new pieces, whether or not
+    // the reader has subscribed, so it can be shown repeatedly while testing.
+    return sinceWall < FREE_READS;
+  }
+
   if (subscribed) return true;
-  if (read.includes(key)) return true;      // already opened, never lock it again
   return read.length < FREE_READS;
 }
 
@@ -41,6 +54,7 @@ export function readsLeft() {
 export async function markRead(key: string) {
   if (read.includes(key)) return;
   read = [...read, key];
+  sinceWall += 1;
   emit();
   try { await AsyncStorage.setItem(K_READ, JSON.stringify(read)); } catch {}
 }
@@ -48,6 +62,7 @@ export async function markRead(key: string) {
 // Demo: flips the flag, no payment involved.
 export async function subscribe() {
   subscribed = true;
+  sinceWall = 0;   // demo: start the next three
   emit();
   try { await AsyncStorage.setItem(K_SUB, '1'); } catch {}
 }
@@ -66,4 +81,13 @@ export function useTpmAccess() {
     return () => { listeners.delete(l); };
   }, []);
   return { read: read.length, subscribed, left: readsLeft() };
+}
+
+// Clears everything, so the demo can be run from the start again.
+export async function resetTpm() {
+  read = [];
+  subscribed = false;
+  sinceWall = 0;
+  emit();
+  try { await AsyncStorage.multiRemove([K_READ, K_SUB]); } catch {}
 }

@@ -65,10 +65,10 @@ export function NoteStep({ s }: { s: Extract<Step, { t: 'note' }> }) {
 
 /* Pick the right answer. Used for both `choose` and `listen`. */
 export function ChoiceStep({
-  prompt, options, answer, why, audio, trs, onResolve,
+  prompt, options, answer, why, audio, trs, ens, onResolve,
 }: {
   prompt: string; options: string[]; answer: string; why?: string;
-  audio?: string; trs?: Record<string, string>; onResolve: (right: boolean) => void;
+  audio?: string; trs?: Record<string, string>; ens?: Record<string, string>; onResolve: (right: boolean) => void;
 }) {
   const [picked, setPicked] = useState<string | null>(null);
   const done = picked !== null;
@@ -107,6 +107,7 @@ export function ChoiceStep({
             >
               <Text style={[st.optT, done && isAnswer && st.optTRight, done && isPicked && !isAnswer && st.optTWrong]}>{o}</Text>
               {trs?.[o] ? <Text style={st.optTr}>{trs[o]}</Text> : null}
+              {ens?.[o] ? <Text style={st.optEn}>{ens[o]}</Text> : null}
             </Pressable>
           );
         })}
@@ -152,6 +153,7 @@ export function BuildStep({
           <Pressable key={p} disabled={checked} onPress={() => setChosen((v) => [...v, p])} style={st.chip}>
             <Text style={st.chipT}>{p}</Text>
             {s.partTrs?.[p] ? <Text style={st.chipTr}>{s.partTrs[p]}</Text> : null}
+            {(s as any).partEns?.[p] ? <Text style={st.chipEn}>{(s as any).partEns[p]}</Text> : null}
           </Pressable>
         ))}
       </View>
@@ -287,6 +289,8 @@ const st = StyleSheet.create({
   optTRight: { color: lw.green },
   optTWrong: { color: lw.wrong },
 
+  optEn: { fontFamily: fonts.body, fontSize: 11, color: lw.green, textAlign: 'center', marginTop: 2 },
+  chipEn: { fontFamily: fonts.body, fontSize: 10, color: lw.green, textAlign: 'center', marginTop: 1 },
   optTr: { fontFamily: fonts.body, fontSize: 12, color: lw.muted, textAlign: 'center', marginTop: 3 },
   chipTr: { fontFamily: fonts.body, fontSize: 11, color: lw.muted, textAlign: 'center', marginTop: 2 },
   letterSound: { fontFamily: fonts.body, fontSize: 9.5, color: lw.muted, marginTop: 1 },
@@ -498,6 +502,8 @@ const gp = StyleSheet.create({
   optFade: { opacity: 0.4 },
   optT: { fontFamily: fonts.persian, fontSize: 20, color: lw.ink, textAlign: 'center' },
   optTRight: { color: lw.green },
+  optEn: { fontFamily: fonts.body, fontSize: 11, color: lw.green, textAlign: 'center', marginTop: 2 },
+  chipEn: { fontFamily: fonts.body, fontSize: 10, color: lw.green, textAlign: 'center', marginTop: 1 },
   optTr: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted, textAlign: 'center', marginTop: 3 },
   why: { borderRadius: 12, padding: spacing.lg, marginTop: spacing.lg, alignItems: 'center' },
   whyRight: { backgroundColor: lw.greenWash },

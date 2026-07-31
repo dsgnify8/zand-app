@@ -3,11 +3,24 @@ import { supabase } from '@/lib/supabase';
 
 export const ADMIN_EMAIL = 'nojan.zandesh@gmail.com';
 
+// Gmail ignores dots in the local part, so nojan.zandesh and nojanzandesh are
+// the same inbox. A plain string compare would treat them as different people.
+function sameAddress(a?: string | null, b?: string | null) {
+  const norm = (x?: string | null) => {
+    if (!x) return '';
+    const [local, domain = ''] = x.trim().toLowerCase().split('@');
+    const isGoogle = domain === 'gmail.com' || domain === 'googlemail.com';
+    return (isGoogle ? local.replace(/\./g, '').split('+')[0] : local) + '@' + domain;
+  };
+  return norm(a) === norm(b) && norm(a) !== '@';
+}
+
 // plain check used outside React (e.g. FramedImage). Reads cached session email.
 let _adminEmail: string | null = null;
 const adminListeners = new Set<() => void>();
-export function setAdminEmail(email: string | null) { _adminEmail = email; adminListeners.forEach((l) => l()); }
-export function isAdmin() { return _adminEmail === ADMIN_EMAIL; }
+export function setAdminEmail(email: string | null) {
+  console.log('[admin] signed in as:', email, '| expecting:', ADMIN_EMAIL, '| match:', email === ADMIN_EMAIL); _adminEmail = email; adminListeners.forEach((l) => l()); }
+export function isAdmin() { return sameAddress(_adminEmail, ADMIN_EMAIL); }
 
 export function useIsAdmin() {
   const [, tick] = useState(0);
@@ -16,7 +29,7 @@ export function useIsAdmin() {
     adminListeners.add(l);
     return () => { adminListeners.delete(l); };
   }, []);
-  return _adminEmail === ADMIN_EMAIL;
+  return sameAddress(_adminEmail, ADMIN_EMAIL);
 }
 
 // log a read/open event for analytics (fire and forget)

@@ -95,7 +95,7 @@ export default function LessonScreen() {
           ) : (
             <Text style={s.finishScore}>Lesson complete</Text>
           )}
-          <Pressable style={[s.cta, s.finishBtn]} onPress={() => router.back()}>
+          <Pressable style={[s.cta, s.finishBtn]} onPress={() => router.replace('/learn/map' as any)}>
             <Text style={s.ctaT}>Done</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setAnswered(false); setScore({ right: 0, total: 0 }); setDone(false); }}>
@@ -109,7 +109,7 @@ export default function LessonScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.back()}>
+        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
@@ -133,10 +133,10 @@ export default function LessonScreen() {
           {step.t === 'letter' ? <LetterStep s={step} /> : null}
           {step.t === 'vowel' ? <VowelStep s={step} /> : null}
           {step.t === 'choose' ? (
-            <ChoiceStep prompt={step.prompt} options={step.options} answer={step.answer} why={step.why} trs={(step as any).optionTrs} onResolve={resolve} />
+            <ChoiceStep prompt={step.prompt} options={step.options} answer={step.answer} why={step.why} trs={(step as any).optionTrs} ens={(step as any).optionEns} onResolve={resolve} />
           ) : null}
           {step.t === 'listen' ? (
-            <ChoiceStep prompt="What did you hear?" options={step.options} answer={step.fa} why={step.tr + '  ·  ' + step.en} audio={step.fa} trs={(step as any).optionTrs} onResolve={resolve} />
+            <ChoiceStep prompt="What did you hear?" options={step.options} answer={step.fa} why={step.tr + '  ·  ' + step.en} audio={step.fa} trs={(step as any).optionTrs} ens={(step as any).optionEns} onResolve={resolve} />
           ) : null}
           {step.t === 'gap' ? <GapStep s={step} onResolve={resolve} /> : null}
           {step.t === 'build' ? <BuildStep s={step} onResolve={resolve} /> : null}

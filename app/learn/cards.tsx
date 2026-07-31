@@ -85,7 +85,7 @@ export default function CardsScreen() {
               ? 'Every one of them. Come back tomorrow and see if they stayed.'
               : 'The ones you did not know will keep coming back until they stick.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => router.back()}>
+          <Pressable style={s.cta} onPress={() => router.replace('/learn/map' as any)}>
             <Text style={s.ctaT}>Done</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setShown(false); setKnown([]); setDone(false); flip.setValue(0); }}>
@@ -107,7 +107,7 @@ export default function CardsScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.back()}>
+        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>

@@ -10,7 +10,8 @@ import { TPM_POSTS, TPM_CREATIVES, type TpmPost } from '@/constants/tpm-content'
 import { FramedImage } from '@/components/framed-image';
 import { eduImage } from '@/constants/education-images';
 import { TpmMark } from '@/components/tpm-mark';
-import { readCount } from '@/lib/tpm-access';
+import { readCount, resetTpm } from '@/lib/tpm-access';
+import { useIsAdmin } from '@/lib/admin';
 
 const W = Dimensions.get('window').width;
 
@@ -81,6 +82,7 @@ function BandPost({ p }: { p: TpmPost }) {
 export default function TpmScreen() {
   const [filter, setFilter] = useState('all');
   const read = readCount();
+  const isAdmin = useIsAdmin();
 
   const posts = filter === 'all' ? TPM_POSTS : TPM_POSTS.filter((p) => p.kind === filter);
 
@@ -105,10 +107,8 @@ export default function TpmScreen() {
     <View style={{ flex: 1, backgroundColor: tpm.paper }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
         <View style={s.head}>
-          <TpmMark size={22} />
-          <Pressable hitSlop={10} onPress={() => router.navigate('/tpm/about' as any)}>
-            <Ionicons name="ellipsis-horizontal" size={20} color={tpm.ink} />
-          </Pressable>
+          <TpmMark size={56} />
+          <View style={{ width: 20 }} />
         </View>
 
         <View style={s.rule} />
@@ -159,9 +159,14 @@ export default function TpmScreen() {
           </ScrollView>
 
           <View style={s.foot}>
-            <TpmMark size={16} color={tpm.faint} />
+            <TpmMark size={14} />
             <Text style={s.footT}>THE PERSIAN MAG</Text>
             {read > 0 ? <Text style={s.footRead}>{read} read</Text> : null}
+            {isAdmin ? (
+              <Pressable hitSlop={10} onPress={() => resetTpm()}>
+                <Text style={s.footReset}>reset demo</Text>
+              </Pressable>
+            ) : null}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -170,7 +175,7 @@ export default function TpmScreen() {
 }
 
 const s = StyleSheet.create({
-  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
+  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 2, paddingRight: spacing.lg, paddingVertical: spacing.sm },
   rule: { height: 2, backgroundColor: tpm.ink },
 
   intro: { paddingHorizontal: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.lg },
@@ -214,5 +219,6 @@ const s = StyleSheet.create({
 
   foot: { alignItems: 'center', gap: 6, paddingTop: spacing.xl, borderTopWidth: 1, borderTopColor: tpm.hair, marginHorizontal: spacing.lg },
   footT: { fontFamily: fonts.bodyStrong, fontSize: 8.5, letterSpacing: 2.5, color: tpm.faint },
+  footReset: { fontFamily: fonts.body, fontSize: 10.5, color: tpm.red, marginTop: 4 },
   footRead: { fontFamily: fonts.body, fontSize: 10.5, color: tpm.faint },
 });

@@ -32,7 +32,7 @@ export default function TabLayout() {
         name="tpm"
         options={{
           title: 'TPM',
-          tabBarIcon: ({ focused, size }) => <TpmIcon size={size} color={focused ? tpm.red : colors.textSecondary} />,
+          tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 8} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
       <Tabs.Screen name="profile" options={{ title: t(NAV.profile), tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />

@@ -1,5 +1,8 @@
 // Maps content image keys to bundled assets. Add a line as you add each image.
 export const EDU_IMAGES: Record<string, any> = {
+  'modern-cover': require('../assets/education/modern-cover.jpeg'),
+  'geo-cities-cover': require('../assets/education/geo-cities-cover.jpg'),
+  'geo-heart-cover': require('../assets/education/geo-heart-cover.jpg'),
   'geo-cover': require('../assets/education/geo-cover.jpg'),
   'article-zadeh-hero': require('../assets/education/article-zadeh-hero.jpg'),
   'article-zadeh-cover': require('../assets/education/article-zadeh-cover.jpg'),

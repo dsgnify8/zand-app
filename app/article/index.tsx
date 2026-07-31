@@ -9,7 +9,7 @@ import { ar, articleByKey, type ArBlock, hasFarsi } from '@/constants/articles';
 import { eduImage } from '@/constants/education-images';
 import { FramedImage } from '@/components/framed-image';
 import { useSaved, markRead, saveScroll, getScroll } from '@/lib/saved-store';
-import { useLang } from '@/lib/i18n';
+import { useLang, t } from '@/lib/i18n';
 import { bump, recordFinished } from '@/lib/stats-store';
 import { logEvent } from '@/lib/admin';
 import { SendArticleSheet } from '@/components/send-article-sheet';

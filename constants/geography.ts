@@ -214,6 +214,7 @@ export const GEO_CHAPTERS: GeoChapter[] = [
     subtitleFa: 'مردم کجا هستند',
     pages: [
       { blocks: [
+        { t: 'imgwide', key: 'geo-cities-cover' },
         { t: 'p', x: 'A country is its cities, and Iran cities were placed by water and by road. Where a mountain stream could be tapped, or a trade route had to pass, a city grew. Some have stood so long that their founding is myth rather than record.', fa: 'کشور همان شهرهایش است، و شهرهای ایران را آب و راه جانمایی کرده‌اند. هر جا می‌شد چشمه‌ای کوهستانی را گرفت، یا راه بازرگانی ناچار از آنجا می‌گذشت، شهری بالا آمد. بعضی‌شان چنان دیرپا هستند که بنیادشان به جای تاریخ، در اسطوره ثبت شده.' },
         { t: 'cities' },
       ] },
