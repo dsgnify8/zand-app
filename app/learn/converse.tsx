@@ -131,7 +131,7 @@ export default function ConverseScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.nav}>
-        <Pressable hitSlop={12} onPress={() => router.back()}>
+        <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn' as any))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
         <Text style={s.navT}>Conversation</Text>

@@ -21,7 +21,7 @@ export default function ReadScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
         <View style={s.top}>
-          <Pressable hitSlop={12} onPress={() => router.back()}>
+          <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn' as any))}>
             <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
           </Pressable>
         </View>

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { resetForDemo } from '@/lib/demo-mode';
 import { loadTpmAccess } from '@/lib/tpm-access';
 import { loadRemoteFrames } from '@/lib/image-frames';
 import { loadReminders } from '@/lib/reminders';
@@ -38,13 +40,28 @@ export const unstable_settings = {
   anchor: '(tabs)',
 };
 
+export let onboardingDone: () => void = () => {};
+
 function AuthGate() {
+  // Onboarding runs before anything else, once, unless demo mode clears it.
+  const [onboarded, setOnboarded] = useState<boolean | null>(null);
+  useEffect(() => {
+    AsyncStorage.getItem('onboarded')
+      .then((v) => setOnboarded(v === '1'))
+      .catch(() => setOnboarded(true));
+  }, []);
+
+  // The onboarding screen calls this when it finishes, so the gate does not
+  // keep redirecting back on its stale value.
+  useEffect(() => { onboardingDone = () => setOnboarded(true); }, []);
   const { session, loading } = useAuth();
   const segments = useSegments();
   useFriendDeepLink(session?.user?.id);
   useEffect(() => {
     if (loading) return;
     const inAuth = segments[0] === 'auth';
+    if (onboarded === null) return;               // still reading storage
+    if (!onboarded) { router.replace('/onboarding' as any); return; }
     if (!session && !inAuth) router.replace('/auth/sign-in');
     if (session && inAuth) router.replace('/');
   }, [session, loading, segments]);
@@ -67,7 +84,8 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
-  useEffect(() => { loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); }, []);
+  useEffect(() => { resetForDemo().then(() => { loadLevel(); });
+    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -93,9 +111,10 @@ export default function RootLayout() {
             <Stack.Screen name="auth/sign-in" options={{ headerShown: false }} />
             <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
             <Stack.Screen name="auth/forgot" options={{ headerShown: false }} />
+            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
             <Stack.Screen name="admin" options={{ headerShown: false }} />
             <Stack.Screen name="tpm/post" options={{ headerShown: false }} />
-            <Stack.Screen name="learn/level" options={{ headerShown: false }} />
+            <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/path" options={{ headerShown: false }} />
             <Stack.Screen name="learn/map" options={{ headerShown: false }} />

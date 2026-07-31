@@ -10,6 +10,7 @@ import { subscribe, FREE_READS } from '@/lib/tpm-access';
 // Demo only. Nothing is charged; the App Store flow is not wired.
 export function Paywall({ onDone }: { onDone: () => void }) {
   const [busy, setBusy] = useState(false);
+  const [plan, setPlan] = useState<'year' | 'month'>('year');
   const [done, setDone] = useState(false);
 
   const buy = async () => {
@@ -43,9 +44,23 @@ export function Paywall({ onDone }: { onDone: () => void }) {
         The Persian Mag publishes: the portraits, the studio visits, the archive.
       </Text>
 
-      <View style={s.price}>
-        <Text style={s.priceN}>$2.99</Text>
-        <Text style={s.priceX}>every two weeks</Text>
+      <View style={s.plans}>
+        <Pressable style={[s.plan, plan === 'year' && s.planOn]} onPress={() => setPlan('year')}>
+          <View style={s.planTop}>
+            <Text style={[s.planN, plan === 'year' && s.planNOn]}>$75</Text>
+            <View style={s.saveTag}><Text style={s.saveTagT}>SAVE 22%</Text></View>
+          </View>
+          <Text style={s.planX}>for a year, paid once</Text>
+          <Text style={s.planSub}>works out at $6.25 a month</Text>
+        </Pressable>
+
+        <Pressable style={[s.plan, plan === 'month' && s.planOn]} onPress={() => setPlan('month')}>
+          <View style={s.planTop}>
+            <Text style={[s.planN, plan === 'month' && s.planNOn]}>$7.99</Text>
+          </View>
+          <Text style={s.planX}>a month</Text>
+          <Text style={s.planSub}>cancel whenever you like</Text>
+        </Pressable>
       </View>
 
       <View style={s.perks}>
@@ -63,11 +78,11 @@ export function Paywall({ onDone }: { onDone: () => void }) {
       </View>
 
       <Pressable style={[s.cta, busy && { opacity: 0.7 }]} disabled={busy} onPress={buy}>
-        {busy ? <ActivityIndicator color={tpm.paper} /> : <Text style={s.ctaT}>Subscribe</Text>}
+        {busy ? <ActivityIndicator color={tpm.paper} /> : <Text style={s.ctaT}>{plan === 'year' ? 'Subscribe for a year' : 'Subscribe monthly'}</Text>}
       </Pressable>
 
       <Text style={s.small}>
-        Billed through the App Store. Renews every two weeks until cancelled.
+        {plan === 'year' ? 'Billed once through the App Store. Renews yearly until cancelled.' : 'Billed monthly through the App Store. Cancel any time.'}
       </Text>
       <Text style={s.demo}>Demo — nothing is charged, and the wall will return</Text>
     </View>
@@ -81,6 +96,16 @@ const s = StyleSheet.create({
   title: { fontFamily: fonts.bodyStrong, fontSize: 30, letterSpacing: -0.5, color: tpm.ink, marginTop: spacing.lg },
   body: { fontFamily: fonts.body, fontSize: 14, lineHeight: 23, color: tpm.inkSoft, textAlign: 'center', marginTop: spacing.md, maxWidth: 320 },
 
+  plans: { alignSelf: 'stretch', gap: spacing.sm, marginTop: spacing.xl },
+  plan: { borderWidth: 1.5, borderColor: tpm.hair, padding: spacing.lg },
+  planOn: { borderColor: tpm.red, backgroundColor: tpm.redWash },
+  planTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  planN: { fontFamily: fonts.bodyStrong, fontSize: 28, letterSpacing: -1, color: tpm.ink },
+  planNOn: { color: tpm.red },
+  planX: { fontFamily: fonts.body, fontSize: 13.5, color: tpm.ink, marginTop: 2 },
+  planSub: { fontFamily: fonts.body, fontSize: 11.5, color: tpm.muted, marginTop: 2 },
+  saveTag: { backgroundColor: tpm.red, paddingVertical: 3, paddingHorizontal: 7 },
+  saveTagT: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.2, color: tpm.paper },
   price: { alignItems: 'center', marginTop: spacing.xl },
   priceN: { fontFamily: fonts.bodyStrong, fontSize: 42, letterSpacing: -1.5, color: tpm.red },
   priceX: { fontFamily: fonts.body, fontSize: 12, color: tpm.muted, marginTop: 2 },

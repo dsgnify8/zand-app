@@ -32,7 +32,7 @@ function BlockView({ b }: { b: Block }) {
     case 'q': return (
       <View style={styles.quote}>
         <Text style={styles.quoteText}>{b.x}</Text>
-        {b.by ? <Text style={styles.quoteBy}>{'\u2014 ' + b.by}</Text> : null}
+        {b.by ? <Text style={styles.quoteBy}>{'\u2014 ' + (getLang() === 'fa' && (b as any).byFa ? (b as any).byFa : b.by)}</Text> : null}
       </View>
     );
     case 'call': return (
@@ -159,8 +159,8 @@ function BlockView({ b }: { b: Block }) {
       <View style={styles.boxGrid}>
         {b.items.map((it, i) => (
           <View key={i} style={styles.box}>
-            <Text style={styles.boxTitle}>{it.title}</Text>
-            <Text style={styles.boxText}>{it.x}</Text>
+            <Text style={styles.boxTitle}>{getLang() === 'fa' && (it as any).titleFa ? (it as any).titleFa : it.title}</Text>
+            <Text style={styles.boxText}>{getLang() === 'fa' && (it as any).fa ? (it as any).fa : it.x}</Text>
           </View>
         ))}
       </View>
@@ -172,8 +172,8 @@ function BlockView({ b }: { b: Block }) {
           <View key={i} style={styles.stepRow}>
             <Text style={styles.stepNum}>{String(i + 1).padStart(2, '0')}</Text>
             <View style={styles.stepText}>
-              <Text style={styles.stepTitle}>{it.title}</Text>
-              <Text style={styles.stepBody}>{it.x}</Text>
+              <Text style={styles.stepTitle}>{getLang() === 'fa' && (it as any).titleFa ? (it as any).titleFa : it.title}</Text>
+              <Text style={styles.stepBody}>{getLang() === 'fa' && (it as any).fa ? (it as any).fa : it.x}</Text>
             </View>
           </View>
         ))}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -21,6 +22,9 @@ export default function LevelScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
+        <Pressable hitSlop={12} style={s.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn' as any))}>
+          <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
+        </Pressable>
         <Art name="cypress" size={92} style={s.art} />
         <Text style={s.eyebrow}>PERSIAN  ·  فارسی</Text>
         <Text style={s.title}>Where do{'\n'}you start?</Text>
@@ -61,6 +65,7 @@ const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: lw.bg },
   body: { paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: spacing.lg },
 
+  back: { alignSelf: 'flex-start', paddingVertical: 6, paddingRight: 12 },
   art: { alignSelf: 'flex-end', opacity: 0.5, marginBottom: -8 },
   eyebrow: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 3, color: lw.muted },
   title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green, marginTop: spacing.md },
