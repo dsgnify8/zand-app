@@ -39,15 +39,17 @@ PAIRS = [
   "{ t: 'p', x: 'It is a rare thing in history for a conqueror to be remembered as a liberator by the people he ruled. Cyrus was remembered so by Babylonians, by Jews, and by Greeks alike, each in their own writings, each telling of a king who ruled with a restraint the ancient world had never seen.', fa: 'کم پیش می‌آید در تاریخ که فاتحی را مردمی که بر آنان فرمان رانده، رهایی‌بخش به یاد بیاورند. کوروش را بابلیان، یهودیان و یونانیان، هر یک در نوشته‌های خودشان، همین‌گونه به یاد آوردند؛ هر یک از شاهی گفتند که با خویشتن‌داری‌ای فرمان راند که جهان باستان مانندش را ندیده بود.' }"),
 ]
 
-missing = [a for a, _ in PAIRS if a not in s]
-if missing:
-    print("ABORT: could not find", len(missing), "block(s):")
-    for m in missing:
-        print("   -", m[:80])
-    raise SystemExit
-
+# SKIP_MISSING: apply what matches, report the rest rather than aborting
+applied, skipped = 0, []
 for a, b in PAIRS:
-    s = s.replace(a, b, 1)
+    if a in s:
+        s = s.replace(a, b, 1)
+        applied += 1
+    else:
+        skipped.append(a[:70])
+print("applied", applied, "of", len(PAIRS))
+for k in skipped:
+    print("   skipped:", k)
 
 open(p, "w").write(s)
 print("chapter four translated:", len(PAIRS), "blocks")

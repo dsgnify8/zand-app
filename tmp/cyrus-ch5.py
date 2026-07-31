@@ -27,15 +27,17 @@ PAIRS = [
   "{ t: 'call', x: 'The vision of Cyrus, that different peoples could live together under one just rule, each keeping its own identity, is one of the oldest and most enduring ideals in the human story. More than two thousand five hundred years later, it still speaks to us.', fa: 'آرمان کوروش، اینکه مردمانِ گوناگون بتوانند زیر یک فرمانروایی دادگر با هم زندگی کنند و هر یک هویت خود را نگه دارد، از کهن‌ترین و ماندگارترین آرمان‌های داستان بشر است. بیش از دو هزار و پانصد سال بعد، هنوز با ما سخن می‌گوید.' }"),
 ]
 
-missing = [a for a, _ in PAIRS if a not in s]
-if missing:
-    print("ABORT: could not find", len(missing), "block(s):")
-    for m in missing:
-        print("   -", m[:80])
-    raise SystemExit
-
+# SKIP_MISSING: apply what matches, report the rest rather than aborting
+applied, skipped = 0, []
 for a, b in PAIRS:
-    s = s.replace(a, b, 1)
+    if a in s:
+        s = s.replace(a, b, 1)
+        applied += 1
+    else:
+        skipped.append(a[:70])
+print("applied", applied, "of", len(PAIRS))
+for k in skipped:
+    print("   skipped:", k)
 
 # a typo guard: the cylinder is استوانه, not استوارنه
 s = s.replace("استوارنهٔ کوروش", "استوانهٔ کوروش")

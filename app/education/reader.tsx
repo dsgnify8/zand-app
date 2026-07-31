@@ -16,29 +16,35 @@ import { SvgTest } from '@/components/svg-test';
 import { useReading } from '@/lib/reading-store';
 import { useProgress } from '@/lib/progress-store';
 import { useEffect, useState } from 'react';
-import { t, useLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 import { FramedImage } from '@/components/framed-image';
 
 function BlockView({ b }: { b: Block }) {
+  // Farsi when the app is in Farsi and this block has been translated.
+  const fa = getLang() === 'fa';
+  const tx = (blk: any) => (fa && blk.fa ? blk.fa : blk.x);
+  const faOn = (blk: any) => fa && !!blk.fa;
+  const rtl = fa ? styles.rtl : undefined;
+
   switch (b.t) {
-    case 'h': return <Text style={styles.h}>{b.x}</Text>;
-    case 'p': return <Text style={styles.p}>{b.x}</Text>;
-    case 'ptext': return <GlossaryText text={b.x} />;
-    case 'pull': return <Text style={styles.pull}>{b.x}</Text>;
+    case 'h': return <Text style={[styles.h, rtl, faOn(b) && styles.faHead]}>{tx(b)}</Text>;
+    case 'p': return <Text style={[styles.p, rtl, faOn(b) && styles.faBody]}>{tx(b)}</Text>;
+    case 'ptext': return <GlossaryText text={tx(b)} />;
+    case 'pull': return <Text style={[styles.pull, rtl, faOn(b) && styles.faPull]}>{tx(b)}</Text>;
     case 'chart': return <CurrencyChart />;
     case 'basket': return <BasketTable />;
     case 'memorial': return <Memorial />;
     case 'q': return (
       <View style={styles.quote}>
-        <Text style={styles.quoteText}>{b.x}</Text>
+        <Text style={[styles.quoteText, rtl, faOn(b) && styles.faQuote]}>{tx(b)}</Text>
         {b.by ? <Text style={styles.quoteBy}>{'\u2014 ' + (getLang() === 'fa' && (b as any).byFa ? (b as any).byFa : b.by)}</Text> : null}
       </View>
     );
     case 'call': return (
       <View style={styles.call}>
-        <Text style={styles.callTitle}>{b.title}</Text>
-        <Text style={styles.callText}>{b.x}</Text>
+        <Text style={[styles.callTitle, rtl]}>{fa && (b as any).titleFa ? (b as any).titleFa : b.title}</Text>
+        <Text style={[styles.callText, rtl, faOn(b) && styles.faBody]}>{tx(b)}</Text>
       </View>
     );
     case 'fact': return (
@@ -81,7 +87,7 @@ function BlockView({ b }: { b: Block }) {
           <View style={styles.imgReal}>
             <FramedImage name={b.key} source={src} style={StyleSheet.absoluteFill as any} />
           </View>
-          {b.cap ? <Text style={styles.imgCap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.imgCap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -90,7 +96,7 @@ function BlockView({ b }: { b: Block }) {
       return (
         <View style={styles.imgWideWrap}>
           {src ? <Image source={src} style={styles.imgWide} resizeMode="cover" /> : <View style={[styles.imgWide, styles.ph]}><Ionicons name="image-outline" size={22} color={dark.textDim} /></View>}
-          {b.cap ? <Text style={styles.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -99,7 +105,7 @@ function BlockView({ b }: { b: Block }) {
       return (
         <View style={styles.imgSmWrap}>
           {src ? <Image source={src} style={styles.imgSm} resizeMode="cover" /> : <Placeholder cap={b.cap} small />}
-          {src && b.cap ? <Text style={styles.imgCap}>{b.cap}</Text> : null}
+          {src && b.cap ? <Text style={styles.imgCap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -113,7 +119,7 @@ function BlockView({ b }: { b: Block }) {
               : <View key={i} style={[styles.imgRowItem, styles.rowPlaceholder]}><Ionicons name="image-outline" size={22} color={dark.textDim} /></View>;
           })}
         </View>
-        {b.cap ? <Text style={styles.imgCap}>{b.cap}</Text> : null}
+        {b.cap ? <Text style={styles.imgCap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
       </View>
     );
     case 'video': {
@@ -137,7 +143,7 @@ function BlockView({ b }: { b: Block }) {
             {a ? <Image source={a} style={styles.collageA} resizeMode="cover" /> : <View style={[styles.collageA, styles.rowPlaceholder]}><Ionicons name="image-outline" size={20} color={dark.textDim} /></View>}
             {c2 ? <Image source={c2} style={styles.collageB} resizeMode="cover" /> : <View style={[styles.collageB, styles.rowPlaceholder]}><Ionicons name="image-outline" size={20} color={dark.textDim} /></View>}
           </View>
-          {b.cap ? <Text style={styles.imgCap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.imgCap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -233,7 +239,7 @@ function BlockView({ b }: { b: Block }) {
             {src ? <Image source={src} style={styles.splitImg} resizeMode="cover" /> : <View style={[styles.splitImg, styles.splitPh]}><Ionicons name="image-outline" size={22} color={dark.textDim} /></View>}
           </View>
           <View style={styles.splitText}>
-            <Text style={styles.splitTitle}>{b.title}</Text>
+            <Text style={[styles.splitTitle, rtl]}>{fa && (b as any).titleFa ? (b as any).titleFa : b.title}</Text>
             <Text style={styles.splitBody}>{b.x}</Text>
           </View>
         </View>
@@ -248,12 +254,12 @@ function BlockView({ b }: { b: Block }) {
     case 'duo': return (
       <View style={styles.duo}>
         <View style={styles.duoCol}>
-          <Text style={styles.duoTitle}>{b.left.title}</Text>
+          <Text style={[styles.duoTitle, rtl]}>{fa && (b.left as any).titleFa ? (b.left as any).titleFa : b.left.title}</Text>
           <Text style={styles.duoBody}>{b.left.x}</Text>
         </View>
         <View style={styles.duoDivider} />
         <View style={styles.duoCol}>
-          <Text style={styles.duoTitle}>{b.right.title}</Text>
+          <Text style={[styles.duoTitle, rtl]}>{fa && (b.right as any).titleFa ? (b.right as any).titleFa : b.right.title}</Text>
           <Text style={styles.duoBody}>{b.right.x}</Text>
         </View>
       </View>
@@ -392,6 +398,11 @@ export default function ReaderScreen() {
 }
 
 const styles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 16.5, lineHeight: 34 },
+  faHead: { fontFamily: fonts.persian, fontSize: 21, lineHeight: 36 },
+  faPull: { fontFamily: fonts.persian, fontSize: 20, lineHeight: 38 },
+  faQuote: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 36 },
   safe: { flex: 1, backgroundColor: dark.bg },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   dim: { fontFamily: fonts.body, fontSize: fontSize.base, color: dark.textDim },

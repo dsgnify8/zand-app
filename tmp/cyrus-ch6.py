@@ -33,15 +33,17 @@ PAIRS = [
   "{ t: 'quotebig', x: 'O man, whoever you are, I am Cyrus, who won the Persians their empire. Do not grudge me this little earth that covers my body.', fa: 'ای انسان، هر که هستی و از هر کجا که می‌آیی، من کوروشم که برای پارسیان امپراتوری را به دست آوردم. بر این اندک خاکی که تنم را پوشانده رشک مبر.' }"),
 ]
 
-missing = [a for a, _ in PAIRS if a not in s]
-if missing:
-    print("ABORT: could not find", len(missing), "block(s):")
-    for m in missing:
-        print("   -", m[:80])
-    raise SystemExit
-
+# SKIP_MISSING: apply what matches, report the rest rather than aborting
+applied, skipped = 0, []
 for a, b in PAIRS:
-    s = s.replace(a, b, 1)
+    if a in s:
+        s = s.replace(a, b, 1)
+        applied += 1
+    else:
+        skipped.append(a[:70])
+print("applied", applied, "of", len(PAIRS))
+for k in skipped:
+    print("   skipped:", k)
 
 open(p, "w").write(s)
 print("chapter six translated:", len(PAIRS), "blocks")

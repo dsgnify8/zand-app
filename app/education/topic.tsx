@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark, findTopic, flattenPages, TOPICS } from '@/constants/education';
 import { eduImage } from '@/constants/education-images';
-import { t, useLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 export default function TopicScreen() {
@@ -46,7 +46,7 @@ export default function TopicScreen() {
         </View>
 
         <View style={styles.body}>
-          <Text style={styles.essence}>{topic.essence}</Text>
+          <Text style={[styles.essence, getLang() === 'fa' && (topic as any).essenceFa && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl', fontSize: 15, lineHeight: 30 }]}>{getLang() === 'fa' && (topic as any).essenceFa ? (topic as any).essenceFa : topic.essence}</Text>
 
           <View style={styles.metaRow}>
             <View style={styles.metaChip}><Ionicons name="book-outline" size={15} color={dark.gold} /><Text style={styles.metaText}>{topic.chapters.length} chapters</Text></View>
@@ -69,7 +69,7 @@ export default function TopicScreen() {
                 <Pressable key={c.key} style={styles.chRow} onPress={() => router.navigate('/education/reader?topic=' + topic.key + '&page=' + startPage as any)}>
                   <Text style={styles.chNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.chText}>
-                    <Text style={styles.chTitle}>{c.title}</Text>
+                    <Text style={[styles.chTitle, getLang() === 'fa' && (c as any).titleFa && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (c as any).titleFa ? (c as any).titleFa : c.title}</Text>
                     {c.subtitle ? <Text style={styles.chSub}>{c.subtitle}  ·  {c.pages.length} pages</Text> : null}
                   </View>
                   <Ionicons name="chevron-forward" size={18} color={dark.textDim} />

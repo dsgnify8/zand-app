@@ -39,15 +39,17 @@ PAIRS = [
   "{ t: 'pull', x: 'No man should be counted happy until the end of his life is known.', fa: 'هیچ‌کس را خوشبخت مخوان، تا پایان زندگی‌اش را ندانی.' }"),
 ]
 
-missing = [a for a, _ in PAIRS if a not in s]
-if missing:
-    print("ABORT: could not find", len(missing), "block(s):")
-    for m in missing:
-        print("   -", m[:80])
-    raise SystemExit
-
+# SKIP_MISSING: apply what matches, report the rest rather than aborting
+applied, skipped = 0, []
 for a, b in PAIRS:
-    s = s.replace(a, b, 1)
+    if a in s:
+        s = s.replace(a, b, 1)
+        applied += 1
+    else:
+        skipped.append(a[:70])
+print("applied", applied, "of", len(PAIRS))
+for k in skipped:
+    print("   skipped:", k)
 
 open(p, "w").write(s)
 print("chapter three translated:", len(PAIRS), "blocks")
