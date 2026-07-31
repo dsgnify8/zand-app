@@ -12,11 +12,11 @@ export const dark = {
 };
 
 export type Block =
-  | { t: 'h'; x: string }
-  | { t: 'p'; x: string }
-  | { t: 'ptext'; x: string }
-  | { t: 'pull'; x: string }
-  | { t: 'q'; x: string; by?: string }
+  | { t: 'h'; x: string; fa?: string }
+  | { t: 'p'; x: string; fa?: string }
+  | { t: 'ptext'; x: string; fa?: string }
+  | { t: 'pull'; x: string; fa?: string }
+  | { t: 'q'; x: string; fa?: string; by?: string }
   | { t: 'call'; title: string; x: string }
   | { t: 'fact'; label: string; value: string }
   | { t: 'stat'; items: { value: string; label: string }[] }
@@ -30,21 +30,26 @@ export type Block =
   | { t: 'boxes'; items: { title: string; x: string }[] }
   | { t: 'steps'; items: { title: string; x: string }[] }
   | { t: 'keyvalue'; items: { k: string; v: string }[] }
-  | { t: 'quotebig'; x: string; by?: string }
+  | { t: 'quotebig'; x: string; fa?: string; by?: string }
   | { t: 'era'; value: string; label: string }
   | { t: 'numstat'; items: { n: string; label: string }[] }
   | { t: 'ribbon'; items: { year: string; label: string }[] }
   | { t: 'splitimg'; key: string; title: string; x: string }
-  | { t: 'markline'; x: string }
+  | { t: 'markline'; x: string; fa?: string }
   | { t: 'duo'; left: { title: string; x: string }; right: { title: string; x: string } }
   | { t: 'video'; key: string; cap?: string }
   | { t: 'map'; cap?: string }
   | { t: 'div' };
 
 export type Page = { blocks: Block[] };
-export type Chapter = { key: string; title: string; subtitle?: string; pages: Page[] };
+export type Chapter = {
+  titleFa?: string;
+  subtitleFa?: string; key: string; title: string; subtitle?: string; pages: Page[] };
 
 export type Topic = {
+  nameFa?: string;
+  essenceFa?: string;
+  closingFa?: string;
   key: string;
   category: string;
   name: string;
@@ -625,9 +630,11 @@ const cyrus: Topic = {
   key: 'cyrus-the-great',
   category: 'history',
   name: 'Cyrus the Great',
+  nameFa: 'کوروش بزرگ',
   persian: 'کوروش بزرگ',
   years: 'c. 600 – 530 BCE',
   essence: 'The founder of the first Persian Empire, and of an idea of just and tolerant rule that echoes to this day.',
+  essenceFa: 'بنیان‌گذار نخستین امپراتوری ایران، و آغازگر اندیشه‌ای از فرمانروایی دادگر و بردبار که پژواکش تا امروز رسیده است.',
   cover: 'cyrus-cover',
   closing: 'cyrus-tomb',
   status: 'ready',
@@ -642,7 +649,9 @@ const cyrus: Topic = {
     {
       key: 'cy1',
       title: 'A King Is Born',
+      titleFa: 'شاهی زاده می‌شود',
       subtitle: 'c. 600 BCE',
+      subtitleFa: 'حدود ۶۰۰ پیش از میلاد',
       pages: [
         { blocks: [
           { t: 'p', x: 'More than two and a half thousand years ago, in the highlands of what is now southern Iran, a child was born who would change the shape of the ancient world. His name was Kurush, whom history remembers as Cyrus, and the empire he built would be the largest the world had yet seen.' },
@@ -672,7 +681,9 @@ const cyrus: Topic = {
     {
       key: 'cy2',
       title: 'The Rise Against the Medes',
+      titleFa: 'برخاستن در برابر مادها',
       subtitle: 'c. 553 – 550 BCE',
+      subtitleFa: 'حدود ۵۵۳ تا ۵۵۰ پیش از میلاد',
       pages: [
         { blocks: [
           { t: 'p', x: 'When Cyrus came to the throne of Persia around 559 BCE, his people were still vassals of the Median king Astyages, the very grandfather who, in legend, had once tried to kill him. For a time the young king bided his time, gathering the loyalty of the Persian tribes and waiting for his moment.' },
@@ -697,7 +708,9 @@ const cyrus: Topic = {
     {
       key: 'cy3',
       title: 'Croesus and the Fall of Lydia',
+      titleFa: 'کرزوس و سقوط لیدیه',
       subtitle: 'c. 547 BCE',
+      subtitleFa: 'حدود ۵۴۷ پیش از میلاد',
       pages: [
         { blocks: [
           { t: 'p', x: 'To the west lay Lydia, a kingdom of legendary wealth ruled by Croesus, whose very name became a byword for riches. Alarmed by the rise of Persia, Croesus resolved to strike first, and before he marched he sent to the famous oracle at Delphi to ask what would happen if he made war on Cyrus.' },
@@ -721,7 +734,9 @@ const cyrus: Topic = {
     {
       key: 'cy4',
       title: 'Babylon and the Freeing of the Captives',
+      titleFa: 'بابل و آزادی اسیران',
       subtitle: '539 BCE',
+      subtitleFa: '۵۳۹ پیش از میلاد',
       pages: [
         { blocks: [
           { t: 'p', x: 'Now only one of the great powers stood between Cyrus and mastery of the known world: Babylon, the ancient and magnificent city on the Euphrates, its walls counted among the wonders of the earth. In 539 BCE, Cyrus turned toward it.' },
@@ -745,6 +760,7 @@ const cyrus: Topic = {
     {
       key: 'cy5',
       title: 'The Empire and Its Ideals',
+      titleFa: 'امپراتوری و آرمان‌هایش',
       subtitle: 'The vision of Cyrus',
       pages: [
         { blocks: [
@@ -771,7 +787,9 @@ const cyrus: Topic = {
     {
       key: 'cy6',
       title: 'The Death of a King',
+      titleFa: 'مرگ یک شاه',
       subtitle: 'c. 530 BCE',
+      subtitleFa: 'حدود ۵۳۰ پیش از میلاد',
       pages: [
         { blocks: [
           { t: 'p', x: 'Even the greatest of kings must meet his end. In his final years Cyrus turned to secure the far northeastern frontier of his empire, where the fierce nomadic peoples of Central Asia raided the borders. It was there, around 530 BCE, that he met his death, campaigning against a people the Greeks called the Massagetae.' },
@@ -793,22 +811,23 @@ const cyrus: Topic = {
     {
       key: 'cy7',
       title: 'The Legacy That Endures',
+      titleFa: 'میراثی که مانده است',
       subtitle: 'From his day to ours',
       pages: [
         { blocks: [
-          { t: 'p', x: 'The empire Cyrus founded did not die with him. Under his son Cambyses and then Darius the Great it grew still larger, reaching into Egypt and to the plains of India and the edge of Europe, and it endured for two hundred years as the mightiest power on earth, until the coming of Alexander.' },
-          { t: 'p', x: 'But the deeper legacy of Cyrus was not his empire. It was his example. He showed that a ruler could be strong and merciful at once, that a conqueror could also be a liberator, and that an empire of many peoples could be bound together by respect rather than fear.' },
+          { t: 'p', x: 'The empire Cyrus founded did not die with him. Under his son Cambyses and then Darius the Great it grew still larger, reaching into Egypt and to the plains of India and the edge of Europe, and it endured for two hundred years as the mightiest power on earth, until the coming of Alexander.', fa: 'امپراتوری‌ای که کوروش بنیان نهاد با او نمرد. زیر فرمان پسرش کمبوجیه و سپس داریوش بزرگ باز هم بزرگ‌تر شد، تا مصر و دشت‌های هند و کرانهٔ اروپا پیش رفت، و دویست سال نیرومندترین قدرت روی زمین ماند، تا آمدن اسکندر.' },
+          { t: 'p', x: 'But the deeper legacy of Cyrus was not his empire. It was his example. He showed that a ruler could be strong and merciful at once, that a conqueror could also be a liberator, and that an empire of many peoples could be bound together by respect rather than fear.', fa: 'اما میراث ژرف‌تر کوروش امپراتوری‌اش نبود؛ سرمشقی بود که گذاشت. نشان داد فرمانروا می‌تواند هم نیرومند باشد و هم بخشنده، فاتح می‌تواند رهایی‌بخش هم باشد، و امپراتوری‌ای از مردمان بسیار را می‌توان با احترام به هم بست، نه با ترس.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The king the world remembered' },
-          { t: 'p', x: 'The Greeks, who were his people\'s great rivals, could not help but admire him. Xenophon wrote a whole book, the Cyropaedia, holding Cyrus up as the model of the ideal ruler, a book later read by kings and thinkers for centuries. The founders of nations far in the future would look back to Cyrus as an example of just rule.' },
+          { t: 'h', x: 'The king the world remembered', fa: 'شاهی که جهان به یادش سپرد' },
+          { t: 'p', x: 'The Greeks, who were his people\'s great rivals, could not help but admire him. Xenophon wrote a whole book, the Cyropaedia, holding Cyrus up as the model of the ideal ruler, a book later read by kings and thinkers for centuries. The founders of nations far in the future would look back to Cyrus as an example of just rule.', fa: 'یونانیان، که رقیبان بزرگ مردم او بودند، نتوانستند تحسینش نکنند. گزنفون کتابی تمام دربارهٔ او نوشت، کوروش‌نامه، و او را نمونهٔ فرمانروای آرمانی خواند؛ کتابی که قرن‌ها پس از آن شاهان و اندیشمندان می‌خواندندش. بنیان‌گذاران ملت‌هایی در آینده‌های دور، کوروش را سرمشق فرمانروایی دادگر می‌دانستند.' },
           { t: 'imgrow', keys: ['cyrus-building-1', 'cyrus-building-2'], cap: 'The remains of Pasargadae, the capital Cyrus built, still standing on the Iranian plain.' },
-          { t: 'p', x: 'For Iranians above all, he remains the father of the nation, the founder of the first Persian Empire and of an idea of Iran that has lasted through every age since. His name is spoken with a pride that has not dimmed in two and a half thousand years.' },
+          { t: 'p', x: 'For Iranians above all, he remains the father of the nation, the founder of the first Persian Empire and of an idea of Iran that has lasted through every age since. His name is spoken with a pride that has not dimmed in two and a half thousand years.', fa: 'و بیش از همه برای ایرانیان، او پدر ملت مانده است؛ بنیان‌گذار نخستین امپراتوری ایران و آغازگر اندیشه‌ای از ایران که از آن پس در هر روزگاری دوام آورده. نامش را با غروری بر زبان می‌آورند که در دو هزار و پانصد سال کم‌رنگ نشده است.' },
         ] },
         { blocks: [
           { t: 'div' },
-          { t: 'p', x: 'This has been a glimpse of the life of Cyrus the Great, the herdsman\'s foster son who became king of the world, the conqueror who ruled with mercy, the founder of an empire and of an ideal. From a small kingdom in the highlands of Persia, he built something that outlasted his empire and outlasts us still, the belief that power is noblest when it is just.' },
-          { t: 'pull', x: 'He won an empire by the sword, and kept it by justice. The world has not forgotten him.' },
+          { t: 'p', x: 'This has been a glimpse of the life of Cyrus the Great, the herdsman\'s foster son who became king of the world, the conqueror who ruled with mercy, the founder of an empire and of an ideal. From a small kingdom in the highlands of Persia, he built something that outlasted his empire and outlasts us still, the belief that power is noblest when it is just.', fa: 'این نگاهی بود کوتاه به زندگی کوروش بزرگ؛ پسرخواندهٔ چوپان که شاه جهان شد، فاتحی که با بخشش فرمان راند، بنیان‌گذار یک امپراتوری و یک آرمان. از پادشاهی کوچکی در بلندی‌های پارس، چیزی ساخت که از امپراتوری‌اش دیرتر پایید و هنوز هم از ما دیرتر می‌پاید: این باور که قدرت آنگاه شریف‌ترین است که دادگر باشد.' },
+          { t: 'pull', x: 'He won an empire by the sword, and kept it by justice. The world has not forgotten him.', fa: 'امپراتوری را با شمشیر گرفت و با داد نگه داشت. جهان او را از یاد نبرده است.' },
         ] },
       ],
     },
