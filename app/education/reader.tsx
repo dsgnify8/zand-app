@@ -49,8 +49,8 @@ function BlockView({ b }: { b: Block }) {
     );
     case 'fact': return (
       <View style={styles.fact}>
-        <Text style={styles.factLabel}>{b.label}</Text>
-        <Text style={styles.factValue}>{b.value}</Text>
+        <Text style={styles.factLabel}>{fa && (b as any).labelFa ? (b as any).labelFa : b.label}</Text>
+        <Text style={[styles.factValue, rtl]}>{fa && (b as any).valueFa ? (b as any).valueFa : b.value}</Text>
       </View>
     );
     case 'stat': return (
@@ -206,7 +206,7 @@ function BlockView({ b }: { b: Block }) {
     case 'era': return (
       <View style={styles.era}>
         <Text style={styles.eraValue}>{b.value}</Text>
-        <Text style={styles.eraLabel}>{b.label}</Text>
+        <Text style={[styles.eraLabel, rtl]}>{fa && (b as any).labelFa ? (b as any).labelFa : b.label}</Text>
       </View>
     );
     case 'numstat': return (
