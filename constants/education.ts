@@ -2267,7 +2267,7 @@ const timurid: Topic = {
         { blocks: [
           { t: 'p', x: 'In the fourteenth century, out of Central Asia, rose the last of the great steppe conquerors, a man the Persians called Timur and the West would call Tamerlane. Claiming the mantle of Genghis Khan, he built an empire by the sword across the Persian world and far beyond, and his name became a byword for both brilliance and terror.', fa: 'در سدهٔ چهاردهم، از آسیای میانه، واپسین فاتح بزرگ دشت‌ها برخاست؛ مردی که ایرانیان تیمور خواندندش و غرب او را تیمورلنگ نامید. ردای چنگیز را از آنِ خود دانست و با شمشیر امپراتوری‌ای در سراسر جهان ایرانی و بسی فراتر از آن برپا کرد. نامش مترادف شد با نبوغ و با وحشت، هر دو با هم.' },
           { t: 'p', x: 'Timur was a military genius who was never once defeated in battle across a lifetime of war, and he was also fearsomely cruel, leaving towers of skulls in the wake of his conquests. He carved out a vast empire centered on the Persian world, from India to the edge of Europe, in a career of almost ceaseless campaigning.', fa: 'تیمور نابغه‌ای نظامی بود که در تمام عمر جنگیدنش حتی یک بار در میدان شکست نخورد، و در عین حال بی‌رحمی‌اش هولناک بود؛ در پی فتوحاتش کله‌مناره‌ها بر جای می‌گذاشت. در کارنامه‌ای از لشکرکشی تقریباً بی‌وقفه، امپراتوری‌ای پهناور بر محور جهان ایرانی تراشید، از هند تا کرانهٔ اروپا.' },
-          { t: 'splitimg', key: 'timurid-timur', title: 'Timur (Tamerlane)', titleFa: 'تیمور لنگ', x: 'A conqueror never defeated in battle, and one of the most feared men in history, Timur built a vast empire across the Persian world.' },
+          { t: 'splitimg', key: 'timurid-timur', title: 'Timur (Tamerlane)', titleFa: 'تیمور لنگ', x: 'A conqueror never defeated in battle, and one of the most feared men in history, Timur built a vast empire across the Persian world.', fa: 'فاتحی که هرگز در میدان شکست نخورد و از هراس‌انگیزترین مردان تاریخ؛ تیمور امپراتوری‌ای پهناور در سراسر جهان ایرانی برپا کرد.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The jewel of Samarkand', fa: 'نگین سمرقند' },
@@ -2290,16 +2290,16 @@ const timurid: Topic = {
           { t: 'h', x: 'A king who mapped the stars', fa: 'شاهی که آسمان را نقشه کرد' },
           { t: 'p', x: 'Timur\'s grandson Ulugh Beg was that rarest of things, a king who was also a great scientist. At his capital of Samarkand he built one of the finest astronomical observatories of the medieval world, and there he and his scholars mapped the stars with an accuracy that would not be surpassed for centuries. A ruler of an empire spent his nights charting the heavens.', fa: 'الغ‌بیگ، نوهٔ تیمور، از آن چیزهای کمیاب بود: شاهی که دانشمندی بزرگ نیز بود. در پایتختش سمرقند یکی از بهترین رصدخانه‌های جهان سده‌های میانه را ساخت، و آنجا خود و دانشمندانش ستارگان را با دقتی نقشه کردند که قرن‌ها کسی از آن پیشی نگرفت. فرمانروای یک امپراتوری شب‌هایش را به ترسیم آسمان می‌گذراند.' },
           { t: 'numstat', items: [
-            { n: 'Herat', label: 'A capital of dazzling art and poetry' },
-            { n: 'Samarkand', label: 'An observatory that mapped the stars' },
-            { n: 'Painting', label: 'The golden age of the Persian miniature' },
-            { n: 'Renaissance', label: 'A flowering to rival Italy\'s' },
+            { n: 'Herat', nFa: 'هرات', label: 'A capital of dazzling art and poetry', labelFa: 'پایتختی از هنر و شعر خیره‌کننده' },
+            { n: 'Samarkand', nFa: 'سمرقند', label: 'An observatory that mapped the stars', labelFa: 'رصدخانه‌ای که آسمان را نقشه کرد' },
+            { n: 'Painting', nFa: 'نگارگری', label: 'The golden age of the Persian miniature', labelFa: 'عصر طلایی نگارگری ایرانی' },
+            { n: 'Renaissance', nFa: 'رستاخیز', label: 'A flowering to rival Italy\'s', labelFa: 'شکوفایی‌ای هم‌سنگ ایتالیا' },
           ] },
         ] },
         { blocks: [
           { t: 'h', x: 'The summit of Persian art', fa: 'قلهٔ هنر ایرانی' },
           { t: 'p', x: 'This was the golden age of the Persian miniature, the exquisite art of painting in books, which reached under the Timurids a delicacy and beauty never surpassed. It was the age of the great poet Jami and of the master painter Behzad, whose works are treasures of world art. In poetry, painting, calligraphy, and architecture, the Timurid renaissance stands as one of the summits of Persian civilization.', fa: 'این عصر طلایی نگارگری ایرانی بود، هنر ظریف نقاشی در کتاب، که زیر دست تیموریان به لطافت و زیبایی‌ای رسید که هرگز از آن پیشی گرفته نشد. روزگار جامی، شاعر بزرگ، و کمال‌الدین بهزاد، نگارگر استاد، که آثارشان از گنجینه‌های هنر جهان است. در شعر، نگارگری، خوشنویسی و معماری، رستاخیز تیموری یکی از قله‌های تمدن ایرانی است.' },
-          { t: 'splitimg', key: 'timurid-miniature', title: 'The Persian miniature', titleFa: 'نگارگری ایرانی', x: 'Under the Timurids, the art of the miniature reached a delicacy and beauty that has never been surpassed.' },
+          { t: 'splitimg', key: 'timurid-miniature', title: 'The Persian miniature', titleFa: 'نگارگری ایرانی', x: 'Under the Timurids, the art of the miniature reached a delicacy and beauty that has never been surpassed.', fa: 'زیر دست تیموریان، هنر نگارگری به لطافت و زیبایی‌ای رسید که هرگز از آن پیشی گرفته نشد.' },
           { t: 'p', x: 'The legacy reached even further. A prince of this house, Babur, would journey to India and found the great Mughal Empire, carrying the refined Persian culture of the Timurids to the subcontinent, where it would shape a whole civilization and raise wonders like the Taj Mahal.', fa: 'این میراث حتی دورتر رفت. شاهزاده‌ای از همین خاندان، بابر، راهی هند شد و امپراتوری بزرگ گورکانی را بنیان نهاد؛ فرهنگ ظریف ایرانیِ تیموریان را با خود به شبه‌قاره برد، جایی که تمدنی تمام را شکل داد و شگفتی‌هایی چون تاج‌محل را برافراشت.' },
         ] },
         { blocks: [
