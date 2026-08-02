@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { eduImage } from '@/constants/education-images';
 import { READING } from '@/constants/profile';
+import { getLang } from '@/lib/i18n';
 
 export type ContinueItem = {
   key: string;

@@ -7,7 +7,7 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { ZandHeader } from '@/components/zand-header';
 import { HISTORY_ERAS } from '@/constants/education';
 import { HistoryTimeline } from '@/components/history-timeline';
-import { t, useLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 export default function HistoryHub() {

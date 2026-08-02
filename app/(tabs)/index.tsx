@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { SECTIONS } from '@/constants/i18n/sections';
-import { t, useLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { HOME } from '@/constants/i18n/home';
 import { Animated, Image, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -331,7 +331,7 @@ export default function HomeScreen() {
               <View style={styles.dailyHead}>
                 <View style={styles.dailyRule} />
                 <Text style={styles.dailyKind}>
-                  {t(({ fact: HOME.kindFact, word: HOME.kindWord, story: HOME.kindStory, poem: HOME.kindPoem } as any)[daily.kind] ?? HOME.kindFact)}
+                  {t(({ fact: HOME.kindFact, word: HOME.kindWord, verse: HOME.kindVerse, story: HOME.kindStory, dish: HOME.kindDish, card: HOME.kindCard } as any)[daily.kind] ?? HOME.kindFact)}
                 </Text>
               </View>
               {daily.fa ? (
