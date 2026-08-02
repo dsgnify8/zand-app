@@ -73,7 +73,7 @@ function BlockView({ b }: { b: Block }) {
               <View style={styles.tlDot} />
               <View style={[styles.tlLine, i === b.items.length - 1 && styles.tlLineHidden]} />
             </View>
-            <Text style={styles.tlLabel}>{it.label}</Text>
+            <Text style={[styles.tlLabel, rtl]}>{fa && (it as any).labelFa ? (it as any).labelFa : it.label}</Text>
           </View>
         ))}
       </ScrollView>
@@ -215,7 +215,7 @@ function BlockView({ b }: { b: Block }) {
           <View key={i} style={styles.numstatItem}>
             <Text style={styles.numstatN}>{it.n}</Text>
             <View style={styles.numstatBar} />
-            <Text style={styles.numstatLabel}>{it.label}</Text>
+            <Text style={[styles.numstatLabel, rtl]}>{fa && (it as any).labelFa ? (it as any).labelFa : it.label}</Text>
           </View>
         ))}
       </View>
@@ -225,7 +225,7 @@ function BlockView({ b }: { b: Block }) {
         {b.items.map((it, i) => (
           <View key={i} style={styles.ribbonItem}>
             <View style={styles.ribbonYearWrap}><Text style={styles.ribbonYear}>{it.year}</Text></View>
-            <Text style={styles.ribbonLabel}>{it.label}</Text>
+            <Text style={[styles.ribbonLabel, rtl]}>{fa && (it as any).labelFa ? (it as any).labelFa : it.label}</Text>
             {i < b.items.length - 1 ? <View style={styles.ribbonConnector} /> : null}
           </View>
         ))}

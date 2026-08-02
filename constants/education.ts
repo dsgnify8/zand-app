@@ -674,7 +674,7 @@ const cyrus: Topic = {
           { t: 'h', x: 'The legend of the infant king', fa: 'افسانهٔ شاهِ نوزاد' },
           { t: 'p', x: 'The Greek historian Herodotus, writing a century after Cyrus, preserved a story that reads like myth. Astyages, king of the Medes and Cyrus\'s own grandfather, dreamed that his daughter\'s child would one day overthrow him. Fearing the omen, he ordered the newborn boy to be killed.', fa: 'هرودوت، تاریخ‌نگار یونانی، یک قرن پس از کوروش داستانی را نگه داشت که بیشتر به اسطوره می‌ماند. آستیاگ، شاه ماد و پدربزرگ خودِ کوروش، خواب دید که فرزند دخترش روزی او را از تخت به زیر خواهد کشید. از این نشانه ترسید و فرمان داد نوزاد را بکشند.' },
           { t: 'p', x: 'But the servant charged with the deed could not do it. The infant was given instead to a herdsman in the mountains, who raised him as his own. The child grew strong and commanding, and even at play the other children chose him as their king, so plainly did he seem born to rule.', fa: 'اما خدمتکاری که مأمور این کار شد، نتوانست انجامش دهد. نوزاد را به چوپانی در کوهستان سپردند و او کودک را چون فرزند خود بزرگ کرد. پسر نیرومند و فرمانده بار آمد، و حتی در بازی هم بچه‌های دیگر او را شاه خود می‌کردند، چنان آشکار بود که برای فرمانروایی زاده شده است.' },
-          { t: 'q', x: 'This boy, the son of a herdsman as we supposed, is in truth the grandson of the king.', by: 'Herodotus, The Histories' },
+          { t: 'q', x: 'This boy, the son of a herdsman as we supposed, is in truth the grandson of the king.', fa: 'این پسر که او را پسر چوپان می‌پنداشتیم، در حقیقت نوهٔ شاه است.', by: 'Herodotus, The Histories', byFa: 'هرودوت، تاریخ' },
         ] },
         { blocks: [
           { t: 'p', x: 'In time the truth was discovered, and the boy was restored to his royal family. Whether the tale is history or legend, it carried a deeper meaning for those who told it. Greatness, they believed, could not be hidden or destroyed. It would find its way into the world no matter what stood against it.', fa: 'سرانجام حقیقت آشکار شد و پسر را به خاندان شاهی‌اش بازگرداندند. این روایت تاریخ باشد یا افسانه، برای آنان که بازگویش می‌کردند معنایی ژرف‌تر داشت: بزرگی را نمی‌توان پنهان کرد و نمی‌توان از میان برد. راه خود را به جهان باز می‌کند، هر چه هم در برابرش بایستد.' },
@@ -1450,7 +1450,7 @@ const silence: Topic = {
     {
       key: 'tc1',
       title: 'The Silence Falls', titleFa: 'سکوت فرود می‌آید',
-      subtitle: 'After the fall',
+      subtitle: 'After the fall', titleFa: 'پس از فروپاشی',
       pages: [
         { blocks: [
           { t: 'p', x: 'When the last Sasanian king fell and the ancient empire came to its end, a strange and heavy quiet settled over the land of Iran. The throne of Cyrus was gone. The sacred fires that had burned for a thousand years grew dim. A proud and ancient nation found itself, for the first time in its long memory, conquered and ruled by others.', fa: 'چون واپسین شهریار ساسانی فرو افتاد و امپراتوری کهن به پایان رسید، خاموشی‌ای غریب و سنگین بر سرزمین ایران نشست. تخت کوروش دیگر نبود. آتش‌های مقدسی که هزار سال فروزان بودند رو به خاموشی گذاشتند. ملتی سربلند و باستانی، برای نخستین بار در حافظهٔ بلند خویش، خود را مغلوب و زیر فرمان دیگران یافت.' },
@@ -1467,7 +1467,7 @@ const silence: Topic = {
     {
       key: 'tc2',
       title: 'The Soul That Would Not Die', titleFa: 'جانی که نمرد',
-      subtitle: 'The quiet endurance',
+      subtitle: 'The quiet endurance', titleFa: 'پایداری خاموش',
       pages: [
         { blocks: [
           { t: 'p', x: 'And yet, beneath the silence, something refused to die. A conquered people may lose its throne and even its faith, and still keep its soul. And the soul of Iran, its language, its memory, its sense of who it was, endured stubbornly in the homes and the hearts of ordinary people, passed quietly from parent to child.', fa: 'با این همه، زیر آن خاموشی، چیزی از مردن سر باز زد. مردمی شکست‌خورده ممکن است تخت خود را از دست بدهند و حتی آیین خود را، و باز جان خویش را نگاه دارند. و جان ایران، یعنی زبانش، خاطره‌اش، و آن دریافتی که از خود داشت، سرسختانه در خانه‌ها و در دل مردم عادی ماند و بی‌صدا از پدر و مادر به فرزند رسید.' },
@@ -1479,10 +1479,10 @@ const silence: Topic = {
           { t: 'p', x: 'Slowly, over the generations, Iran began to stir. The Persian genius, far from being extinguished, poured itself into the new civilization and helped to build its golden age, its scholars, its poets, its statesmen shaping the culture of the whole Islamic world. Iran was not erased. It was transformed, and it transformed everything it touched.', fa: 'به‌آرامی و در گذر نسل‌ها، ایران جنبیدن گرفت. نبوغ ایرانی نه‌تنها خاموش نشده بود، که خود را در تمدن تازه ریخت و در ساختن عصر طلایی آن سهم گرفت؛ دانشمندان، شاعران و دیوانیانش فرهنگ سراسر جهان اسلام را شکل دادند. ایران محو نشد. دگرگون شد، و هر چه را که لمس کرد دگرگون ساخت.' },
           { t: 'p', x: 'And in the east, in the lands of Khorasan far from the seat of the conquerors, Persian princes began to rule again, and to gather at their courts the poets and scholars who spoke the old tongue. The Samanids and others gave shelter to the Persian language and the Persian spirit, and a great revival began to gather its strength. The silence was ending.', fa: 'و در شرق، در سرزمین خراسان و دور از مرکز فاتحان، شاهزادگان ایرانی دوباره به فرمانروایی رسیدند و شاعران و دانشمندانی را که به زبان کهن سخن می‌گفتند در دربار خود گرد آوردند. سامانیان و دیگران زبان فارسی و روح ایرانی را پناه دادند، و رستاخیزی بزرگ کم‌کم نیرو گرفت. سکوت داشت به پایان می‌رسید.' },
           { t: 'ribbon', items: [
-            { year: '651', label: 'The fall of the Sasanians; the silence begins' },
-            { year: '750', label: 'A new age dawns; Persian influence rises again' },
-            { year: '820', label: 'Persian dynasties rule once more in the east' },
-            { year: '900', label: 'The Persian language and spirit begin to bloom anew' },
+            { year: '651', label: 'The fall of the Sasanians; the silence begins', labelFa: 'فروپاشی ساسانیان؛ سکوت آغاز می‌شود' },
+            { year: '750', label: 'A new age dawns; Persian influence rises again', labelFa: 'روزگاری تازه سر می‌رسد؛ نفوذ ایرانی دوباره بالا می‌گیرد' },
+            { year: '820', label: 'Persian dynasties rule once more in the east', labelFa: 'سلسله‌های ایرانی دوباره در شرق فرمان می‌رانند' },
+            { year: '900', label: 'The Persian language and spirit begin to bloom anew', labelFa: 'زبان و روح ایرانی از نو شکفتن می‌گیرد' },
           ] },
         ] },
       ],
@@ -1490,34 +1490,34 @@ const silence: Topic = {
     {
       key: 'tc3',
       title: 'The Poet Who Saved a Language', titleFa: 'شاعری که زبانی را نجات داد',
-      subtitle: 'Ferdowsi, c. 977 - 1010',
+      subtitle: 'Ferdowsi, c. 977 - 1010', titleFa: 'فردوسی، حدود ۹۷۷ تا ۱۰۱۰',
       pages: [
         { blocks: [
           { t: 'p', x: 'Every people needs a voice to speak its soul, and Iran found hers in one of the greatest poets who ever lived. In the eastern city of Tus, a nobleman set himself a task that would consume more than thirty years of his life, and that would give Iran back its very self.', fa: 'هر ملتی صدایی می‌خواهد تا جانش را بر زبان آورد، و ایران صدای خود را در یکی از بزرگ‌ترین شاعران تاریخ یافت. در شهر توس، در شرق ایران، مردی از خاندان دهقانان کاری را بر دوش گرفت که بیش از سی سال از عمرش را برد، و ایران را به خودش بازگرداند.' },
-          { t: 'ptext', x: 'His name was {{ferdowsi|Ferdowsi}}, and his task was to gather all the ancient stories of Iran, its myths, its legends, its kings and heroes from the dawn of time to the fall of the Sasanians, and to set them down in Persian verse, in a single great epic. He called it the Shahnameh, the Book of Kings.' },
-          { t: 'splitimg', key: 'silence-ferdowsi', title: 'Ferdowsi of Tus', x: 'For over thirty years Ferdowsi labored on the Shahnameh, giving his life to preserve the stories, and the language, of his people.' },
+          { t: 'ptext', x: 'His name was {{ferdowsi|Ferdowsi}}, and his task was to gather all the ancient stories of Iran, its myths, its legends, its kings and heroes from the dawn of time to the fall of the Sasanians, and to set them down in Persian verse, in a single great epic. He called it the Shahnameh, the Book of Kings.', fa: 'نامش {{ferdowsi|فردوسی}} بود، و کاری که بر دوش گرفت این بود: همهٔ داستان‌های کهن ایران را گرد آورد، اسطوره‌ها و افسانه‌ها و شاهان و پهلوانان را، از آغاز زمان تا فروپاشی ساسانیان، و همه را در یک حماسهٔ بزرگ به شعر فارسی درآورد. آن را شاهنامه نامید، نامهٔ شاهان.' },
+          { t: 'splitimg', key: 'silence-ferdowsi', title: 'Ferdowsi of Tus', titleFa: 'فردوسیِ توس', x: 'For over thirty years Ferdowsi labored on the Shahnameh, giving his life to preserve the stories, and the language, of his people.', fa: 'فردوسی بیش از سی سال بر شاهنامه رنج برد و عمر خود را داد تا داستان‌ها، و زبان، مردمش را نگاه دارد.' },
         ] },
         { blocks: [
           { t: 'h', x: 'A book to hold a nation', fa: 'کتابی که ملتی را در خود نگاه داشت' },
           { t: 'p', x: 'The Shahnameh is one of the longest and greatest epic poems ever composed by a single hand, nearly sixty thousand verses, a whole world of kings and warriors, love and war, tragedy and glory. But it was far more than a collection of stories. It was an act of preservation, and of defiance.', fa: 'شاهنامه از بلندترین و بزرگ‌ترین حماسه‌هایی است که به دست یک تن سروده شده؛ نزدیک شصت هزار بیت، جهانی تمام از شاهان و پهلوانان، از عشق و جنگ، از سوگ و شکوه. اما این کتاب بسی بیش از مجموعه‌ای از داستان‌ها بود. کاری بود از جنس نگاهبانی، و از جنس ایستادگی.' },
           { t: 'p', x: 'For Ferdowsi wrote it in pure Persian, reaching for the old words and turning away from the Arabic that had flooded the language, determined to prove that Persian could carry the whole weight of a nation\'s memory and glory. In giving Iran its epic, he gave it back its language, whole and alive.', fa: 'زیرا فردوسی آن را به فارسی سره سرود؛ واژه‌های کهن را جست و از عربی‌ای که زبان را فرا گرفته بود روی گرداند، و بر آن بود تا نشان دهد فارسی می‌تواند تمام بار خاطره و شکوه یک ملت را بر دوش بکشد. او با بخشیدن حماسه به ایران، زبانش را نیز به او بازگرداند؛ درست و زنده.' },
           { t: 'numstat', items: [
-            { n: '30+', label: 'Years of his life given to the work' },
-            { n: '~60,000', label: 'Verses in the Shahnameh' },
-            { n: '1,000+', label: 'Years it has been loved, unbroken' },
-            { n: 'One', label: 'Book that saved a language' },
+            { n: '30+', label: 'Years of his life given to the work', labelFa: 'سال از عمرش که پای این کار گذاشت' },
+            { n: '~60,000', label: 'Verses in the Shahnameh', labelFa: 'بیت در شاهنامه' },
+            { n: '1,000+', label: 'Years it has been loved, unbroken', labelFa: 'سال که بی‌وقفه دوستش داشته‌اند' },
+            { n: 'One', label: 'Book that saved a language', labelFa: 'کتابی که زبانی را نجات داد' },
           ] },
         ] },
         { blocks: [
           { t: 'p', x: 'There is a line, long attributed to him, that captures all he did and all he hoped. Having labored so long, he looked upon his finished work and understood what he had built, a monument no conqueror could throw down.', fa: 'بیتی هست که دیرزمانی به او نسبت داده‌اند و همهٔ آنچه کرد و همهٔ آنچه امید داشت در آن گرد آمده است. پس از آن‌همه رنج، به کار به‌پایان‌رسیدهٔ خویش نگریست و دریافت چه برافراشته است: بنایی که هیچ فاتحی توان فرو ریختنش را ندارد.' },
-          { t: 'quotebig', x: 'I have suffered greatly these thirty years, but I have revived the Persians with this Persian tongue.', by: 'ATTRIBUTED TO FERDOWSI' },
+          { t: 'quotebig', x: 'I have suffered greatly these thirty years, but I have revived the Persians with this Persian tongue.', fa: 'بسی رنج بردم در این سال سی\u200Cعجم زنده کردم بدین پارسی', by: 'ATTRIBUTED TO FERDOWSI', byFa: 'منسوب به فردوسی' },
         ] },
       ],
     },
     {
       key: 'tc4',
       title: 'The Voice Returns', titleFa: 'صدا بازمی‌گردد',
-      subtitle: 'The legacy',
+      subtitle: 'The legacy', titleFa: 'میراث',
       pages: [
         { blocks: [
           { t: 'p', x: 'Ferdowsi died, it is said, without the reward he had been promised, and legend tells that the gift arrived at the gate of his city just as his funeral procession left it. But he had won a prize greater than gold. He had given his people back their voice, and it would never fall silent again.', fa: 'گفته‌اند فردوسی بی‌آنکه پاداش وعده‌داده‌شده را ببیند درگذشت، و افسانه می‌گوید که آن هدیه درست هنگامی به دروازهٔ شهرش رسید که تابوتش از آن بیرون می‌رفت. اما او جایزه‌ای بزرگ‌تر از زر به دست آورده بود: صدای مردمش را به آنان بازگردانده بود، و آن صدا دیگر هرگز خاموش نشد.' },
