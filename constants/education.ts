@@ -1237,13 +1237,13 @@ const qajar: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'As the century wore on, the kings sold ever more of the nation\'s wealth and rights to foreign powers and companies, granting concessions over tobacco, banking, oil, and more, to fill an empty treasury. But the people of Iran were beginning to stir.', fa: 'هرچه قرن پیش‌تر می‌رفت، شاهان بیشتر و بیشتر از ثروت و حقوق این ملت را به قدرت‌ها و شرکت‌های بیگانه فروختند؛ امتیاز تنباکو، بانک، نفت و بسیاری دیگر را واگذار کردند تا خزانهٔ تهی را پر کنند. اما مردم ایران داشتند بیدار می‌شدند.' },
-          { t: 'h', x: 'The Tobacco Protest' },
-          { t: 'p', x: 'In 1890 the Shah granted a sweeping monopoly over all Iranian tobacco to a British company. The nation erupted. Led by the clergy and the merchants, Iranians of every class joined a boycott so complete that, it is said, even the women of the royal harem refused to smoke. The Shah was forced to cancel the concession.' },
-          { t: 'markline', x: 'For the first time, the people had spoken with one voice, and the throne had been made to listen.' },
+          { t: 'h', x: 'The Tobacco Protest', fa: 'تحریم تنباکو' },
+          { t: 'p', x: 'In 1890 the Shah granted a sweeping monopoly over all Iranian tobacco to a British company. The nation erupted. Led by the clergy and the merchants, Iranians of every class joined a boycott so complete that, it is said, even the women of the royal harem refused to smoke. The Shah was forced to cancel the concession.', fa: 'در سال ۱۸۹۰ شاه امتیاز انحصار تمام تنباکوی ایران را به یک شرکت بریتانیایی واگذار کرد. کشور به جوش آمد. به پیشگامی روحانیان و بازاریان، ایرانیان از هر طبقه به تحریمی پیوستند چنان فراگیر که، به روایتی، حتی زنان اندرون شاهی هم قلیان را کنار گذاشتند. شاه ناچار شد امتیاز را لغو کند.' },
+          { t: 'markline', x: 'For the first time, the people had spoken with one voice, and the throne had been made to listen.', fa: 'برای نخستین بار، مردم یکصدا سخن گفتند، و تخت ناچار شد بشنود.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The Constitutional Revolution' },
-          { t: 'p', x: 'The Tobacco Protest was only the beginning. The demand grew for a government of laws rather than the whim of kings, and in 1906 the movement triumphed. The Shah was compelled to grant a constitution and to establish the Majles, the national parliament, the first in Iranian history.' },
+          { t: 'h', x: 'The Constitutional Revolution', fa: 'انقلاب مشروطه' },
+          { t: 'p', x: 'The Tobacco Protest was only the beginning. The demand grew for a government of laws rather than the whim of kings, and in 1906 the movement triumphed. The Shah was compelled to grant a constitution and to establish the Majles, the national parliament, the first in Iranian history.', fa: 'تحریم تنباکو تنها آغاز بود. خواستِ حکومتِ قانون به جای هوس شاهان بالا گرفت، و در سال ۱۲۸۵ خورشیدی این جنبش به پیروزی رسید. شاه ناگزیر شد فرمان مشروطیت را امضا کند و مجلس شورای ملی را برپا دارد؛ نخستین مجلس تاریخ ایران.' },
           { t: 'ribbon', items: [
             { year: '1890', label: 'The Tobacco Protest unites the nation against a foreign monopoly' },
             { year: '1906', label: 'The Constitutional Revolution wins a constitution and a parliament' },
@@ -1252,8 +1252,8 @@ const qajar: Topic = {
           ] },
         ] },
         { blocks: [
-          { t: 'p', x: 'It was a hard-won and fragile victory, and the struggle between the crown and the constitution would go on for years, with the parliament even bombarded at one point by Russian-officered forces. But something fundamental had changed. The idea had taken root that the people, not the king alone, were the source of authority in Iran.' },
-          { t: 'markline', x: 'A nation had awoken to the idea that it belonged to its people.' },
+          { t: 'p', x: 'It was a hard-won and fragile victory, and the struggle between the crown and the constitution would go on for years, with the parliament even bombarded at one point by Russian-officered forces. But something fundamental had changed. The idea had taken root that the people, not the king alone, were the source of authority in Iran.', fa: 'پیروزی‌ای بود به‌سختی به دست آمده و شکننده، و کشمکش میان تاج و مشروطه سال‌ها ادامه یافت؛ تا آنجا که یک بار نیروهایی به فرماندهی افسران روس مجلس را به توپ بستند. اما چیزی بنیادی تغییر کرده بود. این اندیشه ریشه دوانده بود که سرچشمهٔ قدرت در ایران مردم‌اند، نه تنها شاه.' },
+          { t: 'markline', x: 'A nation had awoken to the idea that it belonged to its people.', fa: 'ملتی بیدار شد به این اندیشه که این سرزمین از آنِ مردمش است.' },
         ] },
       ],
     },
@@ -1263,7 +1263,7 @@ const qajar: Topic = {
       subtitle: '1911 - 1925',
       pages: [
         { blocks: [
-          { t: 'p', x: 'The final years of the Qajars were the hardest of all. During the First World War, though Iran declared its neutrality, the armies of Russia, Britain, and the Ottomans marched across its soil at will, and famine and disorder swept the land. The Qajar state had become too weak to protect its own people.' },
+          { t: 'p', x: 'The final years of the Qajars were the hardest of all. During the First World War, though Iran declared its neutrality, the armies of Russia, Britain, and the Ottomans marched across its soil at will, and famine and disorder swept the land. The Qajar state had become too weak to protect its own people.', fa: 'واپسین سال‌های قاجار از همه سخت‌تر بود. در جنگ جهانی اول، هرچند ایران بی‌طرفی خود را اعلام کرده بود، سپاهیان روس و بریتانیا و عثمانی هرگاه خواستند از خاکش گذشتند، و قحطی و آشوب این سرزمین را فرا گرفت. دولت قاجار چنان ناتوان شده بود که از مردم خودش هم نمی‌توانست نگهبانی کند.' },
           { t: 'numstat', items: [
             { n: 'WWI', label: 'Foreign armies cross a neutral Iran' },
             { n: 'Famine', label: 'Disorder and hunger grip the land' },
@@ -1272,15 +1272,15 @@ const qajar: Topic = {
           ] },
         ] },
         { blocks: [
-          { t: 'h', x: 'A soldier steps forward' },
-          { t: 'p', x: 'Out of this chaos, in 1921, stepped a commander of the Cossack Brigade named Reza Khan, who marched on Tehran and seized the initiative. For a few years he ruled in the shadow of the last, powerless Qajar king. Then, in 1925, the parliament set the old dynasty aside and raised him to the throne as Reza Shah Pahlavi.' },
-          { t: 'markline', x: 'The Qajar century closed, and the Pahlavi age of modern Iran began.' },
+          { t: 'h', x: 'A soldier steps forward', fa: 'سربازی پا پیش می‌گذارد' },
+          { t: 'p', x: 'Out of this chaos, in 1921, stepped a commander of the Cossack Brigade named Reza Khan, who marched on Tehran and seized the initiative. For a few years he ruled in the shadow of the last, powerless Qajar king. Then, in 1925, the parliament set the old dynasty aside and raised him to the throne as Reza Shah Pahlavi.', fa: 'از دل همین آشوب، در اسفند ۱۲۹۹، فرماندهی از بریگاد قزاق به نام رضاخان پا پیش گذاشت؛ به سوی تهران راه افتاد و ابتکار عمل را به دست گرفت. چند سالی در سایهٔ واپسین شاه ناتوان قاجار حکم راند. سپس، در سال ۱۳۰۴، مجلس سلسلهٔ کهنه را کنار گذاشت و او را با نام رضاشاه پهلوی بر تخت نشاند.' },
+          { t: 'markline', x: 'The Qajar century closed, and the Pahlavi age of modern Iran began.', fa: 'قرن قاجار بسته شد، و روزگار پهلوی و ایران مدرن آغاز گرفت.' },
         ] },
         { blocks: [
           { t: 'div' },
-          { t: 'p', x: 'This has been a glimpse of the Qajars, who ruled Iran through a long and testing century. It was, in many ways, an age of hardship and decline, of lost wars and foreign pressure. Yet it was also the age in which the Iranian nation awoke, demanded a voice in its own affairs, and won its first constitution.' },
-          { t: 'p', x: 'From the trials of the Qajar century, a new and modern Iran was struggling to be born. And when at last it emerged, it would carry forward both the wounds and the awakenings of these long and difficult years.' },
-          { t: 'pull', x: 'In its century of hardship, the nation found its own voice.' },
+          { t: 'p', x: 'This has been a glimpse of the Qajars, who ruled Iran through a long and testing century. It was, in many ways, an age of hardship and decline, of lost wars and foreign pressure. Yet it was also the age in which the Iranian nation awoke, demanded a voice in its own affairs, and won its first constitution.', fa: 'این نگاهی بود کوتاه به قاجارها، که ایران را در قرنی دراز و آزماینده اداره کردند. از بسیاری جهات روزگار سختی و افول بود؛ روزگار جنگ‌های باخته و فشار بیگانه. اما همان روزگاری هم بود که ملت ایران بیدار شد، خواست در کار خودش سهمی داشته باشد، و نخستین قانون اساسی‌اش را به دست آورد.' },
+          { t: 'p', x: 'From the trials of the Qajar century, a new and modern Iran was struggling to be born. And when at last it emerged, it would carry forward both the wounds and the awakenings of these long and difficult years.', fa: 'از دل سختی‌های قرن قاجار، ایرانی تازه و مدرن برای زاده شدن دست‌وپا می‌زد. و آنگاه که سرانجام سر برآورد، هم زخم‌های این سال‌های دراز و دشوار را با خود برد و هم بیداری‌هایش را.' },
+          { t: 'pull', x: 'In its century of hardship, the nation found its own voice.', fa: 'ملت در قرنِ سختی‌اش، صدای خودش را پیدا کرد.' },
         ] },
       ],
     },
