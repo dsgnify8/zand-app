@@ -1313,7 +1313,7 @@ const sasanian: Topic = {
         { blocks: [
           { t: 'p', x: 'For nearly five centuries after Alexander, the glory of Cyrus and Darius had faded. Iran was ruled first by Greek kings and then by the Parthians, a capable but loosely bound dynasty. The memory of the great Persian Empire lived on, but its full splendour had dimmed.', fa: 'نزدیک پنج قرن پس از اسکندر، شکوه کوروش و داریوش رنگ باخته بود. بر ایران نخست شاهان یونانی فرمان راندند و سپس اشکانیان، سلسله‌ای کاردان اما با بندهایی سست. یاد امپراتوری بزرگ ایران زنده مانده بود، اما درخشش کاملش کم‌فروغ شده بود.' },
           { t: 'p', x: 'Then, in 224 CE, a prince from the south, from the very heartland of Persia where Cyrus had once ruled, rose up and restored the ancient glory. His name was Ardashir, and he founded the Sasanian dynasty, the last and one of the greatest of the pre-Islamic Persian empires.', fa: 'سپس، در سال ۲۲۴ میلادی، شاهزاده‌ای از جنوب، از همان دل سرزمین پارس که روزی کوروش بر آن فرمان می‌راند، برخاست و شکوه باستانی را بازگرداند. نامش اردشیر بود، و سلسلهٔ ساسانی را بنیان نهاد؛ واپسین و یکی از بزرگ‌ترین امپراتوری‌های ایران پیش از اسلام.' },
-          { t: 'splitimg', key: 'sasanian-ardashir', title: 'Ardashir I', titleFa: 'اردشیر بابکان', x: 'Ardashir overthrew the Parthians and founded a new empire that consciously looked back to the Achaemenids of Cyrus and Darius, seeking to restore the true glory of Persia.' },
+          { t: 'splitimg', key: 'sasanian-ardashir', title: 'Ardashir I', titleFa: 'اردشیر بابکان', x: 'Ardashir overthrew the Parthians and founded a new empire that consciously looked back to the Achaemenids of Cyrus and Darius, seeking to restore the true glory of Persia.', fa: 'اردشیر اشکانیان را برانداخت و امپراتوری تازه‌ای بنیان نهاد که آگاهانه رو به هخامنشیانِ کوروش و داریوش داشت، و می‌خواست شکوه راستین ایران را بازگرداند.' },
         ] },
         { blocks: [
           { t: 'h', x: 'A conscious return to greatness', fa: 'بازگشتی آگاهانه به بزرگی' },
@@ -1336,11 +1336,11 @@ const sasanian: Topic = {
           { t: 'h', x: 'Good thoughts, good words, good deeds', fa: 'پندار نیک، گفتار نیک، کردار نیک' },
           { t: 'p', x: 'At the core of the faith was a simple and beautiful ideal, that a good life is built on three things: good thoughts, good words, and good deeds. Fire, as the symbol of divine light and purity, was honored in great fire temples that burned across the land, tended by priests and never allowed to go out.', fa: 'در دل این آیین آرمانی ساده و زیبا نشسته بود: زندگی نیک بر سه چیز بنا می‌شود، پندار نیک، گفتار نیک و کردار نیک. آتش، چون نماد روشنایی و پاکی ایزدی، در آتشکده‌های بزرگی گرامی داشته می‌شد که سراسر این سرزمین فروزان بودند؛ موبدان نگاهبانشان بودند و هرگز نمی‌گذاشتند خاموش شوند.' },
           { t: 'markline', x: 'Good thoughts, good words, good deeds.', fa: 'پندار نیک، گفتار نیک، کردار نیک.' },
-          { t: 'splitimg', key: 'sasanian-fire-temple', title: 'The sacred fire', titleFa: 'آتش مقدس', x: 'Great fire temples burned across the empire, their flames a symbol of the divine light. Some, it was said, had burned without pause for centuries.' },
+          { t: 'splitimg', key: 'sasanian-fire-temple', title: 'The sacred fire', titleFa: 'آتش مقدس', x: 'Great fire temples burned across the empire, their flames a symbol of the divine light. Some, it was said, had burned without pause for centuries.', fa: 'آتشکده‌های بزرگ سراسر امپراتوری فروزان بودند و شعله‌هایشان نماد روشنایی ایزدی بود. می‌گفتند برخی از آنها قرن‌ها بی‌آنکه لحظه‌ای خاموش شوند سوخته‌اند.' },
         ] },
         { blocks: [
           { t: 'p', x: 'The influence of this ancient faith reached far beyond Iran. Its ideas of a single God, of heaven and hell, of angels, of a final judgment, and of a savior to come, are believed by many scholars to have shaped the great religions that followed. The spiritual legacy of Zoroastrian Persia lives on in the faith of much of the world to this day.', fa: 'اثر این آیین کهن بسی فراتر از ایران رفت. بسیاری از پژوهشگران بر این باورند که اندیشه‌های آن دربارهٔ خدای یگانه، بهشت و دوزخ، فرشتگان، داوری واپسین و منجی‌ای که خواهد آمد، دین‌های بزرگ پس از خود را شکل داده است. میراث معنوی ایرانِ زرتشتی تا امروز در باور بخش بزرگی از جهان زنده است.' },
-          { t: 'call', title: 'A faith worthy of its own telling', titleFa: 'آیینی که روایت خودش را می‌طلبد', x: 'Zoroastrianism is one of the great treasures of Iranian heritage, and its full story, its prophet, its scripture, and its enduring influence, deserves a telling all its own, which it will one day have.' },
+          { t: 'call', title: 'A faith worthy of its own telling', titleFa: 'آیینی که روایت خودش را می‌طلبد', x: 'Zoroastrianism is one of the great treasures of Iranian heritage, and its full story, its prophet, its scripture, and its enduring influence, deserves a telling all its own, which it will one day have.', fa: 'آیین زرتشتی از گنجینه‌های بزرگ میراث ایرانی است، و روایت کامل آن، پیامبرش، کتابش و اثر ماندگارش، شایستهٔ حکایتی است از آنِ خود؛ حکایتی که روزی خواهد داشت.' },
         ] },
       ],
     },
@@ -1354,12 +1354,12 @@ const sasanian: Topic = {
           { t: 'p', x: 'It was a rivalry of equals, and Persia gave as good as it got. In one of the most famous moments of the age, the Sasanian king Shapur the Great defeated and captured the Roman emperor Valerian himself, an almost unthinkable humiliation for Rome, and a triumph carved in stone in the cliffs of Iran, where it can still be seen today.', fa: 'این رقابت میان دو هماورد برابر بود، و ایران هر ضربه را با ضربه‌ای پاسخ داد. در یکی از نامدارترین لحظه‌های آن روزگار، شاپور بزرگ، شاه ساسانی، والرین امپراتور روم را شکست داد و به اسارت گرفت؛ خواری‌ای که برای روم تقریباً باورنکردنی بود، و پیروزی‌ای که بر صخره‌های ایران کنده شد و تا امروز می‌توان دیدش.' },
         ] },
         { blocks: [
-          { t: 'splitimg', key: 'sasanian-shapur', title: 'Shapur I', titleFa: 'شاپور یکم', x: 'Shapur the Great defeated three Roman emperors and captured one, Valerian, in battle. His victories are carved into the rock reliefs of Persia, where they endure to this day.' },
+          { t: 'splitimg', key: 'sasanian-shapur', title: 'Shapur I', titleFa: 'شاپور یکم', x: 'Shapur the Great defeated three Roman emperors and captured one, Valerian, in battle. His victories are carved into the rock reliefs of Persia, where they endure to this day.', fa: 'شاپور بزرگ سه امپراتور روم را شکست داد و یکی از آنان، والرین، را در نبرد به اسارت گرفت. پیروزی‌هایش بر نقش‌برجسته‌های سنگی ایران کنده شده و تا امروز بر جا مانده است.' },
           { t: 'numstat', items: [
-            { n: '3', label: 'Roman emperors defeated by Shapur I' },
-            { n: '260 CE', label: 'The Roman emperor Valerian captured' },
-            { n: '400+', label: 'Years as a great world power' },
-            { n: 'Rome', label: 'Its equal and rival for centuries' },
+            { n: '3', label: 'Roman emperors defeated by Shapur I', labelFa: 'امپراتور رومی که شاپور یکم شکست داد' },
+            { n: '260 CE', nFa: '۲۶۰ م', label: 'The Roman emperor Valerian captured', labelFa: 'اسارت والرین، امپراتور روم' },
+            { n: '400+', label: 'Years as a great world power', labelFa: 'سال در جایگاه یک قدرت بزرگ جهانی' },
+            { n: 'Rome', nFa: 'روم', label: 'Its equal and rival for centuries', labelFa: 'هماورد و رقیبش در طول قرن‌ها' },
           ] },
         ] },
         { blocks: [
@@ -1377,16 +1377,16 @@ const sasanian: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'The empire reached its final height under the great king Khosrow the First, remembered as Anushirvan, the Immortal Soul, a byword for justice and wisdom for centuries after. Under him the empire was reformed, learning flourished, and Persia stood at the very peak of its power and prestige.', fa: 'امپراتوری در روزگار خسرو یکم به واپسین اوج خود رسید؛ همان که او را انوشیروان خواندند، یعنی دارای روان جاودان، و قرن‌ها پس از آن نامش مترادف داد و خرد ماند. زیر فرمان او امپراتوری اصلاح شد، دانش بالید، و ایران در بلندترین نقطهٔ قدرت و اعتبار خود ایستاد.' },
-          { t: 'splitimg', key: 'sasanian-khosrow', title: 'Khosrow Anushirvan', titleFa: 'خسرو انوشیروان', x: 'Khosrow the First was remembered across the East as the model of the just and wise king. Under him, Sasanian Persia reached its golden height.' },
+          { t: 'splitimg', key: 'sasanian-khosrow', title: 'Khosrow Anushirvan', titleFa: 'خسرو انوشیروان', x: 'Khosrow the First was remembered across the East as the model of the just and wise king. Under him, Sasanian Persia reached its golden height.', fa: 'خسرو یکم را در سراسر شرق نمونهٔ شاه دادگر و خردمند می‌دانستند. در روزگار او، ایران ساسانی به اوج طلایی خود رسید.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The war that exhausted two empires', fa: 'جنگی که دو امپراتوری را از پا انداخت' },
           { t: 'p', x: 'But the long rivalry with the Romans was to prove fatal to both. In the early seventh century, the Sasanians under Khosrow the Second launched a vast war against the Byzantine Empire, and at first they triumphed spectacularly, conquering Egypt, Syria, and the Holy Land, and reaching the very walls of Constantinople.', fa: 'اما رقابت دراز با رومیان سرانجام برای هر دو کشنده از آب درآمد. در آغاز سدهٔ هفتم، ساسانیان به فرمان خسرو پرویز جنگی بزرگ با امپراتوری بیزانس به راه انداختند، و نخست پیروزی‌هایی چشمگیر به دست آوردند: مصر و شام و سرزمین مقدس را گرفتند و تا خودِ دیوارهای قسطنطنیه پیش رفتند.' },
           { t: 'ribbon', items: [
-            { year: '602', label: 'The last great war with Byzantium begins' },
-            { year: '614', label: 'Persia conquers Jerusalem and the Holy Land' },
-            { year: '626', label: 'The Sasanian army reaches Constantinople' },
-            { year: '628', label: 'The war collapses; both empires lie exhausted' },
+            { year: '602', label: 'The last great war with Byzantium begins', labelFa: 'واپسین جنگ بزرگ با بیزانس آغاز می‌شود' },
+            { year: '614', label: 'Persia conquers Jerusalem and the Holy Land', labelFa: 'ایران اورشلیم و سرزمین مقدس را می‌گیرد' },
+            { year: '626', label: 'The Sasanian army reaches Constantinople', labelFa: 'سپاه ساسانی به قسطنطنیه می‌رسد' },
+            { year: '628', label: 'The war collapses; both empires lie exhausted', labelFa: 'جنگ فرو می‌پاشد؛ هر دو امپراتوری از پا افتاده‌اند' },
           ] },
         ] },
         { blocks: [
@@ -1409,10 +1409,10 @@ const sasanian: Topic = {
           { t: 'h', x: 'The battle that decided an empire', fa: 'نبردی که سرنوشت یک امپراتوری را رقم زد' },
           { t: 'p', x: 'The decisive blow came at the battle of Qadisiyyah, around the year 636, where the main Sasanian army met the Arab forces. After days of hard fighting, the Persian army was broken. The road to the capital lay open, and the great city of Ctesiphon fell to the conquerors.', fa: 'ضربهٔ سرنوشت‌ساز در نبرد قادسیه فرود آمد، حدود سال ۶۳۶ میلادی، آنجا که سپاه اصلی ساسانی با نیروهای عرب روبه‌رو شد. پس از روزها نبرد سخت، سپاه ایران شکست. راه پایتخت باز شد، و شهر بزرگ تیسفون به دست فاتحان افتاد.' },
           { t: 'numstat', items: [
-            { n: '636', label: 'The battle of Qadisiyyah breaks the Persian army' },
-            { n: '637', label: 'The capital, Ctesiphon, falls' },
-            { n: '642', label: 'The battle of Nahavand, the final defeat' },
-            { n: '651', label: 'The last Sasanian king dies; the empire ends' },
+            { n: '636', label: 'The battle of Qadisiyyah breaks the Persian army', labelFa: 'نبرد قادسیه سپاه ایران را در هم می‌شکند' },
+            { n: '637', label: 'The capital, Ctesiphon, falls', labelFa: 'پایتخت، تیسفون، فرو می‌افتد' },
+            { n: '642', label: 'The battle of Nahavand, the final defeat', labelFa: 'نبرد نهاوند، شکست نهایی' },
+            { n: '651', label: 'The last Sasanian king dies; the empire ends', labelFa: 'واپسین شهریار ساسانی می‌میرد؛ امپراتوری به پایان می‌رسد' },
           ] },
         ] },
         { blocks: [
