@@ -1807,7 +1807,7 @@ const seljuk: Topic = {
         { blocks: [
           { t: 'p', x: 'From the wide grasslands of Central Asia came a people of nomadic Turkic horsemen, the Seljuks, named for a chieftain of old. Hardy, warlike, and newly devoted to Islam, they swept south and west into the Iranian world in the eleventh century, and within a single generation had built one of the great empires of the age.', fa: 'از علفزارهای پهناور آسیای میانه مردمی آمدند از سوارکاران کوچ‌نشین ترک، سلجوقیان، که نامشان را از سرکرده‌ای کهن گرفته بودند. سرسخت بودند و جنگاور و تازه به اسلام گرویده. در سدهٔ یازدهم رو به جنوب و غرب به جهان ایرانی تاختند، و در فاصلهٔ یک نسل یکی از امپراتوری‌های بزرگ آن روزگار را برپا کردند.' },
           { t: 'p', x: 'In 1040 they shattered the armies of the reigning power at the battle of Dandanaqan, and the road into Iran lay open. Under their leader Tughril, they took city after city, until at last Tughril entered Baghdad itself and was named Sultan, protector of the Islamic world.', fa: 'در سال ۱۰۴۰ در نبرد دندانقان سپاه قدرت حاکم را در هم شکستند و راه ایران باز شد. به رهبری طغرل، شهر پس از شهر را گرفتند، تا آنکه سرانجام طغرل خود وارد بغداد شد و او را سلطان خواندند؛ نگاهبان جهان اسلام.' },
-          { t: 'splitimg', key: 'seljuk-tughril', title: 'Tughril Beg', titleFa: 'طغرل بیک', x: 'Tughril led the Seljuks from the steppe into Iran and beyond, founding an empire that stretched from Central Asia to the Mediterranean.' },
+          { t: 'splitimg', key: 'seljuk-tughril', title: 'Tughril Beg', titleFa: 'طغرل بیک', x: 'Tughril led the Seljuks from the steppe into Iran and beyond, founding an empire that stretched from Central Asia to the Mediterranean.', fa: 'طغرل سلجوقیان را از دشت به ایران و فراتر از آن رساند، و امپراتوری‌ای بنیان نهاد که از آسیای میانه تا مدیترانه کشیده شد.' },
         ] },
         { blocks: [
           { t: 'h', x: 'Conquerors who became Persians', fa: 'فاتحانی که ایرانی شدند' },
@@ -1824,7 +1824,7 @@ const seljuk: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'The true architect of the Seljuk golden age was not a sultan but a Persian statesman, one of the greatest administrators in the history of Iran: Nizam al-Mulk, the great vizier who guided the empire at its height for thirty years.', fa: 'معمار راستین عصر طلایی سلجوقی سلطان نبود، بلکه سیاستمداری ایرانی بود؛ یکی از بزرگ‌ترین دیوانسالاران تاریخ ایران: خواجه نظام‌الملک، وزیر بزرگی که سی سال امپراتوری را در اوجش راه برد.' },
-          { t: 'splitimg', key: 'seljuk-nizam', title: 'Nizam al-Mulk', titleFa: 'خواجه نظام‌الملک', x: 'The brilliant Persian vizier who ran the Seljuk Empire for three decades and wrote a famous book on the art of governing.' },
+          { t: 'splitimg', key: 'seljuk-nizam', title: 'Nizam al-Mulk', titleFa: 'خواجه نظام‌الملک', x: 'The brilliant Persian vizier who ran the Seljuk Empire for three decades and wrote a famous book on the art of governing.', fa: 'وزیر درخشان ایرانی که سه دهه امپراتوری سلجوقی را اداره کرد و سیاست‌نامه را نوشت، کتابی نامدار در آیین حکومت.' },
           { t: 'p', x: 'A master of statecraft, he organized the sprawling empire, built roads and institutions, and wrote a celebrated book on the art of government that was studied for centuries. Above all, he founded a network of great colleges, the Nizamiyya, across the empire, among the finest centers of learning in the world of their day.', fa: 'استادِ کشورداری بود؛ امپراتوری گسترده را سامان داد، راه و نهاد ساخت، و کتابی نامدار در آیین حکومت نوشت، سیاست‌نامه، که قرن‌ها آن را می‌خواندند. از همه مهم‌تر، شبکه‌ای از مدرسه‌های بزرگ را در سراسر امپراتوری بنیان نهاد، نظامیه‌ها، که از بهترین کانون‌های دانش روزگار خود بودند.' },
         ] },
         { blocks: [
@@ -1832,10 +1832,10 @@ const seljuk: Topic = {
           { t: 'p', x: 'This was an age of extraordinary Persian genius. At the Seljuk court worked Omar Khayyam, one of the most remarkable minds of any age: a brilliant mathematician who advanced algebra, and an astronomer who reformed the calendar into one more accurate than any then known in the world.', fa: 'این روزگار، روزگار نبوغ چشمگیر ایرانی بود. در دربار سلجوقی عمر خیام کار می‌کرد، از شگفت‌ترین ذهن‌های هر عصری: ریاضی‌دانی درخشان که جبر را پیش برد، و ستاره‌شناسی که تقویم را چنان اصلاح کرد که دقیق‌تر از هر تقویم شناخته‌شدهٔ آن روز جهان شد.' },
           { t: 'p', x: 'And Khayyam was also a poet, whose quatrains, the Rubaiyat, meditating on life, time, and the fleeting beauty of the world, would one day be loved across the entire earth. That one man could be at once a great scientist and a great poet is a wonder that captures the spirit of this golden age.', fa: 'و خیام شاعر هم بود؛ رباعیاتش، در تأمل بر زندگی و زمان و زیبایی گذرای جهان، روزی در سراسر زمین دوست داشته شد. اینکه یک تن بتواند هم دانشمندی بزرگ باشد و هم شاعری بزرگ، شگفتی‌ای است که روح این عصر طلایی را در خود دارد.' },
           { t: 'numstat', items: [
-            { n: 'Algebra', label: 'Khayyam advanced its foundations' },
-            { n: 'Calendar', label: 'A reform of astonishing accuracy' },
-            { n: 'Rubaiyat', label: 'Poetry beloved around the world' },
-            { n: 'One mind', label: 'Scientist and poet at once' },
+            { n: 'Algebra', nFa: 'جبر', label: 'Khayyam advanced its foundations', labelFa: 'خیام بنیادهایش را پیش برد' },
+            { n: 'Calendar', nFa: 'تقویم', label: 'A reform of astonishing accuracy', labelFa: 'اصلاحی با دقتی شگفت‌آور' },
+            { n: 'Rubaiyat', nFa: 'رباعیات', label: 'Poetry beloved around the world', labelFa: 'شعری که در سراسر جهان دوست داشته شد' },
+            { n: 'One mind', nFa: 'یک ذهن', label: 'Scientist and poet at once', labelFa: 'دانشمند و شاعر، هر دو با هم' },
           ] },
         ] },
         { blocks: [
