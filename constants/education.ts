@@ -1076,10 +1076,10 @@ const safavid: Topic = {
           { t: 'p', x: 'Abbas understood the lesson of Chaldiran. He built a new standing army, no longer dependent on the fickle tribal cavalry, equipped with muskets and cannon in the modern way. With it he became master in his own house and a match for his enemies abroad.', fa: 'عباس درس چالدران را دریافته بود. ارتشی تازه و دائمی بنیان گذاشت که دیگر به سوارهٔ بی‌ثبات ایلی وابسته نبود و به شیوهٔ مدرن به تفنگ و توپ مجهز شده بود. با همین ارتش، هم در خانهٔ خود صاحب‌اختیار شد و هم در برابر دشمنان بیرونی هماورد.' },
           { t: 'p', x: 'Then he turned that army against the empires that had pressed Iran for so long. He drove back the Uzbeks in the east, and he won back from the Ottomans the great western lands they had taken, restoring Iran to its full strength and its rightful borders.', fa: 'سپس همین ارتش را به سوی امپراتوری‌هایی گرداند که مدت‌ها بر ایران فشار آورده بودند. ازبکان را در شرق عقب راند و سرزمین‌های بزرگ غربی را که عثمانیان گرفته بودند بازپس گرفت، و ایران را به توان کامل و مرزهای شایستهٔ خود بازگرداند.' },
           { t: 'steps', items: [
-            { title: 'A modern army', x: 'A standing force with muskets and cannon, loyal to the crown alone.' },
-            { title: 'Enemies driven back', x: 'The Uzbeks in the east and the Ottomans in the west were defeated.' },
-            { title: 'Trade and wealth', x: 'He welcomed merchants from across the world and made Iran rich.' },
-            { title: 'A new capital', x: 'He made Isfahan his capital and adorned it beyond compare.' },
+            { title: 'A modern army', titleFa: 'ارتشی مدرن', x: 'A standing force with muskets and cannon, loyal to the crown alone.', fa: 'نیرویی دائمی، مجهز به تفنگ و توپ، که تنها به تاج وفادار بود.' },
+            { title: 'Enemies driven back', titleFa: 'دشمنان عقب رانده شدند', x: 'The Uzbeks in the east and the Ottomans in the west were defeated.', fa: 'ازبکان در شرق و عثمانیان در غرب شکست خوردند.' },
+            { title: 'Trade and wealth', titleFa: 'تجارت و ثروت', x: 'He welcomed merchants from across the world and made Iran rich.', fa: 'بازرگانان را از سراسر جهان پذیرا شد و ایران را ثروتمند کرد.' },
+            { title: 'A new capital', titleFa: 'پایتختی تازه', x: 'He made Isfahan his capital and adorned it beyond compare.', fa: 'اصفهان را پایتخت خود کرد و آن را چنان آراست که همتا نداشت.' },
           ] },
         ] },
         { blocks: [
@@ -1101,7 +1101,7 @@ const safavid: Topic = {
           { t: 'p', x: 'So great was its splendour that a saying arose, repeated by travellers across the world, that captured the wonder of all who beheld it.', fa: 'شکوهش چندان بود که ضرب‌المثلی از آن برخاست؛ سخنی که مسافران در سراسر جهان تکرارش کردند و شگفتی همهٔ کسانی را که آن را دیده بودند در خود داشت.' },
         ] },
         { blocks: [
-          { t: 'quotebig', x: 'Isfahan is half the world.', by: 'A SAYING OF THE AGE' },
+          { t: 'quotebig', x: 'Isfahan is half the world.', fa: 'اصفهان نصف جهان است.', by: 'A SAYING OF THE AGE', byFa: 'ضرب‌المثلی از آن روزگار' },
           { t: 'p', x: 'At the heart of the city he laid out a vast royal square, the Naqsh-e Jahan, the Image of the World, one of the largest and most magnificent public squares ever built. Around it he raised buildings of such beauty that they remain, to this day, among the treasures of all humanity.', fa: 'در قلب شهر میدانی شاهی و پهناور طرح ریخت: نقش جهان، از بزرگ‌ترین و باشکوه‌ترین میدان‌های عمومی که تا آن روز ساخته شده بود. پیرامون آن بناهایی برافراشت چنان زیبا که تا امروز در شمار گنجینه‌های همهٔ بشریت مانده‌اند.' },
         ] },
         { blocks: [
