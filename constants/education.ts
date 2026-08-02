@@ -1789,6 +1789,7 @@ const seljuk: Topic = {
   persian: 'سلجوقیان',
   years: '1037 - 1194',
   essence: 'The Turkic dynasty that ruled a vast Islamic empire from Iran, and under whom Persian culture, art, and learning reached a brilliant new height.',
+  essenceFa: 'سلسله‌ای ترک‌تبار که امپراتوری بزرگ اسلامی را از ایران اداره کرد، و در روزگارشان فرهنگ و هنر و دانش ایرانی به بلندای تازه‌ای رسید.',
   cover: 'seljuk-cover',
   closing: 'seljuk-cover',
   status: 'ready',
@@ -1800,36 +1801,36 @@ const seljuk: Topic = {
   chapters: [
     {
       key: 'sj1',
-      title: 'Horsemen from the Steppe',
+      title: 'Horsemen from the Steppe', titleFa: 'سوارکارانی از دشت',
       subtitle: '11th century',
       pages: [
         { blocks: [
-          { t: 'p', x: 'From the wide grasslands of Central Asia came a people of nomadic Turkic horsemen, the Seljuks, named for a chieftain of old. Hardy, warlike, and newly devoted to Islam, they swept south and west into the Iranian world in the eleventh century, and within a single generation had built one of the great empires of the age.' },
-          { t: 'p', x: 'In 1040 they shattered the armies of the reigning power at the battle of Dandanaqan, and the road into Iran lay open. Under their leader Tughril, they took city after city, until at last Tughril entered Baghdad itself and was named Sultan, protector of the Islamic world.' },
-          { t: 'splitimg', key: 'seljuk-tughril', title: 'Tughril Beg', x: 'Tughril led the Seljuks from the steppe into Iran and beyond, founding an empire that stretched from Central Asia to the Mediterranean.' },
+          { t: 'p', x: 'From the wide grasslands of Central Asia came a people of nomadic Turkic horsemen, the Seljuks, named for a chieftain of old. Hardy, warlike, and newly devoted to Islam, they swept south and west into the Iranian world in the eleventh century, and within a single generation had built one of the great empires of the age.', fa: 'از علفزارهای پهناور آسیای میانه مردمی آمدند از سوارکاران کوچ‌نشین ترک، سلجوقیان، که نامشان را از سرکرده‌ای کهن گرفته بودند. سرسخت بودند و جنگاور و تازه به اسلام گرویده. در سدهٔ یازدهم رو به جنوب و غرب به جهان ایرانی تاختند، و در فاصلهٔ یک نسل یکی از امپراتوری‌های بزرگ آن روزگار را برپا کردند.' },
+          { t: 'p', x: 'In 1040 they shattered the armies of the reigning power at the battle of Dandanaqan, and the road into Iran lay open. Under their leader Tughril, they took city after city, until at last Tughril entered Baghdad itself and was named Sultan, protector of the Islamic world.', fa: 'در سال ۱۰۴۰ در نبرد دندانقان سپاه قدرت حاکم را در هم شکستند و راه ایران باز شد. به رهبری طغرل، شهر پس از شهر را گرفتند، تا آنکه سرانجام طغرل خود وارد بغداد شد و او را سلطان خواندند؛ نگاهبان جهان اسلام.' },
+          { t: 'splitimg', key: 'seljuk-tughril', title: 'Tughril Beg', titleFa: 'طغرل بیک', x: 'Tughril led the Seljuks from the steppe into Iran and beyond, founding an empire that stretched from Central Asia to the Mediterranean.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'Conquerors who became Persians' },
-          { t: 'p', x: 'Here a pattern repeated that runs through all of Iran\'s history. The Seljuks came as foreign conquerors, but they were swiftly captivated by the older and more sophisticated Persian civilization they had overrun. They adopted its language of culture, its arts, its ways of government, and its administrators.' },
-          { t: 'markline', x: 'They conquered Iran with the sword, and Iran conquered them with its culture.' },
-          { t: 'p', x: 'The conquerors became patrons of Persian civilization, and under their rule, though the sultans were Turks, the soul of the state was Persian. It was a marriage of the vigour of the steppe and the refinement of Iran, and it produced a golden age.' },
+          { t: 'h', x: 'Conquerors who became Persians', fa: 'فاتحانی که ایرانی شدند' },
+          { t: 'p', x: 'Here a pattern repeated that runs through all of Iran\'s history. The Seljuks came as foreign conquerors, but they were swiftly captivated by the older and more sophisticated Persian civilization they had overrun. They adopted its language of culture, its arts, its ways of government, and its administrators.', fa: 'اینجا الگویی تکرار شد که در سراسر تاریخ ایران جاری است. سلجوقیان چون فاتحانی بیگانه آمدند، اما به‌سرعت شیفتهٔ تمدن ایرانی شدند؛ تمدنی کهن‌تر و پرورده‌تر از آنِ خودشان که بر آن چیره شده بودند. زبان فرهنگی‌اش را پذیرفتند، هنرهایش را، شیوهٔ دیوانداری‌اش را، و دیوانیانش را.' },
+          { t: 'markline', x: 'They conquered Iran with the sword, and Iran conquered them with its culture.', fa: 'ایران را با شمشیر گرفتند، و ایران آنان را با فرهنگش گرفت.' },
+          { t: 'p', x: 'The conquerors became patrons of Persian civilization, and under their rule, though the sultans were Turks, the soul of the state was Persian. It was a marriage of the vigour of the steppe and the refinement of Iran, and it produced a golden age.', fa: 'فاتحان به حامیان تمدن ایرانی بدل شدند، و در روزگار آنان، هرچند سلطان‌ها ترک بودند، جان دولت ایرانی بود. این پیوند نیروی دشت بود با ظرافت ایران، و عصری طلایی از آن زاده شد.' },
         ] },
       ],
     },
     {
       key: 'sj2',
-      title: 'The Great Vizier and the Golden Age',
+      title: 'The Great Vizier and the Golden Age', titleFa: 'وزیر بزرگ و عصر طلایی',
       subtitle: '1063 - 1092',
       pages: [
         { blocks: [
-          { t: 'p', x: 'The true architect of the Seljuk golden age was not a sultan but a Persian statesman, one of the greatest administrators in the history of Iran: Nizam al-Mulk, the great vizier who guided the empire at its height for thirty years.' },
-          { t: 'splitimg', key: 'seljuk-nizam', title: 'Nizam al-Mulk', x: 'The brilliant Persian vizier who ran the Seljuk Empire for three decades and wrote a famous book on the art of governing.' },
-          { t: 'p', x: 'A master of statecraft, he organized the sprawling empire, built roads and institutions, and wrote a celebrated book on the art of government that was studied for centuries. Above all, he founded a network of great colleges, the Nizamiyya, across the empire, among the finest centers of learning in the world of their day.' },
+          { t: 'p', x: 'The true architect of the Seljuk golden age was not a sultan but a Persian statesman, one of the greatest administrators in the history of Iran: Nizam al-Mulk, the great vizier who guided the empire at its height for thirty years.', fa: 'معمار راستین عصر طلایی سلجوقی سلطان نبود، بلکه سیاستمداری ایرانی بود؛ یکی از بزرگ‌ترین دیوانسالاران تاریخ ایران: خواجه نظام‌الملک، وزیر بزرگی که سی سال امپراتوری را در اوجش راه برد.' },
+          { t: 'splitimg', key: 'seljuk-nizam', title: 'Nizam al-Mulk', titleFa: 'خواجه نظام‌الملک', x: 'The brilliant Persian vizier who ran the Seljuk Empire for three decades and wrote a famous book on the art of governing.' },
+          { t: 'p', x: 'A master of statecraft, he organized the sprawling empire, built roads and institutions, and wrote a celebrated book on the art of government that was studied for centuries. Above all, he founded a network of great colleges, the Nizamiyya, across the empire, among the finest centers of learning in the world of their day.', fa: 'استادِ کشورداری بود؛ امپراتوری گسترده را سامان داد، راه و نهاد ساخت، و کتابی نامدار در آیین حکومت نوشت، سیاست‌نامه، که قرن‌ها آن را می‌خواندند. از همه مهم‌تر، شبکه‌ای از مدرسه‌های بزرگ را در سراسر امپراتوری بنیان نهاد، نظامیه‌ها، که از بهترین کانون‌های دانش روزگار خود بودند.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The age of Khayyam' },
-          { t: 'p', x: 'This was an age of extraordinary Persian genius. At the Seljuk court worked Omar Khayyam, one of the most remarkable minds of any age: a brilliant mathematician who advanced algebra, and an astronomer who reformed the calendar into one more accurate than any then known in the world.' },
-          { t: 'p', x: 'And Khayyam was also a poet, whose quatrains, the Rubaiyat, meditating on life, time, and the fleeting beauty of the world, would one day be loved across the entire earth. That one man could be at once a great scientist and a great poet is a wonder that captures the spirit of this golden age.' },
+          { t: 'h', x: 'The age of Khayyam', fa: 'روزگار خیام' },
+          { t: 'p', x: 'This was an age of extraordinary Persian genius. At the Seljuk court worked Omar Khayyam, one of the most remarkable minds of any age: a brilliant mathematician who advanced algebra, and an astronomer who reformed the calendar into one more accurate than any then known in the world.', fa: 'این روزگار، روزگار نبوغ چشمگیر ایرانی بود. در دربار سلجوقی عمر خیام کار می‌کرد، از شگفت‌ترین ذهن‌های هر عصری: ریاضی‌دانی درخشان که جبر را پیش برد، و ستاره‌شناسی که تقویم را چنان اصلاح کرد که دقیق‌تر از هر تقویم شناخته‌شدهٔ آن روز جهان شد.' },
+          { t: 'p', x: 'And Khayyam was also a poet, whose quatrains, the Rubaiyat, meditating on life, time, and the fleeting beauty of the world, would one day be loved across the entire earth. That one man could be at once a great scientist and a great poet is a wonder that captures the spirit of this golden age.', fa: 'و خیام شاعر هم بود؛ رباعیاتش، در تأمل بر زندگی و زمان و زیبایی گذرای جهان، روزی در سراسر زمین دوست داشته شد. اینکه یک تن بتواند هم دانشمندی بزرگ باشد و هم شاعری بزرگ، شگفتی‌ای است که روح این عصر طلایی را در خود دارد.' },
           { t: 'numstat', items: [
             { n: 'Algebra', label: 'Khayyam advanced its foundations' },
             { n: 'Calendar', label: 'A reform of astonishing accuracy' },
@@ -1838,25 +1839,25 @@ const seljuk: Topic = {
           ] },
         ] },
         { blocks: [
-          { t: 'p', x: 'But the golden age carried the seeds of its own troubles. Nizam al-Mulk was assassinated in 1092, struck down, it is said, by the daggers of a shadowy new sect, the Assassins, who from their mountain fortresses would haunt the region for generations. Soon after, the great sultan died too, and the empire began to fracture among rival heirs.' },
-          { t: 'markline', x: 'A golden age of Persian art and science bloomed under the Turkish sultans.' },
+          { t: 'p', x: 'But the golden age carried the seeds of its own troubles. Nizam al-Mulk was assassinated in 1092, struck down, it is said, by the daggers of a shadowy new sect, the Assassins, who from their mountain fortresses would haunt the region for generations. Soon after, the great sultan died too, and the empire began to fracture among rival heirs.', fa: 'اما عصر طلایی بذر گرفتاری‌های خود را نیز با خود داشت. نظام‌الملک در سال ۱۰۹۲ ترور شد؛ گفته‌اند به خنجر فرقه‌ای تازه و پنهان‌کار، حشاشین، که از دژهای کوهستانی‌شان نسل‌ها سایه بر این سرزمین انداختند. اندکی بعد سلطان بزرگ نیز درگذشت، و امپراتوری میان وارثان رقیب رو به چندپارگی گذاشت.' },
+          { t: 'markline', x: 'A golden age of Persian art and science bloomed under the Turkish sultans.', fa: 'عصری طلایی از هنر و دانش ایرانی، زیر فرمان سلطان‌های ترک شکفت.' },
         ] },
       ],
     },
     {
       key: 'sj3',
-      title: 'The Empire Divides',
+      title: 'The Empire Divides', titleFa: 'امپراتوری چندپاره می‌شود',
       subtitle: '1092 - 1194',
       pages: [
         { blocks: [
-          { t: 'p', x: 'After the deaths of the great sultan and his great vizier, the vast Seljuk empire, held together by their skill, began to come apart. It split into smaller kingdoms ruled by rival branches of the family, each holding a piece of the once mighty realm.' },
-          { t: 'p', x: 'These successor states carried on the Seljuk legacy for another century, and in places like Anatolia the Seljuk name endured even longer, laying foundations for the Turkish presence there that continues to this day. But the unity of the great empire was gone.' },
+          { t: 'p', x: 'After the deaths of the great sultan and his great vizier, the vast Seljuk empire, held together by their skill, began to come apart. It split into smaller kingdoms ruled by rival branches of the family, each holding a piece of the once mighty realm.', fa: 'پس از مرگ سلطان بزرگ و وزیر بزرگش، امپراتوری پهناور سلجوقی که با کاردانی آن دو یکپارچه مانده بود، رو به گسستن گذاشت. به پادشاهی‌های کوچک‌تری بخش شد که شاخه‌های رقیب همان خاندان بر آنها فرمان می‌راندند، و هر یک تکه‌ای از قلمروِ روزگاری نیرومند را در دست داشت.' },
+          { t: 'p', x: 'These successor states carried on the Seljuk legacy for another century, and in places like Anatolia the Seljuk name endured even longer, laying foundations for the Turkish presence there that continues to this day. But the unity of the great empire was gone.', fa: 'این دولت‌های جانشین یک قرن دیگر میراث سلجوقی را پیش بردند، و در جاهایی چون آناتولی نام سلجوقی حتی دیرتر ماند و بنیاد حضور ترکان را در آنجا گذاشت که تا امروز ادامه دارد. اما یکپارچگی آن امپراتوری بزرگ رفته بود.' },
         ] },
         { blocks: [
           { t: 'div' },
-          { t: 'p', x: 'This has been a glimpse of the Seljuks, Turkic conquerors who became the great patrons of Persian civilization. Under their rule, Iran\'s culture, art, architecture, and science flourished brilliantly, and its influence spread across a vast empire from Central Asia to the Mediterranean.' },
-          { t: 'p', x: 'They showed, as others had before and would again, the deep power of Iranian civilization to absorb and transform its conquerors. The steppe warriors who rode in as foreign masters became, within a generation, the proud custodians of Persian art and learning. It is one of the recurring wonders of Iran\'s long story.' },
-          { t: 'pull', x: 'The conquerors came as masters, and stayed as students of Iran.' },
+          { t: 'p', x: 'This has been a glimpse of the Seljuks, Turkic conquerors who became the great patrons of Persian civilization. Under their rule, Iran\'s culture, art, architecture, and science flourished brilliantly, and its influence spread across a vast empire from Central Asia to the Mediterranean.', fa: 'این نگاهی بود کوتاه به سلجوقیان؛ فاتحانی ترک که به حامیان بزرگ تمدن ایرانی بدل شدند. در روزگار آنان فرهنگ و هنر و معماری و دانش ایران به‌درخشندگی شکفت، و نفوذش در امپراتوری‌ای پهناور از آسیای میانه تا مدیترانه گسترد.' },
+          { t: 'p', x: 'They showed, as others had before and would again, the deep power of Iranian civilization to absorb and transform its conquerors. The steppe warriors who rode in as foreign masters became, within a generation, the proud custodians of Persian art and learning. It is one of the recurring wonders of Iran\'s long story.', fa: 'آنان نشان دادند، چنان‌که پیش از ایشان دیگران نشان داده بودند و پس از ایشان هم خواهند داد، که تمدن ایرانی چه توان ژرفی در جذب و دگرگون کردن فاتحانش دارد. جنگاوران دشت که چون اربابانی بیگانه وارد شدند، در فاصلهٔ یک نسل به نگاهبانان سربلند هنر و دانش ایرانی بدل شدند. این یکی از شگفتی‌های همیشه‌تکرارشوندهٔ داستان بلند ایران است.' },
+          { t: 'pull', x: 'The conquerors came as masters, and stayed as students of Iran.', fa: 'فاتحان چون ارباب آمدند، و چون شاگرد ایران ماندند.' },
         ] },
       ],
     },
