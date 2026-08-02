@@ -330,7 +330,9 @@ export default function HomeScreen() {
             <Pressable style={styles.daily} onPress={() => daily.route ? setDailyOpen((v) => !v) : undefined}>
               <View style={styles.dailyHead}>
                 <View style={styles.dailyRule} />
-                <Text style={styles.dailyKind}>{daily.kind.toUpperCase()} OF THE DAY</Text>
+                <Text style={styles.dailyKind}>
+                  {t(({ fact: HOME.kindFact, word: HOME.kindWord, story: HOME.kindStory, poem: HOME.kindPoem } as any)[daily.kind] ?? HOME.kindFact)}
+                </Text>
               </View>
               {daily.fa ? (
                 <View style={styles.dailyFaRow}>
@@ -338,18 +340,18 @@ export default function HomeScreen() {
                   {daily.tr ? <Text style={styles.dailyTr}>{daily.tr}</Text> : null}
                 </View>
               ) : null}
-              <Text style={styles.dailyT}>{daily.title}</Text>
+              <Text style={[styles.dailyT, getLang() === 'fa' && (daily as any).titleFa && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (daily as any).titleFa ? (daily as any).titleFa : daily.title}</Text>
 
               {!daily.route ? (
-                <Text style={styles.dailyX}>{daily.x}</Text>
+                <Text style={[styles.dailyX, getLang() === 'fa' && (daily as any).xFa && { fontFamily: fonts.persian, fontSize: 15, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (daily as any).xFa ? (daily as any).xFa : daily.x}</Text>
               ) : !dailyOpen ? (
                 <View style={styles.dailyCta}>
-                  <Text style={styles.dailyCtaT}>tap to read</Text>
+                  <Text style={styles.dailyCtaT}>{t(HOME.tapToRead)}</Text>
                   <Ionicons name="chevron-down" size={12} color={colors.accent} />
                 </View>
               ) : (
                 <>
-                  <Text style={styles.dailyX}>{daily.x}</Text>
+                  <Text style={[styles.dailyX, getLang() === 'fa' && (daily as any).xFa && { fontFamily: fonts.persian, fontSize: 15, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (daily as any).xFa ? (daily as any).xFa : daily.x}</Text>
                   <Pressable style={styles.dailyCta} onPress={() => router.navigate(daily.route as any)}>
                     <Text style={styles.dailyCtaT}>{daily.cta}</Text>
                     <Ionicons name="arrow-forward" size={12} color={colors.accent} />

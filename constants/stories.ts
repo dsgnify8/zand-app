@@ -124,57 +124,59 @@ export type Daily = {
   fa?: string;
   tr?: string;
   title: string;
+  titleFa?: string;
   x: string;
+  xFa?: string;
   route?: string;   // present = flips and links out
   cta?: string;
 };
 
 export const DAILY_POOL: Daily[] = [
-  { kind: 'word', fa: 'دلتنگ', tr: 'deltang', title: 'Your heart has gone tight',
-    x: 'It is how Persian says I miss you. Not a report of an absence, a symptom happening in your chest right now.',
+  { kind: 'word', fa: 'دلتنگ', tr: 'deltang', title: 'Your heart has gone tight', titleFa: 'دلت تنگ شده',
+    x: 'It is how Persian says I miss you. Not a report of an absence, a symptom happening in your chest right now.', xFa: 'این است شیوهٔ فارسی برای گفتن دلتنگی. خبر دادن از یک نبود نیست؛ حالی است که همین حالا در سینه‌ات می‌گذرد.',
     route: '/culture/topic?topic=del', cta: 'the whole word map' },
-  { kind: 'verse', title: 'Do not grieve',
-    x: 'Gham makhor. Hafez wrote it six hundred years ago and Iranians have been saying it to each other ever since. It is not advice. It is a hand on the shoulder.',
+  { kind: 'verse', title: 'Do not grieve', titleFa: 'غم مخور',
+    x: 'Gham makhor. Hafez wrote it six hundred years ago and Iranians have been saying it to each other ever since. It is not advice. It is a hand on the shoulder.', xFa: 'حافظ ششصد سال پیش نوشتش و ایرانیان از آن روز تا امروز به هم می‌گویندش. نصیحت نیست؛ دستی است که بر شانه می‌نشیند.',
     route: '/literature/reader?author=hafez&page=0', cta: 'read Hafez' },
-  { kind: 'fact', title: 'The calendar you are not using is better',
-    x: 'Khayyam measured the year to six decimal places in 1079 with brass instruments. His calendar drifts a day every five thousand years. The Gregorian drifts one every three thousand.',
+  { kind: 'fact', title: 'The calendar you are not using is better', titleFa: 'تقویمی که به کار نمی‌بری، دقیق‌تر است',
+    x: 'Khayyam measured the year to six decimal places in 1079 with brass instruments. His calendar drifts a day every five thousand years. The Gregorian drifts one every three thousand.', xFa: 'خیام در سال ۱۰۷۹ با ابزارهای برنجی طول سال را تا شش رقم اعشار اندازه گرفت. تقویم او هر پنج هزار سال یک روز خطا دارد؛ تقویم میلادی هر سه هزار سال یک روز.',
     route: '/literature/reader?author=khayyam&page=0', cta: 'how he did it' },
-  { kind: 'word', fa: 'تعارف', tr: 'taarof', title: 'Offer it three times',
-    x: 'Nothing is real until it has been offered three times. Accept on the first and everyone knows you were waiting for it.',
+  { kind: 'word', fa: 'تعارف', tr: 'taarof', title: 'Offer it three times', titleFa: 'سه بار تعارف کن',
+    x: 'Nothing is real until it has been offered three times. Accept on the first and everyone knows you were waiting for it.', xFa: 'هیچ‌چیز جدی نیست مگر سه بار تعارف شده باشد. بار اول قبول کنی، همه می‌فهمند منتظرش بوده‌ای.',
     route: '/culture/topic?topic=taarof', cta: 'try the simulator' },
-  { kind: 'fact', title: 'Paradise was a garden with a wall around it',
-    x: 'Pairidaeza just meant an enclosed space. The Greeks borrowed the word, scripture borrowed it, and an ordinary Persian garden became the name for heaven.',
+  { kind: 'fact', title: 'Paradise was a garden with a wall around it', titleFa: 'بهشت، باغی بود با دیواری گرداگردش',
+    x: 'Pairidaeza just meant an enclosed space. The Greeks borrowed the word, scripture borrowed it, and an ordinary Persian garden became the name for heaven.', xFa: 'پیریدَئِزَه فقط یعنی جایی که دورش را بسته باشند. یونانیان این واژه را وام گرفتند، کتاب‌های مقدس هم، و باغی ساده و ایرانی نام بهشت شد.',
     route: '/language', cta: 'more words you already speak' },
-  { kind: 'dish', fa: 'ته دیگ', tr: 'tahdig', title: 'The best thing is an accident',
-    x: 'The golden crust at the bottom of the rice pot. Guests get it first. Then the family goes to war over what is left.',
+  { kind: 'dish', fa: 'ته دیگ', tr: 'tahdig', title: 'The best thing is an accident', titleFa: 'بهترین قسمت، اتفاقی است',
+    x: 'The golden crust at the bottom of the rice pot. Guests get it first. Then the family goes to war over what is left.', xFa: 'همان پوستهٔ طلایی ته دیگ. اول به مهمان می‌رسد. بعد خانواده بر سر باقی‌اش به جان هم می‌افتد.',
     route: '/culture/topic?topic=sofreh', cta: 'the table' },
-  { kind: 'verse', title: 'You are the reed',
-    x: 'Rumi opens the Masnavi with a flute crying for the reed bed it was cut from. Twenty six thousand couplets follow, and they are all about that.',
+  { kind: 'verse', title: 'You are the reed', titleFa: 'تو همان نی هستی',
+    x: 'Rumi opens the Masnavi with a flute crying for the reed bed it was cut from. Twenty six thousand couplets follow, and they are all about that.', xFa: 'مولانا مثنوی را با نالهٔ نی‌ای آغاز می‌کند که از نیستان بریده شده است. بیست و شش هزار بیت پس از آن می‌آید، و همه‌اش دربارهٔ همان است.',
     route: '/literature/reader?author=rumi&page=0', cta: 'read Rumi' },
-  { kind: 'fact', title: 'A poem got a king onto a horse without his boots',
-    x: 'Rudaki sang about the smell of a stream in Bukhara. The king had refused to go home for four years. He rode out barefoot.',
+  { kind: 'fact', title: 'A poem got a king onto a horse without his boots', titleFa: 'شعری شاهی را بی‌چکمه بر اسب نشاند',
+    x: 'Rudaki sang about the smell of a stream in Bukhara. The king had refused to go home for four years. He rode out barefoot.', xFa: 'رودکی از بوی جوی مولیان خواند. شاه چهار سال بود که به خانه بازنمی‌گشت. پابرهنه سوار شد و رفت.',
     route: '/literature/reader?author=rudaki&page=0', cta: 'the whole story' },
-  { kind: 'word', fa: 'قربونت برم', tr: 'ghorboonet beram', title: 'May I be sacrificed for you',
-    x: 'Said constantly, to almost anyone, meaning roughly thanks. Persian does not do small affection.',
+  { kind: 'word', fa: 'قربونت برم', tr: 'ghorboonet beram', title: 'May I be sacrificed for you', titleFa: 'قربانت بروم',
+    x: 'Said constantly, to almost anyone, meaning roughly thanks. Persian does not do small affection.', xFa: 'مدام گفته می‌شود، به تقریباً هر کسی، و معنایش چیزی نزدیک به سپاسگزارم است. فارسی محبت را کوچک بیان نمی‌کند.',
     route: '/language', cta: 'the language' },
-  { kind: 'fact', title: 'Iran has been calling itself Iran the whole time',
-    x: 'From Aryanam, the noble ones. Persia was the outside name, from Pars, one province. The country never changed what it calls itself.',
+  { kind: 'fact', title: 'Iran has been calling itself Iran the whole time', titleFa: 'ایران، همیشه خودش را ایران خوانده است',
+    x: 'From Aryanam, the noble ones. Persia was the outside name, from Pars, one province. The country never changed what it calls itself.', xFa: 'از آریانام، یعنی نجیبان. پرشیا نامی بود که بیرونی‌ها گذاشته بودند، برگرفته از پارس، تنها یکی از استان‌ها. این کشور هرگز نامی را که بر خود می‌گذارد عوض نکرد.',
     route: '/language', cta: 'where Persian comes from' },
 ];
 
 
 // folded in from the old "Did you know" set. Flat cards, no flip.
 const DYK: Daily[] = [
-  { kind: 'fact', fa: 'انار', title: 'The oldest symbol', x: 'The pomegranate is one of the oldest symbols in Persian art and myth, a sign of abundance, life, and eternity.' },
-  { kind: 'fact', fa: 'پردیس', title: 'Paradise was a garden', x: 'The English word paradise traces back to an ancient Persian word for a walled garden.' },
-  { kind: 'fact', fa: 'فرش', title: 'The oldest carpet', x: 'The Pazyryk carpet, around 2,500 years old, is the oldest known surviving pile carpet in the world.' },
-  { kind: 'fact', fa: 'بادگیر', title: 'Air conditioning, ancient', x: 'Long before electricity, Persian windcatchers, tall towers called badgir, cooled homes by guiding the breeze downward.' },
-  { kind: 'fact', fa: 'قنات', title: 'Water across the desert', x: 'Qanats, gently sloping underground channels, carried water across the desert for thousands of years.' },
-  { kind: 'fact', fa: 'زعفران', title: 'Worth more than gold', x: 'Iran grows the vast majority of the world saffron, the crimson spice worth more than its weight in gold.' },
-  { kind: 'fact', fa: 'کوروش', title: 'The first declaration', x: 'The Cyrus Cylinder, from the reign of Cyrus the Great, is often described as one of the earliest declarations of tolerance.' },
-  { kind: 'fact', fa: 'هخامنشی', title: 'The largest yet seen', x: 'Around 550 BCE, Cyrus founded the Achaemenid Empire, the largest the ancient world had yet seen, reaching from the Aegean to the Indus.' },
-  { kind: 'fact', fa: 'تخت‌جمشید', title: 'A record in stone', x: 'Built by Darius around 518 BCE, Persepolis welcomed delegations from across the empire, a record in stone of many nations under one rule.' },
-  { kind: 'fact', fa: 'راه‌شاهی', title: 'The first postal system', x: 'The Persian Royal Road was a vast relay of stations and couriers. Messages crossed the empire with remarkable speed, the ancient world first true post.' },
+  { kind: 'fact', fa: 'انار', title: 'The oldest symbol', titleFa: 'کهن‌ترین نماد', x: 'The pomegranate is one of the oldest symbols in Persian art and myth, a sign of abundance, life, and eternity.', xFa: 'انار از کهن‌ترین نمادهای هنر و اسطورهٔ ایرانی است؛ نشانهٔ فراوانی، زندگی و جاودانگی.' },
+  { kind: 'fact', fa: 'پردیس', title: 'Paradise was a garden', titleFa: 'بهشت، یک باغ بود', x: 'The English word paradise traces back to an ancient Persian word for a walled garden.', xFa: 'واژهٔ انگلیسی paradise به واژه‌ای کهن در زبان ایرانی بازمی‌گردد که معنایش باغی دیواردار بود: پردیس.' },
+  { kind: 'fact', fa: 'فرش', title: 'The oldest carpet', titleFa: 'کهن‌ترین فرش', x: 'The Pazyryk carpet, around 2,500 years old, is the oldest known surviving pile carpet in the world.', xFa: 'فرش پازیریک، با حدود ۲٬۵۰۰ سال قدمت، کهن‌ترین فرش گره‌بافتهٔ شناخته‌شدهٔ جهان است که به جا مانده.' },
+  { kind: 'fact', fa: 'بادگیر', title: 'Air conditioning, ancient', titleFa: 'تهویهٔ مطبوع، از روزگار باستان', x: 'Long before electricity, Persian windcatchers, tall towers called badgir, cooled homes by guiding the breeze downward.', xFa: 'مدت‌ها پیش از برق، بادگیرهای ایرانی، همان برج‌های بلند، با هدایت نسیم به پایین خانه‌ها را خنک می‌کردند.' },
+  { kind: 'fact', fa: 'قنات', title: 'Water across the desert', titleFa: 'آب، از دل کویر', x: 'Qanats, gently sloping underground channels, carried water across the desert for thousands of years.', xFa: 'قنات‌ها، کاریزهای زیرزمینی با شیبی ملایم، هزاران سال آب را از دل کویر گذراندند.' },
+  { kind: 'fact', fa: 'زعفران', title: 'Worth more than gold', titleFa: 'گران‌بهاتر از طلا', x: 'Iran grows the vast majority of the world saffron, the crimson spice worth more than its weight in gold.', xFa: 'بخش بزرگی از زعفران جهان در ایران کشت می‌شود؛ ادویه‌ای سرخ که هم‌وزن خود از طلا گران‌بهاتر است.' },
+  { kind: 'fact', fa: 'کوروش', title: 'The first declaration', titleFa: 'نخستین بیانیه', x: 'The Cyrus Cylinder, from the reign of Cyrus the Great, is often described as one of the earliest declarations of tolerance.', xFa: 'استوانهٔ کوروش، از روزگار کوروش بزرگ، را اغلب یکی از نخستین بیانیه‌های بردباری خوانده‌اند.' },
+  { kind: 'fact', fa: 'هخامنشی', title: 'The largest yet seen', titleFa: 'بزرگ‌ترین که تا آن روز دیده شده بود', x: 'Around 550 BCE, Cyrus founded the Achaemenid Empire, the largest the ancient world had yet seen, reaching from the Aegean to the Indus.', xFa: 'حدود ۵۵۰ پیش از میلاد، کوروش امپراتوری هخامنشی را بنیان نهاد؛ بزرگ‌ترین امپراتوری‌ای که جهان باستان تا آن روز دیده بود، از دریای اژه تا سند.' },
+  { kind: 'fact', fa: 'تخت‌جمشید', title: 'A record in stone', titleFa: 'سندی در سنگ', x: 'Built by Darius around 518 BCE, Persepolis welcomed delegations from across the empire, a record in stone of many nations under one rule.', xFa: 'تخت جمشید که داریوش حدود ۵۱۸ پیش از میلاد ساخت، پذیرای نمایندگانی از سراسر امپراتوری بود؛ سندی در سنگ از ملت‌های بسیار زیر یک فرمان.' },
+  { kind: 'fact', fa: 'راه‌شاهی', title: 'The first postal system', titleFa: 'نخستین نظام پستی', x: 'The Persian Royal Road was a vast relay of stations and couriers. Messages crossed the empire with remarkable speed, the ancient world first true post.', xFa: 'راه شاهی ایران شبکه‌ای گسترده از چاپارخانه‌ها و پیک‌ها بود. پیام‌ها با سرعتی شگفت‌آور امپراتوری را می‌پیمودند؛ نخستین نظام پستی راستین جهان باستان.' },
 ];
 
 const ALL_DAILY: Daily[] = [...DAILY_POOL, ...DYK];

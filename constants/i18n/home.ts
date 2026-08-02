@@ -2,6 +2,11 @@ import type { T } from '@/lib/i18n';
 
 // Home screen. Farsi written to sound like a person, not a translation.
 export const HOME: Record<string, T> = {
+  kindFact: { en: 'FACT OF THE DAY', fa: 'دانستنی امروز' },
+  kindWord: { en: 'WORD OF THE DAY', fa: 'واژهٔ امروز' },
+  kindStory: { en: 'STORY OF THE DAY', fa: 'روایت امروز' },
+  kindPoem: { en: 'POEM OF THE DAY', fa: 'شعر امروز' },
+  tapToRead: { en: 'tap to read', fa: 'بزن تا بخوانی' },
   greeting:    { en: 'Welcome back', fa: 'خوش برگشتی' },
 
   today:       { en: 'TODAY', fa: 'امروز' },
