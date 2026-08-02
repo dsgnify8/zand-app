@@ -81,14 +81,14 @@ const ferdowsi: Author = {
       pages: [
         { blocks: [
           { t: 'lead', x: 'To understand Iran, you must first know its poet.', mark: 'crown' },
-          { t: 'p', x: 'He was born around the year 940 in a village near Tus, in the green province of Khorasan in the northeast of Iran. His name was Abul-Qasim, and the world would come to know him as Ferdowsi, a name that means, fittingly, the man of paradise.' },
-          { t: 'p', x: 'He came from the dehqans, the old landed gentry of Iran, a class that took special pride in preserving the ancient traditions, the stories, and the memory of Persia as it had been before the Arab conquest. From childhood he breathed in the old tales of kings and heroes, and they never left him.' },
-          { t: 'motif', symbol: 'pen', caption: 'The reed pen of Tus that would write a nation into being.' },
+          { t: 'p', x: 'He was born around the year 940 in a village near Tus, in the green province of Khorasan in the northeast of Iran. His name was Abul-Qasim, and the world would come to know him as Ferdowsi, a name that means, fittingly, the man of paradise.', fa: 'حدود سال ۹۴۰ میلادی در روستایی نزدیک توس زاده شد، در خراسانِ سبز، در شمال شرق ایران. نامش ابوالقاسم بود، و جهان او را با نام فردوسی شناخت؛ نامی که، به‌جا، یعنی مردِ بهشت.' },
+          { t: 'p', x: 'He came from the dehqans, the old landed gentry of Iran, a class that took special pride in preserving the ancient traditions, the stories, and the memory of Persia as it had been before the Arab conquest. From childhood he breathed in the old tales of kings and heroes, and they never left him.', fa: 'از دهقانان بود، همان طبقهٔ کهن زمین‌دار ایران که نگاهبانی از آیین‌ها و داستان‌ها و خاطرهٔ ایرانِ پیش از فتح عرب را مایهٔ سربلندی خود می‌دانست. از کودکی داستان‌های کهن شاهان و پهلوانان را نفس کشید، و آن داستان‌ها هرگز رهایش نکردند.' },
+          { t: 'motif', symbol: 'pen', caption: 'The reed pen of Tus that would write a nation into being.', captionFa: 'قلم نیِ توس، که ملتی را به نوشتن هستی بخشید.' },
         ] },
         { blocks: [
-          { t: 'p', x: 'The Iran of his birth was a land two centuries removed from the fall of its empire. Arabic had become the language of religion, of scholarship, and of prestige, and the Persian tongue, though still spoken everywhere, had been pushed from the halls of learning and power. To many, it seemed a lesser language, unfit for great works.' },
-          { t: 'p', x: 'But in the east, in Khorasan, a quiet revival was stirring. Persian princes ruled again, and at their courts the old language was cherished. A few brave poets had begun to write in Persian once more, and one had even begun to set the ancient national stories into verse, before death cut his work short. It was this unfinished task that would find its true master in Ferdowsi.' },
-          { t: 'aside', x: 'He was heir to a thousand-year memory, born at the very moment his people needed someone to write it down.' },
+          { t: 'p', x: 'The Iran of his birth was a land two centuries removed from the fall of its empire. Arabic had become the language of religion, of scholarship, and of prestige, and the Persian tongue, though still spoken everywhere, had been pushed from the halls of learning and power. To many, it seemed a lesser language, unfit for great works.', fa: 'ایرانی که در آن زاده شد، دو قرن از فروپاشی امپراتوری‌اش فاصله داشت. عربی زبان دین و دانش و اعتبار شده بود، و زبان فارسی، هرچند هنوز همه‌جا بر زبان مردم جاری بود، از دهلیزهای دانش و قدرت رانده شده بود. به چشم بسیاری زبانی فروتر می‌نمود، نااهلِ کارهای بزرگ.' },
+          { t: 'p', x: 'But in the east, in Khorasan, a quiet revival was stirring. Persian princes ruled again, and at their courts the old language was cherished. A few brave poets had begun to write in Persian once more, and one had even begun to set the ancient national stories into verse, before death cut his work short. It was this unfinished task that would find its true master in Ferdowsi.', fa: 'اما در شرق، در خراسان، بیداری‌ای آرام در کار بود. شاهزادگان ایرانی دوباره فرمان می‌راندند و در دربارهایشان زبان کهن را عزیز می‌داشتند. چند شاعر دلیر دوباره به فارسی نوشتن گرفته بودند، و یکی از آنان حتی داستان‌های ملی کهن را به نظم درآورده بود، پیش از آنکه مرگ کارش را ناتمام بگذارد. همین کار ناتمام بود که استاد راستین خود را در فردوسی یافت.' },
+          { t: 'aside', x: 'He was heir to a thousand-year memory, born at the very moment his people needed someone to write it down.', fa: 'وارث خاطره‌ای هزارساله بود، و درست در لحظه‌ای زاده شد که مردمش به کسی نیاز داشتند تا آن را بنویسد.' },
         ] },
       ],
     },
@@ -99,18 +99,18 @@ const ferdowsi: Author = {
       subtitle: 'HIS DEVOTION',
       pages: [
         { blocks: [
-          { t: 'p', x: 'Around the age of forty, Ferdowsi took up a task so vast it would consume the rest of his life. He set out to gather every ancient story of Iran, its myths and legends, its kings and champions, from the first man to the last Sasanian king, and to weave them all into a single great epic, written in pure and noble Persian verse.' },
-          { t: 'p', x: 'He would call it the Shahnameh, the Book of Kings. It would take him more than thirty years.' },
-          { t: 'illumin', x: 'A single man set out to hold a thousand years of memory in his hands, and would not let it fall.' },
+          { t: 'p', x: 'Around the age of forty, Ferdowsi took up a task so vast it would consume the rest of his life. He set out to gather every ancient story of Iran, its myths and legends, its kings and champions, from the first man to the last Sasanian king, and to weave them all into a single great epic, written in pure and noble Persian verse.', fa: 'نزدیک چهل سالگی، فردوسی کاری را بر دوش گرفت چنان سترگ که باقی عمرش را بلعید. بر آن شد همهٔ داستان‌های کهن ایران را گرد آورد، اسطوره‌ها و افسانه‌ها، شاهان و پهلوانان، از نخستین انسان تا واپسین شهریار ساسانی، و همه را در یک حماسهٔ بزرگ به هم ببافد؛ به نظمی از فارسی سره و بلند.' },
+          { t: 'p', x: 'He would call it the Shahnameh, the Book of Kings. It would take him more than thirty years.', fa: 'نامش را شاهنامه گذاشت، نامهٔ شاهان. بیش از سی سال از او گرفت.' },
+          { t: 'illumin', x: 'A single man set out to hold a thousand years of memory in his hands, and would not let it fall.', fa: 'یک تن بر آن شد که هزار سال خاطره را در دست نگاه دارد، و نگذاشت از دستش بیفتد.' },
         ] },
         { blocks: [
-          { t: 'p', x: 'It was a labor of staggering devotion. Year after year, through the seasons and the decades, he worked, gathering the old sources, shaping the verse, refining every line. He poured his fortune, his health, and his youth into the work, and as the years passed he grew old over his pages, watching his wealth dwindle and his hair turn white in service of the task.' },
-          { t: 'p', x: 'He was driven not by hope of riches, but by something deeper: the conviction that if he did not save these stories, and the language that carried them, they might be lost forever. He was fighting, alone at his desk, to keep the soul of a nation alive.' },
-          { t: 'couplet', a: 'I have toiled these thirty years in pain and strife,', b: 'to bring the Persians back to a Persian life.' },
+          { t: 'p', x: 'It was a labor of staggering devotion. Year after year, through the seasons and the decades, he worked, gathering the old sources, shaping the verse, refining every line. He poured his fortune, his health, and his youth into the work, and as the years passed he grew old over his pages, watching his wealth dwindle and his hair turn white in service of the task.', fa: 'رنجی بود از سرِ سرسپردگی محض. سال از پی سال، در گذر فصل‌ها و دهه‌ها، کار کرد؛ سرچشمه‌های کهن را گرد آورد، بیت را ساخت و هر مصراع را پرداخت. دارایی و تندرستی و جوانی‌اش را در این کار ریخت، و سال‌ها که گذشت بر سر برگ‌هایش پیر شد؛ دید که ثروتش آب می‌رود و مویش در خدمت این کار سپید می‌شود.' },
+          { t: 'p', x: 'He was driven not by hope of riches, but by something deeper: the conviction that if he did not save these stories, and the language that carried them, they might be lost forever. He was fighting, alone at his desk, to keep the soul of a nation alive.', fa: 'آنچه او را پیش می‌راند امید به ثروت نبود، چیزی ژرف‌تر بود: این باور که اگر او این داستان‌ها و زبانی را که حاملشان بود نگاه ندارد، شاید برای همیشه از دست بروند. تنها، پشت میز خود، می‌جنگید تا جان یک ملت زنده بماند.' },
+          { t: 'couplet', a: 'I have toiled these thirty years in pain and strife,', b: 'to bring the Persians back to a Persian life.', aFa: 'بسی رنج بردم در این سال سی', bFa: 'عجم زنده کردم بدین پارسی' },
         ] },
         { blocks: [
-          { t: 'p', x: 'He wrote in a Persian deliberately purified, reaching for the old and native words, turning away wherever he could from the Arabic that had flooded the tongue. It was a conscious act. He would prove that Persian could carry the whole weight of a nation\'s glory, that it needed to borrow from no one.' },
-          { t: 'p', x: 'In this he succeeded beyond all measure. The language of the Shahnameh became a wellspring from which Persian would flow, renewed and unbroken, for a thousand years to come.' },
+          { t: 'p', x: 'He wrote in a Persian deliberately purified, reaching for the old and native words, turning away wherever he could from the Arabic that had flooded the tongue. It was a conscious act. He would prove that Persian could carry the whole weight of a nation\'s glory, that it needed to borrow from no one.', fa: 'به فارسی‌ای نوشت که آگاهانه پیراسته بود؛ واژه‌های کهن و بومی را می‌جست و هر جا می‌توانست از عربی‌ای که زبان را فرا گرفته بود روی می‌گرداند. کاری بود از سر آگاهی. می‌خواست ثابت کند فارسی می‌تواند تمام بار شکوه یک ملت را بر دوش بکشد و نیازی به وام گرفتن از کسی ندارد.' },
+          { t: 'p', x: 'In this he succeeded beyond all measure. The language of the Shahnameh became a wellspring from which Persian would flow, renewed and unbroken, for a thousand years to come.', fa: 'و در این کار بیش از هر اندازه‌ای کامیاب شد. زبان شاهنامه سرچشمه‌ای شد که فارسی هزار سال از آن جاری ماند؛ تازه و ناگسسته.' },
           { t: 'scene', title: 'A poet\'s sacrifice', x: 'It is said that Ferdowsi was promised a great reward for his work, a gold coin for every verse. But when the treasure finally came, it was silver, not gold, and far too little. Proud and wounded, the old poet gave the money away, to a bath keeper and a seller of drinks, and asked for nothing. He had not written for gold.' },
         ] },
       ],
@@ -122,20 +122,20 @@ const ferdowsi: Author = {
       subtitle: 'HIS MASTERWORK',
       pages: [
         { blocks: [
-          { t: 'p', x: 'The Shahnameh is one of the longest epic poems ever written by a single hand: nearly sixty thousand couplets, a whole universe of story. It carries the reader across the entire sweep of Iranian legend and history, from the creation of the world and the first king, through the age of heroes, to the fall of the last Persian empire.' },
-          { t: 'p', x: 'It is myth and history, tragedy and triumph, woven together into a single vast tapestry. And running through it all is a set of deep and abiding themes: the eternal struggle of good against evil, the glory and the burden of kingship, the workings of fate, and above all, the love of Iran.' },
+          { t: 'p', x: 'The Shahnameh is one of the longest epic poems ever written by a single hand: nearly sixty thousand couplets, a whole universe of story. It carries the reader across the entire sweep of Iranian legend and history, from the creation of the world and the first king, through the age of heroes, to the fall of the last Persian empire.', fa: 'شاهنامه از بلندترین حماسه‌هایی است که به دست یک تن سروده شده: نزدیک شصت هزار بیت، جهانی تمام از داستان. خواننده را از سرتاسر افسانه و تاریخ ایران می‌گذراند؛ از آفرینش جهان و نخستین شاه، از میان روزگار پهلوانان، تا فروپاشی واپسین امپراتوری ایران.' },
+          { t: 'p', x: 'It is myth and history, tragedy and triumph, woven together into a single vast tapestry. And running through it all is a set of deep and abiding themes: the eternal struggle of good against evil, the glory and the burden of kingship, the workings of fate, and above all, the love of Iran.', fa: 'اسطوره است و تاریخ، سوگ است و پیروزی، همه در یک فرشِ پهناور به هم بافته. و در سرتاسرش مایه‌هایی ژرف و ماندگار جریان دارد: نبرد جاودانهٔ نیکی با بدی، شکوه و بار پادشاهی، کار سرنوشت، و بیش از همه، عشق به ایران.' },
         ] },
         { blocks: [
           { t: 'scene', title: 'Zahhak, the Serpent King', x: 'In the ancient days, the tyrant Zahhak was tricked by the devil, who kissed his shoulders, from which sprang two hungry serpents that fed upon the brains of the young. For a thousand years his cruelty darkened the world, until a blacksmith named Kaveh raised his leather apron as a banner of revolt and rallied the people to overthrow him. It is one of the oldest tales of tyranny undone by the courage of ordinary people.' },
-          { t: 'aside', x: 'The blacksmith\'s apron became a banner of freedom, a symbol Iranians would remember for a thousand years.' },
+          { t: 'aside', x: 'The blacksmith\'s apron became a banner of freedom, a symbol Iranians would remember for a thousand years.', fa: 'چرم‌پارهٔ آهنگر درفش آزادی شد؛ درفش کاویانی، نشانه‌ای که ایرانیان هزار سال به یادش داشتند.' },
         ] },
         { blocks: [
           { t: 'scene', title: 'Rostam, the Greatest Hero', x: 'Towering over the whole epic is Rostam, the mightiest champion of Iran, a warrior of superhuman strength who serves king after king across centuries, riding his faithful horse Rakhsh through impossible trials. He is the heart of the Shahnameh, the very image of loyalty, courage, and might in service of his homeland.' },
-          { t: 'p', x: 'But even the greatest hero cannot escape the cruelty of fate, and it is in Rostam\'s story that Ferdowsi reaches the deepest and most heartbreaking note in all his work.' },
+          { t: 'p', x: 'But even the greatest hero cannot escape the cruelty of fate, and it is in Rostam\'s story that Ferdowsi reaches the deepest and most heartbreaking note in all his work.', fa: 'اما حتی بزرگ‌ترین پهلوان هم از بی‌رحمی سرنوشت نمی‌گریزد، و فردوسی در داستان رستم به ژرف‌ترین و جگرسوزترین نقطهٔ تمام کارش می‌رسد.' },
         ] },
         { blocks: [
           { t: 'scene', title: 'Rostam and Sohrab', x: 'Rostam had a son he had never known, Sohrab, born and raised far away. Grown into a mighty warrior himself, Sohrab set out to find his father. But fate is cruel: the two met not as father and son but as champions of opposing armies, neither knowing the other. They fought, and Rostam, the greater warrior, struck the fatal blow. Only as the young man lay dying did the truth emerge, in a token Rostam had once given the boy\'s mother. The mightiest hero in the world had killed his own son, and no strength on earth could undo it.' },
-          { t: 'illumin', x: 'The greatest hero of all could conquer any foe, but not the fate that made him slay his own child.' },
+          { t: 'illumin', x: 'The greatest hero of all could conquer any foe, but not the fate that made him slay his own child.', fa: 'بزرگ‌ترین پهلوان می‌توانست بر هر دشمنی چیره شود، اما نه بر سرنوشتی که فرزند خودش را به دست او کشت.' },
           { t: 'p', x: 'The tale of Rostam and Sohrab is among the most powerful tragedies in all of world literature, a meditation on fate, on the gulf between fathers and sons, and on the sorrow woven into even the greatest of lives. Through it, Ferdowsi shows us that his epic is not only about glory, but about the deep and human sadness at the heart of things.' },
         ] },
       ],
@@ -149,16 +149,16 @@ const ferdowsi: Author = {
         { blocks: [
           { t: 'p', x: 'Ferdowsi was far more than a teller of tales. Woven through the Shahnameh is a whole vision of life, a philosophy of wisdom, justice, and the right way to live and to rule. He speaks often, in his own voice, pausing the story to reflect on what it means.' },
           { t: 'p', x: 'Above all he prized wisdom and knowledge, which he held to be the highest of all human goods, the light by which a life should be led.' },
-          { t: 'verse', lines: ['Seek wisdom, for wisdom will guide you well;', 'the wise alone are truly free.'], by: 'THE SHAHNAMEH' },
+          { t: 'verse', lines: ['Seek wisdom, for wisdom will guide you well;', 'the wise alone are truly free.'], linesFa: ['توانا بود هر که دانا بود', 'ز دانش دل پیر برنا بود'], by: 'THE SHAHNAMEH', byFa: 'شاهنامه' },
         ] },
         { blocks: [
           { t: 'p', x: 'He believed deeply in justice, and held that the worth of a king lay not in his power but in his fairness and his care for his people. A ruler who was cruel or unjust, however mighty, was in Ferdowsi\'s eyes no true king at all, and was doomed to fall. Kingship, for him, was a sacred trust, not a possession.' },
           { t: 'p', x: 'And he wrote, again and again, of the fleeting nature of the world, of how kings and heroes and empires all pass away, how fortune turns and glory fades, and how only good deeds and a good name endure beyond the grave. His epic is filled with a wise and gentle sorrow at the passing of all things.' },
-          { t: 'couplet', a: 'The world is a tale, and we are the telling;', b: 'only the word remains when we are gone.' },
+          { t: 'couplet', a: 'The world is a tale, and we are the telling;', b: 'only the word remains when we are gone.', aFa: 'جهان یادگارست و ما رفتنی', bFa: 'به گیتی نماند به جز گفتنی' },
         ] },
         { blocks: [
           { t: 'p', x: 'Through all his reflection runs a profound and tender love of Iran, its land, its people, its honor, and its ancient glory. This love is the beating heart of the Shahnameh, the reason he gave thirty years of his life to it. He wrote to remind his people who they were, and to make sure they never forgot.' },
-          { t: 'illumin', x: 'He gave his life to a single belief: that a people who remember who they are can never truly be conquered.' },
+          { t: 'illumin', x: 'He gave his life to a single belief: that a people who remember who they are can never truly be conquered.', fa: 'عمرش را پای یک باور گذاشت: مردمی که به یاد داشته باشند که هستند، هرگز به‌راستی مغلوب نمی‌شوند.' },
         ] },
       ],
     },
@@ -171,7 +171,7 @@ const ferdowsi: Author = {
         { blocks: [
           { t: 'p', x: 'Ferdowsi died around the year 1020, an old man, in the same town of Tus where he had been born. Legend tells that as his funeral procession left the city, the long-promised reward from the court arrived at last at the gate, too late for the poet to ever see it. He had died without earthly reward.' },
           { t: 'p', x: 'But he had won something far greater than gold. He had known, even as he finished his great work, exactly what he had achieved, and he said so, in words that have proven truer than perhaps any poet has ever spoken of his own work.' },
-          { t: 'verse', lines: ['I shall not die, these seeds I\'ve sown will save', 'my name and reputation from the grave,', 'and men of sense and wisdom will proclaim,', 'when I have gone, my praises and my fame.'], by: 'FERDOWSI, THE SHAHNAMEH' },
+          { t: 'verse', lines: ['I shall not die, these seeds I\'ve sown will save', 'my name and reputation from the grave,', 'and men of sense and wisdom will proclaim,', 'when I have gone, my praises and my fame.'], linesFa: ['نمیرم از این پس که من زنده‌ام', 'که تخم سخن را پراکنده‌ام'], by: 'FERDOWSI, THE SHAHNAMEH', byFa: 'فردوسی، شاهنامه' },
         ] },
         { blocks: [
           { t: 'p', x: 'He was right. Because of the Shahnameh, the Persian language did not fade but flourished, and became one of the great literary tongues of the world. Every poet who came after, Rumi, Saadi, Hafez, Khayyam, wrote in the language that Ferdowsi had preserved and ennobled. He is, in the truest sense, the father of them all.' },
@@ -182,7 +182,7 @@ const ferdowsi: Author = {
         { blocks: [
           { t: 'p', x: 'This has been a glimpse of Ferdowsi, the poet of Tus, one of the greatest who ever lived. He was a man who gave everything he had, his fortune, his years, his very life, to a single, magnificent purpose: to save the language and the memory of his people, and to give them back their voice.' },
           { t: 'p', x: 'He succeeded beyond any dream. In giving Iran the Shahnameh, he gave it back itself. And so, just as he foretold, he did not die. In every Persian word of beauty spoken in the thousand years since, Ferdowsi lives on.' },
-          { t: 'illumin', x: 'He said he would not die. A thousand years later, he speaks still.' },
+          { t: 'illumin', x: 'He said he would not die. A thousand years later, he speaks still.', fa: 'گفت که نمی‌میرد. هزار سال بعد، هنوز سخن می‌گوید.' },
           { t: 'motif', symbol: 'star', caption: 'فردوسی' },
         ] },
       ],

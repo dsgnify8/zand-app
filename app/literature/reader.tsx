@@ -17,7 +17,7 @@ import { Chang, LostVerses } from '@/components/rudaki-blocks';
 import { Mountain, HaftPeykar } from '@/components/nizami-blocks';
 import { Sama, Reed } from '@/components/rumi-blocks';
 import { GlossaryText } from '@/components/glossary-text';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 function chapterStarts(a: Author) {
@@ -53,51 +53,51 @@ function Veil({ surface, hidden }: { surface: string; hidden: string }) {
 
 function Block({ b }: { b: LitBlock }) {
   switch (b.t) {
-    case 'p': return <Text style={styles.p}>{b.x}</Text>;
-    case 'ptext': return <View style={styles.glossWrap}><GlossaryText text={b.x} /></View>;
+    case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
+    case 'ptext': return <View style={styles.glossWrap}><GlossaryText text={tx(b)} /></View>;
     case 'lead': return (
       <View style={styles.leadWrap}>
-        <Text style={styles.lead}>{b.x}</Text>
+        <Text style={[styles.lead, rtl, fa && (b as any).fa && styles.faLead]}>{tx(b)}</Text>
         <LitOrnament mark={(b as any).mark} />
       </View>
     );
     case 'verse': return (
       <View style={styles.verse}>
-        {b.lines.map((l, i) => <Text key={i} style={styles.verseLine}>{l}</Text>)}
-        {b.by ? <Text style={styles.verseBy}>{b.by}</Text> : null}
+        {((fa && (b as any).linesFa) ? (b as any).linesFa : b.lines).map((l: string, i: number) => <Text key={i} style={[styles.verseLine, rtl, fa && (b as any).linesFa && styles.faVerse]}>{l}</Text>)}
+        {b.by ? <Text style={[styles.verseBy, rtl]}>{fa && (b as any).byFa ? (b as any).byFa : b.by}</Text> : null}
       </View>
     );
     case 'couplet': return (
       <View style={styles.couplet}>
-        <Text style={styles.coupletLine}>{b.a}</Text>
+        <Text style={[styles.coupletLine, rtl, fa && (b as any).aFa && styles.faVerse]}>{fa && (b as any).aFa ? (b as any).aFa : b.a}</Text>
         <View style={styles.coupletDot} />
-        <Text style={styles.coupletLine}>{b.b}</Text>
+        <Text style={[styles.coupletLine, rtl, fa && (b as any).bFa && styles.faVerse]}>{fa && (b as any).bFa ? (b as any).bFa : b.b}</Text>
       </View>
     );
     case 'illumin': return (
       <View style={styles.illumin}>
         <Text style={styles.illuminMark}>&#8220;</Text>
-        <Text style={styles.illuminText}>{b.x}</Text>
+        <Text style={[styles.illuminText, rtl, fa && (b as any).fa && styles.faIllumin]}>{tx(b)}</Text>
       </View>
     );
     case 'gloss': return (
       <View style={styles.gloss}>
-        <Text style={styles.glossTerm}>{b.term}</Text>
-        <Text style={styles.glossMeaning}>{b.meaning}</Text>
+        <Text style={[styles.glossTerm, rtl]}>{fa && (b as any).termFa ? (b as any).termFa : b.term}</Text>
+        <Text style={[styles.glossMeaning, rtl, fa && (b as any).meaningFa && styles.faBody]}>{fa && (b as any).meaningFa ? (b as any).meaningFa : b.meaning}</Text>
       </View>
     );
-    case 'motif': return <LitMotif symbol={b.symbol} caption={b.caption} />;
+    case 'motif': return <LitMotif symbol={b.symbol} caption={fa && (b as any).captionFa ? (b as any).captionFa : b.caption} />;
     case 'scene': return (
       <View style={styles.scene}>
-        <Text style={styles.sceneKicker}>A TALE</Text>
-        <Text style={styles.sceneTitle}>{b.title}</Text>
-        <Text style={styles.sceneBody}>{b.x}</Text>
+        <Text style={styles.sceneKicker}>{fa ? 'حکایت' : 'A TALE'}</Text>
+        <Text style={[styles.sceneTitle, rtl]}>{fa && (b as any).titleFa ? (b as any).titleFa : b.title}</Text>
+        <Text style={[styles.sceneBody, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
       </View>
     );
     case 'aside': return (
       <View style={styles.aside}>
         <View style={styles.asideBar} />
-        <Text style={styles.asideText}>{b.x}</Text>
+        <Text style={[styles.asideText, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
       </View>
     );
     case 'img': {
@@ -271,6 +271,11 @@ export default function LitReader() {
 }
 
 const styles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faLead: { fontFamily: fonts.persian, fontSize: 22, lineHeight: 42 },
+  faBody: { fontFamily: fonts.persian, fontSize: 16.5, lineHeight: 34 },
+  faVerse: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 40, textAlign: 'center' },
+  faIllumin: { fontFamily: fonts.persian, fontSize: 18, lineHeight: 36 },
   navScroll: { height: 42, flexGrow: 0, flexShrink: 0, marginTop: spacing.sm, borderBottomWidth: 1, borderBottomColor: lit.hair },
   navRow: { paddingLeft: spacing.lg, paddingRight: spacing.md, alignItems: 'flex-start' },
   navTab: { marginRight: 20, height: 42, justifyContent: 'space-between', paddingTop: 5 },

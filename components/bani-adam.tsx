@@ -7,6 +7,7 @@ import { lit } from '@/constants/literature';
 const FIGURES = 5;
 
 export function BaniAdam() {
+  const fa = getLang() === 'fa';
   const [joined, setJoined] = useState(false);
   const anim = useRef(new Animated.Value(0)).current;
 
@@ -38,21 +39,42 @@ export function BaniAdam() {
       </View>
 
       <View style={styles.lines}>
-        <Text style={styles.line}>The children of Adam are limbs of one body,</Text>
-        <Text style={styles.line}>made, in creation, from a single essence.</Text>
-        <Text style={styles.line}>When one limb is struck by pain,</Text>
-        <Text style={styles.line}>the others cannot rest.</Text>
+        {fa ? (
+          <>
+            <Text style={[styles.line, styles.faVerse]}>بنی‌آدم اعضای یک پیکرند</Text>
+            <Text style={[styles.line, styles.faVerse]}>که در آفرینش ز یک گوهرند</Text>
+            <Text style={[styles.line, styles.faVerse]}>چو عضوی به درد آورد روزگار</Text>
+            <Text style={[styles.line, styles.faVerse]}>دگر عضوها را نماند قرار</Text>
+          </>
+        ) : (
+          <>
+            <Text style={styles.line}>The children of Adam are limbs of one body,</Text>
+            <Text style={styles.line}>made, in creation, from a single essence.</Text>
+            <Text style={styles.line}>When one limb is struck by pain,</Text>
+            <Text style={styles.line}>the others cannot rest.</Text>
+          </>
+        )}
         <View style={styles.gap} />
-        <Text style={styles.lineHard}>And you, untroubled by the suffering of others,</Text>
-        <Text style={styles.lineHard}>do not deserve the name of human.</Text>
+        {fa ? (
+          <>
+            <Text style={[styles.lineHard, styles.faVerse]}>تو کز محنت دیگران بی‌غمی</Text>
+            <Text style={[styles.lineHard, styles.faVerse]}>نشاید که نامت نهند آدمی</Text>
+          </>
+        ) : (
+          <>
+            <Text style={styles.lineHard}>And you, untroubled by the suffering of others,</Text>
+            <Text style={styles.lineHard}>do not deserve the name of human.</Text>
+          </>
+        )}
       </View>
 
-      <Text style={styles.hint}>{joined ? 'one body' : 'touch them'}</Text>
+      <Text style={styles.hint}>{fa ? (joined ? 'یک پیکر' : 'لمسشان کن') : (joined ? 'one body' : 'touch them')}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  faVerse: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 34, textAlign: 'center', writingDirection: 'rtl' },
   wrap: { alignItems: 'center', marginVertical: spacing.xl, paddingVertical: spacing.xl, paddingHorizontal: spacing.lg, backgroundColor: lit.raised, borderRadius: 12, borderWidth: 1, borderColor: lit.hair },
   fa: { fontFamily: fonts.persian, fontSize: 18, color: lit.gold, marginBottom: spacing.xl },
 

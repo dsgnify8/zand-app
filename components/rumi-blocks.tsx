@@ -6,15 +6,16 @@ import { lit } from '@/constants/literature';
 
 /* The sama. Every part of it means something. */
 const PARTS = [
-  { k: 'The white robe', v: 'a shroud' },
-  { k: 'The black cloak', v: 'the tomb, dropped at the start' },
-  { k: 'The tall hat', v: 'a headstone' },
-  { k: 'The right hand, up', v: 'receiving from heaven' },
-  { k: 'The left hand, down', v: 'giving to the earth' },
-  { k: 'The turn, leftward', v: 'around the heart, as the planets go' },
+  { k: 'The white robe', kFa: 'تنورهٔ سپید', v: 'a shroud', vFa: 'کفن' },
+  { k: 'The black cloak', kFa: 'خرقهٔ سیاه', v: 'the tomb, dropped at the start', vFa: 'گور، که در آغاز از تن می‌افتد' },
+  { k: 'The tall hat', kFa: 'کلاه بلند', v: 'a headstone', vFa: 'سنگ گور' },
+  { k: 'The right hand, up', kFa: 'دست راست، رو به بالا', v: 'receiving from heaven', vFa: 'گرفتن از آسمان' },
+  { k: 'The left hand, down', kFa: 'دست چپ، رو به پایین', v: 'giving to the earth', vFa: 'بخشیدن به زمین' },
+  { k: 'The turn, leftward', kFa: 'چرخش، به چپ', v: 'around the heart, as the planets go', vFa: 'گرد دل، چنان‌که ستارگان می‌گردند' },
 ];
 
 export function Sama() {
+  const fa = getLang() === 'fa';
   const [on, setOn] = useState(false);
   const spin = useRef(new Animated.Value(0)).current;
   const flare = useRef(new Animated.Value(0)).current;
@@ -42,7 +43,7 @@ export function Sama() {
 
   return (
     <View style={styles.sWrap}>
-      <Text style={styles.sKicker}>THE SAMA</Text>
+      <Text style={styles.sKicker}>{fa ? 'سماع' : 'THE SAMA'}</Text>
 
       <Pressable onPress={() => setOn((v) => !v)} style={styles.sStage}>
         <Animated.View style={{ transform: [{ rotate }] }}>
@@ -59,15 +60,15 @@ export function Sama() {
         </Animated.View>
       </Pressable>
 
-      <Text style={styles.sHint}>{on ? 'touch to still him' : 'touch to let him turn'}</Text>
+      <Text style={styles.sHint}>{fa ? (on ? 'برای آرام کردنش لمس کن' : 'لمس کن تا بچرخد') : (on ? 'touch to still him' : 'touch to let him turn')}</Text>
 
       {on ? (
         <View style={styles.sParts}>
           {PARTS.map((p, i) => (
             <View key={i} style={styles.sPartRow}>
-              <Text style={styles.sPartK}>{p.k}</Text>
+              <Text style={[styles.sPartK, fa && styles.faSmall]}>{fa && (p as any).kFa ? (p as any).kFa : p.k}</Text>
               <View style={styles.sPartLine} />
-              <Text style={styles.sPartV}>{p.v}</Text>
+              <Text style={[styles.sPartV, fa && styles.faSmall]}>{fa && (p as any).vFa ? (p as any).vFa : p.v}</Text>
             </View>
           ))}
         </View>
@@ -78,6 +79,7 @@ export function Sama() {
 
 /* The ney. Cut from the reed bed, and crying about it. */
 export function Reed() {
+  const fa = getLang() === 'fa';
   const [cut, setCut] = useState(false);
   const sep = useRef(new Animated.Value(0)).current;
   const cry = useRef(new Animated.Value(0)).current;
@@ -96,34 +98,46 @@ export function Reed() {
 
   return (
     <Pressable style={styles.rWrap} onPress={doCut}>
-      <Text style={styles.rKicker}>THE NEY</Text>
+      <Text style={styles.rKicker}>{fa ? 'نی' : 'THE NEY'}</Text>
 
       <View style={styles.rStage}>
         <Animated.View style={[styles.rBed, { opacity: fade }]}>
           {Array.from({ length: 7 }).map((_, i) => (
             <View key={i} style={[styles.rStalk, { height: 40 + (i % 3) * 9 }]} />
           ))}
-          <Text style={styles.rBedLabel}>the reed bed</Text>
+          <Text style={[styles.rBedLabel, fa && styles.faSmall]}>{fa ? 'نیستان' : 'the reed bed'}</Text>
         </Animated.View>
 
         <Animated.View style={[styles.rCutReed, { transform: [{ translateX: away }] }]}>
           <View style={styles.rReedBody}>
             {[0, 1, 2, 3].map((i) => <View key={i} style={styles.rHole} />)}
           </View>
-          <Text style={styles.rReedLabel}>the flute</Text>
+          <Text style={[styles.rReedLabel, fa && styles.faSmall]}>{fa ? 'نی' : 'the flute'}</Text>
         </Animated.View>
       </View>
 
       {!cut ? (
-        <Text style={styles.rHint}>touch to cut it</Text>
+        <Text style={styles.rHint}>{fa ? 'برای بریدن، لمس کن' : 'touch to cut it'}</Text>
       ) : (
         <Animated.View style={{ opacity: cry }}>
           <View style={styles.rRule} />
-          <Text style={styles.rLine}>Listen to this reed, how it complains,</Text>
-          <Text style={styles.rLine}>telling the tale of separations.</Text>
-          <Text style={styles.rLine}>Since they cut me from the reed bed,</Text>
-          <Text style={styles.rLine}>every man and woman has wept at my cry.</Text>
-          <Text style={styles.rNote}>The first four lines of the Masnavi. Plain rendering.</Text>
+          {fa ? (
+            <>
+              <Text style={[styles.rLine, styles.faVerse]}>بشنو این نی چون شکایت می‌کند</Text>
+              <Text style={[styles.rLine, styles.faVerse]}>از جدایی‌ها حکایت می‌کند</Text>
+              <Text style={[styles.rLine, styles.faVerse]}>کز نیستان تا مرا ببریده‌اند</Text>
+              <Text style={[styles.rLine, styles.faVerse]}>در نفیرم مرد و زن نالیده‌اند</Text>
+              <Text style={[styles.rNote, styles.faSmall]}>آغاز مثنوی معنوی</Text>
+            </>
+          ) : (
+            <>
+              <Text style={styles.rLine}>Listen to this reed, how it complains,</Text>
+              <Text style={styles.rLine}>telling the tale of separations.</Text>
+              <Text style={styles.rLine}>Since they cut me from the reed bed,</Text>
+              <Text style={styles.rLine}>every man and woman has wept at my cry.</Text>
+              <Text style={styles.rNote}>The first four lines of the Masnavi. Plain rendering.</Text>
+            </>
+          )}
         </Animated.View>
       )}
     </Pressable>
@@ -131,6 +145,8 @@ export function Reed() {
 }
 
 const styles = StyleSheet.create({
+  faVerse: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 34, textAlign: 'center', writingDirection: 'rtl' },
+  faSmall: { fontFamily: fonts.persian, fontSize: 11, fontStyle: 'normal' },
   sWrap: { alignItems: 'center', marginVertical: spacing.xl, paddingVertical: spacing.xl, paddingHorizontal: spacing.lg, backgroundColor: lit.raised, borderRadius: 12, borderWidth: 1, borderColor: lit.hair },
   sKicker: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: lit.gold },
   sStage: { width: 150, height: 150, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md },
