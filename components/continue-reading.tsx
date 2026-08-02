@@ -23,6 +23,7 @@ export function continueItems(): ContinueItem[] {
 }
 
 export function ContinueReading({ label = 'PICK UP WHERE YOU LEFT OFF' }: { label?: string }) {
+  const fa = getLang() === 'fa';
   const items = continueItems();
   if (items.length === 0) return null;
 
@@ -42,8 +43,8 @@ export function ContinueReading({ label = 'PICK UP WHERE YOU LEFT OFF' }: { labe
                 style={StyleSheet.absoluteFill as any}
               />
               <View style={s.body}>
-                <Text style={s.title} numberOfLines={2}>{r.title}</Text>
-                <Text style={s.sub}>{r.chapter}</Text>
+                <Text style={[s.title, fa && (r as any).titleFa && s.faTitle]} numberOfLines={2}>{fa && (r as any).titleFa ? (r as any).titleFa : r.title}</Text>
+                <Text style={[s.sub, fa && (r as any).chapterFa && s.faSub]}>{fa && (r as any).chapterFa ? (r as any).chapterFa : r.chapter}</Text>
                 <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
                 <Text style={s.pct}>page {r.page} of {r.total}</Text>
               </View>
@@ -56,6 +57,8 @@ export function ContinueReading({ label = 'PICK UP WHERE YOU LEFT OFF' }: { labe
 }
 
 const s = StyleSheet.create({
+  faTitle: { fontFamily: fonts.persian, fontSize: 15, lineHeight: 26, textAlign: 'right' },
+  faSub: { fontFamily: fonts.persian, fontSize: 12, textAlign: 'right' },
   label: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 2, color: colors.textSecondary, marginTop: spacing.xxl, marginBottom: spacing.lg },
   rail: { gap: spacing.md, paddingRight: spacing.lg },
   card: { width: 148, height: 176, borderRadius: 13, overflow: 'hidden', backgroundColor: colors.surface, justifyContent: 'flex-end' },

@@ -32,17 +32,20 @@ export const ME: Me = {
 };
 
 export type ReadingItem = {
+  titleFa?: string;
+  subFa?: string;
+  chapterFa?: string;
   key: string; title: string; sub: string; image: string;
   chapter: string; page: number; total: number; route: string;
 };
 
 export const READING: ReadingItem[] = [
-  { key: 'r1', title: 'Hafez', sub: 'The Tongue of the Unseen', image: 'lit-hafez-cover',
-    chapter: 'The Fal', page: 7, total: 11, route: '/literature/reader?author=hafez&page=6' },
-  { key: 'r2', title: 'Cyrus the Great', sub: 'The Shepherd King', image: 'cyrus-cover',
-    chapter: 'The Cylinder', page: 12, total: 24, route: '/education/reader?topic=cyrus-the-great&page=11' },
-  { key: 'r3', title: 'Geography', sub: 'The Land', image: 'geo-cover',
-    chapter: 'Provinces', page: 4, total: 7, route: '/geography' },
+  { key: 'r1', title: 'Hafez', titleFa: 'حافظ', sub: 'The Tongue of the Unseen', subFa: 'لسان‌الغیب', image: 'lit-hafez-cover',
+    chapter: 'The Fal', chapterFa: 'فال', page: 7, total: 11, route: '/literature/reader?author=hafez&page=6' },
+  { key: 'r2', title: 'Cyrus the Great', titleFa: 'کوروش بزرگ', sub: 'The Shepherd King', subFa: 'شاهِ چوپان', image: 'cyrus-cover',
+    chapter: 'The Cylinder', chapterFa: 'استوانه', page: 12, total: 24, route: '/education/reader?topic=cyrus-the-great&page=11' },
+  { key: 'r3', title: 'Geography', titleFa: 'جغرافیا', sub: 'The Land', subFa: 'سرزمین', image: 'geo-cover',
+    chapter: 'Provinces', chapterFa: 'استان‌ها', page: 4, total: 7, route: '/geography' },
 ];
 
 export type Discover = { key: string; kicker: string; title: string; x: string; image: string; route: string; tint: string };

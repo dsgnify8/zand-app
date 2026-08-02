@@ -315,9 +315,9 @@ export default function HomeScreen() {
                 <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
                 <View style={styles.nudgeAv}><Text style={styles.nudgeAvT}>{pending[0].fromFa[0]}</Text></View>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.nudgeT}>{pending[0].from} sent you {pending[0].kind === 'word' ? 'a word' : 'a topic'}</Text>
+                  <Text style={styles.nudgeT}>{pending[0].from} {pending[0].kind === 'word' ? t(HOME.sentYouWord) : t(HOME.sentYouTopic)}</Text>
                   <Text style={styles.nudgeX}>
-                    {pending.length > 1 ? 'and ' + (pending.length - 1) + ' more waiting' : '“' + pending[0].note + '”'}
+                    {pending.length > 1 ? t(HOME.and) + ' ' + (pending.length - 1) + ' ' + t(HOME.moreWaiting) : '“' + pending[0].note + '”'}
                   </Text>
                 </View>
                 <Ionicons name="arrow-forward" size={16} color={pr.friendA} />

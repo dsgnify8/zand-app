@@ -24,7 +24,7 @@ export default function HistoryHub() {
           <Text style={styles.title}>{t(APP.history)}</Text>
           <Text style={styles.glyph}>تاریخ</Text>
         </View>
-        <Text style={styles.subtitle}>The story of Iran, from the first empires to the modern age, told through the lives and dynasties that shaped it.</Text>
+        <Text style={[styles.subtitle, getLang() === 'fa' && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl', fontSize: 15, lineHeight: 30 }]}>{getLang() === 'fa' ? 'داستان ایران، از نخستین امپراتوری‌ها تا روزگار نو، از خلال زندگی‌ها و سلسله‌هایی که آن را شکل دادند.' : 'The story of Iran, from the first empires to the modern age, told through the lives and dynasties that shaped it.'}</Text>
 
         <HistoryTimeline />
 
