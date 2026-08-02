@@ -1156,6 +1156,7 @@ const qajar: Topic = {
   persian: 'قاجاریان',
   years: '1789 - 1925',
   essence: 'The dynasty that ruled Iran through a long and difficult century, caught between the great powers, until the ground was laid for a new age.',
+  essenceFa: 'سلسله‌ای که ایران را در قرنی دراز و دشوار اداره کرد، گرفتار میان قدرت‌های بزرگ، تا آنکه زمین برای روزگاری تازه آماده شد.',
   cover: 'qajar-cover',
   closing: 'qajar-cover',
   status: 'ready',
@@ -1167,35 +1168,34 @@ const qajar: Topic = {
   chapters: [
     {
       key: 'qj1',
-      title: 'A New Dynasty from the North',
+      title: 'A New Dynasty from the North', titleFa: 'سلسله‌ای تازه از شمال',
       subtitle: '1789 - 1834',
       pages: [
         { blocks: [
-          { t: 'p', x: 'After the gentle Zand dynasty fell, a harder power rose to take its place. Agha Mohammad Khan, chief of the Qajar tribe of the north, fought his way to mastery over Iran and had himself crowned Shah in the last years of the eighteenth century.' },
-          { t: 'p', x: 'He was a ruler of iron will and, by all accounts, fearsome cruelty, forged in a lifetime of struggle and captivity. But he reunited a country that had again fallen into division, and he founded a dynasty that would rule Iran for well over a century.' },
-          { t: 'splitimg', key: 'qajar-agha-mohammad', title: 'The founder', x: 'Agha Mohammad Khan reunited Iran by force and founded the Qajar line, though he did not live long to enjoy his throne. He was assassinated in 1797, soon after his coronation.' },
+          { t: 'p', x: 'After the gentle Zand dynasty fell, a harder power rose to take its place. Agha Mohammad Khan, chief of the Qajar tribe of the north, fought his way to mastery over Iran and had himself crowned Shah in the last years of the eighteenth century.', fa: 'پس از فروپاشی سلسلهٔ مهربان زند، قدرتی سخت‌تر جایش را گرفت. آقامحمدخان، سرکردهٔ ایل قاجار در شمال، با جنگ راه خود را تا فرمانروایی بر ایران باز کرد و در واپسین سال‌های سدهٔ هجدهم تاج بر سر گذاشت.' },
+          { t: 'p', x: 'He was a ruler of iron will and, by all accounts, fearsome cruelty, forged in a lifetime of struggle and captivity. But he reunited a country that had again fallen into division, and he founded a dynasty that would rule Iran for well over a century.', fa: 'فرمانروایی بود با ارادهٔ آهنین و، به گواه همهٔ روایت‌ها، بی‌رحمی‌ای هولناک؛ کسی که عمری کشمکش و اسارت او را چنین ساخته بود. اما کشوری را که دوباره به تفرقه افتاده بود یکپارچه کرد، و سلسله‌ای بنیان نهاد که بیش از یک قرن بر ایران فرمان راند.' },
+          { t: 'splitimg', key: 'qajar-agha-mohammad', title: 'The founder', titleFa: 'بنیان‌گذار', x: 'Agha Mohammad Khan reunited Iran by force and founded the Qajar line, though he did not live long to enjoy his throne. He was assassinated in 1797, soon after his coronation.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A capital named Tehran' },
-          { t: 'p', x: 'It was the Qajars who chose as their capital a modest town in the north of Iran, one that would grow, over their long rule and the ages after, into the great metropolis of the nation. That town was Tehran, and it has been the heart of Iran ever since.' },
-          { t: 'markline', x: 'Under the Qajars, Tehran became the capital it remains to this day.' },
-          { t: 'p', x: 'The crown passed to Fath Ali Shah, whose long reign was famous for its splendour and ceremony, its jewelled court and its portraits of a bearded king in golden robes. But beyond the glitter of the court, storm clouds were gathering on the horizon.' },
+          { t: 'h', x: 'A capital named Tehran', fa: 'پایتختی به نام تهران' },
+          { t: 'p', x: 'It was the Qajars who chose as their capital a modest town in the north of Iran, one that would grow, over their long rule and the ages after, into the great metropolis of the nation. That town was Tehran, and it has been the heart of Iran ever since.', fa: 'این قاجارها بودند که شهرکی ساده در شمال ایران را پایتخت خود کردند؛ شهرکی که در طول فرمانروایی بلندشان و روزگاران پس از آن، به کلان‌شهر بزرگ این کشور بدل شد. آن شهرک تهران بود، و از آن روز تا امروز قلب ایران مانده است.' },
+          { t: 'markline', x: 'Under the Qajars, Tehran became the capital it remains to this day.', fa: 'در روزگار قاجار، تهران پایتخت شد و تا امروز مانده است.' },
+          { t: 'p', x: 'The crown passed to Fath Ali Shah, whose long reign was famous for its splendour and ceremony, its jewelled court and its portraits of a bearded king in golden robes. But beyond the glitter of the court, storm clouds were gathering on the horizon.', fa: 'تاج به فتحعلی‌شاه رسید، که سلطنت بلندش به شکوه و تشریفات نامدار بود؛ به درباری پر از جواهر و به آن نگاره‌های شاهی ریش‌بلند در جامهٔ زرین. اما آن‌سوی درخشش دربار، ابرهای توفان بر افق گرد می‌آمدند.' },
         ] },
       ],
     },
     {
       key: 'qj2',
-      title: 'Caught Between Empires',
+      title: 'Caught Between Empires', titleFa: 'گرفتار میان دو امپراتوری',
       subtitle: '1804 - 1828',
       pages: [
         { blocks: [
-          { t: 'p', x: 'The nineteenth century was the age of the great European empires, and Iran found itself caught between two of the hungriest. To the north loomed the vast and expanding empire of Russia. To the east and south stretched the power of the British, masters of India.' },
-          { t: 'p', x: 'Between these two giants, Iran was squeezed, courted, and pressured, its fate bound up in a great game of empires that it had not the strength to control. It was a hard and humbling position for a proud and ancient nation.' },
+          { t: 'p', x: 'The nineteenth century was the age of the great European empires, and Iran found itself caught between two of the hungriest. To the north loomed the vast and expanding empire of Russia. To the east and south stretched the power of the British, masters of India.', fa: 'سدهٔ نوزدهم روزگار امپراتوری‌های بزرگ اروپایی بود، و ایران خود را گرفتار میان دو تا از گرسنه‌ترینشان یافت. در شمال، امپراتوری پهناور و روبه‌گسترش روسیه سایه انداخته بود. در شرق و جنوب، قدرت بریتانیا کشیده شده بود؛ اربابان هند.' },
+          { t: 'p', x: 'Between these two giants, Iran was squeezed, courted, and pressured, its fate bound up in a great game of empires that it had not the strength to control. It was a hard and humbling position for a proud and ancient nation.', fa: 'ایران میان این دو غول فشرده شد، وعده شنید و زیر فشار رفت؛ سرنوشتش گره خورده بود به بازی بزرگ امپراتوری‌ها، بازی‌ای که توان مهارش را نداشت. برای ملتی سربلند و کهن، جایگاهی بود سخت و خفت‌بار.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The wars with Russia' },
-          { t: 'p', x: 'Twice in the early century Iran went to war with Russia over the lands of the Caucasus, and twice it was defeated by the superior arms and organization of the Russian armies. The cost of those defeats was severe, and it was paid in Iranian soil.' },
-          { t: 'h', x: 'What eight years came to' },
+          { t: 'h', x: 'The wars with Russia', fa: 'جنگ‌های ایران و روس' },
+          { t: 'p', x: 'Twice in the early century Iran went to war with Russia over the lands of the Caucasus, and twice it was defeated by the superior arms and organization of the Russian armies. The cost of those defeats was severe, and it was paid in Iranian soil.', fa: 'دو بار در آغاز آن قرن، ایران بر سر سرزمین‌های قفقاز با روسیه جنگید، و هر دو بار در برابر سلاح و سازمان برتر سپاه روس شکست خورد. بهای این شکست‌ها سنگین بود، و با خاک ایران پرداخت شد.' },
           { t: 'numstat', items: [
             { n: '1813', label: 'The Treaty of Gulistan, after the first war' },
             { n: '1828', label: 'The Treaty of Turkmenchay, after the second' },
@@ -1204,39 +1204,39 @@ const qajar: Topic = {
           ] },
         ] },
         { blocks: [
-          { t: 'p', x: 'By the Treaty of Turkmenchay, one of the most painful in Iranian history, Iran gave up its claims to the rich lands of the Caucasus and granted Russia sweeping privileges. It was a wound to national pride that would not soon heal, and a sign of how far the balance had tipped against Iran.' },
-          { t: 'markline', x: 'A proud nation learned, painfully, that valour alone could not stand against modern empires.' },
+          { t: 'p', x: 'By the Treaty of Turkmenchay, one of the most painful in Iranian history, Iran gave up its claims to the rich lands of the Caucasus and granted Russia sweeping privileges. It was a wound to national pride that would not soon heal, and a sign of how far the balance had tipped against Iran.', fa: 'با عهدنامهٔ ترکمانچای، از دردناک‌ترین قراردادهای تاریخ ایران، ایران از ادعای خود بر سرزمین‌های حاصلخیز قفقاز چشم پوشید و امتیازهایی گسترده به روسیه داد. زخمی بود بر غرور ملی که به این زودی‌ها التیام نیافت، و نشانه‌ای از اینکه ترازو تا کجا به زیان ایران چرخیده است.' },
+          { t: 'markline', x: 'A proud nation learned, painfully, that valour alone could not stand against modern empires.', fa: 'ملتی سربلند، به تلخی آموخت که دلاوری به‌تنهایی در برابر امپراتوری‌های مدرن دوام نمی‌آورد.' },
         ] },
       ],
     },
     {
       key: 'qj3',
-      title: 'The Reformer Who Was Lost',
+      title: 'The Reformer Who Was Lost', titleFa: 'اصلاحگری که از دست رفت',
       subtitle: '1848 - 1851',
       pages: [
         { blocks: [
-          { t: 'p', x: 'Not everyone accepted Iran\'s decline. In the middle of the century there rose a man who saw clearly what his country needed, and who tried, in a few short years, to drag it into the modern world. His name was Amir Kabir, and he was the chief minister of the young Shah, Naser al-Din.' },
-          { t: 'splitimg', key: 'qajar-amir-kabir', title: 'Amir Kabir', x: 'A brilliant and honest statesman, Amir Kabir set out to reform Iran root and branch: its army, its finances, its industry, and its schools. He is remembered as one of the greatest reformers in the nation\'s history.' },
+          { t: 'p', x: 'Not everyone accepted Iran\'s decline. In the middle of the century there rose a man who saw clearly what his country needed, and who tried, in a few short years, to drag it into the modern world. His name was Amir Kabir, and he was the chief minister of the young Shah, Naser al-Din.', fa: 'همه به افول ایران تن ندادند. در میانهٔ آن قرن مردی برخاست که به‌روشنی می‌دید کشورش به چه نیاز دارد، و کوشید در چند سال کوتاه آن را به جهان مدرن بکشاند. نامش امیرکبیر بود، صدراعظم شاه جوان، ناصرالدین‌شاه.' },
+          { t: 'splitimg', key: 'qajar-amir-kabir', title: 'Amir Kabir', titleFa: 'امیرکبیر', x: 'A brilliant and honest statesman, Amir Kabir set out to reform Iran root and branch: its army, its finances, its industry, and its schools. He is remembered as one of the greatest reformers in the nation\'s history.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A vision of a modern Iran' },
-          { t: 'p', x: 'In his brief time in power, Amir Kabir accomplished a remarkable amount. He founded the Dar ol-Fonun, the first modern institution of higher learning in Iran, a school of science, engineering, and medicine that would shape generations. He reformed the treasury, curbed corruption, and worked to build modern industry.' },
-          { t: 'duo', left: { title: 'His vision', x: 'A modern, independent, educated Iran, strong enough to stand on its own among the nations.' }, right: { title: 'His enemies', x: 'A jealous court that feared his power and honesty, and whispered against him to the young king.' } },
+          { t: 'h', x: 'A vision of a modern Iran', fa: 'چشم‌اندازی از ایرانی مدرن' },
+          { t: 'p', x: 'In his brief time in power, Amir Kabir accomplished a remarkable amount. He founded the Dar ol-Fonun, the first modern institution of higher learning in Iran, a school of science, engineering, and medicine that would shape generations. He reformed the treasury, curbed corruption, and worked to build modern industry.', fa: 'امیرکبیر در همان مدت کوتاه قدرتش، کارهای چشمگیری از پیش برد. دارالفنون را بنیان نهاد، نخستین نهاد نوین آموزش عالی در ایران؛ مدرسه‌ای برای دانش و مهندسی و پزشکی که نسل‌ها را شکل داد. خزانه را سامان داد، جلوی فساد را گرفت، و برای برپا کردن صنعت نوین کوشید.' },
+          { t: 'duo', left: { title: 'His vision', titleFa: 'آنچه در سر داشت', x: 'A modern, independent, educated Iran, strong enough to stand on its own among the nations.' }, right: { title: 'His enemies', titleFa: 'دشمنانش', x: 'A jealous court that feared his power and honesty, and whispered against him to the young king.' } },
         ] },
         { blocks: [
-          { t: 'p', x: 'But his very success made him enemies. The courtiers whose corruption he threatened, and who feared his influence over the young Shah, turned the king against him. In 1851 he was dismissed, exiled, and soon after put to death on the Shah\'s order, in a bath house in Kashan.' },
-          { t: 'markline', x: 'Iran lost, in one stroke, the greatest reformer of its age. It is one of history\'s saddest what-ifs.' },
-          { t: 'p', x: 'What Iran might have become, had Amir Kabir been allowed to finish his work, is one of the great questions of the nation\'s history. His death was a tragedy, and the reforms he began were largely undone.' },
+          { t: 'p', x: 'But his very success made him enemies. The courtiers whose corruption he threatened, and who feared his influence over the young Shah, turned the king against him. In 1851 he was dismissed, exiled, and soon after put to death on the Shah\'s order, in a bath house in Kashan.', fa: 'اما همین کامیابی برایش دشمن تراشید. درباریانی که فسادشان را در خطر می‌دیدند و از نفوذ او بر شاه جوان می‌ترسیدند، شاه را در برابرش برانگیختند. در سال ۱۲۳۰ خورشیدی از کار برکنار شد، به تبعید رفت، و اندکی بعد به فرمان شاه در حمام فین کاشان کشته شد.' },
+          { t: 'markline', x: 'Iran lost, in one stroke, the greatest reformer of its age. It is one of history\'s saddest what-ifs.', fa: 'ایران در یک ضربه بزرگ‌ترین اصلاحگر روزگارش را از دست داد. این یکی از اندوهبارترین «اگر»های تاریخ است.' },
+          { t: 'p', x: 'What Iran might have become, had Amir Kabir been allowed to finish his work, is one of the great questions of the nation\'s history. His death was a tragedy, and the reforms he began were largely undone.', fa: 'اینکه اگر می‌گذاشتند امیرکبیر کارش را به پایان برساند ایران چه می‌شد، از پرسش‌های بزرگ تاریخ این ملت است. مرگش فاجعه بود، و اصلاحاتی که آغاز کرده بود بیشترش بر باد رفت.' },
         ] },
       ],
     },
     {
       key: 'qj4',
-      title: 'The Awakening of a Nation',
+      title: 'The Awakening of a Nation', titleFa: 'بیداری یک ملت',
       subtitle: '1890 - 1911',
       pages: [
         { blocks: [
-          { t: 'p', x: 'As the century wore on, the kings sold ever more of the nation\'s wealth and rights to foreign powers and companies, granting concessions over tobacco, banking, oil, and more, to fill an empty treasury. But the people of Iran were beginning to stir.' },
+          { t: 'p', x: 'As the century wore on, the kings sold ever more of the nation\'s wealth and rights to foreign powers and companies, granting concessions over tobacco, banking, oil, and more, to fill an empty treasury. But the people of Iran were beginning to stir.', fa: 'هرچه قرن پیش‌تر می‌رفت، شاهان بیشتر و بیشتر از ثروت و حقوق این ملت را به قدرت‌ها و شرکت‌های بیگانه فروختند؛ امتیاز تنباکو، بانک، نفت و بسیاری دیگر را واگذار کردند تا خزانهٔ تهی را پر کنند. اما مردم ایران داشتند بیدار می‌شدند.' },
           { t: 'h', x: 'The Tobacco Protest' },
           { t: 'p', x: 'In 1890 the Shah granted a sweeping monopoly over all Iranian tobacco to a British company. The nation erupted. Led by the clergy and the merchants, Iranians of every class joined a boycott so complete that, it is said, even the women of the royal harem refused to smoke. The Shah was forced to cancel the concession.' },
           { t: 'markline', x: 'For the first time, the people had spoken with one voice, and the throne had been made to listen.' },
@@ -1259,7 +1259,7 @@ const qajar: Topic = {
     },
     {
       key: 'qj5',
-      title: 'The End of an Age',
+      title: 'The End of an Age', titleFa: 'پایان یک دوران',
       subtitle: '1911 - 1925',
       pages: [
         { blocks: [
@@ -2060,6 +2060,8 @@ const modernIran: Topic = {
           { t: 'p', x: 'Iraq used chemical weapons repeatedly, against Iranian soldiers at the front and against civilians. In March 1988 the Kurdish town of Halabja was attacked with nerve and mustard agents and several thousand of its people died in a day. Tens of thousands of Iranian veterans still live with the effects of gas exposure.' },
           { t: 'p', x: 'Iraq was supplied through the war by the Soviet Union, France, and a number of other states, and received intelligence assistance from the United States. Iran, under embargo, bought what it could wherever it could, including, in one arrangement that became a scandal in Washington, from the United States itself.' },
           { t: 'p', x: 'The war reached the Gulf. Both sides attacked shipping. In July 1988 an American warship shot down an Iranian civilian airliner over the Persian Gulf, killing all two hundred and ninety people aboard. The United States said it had been mistaken for a fighter.' },
+          { t: 'h', x: 'What eight years came to', fa: 'هشت سال، به کجا رسید' },
+          { t: 'h', x: 'What eight years came to', fa: 'هشت سال، به کجا رسید' },
           { t: 'numstat', items: [
             { n: '8', label: 'years of war' },
             { n: '~1m', label: 'dead, both countries' },
