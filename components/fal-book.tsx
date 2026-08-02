@@ -52,7 +52,7 @@ export function FalBook() {
   return (
     <View style={styles.wrap}>
       <Text style={styles.kicker}>{t(APP.falTitle)}</Text>
-      <Text style={styles.instruction}>Hold your question in your heart, then open the book.</Text>
+      <Text style={styles.instruction}>{t(APP.falInstruction)}</Text>
 
       <Pressable onPress={ask}>
         <Animated.View style={[styles.book, { transform: [{ translateY: lift }] }]}>
@@ -99,7 +99,7 @@ export function FalBook() {
             ))}
             <View style={styles.rule} />
             <Text style={styles.readingLabel}>{t(APP.whatItSays)}</Text>
-            <Text style={styles.reading}>{verse?.reading}</Text>
+            <Text style={[styles.reading, getLang() === 'fa' && (verse as any)?.readingFa && styles.faReading]}>{getLang() === 'fa' && (verse as any)?.readingFa ? (verse as any).readingFa : verse?.reading}</Text>
 
             <Pressable style={styles.done} onPress={() => setOpen(false)}>
               <Text style={styles.doneText}>{t(APP.closeTheBook)}</Text>
@@ -130,6 +130,7 @@ const BW = 172;
 const BH = 232;
 
 const styles = StyleSheet.create({
+  faReading: { fontFamily: fonts.persian, fontSize: 15, lineHeight: 32, textAlign: 'right', writingDirection: 'rtl' },
   wrap: { alignItems: 'center', marginVertical: spacing.xl },
   kicker: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 3, color: lit.gold },
   instruction: { fontFamily: fonts.body, fontSize: 13, lineHeight: 20, color: lit.textDim, textAlign: 'center', marginTop: spacing.sm, marginBottom: spacing.lg, fontStyle: 'italic' },
