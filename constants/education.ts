@@ -1581,10 +1581,10 @@ const parthian: Topic = {
         ] },
         { blocks: [
           { t: 'ribbon', items: [
-            { year: '247 BCE', label: 'Arsaces founds the Parthian state' },
-            { year: '171 BCE', label: 'Mithridates I begins the great expansion' },
-            { year: '141 BCE', label: 'The Parthians take Mesopotamia and Babylon' },
-            { year: '1st c. BCE', label: 'Parthia stands as a great world power' },
+            { year: '247 BCE', yearFa: '۲۴۷ پ.م', label: 'Arsaces founds the Parthian state', labelFa: 'اشک دولت اشکانی را بنیان می‌نهد' },
+            { year: '171 BCE', yearFa: '۱۷۱ پ.م', label: 'Mithridates I begins the great expansion', labelFa: 'مهرداد یکم گسترش بزرگ را آغاز می‌کند' },
+            { year: '141 BCE', yearFa: '۱۴۱ پ.م', label: 'The Parthians take Mesopotamia and Babylon', labelFa: 'اشکانیان میان‌رودان و بابل را می‌گیرند' },
+            { year: '1st c. BCE', yearFa: 'سدهٔ یکم پ.م', label: 'Parthia stands as a great world power', labelFa: 'اشکانیان در جایگاه یک قدرت بزرگ جهانی می‌ایستند' },
           ] },
           { t: 'p', x: 'Under the Parthians, Iran was Iranian once more. Though they had absorbed much from the Greek world, and long kept Greek styles at their court, they revived the old Iranian ways, honored the ancient faith, and cherished the memory of the Achaemenid past. The Persian spirit, which had bent under Greek rule, straightened again.', fa: 'زیر فرمان اشکانیان، ایران دوباره ایرانی شد. هرچند بسیاری از جهان یونانی را در خود گرفته بودند و دیرزمانی سبک یونانی را در دربار نگاه داشتند، آیین‌های کهن ایرانی را زنده کردند، دین باستانی را گرامی داشتند، و یاد روزگار هخامنشی را عزیز شمردند. روح ایرانی که زیر فرمانروایی یونانی خم شده بود، دوباره راست ایستاد.' },
           { t: 'markline', x: 'From horsemen of the steppe rose the empire that made Iran Iranian again.', fa: 'از سوارکاران دشت، امپراتوری‌ای برخاست که ایران را دوباره ایرانی کرد.' },
@@ -1604,10 +1604,10 @@ const parthian: Topic = {
           { t: 'h', x: 'The disaster at Carrhae', fa: 'فاجعهٔ حرّان' },
           { t: 'p', x: 'The most famous clash came in 53 BCE at Carrhae, where the Roman general Crassus, one of the richest and most powerful men in Rome, invaded with a mighty army. There the Parthians taught Rome a lesson it never forgot. Their horse archers rained arrows upon the legions, and their heavy armored cavalry shattered them. The Roman army was destroyed, and Crassus was killed.', fa: 'نامدارترین برخورد در سال ۵۳ پیش از میلاد در حرّان روی داد، آنجا که کراسوس، سردار رومی و یکی از ثروتمندترین و نیرومندترین مردان روم، با سپاهی بزرگ به ایران تاخت. اشکانیان همان‌جا درسی به روم دادند که هرگز از یادش نبرد. کمانداران سوارشان بر لژیون‌ها باران تیر باریدند و سواره‌نظام سنگین‌زرهشان آنان را در هم شکست. سپاه روم نابود شد و کراسوس کشته شد.' },
           { t: 'numstat', items: [
-            { n: '53 BCE', label: 'The battle of Carrhae' },
-            { n: 'Crassus', label: 'The Roman commander slain' },
-            { n: '~300', label: 'Years Parthia held Rome at bay' },
-            { n: 'Euphrates', label: 'The frontier Rome could not cross' },
+            { n: '53 BCE', nFa: '۵۳ پ.م', label: 'The battle of Carrhae', labelFa: 'نبرد حرّان' },
+            { n: 'Crassus', nFa: 'کراسوس', label: 'The Roman commander slain', labelFa: 'سردار رومی که کشته شد' },
+            { n: '~300', label: 'Years Parthia held Rome at bay', labelFa: 'سال که اشکانیان روم را پشت مرز نگاه داشتند' },
+            { n: 'Euphrates', nFa: 'فرات', label: 'The frontier Rome could not cross', labelFa: 'مرزی که روم نتوانست از آن بگذرد' },
           ] },
         ] },
         { blocks: [

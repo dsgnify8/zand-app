@@ -213,7 +213,7 @@ function BlockView({ b }: { b: Block }) {
       <View style={styles.numstat}>
         {b.items.map((it, i) => (
           <View key={i} style={styles.numstatItem}>
-            <Text style={styles.numstatN}>{it.n}</Text>
+            <Text style={styles.numstatN}>{fa && (it as any).nFa ? (it as any).nFa : it.n}</Text>
             <View style={styles.numstatBar} />
             <Text style={[styles.numstatLabel, rtl]}>{fa && (it as any).labelFa ? (it as any).labelFa : it.label}</Text>
           </View>
@@ -224,7 +224,7 @@ function BlockView({ b }: { b: Block }) {
       <View style={styles.ribbon}>
         {b.items.map((it, i) => (
           <View key={i} style={styles.ribbonItem}>
-            <View style={styles.ribbonYearWrap}><Text style={styles.ribbonYear}>{it.year}</Text></View>
+            <View style={styles.ribbonYearWrap}><Text style={styles.ribbonYear}>{fa && (it as any).yearFa ? (it as any).yearFa : it.year}</Text></View>
             <Text style={[styles.ribbonLabel, rtl]}>{fa && (it as any).labelFa ? (it as any).labelFa : it.label}</Text>
             {i < b.items.length - 1 ? <View style={styles.ribbonConnector} /> : null}
           </View>
