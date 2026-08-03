@@ -80,7 +80,7 @@ const ferdowsi: Author = {
       subtitle: 'HIS WORLD',
       pages: [
         { blocks: [
-          { t: 'lead', x: 'To understand Iran, you must first know its poet.', mark: 'crown' },
+          { t: 'lead', x: 'To understand Iran, you must first know its poet.', fa: 'برای شناختن ایران، نخست باید شاعرش را شناخت.', mark: 'crown' },
           { t: 'p', x: 'He was born around the year 940 in a village near Tus, in the green province of Khorasan in the northeast of Iran. His name was Abul-Qasim, and the world would come to know him as Ferdowsi, a name that means, fittingly, the man of paradise.', fa: 'حدود سال ۹۴۰ میلادی در روستایی نزدیک توس زاده شد، در خراسانِ سبز، در شمال شرق ایران. نامش ابوالقاسم بود، و جهان او را با نام فردوسی شناخت؛ نامی که، به‌جا، یعنی مردِ بهشت.' },
           { t: 'p', x: 'He came from the dehqans, the old landed gentry of Iran, a class that took special pride in preserving the ancient traditions, the stories, and the memory of Persia as it had been before the Arab conquest. From childhood he breathed in the old tales of kings and heroes, and they never left him.', fa: 'از دهقانان بود، همان طبقهٔ کهن زمین‌دار ایران که نگاهبانی از آیین‌ها و داستان‌ها و خاطرهٔ ایرانِ پیش از فتح عرب را مایهٔ سربلندی خود می‌دانست. از کودکی داستان‌های کهن شاهان و پهلوانان را نفس کشید، و آن داستان‌ها هرگز رهایش نکردند.' },
           { t: 'motif', symbol: 'pen', caption: 'The reed pen of Tus that would write a nation into being.', captionFa: 'قلم نیِ توس، که ملتی را به نوشتن هستی بخشید.' },
@@ -208,15 +208,15 @@ const hafez: Author = {
       subtitle: 'SHIRAZ, c. 1315',
       pages: [
         { blocks: [
-          { t: 'lead', x: 'There are two books in almost every Iranian home. One is holy. The other is Hafez.', mark: 'cup' },
-          { t: 'p', x: 'He was born Shams al Din Mohammad, in Shiraz, in a century when the city passed from one ruler to the next like a coin. His father died when he was young. The family had little. He worked, by the old accounts, in a bakery, and delivered bread to the wealthy quarters of the city.' },
-          { t: 'p', x: 'And somewhere in those years he memorised the Quran, entirely, word for word. That is what his name means. Hafez is not a name at all. It is a title given to one who holds the whole book in memory. The boy who carried bread through Shiraz was carrying something else as well.' },
+          { t: 'lead', x: 'There are two books in almost every Iranian home. One is holy. The other is Hafez.', fa: 'در خانهٔ تقریباً هر ایرانی دو کتاب هست. یکی مقدس است. دیگری حافظ.', fa: 'در خانهٔ تقریباً هر ایرانی دو کتاب هست. یکی مقدس است. دیگری حافظ.', mark: 'cup' },
+          { t: 'p', x: 'He was born Shams al Din Mohammad, in Shiraz, in a century when the city passed from one ruler to the next like a coin. His father died when he was young. The family had little. He worked, by the old accounts, in a bakery, and delivered bread to the wealthy quarters of the city.', fa: 'شمس‌الدین محمد زاده شد، در شیراز، در قرنی که این شهر چون سکه‌ای از دستی به دست دیگر می‌گشت. پدرش در کودکی او درگذشت. خانواده چیز چندانی نداشت. بنا بر روایت‌های کهن، در نانوایی کار می‌کرد و نان را به محله‌های توانگرنشین شهر می‌رساند.' },
+          { t: 'p', x: 'And somewhere in those years he memorised the Quran, entirely, word for word. That is what his name means. Hafez is not a name at all. It is a title given to one who holds the whole book in memory. The boy who carried bread through Shiraz was carrying something else as well.', fa: 'و جایی در همان سال‌ها قرآن را از بر کرد، تمامش، واژه به واژه. معنای نامش همین است. حافظ اصلاً نام نیست؛ لقبی است برای کسی که تمام کتاب را در حافظه دارد. پسری که نان را در شیراز این‌سو و آن‌سو می‌برد، چیز دیگری هم با خود حمل می‌کرد.' },
           { t: 'motif', symbol: 'book', caption: 'حافظ, the one who holds it all in memory.' },
         ] },
         { blocks: [
           { t: 'h', x: 'A city worth loving' },
-          { t: 'p', x: 'Shiraz was already the city of Saadi, already famous for its gardens, its wine, its roses and its nightingales. Hafez almost never left it. In a century of conquerors, when Timur was burning his way across the world, this poet stayed in one city and wrote about one city, and became universal by doing so.' },
-          { t: 'aside', x: 'He is the least travelled of the great Persian poets, and the most widely read.' },
+          { t: 'p', x: 'Shiraz was already the city of Saadi, already famous for its gardens, its wine, its roses and its nightingales. Hafez almost never left it. In a century of conquerors, when Timur was burning his way across the world, this poet stayed in one city and wrote about one city, and became universal by doing so.', fa: 'شیراز از پیش شهر سعدی بود، از پیش به باغ‌ها و می و گل و بلبلش نامدار. حافظ تقریباً هرگز از آن بیرون نرفت. در قرنی پر از فاتحان، آنگاه که تیمور جهان را می‌سوزاند و پیش می‌رفت، این شاعر در یک شهر ماند و از یک شهر نوشت، و درست با همین کار جهانی شد.' },
+          { t: 'aside', x: 'He is the least travelled of the great Persian poets, and the most widely read.', fa: 'کم‌سفرترین شاعر بزرگ ایران است، و پرخواننده‌ترینشان.' },
           { t: 'p', x: 'There is a story, and it may even be true, that when Timur took Shiraz he summoned Hafez to answer for a famous line, the one offering Samarkand and Bukhara, Timur own cities, for the mole on a beautiful face. How dare you, the conqueror asked, give away my cities for a mole. Hafez, old and poor and standing before the most feared man alive, replied that it was precisely such extravagance that had reduced him to this poverty. Timur laughed, and let him go.' },
           { t: 'illumin', x: 'A poet with nothing disarmed the conqueror of the world with a joke.' },
         ] },
@@ -231,22 +231,22 @@ const hafez: Author = {
         { blocks: [
           { t: 'p', x: 'To read Hafez is to learn that a line can hold two meanings at once and mean both of them completely. This is the whole art, and it is why he has never been exhausted in six hundred years of reading.' },
           { t: 'p', x: 'When he writes of wine, he means wine, and he means the intoxication of the divine. When he writes of the beloved, he means a person, and he means God. When he mocks the hypocrite preacher, he means that preacher, and he means every hollow authority that has ever lived. He never chooses. The choice is left to you, and what you choose reveals you.' },
-          { t: 'veil', surface: 'Come, for the palace of hope is built on sand. Bring wine, for the foundation of life is wind.', hidden: 'On the surface, a drinking song. Beneath, one of the oldest truths there is: everything you are building will not hold, so stop clutching at permanence and be present in the hour you actually have.' },
+          { t: 'veil', surface: 'Come, for the palace of hope is built on sand. Bring wine, for the foundation of life is wind.', surfaceFa: 'بیا که قصر امل سخت سست بنیادست\u200Cبیار باده که بنیاد عمر بر بادست', hidden: 'On the surface, a drinking song. Beneath, one of the oldest truths there is: everything you are building will not hold, so stop clutching at permanence and be present in the hour you actually have.', hiddenFa: 'در ظاهر، ترانه‌ای در ستایش می. در باطن، یکی از کهن‌ترین حقیقت‌هایی که هست: هرچه می‌سازی پایدار نمی‌ماند، پس دست از چنگ زدن به ماندگاری بردار و در همان ساعتی باش که به‌راستی داری.' },
         ] },
         { blocks: [
           { t: 'h', x: 'Why the double meaning mattered' },
           { t: 'p', x: 'This was not a game. Hafez lived under rulers who policed piety, and one of them, Mobarez al Din, was so severe that Hafez and his circle called him the police officer. To say the true thing plainly was dangerous. To say it in a way that could always mean something else was survival, and it was art.' },
           { t: 'p', x: 'So the tavern in his poems is the mosque and it is not the mosque. The wine cup is a real cup and it is the whole world. He wrote in a language that authority could not convict, and everyone understood him anyway.' },
-          { t: 'veil', surface: 'Last night I saw the angels knocking at the tavern door, kneading the clay of Adam and casting it into a cup.', hidden: 'The sacred is not in the place the pious told you to look. It is in the tavern, the ruined place, the disreputable corner. God is being made where the respectable would never think to search.' },
+          { t: 'veil', surface: 'Last night I saw the angels knocking at the tavern door, kneading the clay of Adam and casting it into a cup.', surfaceFa: 'دوش دیدم که ملائک در میخانه زدند\u200Cگِل آدم بسرشتند و به پیمانه زدند', hidden: 'The sacred is not in the place the pious told you to look. It is in the tavern, the ruined place, the disreputable corner. God is being made where the respectable would never think to search.', hiddenFa: 'آنچه مقدس است، آنجا نیست که پارسایان نشانت دادند. در میخانه است، در خرابات، در همان گوشهٔ بدنام. کارِ خدا آنجا در جریان است که آبرومندان هرگز به فکرِ گشتنش نمی‌افتند.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The form he perfected' },
           { t: 'p', x: 'He wrote the ghazal, a form of independent couplets bound by rhyme and a single mood rather than a single argument. Each couplet stands alone and could be quoted alone, which is exactly why his lines travel so easily into ordinary speech. A ghazal is not a story. It is a scattering of jewels that somehow make a necklace.' },
           { t: 'ghazal', couplets: [
-            { a: 'Do not grieve. The lost Joseph will return to Canaan.', b: 'The house of sorrow will become a garden. Do not grieve.' },
-            { a: 'Do not grieve, sorrowing heart, your state will mend.', b: 'That head will find its calm again. Do not grieve.' },
-            { a: 'The dark night and the fear of waves and the terrible whirlpool,', b: 'what do they know of our state, those light on the shore.' },
-          ], note: 'From the most beloved ghazal in the Persian language. Every Iranian knows the refrain.' },
+            { a: 'Do not grieve. The lost Joseph will return to Canaan.', b: 'The house of sorrow will become a garden. Do not grieve.', aFa: 'یوسف گمگشته بازآید به کنعان غم مخور', bFa: 'کلبهٔ احزان شود روزی گلستان غم مخور' },
+            { a: 'Do not grieve, sorrowing heart, your state will mend.', b: 'That head will find its calm again. Do not grieve.', aFa: 'ای دل غمدیده حالت به شود دل بد مکن', bFa: 'وین سر شوریده بازآید به سامان غم مخور' },
+            { a: 'The dark night and the fear of waves and the terrible whirlpool,', b: 'what do they know of our state, those light on the shore.', aFa: 'شب تاریک و بیم موج و گردابی چنین هایل', bFa: 'کجا دانند حال ما سبکباران ساحل‌ها' },
+          ], note: 'From the most beloved ghazal in the Persian language. Every Iranian knows the refrain.', noteFa: 'از محبوب‌ترین غزل زبان فارسی. ردیفش را هر ایرانی از بر است.' },
           { t: 'p', x: 'That refrain, gham makhor, do not grieve, has been said by mothers to children and by strangers to strangers for six hundred years. It is not advice. It is a hand on the shoulder.' },
         ] },
       ],
@@ -285,14 +285,14 @@ const hafez: Author = {
           { t: 'p', x: 'Beneath the wine and the roses there is a philosophy, and it is fierce. Hafez spent his life attacking one thing above all others, and it was not sin. It was hypocrisy.' },
           { t: 'p', x: 'He goes after the preacher who tells others to fast while eating, the judge who sells verdicts, the ascetic whose piety is a performance. In his poems the honest drunk is closer to God than the dishonest saint, because the drunk at least is not pretending. This was not blasphemy. It was a demand that the sacred be real.' },
           { t: 'ghazal', couplets: [
-            { a: 'Preachers who make their display in pulpit and prayer niche,', b: 'do other work when they are alone behind the door.' },
-            { a: 'I have a question. Ask the learned of the assembly:', b: 'why do those who order repentance so seldom repent.' },
+            { a: 'Preachers who make their display in pulpit and prayer niche,', b: 'do other work when they are alone behind the door.', aFa: 'واعظان کاین جلوه در محراب و منبر می‌کنند', bFa: 'چون به خلوت می‌روند آن کار دیگر می‌کنند' },
+            { a: 'I have a question. Ask the learned of the assembly:', b: 'why do those who order repentance so seldom repent.', aFa: 'مشکلی دارم ز دانشمند مجلس بازپرس', bFa: 'توبه‌فرمایان چرا خود توبه کمتر می‌کنند' },
           ] },
         ] },
         { blocks: [
           { t: 'h', x: 'Love as the only law' },
           { t: 'p', x: 'Against the hypocrite he sets one thing: love. Not sentiment, but love as a discipline that dissolves the self and its calculations. He holds that a heart alive with love does not die, that the lover who counts the cost has not loved, and that this is the only path that leads anywhere true.' },
-          { t: 'veil', surface: 'I am the slave of the spirit that has no colour of attachment, not to disbelief, not to faith, not to certainty, not to doubt.', hidden: 'He refuses every camp, including the ones that would claim him. Not the pious side, not the sceptical side. The freedom he wants is outside the argument entirely, and this line has protected him from six centuries of people trying to enlist him.' },
+          { t: 'veil', surface: 'I am the slave of the spirit that has no colour of attachment, not to disbelief, not to faith, not to certainty, not to doubt.', surfaceFa: 'غلام همت آنم که زیر چرخ کبود\u200Cز هر چه رنگ تعلق پذیرد آزاد است', hidden: 'He refuses every camp, including the ones that would claim him. Not the pious side, not the sceptical side. The freedom he wants is outside the argument entirely, and this line has protected him from six centuries of people trying to enlist him.', hiddenFa: 'هیچ اردوگاهی را نمی‌پذیرد، حتی آنها را که او را از آنِ خود می‌خوانند. نه سمت پارسایان، نه سمت شکاکان. آزادی‌ای که می‌خواهد یکسره بیرون از این دعواست، و همین یک بیت شش قرن او را از دست کسانی که می‌خواستند زیر پرچم خودشان بکشندش نگاه داشته است.' },
           { t: 'p', x: 'And through it all runs a tenderness toward human failure. Hafez never condemns the weak. He condemns only those who condemn the weak. That is why a nation has trusted him with its questions.' },
         ] },
       ],

@@ -33,19 +33,19 @@ function flatten(a: Author) {
   return out;
 }
 
-function Veil({ surface, hidden }: { surface: string; hidden: string }) {
+function Veil({ surface, hidden, fa }: { surface: string; hidden: string; fa?: boolean }) {
   const [lifted, setLifted] = useState(false);
   return (
     <Pressable style={styles.veil} onPress={() => setLifted((v) => !v)}>
-      <Text style={styles.veilSurface}>{surface}</Text>
+      <Text style={[styles.veilSurface, fa && styles.faVerse]}>{surface}</Text>
       {lifted ? (
         <>
           <View style={styles.veilRule} />
-          <Text style={styles.veilHiddenLabel}>BENEATH</Text>
-          <Text style={styles.veilHidden}>{hidden}</Text>
+          <Text style={styles.veilHiddenLabel}>{fa ? 'در پرده' : 'BENEATH'}</Text>
+          <Text style={[styles.veilHidden, fa && styles.faBody]}>{hidden}</Text>
         </>
       ) : (
-        <Text style={styles.veilHint}>touch to lift the veil</Text>
+        <Text style={styles.veilHint}>{fa ? 'برای کنار زدن پرده لمس کن' : 'touch to lift the veil'}</Text>
       )}
     </Pressable>
   );
@@ -131,8 +131,8 @@ function Block({ b }: { b: LitBlock }) {
     case 'lostverses': return <LostVerses />;
     case 'rubai': return (
       <View style={styles.rubai}>
-        {b.lines.map((l, i) => <Text key={i} style={[styles.rubaiLine, i === 2 && styles.rubaiTurn]}>{l}</Text>)}
-        {b.note ? <Text style={styles.rubaiNote}>{b.note}</Text> : null}
+        {((fa && (b as any).linesFa) ? (b as any).linesFa : b.lines).map((l: string, i: number) => <Text key={i} style={[styles.rubaiLine, i === 2 && styles.rubaiTurn, rtl, fa && (b as any).linesFa && styles.faVerse]}>{l}</Text>)}
+        {b.note ? <Text style={[styles.rubaiNote, rtl]}>{fa && (b as any).noteFa ? (b as any).noteFa : b.note}</Text> : null}
       </View>
     );
     case 'twotrans': return (
@@ -165,15 +165,15 @@ function Block({ b }: { b: LitBlock }) {
       <View style={styles.ghazal}>
         {b.couplets.map((c, i) => (
           <View key={i} style={styles.couplet2}>
-            <Text style={styles.ghazalLine}>{c.a}</Text>
-            <Text style={styles.ghazalLine}>{c.b}</Text>
+            <Text style={[styles.ghazalLine, rtl, fa && (c as any).aFa && styles.faVerse]}>{fa && (c as any).aFa ? (c as any).aFa : c.a}</Text>
+            <Text style={[styles.ghazalLine, rtl, fa && (c as any).bFa && styles.faVerse]}>{fa && (c as any).bFa ? (c as any).bFa : c.b}</Text>
             {i < b.couplets.length - 1 ? <View style={styles.ghazalDot} /> : null}
           </View>
         ))}
-        {b.note ? <Text style={styles.ghazalNote}>{b.note}</Text> : null}
+        {b.note ? <Text style={[styles.ghazalNote, rtl]}>{fa && (b as any).noteFa ? (b as any).noteFa : b.note}</Text> : null}
       </View>
     );
-    case 'veil': return <Veil surface={b.surface} hidden={b.hidden} />;
+    case 'veil': return <Veil surface={fa && (b as any).surfaceFa ? (b as any).surfaceFa : b.surface} hidden={fa && (b as any).hiddenFa ? (b as any).hiddenFa : b.hidden} fa={fa} />;
     case 'rule': return (
       <View style={styles.ruleWrap}>
         <View style={styles.ruleLine} />
