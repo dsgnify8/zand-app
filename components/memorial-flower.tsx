@@ -14,6 +14,7 @@ const BOX = 300;   // the illustration is square; dots are placed as fractions
 // A flower past saving: stem bent, head down, petals on the ground.
 // Drawn rather than photographed so it carries no one's face.
 export function Memorial({ dark = true }: { dark?: boolean }) {
+  const fa = getLang() === 'fa';
   const [open, setOpen] = useState<Remembered | null>(null);
 
   const ink = dark ? 'rgba(239,231,220,0.7)' : 'rgba(34,30,26,0.7)';
@@ -42,7 +43,7 @@ export function Memorial({ dark = true }: { dark?: boolean }) {
       </View>
 
       <Text style={[s.caption, { color: dim }]}>
-        A few, from a sea. Tap any one of them.
+        {fa ? 'چند تن، از دریایی. روی هرکدام بزن.' : 'A few, from a sea. Tap any one of them.'}
       </Text>
 
       <Modal transparent visible={!!open} animationType="fade" onRequestClose={() => setOpen(null)}>
@@ -60,19 +61,19 @@ export function Memorial({ dark = true }: { dark?: boolean }) {
                 />
               </View>
 
-              <Text style={[s.name, { color: text }]}>{open?.name}</Text>
-              {open?.persian ? <Text style={[s.persian, { color: dim }]}>{open.persian}</Text> : null}
+              <Text style={[s.name, { color: text }, fa && s.faName]}>{fa && open?.persian ? open.persian : open?.name}</Text>
+              {!fa && open?.persian ? <Text style={[s.persian, { color: dim }]}>{open.persian}</Text> : null}
 
               <View style={s.metaRow}>
-                {open?.age ? <Text style={[s.meta, { color: dim }]}>{open.age}</Text> : null}
+                {open?.age ? <Text style={[s.meta, { color: dim }]}>{fa && (open as any).ageFa ? (open as any).ageFa : open.age}</Text> : null}
                 {open?.age ? <View style={[s.metaDot, { backgroundColor: dim }]} /> : null}
-                <Text style={[s.meta, { color: dim }]}>{open?.when}</Text>
+                <Text style={[s.meta, { color: dim }]}>{fa && (open as any)?.whenFa ? (open as any).whenFa : open?.when}</Text>
                 <View style={[s.metaDot, { backgroundColor: dim }]} />
-                <Text style={[s.meta, { color: dim }]}>{open?.where}</Text>
+                <Text style={[s.meta, { color: dim }]}>{fa && (open as any)?.whereFa ? (open as any).whereFa : open?.where}</Text>
               </View>
 
               <View style={[s.rule, { backgroundColor: faint }]} />
-              <Text style={[s.what, { color: text }]}>{open?.what}</Text>
+              <Text style={[s.what, { color: text }, fa && s.faWhat]}>{fa && (open as any)?.whatFa ? (open as any).whatFa : open?.what}</Text>
 
               <Pressable style={s.close} onPress={() => setOpen(null)}>
                 <Ionicons name="close" size={16} color={dim} />
@@ -87,6 +88,8 @@ export function Memorial({ dark = true }: { dark?: boolean }) {
 }
 
 const s = StyleSheet.create({
+  faName: { fontFamily: fonts.persian, fontSize: 21, textAlign: 'right' },
+  faWhat: { fontFamily: fonts.persian, fontSize: 14, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' },
   wrap: { marginVertical: spacing.xl },
   hit: { position: 'absolute', width: 32, height: 32, alignItems: 'center', justifyContent: 'center' },
   halo: { position: 'absolute', width: 20, height: 20, borderRadius: 10, borderWidth: 1, opacity: 0.55 },

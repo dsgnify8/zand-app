@@ -198,7 +198,7 @@ function BlockView({ b }: { b: Block }) {
     case 'quotebig': return (
       <View style={styles.qbig}>
         <View style={styles.qbigRule} />
-        <Text style={styles.qbigText}>{b.x}</Text>
+        <Text style={[styles.qbigText, rtl, fa && (b as any).fa && styles.faQuote]}>{tx(b)}</Text>
         {b.by ? <Text style={styles.qbigBy}>{b.by}</Text> : null}
         <View style={styles.qbigRule} />
       </View>

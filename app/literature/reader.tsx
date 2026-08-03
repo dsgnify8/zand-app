@@ -52,6 +52,9 @@ function Veil({ surface, hidden, fa }: { surface: string; hidden: string; fa?: b
 }
 
 function Block({ b }: { b: LitBlock }) {
+  const fa = getLang() === 'fa';
+  const tx = (o: any, k = 'x') => (fa && o[k + 'Fa'] ? o[k + 'Fa'] : o[k]);
+  const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
     case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
     case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;

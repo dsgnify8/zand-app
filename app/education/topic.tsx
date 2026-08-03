@@ -49,8 +49,8 @@ export default function TopicScreen() {
           <Text style={[styles.essence, getLang() === 'fa' && (topic as any).essenceFa && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl', fontSize: 15, lineHeight: 30 }]}>{getLang() === 'fa' && (topic as any).essenceFa ? (topic as any).essenceFa : topic.essence}</Text>
 
           <View style={styles.metaRow}>
-            <View style={styles.metaChip}><Ionicons name="book-outline" size={15} color={dark.gold} /><Text style={styles.metaText}>{topic.chapters.length} chapters</Text></View>
-            <View style={styles.metaChip}><Ionicons name="document-text-outline" size={15} color={dark.gold} /><Text style={styles.metaText}>{totalPages} pages</Text></View>
+            <View style={styles.metaChip}><Ionicons name="book-outline" size={15} color={dark.gold} /><Text style={styles.metaText}>{topic.chapters.length} {getLang() === 'fa' ? 'فصل' : 'chapters'}</Text></View>
+            <View style={styles.metaChip}><Ionicons name="document-text-outline" size={15} color={dark.gold} /><Text style={styles.metaText}>{totalPages} {getLang() === 'fa' ? 'صفحه' : 'pages'}</Text></View>
             <View style={{ flex: 1 }} />
             <SaveHeart itemKey={'topic-' + topic.key} size={19} tint={dark.gold} />
           </View>
