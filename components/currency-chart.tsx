@@ -22,10 +22,10 @@ const POINTS = [
 ];
 
 const MARKS = [
-  { year: 1979, note: 'Revolution' },
-  { year: 2015, note: 'Nuclear deal' },
-  { year: 2018, note: 'US withdrawal' },
-  { year: 2026, note: 'Protests' },
+  { year: 1979, note: 'Revolution', noteFa: 'انقلاب' },
+  { year: 2015, note: 'Nuclear deal', noteFa: 'برجام' },
+  { year: 2018, note: 'US withdrawal', noteFa: 'خروج آمریکا' },
+  { year: 2026, note: 'Protests', noteFa: 'اعتراض‌ها' },
 ];
 
 const W = 320;
@@ -36,6 +36,7 @@ const PAD_T = 16;
 const PAD_B = 30;
 
 export function CurrencyChart({ dark = true }: { dark?: boolean }) {
+  const fa = getLang() === 'fa';
   const ink = dark ? '#EFE7DC' : '#221E1A';
   const dim = dark ? 'rgba(239,231,220,0.45)' : 'rgba(34,30,26,0.45)';
   const grid = dark ? 'rgba(239,231,220,0.12)' : 'rgba(34,30,26,0.12)';
@@ -59,7 +60,7 @@ export function CurrencyChart({ dark = true }: { dark?: boolean }) {
 
   return (
     <View style={s.wrap}>
-      <Text style={[s.label, { color: dim }]}>RIALS TO ONE US DOLLAR</Text>
+      <Text style={[s.label, { color: dim }]}>{fa ? 'ریال در برابر یک دلار آمریکا' : 'RIALS TO ONE US DOLLAR'}</Text>
 
       <Svg width="100%" height={H} viewBox={'0 0 ' + W + ' ' + H}>
         {decades.map((n) => (
@@ -85,15 +86,16 @@ export function CurrencyChart({ dark = true }: { dark?: boolean }) {
       </Svg>
 
       <Text style={[s.note, { color: dim }]}>
-        Each gridline is ten times the one below it. On an ordinary scale the first
-        twenty years would sit flat against the floor.
+        {fa
+          ? 'هر خط شبکه ده برابر خط زیر خودش است. روی مقیاس معمولی، بیست سال اول صاف روی کف نمودار می‌نشست.'
+          : 'Each gridline is ten times the one below it. On an ordinary scale the first twenty years would sit flat against the floor.'}
       </Text>
 
       <View style={s.marks}>
         {MARKS.map((m) => (
           <View key={m.year} style={s.mark}>
             <Text style={[s.markY, { color: ink }]}>{m.year}</Text>
-            <Text style={[s.markN, { color: dim }]}>{m.note}</Text>
+            <Text style={[s.markN, { color: dim }, fa && s.faSmall]}>{fa && (m as any).noteFa ? (m as any).noteFa : m.note}</Text>
           </View>
         ))}
       </View>
@@ -103,12 +105,13 @@ export function CurrencyChart({ dark = true }: { dark?: boolean }) {
 
 // What a household could buy, then and now.
 const BASKET = [
-  { item: 'A month of an average salary, in dollars', then: 'about $650', now: 'about $110' },
-  { item: 'Gold, one gram', then: '1,100 rials', now: 'above 90,000,000 rials' },
-  { item: 'A simple lunch in Tehran', then: 'a few rials', now: 'hundreds of thousands' },
+  { item: 'A month of an average salary, in dollars', itemFa: 'یک ماه حقوق متوسط، به دلار', then: 'about $650', thenFa: 'حدود ۶۵۰ دلار', now: 'about $110', nowFa: 'حدود ۱۱۰ دلار' },
+  { item: 'Gold, one gram', itemFa: 'یک گرم طلا', then: '1,100 rials', thenFa: '۱٬۱۰۰ ریال', now: 'above 90,000,000 rials', nowFa: 'بالای ۹۰٬۰۰۰٬۰۰۰ ریال' },
+  { item: 'A simple lunch in Tehran', itemFa: 'یک ناهار ساده در تهران', then: 'a few rials', thenFa: 'چند ریال', now: 'hundreds of thousands', nowFa: 'صدها هزار تومان' },
 ];
 
 export function BasketTable({ dark = true }: { dark?: boolean }) {
+  const fa = getLang() === 'fa';
   const ink = dark ? '#EFE7DC' : '#221E1A';
   const dim = dark ? 'rgba(239,231,220,0.5)' : 'rgba(34,30,26,0.5)';
   const hair = dark ? 'rgba(239,231,220,0.14)' : 'rgba(34,30,26,0.14)';
@@ -117,24 +120,27 @@ export function BasketTable({ dark = true }: { dark?: boolean }) {
     <View style={s.basket}>
       <View style={[s.bRow, { borderBottomColor: hair }]}>
         <Text style={[s.bHead, { color: dim, flex: 1.6 }]} />
-        <Text style={[s.bHead, { color: dim }]}>BEFORE 1979</Text>
-        <Text style={[s.bHead, { color: dim }]}>TODAY</Text>
+        <Text style={[s.bHead, { color: dim }]}>{fa ? 'پیش از ۱۳۵۷' : 'BEFORE 1979'}</Text>
+        <Text style={[s.bHead, { color: dim }]}>{fa ? 'امروز' : 'TODAY'}</Text>
       </View>
       {BASKET.map((b) => (
         <View key={b.item} style={[s.bRow, { borderBottomColor: hair }]}>
-          <Text style={[s.bItem, { color: ink, flex: 1.6 }]}>{b.item}</Text>
-          <Text style={[s.bVal, { color: dim }]}>{b.then}</Text>
-          <Text style={[s.bVal, { color: ink }]}>{b.now}</Text>
+          <Text style={[s.bItem, { color: ink, flex: 1.6 }, fa && s.faSmall]}>{fa && (b as any).itemFa ? (b as any).itemFa : b.item}</Text>
+          <Text style={[s.bVal, { color: dim }, fa && s.faSmall]}>{fa && (b as any).thenFa ? (b as any).thenFa : b.then}</Text>
+          <Text style={[s.bVal, { color: ink }, fa && s.faSmall]}>{fa && (b as any).nowFa ? (b as any).nowFa : b.now}</Text>
         </View>
       ))}
       <Text style={[s.note, { color: dim }]}>
-        Figures are approximate and move constantly. The direction is the point.
+        {fa
+          ? 'ارقام تقریبی‌اند و مدام تغییر می‌کنند. آنچه اهمیت دارد جهت است.'
+          : 'Figures are approximate and move constantly. The direction is the point.'}
       </Text>
     </View>
   );
 }
 
 const s = StyleSheet.create({
+  faSmall: { fontFamily: fonts.persian, fontSize: 11.5, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
   wrap: { marginVertical: spacing.xl },
   label: { fontFamily: fonts.bodyStrong, fontSize: 8.5, letterSpacing: 2, marginBottom: spacing.md },
   note: { fontFamily: fonts.body, fontSize: 11, lineHeight: 17, marginTop: spacing.md },
