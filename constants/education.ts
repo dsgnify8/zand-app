@@ -90,13 +90,13 @@ const mrp: Topic = {
       pages: [
         { blocks: [
           { t: 'fact', label: 'Born', value: '26 October 1919, Tehran' },
-          { t: 'p', x: "Mohammad Reza was born in Tehran on an autumn morning in 1919, arriving only minutes before his twin sister, Ashraf. Their closeness would last a lifetime, and in the years to come she would be one of the fiercest defenders of his throne." },
-          { t: 'p', x: "The Iran of his birth was weak and often humiliated. Its affairs were shaped in London and in Moscow as much as in Tehran, its treasury was empty, and its roads and schools were few. To grow up in that country was to feel, keenly, how far the nation had fallen from its ancient greatness." },
-          { t: 'p', x: "In his memoirs the Shah returned to this wound again and again. The wish to restore Iran to dignity, to make it modern and respected in the world, was for him never merely a policy. It was a feeling he traced all the way back to childhood." },
+          { t: 'p', x: "Mohammad Reza was born in Tehran on an autumn morning in 1919, arriving only minutes before his twin sister, Ashraf. Their closeness would last a lifetime, and in the years to come she would be one of the fiercest defenders of his throne.", fa: 'محمدرضا در صبحی پاییزی در سال ۱۲۹۸ در تهران به دنیا آمد، تنها چند دقیقه پیش از خواهر دوقلویش، اشرف. این نزدیکی تا آخر عمر میانشان ماند، و در سال‌های بعد اشرف یکی از سرسخت‌ترین مدافعان تخت او شد.' },
+          { t: 'p', x: "The Iran of his birth was weak and often humiliated. Its affairs were shaped in London and in Moscow as much as in Tehran, its treasury was empty, and its roads and schools were few. To grow up in that country was to feel, keenly, how far the nation had fallen from its ancient greatness.", fa: 'ایرانی که در آن زاده شد ناتوان بود و اغلب سرافکنده. کارهایش به همان اندازه که در تهران، در لندن و مسکو تعیین می‌شد؛ خزانه‌اش خالی بود و راه و مدرسه‌اش انگشت‌شمار. بزرگ شدن در چنین کشوری یعنی به‌روشنی حس کردن اینکه این ملت از بزرگی باستانی‌اش چقدر پایین آمده است.' },
+          { t: 'p', x: "In his memoirs the Shah returned to this wound again and again. The wish to restore Iran to dignity, to make it modern and respected in the world, was for him never merely a policy. It was a feeling he traced all the way back to childhood.", fa: 'شاه در خاطراتش بارها به همین زخم برگشت. آرزوی بازگرداندن آبروی ایران، مدرن کردنش و محترم شدنش در جهان، برای او هرگز صرفاً یک سیاست نبود. حسی بود که ریشه‌اش را تا کودکی‌اش دنبال می‌کرد.' },
         ] },
         { blocks: [
           { t: 'ptext', x: "His father, {{reza-khan|Reza Khan}}, had risen from the mountain village of Alasht to become an officer in the Persian Cossack Brigade. Tall, forceful, and self taught, he was a soldier of real presence and iron will, and he believed that only a strong hand could lift Iran out of its weakness." },
-          { t: 'p', x: "In February 1921 Reza Khan marched on the capital and took power in a nearly bloodless coup. For a few years he governed from behind the scenes as minister of war and then prime minister, building the army and the machinery of a modern state. Then, in 1925, he set aside the last Qajar ruler and was crowned Reza Shah Pahlavi, founding a new dynasty." },
+          { t: 'p', x: "In February 1921 Reza Khan marched on the capital and took power in a nearly bloodless coup. For a few years he governed from behind the scenes as minister of war and then prime minister, building the army and the machinery of a modern state. Then, in 1925, he set aside the last Qajar ruler and was crowned Reza Shah Pahlavi, founding a new dynasty.", fa: 'در اسفند ۱۲۹۹، رضاخان به سوی پایتخت راه افتاد و در کودتایی که تقریباً بدون خون‌ریزی بود قدرت را گرفت. چند سالی از پشت صحنه حکومت کرد، اول به‌عنوان وزیر جنگ و بعد نخست‌وزیر، و در همان سال‌ها ارتش و دستگاه یک دولت مدرن را ساخت. سپس، در سال ۱۳۰۴، آخرین شاه قاجار را کنار گذاشت و با نام رضاشاه پهلوی تاج‌گذاری کرد و سلسله‌ای تازه بنیان نهاد.' },
           { t: 'timeline', items: [
             { year: '1878', label: 'Reza Khan born' },
             { year: '1919', label: 'Mohammad Reza born' },
@@ -105,15 +105,15 @@ const mrp: Topic = {
           ] },
         ] },
         { blocks: [
-          { t: 'h', x: 'A childhood set apart' },
-          { t: 'p', x: "At six years old, Mohammad Reza became crown prince of a kingdom his father meant to remake from the ground up. He was raised apart from other children, handed to tutors and officers, and taught from the start that a throne and a mission were waiting for him. His father was determined that his heir would not be a soft, pampered prince of the old Qajar kind." },
-          { t: 'p', x: "Between a stern, towering father and a devoted mother, Tadj ol Molouk, the boy grew up carrying expectations far heavier than his years. He adored his father and feared him in equal measure, and much of his life would be spent trying to prove worthy of him." },
+          { t: 'h', x: 'A childhood set apart', fa: 'کودکی‌ای جدا از بقیه' },
+          { t: 'p', x: "At six years old, Mohammad Reza became crown prince of a kingdom his father meant to remake from the ground up. He was raised apart from other children, handed to tutors and officers, and taught from the start that a throne and a mission were waiting for him. His father was determined that his heir would not be a soft, pampered prince of the old Qajar kind.", fa: 'محمدرضا در شش سالگی ولیعهد کشوری شد که پدرش می‌خواست از پایه از نو بسازد. جدا از بچه‌های دیگر بزرگ شد، به دست معلم‌ها و افسرها سپرده شد، و از همان اول به او آموختند که تخت و رسالتی در انتظارش است. پدرش مصمم بود که ولیعهدش شاهزاده‌ای نازپرورده از جنس قاجارها نباشد.' },
+          { t: 'p', x: "Between a stern, towering father and a devoted mother, Tadj ol Molouk, the boy grew up carrying expectations far heavier than his years. He adored his father and feared him in equal measure, and much of his life would be spent trying to prove worthy of him.", fa: 'میان پدری سختگیر و بلندبالا و مادری دلسوز، تاج‌الملوک، پسر با انتظاراتی بزرگ‌تر از سن‌وسالش بار آمد. پدرش را می‌پرستید و به همان اندازه از او می‌ترسید، و بخش بزرگی از عمرش را صرف این کرد که ثابت کند لایق اوست.' },
           { t: 'imgsm', key: 'mrp-father', cap: 'The young prince with his father, Reza Shah, the founder of the dynasty.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A brush with death' },
-          { t: 'p', x: "As a small boy he fell gravely ill with typhoid fever and very nearly died. In his own account he emerged from the fever changed, believing he had been visited in his delirium by a saint and spared for a reason." },
-          { t: 'p', x: "That conviction, that his life had been set apart for a purpose, never left him. It gave him courage in dark moments and, his critics would later say, a certainty that could shade into stubbornness." },
+          { t: 'h', x: 'A brush with death', fa: 'یک قدمی مرگ' },
+          { t: 'p', x: "As a small boy he fell gravely ill with typhoid fever and very nearly died. In his own account he emerged from the fever changed, believing he had been visited in his delirium by a saint and spared for a reason.", fa: 'در کودکی به تیفوئید مبتلا شد و تا آستانهٔ مرگ رفت. به روایت خودش، از آن تب دگرگون بیرون آمد؛ باور داشت که در هذیان تب، بزرگی بر او ظاهر شده و او را به دلیلی زنده نگه داشته‌اند.' },
+          { t: 'p', x: "That conviction, that his life had been set apart for a purpose, never left him. It gave him courage in dark moments and, his critics would later say, a certainty that could shade into stubbornness.", fa: 'این باور، که زندگی‌اش برای هدفی کنار گذاشته شده، هرگز رهایش نکرد. در لحظه‌های تاریک به او جرئت می‌داد، و به گفتهٔ منتقدانش، یقینی به او می‌داد که گاه به لجاجت پهلو می‌زد.' },
           { t: 'call', title: 'A weight placed early', x: "He was raised not as a child but as a future king. It gave him a deep sense of duty, and also a lifelong, sometimes anxious wish to earn the approval of the formidable man who had made him crown prince." },
         ] },
       ],
@@ -124,18 +124,18 @@ const mrp: Topic = {
       subtitle: '1925 – 1936',
       pages: [
         { blocks: [
-          { t: 'p', x: "Reza Shah wanted his heir ready for a world his own generation had never seen. The boy was taken early from the women's quarters of the palace and placed under the care of tutors and officers, groomed with deliberate discipline for the throne." },
-          { t: 'p', x: "In 1931, at the age of twelve, he was sent abroad to the Institut Le Rosey in Switzerland. He was the first Iranian royal ever educated in Europe. His father meant it as preparation. The prince, at first, felt it as exile from everything he knew." },
+          { t: 'p', x: "Reza Shah wanted his heir ready for a world his own generation had never seen. The boy was taken early from the women's quarters of the palace and placed under the care of tutors and officers, groomed with deliberate discipline for the throne.", fa: 'رضاشاه می‌خواست ولیعهدش برای جهانی آماده باشد که نسل خودش هرگز ندیده بود. پسر را زود از اندرونی کاخ بیرون آوردند و به معلم‌ها و افسرها سپردند، و با انضباطی حساب‌شده برای تخت آماده‌اش کردند.' },
+          { t: 'p', x: "In 1931, at the age of twelve, he was sent abroad to the Institut Le Rosey in Switzerland. He was the first Iranian royal ever educated in Europe. His father meant it as preparation. The prince, at first, felt it as exile from everything he knew.", fa: 'در سال ۱۳۱۰، در دوازده سالگی، به مدرسهٔ لوروزه در سوئیس فرستاده شد. نخستین عضو خاندان سلطنتی ایران بود که در اروپا درس می‌خواند. پدرش این را آماده‌سازی می‌دانست. ولیعهد اما در آغاز، آن را تبعید از هر چه می‌شناخت حس کرد.' },
         ] },
         { blocks: [
           { t: 'img', key: 'mrp-school', cap: "The crown prince, farthest to the left, during his years at the Institut Le Rosey in Switzerland." },
-          { t: 'p', x: "At Le Rosey he learned French, took to football and skiing, and absorbed the manners and ideas of Europe. For the first time he lived among boys who did not bow to him, and he had to earn his place by character rather than birth. It was a lesson in standing on his own." },
-          { t: 'p', x: "He formed friendships that followed him home, among them the Swiss born Ernest Perron, who would remain close to him for years. In his memoirs he described these as the years his vision took shape." },
+          { t: 'p', x: "At Le Rosey he learned French, took to football and skiing, and absorbed the manners and ideas of Europe. For the first time he lived among boys who did not bow to him, and he had to earn his place by character rather than birth. It was a lesson in standing on his own.", fa: 'در لوروزه فرانسه یاد گرفت، به فوتبال و اسکی رو آورد، و آداب و اندیشه‌های اروپا را در خود گرفت. برای نخستین بار میان پسرهایی زندگی می‌کرد که در برابرش تعظیم نمی‌کردند، و باید جایگاهش را با شخصیتش به دست می‌آورد نه با نسبش. درسی بود در روی پای خود ایستادن.' },
+          { t: 'p', x: "He formed friendships that followed him home, among them the Swiss born Ernest Perron, who would remain close to him for years. In his memoirs he described these as the years his vision took shape.", fa: 'دوستی‌هایی در آنجا بست که تا ایران دنبالش آمدند؛ از جمله با ارنست پرون سوئیسی، که سال‌ها نزدیک او ماند. در خاطراتش این سال‌ها را سال‌هایی خواند که نگاهش در آن شکل گرفت.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A bridge between two worlds' },
-          { t: 'p', x: "He came to admire the order, the science, and the industry of the West, and to ask why his own ancient nation had fallen so far behind. Yet the more European he became in his habits, the more he felt the pull of Iran, its poetry, its history, its faith in itself." },
-          { t: 'p', x: "Out of that tension grew the idea that would guide his whole reign. Iran, he believed, must modernize swiftly and boldly, but in its own way, without surrendering the Persian soul that made it itself. He began to see himself as the bridge between the two." },
+          { t: 'h', x: 'A bridge between two worlds', fa: 'پلی میان دو جهان' },
+          { t: 'p', x: "He came to admire the order, the science, and the industry of the West, and to ask why his own ancient nation had fallen so far behind. Yet the more European he became in his habits, the more he felt the pull of Iran, its poetry, its history, its faith in itself.", fa: 'به نظم و دانش و صنعت غرب دل بست، و از خود پرسید چرا ملت کهن خودش این‌قدر عقب مانده است. اما هرچه در عادت‌هایش اروپایی‌تر می‌شد، کشش ایران را بیشتر حس می‌کرد؛ شعرش، تاریخش، و باوری که به خودش داشت.' },
+          { t: 'p', x: "Out of that tension grew the idea that would guide his whole reign. Iran, he believed, must modernize swiftly and boldly, but in its own way, without surrendering the Persian soul that made it itself. He began to see himself as the bridge between the two.", fa: 'از دل همین کشمکش، اندیشه‌ای زاده شد که تمام دوران سلطنتش را هدایت کرد. باور داشت ایران باید سریع و جسورانه مدرن شود، اما به شیوهٔ خودش، بی‌آنکه آن جان ایرانی را که ایرانش می‌کند واگذار کند. کم‌کم خودش را پل میان این دو دید.' },
         ] },
         { blocks: [
           { t: 'stat', items: [
@@ -143,9 +143,9 @@ const mrp: Topic = {
             { value: '5 yrs', label: 'Abroad at Le Rosey' },
             { value: 'French', label: 'A second language' },
           ] },
-          { t: 'p', x: "He returned to Iran in 1936 and entered the military academy in Tehran, stepping into the disciplined, uniformed world his father prized above all. He graduated as a young officer, proud of the army his father had built and eager to serve it." },
-          { t: 'pull', x: "Two Irans lived in him already, the modern and the ancient, the European and the Persian." },
-          { t: 'p', x: "Holding those two Irans together would become the work of his life. In these school years the tension was still a promise rather than a problem, and the young prince believed, with the confidence of the young, that he could honor both at once." },
+          { t: 'p', x: "He returned to Iran in 1936 and entered the military academy in Tehran, stepping into the disciplined, uniformed world his father prized above all. He graduated as a young officer, proud of the army his father had built and eager to serve it.", fa: 'در سال ۱۳۱۵ به ایران بازگشت و وارد دانشکدهٔ افسری تهران شد؛ پا گذاشتن به همان جهان منضبط و یونیفرم‌پوشی که پدرش بیش از هر چیز ارج می‌نهاد. به‌عنوان افسری جوان فارغ‌التحصیل شد، سربلند از ارتشی که پدرش ساخته بود و مشتاق خدمت در آن.' },
+          { t: 'pull', x: "Two Irans lived in him already, the modern and the ancient, the European and the Persian.", fa: 'دو ایران از همان موقع در او زندگی می‌کردند؛ مدرن و باستانی، اروپایی و ایرانی.' },
+          { t: 'p', x: "Holding those two Irans together would become the work of his life. In these school years the tension was still a promise rather than a problem, and the young prince believed, with the confidence of the young, that he could honor both at once.", fa: 'کنار هم نگه داشتن این دو ایران، کار تمام عمرش شد. در آن سال‌های مدرسه، این کشمکش هنوز یک نوید بود نه یک مشکل، و ولیعهد جوان با اعتمادبه‌نفس جوانی باور داشت که می‌تواند حق هر دو را با هم ادا کند.' },
           { t: 'imgsm', key: 'mrp-ch2-end', cap: 'The crown prince, shaped by two worlds, returns home to serve Iran.' },
         ] },
       ],
@@ -156,20 +156,20 @@ const mrp: Topic = {
       subtitle: '1939 – 1943',
       pages: [
         { blocks: [
-          { t: 'p', x: "In 1939 the crown prince married Princess Fawzia of Egypt, the sister of King Farouk. The union joined two royal houses and filled the newsreels with glamour, and a daughter, Shahnaz, was born the following year." },
+          { t: 'p', x: "In 1939 the crown prince married Princess Fawzia of Egypt, the sister of King Farouk. The union joined two royal houses and filled the newsreels with glamour, and a daughter, Shahnaz, was born the following year.", fa: 'در سال ۱۳۱۸، ولیعهد با شاهزاده فوزیه، خواهر فاروق پادشاه مصر، ازدواج کرد. این پیوند دو خاندان سلطنتی را به هم رساند و خبرهای تصویری را از شکوه پر کرد، و سال بعد دختری به نام شهناز به دنیا آمد.' },
           { t: 'fact', label: 'First marriage', value: 'Princess Fawzia of Egypt, 1939' },
           { t: 'imgsm', key: 'mrp-fawzia', cap: "Mohammad Reza and Queen Fawzia in the early years of their marriage." },
-          { t: 'p', x: "Yet the marriage had been arranged for reasons of state as much as of the heart. Fawzia, celebrated across the world for her beauty, was unhappy far from home in the cold formality of the Tehran court, and a quiet distance grew between them that the years would only widen." },
+          { t: 'p', x: "Yet the marriage had been arranged for reasons of state as much as of the heart. Fawzia, celebrated across the world for her beauty, was unhappy far from home in the cold formality of the Tehran court, and a quiet distance grew between them that the years would only widen.", fa: 'اما این ازدواج به همان اندازه که از سر دل بود، از سر مصلحت کشور هم بود. فوزیه که زیبایی‌اش در سراسر جهان زبانزد بود، دور از وطن و در تشریفات سرد دربار تهران خوشحال نبود، و فاصله‌ای خاموش میانشان افتاد که سال‌ها فقط بیشترش کرد.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The war reaches Iran' },
-          { t: 'p', x: "Iran had declared itself neutral, but neutrality could not protect it. Reza Shah's ties to German engineers and trade, and above all the Trans Iranian Railway he had built, made the country too important to leave alone. Britain and the Soviet Union needed that railway to carry supplies to the Soviet front." },
-          { t: 'p', x: "In August 1941 their armies invaded from north and south at once. The Iranian forces, the pride of Reza Shah's reign, were overwhelmed within days. For the old king it was a bitter blow, to watch the army he had built collapse before the very powers he had tried to keep at arm's length." },
+          { t: 'h', x: 'The war reaches Iran', fa: 'جنگ به ایران می‌رسد' },
+          { t: 'p', x: "Iran had declared itself neutral, but neutrality could not protect it. Reza Shah's ties to German engineers and trade, and above all the Trans Iranian Railway he had built, made the country too important to leave alone. Britain and the Soviet Union needed that railway to carry supplies to the Soviet front.", fa: 'ایران خود را بی‌طرف اعلام کرده بود، اما بی‌طرفی نتوانست از آن محافظت کند. پیوند رضاشاه با مهندسان و تجارت آلمان، و بیش از همه راه‌آهن سراسری‌ای که ساخته بود، این کشور را مهم‌تر از آن کرد که به حال خود رها شود. بریتانیا و شوروی به آن راه‌آهن نیاز داشتند تا تدارکات را به جبههٔ شوروی برسانند.' },
+          { t: 'p', x: "In August 1941 their armies invaded from north and south at once. The Iranian forces, the pride of Reza Shah's reign, were overwhelmed within days. For the old king it was a bitter blow, to watch the army he had built collapse before the very powers he had tried to keep at arm's length.", fa: 'در شهریور ۱۳۲۰، ارتش‌های آنها همزمان از شمال و جنوب وارد شدند. نیروهای ایران، مایهٔ فخر دوران رضاشاه، ظرف چند روز از پا درآمدند. برای شاه پیر ضربه‌ای تلخ بود که ببیند ارتشی که ساخته بود در برابر همان قدرت‌هایی فرو می‌ریزد که کوشیده بود دورشان نگه دارد.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'Reza Shah Pahlavi abdicates' },
-          { t: 'p', x: "The occupying powers no longer wanted Reza Shah on the throne. Rather than see the dynasty destroyed, he abdicated in favor of his son and left the country. The founder of modern Iran, the strong father who had shaped the prince's entire world, was carried away into exile." },
-          { t: 'p', x: "He was taken first to Mauritius, then to South Africa, and he died in Johannesburg in 1944, never seeing Iran again. For Mohammad Reza the loss was personal as much as political. He remembered his father with awe and love, and the pain of that parting stayed with him for the rest of his life." },
+          { t: 'h', x: 'Reza Shah Pahlavi abdicates', fa: 'رضاشاه پهلوی از سلطنت کناره می‌گیرد' },
+          { t: 'p', x: "The occupying powers no longer wanted Reza Shah on the throne. Rather than see the dynasty destroyed, he abdicated in favor of his son and left the country. The founder of modern Iran, the strong father who had shaped the prince's entire world, was carried away into exile.", fa: 'قدرت‌های اشغالگر دیگر رضاشاه را بر تخت نمی‌خواستند. به جای آنکه سلسله از میان برود، به سود پسرش کناره گرفت و از کشور رفت. بنیان‌گذار ایران مدرن، همان پدر مقتدری که تمام جهان ولیعهد را شکل داده بود، به تبعید برده شد.' },
+          { t: 'p', x: "He was taken first to Mauritius, then to South Africa, and he died in Johannesburg in 1944, never seeing Iran again. For Mohammad Reza the loss was personal as much as political. He remembered his father with awe and love, and the pain of that parting stayed with him for the rest of his life.", fa: 'نخست به موریس بردندش، بعد به آفریقای جنوبی، و در سال ۱۳۲۳ در ژوهانسبورگ درگذشت، بی‌آنکه دیگر ایران را ببیند. برای محمدرضا این فقدان به همان اندازه که سیاسی بود، شخصی هم بود. پدرش را با هیبت و محبت به یاد می‌آورد، و درد آن جدایی تا آخر عمر با او ماند.' },
           { t: 'imgsm', key: 'mrp-abdicate', cap: 'Reza Shah, who abdicated in 1941 so the dynasty might endure through his son.' },
         ] },
         { blocks: [
