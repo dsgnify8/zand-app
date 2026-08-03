@@ -53,6 +53,7 @@ function Veil({ surface, hidden, fa }: { surface: string; hidden: string; fa?: b
 
 function Block({ b }: { b: LitBlock }) {
   switch (b.t) {
+    case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
     case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
     case 'ptext': return <View style={styles.glossWrap}><GlossaryText text={tx(b)} /></View>;
     case 'lead': return (
@@ -271,6 +272,8 @@ export default function LitReader() {
 }
 
 const styles = StyleSheet.create({
+  h: { fontFamily: fonts.heading, fontSize: 23, lineHeight: 30, color: lit.text, marginTop: spacing.xxl, marginBottom: spacing.sm },
+  faHead: { fontFamily: fonts.persian, fontSize: 20, lineHeight: 36 },
   rtl: { textAlign: 'right', writingDirection: 'rtl' },
   faLead: { fontFamily: fonts.persian, fontSize: 22, lineHeight: 42 },
   faBody: { fontFamily: fonts.persian, fontSize: 16.5, lineHeight: 34 },
