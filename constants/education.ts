@@ -305,7 +305,7 @@ const mrp: Topic = {
           { t: 'p', x: "With his personal foundation finally settled, and his authority firm, the Shah turned to the great project of his reign, the remaking of Iran itself." },
         ] },
         { blocks: [
-          { t: 'h', x: 'The White Revolution' },
+          { t: 'h', x: 'The White Revolution', fa: 'انقلاب سفید' },
           { t: 'p', x: "In January 1963 he launched what he called the White Revolution, a sweeping program of reform from above, meant, in his words, to carry out a revolution by the throne so that none need be made against it. He put it to a national vote, and it passed overwhelmingly." },
           { t: 'circles', items: [
             { value: 'Land', label: 'Land reform for peasants' },
@@ -1934,6 +1934,8 @@ const modernIran: Topic = {
   persian: 'ایران پس از انقلاب',
   years: '1979 - today',
   essence: 'The revolution, the war, the leaders who followed, and the long descent of the currency. What happened, in order, as plainly as it can be told.',
+  essenceFa: 'انقلاب، جنگ، فرمانروایانی که پس از آن آمدند، و سقوط طولانی پول ملی. آنچه رخ داد، به ترتیب، و تا آنجا که بتوان ساده گفتش.',
+  essenceFa: 'انقلاب، جنگ، رهبرانی که پس از آن آمدند، و افت طولانی ارزش پول. این، روایتِ آن چیزی است که رخ داد؛ به ترتیب، و تا حد ممکن ساده.',
   cover: 'modern-cover',
   closing: 'modern-cover',
   status: 'ready',
@@ -1945,60 +1947,60 @@ const modernIran: Topic = {
   chapters: [
     {
       key: 'mi1',
-      title: 'How It Began',
-      subtitle: '1963 - 1979',
+      title: 'How It Began', titleFa: 'چگونه آغاز شد',
+      subtitle: '1963 - 1979', titleFa: '۱۳۴۲ تا ۱۳۵۷',
       pages: [
         { blocks: [
-          { t: 'p', x: 'The Iran that exists today began in 1979. Everything since, the war, the money, the leaders, the arguments at every dinner table, runs back to that year.' },
-          { t: 'p', x: 'This is the hardest chapter in this book to write, because it is not finished. It is not a settled history that everyone has agreed on. It is still being lived, by people who were there and by their children, and almost every family holds a different piece of it.' },
-          { t: 'p', x: 'So this is not a verdict. It is an account: what happened, in order, from the years before the Shah left to where the country stands now. Where the facts are clear they are stated plainly. Where people saw the same events and drew opposite conclusions, both are set down.' },
-          { t: 'markline', x: 'Begin where it begins, and let the record speak.' },
+          { t: 'p', x: 'The Iran that exists today began in 1979. Everything since, the war, the money, the leaders, the arguments at every dinner table, runs back to that year.', fa: 'ایرانِ امروز، در سال ۱۳۵۷ آغاز شد. هر آنچه پس از آن آمده است؛ جنگ، پول، رهبران، و بحث‌هایی که بر سر هر سفره‌ای درمی‌گیرد، ریشه در همان سال دارد.' },
+          { t: 'p', x: 'This is the hardest chapter in this book to write, because it is not finished. It is not a settled history that everyone has agreed on. It is still being lived, by people who were there and by their children, and almost every family holds a different piece of it.', fa: 'نوشتن این فصل از همهٔ فصل‌های این کتاب سخت‌تر است، چون هنوز تمام نشده است. این، تاریخی نیست که همه بر سر آن به توافق رسیده باشند. هنوز در زندگی کسانی که آن روزها را دیده‌اند و فرزندانشان جریان دارد، و تقریباً هر خانواده‌ای بخشی از آن را با خود حمل می‌کند.' },
+          { t: 'p', x: 'So this is not a verdict. It is an account: what happened, in order, from the years before the Shah left to where the country stands now. Where the facts are clear they are stated plainly. Where people saw the same events and drew opposite conclusions, both are set down.', fa: 'پس این حکم نیست، روایت است: آنچه رخ داد، به ترتیب، از سال‌های پیش از رفتن شاه تا جایی که کشور امروز ایستاده است. هرجا واقعیت روشن است، ساده گفته شده. هرجا مردم یک رویداد را دیدند و به نتیجه‌های مخالف رسیدند، هر دو نوشته شده است.' },
+          { t: 'markline', x: 'Begin where it begins, and let the record speak.', fa: 'از همان‌جا که آغاز می‌شود شروع کنیم، و بگذاریم سند سخن بگوید.' },
           { t: 'div' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The White Revolution' },
-          { t: 'p', x: 'In 1963 Mohammad Reza Shah announced a programme he called the White Revolution: a revolution from above, made without bloodshed. His stated ambition was to move Iran, within a single generation, from a largely agricultural country into the front rank of nations.' },
-          { t: 'p', x: 'It is worth remembering what Iran looked like before it. Most people worked land they did not own. Literacy outside the cities was low. Electricity, running water and roads reached only part of the country. The modern industrial economy had barely begun.' },
-          { t: 'p', x: 'The programme set out to change all of that at once. Large estates were broken up and the land distributed to the farmers working it. Factories were required to share profits with their workers. Forests and waterways passed to the state. A literacy corps of young conscripts was sent into the villages to teach, and a health corps followed them. Roads, dams, power stations and universities were built at a pace the country had never seen.' },
-          { t: 'p', x: 'And women were given the vote. They could stand for parliament, and did. The legal age of marriage was raised, family law was reformed to give women rights in divorce and custody, and by the 1970s Iranian women were serving as ministers, judges, ambassadors, doctors and pilots.' },
-          { t: 'pull', x: 'Within a decade Iran had gone from the edge of the modern world to a seat at its table.' },
-          { t: 'p', x: 'With the oil revenues of the 1970s the money arriving in the country was extraordinary. Iran bought advanced technology, built an air force among the most capable anywhere, hosted world leaders, and was spoken of as a coming power. For a great many Iranians those years were the best their families had ever had.' },
+          { t: 'h', x: 'The White Revolution', fa: 'انقلاب سفید' },
+          { t: 'p', x: 'In 1963 Mohammad Reza Shah announced a programme he called the White Revolution: a revolution from above, made without bloodshed. His stated ambition was to move Iran, within a single generation, from a largely agricultural country into the front rank of nations.', fa: 'در سال ۱۳۴۲، محمدرضا شاه برنامه‌ای را با نام «انقلاب سفید» اعلام کرد؛ انقلابی از بالا، بی‌آنکه خون‌ریزی شود. او می‌گفت هدفش این است که ایران را در طول یک نسل، از کشوری که بیشتر بر کشاورزی تکیه دارد، به یکی از کشورهای پیشروی جهان تبدیل کند.' },
+          { t: 'p', x: 'It is worth remembering what Iran looked like before it. Most people worked land they did not own. Literacy outside the cities was low. Electricity, running water and roads reached only part of the country. The modern industrial economy had barely begun.', fa: 'خوب است به یاد بیاوریم ایران پیش از آن چه شکلی بود. بیشتر مردم روی زمینی کار می‌کردند که مال خودشان نبود. سواد بیرون از شهرها پایین بود. برق و آب لوله‌کشی و جاده تنها به بخشی از کشور رسیده بود. اقتصاد صنعتی مدرن تازه داشت شروع می‌شد.' },
+          { t: 'p', x: 'The programme set out to change all of that at once. Large estates were broken up and the land distributed to the farmers working it. Factories were required to share profits with their workers. Forests and waterways passed to the state. A literacy corps of young conscripts was sent into the villages to teach, and a health corps followed them. Roads, dams, power stations and universities were built at a pace the country had never seen.', fa: 'این برنامه می‌خواست همهٔ اینها را یکجا تغییر دهد. با اصلاحات ارضی، املاک بزرگ تقسیم شد و زمین به کشاورزانی رسید که رویش کار می‌کردند. کارخانه‌ها موظف شدند سود را با کارگرانشان سهیم شوند. جنگل‌ها و آب‌ها به دولت رسید. سپاه دانش، متشکل از سربازان جوان، برای درس دادن به روستاها فرستاده شد و سپاه بهداشت هم پس از آن آمد. جاده و سد و نیروگاه و دانشگاه با سرعتی ساخته شد که کشور تا آن روز ندیده بود.' },
+          { t: 'p', x: 'And women were given the vote. They could stand for parliament, and did. The legal age of marriage was raised, family law was reformed to give women rights in divorce and custody, and by the 1970s Iranian women were serving as ministers, judges, ambassadors, doctors and pilots.', fa: 'زنان حق رأی گرفتند. می‌توانستند نامزد مجلس شوند، و شدند. سن قانونی ازدواج بالا رفت، قانون خانواده اصلاح شد تا به زنان در طلاق و حضانت حق بدهد، و تا دههٔ ۱۳۵۰، زنان ایرانی به‌عنوان وزیر، قاضی، سفیر، پزشک و خلبان فعالیت می‌کردند.' },
+          { t: 'pull', x: 'Within a decade Iran had gone from the edge of the modern world to a seat at its table.', fa: 'ایران در طول یک دهه، از حاشیهٔ جهان مدرن به یکی از صندلی‌های سر میزش رسید.' },
+          { t: 'p', x: 'With the oil revenues of the 1970s the money arriving in the country was extraordinary. Iran bought advanced technology, built an air force among the most capable anywhere, hosted world leaders, and was spoken of as a coming power. For a great many Iranians those years were the best their families had ever had.', fa: 'با درآمد نفت در دههٔ ۱۳۵۰، پولی که وارد کشور می‌شد چشمگیر بود. ایران فناوری پیشرفته خرید، یکی از تواناترین نیروهای هوایی جهان را ساخت، میزبان رهبران جهان شد، و از آن به‌عنوان قدرتی در راه سخن می‌گفتند. برای شمار زیادی از ایرانی‌ها، آن سال‌ها بهترین سال‌هایی بود که خانواده‌شان تا آن زمان دیده بود.' },
           { t: 'div' },
-          { t: 'h', x: 'What people experienced' },
-          { t: 'p', x: 'A programme that large touches everyone differently, and the reactions to it varied enormously depending on who you were.' },
+          { t: 'h', x: 'What people experienced', fa: 'مردم چه تجربه کردند' },
+          { t: 'p', x: 'A programme that large touches everyone differently, and the reactions to it varied enormously depending on who you were.', fa: 'برنامه‌ای به این بزرگی، با هر کسی جور دیگری برخورد می‌کند، و واکنش‌ها به آن بسته به اینکه چه کسی بودی، بسیار متفاوت بود.' },
           { t: 'boxes', items: [
-            { title: 'Many families', x: 'Rose. Land of their own, schooling for their children, work in the new industries, and lives visibly better than their parents had.' },
-            { title: 'Landowners', x: 'Large holdings were broken up. A class that had held land and influence for generations lost much of both.' },
-            { title: 'Some farmers', x: 'Received plots too small to support a family, with little credit to work them. Many sold and moved to the cities, arriving with nothing.' },
-            { title: 'The clergy', x: 'Objected to female suffrage, and to land reform reaching religious endowments. Some read the wider programme as reducing their place in Iranian life.' },
-            { title: 'The secular left', x: 'Argued that change handed down from a throne, without a corresponding widening of political life, was incomplete.' },
+            { title: 'Many families', titleFa: 'بسیاری از خانواده‌ها', x: 'Rose. Land of their own, schooling for their children, work in the new industries, and lives visibly better than their parents had.', fa: 'بالا آمدند. زمینی از آنِ خودشان، مدرسه برای بچه‌ها، کار در صنایع تازه، و زندگی‌ای که آشکارا از زندگی پدر و مادرشان بهتر بود.' },
+            { title: 'Landowners', titleFa: 'زمین‌داران', x: 'Large holdings were broken up. A class that had held land and influence for generations lost much of both.', fa: 'املاک بزرگ تقسیم شد. طبقه‌ای که نسل‌ها زمین و نفوذ داشت، بخش زیادی از هر دو را از دست داد.' },
+            { title: 'Some farmers', titleFa: 'بخشی از کشاورزان', x: 'Received plots too small to support a family, with little credit to work them. Many sold and moved to the cities, arriving with nothing.', fa: 'زمین‌هایی گرفتند که برای گذران یک خانواده کوچک بود، و وامی هم برای کار روی آن در کار نبود. خیلی‌ها فروختند و به شهرها رفتند، و دست‌خالی رسیدند.' },
+            { title: 'The clergy', titleFa: 'روحانیت', x: 'Objected to female suffrage, and to land reform reaching religious endowments. Some read the wider programme as reducing their place in Iranian life.', fa: 'به حق رأی زنان اعتراض کرد، و به اینکه اصلاحات ارضی به موقوفات هم برسد. بعضی‌ها کل این برنامه را تلاشی برای کم کردن جایگاهشان در زندگی ایران می‌دیدند.' },
+            { title: 'The secular left', titleFa: 'چپ غیرمذهبی', x: 'Argued that change handed down from a throne, without a corresponding widening of political life, was incomplete.', fa: 'می‌گفت تغییری که از بالا و از سوی یک تخت پادشاهی می‌آید، بدون آنکه فضای سیاسی هم به همان اندازه باز شود، ناقص است.' },
           ] },
-          { t: 'p', x: 'The cities grew very fast, faster than housing or services could follow. The gap between those doing well from the boom and those newly arrived and struggling became visible in a way that was difficult to explain away, and that gap did more to shape what came next than any argument about doctrine.' },
+          { t: 'p', x: 'The cities grew very fast, faster than housing or services could follow. The gap between those doing well from the boom and those newly arrived and struggling became visible in a way that was difficult to explain away, and that gap did more to shape what came next than any argument about doctrine.', fa: 'شهرها خیلی سریع بزرگ شدند، سریع‌تر از آنکه مسکن و خدمات به آنها برسد. فاصلهٔ میان کسانی که از این رونق سود می‌بردند و کسانی که تازه رسیده بودند و در تنگنا بودند، چنان آشکار شد که نمی‌شد توجیهش کرد؛ و همین فاصله، بیش از هر بحث عقیدتی، آنچه را که بعد آمد شکل داد.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A cleric in exile' },
+          { t: 'h', x: 'A cleric in exile', fa: 'روحانی‌ای در تبعید' },
           { t: 'img', key: 'khomeini-exile' },
-          { t: 'p', x: 'Ruhollah Khomeini, a senior cleric in Qom, denounced the White Revolution in 1963, objecting in particular to women voting and to land reform touching religious endowments. He was arrested, and his arrest set off large riots in Qom and Tehran.' },
-          { t: 'p', x: 'In 1964 he was expelled from the country. That decision is worth pausing on: he could have been imprisoned indefinitely, and instead he was put on a plane.' },
-          { t: 'p', x: 'He spent the next fourteen years in Turkey, then in Najaf in Iraq, then briefly outside Paris, and he spent them working. Sermons were recorded onto cassette tapes and carried into Iran by travellers and pilgrims, copied, and passed hand to hand. There was no practical way to intercept a tape in a coat pocket. By the late 1970s a man who had not set foot in Iran for over a decade was among the most widely heard voices in it.' },
-          { t: 'markline', x: 'Exile removed him from Iran. It did not remove him from Iranian ears.' },
-          { t: 'p', x: 'Political life in those years ran within limits. SAVAK, the national intelligence and security organisation founded in 1957, handled internal security and counter-intelligence, and open opposition movements operated with difficulty. Religious spaces, meanwhile, kept their own life and their own gatherings, which is part of why the mosque networks proved so effective when 1978 came.' },
+          { t: 'p', x: 'Ruhollah Khomeini, a senior cleric in Qom, denounced the White Revolution in 1963, objecting in particular to women voting and to land reform touching religious endowments. He was arrested, and his arrest set off large riots in Qom and Tehran.', fa: 'روح‌الله خمینی، از روحانیان بلندپایهٔ قم، در سال ۱۳۴۲ «انقلاب سفید» را محکوم کرد؛ به‌ویژه به حق رأی زنان و به اینکه اصلاحات ارضی به موقوفات هم برسد اعتراض داشت. بازداشت شد، و بازداشتش شورش‌های بزرگی در قم و تهران به راه انداخت.' },
+          { t: 'p', x: 'In 1964 he was expelled from the country. That decision is worth pausing on: he could have been imprisoned indefinitely, and instead he was put on a plane.', fa: 'در سال ۱۳۴۳ از کشور اخراج شد. روی این تصمیم می‌ارزد کمی مکث کنیم: می‌شد او را تا هر وقت که بخواهند در زندان نگه دارند، اما به جایش سوار هواپیمایش کردند.' },
+          { t: 'p', x: 'He spent the next fourteen years in Turkey, then in Najaf in Iraq, then briefly outside Paris, and he spent them working. Sermons were recorded onto cassette tapes and carried into Iran by travellers and pilgrims, copied, and passed hand to hand. There was no practical way to intercept a tape in a coat pocket. By the late 1970s a man who had not set foot in Iran for over a decade was among the most widely heard voices in it.', fa: 'چهارده سال بعد را در ترکیه گذراند، بعد در نجف، و مدت کوتاهی هم در حومهٔ پاریس؛ و در تمام این سال‌ها کار کرد. سخنرانی‌هایش روی نوار کاست ضبط می‌شد و مسافران و زائران آن را به ایران می‌آوردند، تکثیر می‌شد و دست به دست می‌گشت. عملاً راهی نبود که بشود نواری را از جیب کت کسی گرفت. تا اواخر دههٔ ۱۳۵۰، مردی که بیش از ده سال پا به ایران نگذاشته بود، یکی از پرشنونده‌ترین صداهای همان کشور بود.' },
+          { t: 'markline', x: 'Exile removed him from Iran. It did not remove him from Iranian ears.', fa: 'تبعید او را از ایران بیرون برد. از گوش ایرانی‌ها بیرون نبرد.' },
+          { t: 'p', x: 'Political life in those years ran within limits. SAVAK, the national intelligence and security organisation founded in 1957, handled internal security and counter-intelligence, and open opposition movements operated with difficulty. Religious spaces, meanwhile, kept their own life and their own gatherings, which is part of why the mosque networks proved so effective when 1978 came.', fa: 'زندگی سیاسی در آن سال‌ها در چارچوب مشخصی جریان داشت. ساواک، سازمان اطلاعات و امنیت کشور که در سال ۱۳۳۵ تأسیس شد، کار امنیت داخلی و ضداطلاعات را بر عهده داشت، و جریان‌های مخالفِ علنی به‌سختی می‌توانستند فعالیت کنند. در همان حال، فضاهای مذهبی زندگی و مجالس خودشان را داشتند، و همین یکی از دلایلی است که شبکهٔ مسجدها در سال ۱۳۵۶ این‌قدر کارآمد از آب درآمد.' },
           { t: 'div' },
-          { t: 'h', x: 'The year it broke' },
-          { t: 'p', x: 'In January 1978 a newspaper article attacking Khomeini prompted protests in Qom. In Shia practice the dead are mourned again on the fortieth day, so each funeral produced another gathering forty days later, and each gathering produced the next. The cycle ran through the year and grew each time.' },
-          { t: 'p', x: 'On 8 September 1978, in Jaleh Square in Tehran, troops fired on a large demonstration. It became known as Black Friday, and after it a negotiated settlement was much harder to reach. Strikes spread through the oil industry, the bazaar and the civil service. By December the country had largely stopped working.' },
+          { t: 'h', x: 'The year it broke', fa: 'سالی که همه‌چیز شکست' },
+          { t: 'p', x: 'In January 1978 a newspaper article attacking Khomeini prompted protests in Qom. In Shia practice the dead are mourned again on the fortieth day, so each funeral produced another gathering forty days later, and each gathering produced the next. The cycle ran through the year and grew each time.', fa: 'در دی ۱۳۵۶، مقاله‌ای در یک روزنامه که به خمینی حمله کرده بود، اعتراض‌هایی را در قم برانگیخت. در آیین شیعه چهلم مرده را می‌گیرند، پس هر تشییع، چهل روز بعد گردهمایی تازه‌ای می‌ساخت، و هر گردهمایی، گردهمایی بعدی را. این چرخه تمام سال ادامه یافت و هر بار بزرگ‌تر شد.' },
+          { t: 'p', x: 'On 8 September 1978, in Jaleh Square in Tehran, troops fired on a large demonstration. It became known as Black Friday, and after it a negotiated settlement was much harder to reach. Strikes spread through the oil industry, the bazaar and the civil service. By December the country had largely stopped working.', fa: 'در ۱۷ شهریور ۱۳۵۷، در میدان ژاله تهران، نظامیان به روی تظاهراتی بزرگ آتش گشودند. آن روز به جمعهٔ سیاه معروف شد، و پس از آن رسیدن به توافق بسیار سخت‌تر شد. اعتصاب در صنعت نفت، در بازار و در ادارات دولتی گسترش یافت. تا آذر، کشور تقریباً از کار افتاده بود.' },
           { t: 'img', key: 'shah-departure' },
-          { t: 'p', x: 'On 16 January 1979 the Shah left Iran. Photographs from that morning show him weeping on the tarmac, something no one had seen from him before. He had spent thirty-seven years on the throne and had built much of what stood around him, and he left rather than remain somewhere he was no longer wanted, and rather than turn the army fully on the crowds.' },
-          { t: 'quotebig', x: 'He did not fall in a battle. He walked out of a country that had stopped seeing him.' },
-          { t: 'p', x: 'On 1 February Khomeini flew into Tehran and several million people came out to meet him. In April a referendum was held on becoming an Islamic republic, and the result was overwhelming.' },
-          { t: 'p', x: 'One thing about that moment is often forgotten. The coalition that removed the monarchy was extremely broad: communists, liberal nationalists, bazaar merchants, students, clerics, and a great many people with no politics at all who simply wanted something different. Within two years it was not broad at all. What happened in between is the next chapter.' },
+          { t: 'p', x: 'On 16 January 1979 the Shah left Iran. Photographs from that morning show him weeping on the tarmac, something no one had seen from him before. He had spent thirty-seven years on the throne and had built much of what stood around him, and he left rather than remain somewhere he was no longer wanted, and rather than turn the army fully on the crowds.', fa: 'در ۲۶ دی ۱۳۵۷، شاه از ایران رفت. عکس‌های آن روز صبح او را در حال گریه روی باند فرودگاه نشان می‌دهند؛ چیزی که پیش از آن کسی از او ندیده بود. سی و هفت سال بر تخت نشسته بود و بخش بزرگی از آنچه دور و برش ایستاده بود را خودش ساخته بود، و رفت؛ به جای آنکه در جایی بماند که دیگر خواسته نمی‌شد، و به جای آنکه ارتش را تمام‌قد به روی مردم بیاورد.' },
+          { t: 'quotebig', x: 'He did not fall in a battle. He walked out of a country that had stopped seeing him.', fa: 'در نبردی سقوط نکرد. از کشوری بیرون رفت که دیگر او را نمی‌دید.' },
+          { t: 'p', x: 'On 1 February Khomeini flew into Tehran and several million people came out to meet him. In April a referendum was held on becoming an Islamic republic, and the result was overwhelming.', fa: 'در ۱۲ بهمن، خمینی به تهران آمد و چند میلیون نفر به استقبالش رفتند. در فروردین، همه‌پرسی‌ای برای تبدیل شدن به جمهوری اسلامی برگزار شد و نتیجه‌اش قاطع بود.' },
+          { t: 'p', x: 'One thing about that moment is often forgotten. The coalition that removed the monarchy was extremely broad: communists, liberal nationalists, bazaar merchants, students, clerics, and a great many people with no politics at all who simply wanted something different. Within two years it was not broad at all. What happened in between is the next chapter.', fa: 'یک نکته دربارهٔ آن لحظه معمولاً از یاد می‌رود. ائتلافی که پادشاهی را برانداخت بسیار گسترده بود: کمونیست‌ها، ملی‌گرایان لیبرال، بازاری‌ها، دانشجویان، روحانیان، و شمار زیادی آدم بی‌ارتباط با سیاست که فقط چیز دیگری می‌خواستند. دو سال بعد، دیگر اصلاً گسترده نبود. آنچه در این فاصله گذشت، موضوع فصل بعد است.' },
         ] },
       ],
     },
     {
       key: 'mi2',
-      title: 'The New Order',
-      subtitle: '1979 - 1981',
+      title: 'The New Order', titleFa: 'نظم تازه',
+      subtitle: '1979 - 1981', titleFa: '۱۳۵۷ تا ۱۳۶۰',
       pages: [
         { blocks: [
           { t: 'img', key: 'new-order' },
@@ -2042,8 +2044,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi3',
-      title: 'The War',
-      subtitle: '1980 - 1988',
+      title: 'The War', titleFa: 'جنگ',
+      subtitle: '1980 - 1988', titleFa: '۱۳۵۹ تا ۱۳۶۷',
       pages: [
         { blocks: [
           { t: 'p', x: 'On 22 September 1980 Iraq invaded. Saddam Hussein had several reasons, and they reinforced one another.' },
@@ -2091,8 +2093,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi4',
-      title: 'The Leaders Who Followed',
-      subtitle: '1989 - today',
+      title: 'The Leaders Who Followed', titleFa: 'آنان که پس از او آمدند',
+      subtitle: '1989 - today', titleFa: '۱۳۶۸ تا امروز',
       pages: [
         { blocks: [
           { t: 'p', x: 'Khomeini died in June 1989. Ali Khamenei, then president, was elevated to Supreme Leader, a post he still holds. The presidency, meanwhile, changed hands repeatedly, and the swings between its holders are the clearest picture of how divided the country has been about its own direction.' },
@@ -2110,8 +2112,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi5',
-      title: 'What Happened to the Money',
-      subtitle: '1979 - 2026',
+      title: 'What Happened to the Money', titleFa: 'بر سر پول چه آمد',
+      subtitle: '1979 - 2026', titleFa: '۱۳۵۷ تا ۱۴۰۴',
       pages: [
         { blocks: [
           { t: 'p', x: 'No single fact about Iran since the revolution is easier to state or harder to live with than this one. In 1979 a United States dollar bought about seventy rials. In January 2026 it bought around one and a half million.' },
@@ -2126,8 +2128,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi6',
-      title: 'The Streets',
-      subtitle: '1999 - 2022',
+      title: 'The Streets', titleFa: 'خیابان',
+      subtitle: '1999 - 2022', titleFa: '۱۳۷۸ تا ۱۴۰۱',
       pages: [
         { blocks: [
           { t: 'p', x: 'Iranians have gone out into the streets again and again, and each time the pattern has been close to the same: something breaks, it spreads faster than anyone expects, it is put down, and the quiet that follows is mistaken abroad for agreement.' },
@@ -2169,8 +2171,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi7',
-      title: 'The Wars Return',
-      subtitle: '2025 - 2026',
+      title: 'The Wars Return', titleFa: 'بازگشت جنگ',
+      subtitle: '2025 - 2026', titleFa: '۱۴۰۴',
       pages: [
         { blocks: [
           { t: 'p', x: 'On 13 June 2025 Israel struck Iran directly: nuclear facilities, military sites, and the homes of senior commanders and nuclear scientists, many of whom were killed in the first hours. Iran answered with several hundred ballistic missiles and around a thousand drones over the following days. On 22 June the United States bombed three Iranian nuclear sites. A ceasefire took effect on 24 June.' },
@@ -2182,8 +2184,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi8',
-      title: 'The Winter of 2025',
-      subtitle: 'December 2025 - January 2026',
+      title: 'The Winter of 2025', titleFa: 'زمستان ۱۴۰۴',
+      subtitle: 'December 2025 - January 2026', titleFa: 'دی و بهمن ۱۴۰۴',
       pages: [
         { blocks: [
           { t: 'p', x: 'On 28 December 2025 the rial fell to the lowest point in its history. It had been falling for years, but this was different in kind: prices in the shops changed between the morning and the afternoon, and importers stopped quoting at all because no quote survived the day.' },
@@ -2216,8 +2218,8 @@ const modernIran: Topic = {
     },
     {
       key: 'mi9',
-      title: 'Where It Stands',
-      subtitle: 'Today',
+      title: 'Where It Stands', titleFa: 'اکنون کجاییم',
+      subtitle: 'Today', titleFa: 'امروز',
       pages: [
         { blocks: [
           { t: 'p', x: 'Life continues, and that is worth saying first, because coverage of Iran consists almost entirely of its worst days. People are working, marrying, studying, arguing about films. Nowruz is laid out on the same cloth it always was. The mountains above Tehran fill on Fridays. The country is not a ruin and its people are not waiting to be pitied.' },
