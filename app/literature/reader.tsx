@@ -162,7 +162,7 @@ function Block({ b }: { b: LitBlock }) {
         </View>
         <Text style={styles.storyText}>{b.x}</Text>
         <View style={styles.storyRule} />
-        <Text style={styles.storyMoral}>{b.moral}</Text>
+        <Text style={[styles.storyMoral, rtl, fa && (b as any).moralFa && styles.faBody]}>{fa && (b as any).moralFa ? (b as any).moralFa : b.moral}</Text>
       </View>
     );
     case 'ghazal': return (
