@@ -167,7 +167,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
       { t: 'mark', x: 'It happens at three in the afternoon or at four in the morning. The sun does not care, and neither does anyone at the table.', fa: 'ممکن است ساعت سه بعدازظهر باشد یا چهار صبح. خورشید اهمیتی نمی‌دهد، و هیچ‌کس سر آن سفره هم نمی‌دهد.' },
       { t: 'p', x: 'That last part matters. Because the moment is astronomical, Nowruz arrives whenever it arrives. Families set alarms for the middle of the night and wake the children and sit at the table at four in the morning in their new clothes, because you do not miss it.', fa: 'همین نکتهٔ آخر مهم است. چون آن لحظه نجومی است، نوروز هر وقت که برسد می‌رسد. خانواده‌ها برای نیمه‌شب ساعت کوک می‌کنند، بچه‌ها را بیدار می‌کنند، و ساعت چهار صبح با لباس نو سر سفره می‌نشینند؛ چون سال تحویل را از دست نمی‌دهند.' },
       { t: 'h', x: 'And then the book', fa: 'و بعد، آن کتاب' },
-      { t: 'ptext', x: 'Someone reaches for the {{hafez|Hafez}}. A wish is held, the book is opened at random, and the verse is read aloud to the whole family, and everyone argues about what it means for the year ahead. It is the first thing done in the new year, and it is done with a poem.' },
+      { t: 'ptext', x: 'Someone reaches for the {{hafez|Hafez}}. A wish is held, the book is opened at random, and the verse is read aloud to the whole family, and everyone argues about what it means for the year ahead. It is the first thing done in the new year, and it is done with a poem.', fa: 'یکی دست به سوی {{hafez|دیوان حافظ}} می‌برد. نیت می‌کنند، کتاب را بی‌قصد باز می‌کنند، و بیت را بلند برای تمام خانواده می‌خوانند، و همه سر اینکه برای سالِ پیش رو چه معنایی دارد بحث می‌کنند. نخستین کاری که در سال نو انجام می‌شود همین است، و با یک شعر انجام می‌شود.' },
     ],
   },
   {

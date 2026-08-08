@@ -2,6 +2,14 @@
 export type GlossaryTerm = { id: string; term: string; title: string; description: string; titleFa?: string; descriptionFa?: string; video?: string; videoLabel?: string };
 
 export const GLOSSARY: Record<string, GlossaryTerm> = {
+  'hafez': {
+    id: 'hafez',
+    term: 'Hafez',
+    title: 'The Divan of Hafez',
+    titleFa: 'دیوان حافظ',
+    description: 'The collected ghazals of Hafez of Shiraz, c. 1315 to 1390. It sits in most Iranian homes and is opened at Nowruz and at Yalda to be asked a question, a custom called fal e Hafez.',
+    descriptionFa: 'مجموعهٔ غزل‌های حافظ شیرازی، حدود ۱۳۱۵ تا ۱۳۹۰ میلادی. در بیشتر خانه‌های ایرانی هست و نوروز و شب یلدا آن را می‌گشایند تا از او بپرسند؛ آیینی که فال حافظ خوانده می‌شود.',
+  },
   'hoveyda': {
     id: 'hoveyda',
     term: 'Hoveyda',
