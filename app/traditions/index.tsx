@@ -69,9 +69,9 @@ function NzBlockView({ b }: { b: NzBlock }) {
               {i < b.items.length - 1 ? <View style={s.dayStem} /> : null}
             </View>
             <View style={s.dayBody}>
-              <Text style={s.dayD}>{it.d}</Text>
-              <Text style={s.dayN}>{it.n}</Text>
-              <Text style={s.dayX}>{it.x}</Text>
+              <Text style={[s.dayD, rtl]}>{fa && (it as any).dFa ? (it as any).dFa : it.d}</Text>
+              <Text style={[s.dayN, rtl, fa && (it as any).nFa && s.faHead]}>{fa && (it as any).nFa ? (it as any).nFa : it.n}</Text>
+              <Text style={[s.dayX, rtl, fa && (it as any).fa && s.faBody]}>{fa && (it as any).fa ? (it as any).fa : it.x}</Text>
             </View>
           </View>
         ))}
@@ -81,7 +81,7 @@ function NzBlockView({ b }: { b: NzBlock }) {
       <View style={s.close}>
         <View style={s.closeRule} />
         <Text style={s.closeGlyph}>{b.glyph}</Text>
-        <Text style={s.closeText}>{b.x}</Text>
+        <Text style={[s.closeText, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>
         <View style={s.closeDiamond} />
       </View>
     );
@@ -138,7 +138,7 @@ function YlBlockView({ b }: { b: YlBlock }) {
       <View style={s.close}>
         <View style={s.closeRule} />
         <Text style={s.closeGlyph}>{b.glyph}</Text>
-        <Text style={s.closeText}>{b.x}</Text>
+        <Text style={[s.closeText, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>
         <View style={s.closeDiamond} />
       </View>
     );
@@ -245,12 +245,16 @@ export default function Traditions() {
             <FadeIn key={tab + '-head'}>
               <View style={styles.head}>
                 <Text style={[styles.glyph, { color: th.gold }]}>{tab === 'nowruz' ? 'نوروز' : 'یلدا'}</Text>
-                <Text style={[styles.title, { color: th.text }]}>{tab === 'nowruz' ? 'Nowruz' : 'Shab e Yalda'}</Text>
+                <Text style={[styles.title, { color: th.text }]}>{getLang() === 'fa' ? (tab === 'nowruz' ? 'نوروز' : 'شب یلدا') : (tab === 'nowruz' ? 'Nowruz' : 'Shab e Yalda')}</Text>
                 <View style={[styles.headRule, { backgroundColor: th.gold }]} />
                 <Text style={[styles.sub, { color: th.textDim }]}>
-                  {tab === 'nowruz'
-                    ? 'The new day. Three thousand years old, and it arrives at a second.'
-                    : 'The longest night. The dark reaches as far as it can go, and then begins to lose.'}
+                  {getLang() === 'fa'
+                    ? (tab === 'nowruz'
+                        ? 'روزِ نو. سه هزار سال قدمت دارد، و سرِ یک ثانیه از راه می‌رسد.'
+                        : 'درازترین شب. تاریکی تا هر کجا که می‌تواند پیش می‌رود، و بعد شروع می‌کند به باختن.')
+                    : (tab === 'nowruz'
+                        ? 'The new day. Three thousand years old, and it arrives at a second.'
+                        : 'The longest night. The dark reaches as far as it can go, and then begins to lose.')}
                 </Text>
               </View>
             </FadeIn>
