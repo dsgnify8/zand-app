@@ -8,6 +8,7 @@ import { lit } from '@/constants/literature';
 const STRINGS = 9;
 
 export function Chang() {
+  const fa = getLang() === 'fa';
   const vibes = useRef(Array.from({ length: STRINGS }, () => new Animated.Value(0))).current;
 
   const pluck = (i: number) => {
@@ -17,7 +18,7 @@ export function Chang() {
 
   return (
     <View style={styles.changWrap}>
-      <Text style={styles.changKicker}>THE CHANG</Text>
+      <Text style={styles.changKicker}>{fa ? 'چنگ' : 'THE CHANG'}</Text>
       <View style={styles.changFrame}>
         <View style={styles.changNeck} />
         <View style={styles.changBody} />
@@ -36,8 +37,8 @@ export function Chang() {
           );
         })}
       </View>
-      <Text style={styles.changHint}>touch the strings</Text>
-      <Text style={styles.changNote}>His voice is lost. The instrument is not.</Text>
+      <Text style={styles.changHint}>{fa ? 'سیم‌ها را لمس کن' : 'touch the strings'}</Text>
+      <Text style={[styles.changNote, fa && styles.faSmall]}>{fa ? 'صدایش گم شده است. ساز، نه.' : 'His voice is lost. The instrument is not.'}</Text>
     </View>
   );
 }
@@ -67,11 +68,11 @@ export function LostVerses() {
       <View style={styles.lostHead}>
         <View>
           <Text style={styles.lostN}>100,000</Text>
-          <Text style={styles.lostLabel}>VERSES WRITTEN</Text>
+          <Text style={styles.lostLabel}>{fa ? 'بیتِ سروده' : 'VERSES WRITTEN'}</Text>
         </View>
         <View style={{ alignItems: 'flex-end' }}>
           <Text style={[styles.lostN, styles.lostNOn]}>~1,000</Text>
-          <Text style={[styles.lostLabel, styles.lostLabelOn]}>VERSES SURVIVING</Text>
+          <Text style={[styles.lostLabel, styles.lostLabelOn]}>{fa ? 'بیتِ به جا مانده' : 'VERSES SURVIVING'}</Text>
         </View>
       </View>
 
@@ -83,12 +84,13 @@ export function LostVerses() {
         })}
       </View>
 
-      <Text style={styles.lostHint}>{faded ? 'what remains' : 'touch to lose them'}</Text>
+      <Text style={styles.lostHint}>{fa ? (faded ? 'آنچه مانده' : 'لمس کن تا از دست بروند') : (faded ? 'what remains' : 'touch to lose them')}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  faSmall: { fontFamily: fonts.persian, fontSize: 11.5, fontStyle: 'normal' },
   changWrap: { alignItems: 'center', marginVertical: spacing.xl, paddingVertical: spacing.lg, backgroundColor: lit.raised, borderRadius: 12, borderWidth: 1, borderColor: lit.hair },
   changKicker: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: lit.gold },
   changFrame: { width: 170, height: 140, marginTop: spacing.md },
