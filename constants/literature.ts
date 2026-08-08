@@ -631,7 +631,7 @@ const rudaki: Author = {
           { t: 'h', x: 'The court that made a language', fa: 'درباری که زبانی ساخت' },
           { t: 'p', x: 'The Samanids ruled Bukhara, and they made a deliberate and world changing decision. They were Persians, they were proud of it, and they chose to have their court speak and write and celebrate in Persian while the whole Islamic world around them ran on Arabic. They paid for it. They defended it. It was policy.', fa: 'سامانیان بر بخارا فرمان می‌راندند، و تصمیمی گرفتند آگاهانه که جهان را عوض کرد. ایرانی بودند و به آن سربلند، و برگزیدند که دربارشان به فارسی حرف بزند و بنویسد و جشن بگیرد، در حالی که تمام جهان اسلام پیرامونشان با عربی می‌گشت. برایش پول دادند. از آن دفاع کردند. این یک سیاست بود.' },
           { t: 'p', x: 'Rudaki was their poet, and he was the proof. If Persian could produce this, at this level, then Persian was a literary language, and the argument was over. Everything that follows in this section stands on that.', fa: 'رودکی شاعر آنان بود، و او همان دلیل بود. اگر فارسی می‌توانست چنین چیزی و در چنین سطحی پدید بیاورد، پس فارسی زبانی ادبی بود و بحث تمام. هر چه در این بخش پس از او می‌آید، بر همین می‌ایستد.' },
-          { t: 'mark', x: 'Ferdowsi saved the language. Rudaki proved there was something worth saving.' },
+          { t: 'mark', x: 'Ferdowsi saved the language. Rudaki proved there was something worth saving.', fa: 'فردوسی زبان را نجات داد. رودکی نشان داد چیزی هست که ارزش نجات دادن دارد.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The singer', fa: 'خنیاگر' },
@@ -687,7 +687,7 @@ const rudaki: Author = {
         { blocks: [
           { t: 'p', x: 'That grid is the honest picture. Every mark is a hundred verses. The gold ones are what we have.', fa: 'آن شبکه، تصویر صادقانه است. هر نشانه صد بیت است. طلایی‌ها آن چیزی است که داریم.' },
           { t: 'p', x: 'We know he wrote a Kalila and Dimna in verse, the great book of animal fables, because people quote it. The book itself is gone. We have fragments of odes to patrons whose names mean nothing now. We have single couplets, quoted in other men books to make a point about grammar, floating free of whatever poem they came from.', fa: 'می‌دانیم که کلیله و دمنه را به نظم درآورد، آن کتاب بزرگ افسانه‌های جانوران، چون دیگران از آن نقل کرده‌اند. خودِ کتاب رفته است. پاره‌هایی از قصیده‌هایی در مدح ممدوحانی داریم که نامشان امروز هیچ معنایی ندارد. بیت‌هایی تک داریم که در کتاب دیگران برای اثبات نکته‌ای دستوری نقل شده‌اند، جدا افتاده از هر شعری که از آن آمده‌اند.' },
-          { t: 'mark', x: 'We are reading the father of Persian poetry through the footnotes of other people.' },
+          { t: 'mark', x: 'We are reading the father of Persian poetry through the footnotes of other people.', fa: 'ما پدر شعر فارسی را از لابه‌لای پانویس‌های دیگران می‌خوانیم.' },
           { t: 'p', x: 'It is worth sitting with what that means. The judgement that he was the greatest of his age was made by people who could read all of it. We are agreeing with a verdict on evidence we do not have.', fa: 'ارزشش را دارد کمی با معنای این جمله بنشینیم. آن داوری که او بزرگ‌ترین شاعر روزگارش بود، به دست کسانی صادر شد که می‌توانستند همهٔ کارش را بخوانند. ما با حکمی موافقیم که سندش را در دست نداریم.' },
         ] },
       ],
@@ -735,7 +735,7 @@ const rudaki: Author = {
           { t: 'h', x: 'What he handed forward', fa: 'آنچه به دست بعدی‌ها داد' },
           { t: 'p', x: 'He set the forms. The qasida, the ghazal, the rubai, the masnavi. Everything Ferdowsi and Hafez and Saadi and Khayyam used was already shaped and waiting for them, and Rudaki is the one who shaped it. They inherited a working instrument because he built it.', fa: 'قالب‌ها را او بنا گذاشت: قصیده، غزل، رباعی، مثنوی. هر چه فردوسی و حافظ و سعدی و خیام به کار بردند، از پیش شکل گرفته و در انتظارشان بود، و رودکی همان کسی است که شکلش داد. سازی کارآمد به ارث بردند، چون او ساخته بودش.' },
           { t: 'p', x: 'And he set the tone. Direct, musical, unashamed of pleasure, unashamed of loss. Persian poetry could have gone in any direction at the start. It went in his.', fa: 'و لحن را هم او گذاشت: صریح، آهنگین، بی‌شرم از لذت، بی‌شرم از فقدان. شعر فارسی در آغاز می‌توانست به هر سویی برود. به سوی او رفت.' },
-          { t: 'mark', x: 'Every poet in this section is standing on a man whose work we have almost entirely lost.' },
+          { t: 'mark', x: 'Every poet in this section is standing on a man whose work we have almost entirely lost.', fa: 'هر شاعری در این بخش، بر شانهٔ مردی ایستاده که کارش را تقریباً به‌تمامی از دست داده‌ایم.' },
         ] },
         { blocks: [
           { t: 'rule' },
@@ -755,7 +755,7 @@ const nizami: Author = {
   persian: 'نظامی',
   epithet: 'The Master of Romance',
   years: 'c. 1141 - 1209',
-  essence: 'He wrote the greatest love stories in the Persian language, and buried every woman he loved. Layli and Majnun, Khosrow and Shirin, and seven domes of seven colours are all his.',
+  essence: 'He wrote the greatest love stories in the Persian language, and buried every woman he loved. Layli and Majnun, Khosrow and Shirin, and seven domes of seven colours are all his.', essenceFa: 'بزرگ‌ترین داستان‌های عاشقانهٔ زبان فارسی را سرود، و هر زنی را که دوست داشت به خاک سپرد. لیلی و مجنون، خسرو و شیرین، و هفت گنبد به هفت رنگ، همه از او است.',
   cover: 'lit-nizami-cover',
   closing: 'nizami-tomb',
   status: 'ready',
@@ -767,18 +767,18 @@ const nizami: Author = {
       subtitle: 'GANJA, c. 1141',
       pages: [
         { blocks: [
-          { t: 'lead', x: 'The man who taught a civilization how to write about love was widowed three times.', mark: 'domes' },
-          { t: 'p', x: 'Nizami was born around 1141 in Ganja, in the Caucasus, and appears to have almost never left it. No travels like Saadi, no court like Rudaki. He turned down invitations from kings. He stayed in one provincial city, orphaned young, raised by an uncle, and quietly wrote five long poems that changed what Persian could do.' },
-          { t: 'p', x: 'He wrote in Persian, entirely. Ganja is in Azerbaijan today, and Rudaki is buried in Tajikistan, and this is simply what Persian was: a language of a whole region, never contained by any one border.' },
+          { t: 'lead', x: 'The man who taught a civilization how to write about love was widowed three times.', fa: 'مردی که به یک تمدن آموخت چگونه از عشق بنویسد، سه بار همسرش را از دست داد.', mark: 'domes' },
+          { t: 'p', x: 'Nizami was born around 1141 in Ganja, in the Caucasus, and appears to have almost never left it. No travels like Saadi, no court like Rudaki. He turned down invitations from kings. He stayed in one provincial city, orphaned young, raised by an uncle, and quietly wrote five long poems that changed what Persian could do.', fa: 'نظامی حدود سال ۱۱۴۱ میلادی در گنجه، در قفقاز، به دنیا آمد و چنین می‌نماید که تقریباً هرگز از آن بیرون نرفت. نه سفرهایی مثل سعدی، نه درباری مثل رودکی. دعوت شاهان را نپذیرفت. در یک شهر دورافتاده ماند، در کودکی یتیم شد، دایی‌اش بزرگش کرد، و بی‌سروصدا پنج منظومهٔ بلند سرود که توانِ زبان فارسی را دگرگون کرد.' },
+          { t: 'p', x: 'He wrote in Persian, entirely. Ganja is in Azerbaijan today, and Rudaki is buried in Tajikistan, and this is simply what Persian was: a language of a whole region, never contained by any one border.', fa: 'یکسره به فارسی نوشت. گنجه امروز در جمهوری آذربایجان است و رودکی در تاجیکستان به خاک سپرده شده، و فارسی همین بود: زبان یک منطقهٔ تمام، که هرگز در هیچ مرزی نگنجید.' },
           { t: 'motif', symbol: 'rose', caption: 'نظامی' },
         ] },
         { blocks: [
-          { t: 'h', x: 'Afaq' },
-          { t: 'p', x: 'A ruler sent him a gift: a Kipchak slave girl named Afaq. Nizami freed her and married her, and by every trace he left, he loved her without reservation. She bore him a son. And while he was writing Khosrow and Shirin, the great romance, she died.' },
-          { t: 'p', x: 'He put her death into the poem. In the middle of the love story he was writing, he stops, and mourns his wife, and then goes on. It is one of the most unguarded moments in classical Persian literature.' },
-          { t: 'p', x: 'He married again. That wife died as he finished Layli and Majnun. He married a third time. She died as he finished the Haft Peykar. Three books, three wives, each one gone as the ink dried.' },
+          { t: 'h', x: 'Afaq', fa: 'آفاق' },
+          { t: 'p', x: 'A ruler sent him a gift: a Kipchak slave girl named Afaq. Nizami freed her and married her, and by every trace he left, he loved her without reservation. She bore him a son. And while he was writing Khosrow and Shirin, the great romance, she died.', fa: 'فرمانروایی برایش هدیه‌ای فرستاد: کنیزی قبچاق به نام آفاق. نظامی آزادش کرد و با او ازدواج کرد، و به گواه هر نشانی که از خود گذاشته، بی‌هیچ قید و شرطی دوستش داشت. آفاق پسری برایش آورد. و در همان روزهایی که نظامی خسرو و شیرین را می‌سرود، آن منظومهٔ بزرگ عاشقانه، آفاق درگذشت.' },
+          { t: 'p', x: 'He put her death into the poem. In the middle of the love story he was writing, he stops, and mourns his wife, and then goes on. It is one of the most unguarded moments in classical Persian literature.', fa: 'مرگ او را در همان منظومه گذاشت. وسط داستان عاشقانه‌ای که می‌نوشت، می‌ایستد، بر همسرش سوگ می‌گزارد، و بعد ادامه می‌دهد. این یکی از بی‌پرده‌ترین لحظه‌های ادبیات کلاسیک فارسی است.' },
+          { t: 'p', x: 'He married again. That wife died as he finished Layli and Majnun. He married a third time. She died as he finished the Haft Peykar. Three books, three wives, each one gone as the ink dried.', fa: 'دوباره ازدواج کرد. آن همسر درست وقتی درگذشت که لیلی و مجنون را به پایان می‌رساند. بار سوم ازدواج کرد. او هم وقتی رفت که هفت پیکر تمام می‌شد. سه کتاب، سه همسر، و هر یک درست وقتی رفت که مرکب خشک می‌شد.' },
           { t: 'illumin', x: 'He wrote, half joking and not joking at all, asking God why a wife must be taken for every poem finished.' },
-          { t: 'mark', x: 'Every great love story in this language was written by a man burying the woman he loved.' },
+          { t: 'mark', x: 'Every great love story in this language was written by a man burying the woman he loved.', fa: 'هر داستان عاشقانهٔ بزرگ این زبان را مردی نوشت که داشت زنِ محبوبش را به خاک می‌سپرد.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The five' },

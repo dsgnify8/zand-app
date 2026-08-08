@@ -56,6 +56,12 @@ function Block({ b }: { b: LitBlock }) {
   const tx = (o: any, k = 'x') => (fa && (k === 'x' ? o.fa : o[k + 'Fa']) ? (k === 'x' ? o.fa : o[k + 'Fa']) : o[k]);
   const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
+    case 'mark': return (
+      <View style={styles.markWrap}>
+        <View style={styles.markRule} />
+        <Text style={[styles.markText, rtl, fa && (b as any).fa && styles.faMark]}>{tx(b)}</Text>
+      </View>
+    );
     case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
     case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
     case 'ptext': return <View style={styles.glossWrap}><GlossaryText text={tx(b)} /></View>;
@@ -279,6 +285,10 @@ const styles = StyleSheet.create({
   h: { fontFamily: fonts.heading, fontSize: 23, lineHeight: 30, color: lit.text, marginTop: spacing.xxl, marginBottom: spacing.sm },
   faChTitle: { fontFamily: fonts.persian, fontSize: 26, lineHeight: 44, textAlign: 'right' },
   faChRun: { fontFamily: fonts.persian, fontSize: 13, textAlign: 'right' },
+  markWrap: { marginVertical: spacing.xl, alignItems: 'center' },
+  markRule: { width: 34, height: 1, backgroundColor: lit.gold, opacity: 0.6, marginBottom: spacing.md },
+  markText: { fontFamily: fonts.heading, fontSize: 19, lineHeight: 31, color: lit.ink, textAlign: 'center', paddingHorizontal: spacing.md },
+  faMark: { fontFamily: fonts.persian, fontSize: 17, lineHeight: 34 },
   faHead: { fontFamily: fonts.persian, fontSize: 20, lineHeight: 36 },
   rtl: { textAlign: 'right', writingDirection: 'rtl' },
   faLead: { fontFamily: fonts.persian, fontSize: 22, lineHeight: 42 },
