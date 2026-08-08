@@ -18,6 +18,7 @@ function nextMoment() {
 }
 
 export function Tahvil() {
+  const fa = getLang() === 'fa';
   const [target] = useState(nextMoment);
   const [left, setLeft] = useState(target - Date.now());
 
@@ -46,7 +47,7 @@ export function Tahvil() {
 
   return (
     <View style={styles.tWrap}>
-      <Text style={styles.tKicker}>THE YEAR TURNS IN</Text>
+      <Text style={styles.tKicker}>{fa ? 'تا سال تحویل' : 'THE YEAR TURNS IN'}</Text>
       <View style={styles.tRow}>
         {cells.map((c, i) => (
           <View key={i} style={styles.tCell}>
@@ -57,7 +58,7 @@ export function Tahvil() {
       </View>
       <View style={styles.tRule} />
       <Text style={styles.tWhen}>{local}</Text>
-      <Text style={styles.tNote}>your local time, to the minute</Text>
+      <Text style={[styles.tNote, fa && styles.faSmall]}>{fa ? 'به وقت محلی شما، تا دقیقه' : 'your local time, to the minute'}</Text>
     </View>
   );
 }
@@ -128,6 +129,7 @@ function SeenGlyph({ k }: { k: string }) {
 }
 
 export function HaftSeen() {
+  const fa = getLang() === 'fa';
   const [i, setI] = useState(0);
   const ref = useRef<ScrollView>(null);
 
@@ -161,11 +163,11 @@ export function HaftSeen() {
             <Text style={styles.hsTr}>{it.tr}</Text>
             <View style={styles.hsMeansRow}>
               <View style={styles.hsHair} />
-              <Text style={styles.hsMeans}>{it.means}</Text>
+              <Text style={[styles.hsMeans, fa && styles.faSmall]}>{fa && (it as any).meansFa ? (it as any).meansFa : it.means}</Text>
               <View style={styles.hsHair} />
             </View>
-            <Text style={styles.hsX}>{it.x}</Text>
-            {it.note ? <Text style={styles.hsNote}>{it.note}</Text> : null}
+            <Text style={[styles.hsX, fa && styles.faBody]}>{fa && (it as any).fa2 ? (it as any).fa2 : (fa && (it as any).xFa ? (it as any).xFa : it.x)}</Text>
+            {it.note ? <Text style={[styles.hsNote, fa && styles.faSmall]}>{fa && (it as any).noteFa ? (it as any).noteFa : it.note}</Text> : null}
           </View>
         ))}
       </ScrollView>
@@ -183,6 +185,7 @@ export function HaftSeen() {
 
 /* The guests: everything on the table that is not an S. */
 export function Guests() {
+  const fa = getLang() === 'fa';
   const [open, setOpen] = useState<string | null>(null);
   return (
     <View style={styles.guWrap}>
@@ -196,7 +199,7 @@ export function Guests() {
               <View style={{ flex: 1 }} />
               <Ionicons name={on ? 'remove' : 'add'} size={14} color={nz.gold} />
             </View>
-            {on ? <Text style={styles.guX}>{g.x}</Text> : null}
+            {on ? <Text style={[styles.guX, fa && styles.faBody]}>{fa && (g as any).xFa ? (g as any).xFa : g.x}</Text> : null}
           </Pressable>
         );
       })}
@@ -206,6 +209,7 @@ export function Guests() {
 
 /* Chaharshanbe Suri. Jump it. */
 export function Fire() {
+  const fa = getLang() === 'fa';
   const [jumped, setJumped] = useState(false);
   const y = useRef(new Animated.Value(0)).current;
   const flame = useRef(new Animated.Value(0)).current;
@@ -235,7 +239,7 @@ export function Fire() {
 
   return (
     <Pressable style={styles.fWrap} onPress={jump}>
-      <Text style={styles.fKicker}>CHAHARSHANBE SURI</Text>
+      <Text style={styles.fKicker}>{fa ? 'چهارشنبه‌سوری' : 'CHAHARSHANBE SURI'}</Text>
 
       <View style={styles.fStage}>
         <Animated.View style={[styles.flame, { transform: [{ scaleY: flick }] }]} />
@@ -248,12 +252,12 @@ export function Fire() {
       </View>
 
       {!jumped ? (
-        <Text style={styles.fHint}>touch to jump</Text>
+        <Text style={styles.fHint}>{fa ? 'لمس کن تا بپری' : 'touch to jump'}</Text>
       ) : (
         <Animated.View style={{ opacity: said, alignItems: 'center' }}>
           <Text style={styles.fFa}>زردی من از تو، سرخی تو از من</Text>
-          <Text style={styles.fEn}>My yellow is yours, your red is mine.</Text>
-          <Text style={styles.fNote}>You give the fire your tiredness and take its heat.</Text>
+          {!fa ? <Text style={styles.fEn}>My yellow is yours, your red is mine.</Text> : null}
+          <Text style={[styles.fNote, fa && styles.faSmall]}>{fa ? 'خستگی‌ات را به آتش می‌دهی و گرمایش را می‌گیری.' : 'You give the fire your tiredness and take its heat.'}</Text>
         </Animated.View>
       )}
     </Pressable>
@@ -262,6 +266,7 @@ export function Fire() {
 
 /* Sizdah Bedar. Tie a knot, make a wish, let it go. */
 export function Knot() {
+  const fa = getLang() === 'fa';
   const [state, setState] = useState<0 | 1 | 2>(0);
   const tie = useRef(new Animated.Value(0)).current;
   const float = useRef(new Animated.Value(0)).current;
@@ -283,7 +288,7 @@ export function Knot() {
 
   return (
     <Pressable style={styles.kWrap} onPress={next}>
-      <Text style={styles.kKicker}>SIZDAH BEDAR</Text>
+      <Text style={styles.kKicker}>{fa ? 'سیزده‌بدر' : 'SIZDAH BEDAR'}</Text>
 
       <View style={styles.kStage}>
         <Animated.View style={{ transform: [{ translateX: away }], opacity: gone }}>
@@ -298,7 +303,7 @@ export function Knot() {
       </View>
 
       <Text style={styles.kHint}>
-        {state === 0 ? 'touch to tie the knot' : state === 1 ? 'make your wish, then touch again' : 'gone downstream'}
+        {fa ? (state === 0 ? 'لمس کن تا گره بزنی' : state === 1 ? 'آرزویت را بکن، بعد دوباره لمس کن' : 'به آب سپرده شد') : (state === 0 ? 'touch to tie the knot' : state === 1 ? 'make your wish, then touch again' : 'gone downstream')}
       </Text>
       {state === 2 ? <Text style={styles.kNote}>Whatever the year put into it goes with the water.</Text> : null}
     </Pressable>
@@ -306,6 +311,8 @@ export function Knot() {
 }
 
 const styles = StyleSheet.create({
+  faSmall: { fontFamily: fonts.persian, fontSize: 11.5, textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 14.5, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' },
   tWrap: { alignItems: 'center', marginVertical: spacing.xl, paddingVertical: spacing.xl, paddingHorizontal: spacing.lg, backgroundColor: nz.surface, borderRadius: 14, borderWidth: 1, borderColor: nz.hair },
   tKicker: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 3, color: nz.gold },
   tRow: { flexDirection: 'row', marginTop: spacing.lg },
