@@ -12,7 +12,7 @@ import { eduImage } from '@/constants/education-images';
 import { GlossaryText } from '@/components/glossary-text';
 import { Tahvil, HaftSeen, Guests, Fire, Knot } from '@/components/nowruz-blocks';
 import { Solstice, Anar, NightArc } from '@/components/yalda-blocks';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 type Tab = 'nowruz' | 'yalda';
@@ -30,18 +30,21 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 
 function NzBlockView({ b }: { b: NzBlock }) {
   const s = nzStyles;
+  const fa = getLang() === 'fa';
+  const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
+  const rtl = fa ? s.rtl : undefined;
   switch (b.t) {
-    case 'p': return <Text style={s.p}>{b.x}</Text>;
-    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={b.x} /></View>;
-    case 'h': return <Text style={s.h}>{b.x}</Text>;
-    case 'aside': return <Text style={s.aside}>{b.x}</Text>;
+    case 'p': return <Text style={[s.p, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
+    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={tx(b)} /></View>;
+    case 'h': return <Text style={[s.h, rtl, fa && (b as any).fa && s.faHead]}>{tx(b)}</Text>;
+    case 'aside': return <Text style={[s.aside, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
     case 'lead': return (
       <View style={s.leadWrap}>
-        <View style={s.leadRule} /><Text style={s.lead}>{b.x}</Text><View style={s.leadRule} />
+        <View style={s.leadRule} /><Text style={[s.lead, rtl, fa && (b as any).fa && s.faLead]}>{tx(b)}</Text><View style={s.leadRule} />
       </View>
     );
     case 'mark': return (
-      <View style={s.mark}><View style={s.markBar} /><Text style={s.markText}>{b.x}</Text></View>
+      <View style={s.mark}><View style={s.markBar} /><Text style={[s.markText, rtl, fa && (b as any).fa && s.faMark]}>{tx(b)}</Text></View>
     );
     case 'tahvil': return <Tahvil />;
     case 'haftseen': return <HaftSeen />;
@@ -90,18 +93,21 @@ function NzBlockView({ b }: { b: NzBlock }) {
 
 function YlBlockView({ b }: { b: YlBlock }) {
   const s = ylStyles;
+  const fa = getLang() === 'fa';
+  const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
+  const rtl = fa ? s.rtl : undefined;
   switch (b.t) {
-    case 'p': return <Text style={s.p}>{b.x}</Text>;
-    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={b.x} /></View>;
-    case 'h': return <Text style={s.h}>{b.x}</Text>;
-    case 'aside': return <Text style={s.aside}>{b.x}</Text>;
+    case 'p': return <Text style={[s.p, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
+    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={tx(b)} /></View>;
+    case 'h': return <Text style={[s.h, rtl, fa && (b as any).fa && s.faHead]}>{tx(b)}</Text>;
+    case 'aside': return <Text style={[s.aside, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
     case 'lead': return (
       <View style={s.leadWrap}>
-        <View style={s.leadRule} /><Text style={s.lead}>{b.x}</Text><View style={s.leadRule} />
+        <View style={s.leadRule} /><Text style={[s.lead, rtl, fa && (b as any).fa && s.faLead]}>{tx(b)}</Text><View style={s.leadRule} />
       </View>
     );
     case 'mark': return (
-      <View style={s.mark}><View style={s.markBar} /><Text style={s.markText}>{b.x}</Text></View>
+      <View style={s.mark}><View style={s.markBar} /><Text style={[s.markText, rtl, fa && (b as any).fa && s.faMark]}>{tx(b)}</Text></View>
     );
     case 'solstice': return <Solstice />;
     case 'anar': return <Anar />;
@@ -212,7 +218,7 @@ export default function Traditions() {
             const on = c.key === active;
             return (
               <Pressable key={c.key} onPress={() => jump(c.key)} style={styles.navTab}>
-                <Text style={[styles.navText, { color: on ? th.text : th.textDim }]} numberOfLines={1}>{c.nav}</Text>
+                <Text style={[styles.navText, { color: on ? th.text : th.textDim }]} numberOfLines={1}>{getLang() === 'fa' && (c as any).navFa ? (c as any).navFa : c.nav}</Text>
                 <View style={[styles.navRule, { backgroundColor: on ? th.gold : 'transparent' }]} />
               </Pressable>
             );
@@ -256,7 +262,7 @@ export default function Traditions() {
                 <View style={styles.chapter}>
                   <View style={[styles.chDiamond, { backgroundColor: tab === 'nowruz' ? nz.green : yl.anar }]} />
                   {c.subtitle ? <Text style={[styles.chEyebrow, { color: th.gold }]}>{c.subtitle}</Text> : null}
-                  <Text style={[styles.chTitle, { color: th.text }]}>{c.title}</Text>
+                  <Text style={[styles.chTitle, { color: th.text }, getLang() === 'fa' && (c as any).titleFa && { fontFamily: fonts.persian, textAlign: 'right' }]}>{getLang() === 'fa' && (c as any).titleFa ? (c as any).titleFa : c.title}</Text>
                 </View>
                 {c.blocks.map((b: any, bi: number) =>
                   tab === 'nowruz' ? <NzBlockView key={bi} b={b} /> : <YlBlockView key={bi} b={b} />
@@ -303,6 +309,11 @@ const styles = StyleSheet.create({
 });
 
 const nzStyles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 15.5, lineHeight: 32 },
+  faHead: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 34 },
+  faLead: { fontFamily: fonts.persian, fontSize: 18, lineHeight: 36 },
+  faMark: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 32 },
   p: { fontFamily: fonts.body, fontSize: 15, lineHeight: 26, color: nz.text, marginTop: spacing.md },
   h: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: nz.text, marginTop: spacing.xl },
   aside: { fontFamily: fonts.body, fontSize: 12, lineHeight: 20, color: nz.textDim, fontStyle: 'italic', marginTop: spacing.md, paddingLeft: spacing.md, borderLeftWidth: 1, borderLeftColor: nz.hair },
@@ -333,6 +344,11 @@ const nzStyles = StyleSheet.create({
 });
 
 const ylStyles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 15.5, lineHeight: 32 },
+  faHead: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 34 },
+  faLead: { fontFamily: fonts.persian, fontSize: 18, lineHeight: 36 },
+  faMark: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 32 },
   p: { fontFamily: fonts.body, fontSize: 15, lineHeight: 26, color: yl.text, marginTop: spacing.md, opacity: 0.93 },
   h: { fontFamily: fonts.heading, fontSize: fontSize.xl, color: yl.text, marginTop: spacing.xl },
   aside: { fontFamily: fonts.body, fontSize: 12, lineHeight: 20, color: yl.textDim, fontStyle: 'italic', marginTop: spacing.md, paddingLeft: spacing.md, borderLeftWidth: 1, borderLeftColor: yl.hair },

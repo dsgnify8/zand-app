@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { nz, HAFT_SEEN, SEEN_GUESTS, NOWRUZ_MOMENTS } from '@/constants/nowruz';
+import { getLang } from '@/lib/i18n';
 
 const W = Dimensions.get('window').width;
 
@@ -195,7 +196,7 @@ export function Guests() {
           <Pressable key={g.key} style={[styles.guRow, on && styles.guRowOn]} onPress={() => setOpen(on ? null : g.key)}>
             <View style={styles.guHead}>
               <Text style={styles.guFa}>{g.fa}</Text>
-              <Text style={styles.guEn}>{g.en}</Text>
+              <Text style={[styles.guEn, fa && styles.faSmall]}>{fa && (g as any).enFa ? (g as any).enFa : g.en}</Text>
               <View style={{ flex: 1 }} />
               <Ionicons name={on ? 'remove' : 'add'} size={14} color={nz.gold} />
             </View>

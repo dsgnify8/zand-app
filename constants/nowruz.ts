@@ -54,16 +54,16 @@ export const HAFT_SEEN: SeenItem[] = [
     note: 'The sweetest thing on the table has no sugar in it. That is the entire point.', noteFa: 'شیرین‌ترین چیز سفره، یک ذره شکر ندارد. تمام حرف همین است.',
   },
   {
-    key: 'senjed', fa: 'سنجد', tr: 'Senjed', en: 'Oleaster', means: 'Love', meansFa: 'عشق',
-    x: 'The dried fruit of the wild olive tree, small and red brown and floury. It is said its blossom in spring makes the heart fall in love, and so the fruit sits on the table for love itself.',
+    key: 'senjed', fa: 'سنجد', tr: 'Senjed', en: 'Oleaster', means: 'Love', meansFa: 'عشق', meansFa: 'عشق',
+    x: 'The dried fruit of the wild olive tree, small and red brown and floury. It is said its blossom in spring makes the heart fall in love, and so the fruit sits on the table for love itself.', xFa: 'میوهٔ خشک درخت سنجد، ریز و سرخ‌قهوه‌ای و آردی. می‌گویند شکوفه‌اش در بهار دل را به عشق می‌اندازد، و از همین رو میوه‌اش سر سفره می‌نشیند.',
   },
   {
-    key: 'seer', fa: 'سیر', tr: 'Seer', en: 'Garlic', means: 'Health',
-    x: 'A head of garlic, unpeeled. It has been medicine in Iran for thousands of years, and it is on the table as the wish for a body that holds up through the year.',
+    key: 'seer', fa: 'سیر', tr: 'Seer', en: 'Garlic', means: 'Health', meansFa: 'تندرستی',
+    x: 'A head of garlic, unpeeled. It has been medicine in Iran for thousands of years, and it is on the table as the wish for a body that holds up through the year.', xFa: 'یک بُنه سیر، پوست‌نکنده. هزاران سال در ایران دارو بوده، و روی سفره است چون آرزوی تنی است که یک سال تمام دوام بیاورد.',
   },
   {
-    key: 'seeb', fa: 'سیب', tr: 'Seeb', en: 'Apple', means: 'Beauty',
-    x: 'Red apples, for beauty and for health together, because Persian has never quite separated the two. Often polished until they shine, sometimes with a coin pressed beneath.',
+    key: 'seeb', fa: 'سیب', tr: 'Seeb', en: 'Apple', means: 'Beauty', meansFa: 'زیبایی',
+    x: 'Red apples, for beauty and for health together, because Persian has never quite separated the two. Often polished until they shine, sometimes with a coin pressed beneath.', xFa: 'سیب سرخ، هم برای زیبایی و هم برای سلامتی، چون فارسی هیچ‌وقت این دو را کاملاً از هم جدا نکرده است. اغلب چنان برقشان می‌اندازند که بدرخشند، و گاهی سکه‌ای زیرشان می‌گذارند.',
   },
   {
     key: 'somaq', fa: 'سماق', tr: 'Somaq', en: 'Sumac', means: 'The sunrise', meansFa: 'برآمدن آفتاب',
@@ -79,13 +79,13 @@ export const HAFT_SEEN: SeenItem[] = [
 export type Guest = { key: string; fa: string; en: string; x: string };
 
 export const SEEN_GUESTS: Guest[] = [
-  { key: 'mirror', fa: 'آینه', en: 'The mirror', x: 'Placed at the back, facing the room. You are supposed to see yourself in it at the moment the year turns.' },
-  { key: 'candle', fa: 'شمع', en: 'Candles', x: 'One for each child of the house, often. Fire, which is the oldest thing on this table by far.' },
-  { key: 'goldfish', fa: 'ماهی', en: 'The goldfish', x: 'A live fish in a bowl, for life itself, and for Pisces, the sign the year is leaving.' },
-  { key: 'eggs', fa: 'تخم مرغ', en: 'Painted eggs', x: 'One for each member of the family. Some say the egg on the mirror trembles at the instant of the turn.' },
-  { key: 'book', fa: 'کتاب', en: 'A book', x: 'The {{hafez|Hafez}}, usually. It is there to be opened and asked, at the turn, for the shape of the year.' },
-  { key: 'coin', fa: 'سکه', en: 'Coins', x: 'For the year prosperity, and because a table should have something on it that is only worth what people agree it is worth.' },
-  { key: 'sonbol', fa: 'سنبل', en: 'Hyacinth', x: 'For the smell. The whole house smells of it for a week, and that smell is what Iranians abroad say they miss most.' },
+  { key: 'mirror', fa: 'آینه', en: 'The mirror', enFa: 'آینه', x: 'Placed at the back, facing the room. You are supposed to see yourself in it at the moment the year turns.', xFa: 'پشت سفره می‌گذارندش، رو به اتاق. قرار است در لحظهٔ سال تحویل خودت را در آن ببینی.' },
+  { key: 'candle', fa: 'شمع', en: 'Candles', enFa: 'شمع', x: 'One for each child of the house, often. Fire, which is the oldest thing on this table by far.', xFa: 'اغلب برای هر بچهٔ خانه یکی. آتش، که با فاصلهٔ زیاد کهن‌ترین چیز روی این سفره است.' },
+  { key: 'goldfish', fa: 'ماهی', en: 'The goldfish', enFa: 'ماهی قرمز', x: 'A live fish in a bowl, for life itself, and for Pisces, the sign the year is leaving.', xFa: 'ماهی زنده در تنگ، برای خودِ زندگی، و برای برج حوت که سال دارد از آن بیرون می‌رود.' },
+  { key: 'eggs', fa: 'تخم مرغ', en: 'Painted eggs', enFa: 'تخم‌مرغ رنگی', x: 'One for each member of the family. Some say the egg on the mirror trembles at the instant of the turn.', xFa: 'برای هر عضو خانواده یکی. بعضی می‌گویند تخم‌مرغی که روی آینه است، در لحظهٔ سال تحویل می‌لرزد.' },
+  { key: 'book', fa: 'کتاب', en: 'A book', enFa: 'کتاب', x: 'The {{hafez|Hafez}}, usually. It is there to be opened and asked, at the turn, for the shape of the year.', xFa: 'معمولاً {{hafez|دیوان حافظ}}. آنجاست تا سر سال تحویل بازش کنند و از او بپرسند سالِ پیش رو چه شکلی است.' },
+  { key: 'coin', fa: 'سکه', en: 'Coins', enFa: 'سکه', x: 'For the year prosperity, and because a table should have something on it that is only worth what people agree it is worth.', xFa: 'برای برکت سال، و چون روی سفره باید چیزی باشد که ارزشش فقط همان است که مردم بر سرش توافق کرده‌اند.' },
+  { key: 'sonbol', fa: 'سنبل', en: 'Hyacinth', enFa: 'سنبل', x: 'For the smell. The whole house smells of it for a week, and that smell is what Iranians abroad say they miss most.', xFa: 'برای بویش. یک هفته تمام خانه بوی سنبل می‌دهد، و ایرانی‌های خارج از کشور می‌گویند همین بو است که بیش از هر چیز دلشان برایش تنگ می‌شود.' },
 ];
 
 export type NzBlock =
@@ -108,7 +108,7 @@ export type NzChapter = { key: string; title: string; nav: string; subtitle?: st
 
 export const NOWRUZ_CHAPTERS: NzChapter[] = [
   {
-    key: 'n1', title: 'The Oldest New Year', nav: 'The Turn',
+    key: 'n1', title: 'The Oldest New Year', titleFa: 'کهن‌ترین سال نو', nav: 'The Turn', navFa: 'تحویل',
     subtitle: 'WHAT IT IS',
     blocks: [
       { t: 'lead', x: 'Every other new year is a date somebody chose. This one is an event.', fa: 'هر سال نوِ دیگری تاریخی است که کسی انتخابش کرده. این یکی یک رویداد است.' },
@@ -119,7 +119,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
     ],
   },
   {
-    key: 'n2', title: 'Older Than History', nav: 'The Root',
+    key: 'n2', title: 'Older Than History', titleFa: 'کهن‌تر از تاریخ', nav: 'The Root', navFa: 'ریشه',
     subtitle: 'WHERE IT COMES FROM',
     blocks: [
       { t: 'p', x: 'It is at least three thousand years old, and probably older. It comes out of Zoroastrian Iran, out of a religion built on the argument between light and dark, where the return of the sun was not a metaphor for anything. It was the news.', fa: 'دست‌کم سه هزار سال قدمت دارد، و احتمالاً بیشتر. از ایرانِ زرتشتی می‌آید؛ از آیینی که بر نبرد روشنایی و تاریکی بنا شده بود، و در آن بازگشت خورشید استعارهٔ هیچ چیز نبود. خودِ خبر بود.' },
@@ -131,7 +131,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
     ],
   },
   {
-    key: 'n3', title: 'Jumping the Fire', nav: 'The Fire',
+    key: 'n3', title: 'Jumping the Fire', titleFa: 'پریدن از روی آتش', nav: 'The Fire', navFa: 'آتش',
     subtitle: 'CHAHARSHANBE SURI',
     blocks: [
       { t: 'p', x: 'It starts before the year does. On the last Tuesday evening of the old year, in streets and courtyards and car parks across Iran, people light small fires and jump over them.', fa: 'پیش از آنکه سال شروع شود، شروع می‌شود. شب آخرین سه‌شنبهٔ سال، در کوچه‌ها و حیاط‌ها و پارکینگ‌های سراسر ایران، مردم آتش‌های کوچک روشن می‌کنند و از رویشان می‌پرند.' },
@@ -144,7 +144,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
     ],
   },
   {
-    key: 'n4', title: 'The Table', nav: 'Haft Seen',
+    key: 'n4', title: 'The Table', titleFa: 'سفره', nav: 'Haft Seen', navFa: 'هفت‌سین',
     subtitle: 'SEVEN THINGS BEGINNING WITH S',
     blocks: [
       { t: 'p', x: 'A cloth is laid, and on it go seven things, and every one of them begins with the Persian letter seen. That is the rule, and it is the only rule, and everything else on the table is a guest.', fa: 'سفره‌ای پهن می‌شود و هفت چیز رویش می‌رود، و نام هر هفت‌تا با حرف «س» آغاز می‌شود. قاعده همین است، و تنها قاعده هم همین است؛ هر چیز دیگری که روی سفره باشد، مهمان است.' },
@@ -158,7 +158,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
     ],
   },
   {
-    key: 'n5', title: 'The Moment', nav: 'The Instant',
+    key: 'n5', title: 'The Moment', titleFa: 'آن لحظه', nav: 'The Instant', navFa: 'سال تحویل',
     subtitle: 'TAHVIL E SAL',
     blocks: [
       { t: 'p', x: 'Here is what happens at the second itself, and it is the same in almost every Iranian house on earth.', fa: 'و اما در خودِ آن ثانیه چه می‌گذرد؛ و تقریباً در هر خانهٔ ایرانی روی این زمین یکسان است.' },
@@ -171,7 +171,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
     ],
   },
   {
-    key: 'n6', title: 'Thirteen Days', nav: 'The Visits',
+    key: 'n6', title: 'Thirteen Days', titleFa: 'سیزده روز', nav: 'The Visits', navFa: 'دید و بازدید',
     subtitle: 'WHAT COMES AFTER',
     blocks: [
       { t: 'p', x: 'The moment is not the holiday. The holiday is thirteen days long, and it has rules older than anyone can explain.', fa: 'آن لحظه، خودِ عید نیست. عید سیزده روز است، و قاعده‌هایی دارد کهن‌تر از آنکه کسی بتواند توضیحشان دهد.' },
@@ -184,7 +184,7 @@ export const NOWRUZ_CHAPTERS: NzChapter[] = [
     ],
   },
   {
-    key: 'n7', title: 'Out on the Thirteenth', nav: 'Sizdah',
+    key: 'n7', title: 'Out on the Thirteenth', titleFa: 'سیزده‌بدر', nav: 'Sizdah', navFa: 'سیزده',
     subtitle: 'SIZDAH BEDAR',
     blocks: [
       { t: 'p', x: 'Thirteen is unlucky, so on the thirteenth day of the year the entire country leaves the house and spends the whole day outdoors. Every park, every roadside, every scrap of grass in Iran is covered in families on carpets, cooking, sleeping, playing, from morning until dark. It is possibly the largest simultaneous picnic on earth.', fa: 'سیزده نحس است، پس روز سیزدهم سال تمام کشور از خانه بیرون می‌زند و تمام روز را بیرون می‌گذراند. هر پارک، هر حاشیهٔ جاده، هر تکه چمن در ایران پر می‌شود از خانواده‌هایی روی فرش؛ می‌پزند، می‌خوابند، بازی می‌کنند، از صبح تا تاریکی. شاید بزرگ‌ترین پیک‌نیک همزمان روی زمین باشد.' },

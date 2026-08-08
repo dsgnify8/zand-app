@@ -3,6 +3,7 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
+import { getLang } from '@/lib/i18n';
 
 /* The chang: Rudaki's harp. Touch a string and it sounds, silently, for now. */
 const STRINGS = 9;
