@@ -203,8 +203,8 @@ const hafez: Author = {
   chapters: [
     {
       key: 'hz1',
-      title: 'The One Who Remembered',
-      nav: 'Shiraz',
+      title: 'The One Who Remembered', titleFa: 'آن‌که از بر داشت',
+      nav: 'Shiraz', navFa: 'شیراز',
       subtitle: 'SHIRAZ, c. 1315',
       pages: [
         { blocks: [
@@ -224,8 +224,8 @@ const hafez: Author = {
     },
     {
       key: 'hz2',
-      title: 'The Art of Saying Two Things',
-      nav: 'His Art',
+      title: 'The Art of Saying Two Things', titleFa: 'هنر دو معنا گفتن',
+      nav: 'His Art', navFa: 'هنر او',
       subtitle: 'HOW HE WRITES',
       pages: [
         { blocks: [
@@ -253,8 +253,8 @@ const hafez: Author = {
     },
     {
       key: 'hz3',
-      title: 'The Book That Answers',
-      nav: 'The Fal',
+      title: 'The Book That Answers', titleFa: 'کتابی که پاسخ می‌دهد',
+      nav: 'The Fal', navFa: 'فال',
       subtitle: 'FAL E HAFEZ',
       pages: [
         { blocks: [
@@ -277,8 +277,8 @@ const hafez: Author = {
     },
     {
       key: 'hz4',
-      title: 'What He Believed',
-      nav: 'His Mind',
+      title: 'What He Believed', titleFa: 'به چه باور داشت',
+      nav: 'His Mind', navFa: 'اندیشهٔ او',
       subtitle: 'HIS MIND',
       pages: [
         { blocks: [
@@ -299,8 +299,8 @@ const hafez: Author = {
     },
     {
       key: 'hz5',
-      title: 'Still Answering',
-      nav: 'Legacy',
+      title: 'Still Answering', titleFa: 'هنوز پاسخ می‌دهد',
+      nav: 'Legacy', navFa: 'میراث',
       subtitle: 'HIS LEGACY',
       pages: [
         { blocks: [
@@ -339,8 +339,8 @@ const saadi: Author = {
   chapters: [
     {
       key: 'sd1',
-      title: 'The Long Road Home',
-      nav: 'The Road',
+      title: 'The Long Road Home', titleFa: 'راه دراز بازگشت',
+      nav: 'The Road', navFa: 'راه',
       subtitle: 'SHIRAZ, c. 1210',
       pages: [
         { blocks: [
@@ -366,8 +366,8 @@ const saadi: Author = {
     },
     {
       key: 'sd2',
-      title: 'The Rose Garden',
-      nav: 'Golestan',
+      title: 'The Rose Garden', titleFa: 'گلستان',
+      nav: 'Golestan', navFa: 'گلستان',
       subtitle: 'HIS TWO BOOKS',
       pages: [
         { blocks: [
@@ -394,8 +394,8 @@ const saadi: Author = {
     },
     {
       key: 'sd3',
-      title: 'Of One Body',
-      nav: 'Bani Adam',
+      title: 'Of One Body', titleFa: 'از یک پیکر',
+      nav: 'Bani Adam', navFa: 'بنی‌آدم',
       subtitle: 'THE FAMOUS LINES',
       pages: [
         { blocks: [
@@ -419,8 +419,8 @@ const saadi: Author = {
     },
     {
       key: 'sd4',
-      title: 'The Stolen Chapter',
-      nav: 'The West',
+      title: 'The Stolen Chapter', titleFa: 'آن باب دزدیده',
+      nav: 'The West', navFa: 'غرب',
       subtitle: 'SAADI ABROAD',
       pages: [
         { blocks: [
@@ -437,8 +437,8 @@ const saadi: Author = {
     },
     {
       key: 'sd5',
-      title: 'The Garden Still Open',
-      nav: 'Legacy',
+      title: 'The Garden Still Open', titleFa: 'باغی که هنوز باز است',
+      nav: 'Legacy', navFa: 'میراث',
       subtitle: 'HIS PLACE',
       pages: [
         { blocks: [
@@ -477,8 +477,8 @@ const khayyam: Author = {
   chapters: [
     {
       key: 'kh1',
-      title: 'The Tentmaker Son',
-      nav: 'Neyshabur',
+      title: 'The Tentmaker Son', titleFa: 'پسرِ خیمه‌دوز',
+      nav: 'Neyshabur', navFa: 'نیشابور',
       subtitle: 'NEYSHABUR, c. 1048',
       pages: [
         { blocks: [
@@ -497,8 +497,8 @@ const khayyam: Author = {
     },
     {
       key: 'kh2',
-      title: 'The Measure of a Year',
-      nav: 'The Science',
+      title: 'The Measure of a Year', titleFa: 'اندازهٔ یک سال',
+      nav: 'The Science', navFa: 'دانش',
       subtitle: 'WHAT HE ACTUALLY DID',
       pages: [
         { blocks: [
@@ -524,8 +524,8 @@ const khayyam: Author = {
     },
     {
       key: 'kh3',
-      title: 'The Quatrains',
-      nav: 'Rubaiyat',
+      title: 'The Quatrains', titleFa: 'رباعیات',
+      nav: 'Rubaiyat', navFa: 'رباعیات',
       subtitle: 'WHAT HE MAY HAVE WRITTEN',
       pages: [
         { blocks: [
@@ -550,8 +550,8 @@ const khayyam: Author = {
     },
     {
       key: 'kh4',
-      title: 'The Englishman',
-      nav: 'FitzGerald',
+      title: 'The Englishman', titleFa: 'آن مرد انگلیسی',
+      nav: 'FitzGerald', navFa: 'فیتزجرالد',
       subtitle: 'HOW THE WEST MADE HIM',
       pages: [
         { blocks: [
@@ -575,8 +575,8 @@ const khayyam: Author = {
     },
     {
       key: 'kh5',
-      title: 'Where the Blossoms Fall',
-      nav: 'Legacy',
+      title: 'Where the Blossoms Fall', titleFa: 'آنجا که شکوفه می‌ریزد',
+      nav: 'Legacy', navFa: 'میراث',
       subtitle: 'NEYSHABUR, AGAIN',
       pages: [
         { blocks: [
@@ -617,8 +617,8 @@ const rudaki: Author = {
   chapters: [
     {
       key: 'rd1',
-      title: 'Before Anyone',
-      nav: 'The First',
+      title: 'Before Anyone', titleFa: 'پیش از همه',
+      nav: 'The First', navFa: 'نخستین',
       subtitle: 'PANJRUD, c. 858',
       pages: [
         { blocks: [
@@ -643,8 +643,8 @@ const rudaki: Author = {
     },
     {
       key: 'rd2',
-      title: 'The Poem That Moved a King',
-      nav: 'The Ride',
+      title: 'The Poem That Moved a King', titleFa: 'شعری که شاهی را به راه انداخت',
+      nav: 'The Ride', navFa: 'آن سواری',
       subtitle: 'BUKHARA, c. 930',
       pages: [
         { blocks: [
@@ -675,8 +675,8 @@ const rudaki: Author = {
     },
     {
       key: 'rd3',
-      title: 'What Was Lost',
-      nav: 'The Loss',
+      title: 'What Was Lost', titleFa: 'آنچه از دست رفت',
+      nav: 'The Loss', navFa: 'فقدان',
       subtitle: 'A HUNDRED THOUSAND VERSES',
       pages: [
         { blocks: [
@@ -694,8 +694,8 @@ const rudaki: Author = {
     },
     {
       key: 'rd4',
-      title: 'The Old Man',
-      nav: 'The Fall',
+      title: 'The Old Man', titleFa: 'پیرمرد',
+      nav: 'The Fall', navFa: 'افتادن',
       subtitle: 'HOW IT ENDED',
       pages: [
         { blocks: [
@@ -722,8 +722,8 @@ const rudaki: Author = {
     },
     {
       key: 'rd5',
-      title: 'The Adam of Poets',
-      nav: 'Legacy',
+      title: 'The Adam of Poets', titleFa: 'آدم‌الشعرا',
+      nav: 'Legacy', navFa: 'میراث',
       subtitle: 'HIS PLACE',
       pages: [
         { blocks: [
@@ -762,8 +762,8 @@ const nizami: Author = {
   chapters: [
     {
       key: 'nz1',
-      title: 'The Quiet Man of Ganja',
-      nav: 'Ganja',
+      title: 'The Quiet Man of Ganja', titleFa: 'مرد خاموش گنجه',
+      nav: 'Ganja', navFa: 'گنجه',
       subtitle: 'GANJA, c. 1141',
       pages: [
         { blocks: [
@@ -789,8 +789,8 @@ const nizami: Author = {
     },
     {
       key: 'nz2',
-      title: 'The Man Who Carved a Mountain',
-      nav: 'Farhad',
+      title: 'The Man Who Carved a Mountain', titleFa: 'مردی که کوه را تراشید',
+      nav: 'Farhad', navFa: 'فرهاد',
       subtitle: 'KHOSROW AND SHIRIN',
       pages: [
         { blocks: [
@@ -816,8 +816,8 @@ const nizami: Author = {
     },
     {
       key: 'nz3',
-      title: 'The Madman',
-      nav: 'Majnun',
+      title: 'The Madman', titleFa: 'مجنون',
+      nav: 'Majnun', navFa: 'مجنون',
       subtitle: 'LAYLI AND MAJNUN',
       pages: [
         { blocks: [
@@ -842,8 +842,8 @@ const nizami: Author = {
     },
     {
       key: 'nz4',
-      title: 'Seven Domes',
-      nav: 'The Domes',
+      title: 'Seven Domes', titleFa: 'هفت پیکر',
+      nav: 'The Domes', navFa: 'هفت گنبد',
       subtitle: 'HAFT PEYKAR',
       pages: [
         { blocks: [
@@ -864,8 +864,8 @@ const nizami: Author = {
     },
     {
       key: 'nz5',
-      title: 'What He Left',
-      nav: 'Legacy',
+      title: 'What He Left', titleFa: 'آنچه بر جای گذاشت',
+      nav: 'Legacy', navFa: 'میراث',
       subtitle: 'HIS PLACE',
       pages: [
         { blocks: [
@@ -904,8 +904,8 @@ const rumi: Author = {
   chapters: [
     {
       key: 'rm1',
-      title: 'The Road Out',
-      nav: 'The Road',
+      title: 'The Road Out', titleFa: 'راه بیرون',
+      nav: 'The Road', navFa: 'راه',
       subtitle: 'BALKH, 1207',
       pages: [
         { blocks: [
@@ -930,8 +930,8 @@ const rumi: Author = {
     },
     {
       key: 'rm2',
-      title: 'The Meeting',
-      nav: 'Shams',
+      title: 'The Meeting', titleFa: 'آن دیدار',
+      nav: 'Shams', navFa: 'شمس',
       subtitle: 'KONYA, 1244',
       pages: [
         { blocks: [
@@ -958,8 +958,8 @@ const rumi: Author = {
     },
     {
       key: 'rm3',
-      title: 'The Reed Cut from the Bed',
-      nav: 'The Voice',
+      title: 'The Reed Cut from the Bed', titleFa: 'نی، بریده از نیستان',
+      nav: 'The Voice', navFa: 'آن صدا',
       subtitle: 'WHAT THE GRIEF MADE',
       pages: [
         { blocks: [
@@ -986,8 +986,8 @@ const rumi: Author = {
     },
     {
       key: 'rm4',
-      title: 'The Turning',
-      nav: 'Sama',
+      title: 'The Turning', titleFa: 'چرخیدن',
+      nav: 'Sama', navFa: 'سماع',
       subtitle: 'WHY HE SPINS',
       pages: [
         { blocks: [
@@ -1011,8 +1011,8 @@ const rumi: Author = {
     },
     {
       key: 'rm5',
-      title: 'What Was Taken Out',
-      nav: 'The West',
+      title: 'What Was Taken Out', titleFa: 'آنچه حذف شد',
+      nav: 'The West', navFa: 'غرب',
       subtitle: 'RUMI IN ENGLISH',
       pages: [
         { blocks: [
@@ -1037,8 +1037,8 @@ const rumi: Author = {
     },
     {
       key: 'rm6',
-      title: 'The Wedding Night',
-      nav: 'Legacy',
+      title: 'The Wedding Night', titleFa: 'شب عروس',
+      nav: 'Legacy', navFa: 'میراث',
       subtitle: 'KONYA, 1273',
       pages: [
         { blocks: [
