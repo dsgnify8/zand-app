@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
 import { FAL_VERSES, type FalVerse } from '@/constants/fal';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 export function FalBook() {

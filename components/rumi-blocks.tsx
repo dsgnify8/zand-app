@@ -3,6 +3,7 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
+import { getLang } from '@/lib/i18n';
 
 /* The sama. Every part of it means something. */
 const PARTS = [

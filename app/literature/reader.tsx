@@ -23,13 +23,13 @@ import { APP } from '@/constants/i18n/app';
 function chapterStarts(a: Author) {
   const out: { key: string; title: string; nav?: string; page: number }[] = [];
   let n = 0;
-  a.chapters.forEach((c) => { out.push({ key: c.key, title: c.title, nav: (c as any).nav, page: n }); n += c.pages.length; });
+  a.chapters.forEach((c) => { out.push({ key: c.key, title: c.title, titleFa: (c as any).titleFa, nav: (c as any).nav, navFa: (c as any).navFa, page: n }); n += c.pages.length; });
   return out;
 }
 
 function flatten(a: Author) {
   const out: { ci: number; ck: string; title: string; sub?: string; pi: number; total: number; blocks: LitBlock[] }[] = [];
-  a.chapters.forEach((c, ci) => c.pages.forEach((pg, pi) => out.push({ ci, ck: c.key, title: c.title, sub: c.subtitle, pi, total: c.pages.length, blocks: pg.blocks })));
+  a.chapters.forEach((c, ci) => c.pages.forEach((pg, pi) => out.push({ ci, ck: c.key, title: c.title, titleFa: (c as any).titleFa, sub: c.subtitle, subFa: (c as any).subtitleFa, pi, total: c.pages.length, blocks: pg.blocks })));
   return out;
 }
 
@@ -53,7 +53,7 @@ function Veil({ surface, hidden, fa }: { surface: string; hidden: string; fa?: b
 
 function Block({ b }: { b: LitBlock }) {
   const fa = getLang() === 'fa';
-  const tx = (o: any, k = 'x') => (fa && o[k + 'Fa'] ? o[k + 'Fa'] : o[k]);
+  const tx = (o: any, k = 'x') => (fa && (k === 'x' ? o.fa : o[k + 'Fa']) ? (k === 'x' ? o.fa : o[k + 'Fa']) : o[k]);
   const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
     case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
@@ -190,6 +190,7 @@ function Block({ b }: { b: LitBlock }) {
 }
 
 export default function LitReader() {
+  const fa = getLang() === 'fa';
   const params = useLocalSearchParams<{ author: string; page: string }>();
   const author = findAuthor(params.author);
   if (!author) return <SafeAreaView style={styles.safe} edges={['top']}><View style={styles.center}><Text style={styles.dim}>Not found.</Text></View></SafeAreaView>;
@@ -237,7 +238,7 @@ export default function LitReader() {
           const on = c.key === page.ck;
           return (
             <Pressable key={c.key} onPress={() => goto(c.page)} style={styles.navTab}>
-              <Text style={[styles.navText, on && styles.navTextOn]} numberOfLines={1}>{(c as any).nav ?? c.title}</Text>
+              <Text style={[styles.navText, on && styles.navTextOn]} numberOfLines={1}>{fa ? ((c as any).navFa ?? (c as any).titleFa ?? (c as any).nav ?? c.title) : ((c as any).nav ?? c.title)}</Text>
               <View style={[styles.navRule, on && styles.navRuleOn]} />
             </Pressable>
           );
@@ -249,9 +250,9 @@ export default function LitReader() {
           <View style={styles.chapterHead}>
             <View style={styles.chapterOrn}><View style={styles.chapterDiamond} /></View>
             {page.sub ? <Text style={styles.chEyebrow}>{page.sub}</Text> : null}
-            <Text style={styles.chTitle}>{page.title}</Text>
+            <Text style={[styles.chTitle, fa && (page as any).titleFa && styles.faChTitle]}>{fa && (page as any).titleFa ? (page as any).titleFa : page.title}</Text>
           </View>
-        ) : <Text style={styles.chRunning}>{page.title}</Text>}
+        ) : <Text style={[styles.chRunning, fa && (page as any).titleFa && styles.faChRun]}>{fa && (page as any).titleFa ? (page as any).titleFa : page.title}</Text>}
 
         <View style={styles.dots}>
           {Array.from({ length: page.total }).map((_, i) => <View key={i} style={[styles.dot, i === page.pi && styles.dotOn]} />)}
@@ -276,6 +277,8 @@ export default function LitReader() {
 
 const styles = StyleSheet.create({
   h: { fontFamily: fonts.heading, fontSize: 23, lineHeight: 30, color: lit.text, marginTop: spacing.xxl, marginBottom: spacing.sm },
+  faChTitle: { fontFamily: fonts.persian, fontSize: 26, lineHeight: 44, textAlign: 'right' },
+  faChRun: { fontFamily: fonts.persian, fontSize: 13, textAlign: 'right' },
   faHead: { fontFamily: fonts.persian, fontSize: 20, lineHeight: 36 },
   rtl: { textAlign: 'right', writingDirection: 'rtl' },
   faLead: { fontFamily: fonts.persian, fontSize: 22, lineHeight: 42 },

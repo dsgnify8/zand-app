@@ -8,6 +8,7 @@ import { REMEMBERED, type Remembered } from '@/constants/memorial';
 import { DroopingRose } from '@/components/drooping-rose';
 import { FramedImage } from '@/components/framed-image';
 import { eduImage } from '@/constants/education-images';
+import { getLang } from '@/lib/i18n';
 
 const BOX = 300;   // the illustration is square; dots are placed as fractions
 

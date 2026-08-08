@@ -75,7 +75,7 @@ const ferdowsi: Author = {
   chapters: [
     {
       key: 'fd1',
-      title: 'The Poet of Tus',
+      title: 'The Poet of Tus', titleFa: 'حکیم توس',
       nav: 'Tus',
       subtitle: 'HIS WORLD',
       pages: [
@@ -94,7 +94,7 @@ const ferdowsi: Author = {
     },
     {
       key: 'fd2',
-      title: 'The Great Task',
+      title: 'The Great Task', titleFa: 'آن کار سترگ',
       nav: 'The Task',
       subtitle: 'HIS DEVOTION',
       pages: [
@@ -117,7 +117,7 @@ const ferdowsi: Author = {
     },
     {
       key: 'fd3',
-      title: 'The Book of Kings',
+      title: 'The Book of Kings', titleFa: 'نامهٔ شاهان',
       nav: 'Shahnameh',
       subtitle: 'HIS MASTERWORK',
       pages: [
@@ -142,7 +142,7 @@ const ferdowsi: Author = {
     },
     {
       key: 'fd4',
-      title: 'His Mind and His Ideals',
+      title: 'His Mind and His Ideals', titleFa: 'اندیشه و آرمان‌های او',
       nav: 'Philosophy',
       subtitle: 'HIS PHILOSOPHY',
       pages: [
@@ -164,7 +164,7 @@ const ferdowsi: Author = {
     },
     {
       key: 'fd5',
-      title: 'The Immortal',
+      title: 'The Immortal', titleFa: 'جاودانه',
       nav: 'Legacy',
       subtitle: 'HIS LEGACY',
       pages: [
