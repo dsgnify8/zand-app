@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { PAGES } from '@/constants/i18n/pages';
 import { Animated, Easing, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -39,6 +39,7 @@ function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function TopicCard({ t, i }: { t: CultureTopic; i: number }) {
+  const fa = getLang() === 'fa';
   const press = useRef(new Animated.Value(0)).current;
 
   const down = () => Animated.timing(press, { toValue: 1, duration: 130, useNativeDriver: true }).start();
@@ -69,15 +70,15 @@ function TopicCard({ t, i }: { t: CultureTopic; i: number }) {
             <View style={[styles.iconRing, { borderColor: t.accent }]}>
               <Ionicons name={(t.glyph + '-outline') as any} size={17} color={t.accent} />
             </View>
-            <Text style={[styles.tag, { color: t.accent }]}>{t.tag}</Text>
+            <Text style={[styles.tag, { color: t.accent }]}>{fa && (t as any).tagFa ? (t as any).tagFa : t.tag}</Text>
           </View>
 
           <View style={styles.nameRow}>
-            <Text style={styles.name}>{t.title}</Text>
+            <Text style={[styles.name, fa && (t as any).titleFa && { fontFamily: fonts.persian }]}>{fa && (t as any).titleFa ? (t as any).titleFa : t.title}</Text>
             <Text style={[styles.fa, { color: t.accent }]}>{t.persian}</Text>
           </View>
 
-          <Text style={styles.blurb}>{t.blurb}</Text>
+          <Text style={[styles.blurb, fa && (t as any).blurbFa && { fontFamily: fonts.persian, fontSize: 13.5, lineHeight: 28, textAlign: 'right', writingDirection: 'rtl' }]}>{fa && (t as any).blurbFa ? (t as any).blurbFa : t.blurb}</Text>
 
           <View style={styles.foot}>
             <View style={[styles.footRule, { backgroundColor: t.accent }]} />

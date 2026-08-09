@@ -148,6 +148,7 @@ export function DelMap() {
 const CARD_W = W - 72;
 
 function FlipCard({ card }: { card: any }) {
+  const fa = getLang() === 'fa';
   const [flipped, setFlipped] = useState(false);
   const f = useRef(new Animated.Value(0)).current;
 
@@ -169,19 +170,19 @@ function FlipCard({ card }: { card: any }) {
           {card.isNew ? (
             <View style={styles.newTag}>
               <Ionicons name="sparkles" size={9} color={cu.bg} />
-              <Text style={styles.newTagT}>NEW THIS WEEK</Text>
+              <Text style={styles.newTagT}>{fa ? 'تازه، این هفته' : 'NEW THIS WEEK'}</Text>
             </View>
           ) : null}
           {card.fa ? <Text style={styles.flipFa}>{card.fa}</Text> : null}
-          <Text style={styles.flipFront}>{card.front}</Text>
+          <Text style={[styles.flipFront, fa && styles.faFront]}>{fa && (card as any).frontFa ? (card as any).frontFa : card.front}</Text>
           <View style={styles.flipTurn}>
             <Ionicons name="sync-outline" size={12} color={cu.turquoise} />
-            <Text style={styles.flipTurnT}>the truth underneath</Text>
+            <Text style={styles.flipTurnT}>{fa ? 'حقیقتی که زیرش است' : 'the truth underneath'}</Text>
           </View>
         </Animated.View>
 
         <Animated.View style={[styles.flipFace, styles.flipBack, { opacity: backOp, transform: [{ perspective: 1000 }, { rotateY: backRot }] }]}>
-          <Text style={styles.flipBackT}>{card.back}</Text>
+          <Text style={[styles.flipBackT, fa && styles.faBack]}>{fa && (card as any).backFa ? (card as any).backFa : card.back}</Text>
         </Animated.View>
       </View>
     </Pressable>
@@ -312,6 +313,8 @@ export function RicePot() {
 }
 
 const styles = StyleSheet.create({
+  faFront: { fontFamily: fonts.persian, fontSize: 17, lineHeight: 34, textAlign: 'center', writingDirection: 'rtl' },
+  faBack: { fontFamily: fonts.persian, fontSize: 14, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' },
   simWrap: { marginVertical: spacing.xl, padding: spacing.xl, backgroundColor: cu.surface, borderRadius: 14, borderWidth: 1, borderColor: cu.hair, alignItems: 'center' },
   simKicker: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: cu.saffron },
   simDots: { flexDirection: 'row', gap: 6, marginTop: spacing.sm },
@@ -392,6 +395,7 @@ const styles = StyleSheet.create({
 import { Image, Modal } from 'react-native';
 import { DISHES, SWEETS } from '@/constants/culture';
 import { eduImage } from '@/constants/education-images';
+import { getLang } from '@/lib/i18n';
 
 export function Sweets() { return <DishList list={SWEETS} />; }
 export function Dishes() { return <DishList list={DISHES} />; }
