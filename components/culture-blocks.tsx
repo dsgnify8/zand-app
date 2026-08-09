@@ -401,6 +401,7 @@ export function Sweets() { return <DishList list={SWEETS} />; }
 export function Dishes() { return <DishList list={DISHES} />; }
 
 function DishList({ list }: { list: any[] }) {
+  const fa = getLang() === 'fa';
   const DISHES = list;
   const [open, setOpen] = useState<number | null>(null);
   const d = open !== null ? DISHES[open] : null;
@@ -411,8 +412,8 @@ function DishList({ list }: { list: any[] }) {
       {DISHES.map((dish, i) => (
         <Pressable key={dish.key} style={dstyles.row} onPress={() => setOpen(i)}>
           <View style={dstyles.rowText}>
-            <Text style={dstyles.name}>{dish.name}</Text>
-            <Text style={dstyles.tag}>{dish.tag}</Text>
+            <Text style={[dstyles.name, fa && (dish as any).fa && { fontFamily: fonts.persian }]}>{fa && (dish as any).fa ? (dish as any).fa : dish.name}</Text>
+            <Text style={dstyles.tag}>{fa && (dish as any).tagFa ? (dish as any).tagFa : dish.tag}</Text>
           </View>
           <Text style={dstyles.fa}>{dish.fa}</Text>
           <Ionicons name="image-outline" size={14} color={cu.turquoise} />
@@ -431,9 +432,9 @@ function DishList({ list }: { list: any[] }) {
             )}
             <View style={dstyles.cardBody}>
               <Text style={dstyles.cardFa}>{d?.fa}</Text>
-              <Text style={dstyles.cardName}>{d?.name}</Text>
+              <Text style={[dstyles.cardName, fa && (d as any)?.fa && { fontFamily: fonts.persian }]}>{fa && (d as any)?.fa ? (d as any).fa : d?.name}</Text>
               <View style={dstyles.cardRule} />
-              <Text style={dstyles.cardX}>{d?.x}</Text>
+              <Text style={[dstyles.cardX, fa && (d as any)?.xFa && dstyles.faBody]}>{fa && (d as any)?.xFa ? (d as any).xFa : d?.x}</Text>
             </View>
             <Pressable style={dstyles.close} hitSlop={10} onPress={() => setOpen(null)}>
               <Ionicons name="close" size={19} color={cu.text} />
@@ -446,6 +447,7 @@ function DishList({ list }: { list: any[] }) {
 }
 
 const dstyles = StyleSheet.create({
+  faBody: { fontFamily: fonts.persian, fontSize: 14, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' },
   wrap: { marginVertical: spacing.lg, gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: cu.surface, borderRadius: 11, borderWidth: 1, borderColor: cu.hair, paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   rowText: { flex: 1 },
