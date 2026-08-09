@@ -149,7 +149,7 @@ export default function CultureTopic() {
               const on = p.key === active;
               return (
                 <Pressable key={p.key} onPress={() => jump(p.key)} style={styles.navTab}>
-                  <Text style={[styles.navText, on && { color: cu.text }]} numberOfLines={1}>{p.nav}</Text>
+                  <Text style={[styles.navText, on && { color: cu.text }]} numberOfLines={1}>{getLang() === 'fa' && (p as any).navFa ? (p as any).navFa : p.nav}</Text>
                   <View style={[styles.navRule, on && { backgroundColor: t.accent }]} />
                 </Pressable>
               );

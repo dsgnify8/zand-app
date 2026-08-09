@@ -58,14 +58,14 @@ export type CuPage = { key: string; nav: string; title: string; eyebrow?: string
 export const CULTURE_PAGES: Record<string, CuPage[]> = {
 
   taarof: [
-    { key: 't1', nav: 'The Dance', title: 'The Offer You Must Refuse', eyebrow: 'WHAT TAAROF IS',
+    { key: 't1', nav: 'The Dance', navFa: 'رقص', title: 'The Offer You Must Refuse', eyebrow: 'WHAT TAAROF IS',
       blocks: [
         { t: 'lead', x: 'Everything is offered. Almost nothing is meant. And everyone in the room knows exactly which is which.', fa: 'همه‌چیز تعارف می‌شود. تقریباً هیچ‌کدامش جدی نیست. و همهٔ کسانی که در اتاق‌اند دقیقاً می‌دانند کدام کدام است.' },
         { t: 'p', x: 'Taarof is the ritual of not saying the thing. You offer what you would rather keep. You refuse what you badly want. You insist, and are refused, and insist again, and the whole exchange is a piece of theatre both people are performing perfectly while appearing to mean every word.', fa: 'تعارف یعنی رسمِ نگفتنِ آن چیزی که واقعاً می‌خواهی بگویی. چیزی را تعارف می‌کنی که ته دلت می‌خواهی برای خودت نگه داری. چیزی را رد می‌کنی که خودت شدیداً می‌خواهی. اصرار می‌کنی، طرف مقابل رد می‌کند، و تو دوباره اصرار می‌کنی؛ و تمام این رفت‌وبرگشت، نمایشی است که هر دو نفر آن را بی‌نقص بازی می‌کنند، در حالی که هر کدام طوری رفتار می‌کنند انگار تک‌تک کلماتی که می‌گویند کاملاً جدی و از ته دل است.' },
         { t: 'p', x: 'To an outsider it looks like lying. It is closer to the opposite. It is a system for protecting people from ever having to be humiliated by a direct no.', fa: 'برای کسی که از بیرون نگاه می‌کند، این کار شبیه دروغ گفتن به نظر می‌رسد. اما در واقع تقریباً برعکس آن است: تعارف سازوکاری است برای اینکه هیچ‌کس هرگز مجبور نشود یک «نهِ» مستقیم و خشک بشنود و در برابر دیگران کوچک شود.' },
         { t: 'taarofsim' },
       ] },
-    { key: 't2', nav: 'The Rules', title: 'Three Times', eyebrow: 'HOW IT WORKS',
+    { key: 't2', nav: 'The Rules', navFa: 'قاعده‌ها', title: 'Three Times', eyebrow: 'HOW IT WORKS',
       blocks: [
         { t: 'p', x: 'The engine is the rule of three. Nothing is real until it has been offered three times, and nothing is refused until it has been refused three times. Accept on the first offer and you have revealed that you were waiting for it. Refuse a third genuine offer and you have insulted the person giving it.', fa: 'موتور محرک تمام این ماجرا، قانون سه بار است. هیچ‌چیز واقعی نیست مگر آنکه سه بار تعارف شده باشد، و هیچ‌چیز واقعاً رد نشده مگر آنکه سه بار رد شده باشد. اگر بار اول قبول کنی، همه می‌فهمند که از اول منتظرش بوده‌ای. و اگر تعارفِ سومی را که این بار واقعاً جدی است رد کنی، به کسی که آن را پیشنهاد کرده برخورده‌ای.' },
         { t: 'steps', items: [
@@ -78,7 +78,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         { t: 'p', x: 'The purest form. You buy something, you ask the price, and the shopkeeper waves his hand and tells you it is worthless, take it, be my guest. He does not mean it. You do not for one second think he means it. You insist on paying. He refuses. You insist again. He names a price.', fa: 'خالص‌ترین شکل تعارف همین است. چیزی می‌خری، قیمتش را می‌پرسی، و مغازه‌دار دستش را تکان می‌دهد و می‌گوید قابل شما را ندارد. او واقعاً منظوری ندارد. تو هم حتی یک لحظه فکر نمی‌کنی که جدی می‌گوید. اصرار می‌کنی که پولش را بدهی. او قبول نمی‌کند. دوباره اصرار می‌کنی. و آن وقت است که قیمت را می‌گوید.' },
         { t: 'phrase', fa: 'قابل نداره', tr: 'ghabel nadare', lit: 'it has no worth', means: 'The shopkeeper is not giving you the rug. He is saying that money is beneath the dignity of this moment between us. Then you pay him.' },
       ] },
-    { key: 't3', nav: 'The Cost', title: 'What It Is For', eyebrow: 'AND WHAT IT COSTS',
+    { key: 't3', nav: 'The Cost', navFa: 'هزینه', title: 'What It Is For', eyebrow: 'AND WHAT IT COSTS',
       blocks: [
         { t: 'p', x: 'The argument for taarof is that it makes a hierarchy survivable. In a society where status is real and refusing your superior openly is dangerous, taarof gives everyone a way to decline without ever having declined, to negotiate without ever appearing to want anything.', fa: 'استدلالی که به سود تعارف می‌آورند این است که زندگی کردن در یک سلسله‌مراتب را قابل تحمل می‌کند. در جامعه‌ای که جایگاه آدم‌ها واقعاً اهمیت دارد و رد کردنِ آشکارِ حرف کسی که بالاتر از توست می‌تواند خطرناک باشد، تعارف به همه راهی می‌دهد تا نه بگویند بی‌آنکه اصلاً نه گفته باشند، و چانه بزنند بی‌آنکه به نظر برسد چیزی می‌خواهند.' },
         { t: 'p', x: 'It is also, genuinely, a form of care. The offer is a way of saying you matter more to me than the thing. Even when it is empty, the shape of it is generous, and the shape is the message.', fa: 'و در عین حال، تعارف واقعاً نوعی محبت کردن است. آن پیشنهاد، راهی است برای گفتنِ اینکه تو برای من از این چیز مهم‌تری. حتی وقتی که پشتش خالی است، شکلِ کار سخاوتمندانه است؛ و همان شکل، خودِ پیام است.' },
@@ -91,14 +91,14 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
   ],
 
   del: [
-    { key: 'd1', nav: 'The Word', title: 'Everything Is in the Heart', eyebrow: 'دل',
+    { key: 'd1', nav: 'The Word', navFa: 'واژه', title: 'Everything Is in the Heart', eyebrow: 'دل',
       blocks: [
         { t: 'lead', x: 'Persian did not build a vocabulary for feeling. It built one word, and then built everything out of it.', fa: 'فارسی برای احساس، یک دایرهٔ واژگان نساخت. یک کلمه ساخت، و بعد هر چیز دیگری را از دل همان بیرون کشید.' },
         { t: 'p', x: 'Del means heart. Not the romantic heart of English, which mostly handles love and courage. The Persian del is the seat of the entire inner life: longing, courage, worry, kindness, grief, nerve, and the thing that goes tight when someone is far away.', fa: 'دل، یعنی همان دل. اما نه آن قلبِ عاشقانه‌ای که در انگلیسی هست و بیشتر کارش عشق است و شجاعت. دلِ فارسی جایگاه تمام زندگی درونی آدم است: دلتنگی، جرئت، نگرانی، مهربانی، اندوه، جربزه، و همان چیزی که وقتی کسی دور است تنگ می‌شود.' },
         { t: 'p', x: 'And it compounds. Tap it.', fa: 'و ترکیب می‌سازد؛ آن هم چه ترکیب‌هایی. رویش بزن.' },
         { t: 'delmap' },
       ] },
-    { key: 'd2', nav: 'The Tightness', title: 'When the Heart Goes Tight', eyebrow: 'THE ONE THEY MISS',
+    { key: 'd2', nav: 'The Tightness', navFa: 'دلتنگی', title: 'When the Heart Goes Tight', eyebrow: 'THE ONE THEY MISS',
       blocks: [
         { t: 'phrase', fa: 'دلم برات تنگ شده', tr: 'delam barat tang shode', lit: 'my heart has gone tight for you', means: 'I miss you. But the English is a flat report of an absence. The Persian is a physical event happening in your chest right now, and it is happening because of a specific person, and you are telling them.' },
         { t: 'p', x: 'Ask any Iranian abroad which phrase does not survive translation and this is the one they name. I miss you is information. Delam barat tang shode is a symptom.', fa: 'از هر ایرانی خارج از کشور بپرسی کدام عبارت است که از ترجمه جان به در نمی‌برد، همین را می‌گوید. «I miss you» یک خبر است، یک اطلاع. «دلم برات تنگ شده» یک حال است؛ چیزی که همین حالا در سینه‌ات دارد اتفاق می‌افتد.' },
@@ -109,7 +109,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         { t: 'p', x: 'And there is one line that Persian mothers and fathers say to their boys, and it is not advice about behaviour. It is a warning about the value of a thing.', fa: 'و یک جمله هست که پدر و مادرهای ایرانی به پسرهایشان می‌گویند، و این نصیحتی دربارهٔ رفتار نیست. هشداری است دربارهٔ ارزشِ یک چیز.' },
         { t: 'phrase', fa: 'دل دختر ایرانی رو هیچ وقت نشکن', tr: 'dele dokhtare irani ro hich vaght nashkan', lit: 'never break the heart of an Iranian girl', means: 'It is said as though describing an object of great worth that you have been trusted with. Not do not hurt her, which would be about you. This is about what she is carrying, and the assumption underneath it is that a Persian girl heart is precious enough that breaking it is not a mistake, it is damage.' },
       ] },
-    { key: 'd3', nav: 'Why', title: 'Why One Word', eyebrow: 'WHAT IT MEANS',
+    { key: 'd3', nav: 'Why', navFa: 'چرا', title: 'Why One Word', eyebrow: 'WHAT IT MEANS',
       blocks: [
         { t: 'p', x: 'Because Persian does not put much distance between the body and the feeling. English says I am sad, which is a fact about a state. Persian says my heart is tight, which is a fact about an organ, and it is more accurate, because that is where you feel it.', fa: 'چون فارسی فاصلهٔ چندانی میان تن و احساس نمی‌گذارد. انگلیسی می‌گوید «I am sad»، که خبری است دربارهٔ یک حالت. فارسی می‌گوید «دلم گرفته»، که خبری است دربارهٔ یک عضو از بدن؛ و دقیق‌تر هم هست، چون آدم واقعاً همان‌جا حسش می‌کند.' },
         { t: 'p', x: 'It also means that in Persian you cannot really talk about emotion without talking about the heart, which means the poets and the grandmothers and the taxi drivers are all using the same instrument. Hafez did not invent a special vocabulary. He used del, like everyone else, better.', fa: 'این یعنی در فارسی نمی‌شود واقعاً از احساس حرف زد بی‌آنکه از دل حرف بزنی؛ و یعنی شاعرها و مادربزرگ‌ها و رانندهٔ تاکسی، همه دارند از یک ساز استفاده می‌کنند. حافظ واژگان ویژه‌ای اختراع نکرد. از همان «دل» استفاده کرد، مثل بقیه؛ فقط بهتر.' },
@@ -118,13 +118,13 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
   ],
 
   mehmun: [
-    { key: 'm1', nav: 'The Guest', title: 'Beloved of God', eyebrow: 'مهمان',
+    { key: 'm1', nav: 'The Guest', navFa: 'مهمان', title: 'Beloved of God', eyebrow: 'مهمان',
       blocks: [
         { t: 'lead', x: 'The guest is beloved of God. This is not a saying. It is an instruction, and it will be carried out.', fa: 'مهمان حبیب خداست. این یک ضرب‌المثل نیست. یک دستور است، و اجرا هم خواهد شد.' },
         { t: 'p', x: 'Persian hospitality is not gentle. It is a campaign. You will be sat in the best seat, which you will try to refuse and fail. You will be given tea within ninety seconds of arriving. You will be fed past the point of comfort and then fed again, and every refusal will be treated as taarof and overruled.', fa: 'مهمان‌نوازی ایرانی ملایم نیست. یک عملیات تمام‌عیار است. تو را در بهترین جا می‌نشانند، و تلاش می‌کنی قبول نکنی و موفق نمی‌شوی. نود ثانیه از رسیدنت نگذشته، چای جلویت است. آن‌قدر به تو غذا می‌دهند که از مرز راحتی رد شوی، و بعد باز هم می‌دهند؛ و هر بار که نه بگویی، حملش می‌کنند بر تعارف و نادیده‌اش می‌گیرند.' },
         { t: 'phrase', fa: 'مهمان روزی خودش را با خود می‌آورد', tr: 'mehman ruzi ye khodesh ra ba khod miavarad', lit: 'the guest brings his own sustenance with him', means: 'The oldest answer to the oldest worry. You are never a cost. Whatever is eaten in your honour was never the host to begin with, it arrived with you, so there is nothing to weigh and nothing to be careful about. It is a sentence designed to make it impossible for a guest to feel expensive.' },
       ] },
-    { key: 'm2', nav: 'The Siege', title: 'You Are Not Leaving', eyebrow: 'HOW IT GOES',
+    { key: 'm2', nav: 'The Siege', navFa: 'محاصره', title: 'You Are Not Leaving', eyebrow: 'HOW IT GOES',
       blocks: [
         { t: 'steps', items: [
           { n: 'You arrive', nFa: 'می‌رسی', x: 'Shoes off at the door, always, without discussion. Tea appears before you have sat down. Fruit is cut, whether or not anyone wants fruit.', fa: 'کفش‌ها دم در در می‌آید، همیشه، بی‌هیچ بحثی. هنوز ننشسته‌ای که چای می‌رسد. میوه پوست کنده می‌شود، حالا هر کسی میوه بخواهد یا نخواهد.' },
@@ -135,7 +135,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         ] },
         { t: 'mark', x: 'The Persian goodbye is not the end of the visit. It is a distinct event, and it is longer than most meetings.', fa: 'خداحافظی ایرانی، پایان مهمانی نیست. خودش یک برنامهٔ جداگانه است، و از خیلی از جلسه‌ها هم طولانی‌تر.' },
       ] },
-    { key: 'm3', nav: 'Why', title: 'What Is Actually Happening', eyebrow: 'UNDERNEATH IT',
+    { key: 'm3', nav: 'Why', navFa: 'چرا', title: 'What Is Actually Happening', eyebrow: 'UNDERNEATH IT',
       blocks: [
         { t: 'p', x: 'Some of it is old. Iran is a country of deserts and long roads, and for most of its history a traveller who was turned away could die. Hospitality was not a nicety, it was infrastructure, and the caravanserais on every route were built on exactly this principle.', fa: 'بخشی از این ماجرا خیلی قدیمی است. ایران سرزمین کویر است و جاده‌های دراز، و در بیشتر تاریخش مسافری که از خانه‌ای رانده می‌شد، می‌توانست جانش را از دست بدهد. مهمان‌نوازی یک خوش‌رفتاری ساده نبود؛ زیرساخت بود، و کاروانسراهایی که سر هر راهی ساخته شده بودند دقیقاً بر همین اصل بنا شده بودند.' },
         { t: 'p', x: 'And some of it is simpler. Feeding people is how affection is expressed in a culture where saying it outright is difficult. The plate that keeps being refilled is a sentence that nobody in the room is able to say.', fa: 'و بخشی از آن ساده‌تر است. در فرهنگی که گفتنِ مستقیمِ محبت سخت است، غذا دادن همان راهِ ابراز محبت است. آن بشقابی که مدام دوباره پر می‌شود، جمله‌ای است که هیچ‌کس در آن اتاق نمی‌تواند به زبان بیاورد.' },
@@ -147,14 +147,14 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
   ],
 
   javanmardi: [
-    { key: 'j1', nav: 'The Code', title: 'The Young Man Way', eyebrow: 'جوانمردی',
+    { key: 'j1', nav: 'The Code', navFa: 'مرام', title: 'The Young Man Way', eyebrow: 'جوانمردی',
       blocks: [
         { t: 'lead', x: 'Persian chivalry. A thousand years old, still the highest compliment you can pay a man in Iran, and almost unknown outside it.', fa: 'مرام و مردانگیِ ایرانی. هزار سال قدمت دارد، هنوز بالاترین تعریفی است که می‌شود در ایران از یک مرد کرد، و بیرون از ایران تقریباً هیچ‌کس نمی‌شناسدش.' },
         { t: 'p', x: 'Javanmardi means, literally, young manliness, and it means almost the opposite of what that sounds like. It is not swagger. It is the opposite of swagger. Its core is strength that refuses to be used on anyone weaker, generosity that does not announce itself, and keeping your word when it costs you.', fa: 'جوانمردی، تحت‌اللفظی یعنی جوان‌مرد بودن، و معنایش تقریباً برعکس آن چیزی است که از ظاهرش برمی‌آید. قلدری نیست. دقیقاً نقطهٔ مقابل قلدری است. هستهٔ اصلی‌اش این است: زوری که حاضر نیست روی کسی که ضعیف‌تر است استفاده شود، بخششی که خودش را جار نمی‌زند، و سر قول ماندن، آن هم وقتی که برایت گران تمام می‌شود.' },
         { t: 'p', x: 'The javanmard does not humiliate an opponent he has beaten. He does not take from someone who cannot refuse. He does not mention what he gave. Iranians will describe a man as javanmard the way the English might say a man is decent, except with far more weight in it.', fa: 'جوانمرد، حریفی را که شکست داده خوار نمی‌کند. از کسی که نمی‌تواند نه بگوید چیزی نمی‌گیرد. و از آنچه بخشیده حرفی نمی‌زند. ایرانی‌ها وقتی می‌گویند فلانی جوانمرد است، تقریباً همان کاری را می‌کنند که انگلیسی‌زبان‌ها با گفتنِ «آدم درست‌وحسابی» می‌کنند؛ فقط با وزنی به‌مراتب سنگین‌تر.' },
         { t: 'phrase', fa: 'مرام', tr: 'maram', lit: 'the way one goes', means: 'A related word, and the one you will actually hear. He has maram means he behaves properly toward people when nothing forces him to, and everyone can tell.' },
       ] },
-    { key: 'j2', nav: 'The Pit', title: 'The House of Strength', eyebrow: 'ZURKHANEH',
+    { key: 'j2', nav: 'The Pit', navFa: 'گود', title: 'The House of Strength', eyebrow: 'ZURKHANEH',
       blocks: [
         { t: 'p', x: 'And then there is the building. The zurkhaneh, the house of strength, is one of the strangest and best institutions Iran has produced, and it is roughly a thousand years old.', fa: 'و بعد، خودِ آن ساختمان. زورخانه، یعنی خانهٔ زور، یکی از غریب‌ترین و بهترین نهادهایی است که ایران ساخته، و حدود هزار سال قدمت دارد.' },
         { t: 'p', x: 'It is a low domed room with a pit in the middle, sunk below the floor, so that everyone who enters must step down. Men train in that pit. They swing enormous wooden clubs, they lift a wooden shield, they turn in place, they wrestle.', fa: 'اتاقی است گنبدی و کوتاه، با گودی در وسط که پایین‌تر از کف زمین است، طوری که هر کس وارد می‌شود باید پایین برود. مردها در همان گود تمرین می‌کنند. میل‌های چوبی سنگین می‌چرخانند، سنگ برمی‌دارند، در جای خود می‌چرخند، و کشتی می‌گیرند.' },
@@ -165,7 +165,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         { t: 'p', x: 'So the men in the pit are not only training. They are being told, in rhythm, in verse, what a man is for. The physical culture and the ethical culture and the literature are the same activity, in the same room, at the same time. Nothing else in the world quite works like this.', fa: 'پس مردهایی که در گودند فقط تمرین نمی‌کنند. دارند به آنها، با ریتم و با شعر، گفته می‌شود که مرد بودن به چه کار می‌آید. پرورش تن و پرورش اخلاق و ادبیات، همه یک کارند؛ در یک اتاق، در یک زمان. هیچ چیز دیگری در دنیا دقیقاً این‌طور کار نمی‌کند.' },
         { t: 'aside', x: 'The pit is sunk below floor level for a reason. You step down to enter. Nobody stands above anybody.', fa: 'اینکه گود پایین‌تر از کف زمین است بی‌دلیل نیست. برای وارد شدن باید پایین بروی. هیچ‌کس بالای سر کسی نمی‌ایستد.' },
       ] },
-    { key: 'j3', nav: 'Takhti', title: 'The Man They Loved', eyebrow: 'THE MODERN SAINT',
+    { key: 'j3', nav: 'Takhti', navFa: 'تختی', title: 'The Man They Loved', eyebrow: 'THE MODERN SAINT',
       blocks: [
         { t: 'p', x: 'If you want to know what Iranians mean by javanmard, they will not explain. They will tell you about Takhti.', fa: 'اگر بخواهی بدانی ایرانی‌ها از جوانمرد چه منظوری دارند، برایت توضیح نمی‌دهند. از تختی برایت می‌گویند.' },
         { t: 'p', x: 'Gholamreza Takhti was a wrestler, an Olympic champion, and the most beloved athlete in Iranian history. But that is not why he is beloved. The stories are all about the same thing.', fa: 'غلامرضا تختی کشتی‌گیر بود، قهرمان المپیک، و محبوب‌ترین ورزشکار تاریخ ایران. اما محبوبیتش به این دلیل نیست. حکایت‌هایی که از او مانده، همه دربارهٔ یک چیزند.' },
@@ -180,7 +180,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
   ],
 
   sofreh: [
-    { key: 's1', nav: 'The Spread', title: 'Everything, All at Once', eyebrow: 'سفره',
+    { key: 's1', nav: 'The Spread', navFa: 'سفره', title: 'Everything, All at Once', eyebrow: 'سفره',
       blocks: [
         { t: 'lead', x: 'A Persian table is not laid with a meal. It is laid with everything you could possibly need, and then more, in case you need that too.', fa: 'سفرهٔ ایرانی را با یک وعده غذا نمی‌چینند. با هر چیزی می‌چینند که ممکن است لازمت شود، و بعد بیشتر از آن، محض احتیاط که شاید آن را هم بخواهی.' },
         { t: 'p', x: 'The sofreh is the spread. And the rule of it is abundance: the rice, the stew, the kabab, the bread, the yoghurt, the pickles, the raw herbs, the salad, the butter, the extra plate of rice nobody asked for. It is all there before you sit, and it stays there until you leave.', fa: 'سفره یعنی همان چیدمانِ کامل. و قاعده‌اش فراوانی است: برنج، خورش، کباب، نان، ماست، ترشی، سبزی خوردن، سالاد، کره، و آن بشقاب اضافهٔ برنج که هیچ‌کس نخواسته بود. همه‌اش پیش از آنکه بنشینی سر جایش است، و تا وقتی که بروی هم همان‌جا می‌ماند.' },
@@ -188,7 +188,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         { t: 'mark', x: 'A guest should never have to ask for anything. That is the whole design of the table.', fa: 'مهمان نباید هیچ‌وقت مجبور شود چیزی بخواهد. تمام طراحی این سفره بر همین اصل است.' },
         { t: 'p', x: 'That is why it looks like too much. It is supposed to. A table with exactly enough on it is a table that was calculated, and calculating what a guest needs is the one thing a host must never be caught doing.', fa: 'برای همین است که به نظر زیادی می‌آید. قرار هم هست که زیادی به نظر بیاید. سفره‌ای که رویش دقیقاً به اندازه باشد، یعنی حساب‌وکتاب شده؛ و حساب کردنِ اینکه مهمان چقدر لازم دارد، تنها کاری است که میزبان نباید هرگز موقع انجامش مچش گرفته شود.' },
       ] },
-    { key: 's2', nav: 'Rice', title: 'Rice Is Not a Side Dish', eyebrow: 'THE CENTRE',
+    { key: 's2', nav: 'Rice', navFa: 'برنج', title: 'Rice Is Not a Side Dish', eyebrow: 'THE CENTRE',
       blocks: [
         { t: 'p', x: 'Understand this and you understand the kitchen. In Iran, rice is not something served alongside the meal. Rice is the meal. Everything else is an accompaniment to it, including the meat.', fa: 'این یکی را که بفهمی، کل آشپزخانه را فهمیده‌ای. در ایران، برنج چیزی نیست که کنار غذا بیاید. برنج، خودِ غذاست. هر چیز دیگری همراهِ آن است، حتی گوشت.' },
         { t: 'p', x: 'And it is not boiled. Persian rice is a two stage operation: parboiled, drained, then steamed slowly under a cloth wrapped lid until every grain is separate, long, and standing on its own. A cook is judged on whether the grains stick. It takes real skill and everyone knows who has it.', fa: 'و آب‌پز هم نمی‌شود. برنج ایرانی دو مرحله دارد: اول نیم‌پز و آبکش می‌شود، بعد زیر درِ دم‌کنی‌پیچیده آرام‌آرام دم می‌کشد تا هر دانه‌اش جدا باشد و کشیده و سرِ پا. آشپز را از روی همین قضاوت می‌کنند که دانه‌ها به هم چسبیده‌اند یا نه. مهارت واقعی می‌خواهد، و همه هم می‌دانند دستِ چه کسی خوب است.' },
@@ -198,12 +198,12 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         { t: 'p', x: 'It is fought over. Not metaphorically. Guests are given it first, which is obligatory, and then the family fights over what is left. Iranians raised abroad will tell you that tahdig is the single food they would choose as their last meal, over anything else on earth.', fa: 'سرش دعوا می‌شود. نه به‌طور استعاری. اول به مهمان می‌دهند، که اجباری است، و بعد خانواده بر سر باقی‌ماندهٔ آن به جان هم می‌افتد. ایرانی‌هایی که در خارج بزرگ شده‌اند به تو می‌گویند اگر قرار باشد آخرین غذای عمرشان را انتخاب کنند، ته دیگ را انتخاب می‌کنند؛ به هر چیز دیگری روی این کرهٔ خاکی ترجیحش می‌دهند.' },
         { t: 'mark', x: 'The greatest thing in Persian cooking is the accident at the bottom of the pot.', fa: 'بهترین چیز آشپزی ایرانی، همان اتفاقی است که ته قابلمه می‌افتد.' },
       ] },
-    { key: 's3', nav: 'The Dishes', title: 'What Is On It', eyebrow: 'THE FOOD',
+    { key: 's3', nav: 'The Dishes', navFa: 'غذاها', title: 'What Is On It', eyebrow: 'THE FOOD',
       blocks: [
         { t: 'p', x: 'Touch a dish to see it.', fa: 'روی هر غذایی بزن تا ببینی‌اش.' },
         { t: 'dishes' },
       ] },
-    { key: 's4', nav: 'The Flavour', title: 'Sour, Slow, and Never Hot', eyebrow: 'HOW IT TASTES',
+    { key: 's4', nav: 'The Flavour', navFa: 'طعم', title: 'Sour, Slow, and Never Hot', eyebrow: 'HOW IT TASTES',
       blocks: [
         { t: 'p', x: 'Persian cooking is built on sourness, which is unusual, and on things most kitchens never touch. Dried limes, sour cherries, pomegranate molasses, barberries, unripe grapes, and above all saffron, which is measured in fear because of what it costs.', fa: 'آشپزی ایرانی بر پایهٔ ترشی بنا شده، که چیز غیرمعمولی است، و بر پایهٔ چیزهایی که بیشتر آشپزخانه‌های دنیا اصلاً سراغشان نمی‌روند: لیمو عمانی، آلبالو، رب انار، زرشک، غوره، و بالاتر از همه زعفران، که آدم با ترس و لرز اندازه‌اش می‌گیرد، چون می‌داند چقدر می‌ارزد.' },
         { t: 'p', x: 'It is almost never hot. Iranians do not do chilli. The complexity comes from time and from sour, not from heat, and a stew that has not cooked for four hours is not finished. Ask an Iranian how long ghormeh sabzi takes and the honest answer is most of a day.', fa: 'تقریباً هیچ‌وقت تند نیست. ایرانی‌ها اهل فلفل تند نیستند. آن پیچیدگی از زمان می‌آید و از ترشی، نه از تندی؛ و خورشی که چهار ساعت نپخته باشد، هنوز تمام نشده. از یک ایرانی بپرس قرمه‌سبزی چقدر طول می‌کشد، و پاسخ صادقانه‌اش این است: بیشترِ یک روز.' },
@@ -211,7 +211,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
         { t: 'p', x: 'And there is one more thing on every table that is not a dish at all. Sabzi khordan, a plate of raw herbs: mint, tarragon, basil, radish, spring onion, eaten by the handful with bread and white cheese and walnuts, all the way through the meal. It is not a garnish. Nobody in Iran has ever thought of it as a garnish.', fa: 'و یک چیز دیگر هم سر هر سفره‌ای هست که اصلاً غذا نیست: سبزی خوردن. یک بشقاب سبزی تازه؛ نعنا، ترخون، ریحان، تربچه، پیازچه، که مشت‌مشت با نان و پنیر و گردو خورده می‌شود، از اول تا آخر غذا. تزیین نیست. هیچ‌کس در ایران حتی یک بار هم به چشم تزیین نگاهش نکرده.' },
         { t: 'close', x: 'A cuisine of long slow sourness, built around a grain, whose greatest achievement is the crust at the bottom of the pot, laid out all at once so that nobody has to ask for anything.', fa: 'آشپزی‌ای بر پایهٔ ترشیِ آرام و طولانی، ساخته‌شده گرد یک دانه، که بزرگ‌ترین دستاوردش پوستهٔ ته قابلمه است؛ و همه‌اش یکجا چیده می‌شود تا هیچ‌کس مجبور نشود چیزی بخواهد.' },
       ] },
-    { key: 's5', nav: 'The Sweet', title: 'After, and In Between', eyebrow: 'SHIRINI',
+    { key: 's5', nav: 'The Sweet', navFa: 'شیرینی', title: 'After, and In Between', eyebrow: 'SHIRINI',
       blocks: [
         { t: 'p', x: 'Persian sweetness is not the sugar of a European dessert. It runs on saffron, rosewater, pistachio, and sour, and quite a lot of it is not really a dessert at all. It is the thing that is out on the table permanently, for anyone who walks in.', fa: 'شیرینیِ ایرانی، آن شکرِ دسرهای اروپایی نیست. با زعفران و گلاب و پسته و ترشی کار می‌کند، و خیلی از آنچه در این دسته می‌گنجد اصلاً دسر نیست. آن چیزی است که همیشه روی میز است، برای هر کسی که از در وارد شود.' },
         { t: 'sweets' },
@@ -221,13 +221,13 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
   ],
 
   chai: [
-    { key: 'c1', nav: 'The Glass', title: 'Never Just a Drink', eyebrow: 'چای',
+    { key: 'c1', nav: 'The Glass', navFa: 'استکان', title: 'Never Just a Drink', eyebrow: 'چای',
       blocks: [
         { t: 'lead', x: 'Nobody in Iran has ever had a cup of tea. They have had an occasion, and there was tea in it.', fa: 'هیچ‌کس در ایران تا حالا فقط «یک استکان چای» نخورده است. یک موقعیت بوده، که چای هم در آن بوده.' },
         { t: 'p', x: 'It arrives when you arrive, before anything is said. It arrives when a deal is being discussed, and again when it is done. It arrives at the end of every meal. Refusing it is not really available to you.', fa: 'همان لحظه که می‌رسی می‌آید، پیش از آنکه حرفی زده شود. وقتی دارند سر معامله‌ای صحبت می‌کنند می‌آید، و وقتی معامله جوش خورد باز هم می‌آید. آخر هر غذایی می‌آید. و رد کردنش اصلاً جزو گزینه‌های تو نیست.' },
         { t: 'p', x: 'And it is served in a small glass, never a mug, because the colour matters. Iranians judge tea by looking at it. It should be deep amber and clear, dark enough to be serious, and you can see straight through it. Tea you cannot see is a failure.', fa: 'و در استکان کوچک می‌دهند، هرگز در ماگ، چون رنگش اهمیت دارد. ایرانی‌ها چای را با نگاه کردن قضاوت می‌کنند. باید کهربایی و سیر باشد و در عین حال زلال؛ آن‌قدر پررنگ که جدی باشد، و آن‌قدر شفاف که از پشتش را ببینی. چایی که نشود از پشتش را دید، شکست خورده است.' },
       ] },
-    { key: 'c2', nav: 'The Cube', title: 'The Sugar Goes in Your Mouth', eyebrow: 'GHAND',
+    { key: 'c2', nav: 'The Cube', navFa: 'قند', title: 'The Sugar Goes in Your Mouth', eyebrow: 'GHAND',
       blocks: [
         { t: 'p', x: 'The thing visitors never forget. The sugar does not go in the glass. You take a hard cube of sugar, ghand, put it between your front teeth, and drink the hot tea through it.', fa: 'آن چیزی که هیچ مهمان خارجی فراموشش نمی‌کند: قند در استکان نمی‌رود. یک حبه قند برمی‌داری، می‌گذاری‌اش لای دندان‌های جلو، و چای داغ را از رویش می‌نوشی.' },
         { t: 'p', x: 'The cube dissolves slowly as the tea passes over it, so the sweetness is at the front and the tea stays clean behind it. One cube can last most of a glass. Watch an old man do it and you will see it is a technique.', fa: 'قند همان‌طور که چای از رویش می‌گذرد آرام‌آرام آب می‌شود، پس شیرینی جلوی دهان است و چای پشت سرش دست‌نخورده می‌ماند. یک حبه می‌تواند تا آخرِ استکان دوام بیاورد. یک بار به یک پیرمرد نگاه کن که این کار را می‌کند؛ می‌بینی که خودش یک فن است.' },
@@ -240,7 +240,7 @@ export const CULTURE_PAGES: Record<string, CuPage[]> = {
   ],
 
   typical: [
-    { key: 'tp1', nav: 'The Cards', title: 'You Know the Ones', eyebrow: 'TYPICAL PERSIAN',
+    { key: 'tp1', nav: 'The Cards', navFa: 'کارت‌ها', title: 'You Know the Ones', eyebrow: 'TYPICAL PERSIAN',
       blocks: [
         { t: 'p', x: 'Every Iranian recognises these instantly, and every one of them is a joke with something true sitting underneath it. Tap a card to turn it over.', fa: 'هر ایرانی این‌ها را در یک لحظه می‌شناسد، و هر کدامشان شوخی‌ای است که یک حقیقت زیرش نشسته. روی هر کارت بزن تا برگردد.' },
         { t: 'cards' },

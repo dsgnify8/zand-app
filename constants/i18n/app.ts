@@ -1,6 +1,8 @@
 import type { T } from '@/lib/i18n';
 
 export const APP: Record<string, T> = {
+  finish: { en: 'Finish', fa: 'پایان' },
+  next: { en: 'Next', fa: 'بعدی' },
   falInstruction: { en: 'Hold your question in your heart, then open the book.', fa: 'نیت کن، و آنگاه کتاب را بگشا.' },
   // auth
   welcomeBack: { en: 'Welcome back', fa: 'خوش برگشتی' },

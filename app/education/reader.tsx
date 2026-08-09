@@ -388,7 +388,7 @@ export default function ReaderScreen() {
             <Text style={[styles.navText, p === 0 && styles.navTextDim]}>{t(APP.previous)}</Text>
           </Pressable>
           <Pressable style={styles.navBtnPrimary} onPress={() => goto(p + 1)}>
-            <Text style={styles.navTextPrimary}>{p + 1 >= total ? 'Finish' : 'Next'}</Text>
+            <Text style={styles.navTextPrimary}>{p + 1 >= total ? t(APP.finish) : t(APP.next)}</Text>
             <Ionicons name={p + 1 >= total ? 'checkmark' : 'chevron-forward'} size={18} color={dark.bg} />
           </Pressable>
         </View>
