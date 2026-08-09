@@ -39,7 +39,7 @@ export default function TopicScreen() {
             <Ionicons name="close" size={24} color={dark.text} />
           </Pressable>
           <View style={styles.coverText}>
-            <Text style={styles.eyebrow}>HISTORY</Text>
+            <Text style={styles.eyebrow}>{getLang() === 'fa' ? 'تاریخ' : 'HISTORY'}</Text>
             <Text style={styles.name}>{topic.name}</Text>
             <Text style={styles.years}>{topic.years}  ·  {topic.persian}</Text>
           </View>

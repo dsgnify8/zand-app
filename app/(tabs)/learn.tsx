@@ -13,6 +13,7 @@ import { ALPHABET, LEARN_GROUPS, CONTINUE, LEARN_STATS, type LearnModule } from 
 import { useLearnProgress } from '@/lib/learn-progress';
 import { useStats } from '@/lib/stats-store';
 import { STAGES } from '@/constants/journey';
+import { getLang } from '@/lib/i18n';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -202,7 +203,7 @@ export default function LearnScreen() {
               <Text style={s.watermark}>فارسی</Text>
               <View style={s.headRow}>
                 <View style={s.headBar} />
-                <Text style={s.headEyebrow}>THE STUDY</Text>
+                <Text style={s.headEyebrow}>{getLang() === 'fa' ? 'آموختن' : 'THE STUDY'}</Text>
               </View>
               <Text style={s.title}>Learn{'\n'}Persian</Text>
             </View>
