@@ -10,6 +10,7 @@ import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { cu, CULTURE_TOPICS, CULTURE_PAGES, type CuBlock } from '@/constants/culture';
 import { CultureGround } from '@/app/culture/index';
 import { TaarofSim, DelMap, TypicalCards, Zurkhaneh, RicePot, Dishes, Sweets } from '@/components/culture-blocks';
+import { getLang } from '@/lib/i18n';
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
   const a = useRef(new Animated.Value(0)).current;
@@ -21,21 +22,24 @@ function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b, accent }: { b: CuBlock; accent: string }) {
+  const fa = getLang() === 'fa';
+  const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
+  const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
-    case 'p': return <Text style={styles.p}>{b.x}</Text>;
-    case 'h': return <Text style={styles.h}>{b.x}</Text>;
-    case 'aside': return <Text style={[styles.aside, { borderLeftColor: accent }]}>{b.x}</Text>;
+    case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
+    case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
+    case 'aside': return <Text style={[styles.aside, { borderLeftColor: accent }, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
     case 'lead': return (
       <View style={styles.leadWrap}>
         <View style={[styles.leadRule, { backgroundColor: accent }]} />
-        <Text style={styles.lead}>{b.x}</Text>
+        <Text style={[styles.lead, rtl, fa && (b as any).fa && styles.faLead]}>{tx(b)}</Text>
         <View style={[styles.leadRule, { backgroundColor: accent }]} />
       </View>
     );
     case 'mark': return (
       <View style={styles.mark}>
         <View style={[styles.markBar, { backgroundColor: accent }]} />
-        <Text style={styles.markText}>{b.x}</Text>
+        <Text style={[styles.markText, rtl, fa && (b as any).fa && styles.faMark]}>{tx(b)}</Text>
       </View>
     );
     case 'phrase': return (
@@ -56,7 +60,7 @@ function Block({ b, accent }: { b: CuBlock; accent: string }) {
           <View style={[styles.storyDot, { backgroundColor: accent }]} />
           <Text style={[styles.storyTitle, { color: accent }]}>{b.title}</Text>
         </View>
-        <Text style={styles.storyX}>{b.x}</Text>
+        <Text style={[styles.storyX, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
         <View style={[styles.storyRule, { backgroundColor: accent }]} />
         <Text style={styles.storyMoral}>{b.moral}</Text>
       </View>
@@ -72,8 +76,8 @@ function Block({ b, accent }: { b: CuBlock; accent: string }) {
               {i < b.items.length - 1 ? <View style={styles.stepStem} /> : null}
             </View>
             <View style={styles.stepBody}>
-              <Text style={styles.stepName}>{it.n}</Text>
-              <Text style={styles.stepX}>{it.x}</Text>
+              <Text style={[styles.stepName, rtl, fa && (it as any).nFa && styles.faHead]}>{fa && (it as any).nFa ? (it as any).nFa : it.n}</Text>
+              <Text style={[styles.stepX, rtl, fa && (it as any).fa && styles.faBody]}>{fa && (it as any).fa ? (it as any).fa : it.x}</Text>
             </View>
           </View>
         ))}
@@ -82,7 +86,7 @@ function Block({ b, accent }: { b: CuBlock; accent: string }) {
     case 'close': return (
       <View style={styles.close}>
         <View style={[styles.closeRule, { backgroundColor: accent }]} />
-        <Text style={styles.closeText}>{b.x}</Text>
+        <Text style={[styles.closeText, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
         <View style={[styles.closeDiamond, { backgroundColor: accent }]} />
       </View>
     );
@@ -191,6 +195,11 @@ export default function CultureTopic() {
 }
 
 const styles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 15.5, lineHeight: 32 },
+  faHead: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 34 },
+  faLead: { fontFamily: fonts.persian, fontSize: 18, lineHeight: 36 },
+  faMark: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 32 },
   root: { flex: 1, backgroundColor: cu.bg },
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
