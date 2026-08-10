@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
 import { findByEmail, sendRequest } from '@/lib/friends';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -48,7 +48,7 @@ export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => v
             <View style={s.linkIcon}><Ionicons name="link" size={20} color="#FFF" /></View>
             <View style={{ flex: 1 }}>
               <Text style={s.linkT}>{t(APP.shareYourLink)}</Text>
-              <Text style={s.linkX}>They tap it, open the app, and you connect.</Text>
+              <Text style={[s.linkX, getLang() === 'fa' && { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' ? 'روی لینک می‌زنند، اپ باز می‌شود، و به هم وصل می‌شوید.' : 'They tap it, open the app, and you connect.'}</Text>
             </View>
             <Ionicons name="share-outline" size={20} color={colors.accent} />
           </Pressable>

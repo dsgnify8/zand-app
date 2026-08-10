@@ -55,7 +55,7 @@ function Block({ b }: { b: NzBlock }) {
         <View style={styles.imgWrap}>
           {src ? <Image source={src} style={styles.img} resizeMode="cover" />
                : <View style={[styles.img, styles.ph]}><Ionicons name="image-outline" size={20} color={nz.textDim} /></View>}
-          {b.cap ? <Text style={styles.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.cap}>{getLang() === 'fa' && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }

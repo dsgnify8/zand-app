@@ -199,7 +199,7 @@ function BlockView({ b }: { b: Block }) {
       <View style={styles.qbig}>
         <View style={styles.qbigRule} />
         <Text style={[styles.qbigText, rtl, fa && (b as any).fa && styles.faQuote]}>{tx(b)}</Text>
-        {b.by ? <Text style={styles.qbigBy}>{b.by}</Text> : null}
+        {b.by ? <Text style={styles.qbigBy}>{getLang() === 'fa' && (b as any).byFa ? (b as any).byFa : b.by}</Text> : null}
         <View style={styles.qbigRule} />
       </View>
     );

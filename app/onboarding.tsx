@@ -140,7 +140,15 @@ export default function Onboarding() {
   return (
     <View style={s.root}>
       <LinearGradient
-        colors={['#FBF8F3', '#F2EBDF', '#EDE4D6']}
+        colors={
+          step === 0
+            ? ['#FDFBF7', '#F8F2E9', '#F2EADC']
+            : step === 1
+            ? ['#F2EADC', '#EADFCB', '#DFD0B6']
+            : ['#DFD0B6', '#E6DCCB', '#f6f3f1']
+        }
+        start={{ x: 0, y: 0.15 }}
+        end={{ x: 1, y: 0.85 }}
         locations={[0, 0.55, 1]}
         start={{ x: 0.1, y: 0 }}
         end={{ x: 0.9, y: 1 }}
@@ -206,12 +214,15 @@ export default function Onboarding() {
                       const on = lang === l.code;
                       return (
                         <Pressable key={l.code} onPress={() => setLang(l.code)} style={{ flex: 1 }}>
-                          <Frosted style={s.langCard} intensity={on ? 50 : 22}>
+                          <View style={on ? s.langWrapOn : undefined}>
+                          <Frosted style={s.langCard} intensity={on ? 60 : 18}>
                             <Text style={[s.langNative, on && s.langOn, l.code === 'fa' && s.langFa]}>
                               {l.native}
                             </Text>
                             <Text style={[s.langLabel, on && s.langLabelOn]}>{l.label}</Text>
                           </Frosted>
+                          {on ? <View style={s.langEdgeOn} pointerEvents="none" /> : null}
+                          </View>
                           {on ? (
                             <View style={s.tick}>
                               <Ionicons name="checkmark" size={13} color="#FFF" />
@@ -307,36 +318,38 @@ const s = StyleSheet.create({
   scroll: { flexGrow: 1, justifyContent: 'center', paddingHorizontal: spacing.xl, paddingVertical: spacing.xl },
 
   fa: { fontFamily: fonts.persian, fontSize: 44, lineHeight: 70, color: colors.accent, opacity: 0.8 },
-  title: { fontFamily: fonts.heading, fontSize: 40, lineHeight: 46, color: colors.textPrimary, marginTop: spacing.sm },
-  formTitle: { fontFamily: fonts.heading, fontSize: 34, lineHeight: 40, color: colors.textPrimary },
-  blurb: { fontFamily: fonts.body, fontSize: 14.5, lineHeight: 23, color: colors.textSecondary, marginTop: spacing.md, maxWidth: 320 },
+  title: { fontFamily: fonts.body, fontSize: 30, lineHeight: 41, letterSpacing: -0.8, color: colors.textPrimary, marginTop: spacing.sm },
+  formTitle: { fontFamily: fonts.body, fontSize: 27, lineHeight: 36, letterSpacing: -0.7, color: colors.textPrimary },
+  blurb: { fontFamily: fonts.body, fontSize: 14.5, lineHeight: 25, color: colors.textSecondary, marginTop: spacing.sm, maxWidth: 320, opacity: 0.9 },
 
-  frost: { borderRadius: 22, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.28)' },
-  frostTint: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(255,255,255,0.34)' },
-  frostEdge: { ...StyleSheet.absoluteFillObject, borderRadius: 22, borderWidth: 1, borderColor: 'rgba(255,255,255,0.8)' },
-  frostInner: { padding: spacing.lg },
+  frost: { borderRadius: 24, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.16)' },
+  frostTint: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(255,255,255,0.18)' },
+  frostEdge: { ...StyleSheet.absoluteFillObject, borderRadius: 24, borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.55)' },
+  frostInner: { paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
 
-  card: { marginTop: spacing.xxl },
-  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md },
+  card: { marginTop: spacing.xl, maxWidth: 340 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.sm + 4 },
   rowTop: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(34,30,26,0.1)' },
-  rowIcon: { width: 38, height: 38, borderRadius: 19, backgroundColor: 'rgba(255,255,255,0.75)', alignItems: 'center', justifyContent: 'center' },
-  rowT: { fontFamily: fonts.body, fontSize: 15, color: colors.textPrimary },
-  rowX: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, marginTop: 2 },
+  rowIcon: { width: 34, height: 34, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.5)', alignItems: 'center', justifyContent: 'center' },
+  rowT: { fontFamily: fonts.body, fontSize: 14, letterSpacing: -0.1, color: colors.textPrimary },
+  rowX: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 17, color: colors.textSecondary, marginTop: 2, opacity: 0.8 },
 
-  langs: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.xxl },
-  langCard: { paddingVertical: spacing.xl, alignItems: 'center' },
-  langNative: { fontFamily: fonts.body, fontSize: 20, color: colors.textPrimary },
-  langFa: { fontFamily: fonts.persian, fontSize: 25 },
+  langs: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.xl, maxWidth: 330 },
+  langCard: { height: 108, paddingHorizontal: spacing.sm, alignItems: 'center', justifyContent: 'center' },
+  langNative: { fontFamily: fonts.body, fontSize: 18, letterSpacing: -0.2, color: colors.textPrimary },
+  langFa: { fontFamily: fonts.persian, fontSize: 24, lineHeight: 38 },
   langOn: { color: colors.accent },
-  langLabel: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, marginTop: 4 },
+  langWrapOn: { transform: [{ scale: 1.03 }] },
+  langEdgeOn: { ...StyleSheet.absoluteFillObject, borderRadius: 24, borderWidth: 1.5, borderColor: colors.accent, opacity: 0.55 },
+  langLabel: { fontFamily: fonts.body, fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase', color: colors.textSecondary, marginTop: 6, opacity: 0.8 },
   langLabelOn: { color: colors.textPrimary },
-  tick: { position: 'absolute', top: 10, right: 10, width: 22, height: 22, borderRadius: 11, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
+  tick: { position: 'absolute', top: 9, right: 9, width: 20, height: 20, borderRadius: 10, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
 
   // the form: each field is its own pill, nothing nested
   form: { marginTop: spacing.xl, gap: spacing.md },
-  field: { borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: 'rgba(255,255,255,0.8)', backgroundColor: 'rgba(255,255,255,0.24)' },
+  field: { borderRadius: 18, overflow: 'hidden', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.6)', backgroundColor: 'rgba(255,255,255,0.14)' },
   fieldOn: { borderColor: colors.accent },
-  fieldTint: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(255,255,255,0.3)' },
+  fieldTint: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(255,255,255,0.42)' },
   fieldInner: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.md },
   fieldL: { fontFamily: fonts.bodyStrong, fontSize: 8.5, letterSpacing: 2.2, color: colors.textSecondary, marginBottom: 5 },
   input: { fontFamily: fonts.body, fontSize: 16.5, lineHeight: 21, color: colors.textPrimary, padding: 0, margin: 0 },

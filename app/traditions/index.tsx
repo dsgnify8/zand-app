@@ -56,7 +56,7 @@ function NzBlockView({ b }: { b: NzBlock }) {
       return (
         <View style={s.imgWrap}>
           {src ? <Image source={src} style={s.img} resizeMode="cover" /> : <View style={[s.img, s.ph]} />}
-          {b.cap ? <Text style={s.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={s.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -130,7 +130,7 @@ function YlBlockView({ b }: { b: YlBlock }) {
       return (
         <View style={s.imgWrap}>
           {src ? <Image source={src} style={s.img} resizeMode="cover" /> : <View style={[s.img, s.ph]} />}
-          {b.cap ? <Text style={s.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={s.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }

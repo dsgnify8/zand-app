@@ -115,7 +115,7 @@ function Block({ b }: { b: LitBlock }) {
       return (
         <View style={styles.imgWrap}>
           {src ? <Image source={src} style={styles.img} resizeMode="cover" /> : <View style={[styles.img, styles.ph]}><Ionicons name="image-outline" size={22} color={lit.textDim} /></View>}
-          {b.cap ? <Text style={styles.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -126,7 +126,7 @@ function Block({ b }: { b: LitBlock }) {
           <View style={styles.frame}>
             {src ? <Image source={src} style={styles.frameImg} resizeMode="cover" /> : <View style={[styles.frameImg, styles.ph]}><Ionicons name="image-outline" size={22} color={lit.textDim} /></View>}
           </View>
-          {b.cap ? <Text style={styles.cap}>{b.cap}</Text> : null}
+          {b.cap ? <Text style={styles.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
     }
@@ -164,7 +164,7 @@ function Block({ b }: { b: LitBlock }) {
       <View style={styles.story}>
         <View style={styles.storyHead}>
           <View style={styles.storyDot} />
-          <Text style={styles.storyTitle}>{b.title}</Text>
+          <Text style={[styles.storyTitle, rtl]}>{fa && (b as any).titleFa ? (b as any).titleFa : b.title}</Text>
         </View>
         <Text style={styles.storyText}>{b.x}</Text>
         <View style={styles.storyRule} />

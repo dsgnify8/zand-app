@@ -58,7 +58,7 @@ function Block({ b, accent }: { b: CuBlock; accent: string }) {
       <View style={styles.story}>
         <View style={styles.storyHead}>
           <View style={[styles.storyDot, { backgroundColor: accent }]} />
-          <Text style={[styles.storyTitle, { color: accent }]}>{b.title}</Text>
+          <Text style={[styles.storyTitle, { color: accent }, rtl]}>{fa && (b as any).titleFa ? (b as any).titleFa : b.title}</Text>
         </View>
         <Text style={[styles.storyX, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
         <View style={[styles.storyRule, { backgroundColor: accent }]} />
