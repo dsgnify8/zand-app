@@ -140,7 +140,7 @@ function SavedStrip({ onSeeAll }: { onSeeAll: () => void }) {
   return (
     <View style={{ marginTop: spacing.xl }}>
       <View style={s.labelRow}>
-        <Text style={s.sectionLabelInline}>MY SAVED</Text>
+        <Text style={s.sectionLabelInline}>{t(PROFILE.mySaved)}</Text>
         <Pressable onPress={onSeeAll} hitSlop={8}>
           <Text style={s.seeAll}>{t(PROFILE.seeAll)} {items.length}</Text>
         </Pressable>

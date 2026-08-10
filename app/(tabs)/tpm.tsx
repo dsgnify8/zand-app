@@ -12,6 +12,7 @@ import { eduImage } from '@/constants/education-images';
 import { TpmMark } from '@/components/tpm-mark';
 import { readCount, resetTpm } from '@/lib/tpm-access';
 import { useIsAdmin } from '@/lib/admin';
+import { getLang } from '@/lib/i18n';
 
 const W = Dimensions.get('window').width;
 
@@ -142,7 +143,7 @@ export default function TpmScreen() {
           {/* the people, as a rail */}
           <View style={s.creativesHead}>
             <View style={s.hairRule} />
-            <Text style={s.creativesL}>THE PEOPLE</Text>
+            <Text style={s.creativesL}>{getLang() === 'fa' ? 'آدم‌ها' : 'THE PEOPLE'}</Text>
             <View style={s.hairRule} />
           </View>
 

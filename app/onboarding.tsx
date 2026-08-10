@@ -180,7 +180,7 @@ export default function Onboarding() {
               {step === 0 ? (
                 <>
                   <Text style={s.fa}>زند</Text>
-                  <Text style={s.title}>Welcome</Text>
+                  <Text style={s.title}>{lang === 'fa' ? 'خوش آمدی' : 'Welcome'}</Text>
                   <Text style={s.blurb}>
                     A world for Persians. The language, the history, the culture, and the
                     creatives making things in it now.
@@ -298,7 +298,7 @@ export default function Onboarding() {
                 onPress={() => goAuth(mode === 'up' ? '/auth/sign-up' : '/auth/sign-in')}
               />
               <Pressable hitSlop={10} onPress={finish} style={{ marginTop: spacing.lg }}>
-                <Text style={s.later}>Maybe later</Text>
+                <Text style={s.later}>{lang === 'fa' ? 'شاید بعداً' : 'Maybe later'}</Text>
               </Pressable>
             </>
           )}
