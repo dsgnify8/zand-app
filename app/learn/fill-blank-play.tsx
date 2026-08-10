@@ -77,7 +77,7 @@ export default function FillBlankPlay() {
         {!done ? (
           <>
             <View style={styles.topBar}>
-              <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
+              <Pressable hitSlop={10} onPress={() => router.replace('/learn/map' as any)}>
                 <Ionicons name="close" size={26} color={lw.muted} />
               </Pressable>
               <View style={styles.progressTrack}><View style={[styles.progressFill, { width: (Math.round(((checked ? i + 1 : i) / total) * 100) + '%') as any }]} /></View>
