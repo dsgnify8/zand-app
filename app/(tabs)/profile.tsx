@@ -49,7 +49,7 @@ function useSavedItems() {
   return resolveMany(saved);
 }
 
-const TABS: { k: Tab; label: string; icon: string }[] = [
+const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
   { k: 'you', label: t(PROFILE.you), icon: 'sparkles' },
   { k: 'library', label: t(PROFILE.library), icon: 'bookmark' },
   { k: 'friends', label: t(PROFILE.friends), icon: 'people' },
@@ -604,7 +604,7 @@ export default function Profile() {
       </View>
 
       <View style={s.tabs}>
-        {TABS.map((t) => {
+        {tabsFor().map((t) => {
           const on = t.k === tab;
           return (
             <Pressable key={t.k} style={[s.tab, on && s.tabOn]} onPress={() => setTab(t.k)}>

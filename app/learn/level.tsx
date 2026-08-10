@@ -22,7 +22,7 @@ export default function LevelScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
-        <Pressable hitSlop={12} style={s.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn' as any))}>
+        <Pressable hitSlop={12} style={s.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/' as any))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
         <Art name="cypress" size={92} style={s.art} />
