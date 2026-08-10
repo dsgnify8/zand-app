@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { PAGES } from '@/constants/i18n/pages';
 import { SaveHeart } from '@/components/save-heart';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -23,21 +23,24 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b }: { b: LangBlock }) {
+  const fa = getLang() === 'fa';
+  const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
+  const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
-    case 'p': return <Text style={styles.p}>{b.x}</Text>;
-    case 'h': return <Text style={styles.h}>{b.x}</Text>;
-    case 'aside': return <Text style={styles.aside}>{b.x}</Text>;
+    case 'p': return <Text style={[styles.p, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
+    case 'h': return <Text style={[styles.h, rtl, fa && (b as any).fa && styles.faHead]}>{tx(b)}</Text>;
+    case 'aside': return <Text style={[styles.aside, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>;
     case 'lead': return (
       <View style={styles.leadWrap}>
         <View style={styles.leadRule} />
-        <Text style={styles.lead}>{b.x}</Text>
+        <Text style={[styles.lead, rtl, fa && (b as any).fa && styles.faLead]}>{tx(b)}</Text>
         <View style={styles.leadRule} />
       </View>
     );
     case 'mark': return (
       <View style={styles.mark}>
         <View style={styles.markBar} />
-        <Text style={styles.markText}>{b.x}</Text>
+        <Text style={[styles.markText, rtl, fa && (b as any).fa && styles.faMark]}>{tx(b)}</Text>
       </View>
     );
     case 'cognates': return (
@@ -76,9 +79,9 @@ function Block({ b }: { b: LangBlock }) {
               {i < b.items.length - 1 ? <View style={styles.eraStem} /> : null}
             </View>
             <View style={styles.eraBody}>
-              <Text style={styles.eraAge}>{it.age}</Text>
-              <Text style={styles.eraScript}>{it.script}</Text>
-              <Text style={styles.eraNote}>{it.note}</Text>
+              <Text style={[styles.eraAge, rtl]}>{fa && (it as any).ageFa ? (it as any).ageFa : it.age}</Text>
+              <Text style={[styles.eraScript, rtl]}>{fa && (it as any).scriptFa ? (it as any).scriptFa : it.script}</Text>
+              <Text style={[styles.eraNote, rtl, fa && (it as any).noteFa && styles.faBody]}>{fa && (it as any).noteFa ? (it as any).noteFa : it.note}</Text>
             </View>
           </View>
         ))}
@@ -91,9 +94,9 @@ function Block({ b }: { b: LangBlock }) {
             <View style={styles.loanHead}>
               <Text style={styles.loanEn}>{it.en}</Text>
               <Ionicons name="arrow-back" size={12} color={lang.accent} />
-              <Text style={styles.loanFrom}>{it.from}</Text>
+              <Text style={styles.loanFrom}>{fa && (it as any).fromFa ? (it as any).fromFa : it.from}</Text>
             </View>
-            <Text style={styles.loanNote}>{it.note}</Text>
+            <Text style={[styles.loanNote, rtl, fa && (it as any).noteFa && styles.faBody]}>{fa && (it as any).noteFa ? (it as any).noteFa : it.note}</Text>
           </View>
         ))}
       </View>
@@ -101,14 +104,14 @@ function Block({ b }: { b: LangBlock }) {
     case 'split': return (
       <View style={styles.split}>
         <View style={styles.splitCol}>
-          <Text style={styles.splitTitle}>{b.left.title}</Text>
+          <Text style={[styles.splitTitle, rtl]}>{fa && (b.left as any).titleFa ? (b.left as any).titleFa : b.left.title}</Text>
           <View style={styles.splitRule} />
-          <Text style={styles.splitText}>{b.left.x}</Text>
+          <Text style={[styles.splitText, rtl, fa && (b.left as any).fa && styles.faBody]}>{fa && (b.left as any).fa ? (b.left as any).fa : b.left.x}</Text>
         </View>
         <View style={styles.splitCol}>
-          <Text style={styles.splitTitle}>{b.right.title}</Text>
+          <Text style={[styles.splitTitle, rtl]}>{fa && (b.right as any).titleFa ? (b.right as any).titleFa : b.right.title}</Text>
           <View style={styles.splitRule} />
-          <Text style={styles.splitText}>{b.right.x}</Text>
+          <Text style={[styles.splitText, rtl, fa && (b.right as any).fa && styles.faBody]}>{fa && (b.right as any).fa ? (b.right as any).fa : b.right.x}</Text>
         </View>
       </View>
     );
@@ -127,7 +130,7 @@ function Block({ b }: { b: LangBlock }) {
       <View style={styles.close}>
         <View style={styles.closeRule} />
         <Text style={styles.closeGlyph}>{b.glyph}</Text>
-        <Text style={styles.closeText}>{b.x}</Text>
+        <Text style={[styles.closeText, rtl, fa && (b as any).fa && styles.faBody]}>{tx(b)}</Text>
       </View>
     );
     default: return null;
@@ -220,6 +223,11 @@ export default function LanguageScreen() {
 }
 
 const styles = StyleSheet.create({
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
+  faBody: { fontFamily: fonts.persian, fontSize: 15.5, lineHeight: 32 },
+  faHead: { fontFamily: fonts.persian, fontSize: 19, lineHeight: 34 },
+  faLead: { fontFamily: fonts.persian, fontSize: 18, lineHeight: 36 },
+  faMark: { fontFamily: fonts.persian, fontSize: 16, lineHeight: 32 },
   safe: { flex: 1, backgroundColor: lang.bg },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   topTitle: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: lang.text },
