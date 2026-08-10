@@ -13,6 +13,8 @@ import { useStrength } from '@/lib/word-strength';
 import { ExpressionCard } from '@/components/expression-card';
 import { Art, type ArtName } from '@/components/lang-art';
 import { ReminderRow } from '@/components/reminder-row';
+import { useAuth } from '@/lib/auth';
+import { getLang } from '@/lib/i18n';
 
 // Where each level joins the route. Shown as a marker between stages.
 const LEVEL_BAND: Record<string, { label: string; sub: string }> = {
@@ -82,6 +84,7 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 }
 
 export default function MapScreen() {
+  const { session } = useAuth();
     const scrollRef = useRef<ScrollView>(null);
   const stageOffsets = useRef<Record<string, number>>({});
   const [pickOpen, setPickOpen] = useState(false);
@@ -106,6 +109,15 @@ export default function MapScreen() {
           <Text style={s.change}>{info ? info.name : 'set your level'}</Text>
         </Pressable>
       </View>
+
+      {!session ? (
+        <Pressable style={s.nudge} onPress={() => router.push('/onboarding?step=2' as any)}>
+          <Ionicons name="cloud-upload-outline" size={12} color={lw.muted} />
+          <Text style={s.nudgeT}>
+            {getLang() === 'fa' ? 'برای ذخیرهٔ پیشرفتت وارد شو' : 'Sign in to track your learning'}
+          </Text>
+        </Pressable>
+      ) : null}
 
       <Pressable style={s.pick} onPress={() => setPickOpen(true)}>
         <Text style={s.pickRoman}>{STAGES[activeStage]?.roman}</Text>
@@ -274,6 +286,8 @@ const s = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   change: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted },
 
+  nudge: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, alignSelf: 'center', paddingHorizontal: spacing.md, paddingVertical: 5, marginBottom: 6 },
+  nudgeT: { fontFamily: fonts.body, fontSize: 11, color: lw.muted },
   pick: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, alignSelf: 'center', paddingHorizontal: spacing.lg, paddingVertical: 9, borderRadius: 22, backgroundColor: lw.card, borderWidth: StyleSheet.hairlineWidth, borderColor: lw.rule, marginBottom: spacing.sm, maxWidth: 300 },
   pickRoman: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.4, color: lw.gold },
   pickT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: lw.ink, flexShrink: 1 },

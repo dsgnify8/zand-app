@@ -1,9 +1,8 @@
 // Shown over the You tab when nobody is signed in.
 //
-// The page underneath keeps rendering its demo content, so a new user
-// sees what the profile becomes rather than an empty state. We blur it
-// and float a card on top. The preview is deliberately still legible —
-// enough to be enticing, not enough to be mistaken for their own data.
+// Deliberately light: the page underneath stays readable so a visitor
+// sees what the profile becomes. Enough blur to signal "not yours",
+// not so much that it hides the thing we are advertising.
 
 import { BlurView } from 'expo-blur';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -18,12 +17,15 @@ export function SignedOutOverlay() {
 
   return (
     <View style={s.wrap} pointerEvents="box-none">
-      <BlurView intensity={38} tint="light" style={StyleSheet.absoluteFill} />
+      <BlurView intensity={8} tint="light" style={StyleSheet.absoluteFill} />
       <View style={s.veil} pointerEvents="none" />
 
-      <View style={s.card}>
+      <BlurView intensity={80} tint="light" style={s.card}>
+        <View style={s.cardEdge} pointerEvents="none" />
+
         <View style={s.icon}>
-          <Ionicons name="person-outline" size={20} color={colors.accent} />
+          <BlurView intensity={40} tint="light" style={StyleSheet.absoluteFill} />
+          <Ionicons name="person-outline" size={16} color={colors.accent} />
         </View>
 
         <Text style={[s.title, fa && s.faTitle]}>
@@ -32,65 +34,70 @@ export function SignedOutOverlay() {
 
         <Text style={[s.blurb, fa && s.faBlurb]}>
           {fa
-            ? 'پیشرفتت، دوستانت و هر چه ذخیره کرده‌ای، روی همهٔ دستگاه‌هایت ذخیره و همگام می‌شود.'
-            : 'Your progress, your friends, and everything you save — kept and synced across your devices.'}
+            ? 'پیشرفت و ذخیره‌هایت، روی همهٔ دستگاه‌هایت.'
+            : 'Your progress and saves, on every device.'}
         </Text>
 
         <Pressable style={s.primary} onPress={() => router.push('/onboarding?step=2' as any)}>
+          <BlurView intensity={70} tint="light" style={StyleSheet.absoluteFill} />
+          <View style={s.primaryTint} pointerEvents="none" />
           <Text style={[s.primaryT, fa && s.faBtn]}>
-            {fa ? 'ساختن حساب' : 'Create an account'}
+            {fa ? 'ورود یا ثبت‌نام' : 'Sign in or create an account'}
           </Text>
         </Pressable>
-
-        <Pressable style={s.ghost} onPress={() => router.push('/onboarding?step=2' as any)}>
-          <Text style={[s.ghostT, fa && s.faBtn]}>
-            {fa ? 'قبلاً حساب دارم' : 'I already have an account'}
-          </Text>
-        </Pressable>
-      </View>
+      </BlurView>
     </View>
   );
 }
 
 const s = StyleSheet.create({
   wrap: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.xl, zIndex: 20 },
-  veil: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(246,243,241,0.45)' },
+  veil: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(246,243,241,0.10)' },
 
   card: {
     width: '100%',
-    maxWidth: 340,
-    backgroundColor: 'rgba(255,255,255,0.92)',
-    borderRadius: 24,
-    paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.xl,
+    maxWidth: 290,
+    borderRadius: 22,
+    overflow: 'hidden',
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.md,
     alignItems: 'center',
+  },
+  cardEdge: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 22,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(34,30,26,0.08)',
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 24,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 4,
+    borderColor: 'rgba(255,255,255,0.85)',
+    backgroundColor: 'rgba(255,255,255,0.52)',
   },
 
   icon: {
-    width: 44, height: 44, borderRadius: 15,
-    backgroundColor: 'rgba(201,162,39,0.12)',
+    width: 36, height: 36, borderRadius: 13,
+    overflow: 'hidden',
     alignItems: 'center', justifyContent: 'center',
-    marginBottom: spacing.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.8)',
+    marginBottom: spacing.sm,
   },
 
-  title: { fontFamily: fonts.bodyStrong, fontSize: 17, letterSpacing: -0.3, color: colors.textPrimary, textAlign: 'center' },
-  faTitle: { fontFamily: fonts.persian, fontSize: 17, lineHeight: 32 },
+  title: { fontFamily: fonts.bodyStrong, fontSize: 15, letterSpacing: -0.2, color: colors.textPrimary, textAlign: 'center' },
+  faTitle: { fontFamily: fonts.persian, fontSize: 15, lineHeight: 29 },
 
-  blurb: { fontFamily: fonts.body, fontSize: 13, lineHeight: 21, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.sm, marginBottom: spacing.lg },
-  faBlurb: { fontFamily: fonts.persian, fontSize: 13, lineHeight: 27, writingDirection: 'rtl' },
+  blurb: { fontFamily: fonts.body, fontSize: 12, lineHeight: 18, color: colors.textSecondary, textAlign: 'center', marginTop: 4, marginBottom: spacing.md },
+  faBlurb: { fontFamily: fonts.persian, fontSize: 12, lineHeight: 24, writingDirection: 'rtl' },
 
-  primary: { alignSelf: 'stretch', backgroundColor: colors.accent, borderRadius: radius.lg, paddingVertical: 13, alignItems: 'center' },
-  primaryT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },
+  primary: {
+    alignSelf: 'stretch',
+    borderRadius: radius.lg,
+    overflow: 'hidden',
+    paddingVertical: 11,
+    alignItems: 'center',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.9)',
+  },
+  primaryTint: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(201,162,39,0.16)' },
+  primaryT: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.textPrimary },
 
-  ghost: { alignSelf: 'stretch', paddingVertical: 12, alignItems: 'center', marginTop: 4 },
-  ghostT: { fontFamily: fonts.body, fontSize: 13, color: colors.textSecondary },
-
-  faBtn: { fontFamily: fonts.persian, fontSize: 13.5 },
+  faBtn: { fontFamily: fonts.persian, fontSize: 13 },
 });
