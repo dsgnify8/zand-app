@@ -33,6 +33,7 @@ import { typicalDeck, typicalOfDay, CULTURE_TOPICS } from '@/constants/culture';
 import { GEO_CHAPTERS } from '@/constants/geography';
 import { INBOX, pr } from '@/constants/profile';
 import { APP } from '@/constants/i18n/app';
+import { useAuth } from '@/lib/auth';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -280,7 +281,14 @@ export default function HomeScreen() {
   const [flipped, setFlipped] = useState(false);
   const y = useRef(new Animated.Value(0)).current;
 
-  const pending = INBOX.filter((i) => !i.done);
+  // Signed out we show the seeded preview; signed in we show only what
+  // has actually been sent to this person, so a new account sees the
+  // invitation to send rather than someone else's fake message.
+  const { session } = useAuth();
+  const { items: realInbox } = useInbox(session?.user?.id);
+  const pending = session
+    ? (realInbox ?? []).filter((i: any) => !i.done)
+    : INBOX.filter((i) => !i.done);
 
   useEffect(() => { markActivity(); }, [markActivity]);
 
@@ -310,7 +318,23 @@ export default function HomeScreen() {
         >
           <FadeIn><Text style={[styles.greeting, fa && styles.faRight]}>{t(HOME.greeting)}</Text></FadeIn>
 
-          {pending.length > 0 ? (
+          {pending.length === 0 ? (
+            <FadeIn delay={40}>
+              <Pressable style={styles.nudge} onPress={() => router.navigate('/profile?tab=friends' as any)}>
+                <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+                <View style={styles.nudgeAv}><Ionicons name="paper-plane-outline" size={15} color={pr.friendA} /></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.nudgeT, fa && styles.faRight]}>
+                    {fa ? 'چیزی برای یک دوست بفرست' : 'Send a friend a topic'}
+                  </Text>
+                  <Text style={[styles.nudgeX, fa && styles.faRight]}>
+                    {fa ? 'یک واژه، یک شعر، یا چیزی که تازه خوانده‌ای.' : 'A word, a poem, or something you just read.'}
+                  </Text>
+                </View>
+                <Ionicons name="arrow-forward" size={16} color={pr.friendA} />
+              </Pressable>
+            </FadeIn>
+          ) : (
             <FadeIn delay={40}>
               <Pressable style={styles.nudge} onPress={() => router.navigate('/profile?tab=friends' as any)}>
                 <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
@@ -324,7 +348,7 @@ export default function HomeScreen() {
                 <Ionicons name="arrow-forward" size={16} color={pr.friendA} />
               </Pressable>
             </FadeIn>
-          ) : null}
+          )}
 
           <FadeIn delay={60}>
             <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.today)}</Text>

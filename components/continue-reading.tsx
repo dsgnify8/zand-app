@@ -6,6 +6,10 @@ import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { eduImage } from '@/constants/education-images';
 import { READING } from '@/constants/profile';
 import { getLang } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
+import { EmptyState } from '@/components/empty-state';
+import { useSaved } from '@/lib/saved-store';
+import { resolveMany } from '@/lib/resolve-saved';
 
 export type ContinueItem = {
   key: string;
@@ -19,6 +23,9 @@ export type ContinueItem = {
 
 // Single source for both the home rail and the profile rail.
 // TODO at launch: return real progress from the reading store instead of READING.
+// Signed out this returns the seeded preview, so a visitor sees what the
+// section becomes. Signed in it returns only what this person has
+// actually opened, most recent first — which for a new account is empty.
 export function continueItems(): ContinueItem[] {
   return READING as ContinueItem[];
 }
@@ -26,8 +33,42 @@ export function continueItems(): ContinueItem[] {
 export function ContinueReading({ label }: { label?: string }) {
   const _lbl = label ?? (getLang() === 'fa' ? 'از همون‌جا ادامه بده' : 'PICK UP WHERE YOU LEFT OFF');
   const fa = getLang() === 'fa';
-  const items = continueItems();
-  if (items.length === 0) return null;
+  const { session } = useAuth();
+  const { recent } = useSaved();
+  // Signed out we show the seeded preview so a visitor sees the shape of
+  // the section. Signed in we show only what this person has opened.
+  // Resolved and ContinueItem are different shapes, so map rather than
+  // cast: a saved key knows what it is and where it lives, but not how
+  // far through it you are, so the progress fields stay neutral until we
+  // track per-item position.
+  const items: ContinueItem[] = session
+    ? resolveMany(recent).slice(0, 6).map((r) => ({
+        key: r.key,
+        title: r.title,
+        chapter: r.sub,
+        image: r.image ?? '',
+        page: 0,
+        total: 0,
+        route: r.route,
+      }))
+    : continueItems();
+  // Signed out with nothing yet, the seeded preview stands in so a
+  // visitor sees what the section becomes. Signed in, an empty account
+  // gets a prompt rather than a silently missing section.
+  if (items.length === 0) {
+    if (!session) return null;
+    return (
+      <View style={{ marginTop: spacing.xl }}>
+        <Text style={s.label}>{_lbl}</Text>
+        <EmptyState
+          icon="book-outline"
+          line="Nothing started yet. Open anything and it will wait for you here."
+          lineFa="هنوز چیزی را شروع نکرده‌ای. هر چیزی را باز کنی، همین‌جا منتظرت می‌ماند."
+          cta="Explore" ctaFa="گشت‌وگذار" to="/(tabs)/explore"
+        />
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -35,7 +76,8 @@ export function ContinueReading({ label }: { label?: string }) {
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.rail}>
         {items.map((r) => {
           const src = eduImage(r.image);
-          const pct = Math.round((r.page / r.total) * 100);
+          // total is 0 for items we know were opened but not how far
+          const pct = r.total > 0 ? Math.round((r.page / r.total) * 100) : 0;
           return (
             <Pressable key={r.key} style={s.card} onPress={() => router.navigate(r.route as any)}>
               {src ? <Image source={src} style={s.img} resizeMode="cover" /> : <View style={[s.img, s.ph]} />}
@@ -48,7 +90,11 @@ export function ContinueReading({ label }: { label?: string }) {
                 <Text style={[s.title, fa && (r as any).titleFa && s.faTitle]} numberOfLines={2}>{fa && (r as any).titleFa ? (r as any).titleFa : r.title}</Text>
                 <Text style={[s.sub, fa && (r as any).chapterFa && s.faSub]}>{fa && (r as any).chapterFa ? (r as any).chapterFa : r.chapter}</Text>
                 <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
-                <Text style={s.pct}>page {r.page} of {r.total}</Text>
+                {r.total > 0 ? (
+                  <Text style={s.pct}>{fa ? 'صفحهٔ ' + r.page + ' از ' + r.total : 'page ' + r.page + ' of ' + r.total}</Text>
+                ) : (
+                  <Text style={s.pct}>{fa ? 'ادامه بده' : 'Continue'}</Text>
+                )}
               </View>
             </Pressable>
           );

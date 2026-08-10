@@ -29,6 +29,7 @@ import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/compone
 import { LearnProgressBlock } from '@/components/learn-progress-block';
 import { APP } from '@/constants/i18n/app';
 import { SignedOutOverlay } from '@/components/signed-out-overlay';
+import { EmptyState } from '@/components/empty-state';
 
 type Tab = 'you' | 'library' | 'friends' | 'progress';
 
@@ -137,7 +138,24 @@ function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLib
 }
 
 function SavedStrip({ onSeeAll }: { onSeeAll: () => void }) {
-  const items = useSavedItems();
+  const real = useSavedItems();
+  const { session } = useAuth();
+  // signed out we show the seeded preview so a visitor sees the shape of
+  // the page; signed in we show only what they have actually saved
+  const items = session ? real : (real.length ? real : SAVED);
+  if (session && items.length === 0) {
+    return (
+      <View style={{ marginTop: spacing.xl }}>
+        <Text style={s.sectionLabelInline}>{t(PROFILE.mySaved)}</Text>
+        <EmptyState
+          icon="bookmark-outline"
+          line="Nothing saved yet. Tap the bookmark on anything you want to keep."
+          lineFa="هنوز چیزی ذخیره نکرده‌ای. روی هر چیزی که می‌خواهی نگه داری، نشان ذخیره را بزن."
+          cta="Explore" ctaFa="گشت‌وگذار" to="/(tabs)/explore"
+        />
+      </View>
+    );
+  }
   return (
     <View style={{ marginTop: spacing.xl }}>
       <View style={s.labelRow}>
