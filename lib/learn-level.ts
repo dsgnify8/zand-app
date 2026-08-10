@@ -1,6 +1,7 @@
 // Which level the learner picked, and whether they have been asked yet.
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { syncTouch } from '@/lib/cloud-sync';
 
 export type Level = 'beginner' | 'elementary' | 'intermediate' | 'advanced';
 
@@ -34,12 +35,12 @@ export async function loadLevel() {
 
 export async function setLevel(v: Level) {
   level = v; asked = true; emit();
-  try { await AsyncStorage.multiSet([[K_LEVEL, v], [K_ASKED, '1']]); } catch {}
+  try { await AsyncStorage.multiSet([[K_LEVEL, v], [K_ASKED, '1']]); syncTouch(); } catch {}
 }
 
 export async function skipLevel() {
   asked = true; emit();
-  try { await AsyncStorage.setItem(K_ASKED, '1'); } catch {}
+  try { await AsyncStorage.setItem(K_ASKED, '1'); syncTouch(); } catch {}
 }
 
 export function getLevel() { return level; }

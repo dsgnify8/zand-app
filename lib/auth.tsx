@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { setAdminEmail } from '@/lib/admin';
+import { pullAndMerge, syncStop, syncFlush } from '@/lib/cloud-sync';
 
 type AuthState = {
   session: Session | null;
@@ -65,6 +66,36 @@ export function AuthProvider({ children }: { children: any }) {
     const { error } = await supabase.auth.resetPasswordForEmail(email);
     return { error: error?.message };
   };
+
+
+  // Sync. When a session appears we pull the cloud copy and merge it into
+  // whatever is on this device, so a user who used the app signed out
+  // keeps everything they did. When it goes away we stop syncing but
+  // leave the local data alone.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const uid = session?.user?.id;
+      if (uid) {
+        const changed = await pullAndMerge(uid);
+        if (changed && !cancelled) {
+          // reload the stores so the UI shows what we just pulled
+          try {
+            const [{ loadLearnProgress }, { loadStrength }, { loadStats }, { loadSaved }] = await Promise.all([
+              import('@/lib/learn-progress'),
+              import('@/lib/word-strength'),
+              import('@/lib/stats-store'),
+              import('@/lib/saved-store'),
+            ]);
+            await Promise.all([loadLearnProgress(), loadStrength(), loadStats(), loadSaved()]);
+          } catch {}
+        }
+      } else {
+        syncStop();
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [session?.user?.id]);
 
   return (
     <AuthContext.Provider value={{ session, user, loading, displayName, signUp, signIn, signOut, resetPassword, updateName, updateEmail, updatePhone }}>

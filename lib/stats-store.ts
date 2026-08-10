@@ -1,6 +1,7 @@
 // Tracks lifetime activity for milestones and the progress tab.
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { syncTouch } from '@/lib/cloud-sync';
 
 export type Stats = {
   topicsFinished: number;
@@ -35,7 +36,7 @@ export async function loadStats() {
     emit();
   } catch {}
 }
-async function persist() { try { await AsyncStorage.setItem(KEY, JSON.stringify(state)); } catch {} }
+async function persist() { try { await AsyncStorage.setItem(KEY, JSON.stringify(state)); syncTouch(); } catch {} }
 
 // Counts a day only once, and only when a lesson was finished on it.
 let lastLearnDay = '';
@@ -48,7 +49,7 @@ export async function markLearnDay() {
     const days: string[] = raw ? JSON.parse(raw) : [];
     if (!days.includes(today)) {
       const next = [...days, today];
-      await AsyncStorage.setItem('learn:days', JSON.stringify(next));
+      await AsyncStorage.setItem('learn:days', JSON.stringify(next)); syncTouch();
       bump('learnDays');
     }
   } catch {}

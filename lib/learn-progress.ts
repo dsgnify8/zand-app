@@ -1,6 +1,7 @@
 // Which lessons have been finished, and how well.
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { syncTouch } from '@/lib/cloud-sync';
 
 export type Done = { unit: string; lesson: string; score: number; at: number };
 
@@ -39,7 +40,7 @@ export async function markLessonDone(unit: string, lesson: string, score: number
     ...done.filter((d) => !(d.unit === unit && d.lesson === lesson)),
   ];
   emit();
-  try { await AsyncStorage.setItem(KEY, JSON.stringify(done)); } catch {}
+  try { await AsyncStorage.setItem(KEY, JSON.stringify(done)); syncTouch(); } catch {}
   syncStages();
 }
 

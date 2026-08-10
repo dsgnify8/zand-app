@@ -95,7 +95,7 @@ export default function LessonScreen() {
           ) : (
             <Text style={s.finishScore}>Lesson complete</Text>
           )}
-          <Pressable style={[s.cta, s.finishBtn]} onPress={() => router.replace('/learn/map' as any)}>
+          <Pressable style={[s.cta, s.finishBtn]} onPress={() => { console.log('[EXIT] lesson.tsx'); router.replace('/learn/map' as any); }}>
             <Text style={s.ctaT}>Done</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setAnswered(false); setScore({ right: 0, total: 0 }); setDone(false); }}>
@@ -109,7 +109,7 @@ export default function LessonScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
+        <Pressable hitSlop={12} onPress={() => { console.log('[EXIT] lesson.tsx'); router.replace('/learn/map' as any); }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
@@ -164,7 +164,7 @@ const s = StyleSheet.create({
   fill: { height: 3, borderRadius: 2, backgroundColor: lw.green },
   count: { fontFamily: fonts.body, fontSize: 12, color: lw.muted },
 
-  backEdge: { position: 'absolute', left: 0, top: 60, bottom: 90, width: 56, zIndex: 5, justifyContent: 'center', alignItems: 'flex-start', paddingLeft: 4 },
+  backEdge: { position: 'absolute', left: 0, top: 132, bottom: 90, width: 56, zIndex: 5, justifyContent: 'center', alignItems: 'flex-start', paddingLeft: 4 },
   backHint: { width: 26, height: 26, borderRadius: 13, backgroundColor: lw.greenWash, alignItems: 'center', justifyContent: 'center', opacity: 0.75 },
   body: { paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: spacing.xxl },
   footer: { paddingHorizontal: spacing.xl, paddingBottom: spacing.md },

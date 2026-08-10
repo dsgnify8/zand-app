@@ -88,7 +88,7 @@ export default function BlanksScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
         <View style={s.top}>
-          <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
+          <Pressable hitSlop={12} onPress={() => { console.log('[X] pressed on blanks'); router.replace('/learn/map' as any); }}>
             <Ionicons name="close" size={22} color={lw.muted} />
           </Pressable>
         </View>
@@ -113,7 +113,7 @@ export default function BlanksScreen() {
           <Text style={s.finX}>
             {pct >= 75 ? 'You are reading, not guessing.' : 'Go back through the lessons and these will come.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => router.replace('/learn/map' as any)}>
+          <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on blanks'); router.replace('/learn/map' as any); }}>
             <Text style={s.ctaT}>Done</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
@@ -140,7 +140,7 @@ export default function BlanksScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
+        <Pressable hitSlop={12} onPress={() => { console.log('[EXIT] blanks.tsx'); router.replace('/learn/map' as any); }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>

@@ -16,7 +16,7 @@ export default function PathScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
+        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
         <Pressable hitSlop={10} onPress={() => router.replace('/learn/level' as any)}>

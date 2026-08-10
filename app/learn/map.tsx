@@ -82,7 +82,7 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 }
 
 export default function MapScreen() {
-  const scrollRef = useRef<ScrollView>(null);
+    const scrollRef = useRef<ScrollView>(null);
   const stageOffsets = useRef<Record<string, number>>({});
   const [pickOpen, setPickOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);

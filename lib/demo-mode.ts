@@ -9,7 +9,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const DEMO = true;
+export const DEMO = false;
 
 // Only these are wiped. Anything not listed here survives.
 const REPLAY = [

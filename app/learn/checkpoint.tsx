@@ -115,7 +115,7 @@ export default function CheckpointScreen() {
               ? 'This chapter is yours. The words you missed will come round again in review.'
               : 'Worth going back through the chapter before moving on. Nothing is lost by rereading.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => router.replace('/learn/map' as any)}>
+          <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on checkpoint'); router.replace('/learn/map' as any); }}>
             <Text style={s.ctaT}>{passed ? 'Carry on' : 'Back to the chapter'}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
@@ -144,7 +144,7 @@ export default function CheckpointScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
+        <Pressable hitSlop={12} onPress={() => { console.log('[X] pressed on checkpoint'); router.replace('/learn/map' as any); }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>

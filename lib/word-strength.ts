@@ -8,6 +8,7 @@
 
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { syncTouch } from '@/lib/cloud-sync';
 
 export type WordState = {
   fa: string;
@@ -35,7 +36,7 @@ export async function loadStrength() {
 }
 
 async function persist() {
-  try { await AsyncStorage.setItem(KEY, JSON.stringify(words)); } catch {}
+  try { await AsyncStorage.setItem(KEY, JSON.stringify(words)); syncTouch(); } catch {}
 }
 
 // keep the profile's solid-word count in step

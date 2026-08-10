@@ -77,7 +77,7 @@ export default function FillBlankPlay() {
         {!done ? (
           <>
             <View style={styles.topBar}>
-              <Pressable hitSlop={10} onPress={() => router.replace('/learn/map' as any)}>
+              <Pressable hitSlop={10} onPress={() => { console.log('[X] pressed on fill-blank-play'); router.replace('/learn/map' as any); }}>
                 <Ionicons name="close" size={26} color={lw.muted} />
               </Pressable>
               <View style={styles.progressTrack}><View style={[styles.progressFill, { width: (Math.round(((checked ? i + 1 : i) / total) * 100) + '%') as any }]} /></View>
@@ -138,7 +138,7 @@ export default function FillBlankPlay() {
             <Text style={styles.summaryTitle}>{category.title} complete</Text>
             <Text style={styles.summaryLine}>{score} of {total} correct</Text>
             <Pressable style={styles.primaryBtn} onPress={restart}><Text style={styles.primaryText}>Try again</Text></Pressable>
-            <Pressable style={styles.secondaryBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}><Text style={styles.secondaryText}>Choose another category</Text></Pressable>
+            <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>Choose another category</Text></Pressable>
           </View>
         )}
       </View>

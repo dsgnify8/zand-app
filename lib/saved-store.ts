@@ -1,6 +1,7 @@
 // Likes and saved-for-later, per device. Persists across restarts.
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { syncTouch } from '@/lib/cloud-sync';
 
 type Sets = { liked: string[]; saved: string[]; recent: string[]; scroll: Record<string, number> };
 
@@ -23,7 +24,7 @@ export async function loadSaved() {
 
 async function persist() {
   try {
-    await AsyncStorage.multiSet([[K_LIKED, JSON.stringify(state.liked)], [K_SAVED, JSON.stringify(state.saved)], [K_RECENT, JSON.stringify(state.recent)], [K_SCROLL, JSON.stringify(state.scroll)]]);
+    await AsyncStorage.multiSet([[K_LIKED, JSON.stringify(state.liked)], [K_SAVED, JSON.stringify(state.saved)], [K_RECENT, JSON.stringify(state.recent)], [K_SCROLL, JSON.stringify(state.scroll)]]); syncTouch();
   } catch {}
 }
 

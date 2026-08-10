@@ -28,6 +28,7 @@ import { StreakPlant } from '@/components/streak-plant';
 import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
 import { LearnProgressBlock } from '@/components/learn-progress-block';
 import { APP } from '@/constants/i18n/app';
+import { SignedOutOverlay } from '@/components/signed-out-overlay';
 
 type Tab = 'you' | 'library' | 'friends' | 'progress';
 
@@ -585,7 +586,7 @@ function ProgressTab() {
 /* ---------------- The page ---------------- */
 
 export default function Profile() {
-  const { displayName } = useAuth();
+  const { displayName, session } = useAuth();
   const { tab: wantTab } = useLocalSearchParams<{ tab?: string }>();
   const [tab, setTab] = useState<Tab>((wantTab as Tab) || 'you');
   const [settings, setSettings] = useState(false);
@@ -624,6 +625,7 @@ export default function Profile() {
       </ScrollView>
 
       <SettingsSheet open={settings} onClose={() => setSettings(false)} />
+      {!session ? <SignedOutOverlay /> : null}
     </SafeAreaView>
   );
 }

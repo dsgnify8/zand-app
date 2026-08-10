@@ -33,6 +33,8 @@ import { SRSProvider } from '@/lib/srs-store';
 import { ReadingProvider } from '@/lib/reading-store';
 import { GlossaryProvider } from '@/lib/glossary-store';
 import { AnimatedSplash } from '@/components/animated-splash';
+import { AppState } from 'react-native';
+import { syncFlush } from '@/lib/cloud-sync';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -62,13 +64,23 @@ function AuthGate() {
     const inAuth = segments[0] === 'auth';
     if (onboarded === null) return;               // still reading storage
     if (!onboarded) { router.replace('/onboarding' as any); return; }
-    if (!session && !inAuth) router.replace('/auth/sign-in');
+    // Signed out is a supported state: the whole app is browsable and
+    // progress is kept locally until they sign in, at which point it is
+    // merged up. So we do not force anyone to the auth screen.
     if (session && inAuth) router.replace('/');
   }, [session, loading, segments]);
   return null;
 }
 
 export default function RootLayout() {
+  // push anything pending when the app goes to the background, so a
+  // force quit inside the debounce window does not lose progress
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (st) => {
+      if (st !== 'active') syncFlush();
+    });
+    return () => sub.remove();
+  }, []);
   const colorScheme = useColorScheme();
   const [splashDone, setSplashDone] = useState(false);
   const [fontsLoaded] = useFonts({

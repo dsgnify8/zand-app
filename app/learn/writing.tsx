@@ -24,7 +24,7 @@ export default function WritingScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader />
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
+        <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>
         </Pressable>

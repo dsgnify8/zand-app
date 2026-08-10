@@ -83,7 +83,7 @@ export default function DeckStudyScreen() {
         <View style={styles.center}><ActivityIndicator color={lw.green} /></View>
       ) : (
         <View style={styles.container}>
-          <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
+          <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
             <Ionicons name="chevron-back" size={20} color={lw.muted} />
             <Text style={styles.backBtnText}>Flashcards</Text>
           </Pressable>
@@ -142,7 +142,7 @@ export default function DeckStudyScreen() {
                 </Pressable>
               ) : null}
               <Pressable style={styles.secondaryBtn} onPress={restart}><Text style={styles.secondaryText}>Study whole deck</Text></Pressable>
-              <Pressable style={styles.secondaryBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}><Text style={styles.secondaryText}>Back to decks</Text></Pressable>
+              <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>Back to decks</Text></Pressable>
             </View>
           )}
         </View>
