@@ -484,7 +484,7 @@ const rezaShah: Topic = {
           { t: 'fact', label: 'Born', value: '15 March 1878, Alasht, Mazandaran' },
           { t: 'p', x: 'Reza Khan was born on 15 March 1878 in Alasht, a small village high in the mountains of Mazandaran, in the green north of Iran. His people were of modest means, and the world he entered was a hard one, far from the comforts of the capital.', fa: 'رضاخان در ۱۵ مارس ۱۸۷۸ در روستای الاشت به دنیا آمد، دهکده‌ای کوچک در بلندی‌های کوه‌های مازندران، در شمال سبز ایران. خانواده‌اش تنگدست بودند و جهانی که پا به آن گذاشت سخت بود، دور از آسایش پایتخت.' },
           { t: 'p', x: 'His father, an officer, died when Reza was only a few months old. His mother carried her infant son through winter snows toward Tehran to find family, a journey that nearly cost them both their lives. He grew up without wealth or connection, shaped early by hardship and by his own stubborn strength of will.', fa: 'پدرش که افسر بود، وقتی رضا تنها چند ماه داشت درگذشت. مادرش نوزادش را در برف‌های زمستان به سوی تهران برد تا خویشاوندی بیابد؛ سفری که نزدیک بود جان هر دو را بگیرد. بی‌ثروت و بی‌پشتوانه بزرگ شد، و از همان آغاز، سختی و ارادهٔ سرسخت خودش او را ساختند.' },
-          { t: 'imgsm', key: 'reza-teen', cap: 'Reza Khan in his youth, before his rise through the ranks.' },
+          { t: 'imgsm', key: 'reza-teen', cap: 'Reza Khan in his youth, before his rise through the ranks.', capFa: 'رضاخان در جوانی، پیش از بالا رفتنش در سلسله‌مراتب نظامی.' },
         ] },
         { blocks: [
           { t: 'p', x: 'As a young man he joined the Persian Cossack Brigade, the only modern, disciplined military unit in a Qajar Iran that was otherwise weak and disordered. There he found his calling. Tall, commanding, and fearless, he rose steadily through the ranks by sheer ability in an age when birth usually counted for more.', fa: 'در جوانی به بریگاد قزاق پیوست، تنها یگان نظامی مدرن و منضبط در ایرانِ قاجاری‌ای که در باقی امور ناتوان و پریشان بود. راه خودش را همان‌جا یافت. بلندقامت، فرمانده‌وار و بی‌باک، تنها با توانایی خودش پله‌پله بالا رفت، در روزگاری که معمولاً نسب بیشتر از لیاقت به کار می‌آمد.' },
@@ -512,7 +512,7 @@ const rezaShah: Topic = {
             { value: '1921', label: 'The capital taken' },
           ] },
           { t: 'p', x: 'He installed a new government with the journalist Seyyed Zia Tabatabaei as prime minister, and took for himself the command of the armed forces, with the title Sardar Sepah, commander of the army. The Qajar Shah remained on his throne in name, but real power in Iran had changed hands. This quiet, disciplined coup is the true beginning of Reza Shah\'s rise.', fa: 'دولتی تازه بر سر کار آورد با سید ضیاءالدین طباطبایی، روزنامه‌نگار، در مقام نخست‌وزیر، و فرماندهی نیروهای مسلح را خود بر عهده گرفت با لقب سردار سپه. شاه قاجار به نام بر تخت ماند، اما قدرت واقعی در ایران دست به دست شده بود. همین کودتای آرام و منضبط، آغاز راستین برآمدن رضاشاه است.' },
-          { t: 'imgsm', key: 'reza-coup', cap: 'Reza Khan at the time of the march on Tehran, 1921.' },
+          { t: 'imgsm', key: 'reza-coup', cap: 'Reza Khan at the time of the march on Tehran, 1921.', capFa: 'رضاخان در روزهای حرکت به سوی تهران، ۱۲۹۹.' },
         ] },
         { blocks: [
           { t: 'p', x: 'Over the next four years he gathered the reins of the state into his own hands. He crushed the tribal rebellions and separatist revolts that had torn the provinces apart, and for the first time in living memory, a single authority reached from Tehran to the farthest corners of the country.', fa: 'در چهار سال بعد، افسار دولت را یکسره در دست خود گرفت. شورش‌های ایلی و جنبش‌های جدایی‌خواه را که ولایات را از هم دریده بودند فرو نشاند، و برای نخستین بار در حافظهٔ زندگان، یک قدرت واحد از تهران تا دورترین گوشه‌های کشور رسید.' },
@@ -547,7 +547,7 @@ const rezaShah: Topic = {
           { t: 'h', x: 'A new nation, remade', fa: 'ملتی که از نو ساخته شد' },
           { t: 'p', x: 'He built thousands of miles of modern roads and the first real factories, registered the land, and nationalized the forests. He replaced religious law with a European style civil code, brought in Western dress for men, and in 1936 ordered the removal of the veil, a reform welcomed by some and deeply resented by others.', fa: 'هزاران کیلومتر راه مدرن و نخستین کارخانه‌های واقعی را ساخت، زمین‌ها را به ثبت رساند و جنگل‌ها را ملی کرد. قانون مدنی به سبک اروپایی را جایگزین قوانین شرعی کرد، لباس غربی را برای مردان آورد، و در ۱۳۱۴ فرمان کشف حجاب داد؛ اصلاحی که گروهی از آن استقبال کردند و گروهی دیگر به‌سختی از آن رنجیدند.' },
           { t: 'p', x: 'In 1935 he asked the world to call the country by the name its own people used, Iran, the land of the Aryans, rather than the Greek name Persia. It was a small change of a word that carried a whole vision, a nation reclaiming itself and stepping forward under its own name.', fa: 'در سال ۱۹۳۵ از جهان خواست به‌جای نام یونانی «پرشیا»، کشور را با همان نامی بخوانند که مردمش به کار می‌بردند: «ایران»، سرزمین آریاییان. این تنها تغییر یک واژه بود، اما در دل خود چشم‌اندازی کامل را حمل می‌کرد؛ ملتی که هویت خود را بازپس می‌گیرد و با نام خود به پیش می‌رود.' },
-          { t: 'imgsm', key: 'reza-serving', cap: 'Reza Shah, the builder of the modern Iranian state.' },
+          { t: 'imgsm', key: 'reza-serving', cap: 'Reza Shah, the builder of the modern Iranian state.', capFa: 'رضاشاه، سازندهٔ دولت مدرن ایران.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The railway across the roof of Iran', fa: 'راه‌آهنی از بام ایران' },
@@ -563,7 +563,7 @@ const rezaShah: Topic = {
           { t: 'p', x: 'The route climbed over the Zagros and the Alborz, the two great mountain ranges, rising past two thousand two hundred metres at its highest point, near the very limit of what the steam engines of the day could manage. It required more than ninety kilometres of tunnels and over four thousand bridges.', fa: 'مسیر از زاگرس و البرز بالا می‌رفت، دو رشته‌کوه بزرگ، و در بلندترین نقطه‌اش از دو هزار و دویست متر می‌گذشت؛ نزدیک به مرزِ توانِ لکوموتیوهای بخار آن روزگار. بیش از نود کیلومتر تونل و بیش از چهار هزار پل لازم داشت.' },
           { t: 'p', x: 'Among its wonders were the Veresk Bridge in Mazandaran, one hundred and ten metres long and sixty six metres high, built without scaffolding and still standing as an engineering marvel, and the famous Three Golden Lines, a section of three switchback loops that climbed the steep Gaduk pass. Built between 1933 and 1938 across such terrain, it was a feat far ahead of its time.', fa: 'از شگفتی‌هایش پل ورسک در مازندران بود، صد و ده متر درازا و شصت و شش متر بلندی، که بدون داربست ساخته شد و هنوز چون شاهکاری مهندسی ایستاده است؛ و سه خط طلا، سه حلقهٔ مارپیچ نامدار که از گردنهٔ پرشیب گدوک بالا می‌رفتند. ساختنش میان ۱۹۳۳ تا ۱۹۳۸ و در چنین زمینی، کاری بود بسیار جلوتر از زمانهٔ خود.' },
           { t: 'q', x: 'Now I can die in peace. I have connected the Persian Gulf to the Caspian with Iranian hands and Iranian money.', fa: 'حالا می‌توانم آسوده بمیرم. خلیج فارس را با دست ایرانی و پول ایرانی به دریای خزر رساندم.', by: 'Reza Shah, at the railway\'s opening, 1938', byFa: 'رضاشاه، در افتتاح راه‌آهن، ۱۳۱۷' },
-          { t: 'img', key: 'iran-railway', cap: 'The Trans-Iranian Railway, binding the Persian Gulf to the Caspian across 1,394 km.' },
+          { t: 'img', key: 'iran-railway', cap: 'The Trans-Iranian Railway, binding the Persian Gulf to the Caspian across 1,394 km.', capFa: 'راه‌آهن سراسری ایران، که در ۱۳۹۴ کیلومتر خلیج فارس را به دریای خزر بست.' },
           { t: 'p', x: 'The railway was inaugurated with great ceremony on 26 August 1938. Years later, during the Second World War, this same line became the vital Persian Corridor, carrying nearly five million tons of supplies to the Soviet Union. It remains in daily use to this day.', fa: 'راه‌آهن در ۲۶ اوت ۱۹۳۸ با تشریفاتی بزرگ افتتاح شد. سال‌ها بعد، در جنگ جهانی دوم، همین خط به کریدور ایران بدل شد و نزدیک پنج میلیون تن تدارکات را به اتحاد شوروی رساند. تا امروز هر روز در کار است.' },
         ] },
       ],
@@ -576,13 +576,13 @@ const rezaShah: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'Behind the towering public figure was a father whose children remembered him with deep love and no small awe. He was stern, demanding, and impatient with weakness, yet those closest to him spoke of a warmth and a tenderness that the public rarely saw.', fa: 'پشت آن چهرهٔ بلندبالای عمومی، پدری بود که فرزندانش با محبتی عمیق و هیبتی کم‌نظیر به یادش می‌آوردند. سختگیر بود، پرتوقع، و با سستی سر ناسازگاری داشت؛ اما نزدیک‌ترین کسانش از گرمی و مهری می‌گفتند که مردم کمتر می‌دیدند.' },
-          { t: 'img', key: 'reza-children', cap: 'Reza Shah with his children, among them the future Shah, Mohammad Reza.' },
-          { t: 'img', key: 'reza-command', cap: 'Reza Shah with his son and heir, the young Mohammad Reza.' },
+          { t: 'img', key: 'reza-children', cap: 'Reza Shah with his children, among them the future Shah, Mohammad Reza.', capFa: 'رضاشاه در کنار فرزندانش، و در میانشان محمدرضا، شاه آینده.' },
+          { t: 'img', key: 'reza-command', cap: 'Reza Shah with his son and heir, the young Mohammad Reza.', capFa: 'رضاشاه با پسر و ولیعهدش، محمدرضای نوجوان.' },
           { t: 'p', x: 'He raised his sons and daughters to serve Iran, and he placed on his eldest son and heir, Mohammad Reza, the heaviest expectations of all. In the family memoirs his children describe a man of simple habits and iron discipline, who rose early, worked without rest, and expected the same of everyone around him.', fa: 'پسران و دخترانش را برای خدمت به ایران بار آورد، و سنگین‌ترین انتظارها را بر دوش پسر بزرگ و ولیعهدش، محمدرضا، گذاشت. فرزندانش در خاطراتشان از مردی می‌نویسند با عادت‌هایی ساده و انضباطی آهنین؛ سحرخیز، بی‌وقفه در کار، و با همین توقع از هر که پیرامونش بود.' },
         ] },
         { blocks: [
           { t: 'p', x: 'He had little patience for luxury or ceremony for its own sake. What moved him was the work of building, and he threw himself into it with a soldier\'s single mindedness. He would appear without warning at a worksite or a barracks or a school, inspecting, questioning, driving the work forward.', fa: 'حوصلهٔ تجمل و تشریفاتِ بی‌سبب را نداشت. آنچه او را به حرکت می‌آورد کارِ ساختن بود، و با یکدندگی یک سرباز خود را در آن انداخت. بی‌خبر سر کارگاه یا پادگان یا مدرسه‌ای پیدا می‌شد، بازرسی می‌کرد، می‌پرسید، و کار را جلو می‌راند.' },
-          { t: 'img', key: 'reza-young-kids', cap: 'The young royal children, raised to serve the nation their father was building.' },
+          { t: 'img', key: 'reza-young-kids', cap: 'The young royal children, raised to serve the nation their father was building.', capFa: 'فرزندان خردسال خاندان سلطنتی، که برای خدمت به کشوری بار می‌آمدند که پدرشان می‌ساخت.' },
           { t: 'p', x: 'To his children he was the fixed point around which the whole household turned. They remembered his rare smiles as precious things, and carried his example, his devotion to Iran above all else, for the rest of their lives.', fa: 'برای فرزندانش نقطهٔ ثابتی بود که تمام خانه گرد آن می‌چرخید. لبخندهای کمیابش را چون چیزی گران‌بها به یاد داشتند، و سرمشق او را، آن دلبستگی به ایران که بر همه‌چیز مقدم بود، تا پایان عمر با خود بردند.' },
         ] },
       ],
@@ -669,7 +669,7 @@ const cyrus: Topic = {
         { blocks: [
           { t: 'p', x: 'More than two and a half thousand years ago, in the highlands of what is now southern Iran, a child was born who would change the shape of the ancient world. His name was Kurush, whom history remembers as Cyrus, and the empire he built would be the largest the world had yet seen.', fa: 'بیش از دو هزار و پانصد سال پیش، در بلندی‌های جنوب ایرانِ امروز، کودکی به دنیا آمد که قرار بود شکل جهان باستان را دگرگون کند. نامش کوروش بود، و امپراتوری‌ای که برپا کرد بزرگ‌ترین چیزی شد که جهان تا آن روز به خود دیده بود.' },
           { t: 'p', x: 'The land of his birth, Persia, was then a small kingdom of herders and farmers, a subject people living in the shadow of the mighty Median Empire to their north. Few could have imagined that from this modest place would rise a ruler whose name would still be spoken with reverence across the world, so many centuries later.', fa: 'زادگاهش، پارس، آن روزها پادشاهی کوچکی بود از چوپانان و کشاورزان؛ مردمی زیردست که در سایهٔ امپراتوری نیرومند ماد در شمالشان زندگی می‌کردند. کمتر کسی می‌توانست تصور کند که از چنین جای فروتنی فرمانروایی برخیزد که قرن‌ها بعد هنوز نامش را در سراسر جهان با احترام بر زبان بیاورند.' },
-          { t: 'imgsm', key: 'cyrus-face', cap: 'Cyrus the Great, founder of the Persian Empire, as imagined in later ages.' },
+          { t: 'imgsm', key: 'cyrus-face', cap: 'Cyrus the Great, founder of the Persian Empire, as imagined in later ages.', capFa: 'کوروش بزرگ، بنیان‌گذار شاهنشاهی ایران، آن‌گونه که در روزگاران بعد تصویرش کرده‌اند.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The legend of the infant king', fa: 'افسانهٔ شاهِ نوزاد' },
@@ -685,7 +685,7 @@ const cyrus: Topic = {
           { t: 'h', x: 'A world waiting to be remade', fa: 'جهانی در انتظار دگرگونی' },
           { t: 'p', x: 'The world into which Cyrus came was divided among four great powers. The Medes ruled the Iranian plateau, Babylon held the fertile heart of Mesopotamia, Lydia commanded the wealth of Asia Minor, and Egypt guarded the ancient valley of the Nile. Persia was a minor kingdom among giants.', fa: 'جهانی که کوروش در آن پا گذاشت میان چهار قدرت بزرگ بخش شده بود. مادها بر فلات ایران فرمان می‌راندند، بابل قلب حاصلخیز میان‌رودان را در دست داشت، لیدیه بر ثروت آسیای صغیر مسلط بود، و مصر درّهٔ کهن نیل را پاس می‌داشت. پارس پادشاهی کوچکی بود در میان غول‌ها.' },
           { t: 'p', x: 'Within a single generation, Cyrus would bring all but one of these under his rule, and bind them into a single empire stretching from the Aegean Sea to the edge of India. It would be the first empire in history to unite so many peoples, and the first to attempt to rule them with tolerance rather than terror.', fa: 'در فاصلهٔ یک نسل، کوروش همهٔ اینها جز یکی را زیر فرمان خود آورد و در امپراتوری واحدی به هم بست که از دریای اژه تا کرانهٔ هند کشیده می‌شد. نخستین امپراتوری تاریخ بود که این‌همه مردم را یکجا گرد آورد، و نخستینی که کوشید آنان را با بردباری اداره کند نه با وحشت.' },
-          { t: 'img', key: 'cyrus-empire', cap: 'The Achaemenid Empire at its height, from the Aegean and Egypt to the Indus. Its capital, Pasargadae, is marked in gold.' },
+          { t: 'img', key: 'cyrus-empire', cap: 'The Achaemenid Empire at its height, from the Aegean and Egypt to the Indus. Its capital, Pasargadae, is marked in gold.', capFa: 'شاهنشاهی هخامنشی در اوج خود، از دریای اژه و مصر تا رود سند. پایتختش، پاسارگاد، با رنگ طلایی نشان داده شده.' },
           { t: 'keyvalue', items: [ { k: 'Founded', v: 'c. 550 BCE' }, { k: 'Capital', v: 'Pasargadae' }, { k: 'Extent', v: 'Aegean Sea to the Indus' }, { k: 'A first', v: 'Empire ruled by tolerance' } ] },
           { t: 'pull', x: 'From a small kingdom of herders, he would build the greatest empire the world had known.', fa: 'از پادشاهی کوچکی از چوپانان، بزرگ‌ترین امپراتوری‌ای را ساخت که جهان می‌شناخت.' },
         ] },
@@ -734,7 +734,7 @@ const cyrus: Topic = {
           { t: 'h', x: 'A trick of camels', fa: 'ترفند شتران' },
           { t: 'p', x: 'The armies met, and after an indecisive battle Croesus withdrew for the winter, expecting Cyrus to do the same. But Cyrus did not follow the old rules of war. He pursued at once, marching in the cold to strike while the Lydian army was dispersed, and appeared before the walls of Sardes when he was least expected.', fa: 'دو سپاه به هم رسیدند و پس از نبردی بی‌نتیجه، کرزوس برای زمستان عقب نشست، به گمان اینکه کوروش نیز چنین کند. اما کوروش به قاعده‌های کهن جنگ پایبند نبود. بی‌درنگ در پی او رفت، در سرما لشکر کشید تا در همان هنگام که سپاه لیدیه پراکنده بود ضربه بزند، و درست وقتی که انتظارش را نداشتند پیش دیوارهای سارد پدیدار شد.' },
           { t: 'p', x: 'In the battle before the city, the famed Lydian cavalry was the finest in the world. So Cyrus, by the counsel of Harpagus, placed his baggage camels at the front of his line. The horses of the Lydians, unused to the sight and smell of camels, panicked and refused to charge, and the battle was won.', fa: 'در نبردِ پیش شهر، سوارهٔ نامدار لیدیه بهترین سوارهٔ جهان بود. پس کوروش به رایزنی هارپاگ، شتران بارکشش را در صف نخست نشاند. اسبان لیدیه که به دیدن و بوی شتر خو نداشتند، رَم کردند و از یورش سر باز زدند، و نبرد برده شد.' },
-          { t: 'img', key: 'cyrus-conquests', cap: 'The conquests of Cyrus, in sequence: Media, then Lydia, then Babylon.' },
+          { t: 'img', key: 'cyrus-conquests', cap: 'The conquests of Cyrus, in sequence: Media, then Lydia, then Babylon.', capFa: 'فتوحات کوروش، به ترتیب: ماد، سپس لیدی، سپس بابل.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The mercy of the victor', fa: 'بخشش فاتح' },
@@ -759,7 +759,7 @@ const cyrus: Topic = {
           { t: 'h', x: 'The Cyrus Cylinder', fa: 'استوانهٔ کوروش' },
           { t: 'p', x: 'What Cyrus did next echoed through history. Rather than sack the great city or drag its gods away in chains, as conquerors before him had done, he entered in peace, honored the Babylonian god Marduk, restored the temples, and let the life of the city go on undisturbed.', fa: 'آنچه کوروش پس از آن کرد، در تاریخ پژواک انداخت. به جای غارت شهر بزرگ یا به زنجیر کشیدن خدایانش، چنان‌که فاتحان پیش از او کرده بودند، به صلح وارد شد، مردوک خدای بابلی را گرامی داشت، نیایشگاه‌ها را بازساخت و گذاشت زندگی شهر بی‌آشوب ادامه یابد.' },
           { t: 'p', x: 'He recorded his acts on a clay barrel now known as the Cyrus Cylinder, one of the most remarkable objects to survive from the ancient world. In it he tells how he freed the peoples held captive in Babylon and let them return to their homelands, and how he restored their temples and their gods.', fa: 'کارهایش را بر استوانه‌ای گِلی نوشت که امروز آن را استوانهٔ کوروش می‌نامند، از شگفت‌ترین چیزهایی که از جهان باستان به جا مانده است. در آن می‌گوید چگونه مردمانی را که در بابل به اسارت نگه داشته شده بودند آزاد کرد و گذاشت به سرزمین‌های خود بازگردند، و چگونه نیایشگاه‌ها و خدایانشان را به آنان بازگرداند.' },
-          { t: 'imgsm', key: 'cyrus-cylinder', cap: 'The Cyrus Cylinder, on which the king recorded his acts. It survives in the British Museum.' },
+          { t: 'imgsm', key: 'cyrus-cylinder', cap: 'The Cyrus Cylinder, on which the king recorded his acts. It survives in the British Museum.', capFa: 'منشور کوروش، که شاه کارهایش را بر آن ثبت کرد. امروز در موزهٔ بریتانیا نگهداری می‌شود.' },
           { t: 'q', x: 'I returned to their places the gods who had dwelt there, and let them dwell in eternal abodes. I gathered all their peoples and restored to them their homes.', fa: 'خدایانی را که در آنجا می‌زیستند به جایگاه خویش بازگرداندم و چنان کردم که در خانه‌های جاودان خود بیارامند. همهٔ مردمان ایشان را گرد آوردم و خانه‌هایشان را به آنان بازگرداندم.', by: 'the Cyrus Cylinder', byFa: 'استوانهٔ کوروش' },
         ] },
         { blocks: [
@@ -778,7 +778,7 @@ const cyrus: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'By now the empire of Cyrus stretched from the Aegean Sea in the west to the borders of India in the east, the largest the world had yet seen. But its true greatness lay not in its size. It lay in how he chose to rule it.', fa: 'اکنون امپراتوری کوروش از دریای اژه در غرب تا مرزهای هند در شرق کشیده شده بود، بزرگ‌ترین امپراتوری‌ای که جهان تا آن روز دیده بود. اما بزرگی راستینش در وسعتش نبود؛ در شیوه‌ای بود که برای فرمانروایی برگزید.' },
-          { t: 'img', key: 'cyrus-empire', cap: 'The empire of Cyrus at its height, from the Aegean and Egypt to the Indus.' },
+          { t: 'img', key: 'cyrus-empire', cap: 'The empire of Cyrus at its height, from the Aegean and Egypt to the Indus.', capFa: 'شاهنشاهی کوروش در اوج خود، از دریای اژه و مصر تا رود سند.' },
         ] },
         { blocks: [
           { t: 'h', x: 'A new idea of empire', fa: 'اندیشه‌ای تازه از امپراتوری' },
@@ -793,7 +793,7 @@ const cyrus: Topic = {
         { blocks: [
           { t: 'p', x: 'This was more than mercy. It was a philosophy of power, the understanding that an empire held together by respect would outlast one held together by fear. For his ideals of tolerance and human dignity, the Cyrus Cylinder is sometimes called the first charter of human rights, and a copy of it rests today at the United Nations.', fa: 'این فراتر از بخشش بود. فلسفه‌ای از قدرت بود؛ این دریافت که امپراتوری‌ای که با احترام به هم بسته شده باشد، از امپراتوری‌ای که با ترس نگه داشته شده، دیرتر می‌پاید. به سبب همین آرمان‌های بردباری و کرامت انسانی، استوانهٔ کوروش را گاه نخستین منشور حقوق بشر خوانده‌اند، و رونوشتی از آن امروز در سازمان ملل نگهداری می‌شود.' },
           { t: 'call', title: 'An idea that endures', titleFa: 'اندیشه‌ای که مانده است', x: 'The vision of Cyrus, that different peoples could live together under one just rule, each keeping its own identity, is one of the oldest and most enduring ideals in the human story. More than two thousand five hundred years later, it still speaks to us.', fa: 'آرمان کوروش، اینکه مردمان گوناگون بتوانند زیر یک فرمانروایی دادگر در کنار هم زندگی کنند و هر یک هویت خویش را نگاه دارد، از کهن‌ترین و ماندگارترین آرمان‌های داستان بشر است. بیش از دو هزار و پانصد سال بعد، هنوز با ما سخن می‌گوید.' },
-          { t: 'imgsm', key: 'cyrus-relief', cap: 'A relief from the age of the empire he founded.' },
+          { t: 'imgsm', key: 'cyrus-relief', cap: 'A relief from the age of the empire he founded.', capFa: 'نقش‌برجسته‌ای از روزگار شاهنشاهی‌ای که او بنیان گذاشت.' },
         ] },
       ],
     },
@@ -815,7 +815,7 @@ const cyrus: Topic = {
         { blocks: [
           { t: 'h', x: 'The tomb at Pasargadae', fa: 'آرامگاه پاسارگاد' },
           { t: 'p', x: 'There, upon the plain of Pasargadae, stands his tomb, a simple and noble structure of pale stone that has endured for two and a half thousand years. It survived even the coming of Alexander the Great, who, conquering Persia two centuries later, is said to have honored the tomb of Cyrus and ordered it protected.', fa: 'آنجا، بر دشت پاسارگاد، آرامگاهش ایستاده است؛ بنایی ساده و شکوهمند از سنگ روشن که دو هزار و پانصد سال دوام آورده است. حتی از آمدن اسکندر هم جان به در برد؛ او که دو قرن بعد پارس را گشود، گفته‌اند آرامگاه کوروش را گرامی داشت و فرمان داد از آن نگهداری کنند.' },
-          { t: 'img', key: 'cyrus-tomb', cap: 'The tomb of Cyrus the Great at Pasargadae, which has stood for over 2,500 years.' },
+          { t: 'img', key: 'cyrus-tomb', cap: 'The tomb of Cyrus the Great at Pasargadae, which has stood for over 2,500 years.', capFa: 'آرامگاه کوروش بزرگ در پاسارگاد، که بیش از دو هزار و پانصد سال سرِ پا مانده است.' },
           { t: 'p', x: 'An inscription said to have once stood there carried words of quiet dignity, a king asking not for glory but for peace, reminding the passer by that he too was mortal.', fa: 'گفته‌اند روزی سنگ‌نوشته‌ای آنجا بوده با کلماتی آرام و باوقار؛ شاهی که نه شکوه، که آسودگی می‌خواست، و به رهگذر یادآوری می‌کرد که او نیز میرا بوده است.' },
           { t: 'quotebig', x: 'O man, whoever you are, I am Cyrus, who won the Persians their empire. Do not grudge me this little earth that covers my body.', fa: 'ای انسان، هر که هستی و از هر کجا که می‌آیی، من کوروشم که برای پارسیان امپراتوری را به دست آوردم. بر این اندک خاکی که پیکرم را پوشانده است رشک مبر.', by: 'ATTRIBUTED TO THE TOMB OF CYRUS', byFa: 'منسوب به آرامگاه کوروش' },
         ] },
@@ -834,7 +834,7 @@ const cyrus: Topic = {
         { blocks: [
           { t: 'h', x: 'The king the world remembered', fa: 'شاهی که جهان به یادش سپرد' },
           { t: 'p', x: 'The Greeks, who were his people\'s great rivals, could not help but admire him. Xenophon wrote a whole book, the Cyropaedia, holding Cyrus up as the model of the ideal ruler, a book later read by kings and thinkers for centuries. The founders of nations far in the future would look back to Cyrus as an example of just rule.', fa: 'یونانیان، که رقیبان بزرگ مردم او بودند، نتوانستند تحسینش نکنند. گزنفون کتابی تمام دربارهٔ او نوشت، کوروش‌نامه، و او را نمونهٔ فرمانروای آرمانی خواند؛ کتابی که قرن‌ها پس از آن شاهان و اندیشمندان می‌خواندندش. بنیان‌گذاران ملت‌هایی در آینده‌های دور، کوروش را سرمشق فرمانروایی دادگر می‌دانستند.' },
-          { t: 'imgrow', keys: ['cyrus-building-1', 'cyrus-building-2'], cap: 'The remains of Pasargadae, the capital Cyrus built, still standing on the Iranian plain.' },
+          { t: 'imgrow', keys: ['cyrus-building-1', 'cyrus-building-2'], cap: 'The remains of Pasargadae, the capital Cyrus built, still standing on the Iranian plain.', capFa: 'بازماندهٔ پاسارگاد، پایتختی که کوروش ساخت، هنوز بر دشت ایران ایستاده.' },
           { t: 'p', x: 'For Iranians above all, he remains the father of the nation, the founder of the first Persian Empire and of an idea of Iran that has lasted through every age since. His name is spoken with a pride that has not dimmed in two and a half thousand years.', fa: 'و بیش از همه برای ایرانیان، او پدر ملت مانده است؛ بنیان‌گذار نخستین امپراتوری ایران و آغازگر اندیشه‌ای از ایران که از آن پس در هر روزگاری دوام آورده. نامش را با غروری بر زبان می‌آورند که در دو هزار و پانصد سال کم‌رنگ نشده است.' },
         ] },
         { blocks: [
@@ -935,7 +935,7 @@ const zand: Topic = {
           { t: 'p', x: "The Vakil Mosque, with its forest of carved stone columns and its exquisite tilework, and the Vakil Bazaar, whose vaulted brick halls still shelter the merchants of Shiraz to this day, are among the treasures of Iranian architecture.", fa: 'مسجد وکیل، با جنگلی از ستون‌های سنگی تراشیده و کاشی‌کاری ظریفش، و بازار وکیل، که راسته‌های آجری و طاق‌دارش تا امروز بازرگانان شیراز را در خود جای داده‌اند، از گنجینه‌های معماری ایران‌اند.' },
         ] },
         { blocks: [
-          { t: 'imgrow', keys: ['zand-vakil-mosque', 'zand-vakil-bazaar'], cap: 'The Vakil Mosque and the Vakil Bazaar in Shiraz, built by Karim Khan and still in use today.' },
+          { t: 'imgrow', keys: ['zand-vakil-mosque', 'zand-vakil-bazaar'], cap: 'The Vakil Mosque and the Vakil Bazaar in Shiraz, built by Karim Khan and still in use today.', capFa: 'مسجد وکیل و بازار وکیل در شیراز، ساختهٔ کریم‌خان، که امروز هم در استفاده‌اند.' },
           { t: 'p', x: "He also laid out gardens and repaired the shrines and tombs of the poets, honoring the cultural soul of the city. Under his care, Shiraz became again what it had long been in the Persian imagination: a place of beauty, learning, and peace.", fa: 'باغ‌ها نیز طرح ریخت و زیارتگاه‌ها و آرامگاه شاعران را تعمیر کرد، و بدین‌سان جان فرهنگی شهر را گرامی داشت. زیر مراقبت او، شیراز دوباره همان شد که دیرزمانی در خیال ایرانی بود: جایگاه زیبایی، دانش و آرامش.' },
           { t: 'pull', x: "He gave his beloved city monuments that still bear his people\'s name, not his own.", fa: 'به شهر محبوبش بناهایی بخشید که هنوز نام مردمش را بر خود دارند، نه نام خودش را.' },
         ] },
@@ -1019,7 +1019,7 @@ const safavid: Topic = {
         { blocks: [
           { t: 'p', x: 'For centuries after the Mongol storm, Iran had been a patchwork of rival lords and warring tribes, with no single ruler and no single soul. Then, at the very dawn of the sixteenth century, a boy of fourteen changed the course of the nation forever.', fa: 'قرن‌ها پس از توفان مغول، ایران به تکه‌هایی پراکنده از خان‌های رقیب و ایل‌های در جنگ بدل شده بود؛ نه فرمانروایی واحد داشت و نه روحی یگانه. سپس، درست در سپیده‌دم سدهٔ شانزدهم، نوجوانی چهارده ساله مسیر این ملت را برای همیشه دگرگون کرد.' },
           { t: 'p', x: 'His name was Ismail, and he was the young leader of the Safavid order, a devoted religious brotherhood from the northwest of Iran. Around him gathered fierce and loyal warriors, and at their head he swept across the land, defeating all who stood against him.', fa: 'نامش اسماعیل بود، پیشوای جوان طریقت صفوی؛ برادری‌ای دینی و سرسپرده از شمال غرب ایران. جنگاورانی دلیر و وفادار گرد او جمع شدند، و او در رأس آنان سرتاسر سرزمین را درنوردید و هر که را در برابرش ایستاد از پای درآورد.' },
-          { t: 'imgsm', key: 'safavid-ismail', cap: 'Shah Ismail I, founder of the Safavid dynasty, who took the throne at fourteen.' },
+          { t: 'imgsm', key: 'safavid-ismail', cap: 'Shah Ismail I, founder of the Safavid dynasty, who took the throne at fourteen.', capFa: 'شاه اسماعیل یکم، بنیان‌گذار سلسلهٔ صفوی، که در چهارده سالگی بر تخت نشست.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The crown at fourteen', fa: 'تاج در چهارده سالگی' },
@@ -1053,7 +1053,7 @@ const safavid: Topic = {
         { blocks: [
           { t: 'h', x: 'A kingdom tested', fa: 'پادشاهی‌ای در بوتهٔ آزمایش' },
           { t: 'p', x: 'The decades that followed were difficult ones. The dynasty was pressed on its frontiers by the Ottomans in the west and the Uzbeks in the east, and troubled at home by the rivalries of the powerful tribal chiefs on whom the throne depended.', fa: 'دهه‌های پس از آن دشوار بودند. سلسله در مرزهایش از غرب زیر فشار عثمانی و از شرق زیر فشار ازبکان بود، و در درون نیز رقابت خان‌های نیرومند ایلی گرفتارش کرده بود؛ همان‌ها که تخت به آنان تکیه داشت.' },
-          { t: 'img', key: 'safavid-battle', cap: 'The Safavids faced the great powers of their age on every frontier.' },
+          { t: 'img', key: 'safavid-battle', cap: 'The Safavids faced the great powers of their age on every frontier.', capFa: 'صفویان در هر مرزی با قدرت‌های بزرگ روزگار خود روبه‌رو بودند.' },
           { t: 'p', x: 'Yet the young state endured. Through hard years and capable rulers it held together, waiting, though it did not yet know it, for the king who would raise it to its height.', fa: 'با این همه، دولت جوان دوام آورد. در سال‌های سخت و به دست فرمانروایانی کاردان یکپارچه ماند و در انتظار نشست؛ هرچند خود هنوز نمی‌دانست در انتظار چه کسی است: شاهی که آن را به اوج خواهد رساند.' },
         ] },
         { blocks: [
@@ -1071,7 +1071,7 @@ const safavid: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'Shah Abbas came to the throne of a troubled kingdom, hemmed in by enemies and weakened by division within. Over the course of his long reign he transformed it utterly, and left Iran stronger, richer, and more glorious than it had been in a thousand years.', fa: 'شاه عباس بر تخت پادشاهی‌ای نشست که گرفتار بود؛ از بیرون در محاصرهٔ دشمنان و از درون فرسودهٔ تفرقه. در طول سلطنت بلندش آن را یکسره دگرگون کرد و ایران را نیرومندتر، ثروتمندتر و باشکوه‌تر از هزار سال گذشته‌اش بر جای گذاشت.' },
-          { t: 'imgsm', key: 'safavid-abbas', cap: 'Shah Abbas the Great, under whom the Safavid Empire reached its height.' },
+          { t: 'imgsm', key: 'safavid-abbas', cap: 'Shah Abbas the Great, under whom the Safavid Empire reached its height.', capFa: 'شاه عباس بزرگ، که امپراتوری صفوی در روزگار او به اوج رسید.' },
           { t: 'p', x: 'He was a ruler of rare gifts: a brilliant soldier, a shrewd statesman, and a great patron of art and architecture. He was also, at times, a hard and suspicious man, as the great kings of that age often were. But his vision for Iran was without equal.', fa: 'فرمانروایی بود با توانایی‌هایی کم‌نظیر: سربازی درخشان، سیاستمداری زیرک، و حامی بزرگ هنر و معماری. گاه نیز مردی سختگیر و بدگمان بود، چنان‌که پادشاهان بزرگ آن روزگار اغلب بودند. اما چشم‌اندازی که برای ایران داشت بی‌همتا بود.' },
         ] },
         { blocks: [
@@ -1100,7 +1100,7 @@ const safavid: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: 'Of all that Shah Abbas achieved, none endures more beautifully than his capital. He made Isfahan the seat of his empire and set out to make it the most beautiful city on earth, and by the judgment of many who saw it, he succeeded.', fa: 'از میان همهٔ دستاوردهای شاه عباس، هیچ‌کدام به زیبایی پایتختش بر جای نمانده است. اصفهان را مقر امپراتوری خود کرد و بر آن شد که زیباترین شهر روی زمین را بسازد؛ و به داوری بسیاری از کسانی که آن را دیدند، کامیاب شد.' },
-          { t: 'img', key: 'safavid-isfahan', cap: 'Isfahan, the capital of Shah Abbas, one of the most beautiful cities ever built.' },
+          { t: 'img', key: 'safavid-isfahan', cap: 'Isfahan, the capital of Shah Abbas, one of the most beautiful cities ever built.', capFa: 'اصفهان، پایتخت شاه عباس، یکی از زیباترین شهرهایی که تاکنون ساخته شده.' },
           { t: 'p', x: 'So great was its splendour that a saying arose, repeated by travellers across the world, that captured the wonder of all who beheld it.', fa: 'شکوهش چندان بود که ضرب‌المثلی از آن برخاست؛ سخنی که مسافران در سراسر جهان تکرارش کردند و شگفتی همهٔ کسانی را که آن را دیده بودند در خود داشت.' },
         ] },
         { blocks: [
@@ -1110,7 +1110,7 @@ const safavid: Topic = {
         { blocks: [
           { t: 'h', x: 'Wonders in tile and stone', fa: 'شگفتی‌هایی از کاشی و سنگ' },
           { t: 'p', x: 'On the square rose the great Shah Mosque, its dome and portals covered in dazzling blue tilework, a masterpiece of Persian architecture. Nearby stood the exquisite Sheikh Lotfollah Mosque, the graceful Ali Qapu palace, and the entrance to the endless royal bazaar.', fa: 'بر این میدان مسجد بزرگ شاه سر برآورد، با گنبد و سردری پوشیده از کاشی‌کاری خیره‌کنندهٔ لاجوردی؛ شاهکاری از معماری ایرانی. در همان نزدیکی مسجد ظریف شیخ لطف‌الله ایستاده بود، کاخ موزون عالی‌قاپو، و سردر بازار بی‌انتهای شاهی.' },
-          { t: 'imgrow', keys: ['safavid-mosque-1', 'safavid-mosque-2'], cap: 'The great mosques of Isfahan, masterpieces of blue tilework raised under Shah Abbas.' },
+          { t: 'imgrow', keys: ['safavid-mosque-1', 'safavid-mosque-2'], cap: 'The great mosques of Isfahan, masterpieces of blue tilework raised under Shah Abbas.', capFa: 'مسجدهای بزرگ اصفهان، شاهکارهای کاشی‌کاری آبی که در روزگار شاه عباس برپا شد.' },
           { t: 'p', x: 'He built bridges across the river that were themselves works of art, and gardens and avenues that made the city a paradise. The mastery of the Persian artist reached its very summit here, in colour, in geometry, and in grace.', fa: 'بر رودخانه پل‌هایی ساخت که خود اثر هنری بودند، و باغ‌ها و خیابان‌هایی که شهر را به بهشت بدل کردند. چیره‌دستی هنرمند ایرانی همین‌جا به اوج خود رسید: در رنگ، در هندسه، و در لطافت.' },
         ] },
         { blocks: [
@@ -1569,7 +1569,7 @@ const parthian: Topic = {
           { t: 'h', x: 'A people from the steppe', fa: 'مردمی از دشت‌های شمال' },
           { t: 'p', x: 'But Iran would not stay in foreign hands. From the northeast, from the wide grasslands beyond the Caspian, came a people of hardy nomadic horsemen: the Parni, led by a chief named Arsaces. Around the middle of the third century BCE, they swept into the region of Parthia and threw off Greek rule.', fa: 'اما ایران در دست بیگانه نماند. از شمال شرق، از علفزارهای پهناور آن سوی خزر، مردمی آمدند از سوارکاران کوچ‌نشین و سرسخت: پَرنی‌ها، به سرکردگی مردی به نام اشک. حدود میانهٔ سدهٔ سوم پیش از میلاد به سرزمین پارت تاختند و یوغ یونانی را به کناری افکندند.' },
           { t: 'p', x: 'From that homeland the dynasty took its name, and Arsaces gave his to the line of kings who followed, the Arsacids. From these beginnings, a small rebellion on the edge of a Greek empire, would grow one of the great powers of the ancient world.', fa: 'سلسله نام خود را از همان سرزمین گرفت، و اشک نامش را به تبار شاهانی داد که پس از او آمدند: اشکانیان. از این آغاز کوچک، شورشی در حاشیهٔ یک امپراتوری یونانی، یکی از قدرت‌های بزرگ جهان باستان برخاست.' },
-          { t: 'imgwide', key: 'parthian-arsaces', capFa: 'اشک یکم، سرکردهٔ پرنی‌ها، سلسله‌ای را بنیان نهاد که یونانیان را از ایران بیرون راند.', cap: 'Arsaces I, chief of the Parni, founded the dynasty that would drive the Greeks from Iran and rule for nearly five centuries.' },
+          { t: 'imgwide', key: 'parthian-arsaces', capFa: 'اشک یکم، سرکردهٔ پرنی‌ها، سلسله‌ای را بنیان نهاد که یونانیان را از ایران بیرون راند.', cap: 'Arsaces I, chief of the Parni, founded the dynasty that would drive the Greeks from Iran and rule for nearly five centuries.', capFa: 'ارشک یکم، سردار پارنی‌ها، سلسله‌ای را بنیان گذاشت که یونانیان را از ایران بیرون راند و نزدیک پنج قرن فرمان راند.' },
         ] },
       ],
     },

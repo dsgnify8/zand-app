@@ -582,7 +582,7 @@ const khayyam: Author = {
         { blocks: [
           { t: 'p', x: 'There is a story, and unusually for such stories it comes from someone who knew him. Nizami Aruzi wrote that Khayyam once said his grave would lie in a place where the north wind would scatter blossoms over it.', fa: 'حکایتی هست، و برخلاف بیشتر چنین حکایت‌ها، از کسی نقل شده که خودش او را می‌شناخته. نظامی عروضی نوشته که خیام روزی گفت گورش جایی خواهد بود که باد شمال بر آن شکوفه بریزد.' },
           { t: 'p', x: 'Years after Khayyam died, Aruzi went to Neyshabur and found the tomb. It sat at the foot of a garden wall, and pear and peach trees leaned over that wall, and the ground was so buried in fallen blossom that the grave was hidden beneath it. He wrote that he wept.', fa: 'سال‌ها پس از مرگ خیام، عروضی به نیشابور رفت و گور را یافت. پای دیوار باغی بود، و درختان امرود و هلو بر آن دیوار خم شده بودند، و زمین چنان زیر شکوفهٔ ریخته پنهان شده بود که گور در آن گم بود. نوشت که گریست.' },
-          { t: 'imgframe', key: 'khayyam-tomb', cap: 'The tomb at Neyshabur, rebuilt in 1963 as a lattice of interlocking geometry, for a man who solved equations with shapes.' },
+          { t: 'imgframe', key: 'khayyam-tomb', cap: 'The tomb at Neyshabur, rebuilt in 1963 as a lattice of interlocking geometry, for a man who solved equations with shapes.', capFa: 'آرامگاه نیشابور، که در سال ۱۳۴۲ به شکل شبکه‌ای از هندسهٔ درهم‌بافته از نو ساخته شد؛ برای مردی که معادله‌ها را با شکل حل می‌کرد.' },
           { t: 'illumin', x: 'The man who would not predict the afterlife predicted his own grave, and got it right.', fa: 'مردی که حاضر نبود دربارهٔ آن دنیا پیشگویی کند، گور خودش را پیشگویی کرد و درست هم گفت.' },
         ] },
         { blocks: [
@@ -728,7 +728,7 @@ const rudaki: Author = {
       pages: [
         { blocks: [
           { t: 'p', x: 'Iranians call him Adam al Shoara, the Adam of Poets. The first man of the tribe. Everyone in this section is descended from him.', fa: 'ایرانی‌ها او را آدم‌الشعرا می‌خوانند؛ آدمِ شاعران. نخستین مرد این تبار. همهٔ کسانی که در این بخش هستند از نسل او هستند.' },
-          { t: 'imgframe', key: 'rudaki-tomb', cap: 'The tomb at Panjrud, in the mountains of Tajikistan, where the first Persian poet went home to die.' },
+          { t: 'imgframe', key: 'rudaki-tomb', cap: 'The tomb at Panjrud, in the mountains of Tajikistan, where the first Persian poet went home to die.', capFa: 'آرامگاه پنجرود، در کوه‌های تاجیکستان، جایی که نخستین شاعر فارسی برای مردن به خانه بازگشت.' },
           { t: 'p', x: 'He is buried in Tajikistan, which is worth pausing on, because it says something true about Persian. The language is bigger than the country. It began in Bukhara and Samarkand, cities that are not in Iran and have not been for centuries, and the first great poet of Iran lies outside it. Persian was never contained by a border.', fa: 'در تاجیکستان به خاک سپرده شده، و ارزشش را دارد که روی این مکث کنیم، چون چیزی راست دربارهٔ فارسی می‌گوید: این زبان از آن کشور بزرگ‌تر است. در بخارا و سمرقند آغاز شد، شهرهایی که در ایران نیستند و قرن‌ها نبوده‌اند، و نخستین شاعر بزرگ ایران بیرون از ایران آرمیده است. فارسی هرگز در هیچ مرزی نگنجید.' },
         ] },
         { blocks: [
@@ -870,7 +870,7 @@ const nizami: Author = {
       pages: [
         { blocks: [
           { t: 'p', x: 'He died in Ganja around 1209, in the city he never left, and is buried there.', fa: 'حدود سال ۱۲۰۹ میلادی در گنجه درگذشت، در همان شهری که هرگز ترکش نکرد، و همان‌جا به خاک سپرده شد.' },
-          { t: 'imgframe', key: 'nizami-tomb', cap: 'The tomb at Ganja, for the man who wrote the loves everyone else would spend eight centuries painting.' },
+          { t: 'imgframe', key: 'nizami-tomb', cap: 'The tomb at Ganja, for the man who wrote the loves everyone else would spend eight centuries painting.', capFa: 'آرامگاه گنجه، برای مردی که عشق‌هایی را نوشت که بقیه هشتصد سال صرف کشیدنشان کردند.' },
           { t: 'p', x: 'His afterlife is enormous. Every miniature painter for the next six hundred years painted his scenes: Shirin at the pool, Farhad on the mountain, Majnun among the animals, the seven domes. Walk any museum with Persian art and you are looking at Nizami, whether the label says so or not. Poets from Turkey to India rewrote his five poems in their own languages as a test of skill.', fa: 'آنچه پس از او ماند عظیم است. در ششصد سال بعد، هر نگارگری صحنه‌های او را کشید: شیرین بر لب چشمه، فرهاد بر کوه، مجنون میان جانوران، و آن هفت گنبد. در هر موزه‌ای که هنر ایرانی دارد قدم بزنی، داری نظامی را تماشا می‌کنی، چه روی برچسبش نوشته باشند و چه نه. شاعران، از ترکیه تا هند، پنج منظومهٔ او را به زبان خودشان از نو نوشتند، به‌عنوان محک هنرشان.' },
         ] },
         { blocks: [
@@ -1044,7 +1044,7 @@ const rumi: Author = {
         { blocks: [
           { t: 'p', x: 'He died on the seventeenth of December, 1273, in Konya.', fa: 'در هفدهم دسامبر ۱۲۷۳ میلادی، در قونیه، درگذشت.' },
           { t: 'p', x: 'The funeral is the thing to know about him. Christians came. Jews came. Greeks and Armenians and Turks and Persians came, and when they were asked why, the answer that survives is that each of them had found their own prophet in him. The procession took hours to pass.', fa: 'اگر یک چیز دربارهٔ او باید دانست، همان تشییع اوست. مسیحیان آمدند. یهودیان آمدند. یونانی و ارمنی و ترک و ایرانی آمدند، و وقتی پرسیدند چرا، پاسخی که به جا مانده این است که هر کدامشان پیامبر خودش را در او یافته بود. گذشتن آن جمعیت ساعت‌ها طول کشید.' },
-          { t: 'imgframe', key: 'rumi-tomb', cap: 'The green dome at Konya, where they still come, seven hundred and fifty years on.' },
+          { t: 'imgframe', key: 'rumi-tomb', cap: 'The green dome at Konya, where they still come, seven hundred and fifty years on.', capFa: 'گنبد سبز قونیه، که هفتصد و پنجاه سال بعد هنوز به دیدنش می‌آیند.' },
           { t: 'p', x: 'And he had told them not to mourn. He called the night of his death Shab e Arus, the wedding night, because dying was the reunion, the reed going back to the water. It is still marked in Konya every December, on the anniversary, as a wedding.', fa: 'و به آنان گفته بود سوگواری نکنند. شب مرگش را شب عروس نامید، شب عروسی، چون مردن همان وصال بود؛ بازگشتن نی به آب. هنوز هم هر سال در قونیه، در سالگردش، آن شب را چون یک عروسی برگزار می‌کنند.' },
           { t: 'illumin', x: 'He named the night of his own death the wedding night, and they have kept the name.', fa: 'شب مرگ خودش را شب عروس نامید، و آن نام را نگه داشته‌اند.' },
         ] },
