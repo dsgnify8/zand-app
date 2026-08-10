@@ -1,6 +1,10 @@
 import type { T } from '@/lib/i18n';
 
 export const SETTINGS: Record<string, T> = {
+  settingsTitle: { en: 'Settings', fa: 'تنظیمات' },
+  adminPanel: { en: 'Admin panel', fa: 'پنل مدیریت' },
+  adminPanelX: { en: 'Manage articles and analytics', fa: 'مدیریت مقاله‌ها و آمار' },
+  termsX: { en: 'The legal part', fa: 'بخش حقوقی' },
   title: { en: 'Settings', fa: 'تنظیمات' },
   account: { en: 'Account', fa: 'حساب' },
   accountX: { en: 'Your name and email', fa: 'نام و ایمیل تو' },

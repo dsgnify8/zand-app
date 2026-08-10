@@ -61,13 +61,13 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   const close = () => { setPanel(null); onClose(); };
 
   const rows = [
-    ...(isAdmin ? [{ key: 'admin', i: 'construct-outline', t: 'Admin panel', x: 'Manage articles and analytics' }] : []),
+    ...(isAdmin ? [{ key: 'admin', i: 'construct-outline', t: tset(SETTINGS.adminPanel), x: tset(SETTINGS.adminPanelX) }] : []),
     { key: 'friends', i: 'people-outline', t: tset(SETTINGS.inviteFriends), x: tset(SETTINGS.inviteFriendsX) },
     { key: 'account', i: 'person-outline', t: tset(SETTINGS.account), x: tset(SETTINGS.accountX) },
-    { key: 'language', i: 'language-outline', t: 'Language', x: { en: 'English', fa: 'فارسی', es: 'Español', fr: 'Français' }[curLang] ?? 'English' },
+    { key: 'language', i: 'language-outline', t: tset(SETTINGS.language), x: { en: 'English', fa: 'فارسی', es: 'Español', fr: 'Français' }[curLang] ?? 'English' },
     { key: 'notifications', i: 'notifications-outline', t: tset(SETTINGS.notifications), x: tset(SETTINGS.notificationsX) },
-    { key: 'help', i: 'help-circle-outline', t: 'Help centre', x: 'Get in touch' },
-    { key: 'terms', i: 'document-text-outline', t: 'Terms and privacy', x: 'The legal part' },
+    { key: 'help', i: 'help-circle-outline', t: tset(SETTINGS.help), x: tset(SETTINGS.helpX) },
+    { key: 'terms', i: 'document-text-outline', t: tset(SETTINGS.terms), x: tset(SETTINGS.termsX) },
   ] as const;
 
   const Header = ({ title }: { title: string }) => (
@@ -86,7 +86,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     <Sheet open={open} onClose={close}>
       {panel === null ? (
         <>
-          <Header title="Settings" />
+          <Header title={tset(SETTINGS.settingsTitle)} />
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl }}>
             <View style={m.account}>
               <LinearGradient colors={[pr.goldA, pr.goldB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
