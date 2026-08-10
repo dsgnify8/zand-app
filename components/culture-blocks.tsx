@@ -12,9 +12,9 @@ const W = Dimensions.get('window').width;
 type Round = { host: string; fa: string; real: boolean };
 
 const ROUNDS: Round[] = [
-  { host: 'Please, take it. It is worthless. Be my guest.', fa: 'قابل نداره', real: false },
-  { host: 'No, truly, I insist. Take it.', fa: 'خواهش می‌کنم', real: false },
-  { host: 'I will be offended. Please. Take it.', fa: 'تعارف نکن', real: true },
+  { host: 'Please, take it. It is worthless. Be my guest.', hostFa: 'خواهش می‌کنم، بردارید. قابل شما را ندارد.', fa: 'قابل نداره', real: false },
+  { host: 'No, truly, I insist. Take it.', hostFa: 'نه، جدی می‌گویم. اصرار می‌کنم. بردارید.', fa: 'خواهش می‌کنم', real: false },
+  { host: 'I will be offended. Please. Take it.', hostFa: 'به من برمی‌خورد. خواهش می‌کنم. بردارید.', fa: 'تعارف نکن', real: true },
 ];
 
 export function TaarofSim() {
@@ -48,17 +48,17 @@ export function TaarofSim() {
 
   if (ending) {
     const map = {
-      greedy: { c: cu.pomegranate, t: 'Too soon.', x: 'You accepted on offer ' + (step + 1) + '. The first offers are not real, and everyone at the table now knows you were waiting for it. The host is smiling. The host is not pleased.' },
-      perfect: { c: cu.pistachio, t: 'Correct.', x: 'Three refusals, then acceptance on the third genuine offer. Nobody was exposed, nobody was refused, and everybody got exactly what they wanted. This is the whole machine working.' },
-      lost: { c: cu.saffron, t: 'You overdid it.', x: 'The third offer was real and you refused it. The host has withdrawn it, because you have now insisted, and they have to take you at your word. You wanted it. You do not have it.' },
+      greedy: { c: cu.pomegranate, t: 'Too soon.', tFa: 'زود بود.', x: 'You accepted on offer ' + (step + 1) + '. The first offers are not real, and everyone at the table now knows you were waiting for it. The host is smiling. The host is not pleased.', fa: 'تعارف شمارهٔ ' + (step + 1) + ' را قبول کردی. تعارف‌های اول واقعی نیستند، و حالا همهٔ کسانی که سر سفره‌اند می‌دانند که منتظرش بودی. میزبان لبخند می‌زند. میزبان راضی نیست.' },
+      perfect: { c: cu.pistachio, t: 'Correct.', tFa: 'درست بود.', x: 'Three refusals, then acceptance on the third genuine offer. Nobody was exposed, nobody was refused, and everybody got exactly what they wanted. This is the whole machine working.', fa: 'سه بار رد کردی، و بعد تعارف سومِ واقعی را پذیرفتی. آبروی کسی نرفت، به کسی نه گفته نشد، و همه دقیقاً همان چیزی را گرفتند که می‌خواستند. این یعنی تمام آن دستگاه، درست کار کرده.' },
+      lost: { c: cu.saffron, t: 'You overdid it.', tFa: 'زیاده‌روی کردی.', x: 'The third offer was real and you refused it. The host has withdrawn it, because you have now insisted, and they have to take you at your word. You wanted it. You do not have it.', fa: 'تعارف سوم واقعی بود و تو ردش کردی. میزبان پسش گرفت، چون تو اصرار کردی و او ناچار است حرفت را باور کند. می‌خواستی‌اش. و حالا نداری‌اش.' },
     }[ending];
     return (
       <View style={[styles.simWrap, { borderColor: map.c }]}>
-        <Text style={[styles.simVerdict, { color: map.c }]}>{map.t}</Text>
+        <Text style={[styles.simVerdict, { color: map.c }]}>{fa && (map as any).tFa ? (map as any).tFa : map.t}</Text>
         <Text style={[styles.simVerdictX, fa && styles.faBody]}>{fa && (map as any).fa ? (map as any).fa : map.x}</Text>
         <Pressable style={styles.simAgain} onPress={reset}>
           <Ionicons name="refresh" size={13} color={cu.textDim} />
-          <Text style={styles.simAgainT}>again</Text>
+          <Text style={styles.simAgainT}>{fa ? 'دوباره' : 'again'}</Text>
         </Pressable>
       </View>
     );
@@ -66,20 +66,20 @@ export function TaarofSim() {
 
   return (
     <Animated.View style={[styles.simWrap, { transform: [{ translateX: sx }] }]}>
-      <Text style={styles.simKicker}>OFFER {step + 1} OF 3</Text>
+      <Text style={styles.simKicker}>{fa ? 'تعارف ' + (step + 1) + ' از ۳' : 'OFFER ' + (step + 1) + ' OF 3'}</Text>
       <View style={styles.simDots}>
         {[0, 1, 2].map((i) => <View key={i} style={[styles.simDot, i <= step && styles.simDotOn]} />)}
       </View>
 
       <Text style={styles.simFa}>{round.fa}</Text>
-      <Text style={styles.simHost}>{round.host}</Text>
+      <Text style={[styles.simHost, fa && styles.faBody]}>{fa && (round as any).hostFa ? (round as any).hostFa : round.host}</Text>
 
       <View style={styles.simBtns}>
         <Pressable style={[styles.simBtn, styles.simBtnGhost]} onPress={refuse}>
-          <Text style={styles.simBtnGhostT}>Refuse</Text>
+          <Text style={styles.simBtnGhostT}>{fa ? 'رد می‌کنم' : 'Refuse'}</Text>
         </Pressable>
         <Pressable style={[styles.simBtn, styles.simBtnSolid]} onPress={accept}>
-          <Text style={styles.simBtnSolidT}>Accept</Text>
+          <Text style={styles.simBtnSolidT}>{fa ? 'قبول می‌کنم' : 'Accept'}</Text>
         </Pressable>
       </View>
     </Animated.View>
@@ -89,14 +89,14 @@ export function TaarofSim() {
 /* ---------- The del map ---------- */
 
 const DEL_WORDS = [
-  { fa: 'دلتنگ', tr: 'deltang', en: 'heart tight', x: 'Missing someone.' },
-  { fa: 'دلسوز', tr: 'delsuz', en: 'heart burning', x: 'Compassionate. Your heart burns for them.' },
-  { fa: 'دلبر', tr: 'delbar', en: 'heart carrier', x: 'The beloved. They took it with them.' },
-  { fa: 'دلدار', tr: 'deldar', en: 'heart holder', x: 'The one who holds your heart.' },
-  { fa: 'دل‌شکسته', tr: 'delshekaste', en: 'heart broken', x: 'The same image in every language, but Persian got there first.' },
-  { fa: 'دلگیر', tr: 'delgir', en: 'heart caught', x: 'Melancholy. Something has your heart and will not let go.' },
-  { fa: 'دل‌خور', tr: 'delkhor', en: 'heart eaten', x: 'Hurt, quietly. Something is eating at it.' },
-  { fa: 'دلیر', tr: 'delir', en: 'heart strong', x: 'Brave. Courage is a property of the heart, not the nerve.' },
+  { fa: 'دلتنگ', tr: 'deltang', en: 'heart tight', x: 'Missing someone.', xFa: 'دلت برای کسی تنگ شده.' },
+  { fa: 'دلسوز', tr: 'delsuz', en: 'heart burning', x: 'Compassionate. Your heart burns for them.', xFa: 'مهربان و دلواپس دیگری. دلت برایش می‌سوزد.' },
+  { fa: 'دلبر', tr: 'delbar', en: 'heart carrier', x: 'The beloved. They took it with them.', xFa: 'معشوق. دل را با خودش برد.' },
+  { fa: 'دلدار', tr: 'deldar', en: 'heart holder', x: 'The one who holds your heart.', xFa: 'آن که دلت دست اوست.' },
+  { fa: 'دل‌شکسته', tr: 'delshekaste', en: 'heart broken', x: 'The same image in every language, but Persian got there first.', xFa: 'همین تصویر در هر زبانی هست، اما فارسی زودتر از همه به آن رسید.' },
+  { fa: 'دلگیر', tr: 'delgir', en: 'heart caught', x: 'Melancholy. Something has your heart and will not let go.', xFa: 'گرفتگی و افسردگی. چیزی دلت را گرفته و رها نمی‌کند.' },
+  { fa: 'دل‌خور', tr: 'delkhor', en: 'heart eaten', x: 'Hurt, quietly. Something is eating at it.', xFa: 'رنجیده، بی‌سروصدا. چیزی دارد دلت را می‌خورد.' },
+  { fa: 'دلیر', tr: 'delir', en: 'heart strong', x: 'Brave. Courage is a property of the heart, not the nerve.', xFa: 'شجاع. جرئت خاصیتِ دل است، نه اعصاب.' },
 ];
 
 export function DelMap() {
@@ -134,7 +134,7 @@ export function DelMap() {
       {sel ? (
         <View style={styles.dmCard}>
           <Text style={[styles.dmLit, fa && styles.faBody]}>{fa && (sel as any).enFa ? (sel as any).enFa : sel.en}</Text>
-          <Text style={[styles.dmX, fa && styles.faBody]}>{fa && (sel as any).fa ? (sel as any).fa : sel.x}</Text>
+          <Text style={[styles.dmX, fa && styles.faBody]}>{fa && (sel as any).xFa ? (sel as any).xFa : sel.x}</Text>
         </View>
       ) : (
         <Text style={styles.dmHint}>touch a word</Text>
@@ -251,7 +251,7 @@ export function Zurkhaneh() {
 
   return (
     <Pressable style={styles.zWrap} onPress={toggle}>
-      <Text style={styles.zKicker}>THE ZURKHANEH</Text>
+      <Text style={styles.zKicker}>{fa ? 'زورخانه' : 'THE ZURKHANEH'}</Text>
 
       <View style={styles.zRoom}>
         <View style={styles.zDome} />
@@ -294,7 +294,7 @@ export function RicePot() {
 
   return (
     <Pressable style={styles.rWrap} onPress={lift}>
-      <Text style={styles.rKicker}>TAHDIG</Text>
+      <Text style={styles.rKicker}>{fa ? 'ته دیگ' : 'TAHDIG'}</Text>
 
       <View style={styles.rStage}>
         <Animated.View style={[styles.rLid, { transform: [{ translateY: lidY }], opacity: lidO }]} />
