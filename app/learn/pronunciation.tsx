@@ -47,7 +47,7 @@ export default function PronunciationScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader />
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-        <Pressable style={styles.backBtn} onPress={() => router.back()}>
+        <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>
         </Pressable>

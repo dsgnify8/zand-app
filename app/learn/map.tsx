@@ -98,7 +98,7 @@ export default function MapScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.back()}>
+        <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
         <Pressable hitSlop={10} onPress={() => router.navigate('/learn/level' as any)}>

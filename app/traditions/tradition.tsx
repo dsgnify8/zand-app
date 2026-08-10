@@ -144,7 +144,7 @@ export default function TraditionScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <Pressable style={styles.back} onPress={() => router.back()}>
+        <Pressable style={styles.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={20} color={light.textDim} />
           <Text style={styles.backText}>{t(APP.traditions)}</Text>
         </Pressable>

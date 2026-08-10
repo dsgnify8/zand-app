@@ -67,7 +67,7 @@ export default function ArticleScreen() {
   if (!a) {
     return (
       <SafeAreaView style={s.safe}>
-        <Pressable style={s.back} onPress={() => router.back()}>
+        <Pressable style={s.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={22} color={ar.ink} />
         </Pressable>
         <Text style={s.missing}>This piece could not be found.</Text>
@@ -91,7 +91,7 @@ export default function ArticleScreen() {
     <View style={{ flex: 1, backgroundColor: ar.bg }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
         <View style={s.topBar}>
-          <Pressable style={s.back} hitSlop={10} onPress={() => router.back()}>
+          <Pressable style={s.back} hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
             <Ionicons name="chevron-back" size={22} color={ar.ink} />
             <Text style={s.backT}>{t(APP.articles)}</Text>
           </Pressable>

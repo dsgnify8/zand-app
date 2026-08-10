@@ -45,7 +45,7 @@ export default function AdminScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.head}>
-        <Pressable hitSlop={10} onPress={() => router.back()}><Ionicons name="chevron-back" size={24} color={colors.textPrimary} /></Pressable>
+        <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}><Ionicons name="chevron-back" size={24} color={colors.textPrimary} /></Pressable>
         <Text style={s.title}>Admin</Text>
         <View style={{ width: 24 }} />
       </View>

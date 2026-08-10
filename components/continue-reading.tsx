@@ -23,14 +23,15 @@ export function continueItems(): ContinueItem[] {
   return READING as ContinueItem[];
 }
 
-export function ContinueReading({ label = 'PICK UP WHERE YOU LEFT OFF' }: { label?: string }) {
+export function ContinueReading({ label }: { label?: string }) {
+  const _lbl = label ?? (getLang() === 'fa' ? 'از همون‌جا ادامه بده' : 'PICK UP WHERE YOU LEFT OFF');
   const fa = getLang() === 'fa';
   const items = continueItems();
   if (items.length === 0) return null;
 
   return (
     <View>
-      <Text style={s.label}>{label}</Text>
+      <Text style={s.label}>{_lbl}</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.rail}>
         {items.map((r) => {
           const src = eduImage(r.image);

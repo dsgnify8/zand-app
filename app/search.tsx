@@ -22,7 +22,7 @@ export default function SearchScreen() {
   }, [results]);
 
   const go = (route: string) => {
-    router.back();
+    (router.canGoBack() ? router.back() : router.replace('/'));
     requestAnimationFrame(() => router.navigate(route as any));
   };
 
@@ -47,7 +47,7 @@ export default function SearchScreen() {
             </Pressable>
           ) : null}
         </View>
-        <Pressable onPress={() => router.back()} hitSlop={8}>
+        <Pressable onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} hitSlop={8}>
           <Text style={styles.cancel}>{t(APP.cancel)}</Text>
         </Pressable>
       </View>

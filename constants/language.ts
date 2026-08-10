@@ -32,13 +32,13 @@ export type LangChapter = { key: string; title: string; nav: string; subtitle?: 
 export const LANG_CHAPTERS: LangChapter[] = [
   {
     key: 'l1',
-    title: 'The Family',
+    title: 'The Family', titleFa: 'خانواده',
     nav: 'The Root',
-    subtitle: 'WHERE PERSIAN COMES FROM',
+    subtitle: 'WHERE PERSIAN COMES FROM', subtitleFa: 'فارسی از کجا می‌آید',
     pages: [
       { blocks: [
         { t: 'lead', x: 'Persian was never the language of the strongest army. It simply kept becoming the language of whoever won.', fa: 'فارسی هیچ‌وقت زبان قوی‌ترین ارتش نبود. فقط هر بار زبانِ کسی می‌شد که برنده شده بود.' },
-        { t: 'p', x: 'Say pedar out loud, then say father. Persian is not a distant cousin of English. It is family. Both descend from a single language spoken somewhere on the steppe thousands of years ago, by people who left no writing and whose name we do not know. Their children walked west into Europe and east into Iran and India, and their words walked with them.', fa: '«پدر» را بلند بگو، بعد «father» را. فارسی پسرعموی دورِ انگلیسی نیست؛ خانوادهٔ نزدیک است. هر دو از یک زبان واحد می‌آیند که هزاران سال پیش جایی در دشت‌های شمالی حرف زده می‌شد، به دهان مردمی که هیچ نوشته‌ای از خود به جا نگذاشتند و نامشان را هم نمی‌دانیم. فرزندانشان رو به غرب به اروپا رفتند و رو به شرق به ایران و هند، و واژه‌هایشان هم با آنها راه افتادند.' },
+        { t: 'p', x: 'Say pedar out loud, then say father. Persian is not a distant cousin of English. It is family. Both descend from a single language spoken somewhere on the steppe thousands of years ago, by people who left no writing and whose name we do not know. Their children walked west into Europe and east into Iran and India, and their words walked with them.', fa: '«پدر» را بلند بگو، بعد واژهٔ انگلیسی «father» را. فارسی پسرعموی دورِ انگلیسی نیست؛ خانوادهٔ نزدیک است. هر دو از یک زبان واحد می‌آیند که هزاران سال پیش جایی در دشت‌های شمالی حرف زده می‌شد، به دهان مردمی که هیچ نوشته‌ای از خود به جا نگذاشتند و نامشان را هم نمی‌دانیم. فرزندانشان رو به غرب به اروپا رفتند و رو به شرق به ایران و هند، و واژه‌هایشان هم با آنها راه افتادند.' },
         { t: 'p', x: 'Nobody borrowed these. They were inherited, from the same mouth, before Rome, before Athens, before Persepolis.', fa: 'هیچ‌کس این واژه‌ها را از دیگری وام نگرفته. به ارث رسیده‌اند، از یک دهان، پیش از روم، پیش از آتن، پیش از تخت جمشید.' },
         { t: 'cognates', items: [
           { fa: 'پدر', tr: 'pedar', en: 'father' },
@@ -68,9 +68,9 @@ export const LANG_CHAPTERS: LangChapter[] = [
   },
   {
     key: 'l2',
-    title: 'Three Thousand Years',
+    title: 'Three Thousand Years', titleFa: 'سه هزار سال',
     nav: 'The Journey',
-    subtitle: 'THE THREE AGES OF PERSIAN',
+    subtitle: 'THE THREE AGES OF PERSIAN', subtitleFa: 'سه دورهٔ زبان فارسی',
     pages: [
       { blocks: [
         { t: 'p', x: 'Very few languages on earth can be read across three thousand years and still be recognisably themselves. Persian can. It has changed its alphabet twice and its grammar has simplified beautifully, but the thread never broke.', fa: 'زبان‌های خیلی کمی روی زمین هستند که بشود سه هزار سال از تاریخشان را خواند و هنوز همان زبان را در آن شناخت. فارسی می‌تواند. دو بار خطش را عوض کرده و دستور زبانش هم به‌زیبایی ساده شده، اما آن رشته هیچ‌وقت پاره نشد.' },
@@ -90,9 +90,9 @@ export const LANG_CHAPTERS: LangChapter[] = [
   },
   {
     key: 'l3',
-    title: 'What Arabic Took',
+    title: 'What Arabic Took', titleFa: 'عربی چه گرفت',
     nav: 'The Conquest',
-    subtitle: 'AND WHAT IT COULD NOT',
+    subtitle: 'AND WHAT IT COULD NOT', subtitleFa: 'و چه چیزی را نتوانست',
     pages: [
       { blocks: [
         { t: 'p', x: 'After the Arab conquest, Arabic became the language of religion, of scholarship, and of power. For two centuries Persian went quiet in the places that mattered. When it came back, it came back wearing Arabic letters and carrying thousands of Arabic words.', fa: 'پس از فتح عرب، عربی زبان دین شد و دانش و قدرت. دو قرن، فارسی در جاهایی که اهمیت داشت خاموش ماند. وقتی بازگشت، با حروف عربی بازگشت و هزاران واژهٔ عربی هم با خود آورد.' },
@@ -120,9 +120,9 @@ export const LANG_CHAPTERS: LangChapter[] = [
   },
   {
     key: 'l4',
-    title: 'Words You Already Speak',
+    title: 'Words You Already Speak', titleFa: 'واژه‌هایی که پیش‌تر می‌گویی',
     nav: 'In English',
-    subtitle: 'PERSIAN IN YOUR MOUTH',
+    subtitle: 'PERSIAN IN YOUR MOUTH', subtitleFa: 'فارسی، در دهان جهان',
     pages: [
       { blocks: [
         { t: 'p', x: 'You have been speaking Persian your whole life without noticing. These crossed into English through trade, through conquest, through the long road between Iran and everywhere else.', fa: 'انگلیسی‌زبان‌ها تمام عمرشان فارسی حرف زده‌اند بی‌آنکه متوجه باشند. این واژه‌ها از راه بازرگانی، از راه لشکرکشی، و از راه آن جادهٔ دراز میان ایران و بقیهٔ جهان، به انگلیسی رفته‌اند.' },
@@ -150,9 +150,9 @@ export const LANG_CHAPTERS: LangChapter[] = [
   },
   {
     key: 'l5',
-    title: 'Alive and Spoken',
+    title: 'Alive and Spoken', titleFa: 'زنده و گفته‌شده',
     nav: 'Today',
-    subtitle: 'THE LANGUAGE NOW',
+    subtitle: 'THE LANGUAGE NOW', subtitleFa: 'این زبان، امروز',
     pages: [
       { blocks: [
         { t: 'p', x: 'Persian is spoken by well over a hundred million people, and not only in Iran. It is Dari in Afghanistan and Tajik in Tajikistan, three names for what is substantially one language, and a speaker of each can follow the others.', fa: 'بیش از صد میلیون نفر فارسی حرف می‌زنند، و نه فقط در ایران. در افغانستان دری است و در تاجیکستان تاجیکی؛ سه نام برای چیزی که در اساس یک زبان است، و گویشور هر کدام حرف آن دو تای دیگر را می‌فهمد.' },

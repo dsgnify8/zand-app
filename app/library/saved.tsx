@@ -27,7 +27,7 @@ export default function SavedScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader />
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <Pressable style={styles.backBtn} onPress={() => router.back()}>
+        <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
           <Text style={styles.backBtnText}>{t(APP.profile)}</Text>
         </Pressable>

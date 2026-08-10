@@ -80,7 +80,7 @@ function StreakCard() {
 }
 
 function KeepReading() {
-  return <ContinueReading label="PICK UP WHERE YOU LEFT OFF" />;
+  return <ContinueReading label={t(PROFILE.pickUp)} />;
 }
 function DiscoverRow() {
   return (
@@ -186,7 +186,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
     <View>
       <Pressable style={s.subBack} hitSlop={10} onPress={onBack}>
         <Ionicons name="chevron-back" size={20} color={pr.ink} />
-        <Text style={s.subBackT}>Library</Text>
+        <Text style={s.subBackT}>{t(PROFILE.yourLibrary)}</Text>
       </Pressable>
       <Text style={s.subTitle}>{TITLE[view]}</Text>
 

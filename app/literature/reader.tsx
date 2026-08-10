@@ -215,7 +215,7 @@ export default function LitReader() {
           <Text style={styles.endTitle}>Fin</Text>
           <Text style={styles.endName}>{author.name}</Text>
           <Text style={styles.endYears}>{author.years}</Text>
-          <Pressable style={styles.endBtn} onPress={() => router.back()}><Text style={styles.endBtnText}>{t(APP.back)}</Text></Pressable>
+          <Pressable style={styles.endBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}><Text style={styles.endBtnText}>{t(APP.back)}</Text></Pressable>
           <Pressable style={styles.endGhost} onPress={() => goto(0)}><Text style={styles.endGhostText}>{t(APP.readAgain)}</Text></Pressable>
         </View>
       </SafeAreaView>
@@ -228,7 +228,7 @@ export default function LitReader() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <View style={styles.topBar}>
-        <Pressable hitSlop={10} onPress={() => router.back()}><Ionicons name="chevron-back" size={24} color={lit.text} /></Pressable>
+        <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}><Ionicons name="chevron-back" size={24} color={lit.text} /></Pressable>
         <Text style={styles.topTitle}>{author.name}</Text>
         <SaveHeart itemKey={'poet-' + author.key} size={20} tint={lit.text} />
       </View>

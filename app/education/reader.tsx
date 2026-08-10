@@ -336,7 +336,7 @@ export default function ReaderScreen() {
             <Text style={styles.endTitle}>{t(APP.readingComplete)}</Text>
             <Text style={styles.endName}>{topic.name}</Text>
             <Text style={styles.endYears}>{topic.years}</Text>
-            <Pressable style={styles.endBtn} onPress={() => router.dismissAll ? router.dismissAll() : router.back()}>
+            <Pressable style={styles.endBtn} onPress={() => router.dismissAll ? router.dismissAll() : (router.canGoBack() ? router.back() : router.replace('/'))}>
               <Text style={styles.endBtnText}>{t(APP.backToTopic)}</Text>
             </Pressable>
             <Pressable style={styles.endGhost} onPress={() => goto(0)}>
@@ -354,11 +354,11 @@ export default function ReaderScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <View style={styles.topBar}>
-        <Pressable hitSlop={10} onPress={() => p > 0 ? goto(p - 1) : router.back()}>
+        <Pressable hitSlop={10} onPress={() => p > 0 ? goto(p - 1) : (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={26} color={dark.text} />
         </Pressable>
         <Text style={styles.topTitle}>Chapter {page.chapterIndex + 1}</Text>
-        <Pressable hitSlop={10} onPress={() => router.back()}>
+        <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="close" size={26} color={dark.text} />
         </Pressable>
       </View>

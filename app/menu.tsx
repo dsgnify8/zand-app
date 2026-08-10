@@ -26,14 +26,14 @@ export default function MenuScreen() {
   const [openExplore, setOpenExplore] = useState(false);
 
   const go = (route: string) => {
-    router.back();
+    (router.canGoBack() ? router.back() : router.replace('/'));
     requestAnimationFrame(() => router.navigate(route as any));
   };
 
   return (
     <View style={styles.overlay}>
       {/* tap the top area to dismiss */}
-      <Pressable style={styles.dismiss} onPress={() => router.back()} />
+      <Pressable style={styles.dismiss} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} />
 
       <View style={styles.sheet}>
         <SafeAreaView edges={['bottom']}>
@@ -41,7 +41,7 @@ export default function MenuScreen() {
 
           <View style={styles.topRow}>
             <Text style={styles.wordmark}>ZAND</Text>
-            <Pressable hitSlop={10} onPress={() => router.back()}>
+            <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
               <Ionicons name="close" size={24} color={colors.textPrimary} />
             </Pressable>
           </View>

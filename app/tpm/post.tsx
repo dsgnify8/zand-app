@@ -42,7 +42,7 @@ export default function TpmPostScreen() {
     <View style={{ flex: 1, backgroundColor: tpm.paper }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
         <View style={s.nav}>
-          <Pressable hitSlop={12} onPress={() => router.back()}>
+          <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
             <Ionicons name="chevron-back" size={23} color={tpm.ink} />
           </Pressable>
           <TpmMark size={24} />

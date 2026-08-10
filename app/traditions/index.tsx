@@ -184,7 +184,7 @@ export default function Traditions() {
     <View style={{ flex: 1, backgroundColor: th.bg }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
         <View style={styles.topBar}>
-          <Pressable hitSlop={10} onPress={() => router.back()}>
+          <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
             <Ionicons name="chevron-back" size={24} color={th.text} />
           </Pressable>
           <Text style={[styles.topTitle, { color: th.text }]}>{t(APP.traditions)}</Text>

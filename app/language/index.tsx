@@ -161,7 +161,7 @@ export default function LanguageScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.topBar}>
-        <Pressable hitSlop={10} onPress={() => router.back()}>
+        <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={24} color={lang.text} />
         </Pressable>
         <Text style={styles.topTitle}>{t(PAGES.language)}</Text>
@@ -206,8 +206,8 @@ export default function LanguageScreen() {
             <FadeIn delay={60 + ci * 50}>
               <View style={styles.chapter}>
                 <View style={styles.chDiamond} />
-                {c.subtitle ? <Text style={styles.chEyebrow}>{c.subtitle}</Text> : null}
-                <Text style={styles.chTitle}>{c.title}</Text>
+                {c.subtitle ? <Text style={styles.chEyebrow}>{getLang() === 'fa' && (c as any).subtitleFa ? (c as any).subtitleFa : c.subtitle}</Text> : null}
+                <Text style={[styles.chTitle, getLang() === 'fa' && (c as any).titleFa && { fontFamily: fonts.persian, textAlign: 'right' }]}>{getLang() === 'fa' && (c as any).titleFa ? (c as any).titleFa : c.title}</Text>
               </View>
               {c.pages.map((pg, pi) => (
                 <View key={pi} style={styles.page}>

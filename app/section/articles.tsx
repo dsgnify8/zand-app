@@ -110,7 +110,7 @@ export default function ArticlesScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: ar.bg }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-        <Pressable style={s.back} hitSlop={10} onPress={() => router.back()}>
+        <Pressable style={s.back} hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={22} color={ar.ink} />
           <Text style={s.backT}>{t(SECTIONS.explore ?? PAGES.culture)}</Text>
         </Pressable>

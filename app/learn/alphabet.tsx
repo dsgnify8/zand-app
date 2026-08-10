@@ -191,7 +191,7 @@ export default function AlphabetScreen() {
           }).catch(() => {});
         }}
       >
-        <Pressable style={styles.backBtn} onPress={() => router.back()}>
+        <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>Learn</Text>
         </Pressable>

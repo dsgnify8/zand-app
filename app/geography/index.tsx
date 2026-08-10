@@ -145,7 +145,7 @@ export default function GeographyScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.topBar}>
-        <Pressable hitSlop={10} onPress={() => router.back()}>
+        <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={24} color={dark.text} />
         </Pressable>
         <Text style={styles.topTitle}>{t(PAGES.geography)}</Text>

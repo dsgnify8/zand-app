@@ -20,7 +20,7 @@ export default function LiteratureHub() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <Pressable style={styles.back} onPress={() => router.back()}>
+        <Pressable style={styles.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={20} color={lit.textDim} />
           <Text style={styles.backText}>{t(APP.education)}</Text>
         </Pressable>

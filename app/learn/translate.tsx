@@ -132,7 +132,7 @@ export default function TranslateScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.nav}>
-        <Pressable hitSlop={12} onPress={() => router.back()}>
+        <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </Pressable>
         <Text style={s.navTitle}>Translate</Text>

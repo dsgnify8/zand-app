@@ -29,7 +29,7 @@ export default function Forgot() {
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.flex}>
         <View style={s.body}>
-          <Pressable hitSlop={10} onPress={() => router.back()} style={s.back}>
+          <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} style={s.back}>
             <Ionicons name="chevron-back" size={22} color={colors.textPrimary} />
             <Text style={s.backT}>{t(APP.back)}</Text>
           </Pressable>

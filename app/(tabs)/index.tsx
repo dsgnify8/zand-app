@@ -363,7 +363,7 @@ export default function HomeScreen() {
 
           <FadeIn delay={120}><Countdown /></FadeIn>
 
-          <FadeIn delay={150}><ContinueReading label="KEEP READING" /></FadeIn>
+          <FadeIn delay={150}><ContinueReading label={t(APP.keepReading)} /></FadeIn>
 
           <FadeIn delay={210}>
             <View style={styles.labelRow}>
@@ -424,12 +424,12 @@ export default function HomeScreen() {
               {!flipped ? (
                 <>
                   {weekly.fa ? <Text style={styles.tpFa}>{weekly.fa}</Text> : null}
-                  <Text style={styles.tpFront}>{weekly.front}</Text>
+                  <Text style={[styles.tpFront, getLang() === 'fa' && (weekly as any).frontFa && { fontFamily: fonts.persian, fontSize: 16, lineHeight: 32, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (weekly as any).frontFa ? (weekly as any).frontFa : weekly.front}</Text>
                   <Text style={styles.tpHint}>touch for the truth underneath</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.tpBack}>{weekly.back}</Text>
+                  <Text style={[styles.tpBack, getLang() === 'fa' && (weekly as any).backFa && { fontFamily: fonts.persian, fontSize: 13.5, lineHeight: 28, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (weekly as any).backFa ? (weekly as any).backFa : weekly.back}</Text>
                   <Pressable onPress={() => router.navigate('/culture/topic?topic=typical' as any)}>
                     <Text style={styles.tpMore}>all fourteen cards</Text>
                   </Pressable>

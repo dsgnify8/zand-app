@@ -45,7 +45,7 @@ export default function PhrasebookScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => (open ? setOpen(null) : router.back())}>
+        <Pressable hitSlop={12} onPress={() => (open ? setOpen(null) : (router.canGoBack() ? router.back() : router.replace('/')))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
         <Text style={s.topT}>{open ? open.title : 'Phrasebook'}</Text>
