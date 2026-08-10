@@ -31,7 +31,7 @@ export default function FlashcardsHome() {
           {DECKS.map((d) => {
             const due = dueCount(d.cards.map((c) => cardId(d.key, c.fa)));
             return (
-              <Pressable key={d.key} style={styles.card} onPress={() => router.navigate('/learn/flashcard?deck=' + d.key as any)}>
+              <Pressable key={d.key} style={styles.card} onPress={() => router.replace('/learn/flashcard?deck=' + d.key as any)}>
                 <View style={styles.cardText}>
                   <Text style={styles.cardTitle}>{d.title}</Text>
                   <Text style={styles.cardDesc}>{d.cards.length} cards</Text>

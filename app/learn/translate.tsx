@@ -219,7 +219,7 @@ export default function TranslateScreen() {
         ) : null}
 
         {/* talk to someone */}
-        <Pressable style={s.converse} onPress={() => router.navigate('/learn/converse' as any)}>
+        <Pressable style={s.converse} onPress={() => router.replace('/learn/converse' as any)}>
           <Ionicons name="swap-vertical-outline" size={16} color={lw.green} />
           <View style={{ flex: 1 }}>
             <Text style={s.converseT}>Talk to someone</Text>

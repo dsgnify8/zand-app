@@ -33,7 +33,7 @@ export default function FillBlankHome() {
         <Text style={styles.sectionLabel}>CHOOSE A CATEGORY</Text>
         <View style={styles.list}>
           {BLANK_CATEGORIES.map((c) => (
-            <Pressable key={c.key} style={styles.card} onPress={() => router.navigate('/learn/fill-blank-play?cat=' + c.key as any)}>
+            <Pressable key={c.key} style={styles.card} onPress={() => router.replace('/learn/fill-blank-play?cat=' + c.key as any)}>
               <View style={styles.cardIcon}><Ionicons name={c.icon as any} size={22} color={lw.green} /></View>
               <View style={styles.cardText}>
                 <Text style={styles.cardTitle}>{c.title}</Text>

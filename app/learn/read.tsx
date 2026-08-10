@@ -32,7 +32,7 @@ export default function ReadScreen() {
           <Text style={s.sub}>Tap any word you do not know. Nothing is hidden from you.</Text>
           <View style={s.list}>
             {READINGS.map((x) => (
-              <Pressable key={x.key} style={s.row} onPress={() => router.navigate(('/learn/read?text=' + x.key) as any)}>
+              <Pressable key={x.key} style={s.row} onPress={() => router.replace(('/learn/read?text=' + x.key) as any)}>
                 <View style={{ flex: 1 }}>
                   <Text style={s.rowT}>{x.title}</Text>
                   <Text style={s.rowFa}>{x.titleFa}</Text>
@@ -50,7 +50,7 @@ export default function ReadScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => router.navigate('/learn/read' as any)}>
+        <Pressable hitSlop={12} onPress={() => router.replace('/learn/read' as any)}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
         <Pressable hitSlop={10} onPress={() => setShowEn((v) => !v)}>

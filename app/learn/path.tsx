@@ -19,7 +19,7 @@ export default function PathScreen() {
         <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
-        <Pressable hitSlop={10} onPress={() => router.navigate('/learn/level' as any)}>
+        <Pressable hitSlop={10} onPress={() => router.replace('/learn/level' as any)}>
           <Text style={s.change}>{info ? info.name : 'set your level'}</Text>
         </Pressable>
       </View>
@@ -31,7 +31,7 @@ export default function PathScreen() {
           Work down it, or go anywhere you like. Nothing is locked.
         </Text>
 
-        <Pressable style={s.review} onPress={() => router.navigate('/learn/review' as any)}>
+        <Pressable style={s.review} onPress={() => router.replace('/learn/review' as any)}>
           <View style={s.reviewIcon}><Ionicons name="repeat" size={17} color={lw.green} /></View>
           <View style={{ flex: 1 }}>
             <Text style={s.reviewT}>Review what you know</Text>
@@ -63,7 +63,7 @@ export default function PathScreen() {
                     <Pressable
                       key={l.key}
                       style={s.lesson}
-                      onPress={() => router.navigate(('/learn/lesson?unit=' + u.key + '&lesson=' + l.key) as any)}
+                      onPress={() => router.replace(('/learn/lesson?unit=' + u.key + '&lesson=' + l.key) as any)}
                     >
                       <View style={[s.dot, done && s.dotOn]}>
                         {done ? <Ionicons name="checkmark" size={12} color="#FFF" /> : <Text style={s.dotN}>{i + 1}</Text>}

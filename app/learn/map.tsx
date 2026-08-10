@@ -59,7 +59,7 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 
   return (
     <View style={[s.nodeRow, { transform: [{ translateX: WAVE[index % WAVE.length] }] }]}>
-      <Pressable onPress={() => router.navigate(st.route as any)} style={s.nodeTap}>
+      <Pressable onPress={() => router.replace(st.route as any)} style={s.nodeTap}>
         <View style={s.nodeWrap}>
           {isNext ? (
             <Animated.View style={[s.ring, { transform: [{ scale: ring }], opacity: ringOp }]} />
@@ -84,6 +84,7 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 export default function MapScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const stageOffsets = useRef<Record<string, number>>({});
+  const [pickOpen, setPickOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   useLearnProgress();
   const { info } = useLevel();
@@ -98,28 +99,50 @@ export default function MapScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
+        <Pressable hitSlop={12} onPress={() => router.replace('/(tabs)/learn' as any)}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
-        <Pressable hitSlop={10} onPress={() => router.navigate('/learn/level' as any)}>
+        <Pressable hitSlop={10} onPress={() => router.replace('/learn/level' as any)}>
           <Text style={s.change}>{info ? info.name : 'set your level'}</Text>
         </Pressable>
       </View>
 
-      <View style={s.rail}>
-        {STAGES.map((st, i) => (
-          <Pressable
-            key={st.key}
-            hitSlop={6}
-            onPress={() => {
-              const y = stageOffsets.current[st.key];
-              if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 40), animated: true });
-            }}
-          >
-            <View style={[s.tick, i === activeStage && s.tickOn]} />
-          </Pressable>
-        ))}
-      </View>
+      <Pressable style={s.pick} onPress={() => setPickOpen(true)}>
+        <Text style={s.pickRoman}>{STAGES[activeStage]?.roman}</Text>
+        <Text style={s.pickT} numberOfLines={1}>{STAGES[activeStage]?.title}</Text>
+        <Ionicons name="chevron-down" size={14} color={lw.muted} />
+      </Pressable>
+
+      {pickOpen ? (
+        <Pressable style={s.pickBack} onPress={() => setPickOpen(false)}>
+          <ScrollView style={s.pickScroll} contentContainerStyle={s.pickSheet} showsVerticalScrollIndicator={false}>
+            <Text style={s.pickHead}>{'\u0641\u0635\u0644\u200c\u0647\u0627'}</Text>
+            {STAGES.map((st, i) => {
+              const total = st.steps.length;
+              const done = st.steps.filter((x: any) => stepDone(x)).length;
+              const on = i === activeStage;
+              return (
+                <Pressable
+                  key={st.key}
+                  style={[s.pickRow, on && s.pickRowOn]}
+                  onPress={() => {
+                    setPickOpen(false);
+                    const y = stageOffsets.current[st.key];
+                    if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 40), animated: true });
+                  }}
+                >
+                  <Text style={[s.pickRowRoman, on && s.pickRowRomanOn]}>{st.roman}</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={[s.pickRowT, on && s.pickRowTOn]}>{st.title}</Text>
+                    <Text style={s.pickRowFa}>{st.titleFa}</Text>
+                  </View>
+                  <Text style={s.pickRowN}>{done}/{total}</Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </Pressable>
+      ) : null}
 
       <ScrollView
         ref={scrollRef}
@@ -150,6 +173,7 @@ export default function MapScreen() {
           return (
           <View
             key={stage.key}
+            style={stage.key !== 'letters' ? s.stageCourse : undefined}
             style={s.stage}
             onLayout={(e) => { stageOffsets.current[stage.key] = e.nativeEvent.layout.y; }}
           >
@@ -161,10 +185,14 @@ export default function MapScreen() {
                 <View style={s.bandRule} />
               </View>
             ) : null}
-            <View style={s.stageHead}>
+            <View style={[s.stageHead, stage.key !== 'letters' && s.stageHeadCourse]}>
               <View style={s.stageLine} />
               <View style={s.stageLabel}>
-                <Art name={STAGE_ART[si % STAGE_ART.length]} size={54} style={{ opacity: 0.55, marginBottom: 2 }} />
+                <Art
+                  name={STAGE_ART[si % STAGE_ART.length]}
+                  size={54}
+                  style={{ opacity: stage.key === 'letters' ? 0.55 : 0.85, marginBottom: 2 }}
+                />
                 <Text style={s.stageRoman}>{stage.roman}</Text>
                 <Text style={s.stageT}>{stage.title}</Text>
                 <Text style={s.stageFa}>{stage.titleFa}</Text>
@@ -178,7 +206,7 @@ export default function MapScreen() {
                 {stage.steps.map((st) => {
                   const done = stepDone(st);
                   return (
-                    <Pressable key={st.key} style={s.tile} onPress={() => router.navigate(st.route as any)}>
+                    <Pressable key={st.key} style={s.tile} onPress={() => router.replace(st.route as any)}>
                       <View style={[s.tileIcon, done && s.tileIconOn]}>
                         <Ionicons name={(ICON[st.kind] ?? 'ellipse-outline') as any} size={17} color={done ? '#FFF' : lw.green} />
                       </View>
@@ -210,7 +238,7 @@ export default function MapScreen() {
           <Text style={s.sideX}>Useful whenever you want them. Not required.</Text>
           <View style={s.sideList}>
             {SIDE_QUESTS.map((st) => (
-              <Pressable key={st.key} style={s.sideRow} onPress={() => router.navigate(st.route as any)}>
+              <Pressable key={st.key} style={s.sideRow} onPress={() => router.replace(st.route as any)}>
                 <View style={[s.sideDot, stepDone(st) && s.sideDotOn]}>
                   {stepDone(st) ? <Ionicons name="checkmark" size={12} color="#FFF" /> : null}
                 </View>
@@ -221,7 +249,7 @@ export default function MapScreen() {
                 <Ionicons name="chevron-forward" size={15} color={lw.muted} />
               </Pressable>
             ))}
-            <Pressable style={s.sideRow} onPress={() => router.navigate('/learn/phrasebook' as any)}>
+            <Pressable style={s.sideRow} onPress={() => router.replace('/learn/phrasebook' as any)}>
               <View style={s.sideDot} />
               <View style={{ flex: 1 }}>
                 <Text style={s.sideT}>Phrasebook</Text>
@@ -246,6 +274,23 @@ const s = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   change: { fontFamily: fonts.body, fontSize: 12.5, color: lw.muted },
 
+  pick: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, alignSelf: 'center', paddingHorizontal: spacing.lg, paddingVertical: 9, borderRadius: 22, backgroundColor: lw.card, borderWidth: StyleSheet.hairlineWidth, borderColor: lw.rule, marginBottom: spacing.sm, maxWidth: 300 },
+  pickRoman: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.4, color: lw.gold },
+  pickT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: lw.ink, flexShrink: 1 },
+  pickBack: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(20,17,14,0.35)', zIndex: 40, justifyContent: 'flex-start', paddingTop: 130, paddingHorizontal: spacing.lg },
+  pickScroll: { maxHeight: 420, borderRadius: 20 },
+  pickSheet: { backgroundColor: lw.bg, borderRadius: 20, paddingVertical: spacing.md, paddingHorizontal: spacing.sm, borderWidth: StyleSheet.hairlineWidth, borderColor: lw.rule },
+  pickHead: { fontFamily: fonts.persian, fontSize: 13, color: lw.muted, textAlign: 'center', marginBottom: spacing.sm },
+  pickRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: 11, paddingHorizontal: spacing.md, borderRadius: 14 },
+  pickRowOn: { backgroundColor: lw.card },
+  pickRowRoman: { fontFamily: fonts.bodyStrong, fontSize: 11, letterSpacing: 1, color: lw.muted, width: 26 },
+  pickRowRomanOn: { color: lw.gold },
+  pickRowT: { fontFamily: fonts.bodyStrong, fontSize: 13.5, color: lw.ink },
+  pickRowTOn: { color: lw.gold },
+  pickRowFa: { fontFamily: fonts.persian, fontSize: 11.5, color: lw.muted, marginTop: 1 },
+  pickRowN: { fontFamily: fonts.body, fontSize: 11, color: lw.muted },
+  stageCourse: { backgroundColor: 'rgba(24,20,16,0.035)', borderRadius: 22, paddingTop: spacing.sm, paddingBottom: spacing.md, marginTop: spacing.md },
+  stageHeadCourse: { marginTop: spacing.xs },
   rail: { position: 'absolute', right: 6, top: 90, bottom: 40, zIndex: 10, justifyContent: 'center', alignItems: 'center', gap: 5 },
   tick: { width: 3, height: 14, borderRadius: 2, backgroundColor: lw.greenPale },
   tickOn: { backgroundColor: lw.green, height: 20 },

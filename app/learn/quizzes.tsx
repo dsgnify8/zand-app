@@ -33,7 +33,7 @@ export default function QuizzesHome() {
         <Text style={styles.sectionLabel}>CHOOSE A QUIZ</Text>
         <View style={styles.list}>
           {QUIZ_CATEGORIES.map((c) => (
-            <Pressable key={c.key} style={styles.card} onPress={() => router.navigate('/learn/quiz-play?cat=' + c.key as any)}>
+            <Pressable key={c.key} style={styles.card} onPress={() => router.replace('/learn/quiz-play?cat=' + c.key as any)}>
               <View style={styles.cardIcon}><Ionicons name={c.icon as any} size={22} color={lw.green} /></View>
               <View style={styles.cardText}>
                 <Text style={styles.cardTitle}>{c.title}</Text>
