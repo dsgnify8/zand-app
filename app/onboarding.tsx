@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -103,7 +103,10 @@ function GlassButton({
 }
 
 export default function Onboarding() {
-  const [step, setStep] = useState(0);
+  // Entered with ?step=2 when a signed-out user asks to sign in, so the
+  // auth page reuses this screen's design rather than the bare form.
+  const { step: wantStep } = useLocalSearchParams<{ step?: string }>();
+  const [step, setStep] = useState(Number(wantStep) || 0);
   const [lang, setLang] = useState('en');
   const [mode, setMode] = useState<'up' | 'in'>('up');
   const [name, setName] = useState('');

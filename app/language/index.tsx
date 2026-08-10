@@ -116,10 +116,10 @@ function Block({ b }: { b: LangBlock }) {
       </View>
     );
     case 'learncta': return (
-      <Pressable style={styles.cta} onPress={() => router.navigate('/learn/alphabet')}>
+      <Pressable style={styles.cta} onPress={() => router.replace('/(tabs)/learn' as any)}>
         <Text style={styles.ctaGlyph}>ا ب پ</Text>
         <Text style={styles.ctaTitle}>{getLang() === 'fa' ? 'فارسی بیاموز' : 'Learn Farsi'}</Text>
-        <Text style={styles.ctaSub}>Start with the letters, their shapes and their sounds.</Text>
+        <Text style={styles.ctaSub}>{getLang() === 'fa' ? 'از الفبا تا گفت‌وگوی واقعی؛ قدم به قدم.' : 'From the alphabet to real conversation, step by step.'}</Text>
         <View style={styles.ctaBtn}>
           <Text style={styles.ctaBtnText}>{getLang() === 'fa' ? 'شروع' : 'BEGIN'}</Text>
           <Ionicons name="arrow-forward" size={14} color={lang.bg} />

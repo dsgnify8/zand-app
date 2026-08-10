@@ -36,13 +36,13 @@ export function SignedOutOverlay() {
             : 'Your progress, your friends, and everything you save — kept and synced across your devices.'}
         </Text>
 
-        <Pressable style={s.primary} onPress={() => router.push('/auth/sign-up' as any)}>
+        <Pressable style={s.primary} onPress={() => router.push('/onboarding?step=2' as any)}>
           <Text style={[s.primaryT, fa && s.faBtn]}>
             {fa ? 'ساختن حساب' : 'Create an account'}
           </Text>
         </Pressable>
 
-        <Pressable style={s.ghost} onPress={() => router.push('/auth/sign-in' as any)}>
+        <Pressable style={s.ghost} onPress={() => router.push('/onboarding?step=2' as any)}>
           <Text style={[s.ghostT, fa && s.faBtn]}>
             {fa ? 'قبلاً حساب دارم' : 'I already have an account'}
           </Text>
