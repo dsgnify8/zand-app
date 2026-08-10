@@ -266,6 +266,7 @@ function BandCard({ card }: { card: Card }) {
 }
 
 export default function HomeScreen() {
+  const fa = getLang() === 'fa';
   useLang();
   const fact = getDailyFact();
   useHidden();
@@ -307,7 +308,7 @@ export default function HomeScreen() {
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
         >
-          <FadeIn><Text style={styles.greeting}>{t(HOME.greeting)}</Text></FadeIn>
+          <FadeIn><Text style={[styles.greeting, fa && styles.faRight]}>{t(HOME.greeting)}</Text></FadeIn>
 
           {pending.length > 0 ? (
             <FadeIn delay={40}>
@@ -326,16 +327,16 @@ export default function HomeScreen() {
           ) : null}
 
           <FadeIn delay={60}>
-            <Text style={styles.sectionLabel}>{t(HOME.today)}</Text>
+            <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.today)}</Text>
             <Pressable style={styles.daily} onPress={() => daily.route ? setDailyOpen((v) => !v) : undefined}>
-              <View style={styles.dailyHead}>
+              <View style={[styles.dailyHead, fa && styles.faRowRev]}>
                 <View style={styles.dailyRule} />
-                <Text style={styles.dailyKind}>
+                <Text style={[styles.dailyKind, fa && styles.faRight]}>
                   {t(({ fact: HOME.kindFact, word: HOME.kindWord, verse: HOME.kindVerse, story: HOME.kindStory, dish: HOME.kindDish, card: HOME.kindCard } as any)[daily.kind] ?? HOME.kindFact)}
                 </Text>
               </View>
               {daily.fa ? (
-                <View style={styles.dailyFaRow}>
+                <View style={[styles.dailyFaRow, fa && styles.faRowRev]}>
                   <Text style={styles.dailyFa}>{daily.fa}</Text>
                   {daily.tr ? <Text style={styles.dailyTr}>{daily.tr}</Text> : null}
                 </View>
@@ -345,15 +346,15 @@ export default function HomeScreen() {
               {!daily.route ? (
                 <Text style={[styles.dailyX, getLang() === 'fa' && (daily as any).xFa && { fontFamily: fonts.persian, fontSize: 15, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (daily as any).xFa ? (daily as any).xFa : daily.x}</Text>
               ) : !dailyOpen ? (
-                <View style={styles.dailyCta}>
-                  <Text style={styles.dailyCtaT}>{t(HOME.tapToRead)}</Text>
+                <View style={[styles.dailyCta, fa && styles.faRowRev]}>
+                  <Text style={[styles.dailyCtaT, fa && styles.faRight]}>{t(HOME.tapToRead)}</Text>
                   <Ionicons name="chevron-down" size={12} color={colors.accent} />
                 </View>
               ) : (
                 <>
                   <Text style={[styles.dailyX, getLang() === 'fa' && (daily as any).xFa && { fontFamily: fonts.persian, fontSize: 15, lineHeight: 30, textAlign: 'right', writingDirection: 'rtl' }]}>{getLang() === 'fa' && (daily as any).xFa ? (daily as any).xFa : daily.x}</Text>
                   <Pressable style={styles.dailyCta} onPress={() => router.navigate(daily.route as any)}>
-                    <Text style={styles.dailyCtaT}>{daily.cta}</Text>
+                    <Text style={[styles.dailyCtaT, fa && styles.faRight]}>{daily.cta}</Text>
                     <Ionicons name="arrow-forward" size={12} color={colors.accent} />
                   </Pressable>
                 </>
@@ -367,7 +368,7 @@ export default function HomeScreen() {
 
           <FadeIn delay={210}>
             <View style={styles.labelRow}>
-              <Text style={styles.sectionLabelInline}>{t(APP.stories)}</Text>
+              <Text style={[styles.sectionLabelInline, fa && styles.faRight]}>{t(APP.stories)}</Text>
               <Pressable hitSlop={8} onPress={() => router.navigate('/section/articles' as any)}>
                 <Text style={styles.seeAll}>all of them</Text>
               </Pressable>
@@ -377,7 +378,7 @@ export default function HomeScreen() {
             {ARTICLES.filter((a) => !isHidden(a.key)).slice(0, 8).map((a) => <ArticleStoryCard key={a.key} a={a} />)}
           </ScrollView>
 
-          <FadeIn delay={180}><Text style={styles.sectionLabel}>{t(HOME.explore)}</Text></FadeIn>
+          <FadeIn delay={180}><Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.explore)}</Text></FadeIn>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabScroll} contentContainerStyle={styles.tabRow}>
             {PILLARS.map((p) => {
@@ -397,7 +398,7 @@ export default function HomeScreen() {
 
           {dailyArticle ? (
           <FadeIn delay={240}>
-            <Text style={styles.sectionLabel}>{t(HOME.newThisWeek)}</Text>
+            <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.newThisWeek)}</Text>
             <Pressable style={styles.featuredCard} onPress={() => router.navigate(('/article?article=' + dailyArticle.key) as any)}>
               <View style={styles.formatTag}><Text style={styles.formatTagText}>{dailyArticle.tag}</Text></View>
               <Text style={styles.featuredTitle}>{dailyArticle.title}</Text>
@@ -414,12 +415,12 @@ export default function HomeScreen() {
           ) : null}
 
           <FadeIn delay={270}>
-            <Text style={styles.sectionLabel}>{t(HOME.jumpBackIn)}</Text>
+            <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.jumpBackIn)}</Text>
             <ContinueLearning />
           </FadeIn>
 
           <FadeIn delay={300}>
-            <Text style={styles.sectionLabel}>{t(HOME.typical)}</Text>
+            <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.typical)}</Text>
             <Pressable style={styles.tp} onPress={() => setFlipped((v) => !v)}>
               {!flipped ? (
                 <>
@@ -461,6 +462,8 @@ const styles = StyleSheet.create({
   container: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl },
 
   greeting: { fontFamily: fonts.heading, fontSize: 30, color: colors.textPrimary, marginTop: spacing.md },
+  faRight: { textAlign: 'right', writingDirection: 'rtl' },
+  faRowRev: { flexDirection: 'row-reverse' },
   sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5, marginTop: spacing.xl, marginBottom: spacing.sm },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl, marginBottom: spacing.sm },
   sectionLabelInline: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5 },
