@@ -5,7 +5,6 @@ import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from 'expo-aud
 import { supabase } from '@/lib/supabase';
 
 let current: AudioPlayer | null = null;
-let configured = false;
 
 // url cache for this session, so repeat taps are instant
 const urls = new Map<string, string>();
@@ -28,10 +27,10 @@ async function urlFor(text: string, slow: boolean, lang: string) {
 export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }) {
   const slow = opts?.slow ?? false;
   try {
-    if (!configured) {
-      await setAudioModeAsync({ playsInSilentMode: true });
-      configured = true;
-    }
+    // Always reset the mode before playing. If a recording session ran
+    // earlier, iOS is still routed to the earpiece and playback is quiet;
+    // clearing allowsRecording puts it back on the speaker.
+    await setAudioModeAsync({ playsInSilentMode: true, allowsRecording: false });
     if (current) { try { current.remove(); } catch {} current = null; }
 
     const uri = await urlFor(text, slow, lang);

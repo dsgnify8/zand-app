@@ -11,6 +11,7 @@ import { lw } from '@/constants/lang-theme';
 import { speak } from '@/lib/speak';
 import { supabase } from '@/lib/supabase';
 import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib/listen';
+import { setAudioModeAsync } from 'expo-audio';
 
 const LANGS: { code: string; label: string; native: string }[] = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -71,6 +72,9 @@ export default function TranslateScreen() {
     setHearing(true);
     try {
       await recorder.stop();
+      // put the audio session back on the speaker; leaving it in record
+      // mode routes playback to the earpiece and it comes out very quiet
+      try { await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true }); } catch {}
       await new Promise((r) => setTimeout(r, 350));
       const uri = recorder.uri;
       if (!uri) return;
