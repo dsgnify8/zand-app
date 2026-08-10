@@ -51,7 +51,7 @@ function Block({ b, accent }: { b: CuBlock; accent: string }) {
           <Text style={styles.phLit}>{b.lit}</Text>
           <View style={styles.phHair} />
         </View>
-        <Text style={styles.phMeans}>{b.means}</Text>
+        <Text style={[styles.phMeans, rtl, fa && (b as any).meansFa && styles.faBody]}>{fa && (b as any).meansFa ? (b as any).meansFa : b.means}</Text>
       </View>
     );
     case 'story': return (
@@ -134,7 +134,7 @@ export default function CultureTopic() {
           <Pressable hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
             <Ionicons name="chevron-back" size={24} color={cu.text} />
           </Pressable>
-          <Text style={styles.topTitle}>{t.title}</Text>
+          <Text style={[styles.topTitle, getLang() === 'fa' && (t as any).titleFa && { fontFamily: fonts.persian }]}>{getLang() === 'fa' && (t as any).titleFa ? (t as any).titleFa : t.title}</Text>
           <SaveHeart itemKey={'culture-' + t.key} size={19} tint={cu.text} />
         </View>
 
@@ -173,7 +173,7 @@ export default function CultureTopic() {
                 <View style={[styles.headBar, { backgroundColor: t.accent }]} />
                 <Text style={[styles.headTag, { color: t.accent }]}>{t.tag}</Text>
               </View>
-              <Text style={styles.headTitle}>{t.title}</Text>
+              <Text style={[styles.headTitle, getLang() === 'fa' && (t as any).titleFa && { fontFamily: fonts.persian, textAlign: 'right' }]}>{getLang() === 'fa' && (t as any).titleFa ? (t as any).titleFa : t.title}</Text>
             </View>
           </Rise>
 
@@ -182,7 +182,7 @@ export default function CultureTopic() {
               <Rise delay={60 + pi * 50}>
                 <View style={styles.chapter}>
                   {pg.eyebrow ? <Text style={[styles.chEyebrow, { color: t.accent }]}>{pg.eyebrow}</Text> : null}
-                  <Text style={styles.chTitle}>{pg.title}</Text>
+                  <Text style={[styles.chTitle, getLang() === 'fa' && (pg as any).titleFa && { fontFamily: fonts.persian, textAlign: 'right' }]}>{getLang() === 'fa' && (pg as any).titleFa ? (pg as any).titleFa : pg.title}</Text>
                 </View>
                 {pg.blocks.map((b, bi) => <Block key={bi} b={b} accent={t.accent} />)}
               </Rise>

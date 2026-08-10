@@ -55,7 +55,7 @@ export function TaarofSim() {
     return (
       <View style={[styles.simWrap, { borderColor: map.c }]}>
         <Text style={[styles.simVerdict, { color: map.c }]}>{map.t}</Text>
-        <Text style={styles.simVerdictX}>{map.x}</Text>
+        <Text style={[styles.simVerdictX, fa && styles.faBody]}>{fa && (map as any).fa ? (map as any).fa : map.x}</Text>
         <Pressable style={styles.simAgain} onPress={reset}>
           <Ionicons name="refresh" size={13} color={cu.textDim} />
           <Text style={styles.simAgainT}>again</Text>
@@ -133,8 +133,8 @@ export function DelMap() {
 
       {sel ? (
         <View style={styles.dmCard}>
-          <Text style={styles.dmLit}>{sel.en}</Text>
-          <Text style={styles.dmX}>{sel.x}</Text>
+          <Text style={[styles.dmLit, fa && styles.faBody]}>{fa && (sel as any).enFa ? (sel as any).enFa : sel.en}</Text>
+          <Text style={[styles.dmX, fa && styles.faBody]}>{fa && (sel as any).fa ? (sel as any).fa : sel.x}</Text>
         </View>
       ) : (
         <Text style={styles.dmHint}>touch a word</Text>
