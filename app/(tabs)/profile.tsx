@@ -487,8 +487,10 @@ function FriendsTab() {
               <Text style={s.inboxNote}>“{i.note}”</Text>
             </View>
           ))}
+          {/* A preview of what this becomes, shown only when nobody is
+              signed in. Real friends render above, from `accepted`. */}
           <View style={{ gap: spacing.sm }}>
-            {FRIENDS.slice(0, 2).map((f) => (
+            {(user ? [] : FRIENDS.slice(0, 2)).map((f) => (
               <View key={f.key} style={s.friendRow}>
                 <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{f.persian[0]}</Text></View>
                 <View style={{ flex: 1 }}>
