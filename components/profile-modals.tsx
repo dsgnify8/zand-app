@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { bump } from '@/lib/stats-store';
 import { sendItem } from '@/lib/inbox';
-import { Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -17,6 +17,8 @@ import { ReminderRow } from '@/components/reminder-row';
 import { FriendsSheet } from '@/components/friends-sheet';
 import { InviteSheet } from '@/components/invite-sheet';
 import { SETTINGS } from '@/constants/i18n/settings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { supabase } from '@/lib/supabase';
 
 function Sheet({ open, onClose, children }: any) {
   return (
@@ -35,6 +37,20 @@ function Sheet({ open, onClose, children }: any) {
 
 export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [panel, setPanel] = useState<null | 'account' | 'language' | 'notifications' | 'help' | 'terms'>(null);
+  const [confirmDel, setConfirmDel] = useState(false);
+  const [delBusy, setDelBusy] = useState(false);
+
+  const doDelete = async () => {
+    setDelBusy(true);
+    try {
+      await supabase.functions.invoke('delete-account');
+      await AsyncStorage.clear();   // nothing of theirs stays on the device
+      await signOut();
+      onClose();
+    } catch {}
+    setDelBusy(false);
+    setConfirmDel(false);
+  };
   const { lang: curLang } = useLang();
   const { displayName, user, signOut, updateName, updateEmail, updatePhone } = useAuth();
   const phone = (user?.user_metadata?.phone as string) ?? '';
@@ -134,6 +150,35 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               <View style={m.fieldRow}><Text style={m.fieldV}>{phone || 'Add your number'}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
             </Pressable>
             <View style={m.field}><Text style={m.fieldL}>{tset(SETTINGS.memberSince)}</Text><Text style={m.fieldV}>{ME.since}</Text></View>
+
+            {/* Deliberately quiet and at the bottom: findable by anyone
+                looking for it, never hit by accident. Two taps, and the
+                second one says exactly what goes. */}
+            <Pressable
+              style={m.danger}
+              onPress={() => (confirmDel ? doDelete() : setConfirmDel(true))}
+              disabled={delBusy}
+            >
+              {delBusy ? (
+                <ActivityIndicator size="small" color={pr.readA} />
+              ) : (
+                <Text style={m.dangerT}>
+                  {confirmDel
+                    ? 'Tap again to permanently delete your account'
+                    : tset(SETTINGS.deleteAccount)}
+                </Text>
+              )}
+            </Pressable>
+            {confirmDel && !delBusy ? (
+              <>
+                <Text style={m.dangerX}>
+                  This removes your progress, saves, friends and messages. It cannot be undone.
+                </Text>
+                <Pressable onPress={() => setConfirmDel(false)} style={{ paddingVertical: 10 }}>
+                  <Text style={m.dangerCancel}>Keep my account</Text>
+                </Pressable>
+              </>
+            ) : null}
 
             {editField ? (
               <View style={m.editBox}>
@@ -500,6 +545,10 @@ const m = StyleSheet.create({
   editCancelT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: pr.dim },
   editSave: { backgroundColor: colors.accent, borderRadius: 16, paddingVertical: 8, paddingHorizontal: spacing.lg },
   editSaveT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
+  danger: { alignItems: 'center', paddingVertical: spacing.lg, marginTop: spacing.md },
+  dangerT: { fontFamily: fonts.body, fontSize: 12.5, color: '#B3261E' },
+  dangerX: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18, color: pr.dim, textAlign: 'center', paddingHorizontal: spacing.lg },
+  dangerCancel: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: pr.readA, textAlign: 'center' },
   signOut: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderWidth: 1, borderColor: pr.hair, borderRadius: 11, paddingVertical: spacing.md, marginTop: spacing.lg },
   signOutT: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: pr.readA },
   version: { fontFamily: fonts.body, fontSize: 10, color: pr.dim, textAlign: 'center', marginTop: spacing.lg },

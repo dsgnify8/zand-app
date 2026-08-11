@@ -95,6 +95,18 @@ export default function AdminScreen() {
               <View style={s.statCard}><Text style={s.statN}>{signups ?? '—'}</Text><Text style={s.statL}>ACTIVE READERS</Text></View>
               <View style={s.statCard}><Text style={s.statN}>{totalReads ?? '—'}</Text><Text style={s.statL}>TOTAL READS</Text></View>
             </View>
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-content' as any)}>
+              <Ionicons name="create-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Edit content</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-content' as any)}>
+              <Ionicons name="create-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Edit content</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
             <Text style={s.sectionL}>MOST READ</Text>
             {topReads.length === 0 ? (
               <Text style={s.dim}>No reads logged yet.</Text>
@@ -117,6 +129,8 @@ export default function AdminScreen() {
 }
 
 const s = StyleSheet.create({
+  editRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 14, borderTopWidth: StyleSheet.hairlineWidth, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(0,0,0,0.08)', marginBottom: 18 },
+  editRowT: { flex: 1, fontFamily: fonts.bodyStrong, fontSize: 13.5, color: colors.textPrimary },
   safe: { flex: 1, backgroundColor: colors.background },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   dim: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary },

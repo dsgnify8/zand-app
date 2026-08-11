@@ -19,11 +19,13 @@ import { useEffect, useState } from 'react';
 import { t, useLang, getLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 import { FramedImage } from '@/components/framed-image';
+import { txt } from '@/lib/content-overrides';
 
 function BlockView({ b }: { b: Block }) {
   // Farsi when the app is in Farsi and this block has been translated.
   const fa = getLang() === 'fa';
-  const tx = (blk: any) => (fa && blk.fa ? blk.fa : blk.x);
+  // goes through the override layer so admin edits apply without a build
+  const tx = (blk: any) => txt(blk, fa);
   const faOn = (blk: any) => fa && !!blk.fa;
   const rtl = fa ? styles.rtl : undefined;
 

@@ -38,6 +38,7 @@ const KEYS = [
   'scroll:articles',
   'learn:level',
   'learn:asked',
+  'usage:v1',
 ] as const;
 type StoreKey = (typeof KEYS)[number];
 
@@ -116,6 +117,16 @@ function mergeOne(key: StoreKey, local: any, cloud: any) {
     case 'recent:articles':
       // plain arrays of keys; union them, never drop one
       return [...new Set([...(cloud ?? []), ...(local ?? [])])];
+    case 'usage:v1': {
+      // union the call timestamps so a second device cannot hand someone
+      // a fresh allowance; pro is sticky once true
+      const uni = (a: number[] = [], b: number[] = []) => [...new Set([...a, ...b])].sort();
+      return {
+        speak: uni(local?.speak, cloud?.speak),
+        listen: uni(local?.listen, cloud?.listen),
+        pro: !!(local?.pro || cloud?.pro),
+      };
+    }
     case 'scroll:articles':
       // per-article scroll offsets; keep whichever is further in
       return { ...(cloud ?? {}), ...(local ?? {}) };

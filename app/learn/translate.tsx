@@ -8,10 +8,10 @@ import * as Clipboard from 'expo-clipboard';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
-import { speak } from '@/lib/speak';
 import { supabase } from '@/lib/supabase';
 import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib/listen';
 import { setAudioModeAsync } from 'expo-audio';
+import { useMetered } from '@/lib/use-metered';
 
 const LANGS: { code: string; label: string; native: string }[] = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -34,6 +34,7 @@ const K_HISTORY = 'translate:history';
 type Entry = { q: string; a: string; tr?: string | null; from: string; to: string };
 
 export default function TranslateScreen() {
+  const { say, listen: metListen, PaywallHost } = useMetered();
   const [from, setFrom] = useState('en');
   const [to, setTo] = useState('fa');
   const [input, setInput] = useState('');
@@ -78,7 +79,7 @@ export default function TranslateScreen() {
       await new Promise((r) => setTimeout(r, 350));
       const uri = recorder.uri;
       if (!uri) return;
-      const heard = await transcribe(uri, STT_LOCALE[from] ?? 'en-US');
+      const heard = await metListen(uri, STT_LOCALE[from] ?? 'en-US');
       if (heard) setInput(heard);
       else setError('I did not catch that. Try again.');
     } catch { setError('Something went wrong.'); }
@@ -208,7 +209,7 @@ export default function TranslateScreen() {
             <Text style={[s.resultText, isFa(to) && s.resultRtl]}>{output}</Text>
             {translit ? <Text style={[s.translit, isFa(to) && { textAlign: 'right' }]}>{translit}</Text> : null}
             <View style={s.actions}>
-              <Pressable style={s.action} hitSlop={8} onPress={() => speak(output, to)}>
+              <Pressable style={s.action} hitSlop={8} onPress={() => say(output, to)}>
                 <Ionicons name="volume-high-outline" size={19} color={colors.textSecondary} />
               </Pressable>
               <Pressable style={s.action} hitSlop={8} onPress={copy}>
@@ -324,6 +325,7 @@ export default function TranslateScreen() {
           </Pressable>
         </Pressable>
       </Modal>
+      {PaywallHost}
     </SafeAreaView>
   );
 }

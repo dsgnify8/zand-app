@@ -35,6 +35,8 @@ import { GlossaryProvider } from '@/lib/glossary-store';
 import { AnimatedSplash } from '@/components/animated-splash';
 import { AppState } from 'react-native';
 import { syncFlush } from '@/lib/cloud-sync';
+import { loadOverrides } from '@/lib/content-overrides';
+import { loadUsage } from '@/lib/usage';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -97,7 +99,7 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   useEffect(() => { resetForDemo().then(() => { loadLevel(); });
-    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); }, []);
+    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides(); loadUsage(); }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -126,6 +128,7 @@ export default function RootLayout() {
             <Stack.Screen name="onboarding" options={{ headerShown: false }} />
             <Stack.Screen name="admin" options={{ headerShown: false }} />
             <Stack.Screen name="tpm/post" options={{ headerShown: false }} />
+            <Stack.Screen name="admin-content" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/path" options={{ headerShown: false }} />

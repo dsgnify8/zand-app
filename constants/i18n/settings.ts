@@ -1,6 +1,7 @@
 import type { T } from '@/lib/i18n';
 
 export const SETTINGS: Record<string, T> = {
+  deleteAccount: { en: 'Delete my account', fa: 'حذف حساب کاربری' },
   settingsTitle: { en: 'Settings', fa: 'تنظیمات' },
   adminPanel: { en: 'Admin panel', fa: 'پنل مدیریت' },
   adminPanelX: { en: 'Manage articles and analytics', fa: 'مدیریت مقاله‌ها و آمار' },

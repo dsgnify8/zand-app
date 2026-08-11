@@ -10,7 +10,7 @@ import { ZandHeader } from '@/components/zand-header';
 import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { DECKS } from '@/constants/flashcards';
 import { PRON_WORDS } from '@/constants/pron-words';
-import { speak } from '@/lib/speak';
+import { useMetered } from '@/lib/use-metered';
 
 type Item = { id: string; fa: string; roman: string; en: string; kind: string };
 
@@ -24,13 +24,14 @@ const EXTRA_ITEMS: Item[] = PRON_WORDS.map((w, i) => ({ id: 'X' + i, fa: w.fa, r
 const ALL = [...LETTER_ITEMS, ...WORD_ITEMS, ...EXTRA_ITEMS];
 
 export default function PronunciationScreen() {
+  const { say, listen: metListen, PaywallHost } = useMetered();
   const [tab, setTab] = useState<'letters' | 'words'>('letters');
   const [query, setQuery] = useState('');
   const [active, setActive] = useState<string | null>(null);
 
   const play = (id: string, text: string) => {
     setActive(id);
-    speak(text);
+    say(text);
     setTimeout(() => setActive((a) => (a === id ? null : a)), 1400);
   };
 
@@ -102,6 +103,7 @@ export default function PronunciationScreen() {
           {results.length === 0 ? <Text style={styles.empty}>No matches for “{query}”.</Text> : null}
         </View>
       </ScrollView>
+      {PaywallHost}
     </SafeAreaView>
   );
 }

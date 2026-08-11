@@ -3,6 +3,7 @@
 // Uses expo-audio; expo-av is deprecated and goes away in SDK 54.
 import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from 'expo-audio';
 import { supabase } from '@/lib/supabase';
+import { canUse, useOne } from '@/lib/usage';
 
 let current: AudioPlayer | null = null;
 
@@ -24,8 +25,19 @@ async function urlFor(text: string, slow: boolean, lang: string) {
   return data.url as string;
 }
 
-export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }) {
+// Returns 'limit' when the free allowance is spent, so the caller can
+// show the paywall. Returns undefined otherwise, as before.
+export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }): Promise<'limit' | void> {
   const slow = opts?.slow ?? false;
+
+  // A cached url costs nothing to play, so replaying something already
+  // fetched this session does not count against the allowance.
+  const cached = urls.has(lang + '|' + (slow ? 's' : 'n') + '|' + text);
+  if (!cached) {
+    if (!canUse('speak')) return 'limit';
+    await useOne('speak');
+  }
+
   try {
     // Always reset the mode before playing. If a recording session ran
     // earlier, iOS is still routed to the earpiece and playback is quiet;

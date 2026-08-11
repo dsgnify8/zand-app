@@ -19,6 +19,7 @@ import { Sama, Reed } from '@/components/rumi-blocks';
 import { GlossaryText } from '@/components/glossary-text';
 import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
+import { txt } from '@/lib/content-overrides';
 
 function chapterStarts(a: Author) {
   const out: { key: string; title: string; nav?: string; page: number }[] = [];
@@ -53,7 +54,8 @@ function Veil({ surface, hidden, fa }: { surface: string; hidden: string; fa?: b
 
 function Block({ b }: { b: LitBlock }) {
   const fa = getLang() === 'fa';
-  const tx = (o: any, k = 'x') => (fa && (k === 'x' ? o.fa : o[k + 'Fa']) ? (k === 'x' ? o.fa : o[k + 'Fa']) : o[k]);
+  // goes through the override layer so admin edits apply without a build
+  const tx = (o: any, k: any = 'x') => txt(o, fa, k);
   const rtl = fa ? styles.rtl : undefined;
   switch (b.t) {
     case 'mark': return (

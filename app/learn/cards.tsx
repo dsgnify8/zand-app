@@ -10,6 +10,7 @@ import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
+import { useMetered } from '@/lib/use-metered';
 
 type Card = { fa: string; tr: string; en: string; literal?: string };
 
@@ -32,6 +33,7 @@ function cardsFor(stage?: string): Card[] {
 }
 
 export default function CardsScreen() {
+  const { say, listen: metListen, PaywallHost } = useMetered();
   const { stage } = useLocalSearchParams<{ stage?: string }>();
   // the ones you keep missing come round first
   const cards = useMemo(() => prioritise(cardsFor(stage)), [stage]);
@@ -118,7 +120,7 @@ export default function CardsScreen() {
         <Pressable style={s.cardWrap} onPress={() => (shown ? undefined : reveal())}>
           <Animated.View style={[s.face, { opacity: frontOp, transform: [{ translateY: lift }] }]}>
             <Text style={s.fa}>{card.fa}</Text>
-            <Pressable hitSlop={12} onPress={() => speak(card.fa, 'fa')} style={s.say}>
+            <Pressable hitSlop={12} onPress={() => say(card.fa, 'fa')} style={s.say}>
               <Ionicons name="volume-medium-outline" size={18} color={lw.muted} />
             </Pressable>
             {!shown ? <Text style={s.tapHint}>tap to see what it means</Text> : null}
@@ -150,6 +152,7 @@ export default function CardsScreen() {
           </View>
         )}
       </View>
+      {PaywallHost}
     </SafeAreaView>
   );
 }

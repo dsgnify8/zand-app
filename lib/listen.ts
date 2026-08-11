@@ -8,6 +8,7 @@ import { AudioModule, RecordingPresets, useAudioRecorder, setAudioModeAsync } fr
 // module keeps them working and is the documented migration path.
 import * as FileSystem from 'expo-file-system/legacy';
 import { supabase } from '@/lib/supabase';
+import { canUse, useOne } from '@/lib/usage';
 
 export const WAV_16K = {
   extension: '.wav',
@@ -39,7 +40,12 @@ export async function askMic() {
 }
 
 // Send a recorded file off to be transcribed.
-export async function transcribe(uri: string, lang = 'fa-IR'): Promise<string | null> {
+// Returns the literal 'limit' when the allowance is spent. Callers
+// already handle null for a failed transcription, so the sentinel is a
+// distinct value rather than another null.
+export async function transcribe(uri: string, lang = 'fa-IR'): Promise<string | null | 'limit'> {
+  if (!canUse('listen')) return 'limit';
+  await useOne('listen');
   try {
     // what did we actually record?
     try {
