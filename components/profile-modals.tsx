@@ -19,6 +19,7 @@ import { InviteSheet } from '@/components/invite-sheet';
 import { SETTINGS } from '@/constants/i18n/settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/lib/supabase';
+import { useNotifPrefs, setNotifPref } from '@/lib/notif-prefs';
 
 function Sheet({ open, onClose, children }: any) {
   return (
@@ -91,12 +92,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   // Categories, each independently switchable. 'learning' and 'idle' are
   // local scheduled notifications and work today; 'articles' and
   // 'friends' need real push, which needs a development build.
-  const [notif, setNotif] = useState({
-    learning: true,   // daily practice reminder
-    idle: true,       // pick up where you left off
-    articles: true,   // something new to read
-    friends: true,    // a friend sent you something
-  });
+  const notif = useNotifPrefs();
 
   const close = () => { setPanel(null); onClose(); };
 
@@ -104,7 +100,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     ...(isAdmin ? [{ key: 'admin', i: 'construct-outline', t: tset(SETTINGS.adminPanel), x: tset(SETTINGS.adminPanelX) }] : []),
     { key: 'friends', i: 'people-outline', t: tset(SETTINGS.inviteFriends), x: tset(SETTINGS.inviteFriendsX) },
     { key: 'account', i: 'person-outline', t: tset(SETTINGS.account), x: tset(SETTINGS.accountX) },
-    { key: 'language', i: 'language-outline', t: tset(SETTINGS.language), x: { en: 'English', fa: 'فارسی', es: 'Español', fr: 'Français' }[curLang] ?? 'English' },
+    { key: 'language', i: 'language-outline', t: tset(SETTINGS.language), x: { en: 'English', fa: 'فارسی' }[curLang] ?? 'English' },
     { key: 'notifications', i: 'notifications-outline', t: tset(SETTINGS.notifications), x: tset(SETTINGS.notificationsX) },
     { key: 'help', i: 'help-circle-outline', t: tset(SETTINGS.help), x: tset(SETTINGS.helpX) },
     { key: 'terms', i: 'document-text-outline', t: tset(SETTINGS.terms), x: tset(SETTINGS.termsX) },
@@ -242,8 +238,6 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
             {[
               { code: 'en', label: 'English' },
               { code: 'fa', label: 'فارسی' },
-              { code: 'es', label: 'Español' },
-              { code: 'fr', label: 'Français' },
             ].map((l) => {
               const on = curLang === l.code;
               return (
@@ -253,7 +247,6 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
                 </Pressable>
               );
             })}
-            <Text style={m.footNote}>More of the app is translated over time. English is the most complete for now.</Text>
           </View>
         </>
       ) : null}
@@ -269,7 +262,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               { k: 'articles', t: 'Something new', x: 'When a new piece or topic goes up' },
               { k: 'friends', t: 'From friends', x: 'When someone sends you a word or topic' },
             ].map((n) => (
-              <Pressable key={n.k} style={m.notifRow} onPress={() => setNotif((v) => ({ ...v, [n.k]: !(v as any)[n.k] }))}>
+              <Pressable key={n.k} style={m.notifRow} onPress={() => setNotifPref(n.k as any, !(notif as any)[n.k])}>
                 <View style={{ flex: 1 }}>
                   <Text style={m.rowT}>{n.t}</Text>
                   <Text style={m.rowX}>{n.x}</Text>

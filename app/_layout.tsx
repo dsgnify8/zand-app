@@ -38,6 +38,7 @@ import { syncFlush } from '@/lib/cloud-sync';
 import { loadOverrides } from '@/lib/content-overrides';
 import { loadUsage } from '@/lib/usage';
 import { LangSwitchOverlay } from '@/components/lang-switch-overlay';
+import { loadNotifPrefs } from '@/lib/notif-prefs';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -100,7 +101,7 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   useEffect(() => { resetForDemo().then(() => { loadLevel(); });
-    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides(); loadUsage(); }, []);
+    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides(); loadUsage(); loadNotifPrefs(); }, []);
 
   if (!fontsLoaded) {
     return null;

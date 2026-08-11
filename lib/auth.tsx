@@ -78,6 +78,12 @@ export function AuthProvider({ children }: { children: any }) {
       const uid = session?.user?.id;
       if (uid) {
         const changed = await pullAndMerge(uid);
+        // Register this device for push. Returns null in Expo Go, which
+        // is fine — it will register on the first launch of a real build.
+        try {
+          const { registerForPush } = await import('@/lib/notif-prefs');
+          registerForPush(uid);
+        } catch {}
         if (changed && !cancelled) {
           // reload the stores so the UI shows what we just pulled
           try {

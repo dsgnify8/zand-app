@@ -21,7 +21,20 @@ export async function sendItem(payload: {
   sender: string; recipient: string; kind: string;
   item_key?: string; title?: string; fa?: string; tr?: string; en?: string; note?: string;
 }) {
-  return supabase.from('sent_items').insert(payload);
+  const res = await supabase.from('sent_items').insert(payload);
+  // Tell them, if they have a device registered and have not switched
+  // this off. Fire and forget: a failed notification must never fail
+  // the send itself.
+  supabase.functions.invoke('send-push', {
+    body: {
+      userId: (payload as any).recipient,
+      title: 'Something came for you',
+      body: (payload as any).title ?? 'A friend sent you something.',
+      category: 'friends',
+      data: { tab: 'friends' },
+    },
+  }).catch(() => {});
+  return res;
 }
 
 export async function markLearned(id: number) {

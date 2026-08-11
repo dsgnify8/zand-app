@@ -39,6 +39,7 @@ const KEYS = [
   'learn:level',
   'learn:asked',
   'usage:v1',
+  'notif:v1',
 ] as const;
 type StoreKey = (typeof KEYS)[number];
 
