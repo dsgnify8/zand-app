@@ -4,11 +4,17 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { I18nManager } from 'react-native';
 
-export type Lang = 'en' | 'fa' | 'es' | 'fr';
+export type Lang = 'en' | 'fa';
 
 let lang: Lang = 'en';
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
+
+/** Subscribe to language changes. Returns an unsubscribe. */
+export function onLangChange(fn: () => void) {
+  listeners.add(fn);
+  return () => { listeners.delete(fn); };
+}
 
 const KEY = 'app:lang';
 

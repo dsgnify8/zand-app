@@ -38,10 +38,26 @@ function Sheet({ open, onClose, children }: any) {
 export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [panel, setPanel] = useState<null | 'account' | 'language' | 'notifications' | 'help' | 'terms'>(null);
   const [confirmDel, setConfirmDel] = useState(false);
+  const [delPass, setDelPass] = useState('');
+  const [delErr, setDelErr] = useState<string | null>(null);
   const [delBusy, setDelBusy] = useState(false);
 
   const doDelete = async () => {
+    // Re-authenticate first. This proves it is really them and not
+    // someone who picked up an unlocked phone, and it is the standard
+    // pattern for a destructive, irreversible action.
+    if (!delPass.trim()) { setDelErr('Enter your password to confirm.'); return; }
     setDelBusy(true);
+    setDelErr(null);
+    const { error: authErr } = await supabase.auth.signInWithPassword({
+      email: user?.email ?? '',
+      password: delPass,
+    });
+    if (authErr) {
+      setDelBusy(false);
+      setDelErr('That password is not right.');
+      return;
+    }
     try {
       await supabase.functions.invoke('delete-account');
       await AsyncStorage.clear();   // nothing of theirs stays on the device
@@ -72,7 +88,15 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   const isAdmin = useIsAdmin();
   const [inviteOpen, setInviteOpen] = useState(false);
   const email = user?.email ?? '';
-  const [notif, setNotif] = useState({ friends: true, articles: true });
+  // Categories, each independently switchable. 'learning' and 'idle' are
+  // local scheduled notifications and work today; 'articles' and
+  // 'friends' need real push, which needs a development build.
+  const [notif, setNotif] = useState({
+    learning: true,   // daily practice reminder
+    idle: true,       // pick up where you left off
+    articles: true,   // something new to read
+    friends: true,    // a friend sent you something
+  });
 
   const close = () => { setPanel(null); onClose(); };
 
@@ -174,6 +198,16 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
                 <Text style={m.dangerX}>
                   This removes your progress, saves, friends and messages. It cannot be undone.
                 </Text>
+                <TextInput
+                  style={m.delInput}
+                  value={delPass}
+                  onChangeText={setDelPass}
+                  placeholder="Your password"
+                  placeholderTextColor={pr.dim}
+                  secureTextEntry
+                  autoCapitalize="none"
+                />
+                {delErr ? <Text style={m.delErr}>{delErr}</Text> : null}
                 <Pressable onPress={() => setConfirmDel(false)} style={{ paddingVertical: 10 }}>
                   <Text style={m.dangerCancel}>Keep my account</Text>
                 </Pressable>
@@ -196,7 +230,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
                 </View>
               </View>
             ) : null}
-            <Text style={m.footNote}>To change your name or email, get in touch at contact@zand.com.</Text>
+            <Text style={m.footNote}>Any questions about your information? Get in touch at contact@zand.com.</Text>
           </View>
         </>
       ) : null}
@@ -230,8 +264,10 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
           <View style={{ paddingBottom: spacing.xxl }}>
             <View style={{ marginBottom: spacing.lg }}><ReminderRow /></View>
             {[
-              { k: 'friends', t: 'Friends', x: 'When someone sends you a word or topic' },
-              { k: 'articles', t: 'New articles', x: 'When a new piece goes up' },
+              { k: 'learning', t: 'Language practice', x: 'A daily nudge to keep your streak' },
+              { k: 'idle', t: 'Pick up where you left off', x: 'If you have not opened something in a few days' },
+              { k: 'articles', t: 'Something new', x: 'When a new piece or topic goes up' },
+              { k: 'friends', t: 'From friends', x: 'When someone sends you a word or topic' },
             ].map((n) => (
               <Pressable key={n.k} style={m.notifRow} onPress={() => setNotif((v) => ({ ...v, [n.k]: !(v as any)[n.k] }))}>
                 <View style={{ flex: 1 }}>
@@ -545,6 +581,8 @@ const m = StyleSheet.create({
   editCancelT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: pr.dim },
   editSave: { backgroundColor: colors.accent, borderRadius: 16, paddingVertical: 8, paddingHorizontal: spacing.lg },
   editSaveT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
+  delInput: { fontFamily: fonts.body, fontSize: 13.5, color: pr.ink, backgroundColor: 'rgba(0,0,0,0.04)', borderRadius: 11, paddingHorizontal: spacing.md, paddingVertical: 11, marginTop: spacing.md, marginHorizontal: spacing.lg },
+  delErr: { fontFamily: fonts.body, fontSize: 11.5, color: '#B3261E', textAlign: 'center', marginTop: 6 },
   danger: { alignItems: 'center', paddingVertical: spacing.lg, marginTop: spacing.md },
   dangerT: { fontFamily: fonts.body, fontSize: 12.5, color: '#B3261E' },
   dangerX: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18, color: pr.dim, textAlign: 'center', paddingHorizontal: spacing.lg },

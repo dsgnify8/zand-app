@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { onboardingDone } from '@/app/_layout';
+import { useAuth } from '@/lib/auth';
 
 const LANGS = [
   { code: 'en', label: 'English', native: 'English' },
@@ -106,6 +107,7 @@ export default function Onboarding() {
   // Entered with ?step=2 when a signed-out user asks to sign in, so the
   // auth page reuses this screen's design rather than the bare form.
   const { step: wantStep } = useLocalSearchParams<{ step?: string }>();
+  const { signUp, signIn } = useAuth();
   const [step, setStep] = useState(Number(wantStep) || 0);
   const [lang, setLang] = useState('en');
   const [mode, setMode] = useState<'up' | 'in'>('up');
@@ -130,6 +132,25 @@ export default function Onboarding() {
       await AsyncStorage.setItem('onboarded', '1');
       await AsyncStorage.setItem('lang', lang);
     } catch {}
+    onboardingDone();
+    router.replace('/(tabs)' as any);
+  };
+
+  const [authBusy, setAuthBusy] = useState(false);
+  const [authErr, setAuthErr] = useState<string | null>(null);
+
+  // The form on this screen is the real one. Sending someone to another
+  // auth page to retype what they just typed was the bug.
+  const doAuth = async () => {
+    setAuthErr(null);
+    if (!email.trim() || !pass) { setAuthErr('Email and password are needed.'); return; }
+    setAuthBusy(true);
+    const { error } = mode === 'up'
+      ? await signUp(email.trim(), pass, name.trim())
+      : await signIn(email.trim(), pass);
+    setAuthBusy(false);
+    if (error) { setAuthErr(error); return; }
+    try { await AsyncStorage.setItem('onboarded', '1'); } catch {}
     onboardingDone();
     router.replace('/(tabs)' as any);
   };
@@ -295,10 +316,11 @@ export default function Onboarding() {
             <GlassButton label="Continue" icon="arrow-forward" primary onPress={() => setStep(step + 1)} />
           ) : (
             <>
+              {authErr ? <Text style={s.authErr}>{authErr}</Text> : null}
               <GlassButton
-                label={mode === 'up' ? 'Create account' : 'Sign in'}
+                label={authBusy ? 'One moment…' : (mode === 'up' ? 'Create account' : 'Sign in')}
                 primary
-                onPress={() => goAuth(mode === 'up' ? '/auth/sign-up' : '/auth/sign-in')}
+                onPress={doAuth}
               />
               <Pressable hitSlop={10} onPress={finish} style={{ marginTop: spacing.lg }}>
                 <Text style={s.later}>{lang === 'fa' ? 'شاید بعداً' : 'Maybe later'}</Text>
@@ -370,5 +392,6 @@ const s = StyleSheet.create({
   btnRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   btnT: { fontFamily: fonts.body, fontSize: 16, color: colors.textPrimary },
   btnTPrimary: { color: '#FFF' },
+  authErr: { fontFamily: fonts.body, fontSize: 12.5, color: '#B3261E', textAlign: 'center', marginBottom: spacing.sm },
   later: { fontFamily: fonts.body, fontSize: 13.5, color: colors.textSecondary },
 });

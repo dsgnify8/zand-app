@@ -37,6 +37,7 @@ import { AppState } from 'react-native';
 import { syncFlush } from '@/lib/cloud-sync';
 import { loadOverrides } from '@/lib/content-overrides';
 import { loadUsage } from '@/lib/usage';
+import { LangSwitchOverlay } from '@/components/lang-switch-overlay';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -172,6 +173,7 @@ export default function RootLayout() {
           <ShareCatch />
           <StatusBar style="auto" />
           {!splashDone ? <AnimatedSplash onDone={() => setSplashDone(true)} /> : null}
+          <LangSwitchOverlay />
         </ThemeProvider>
           </GlossaryProvider>
         </ReadingProvider>

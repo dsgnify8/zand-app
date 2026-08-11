@@ -1,39 +1,37 @@
-import { Alert, I18nManager } from 'react-native';
-import { setLang, type Lang, getLang } from '@/lib/i18n';
+// Switching language.
+//
+// The old version called I18nManager.forceRTL(), which flips the native
+// layout engine and genuinely does need a reload — hence the restart
+// alert with no way out.
+//
+// But this app never relied on that. Every right-to-left treatment is
+// explicit in the styles: textAlign, writingDirection, and row-reverse
+// where a row has an icon beside text. Persian renders correctly with
+// the layout engine left alone. So we do not touch I18nManager, the
+// change is instant, and there is nothing to restart.
+//
+// The brief overlay is not a loading state — the switch is immediate.
+// It is there so the change registers as deliberate rather than the
+// screen appearing to glitch.
 
-// Farsi needs right-to-left. Flipping RTL requires a reload to take effect,
-// so we set it, then offer to restart into the correct layout.
+import { setLang, type Lang } from '@/lib/i18n';
+
+let overlayFn: ((msg: string | null) => void) | null = null;
+
+/** The root layout registers here so we can show the switching message. */
+export function registerLangOverlay(fn: (msg: string | null) => void) {
+  overlayFn = fn;
+  return () => { overlayFn = null; };
+}
+
 export async function applyLanguage(next: Lang) {
-  const prev = getLang();
+  const msg = next === 'fa' ? 'در حال تغییر به فارسی…' : 'Switching to English…';
+  overlayFn?.(msg);
+
   await setLang(next);
 
-  const wantRTL = next === 'fa';
-  const rtlChanged = I18nManager.isRTL !== wantRTL;
-
-  if (rtlChanged) {
-    I18nManager.allowRTL(wantRTL);
-    I18nManager.forceRTL(wantRTL);
-
-    const title = wantRTL
-      ? 'برای فارسی، برنامه دوباره باز می‌شود'
-      : 'Restart to apply';
-    const body = wantRTL
-      ? 'برای چیدمان درست فارسی، برنامه بسته و دوباره باز می‌شود.\nThe app will reopen to switch to Farsi.'
-      : 'The app will reopen to apply the new layout.';
-    const ok = wantRTL ? 'باز کن  ·  Restart' : 'Restart';
-
-    Alert.alert(title, body, [
-      {
-        text: ok,
-        onPress: async () => {
-          try {
-            const Updates = await import('expo-updates');
-            await Updates.reloadAsync();
-          } catch {
-            // dev/Expo Go: reload not available; the change applies on next manual reload
-          }
-        },
-      },
-    ]);
-  }
+  // Long enough to read, short enough not to be a wait. The language has
+  // already changed underneath by the time this clears.
+  await new Promise((r) => setTimeout(r, 700));
+  overlayFn?.(null);
 }
