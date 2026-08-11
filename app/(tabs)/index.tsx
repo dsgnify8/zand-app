@@ -34,6 +34,7 @@ import { GEO_CHAPTERS } from '@/constants/geography';
 import { INBOX, pr } from '@/constants/profile';
 import { APP } from '@/constants/i18n/app';
 import { useAuth } from '@/lib/auth';
+import { useInbox } from '@/lib/inbox';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
