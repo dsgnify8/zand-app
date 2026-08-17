@@ -24,12 +24,24 @@ import { resolveMany } from '@/lib/resolve-saved';
 import { useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
 import { AchievementsSheet } from '@/components/achievements-sheet';
 import { eduImage } from '@/constants/education-images';
+import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
+
+// Saved articles carry a bundled image key; saved businesses carry a
+// storage path. Both arrive in the same list, so resolving happens here.
+const libImage = (img?: string | null) => {
+  if (!img) return undefined;
+  if (isBundled(img)) return eduImage(bundledKey(img));
+  if (img.includes('/')) return { uri: photoUrl(img) };   // storage path
+  return eduImage(img);
+};
 import { StreakPlant } from '@/components/streak-plant';
 import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
 import { LearnProgressBlock } from '@/components/learn-progress-block';
 import { APP } from '@/constants/i18n/app';
 import { SignedOutOverlay } from '@/components/signed-out-overlay';
 import { EmptyState } from '@/components/empty-state';
+import { useSavedBusinesses } from '@/lib/saved-businesses';
+import { loadBusiness, categoryLabel } from '@/lib/businesses';
 
 type Tab = 'you' | 'library' | 'friends' | 'progress';
 
@@ -193,6 +205,30 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
   const keys = view === 'favourites' ? liked : view === 'saved' ? saved : view === 'history' ? recent : [];
   const arts = resolveMany(keys);
 
+  // Saved businesses live in their own store and come from the database
+  // rather than from constants, so they are fetched and folded in here
+  // instead of going through resolveMany.
+  const savedBiz = useSavedBusinesses();
+  const [bizCards, setBizCards] = useState<any[]>([]);
+  useEffect(() => {
+    if (view !== 'saved' || savedBiz.length === 0) { setBizCards([]); return; }
+    (async () => {
+      const rows = await Promise.all(savedBiz.map((id) => loadBusiness(id)));
+      setBizCards(
+        rows.filter(Boolean).map((x: any) => ({
+          key: 'biz-' + x.id,
+          kind: 'business',
+          title: x.name,
+          sub: categoryLabel(x.category, false) + (x.city ? '  ·  ' + x.city : ''),
+          image: x.photos?.[0] ?? null,
+          route: '/business?id=' + x.id,
+        })),
+      );
+    })();
+  }, [view, savedBiz.join(',')]);
+
+  const items = view === 'saved' ? [...bizCards, ...arts] : arts;
+
   const TITLE: Record<string, string> = { history: t(PROFILE.history), favourites: t(PROFILE.favourites), watched: t(PROFILE.watched), saved: t(PROFILE.saveLater) };
   const EMPTY: Record<string, string> = {
     history: 'Nothing opened yet. Start reading and it shows up here.',
@@ -220,7 +256,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
             {watchedIds.map((id: string) => <VideoTile key={id} id={id} />)}
           </View>
         )
-      ) : arts.length === 0 ? (
+      ) : items.length === 0 ? (
         <View style={s.emptyWrap}>
           <Ionicons name={view === 'favourites' ? 'heart-outline' : view === 'saved' ? 'bookmark-outline' : view === 'watched' ? 'play-circle-outline' : 'time-outline'} size={30} color={pr.dim} />
           <Text style={s.emptyT}>{EMPTY[view]}</Text>
@@ -233,10 +269,10 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
               {arts.filter((_, i) => i % 2 === col).map((a) => (
                 <Pressable key={a.key} style={s.pinCard} onPress={() => router.navigate(('/article?article=' + a.key) as any)}>
                   <View style={[s.pinImg, { height: 130 + ((a.title.length * 7) % 90) }]}>
-                    {a.kind === 'culture' && a.accent && a.glyph && !eduImage(a.image) ? (
+                    {a.kind === 'culture' && a.accent && a.glyph && !libImage(a.image) ? (
                       <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
                     ) : (
-                      <FramedImage name={a.image ?? a.key} source={a.image ? eduImage(a.image) : undefined} style={StyleSheet.absoluteFill as any}
+                      <FramedImage name={a.image ?? a.key} source={libImage(a.image)} style={StyleSheet.absoluteFill as any}
                         onPress={() => router.navigate(a.route as any)} />
                     )}
                     <Pressable style={s.pinHeart} hitSlop={8} onPress={() => toggleLike(a.key)}>
@@ -252,13 +288,13 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
         </View>
       ) : (
         <View style={{ gap: spacing.sm }}>
-          {arts.map((a) => (
+          {items.map((a) => (
             <Pressable key={a.key} style={s.saveRow} onPress={() => router.navigate(a.route as any)}>
               <View style={s.saveThumb}>
-                {a.kind === 'culture' && a.accent && a.glyph && !eduImage(a.image) ? (
+                {a.kind === 'culture' && a.accent && a.glyph && !libImage(a.image) ? (
                   <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
                 ) : (
-                  <FramedImage name={a.image ?? a.key} source={a.image ? eduImage(a.image) : undefined} style={StyleSheet.absoluteFill as any}
+                  <FramedImage name={a.image ?? a.key} source={libImage(a.image)} style={StyleSheet.absoluteFill as any}
                     onPress={() => router.navigate(a.route as any)} />
                 )}
               </View>

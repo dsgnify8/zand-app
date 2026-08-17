@@ -137,7 +137,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
 
             <View style={{ gap: spacing.sm, marginTop: spacing.lg }}>
               {rows.map((r) => (
-                <Pressable key={r.key} style={m.row} onPress={() => { if (r.key === 'admin') { close(); router.navigate('/admin' as any); } else if (r.key === 'friends') { setInviteOpen(true); } else { setPanel(r.key as any); } }}>
+                <Pressable key={r.key} style={m.row} onPress={() => { if (r.key === 'admin') { close(); router.navigate('/admin' as any); } else if (r.key === 'businesses') { close(); router.navigate('/my-businesses' as any); } else if (r.key === 'friends') { setInviteOpen(true); } else { setPanel(r.key as any); } }}>
                   <View style={m.rowIcon}><Ionicons name={r.i as any} size={16} color={colors.textPrimary} /></View>
                   <View style={{ flex: 1 }}>
                     <Text style={m.rowT}>{r.t}</Text>

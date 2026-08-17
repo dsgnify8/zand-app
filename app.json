@@ -62,6 +62,13 @@
           "locationWhenInUsePermission": "Zand uses your location to show Iranian-owned businesses near you.",
           "isIosBackgroundLocationEnabled": false
         }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.zand",
+          "enableGooglePay": true
+        }
       ]
     ],
     "experiments": {

@@ -35,6 +35,7 @@ const KEYS = [
   'stats:v1',
   'liked:articles',
   'saved:articles',
+  'saved:businesses',
   'recent:articles',
   'scroll:articles',
   'learn:level',
@@ -122,6 +123,7 @@ function mergeOne(key: StoreKey, local: any, cloud: any) {
     }
     case 'learn:strength': return mergeStrength(local, cloud);
     case 'stats:v1': return mergeStats(local, cloud);
+    case 'saved:businesses':
     case 'liked:articles':
     case 'saved:articles':
     case 'recent:articles':

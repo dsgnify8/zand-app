@@ -39,6 +39,7 @@ import { loadOverrides } from '@/lib/content-overrides';
 import { loadUsage } from '@/lib/usage';
 import { LangSwitchOverlay } from '@/components/lang-switch-overlay';
 import { loadNotifPrefs } from '@/lib/notif-prefs';
+import { loadSavedBusinesses } from '@/lib/saved-businesses';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -101,7 +102,7 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   useEffect(() => { resetForDemo().then(() => { loadLevel(); });
-    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadPartial(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides(); loadUsage(); loadNotifPrefs(); }, []);
+    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadPartial(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides(); loadUsage(); loadNotifPrefs(); loadSavedBusinesses(); }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -130,10 +131,10 @@ export default function RootLayout() {
             <Stack.Screen name="onboarding" options={{ headerShown: false }} />
             <Stack.Screen name="admin" options={{ headerShown: false }} />
             <Stack.Screen name="tpm/post" options={{ headerShown: false }} />
-            <Stack.Screen name="local-map" options={{ headerShown: false }} />
+            <Stack.Screen name="local-map" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
             <Stack.Screen name="my-businesses" options={{ headerShown: false }} />
-            <Stack.Screen name="business" options={{ headerShown: false }} />
-            <Stack.Screen name="business-new" options={{ headerShown: false }} />
+            <Stack.Screen name="business" options={{ headerShown: false, animation: 'slide_from_right' }} />
+            <Stack.Screen name="business-new" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
             <Stack.Screen name="admin-businesses" options={{ headerShown: false }} />
             <Stack.Screen name="admin-content" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />

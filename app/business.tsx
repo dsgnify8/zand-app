@@ -5,9 +5,9 @@
 // them. Description and hours come after, because they matter once you
 // have decided you are interested rather than before.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
-  ActivityIndicator, Dimensions, Image, Linking, Platform, Pressable,
+  ActivityIndicator, Animated, Dimensions, Image, Linking, Platform, Pressable,
   ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,6 +19,10 @@ import { getLang } from '@/lib/i18n';
 import { loadBusiness, categoryLabel, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
+import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
+import { NearbyPlaces } from '@/components/nearby-places';
+import { isSavedBusiness, toggleSavedBusiness, shareBusiness } from '@/lib/saved-businesses';
 
 // A listing photo is either a storage path or a bundled demo image.
 const bizImage = (path: string) =>
@@ -63,6 +67,8 @@ export default function BusinessPage() {
   const [b, setB] = useState<Business | null>(null);
   const [loading, setLoading] = useState(true);
   const [shot, setShot] = useState(0);
+  const [, setSavedTick] = useState(0);
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     (async () => {
@@ -110,11 +116,31 @@ export default function BusinessPage() {
   };
 
   return (
-    <SafeAreaView style={s.safe} edges={['top']}>
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl * 2 }} showsVerticalScrollIndicator={false}>
+    <View style={s.safe}>
+      <StatusBar style="light" />
+      <Animated.ScrollView
+        contentContainerStyle={{ paddingBottom: spacing.xxl * 2 }}
+        showsVerticalScrollIndicator={false}
+        contentInsetAdjustmentBehavior="never"
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true },
+        )}
+      >
 
         {/* photos */}
-        <View>
+        <Animated.View
+          style={{
+            transform: [
+              // half speed going up, and it stretches rather than tears
+              // away when pulled down past the top
+              { translateY: scrollY.interpolate({ inputRange: [-200, 0, 400], outputRange: [0, 0, 200], extrapolate: 'clamp' }) },
+              { scale: scrollY.interpolate({ inputRange: [-200, 0], outputRange: [1.35, 1], extrapolate: 'clamp' }) },
+            ],
+            opacity: scrollY.interpolate({ inputRange: [0, 260, 400], outputRange: [1, 1, 0.55], extrapolate: 'clamp' }),
+          }}
+        >
           {photos.length ? (
             <>
               <ScrollView
@@ -124,7 +150,7 @@ export default function BusinessPage() {
                 onMomentumScrollEnd={(e) => setShot(Math.round(e.nativeEvent.contentOffset.x / W))}
               >
                 {photos.map((p) => (
-                  <Image key={p} source={bizImage(p)} style={{ width: W, height: 260 }} />
+                  <Image key={p} source={bizImage(p)} style={{ width: W, height: 420 }} />
                 ))}
               </ScrollView>
               {photos.length > 1 ? (
@@ -141,10 +167,32 @@ export default function BusinessPage() {
             </View>
           )}
 
+          <LinearGradient
+            colors={['rgba(0,0,0,0.38)', 'transparent']}
+            style={s.topShade}
+            pointerEvents="none"
+          />
+          <View style={s.topRight}>
+            <Pressable
+              style={s.roundBtn}
+              hitSlop={8}
+              onPress={() => { toggleSavedBusiness(b.id); setSavedTick((n) => n + 1); }}
+            >
+              <Ionicons
+                name={isSavedBusiness(b.id) ? 'bookmark' : 'bookmark-outline'}
+                size={17}
+                color="#FFF"
+              />
+            </Pressable>
+            <Pressable style={s.roundBtn} hitSlop={8} onPress={() => shareBusiness(b)}>
+              <Ionicons name="share-outline" size={17} color="#FFF" />
+            </Pressable>
+          </View>
+
           <Pressable style={s.back} hitSlop={10} onPress={() => router.replace('/local' as any)}>
             <Ionicons name="chevron-back" size={20} color="#FFF" />
           </Pressable>
-        </View>
+        </Animated.View>
 
         <View style={s.body}>
           <Text style={[s.name, fa && b.name_fa ? s.nameFa : null]}>{name}</Text>
@@ -185,11 +233,21 @@ export default function BusinessPage() {
             <Text style={[s.desc, fa && b.description_fa ? s.descFa : null]}>{desc}</Text>
           ) : null}
 
-          {b.address ? (
-            <View style={s.block}>
+          {b.address || b.lat != null ? (
+            <Pressable
+              style={s.block}
+              onPress={() => b.lat != null && router.navigate(('/local-map?focus=' + b.id) as any)}
+            >
               <Text style={s.blockL}>{fa ? 'نشانی' : 'ADDRESS'}</Text>
-              <Text style={[s.blockV, fa && s.rtl]}>{b.address}</Text>
-            </View>
+              <View style={s.addrRow}>
+                <Text style={[s.blockV, fa && s.rtl, { flex: 1 }]}>{b.address || (fa ? 'روی نقشه' : 'See it on the map')}</Text>
+                {b.lat != null ? (
+                  <View style={s.mapChip}>
+                    <Ionicons name="map-outline" size={14} color={colors.accent} />
+                  </View>
+                ) : null}
+              </View>
+            </Pressable>
           ) : null}
 
           {hours.length ? (
@@ -217,14 +275,16 @@ export default function BusinessPage() {
             </View>
           ) : null}
 
+          <NearbyPlaces b={b} fa={fa} />
+
           <Text style={s.foot}>
             {fa
               ? 'این کسب‌وکار خودش را در فهرست زند ثبت کرده است.'
               : 'This business listed itself on Zand.'}
           </Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </Animated.ScrollView>
+    </View>
   );
 }
 
@@ -233,13 +293,18 @@ const s = StyleSheet.create({
   head: { paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   dim: { fontFamily: fonts.body, fontSize: 13, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl },
 
-  back: { position: 'absolute', top: spacing.md, left: spacing.lg, width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
+  topShade: { position: 'absolute', top: 0, left: 0, right: 0, height: 120 },
+  topRight: { position: 'absolute', top: 56, right: spacing.lg, flexDirection: 'row', gap: 8 },
+  roundBtn: { width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
+  mapChip: { width: 30, height: 30, borderRadius: 10, backgroundColor: 'rgba(201,162,39,0.12)', alignItems: 'center', justifyContent: 'center' },
+  addrRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  back: { position: 'absolute', top: 56, left: spacing.lg, width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   noShot: { height: 200, backgroundColor: 'rgba(0,0,0,0.04)', alignItems: 'center', justifyContent: 'center' },
   dots: { position: 'absolute', bottom: 12, alignSelf: 'center', flexDirection: 'row', gap: 5 },
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.55)' },
   dotOn: { backgroundColor: '#FFF' },
 
-  body: { padding: spacing.lg },
+  body: { padding: spacing.lg, marginTop: -22, borderTopLeftRadius: 22, borderTopRightRadius: 22, backgroundColor: colors.background },
   name: { fontFamily: fonts.bodyStrong, fontSize: 22, letterSpacing: -0.5, color: colors.textPrimary },
   nameFa: { fontFamily: fonts.persian, fontSize: 21, textAlign: 'right' },
   meta: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary, marginTop: 4 },

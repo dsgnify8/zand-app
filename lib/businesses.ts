@@ -62,6 +62,12 @@ export const CATEGORIES = [
   { key: 'medical',    en: 'Medical',     fa: 'پزشکی',     icon: 'medkit-outline' },
   { key: 'dental',     en: 'Dental',      fa: 'دندان‌پزشکی', icon: 'happy-outline' },
   { key: 'tutoring',   en: 'Tutoring',    fa: 'آموزش',     icon: 'school-outline' },
+  { key: 'finance',    en: 'Finance',     fa: 'مالی',      icon: 'calculator-outline' },
+  { key: 'property',   en: 'Property',    fa: 'املاک',     icon: 'home-outline' },
+  { key: 'arts',       en: 'Arts',        fa: 'هنر',       icon: 'color-palette-outline' },
+  { key: 'music',      en: 'Music',       fa: 'موسیقی',    icon: 'musical-notes-outline' },
+  { key: 'travel',     en: 'Travel',      fa: 'سفر',       icon: 'airplane-outline' },
+  { key: 'fitness',    en: 'Fitness',     fa: 'ورزش',      icon: 'barbell-outline' },
   { key: 'other',      en: 'Other',       fa: 'دیگر',      icon: 'ellipsis-horizontal-outline' },
 ] as const;
 
@@ -206,4 +212,96 @@ export function useBusinesses(opts: Parameters<typeof loadBusinesses>[0] = {}) {
 
   useEffect(() => { refresh(); }, [key]);
   return { items, loading, refresh };
+}
+
+
+/* ---------------- what people do with a listing ---------------- */
+
+export type EventKind = 'view' | 'card' | 'call' | 'whatsapp' | 'website' | 'directions';
+
+/**
+ * Record an interaction. Fire and forget on purpose: analytics must
+ * never slow down or break the thing being measured, so a failure here
+ * is silent and the user notices nothing.
+ */
+export function trackBusiness(businessId: string, kind: EventKind, userId?: string) {
+  supabase
+    .from('business_events')
+    .insert({ business_id: businessId, kind, user_id: userId ?? null })
+    .then(() => {}, () => {});
+}
+
+export type Insight = {
+  views: number;          // opened the full listing
+  cards: number;          // saw it in the feed or on the map
+  calls: number;
+  whatsapp: number;
+  website: number;
+  directions: number;
+  byDay: { day: string; views: number }[];
+};
+
+/** Everything an owner sees on their analytics tab, for one listing. */
+export async function insightsFor(businessId: string, days = 30): Promise<Insight> {
+  const since = new Date(Date.now() - days * 86400000).toISOString();
+  const { data } = await supabase
+    .from('business_events')
+    .select('kind, created_at')
+    .eq('business_id', businessId)
+    .gte('created_at', since);
+
+  const rows = data ?? [];
+  const count = (k: string) => rows.filter((r: any) => r.kind === k).length;
+
+  // one bucket per day, so a sparse series still draws a continuous line
+  const buckets = new Map<string, number>();
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10);
+    buckets.set(d, 0);
+  }
+  rows.forEach((r: any) => {
+    if (r.kind !== 'view') return;
+    const d = String(r.created_at).slice(0, 10);
+    if (buckets.has(d)) buckets.set(d, (buckets.get(d) ?? 0) + 1);
+  });
+
+  return {
+    views: count('view'),
+    cards: count('card'),
+    calls: count('call'),
+    whatsapp: count('whatsapp'),
+    website: count('website'),
+    directions: count('directions'),
+    byDay: [...buckets.entries()].map(([day, views]) => ({ day, views })),
+  };
+}
+
+/**
+ * How this listing compares to others in the same category and city.
+ * Returned as a percentile rather than a rank, because "better than 80%
+ * of salons in Gothenburg" is useful to an owner and "seventh" is not.
+ */
+export async function percentileFor(b: Business, myViews: number): Promise<number | null> {
+  const { data } = await supabase
+    .from('businesses')
+    .select('id')
+    .eq('status', 'active')
+    .eq('category', b.category)
+    .eq('city', b.city ?? '');
+  const ids = (data ?? []).map((x: any) => x.id).filter((id: string) => id !== b.id);
+  if (ids.length < 3) return null;   // too few to say anything honest
+
+  const since = new Date(Date.now() - 30 * 86400000).toISOString();
+  const { data: ev } = await supabase
+    .from('business_events')
+    .select('business_id')
+    .in('business_id', ids)
+    .eq('kind', 'view')
+    .gte('created_at', since);
+
+  const per = new Map<string, number>();
+  (ev ?? []).forEach((r: any) => per.set(r.business_id, (per.get(r.business_id) ?? 0) + 1));
+  const others = ids.map((id: string) => per.get(id) ?? 0);
+  const below = others.filter((n) => n < myViews).length;
+  return Math.round((below / others.length) * 100);
 }

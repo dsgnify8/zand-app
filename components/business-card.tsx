@@ -18,9 +18,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { categoryLabel, type Business } from '@/lib/businesses';
+import { categoryLabel, trackBusiness, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
+import { isSavedBusiness, toggleSavedBusiness } from '@/lib/saved-businesses';
 
 const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
@@ -38,6 +39,7 @@ export function BusinessCard({
 }) {
   const shots = b.photos ?? [];
   const [i, setI] = useState(0);
+  const [, setTick] = useState(0);
   const scroll = useRef<ScrollView>(null);
 
   const go = (n: number) => {
@@ -57,7 +59,7 @@ export function BusinessCard({
   return (
     <View style={s.card}>
       {/* photos */}
-      <Pressable onPress={onOpen}>
+      <View>
         <View style={s.shotWrap}>
           {shots.length ? (
             <ScrollView
@@ -68,7 +70,9 @@ export function BusinessCard({
               onMomentumScrollEnd={onEnd}
             >
               {shots.map((p) => (
-                <Image key={p} source={bizImage(p)} style={{ width: W, height: 210 }} />
+                <Pressable key={p} onPress={onOpen}>
+                  <Image source={bizImage(p)} style={{ width: W, height: 210 }} />
+                </Pressable>
               ))}
             </ScrollView>
           ) : (
@@ -107,6 +111,18 @@ export function BusinessCard({
             </>
           ) : null}
 
+          <Pressable
+            style={s.save}
+            hitSlop={8}
+            onPress={() => { toggleSavedBusiness(b.id); setTick((n) => n + 1); }}
+          >
+            <Ionicons
+              name={isSavedBusiness(b.id) ? 'bookmark' : 'bookmark-outline'}
+              size={17}
+              color="#FFF"
+            />
+          </Pressable>
+
           {b.badge ? (
             <View style={s.badge}>
               <Text style={s.badgeT}>{b.badge}</Text>
@@ -119,7 +135,7 @@ export function BusinessCard({
             </View>
           ) : null}
         </View>
-      </Pressable>
+      </View>
 
       {/* words */}
       <Pressable onPress={onOpen} style={s.body}>
@@ -137,7 +153,7 @@ export function BusinessCard({
       {(b.phone || wa || b.website) ? (
         <View style={s.acts}>
           {b.phone ? (
-            <Pressable style={s.act} onPress={() => Linking.openURL('tel:' + b.phone)}>
+            <Pressable style={s.act} onPress={() => { trackBusiness(b.id, 'call'); Linking.openURL('tel:' + b.phone); }}>
               <Ionicons name="call-outline" size={14} color={colors.textPrimary} />
               <Text style={s.actT}>{fa ? 'تماس' : 'Call'}</Text>
             </Pressable>
@@ -145,7 +161,7 @@ export function BusinessCard({
           {wa ? (
             <Pressable
               style={s.act}
-              onPress={() => Linking.openURL('https://wa.me/' + wa.replace(/[^\d]/g, ''))}
+              onPress={() => { trackBusiness(b.id, 'whatsapp'); Linking.openURL('https://wa.me/' + wa.replace(/[^\d]/g, '')); }}
             >
               <Ionicons name="logo-whatsapp" size={14} color={colors.textPrimary} />
               <Text style={s.actT}>WhatsApp</Text>
@@ -180,9 +196,10 @@ const s = StyleSheet.create({
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.55)' },
   dotOn: { backgroundColor: '#FFF', width: 6, height: 6, borderRadius: 3 },
 
+  save: { position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(0,0,0,0.35)', alignItems: 'center', justifyContent: 'center', zIndex: 3 },
   badge: { position: 'absolute', top: 10, left: 10, backgroundColor: 'rgba(20,17,14,0.82)', paddingHorizontal: 9, paddingVertical: 5, borderRadius: 10 },
   badgeT: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 0.3, color: '#FFF' },
-  km: { position: 'absolute', top: 10, right: 10, backgroundColor: 'rgba(255,255,255,0.92)', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 10 },
+  km: { position: 'absolute', bottom: 10, right: 10, backgroundColor: 'rgba(255,255,255,0.92)', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 10 },
   kmT: { fontFamily: fonts.bodyStrong, fontSize: 10.5, color: colors.textPrimary },
 
   body: { paddingTop: spacing.md },

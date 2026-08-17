@@ -7,7 +7,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Image, Pressable, ScrollView,
+  ActivityIndicator, FlatList, Image, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -105,7 +105,14 @@ export default function Local() {
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
-      <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
+      <FlatList
+        data={loading ? [] : items}
+        keyExtractor={(x) => x.id}
+        contentContainerStyle={s.body}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          <>
 
         {/* top bar */}
         <View style={s.top}>
@@ -222,38 +229,39 @@ export default function Local() {
           })}
         </ScrollView>
 
-        {/* the list */}
-        {loading ? (
-          <ActivityIndicator style={{ marginTop: spacing.xxl }} color={colors.accent} />
-        ) : items.length === 0 ? (
-          <View style={s.empty}>
-            <Ionicons name="storefront-outline" size={20} color={colors.textSecondary} />
-            <Text style={s.emptyT}>
-              {fa
-                ? 'اینجا هنوز چیزی ثبت نشده. شاید تو اولی باشی.'
-                : 'Nothing here yet. Yours could be the first.'}
-            </Text>
-            <Pressable onPress={listYours}>
-              <Text style={s.emptyCta}>{fa ? 'ثبت کسب‌وکار' : 'List a business'}</Text>
-            </Pressable>
-          </View>
-        ) : (
-          items.map((biz) => {
-            const km = place && biz.lat != null
-              ? dist(place.lat, place.lng, biz.lat, biz.lng ?? 0)
-              : null;
-            return (
-              <BusinessCard
-                key={biz.id}
-                b={biz}
-                fa={fa}
-                km={km}
-                onOpen={() => router.navigate(('/business?id=' + biz.id) as any)}
-              />
-            );
-          })
-        )}
-      </ScrollView>
+          </>
+        }
+        ListEmptyComponent={
+          loading ? (
+            <ActivityIndicator style={{ marginTop: spacing.xxl }} color={colors.accent} />
+          ) : (
+            <View style={s.empty}>
+              <Ionicons name="storefront-outline" size={20} color={colors.textSecondary} />
+              <Text style={s.emptyT}>
+                {fa
+                  ? 'اینجا هنوز چیزی ثبت نشده. شاید تو اولی باشی.'
+                  : 'Nothing here yet. Yours could be the first.'}
+              </Text>
+              <Pressable onPress={listYours}>
+                <Text style={s.emptyCta}>{fa ? 'ثبت کسب‌وکار' : 'List a business'}</Text>
+              </Pressable>
+            </View>
+          )
+        }
+        renderItem={({ item: biz }) => {
+          const km = place && biz.lat != null
+            ? dist(place.lat, place.lng, biz.lat, biz.lng ?? 0)
+            : null;
+          return (
+            <BusinessCard
+              b={biz}
+              fa={fa}
+              km={km}
+              onOpen={() => router.navigate(('/business?id=' + biz.id) as any)}
+            />
+          );
+        }}
+      />
 
       {/* map */}
       <Pressable style={s.mapBtn} onPress={() => router.navigate('/local-map' as any)}>

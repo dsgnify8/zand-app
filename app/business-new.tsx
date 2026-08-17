@@ -23,8 +23,13 @@ import { getLang } from '@/lib/i18n';
 import {
   CATEGORIES, loadBusiness, saveBusiness, submitBusiness, type Business,
 } from '@/lib/businesses';
-import { MAX_PHOTOS, pickPhotos, uploadPhoto, photoUrl, removePhoto } from '@/lib/business-photos';
+import { MAX_PHOTOS, pickPhotos, uploadPhoto, photoUrl, removePhoto, isBundled, bundledKey } from '@/lib/business-photos';
+import { eduImage } from '@/constants/education-images';
+
+const bizImage = (path: string) =>
+  isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 import { currentPlace, findPlace, type Place } from '@/lib/geo';
+import { BusinessInsights } from '@/components/business-insights';
 
 const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
 const DAY_LABEL: Record<string, string> = {
@@ -54,6 +59,7 @@ export default function BusinessForm() {
   const [uploading, setUploading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [kw, setKw] = useState('');
+  const [tab, setTab] = useState<'edit' | 'stats'>('edit');
 
   // Four is the cap: enough to catch the things a category misses, few
   // enough that nobody stuffs it with every word they can think of.
@@ -217,6 +223,23 @@ export default function BusinessForm() {
         <View style={{ width: 22 }} />
       </View>
 
+      {b.status === 'active' ? (
+        <View style={s.tabs}>
+          {(['edit', 'stats'] as const).map((t) => (
+            <Pressable key={t} style={[s.tab, tab === t && s.tabOn]} onPress={() => setTab(t)}>
+              <Text style={[s.tabT, tab === t && s.tabTOn]}>
+                {t === 'edit' ? 'Listing' : 'How it is doing'}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+      ) : null}
+
+      {tab === 'stats' && b.status === 'active' ? (
+        <ScrollView contentContainerStyle={s.body}>
+          <BusinessInsights b={b as any} />
+        </ScrollView>
+      ) : (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={s.body} keyboardShouldPersistTaps="handled">
 
@@ -312,7 +335,7 @@ export default function BusinessForm() {
           <View style={s.photos}>
             {(b.photos ?? []).map((p, i) => (
               <View key={p} style={s.photoWrap}>
-                <Image source={{ uri: photoUrl(p) }} style={s.photo} />
+                <Image source={bizImage(p)} style={s.photo} />
                 {i === 0 ? <View style={s.coverTag}><Text style={s.coverTagT}>COVER</Text></View> : null}
                 <Pressable style={s.photoX} hitSlop={6} onPress={() => dropPhoto(p)}>
                   <Ionicons name="close" size={12} color="#FFF" />
@@ -392,7 +415,7 @@ export default function BusinessForm() {
               style={[s.input, { flex: 1 }]}
               value={kw}
               onChangeText={setKw}
-              placeholder="ice cream, arcade, halal…"
+              placeholder="ice cream, hair styling, arcade…"
               placeholderTextColor={colors.textSecondary}
               autoCapitalize="none"
               onSubmitEditing={addKw}
@@ -470,6 +493,7 @@ export default function BusinessForm() {
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>
+      )}
     </SafeAreaView>
   );
 }
@@ -479,6 +503,11 @@ const s = StyleSheet.create({
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(0,0,0,0.08)' },
   headT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: colors.textPrimary },
 
+  tabs: { flexDirection: 'row', gap: 6, paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.xs },
+  tab: { flex: 1, paddingVertical: 9, borderRadius: 14, alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.04)' },
+  tabOn: { backgroundColor: 'rgba(34,30,26,0.9)' },
+  tabT: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary },
+  tabTOn: { color: '#FFF', fontFamily: fonts.bodyStrong },
   body: { padding: spacing.lg, paddingBottom: spacing.xxl * 2 },
   intro: { fontFamily: fonts.body, fontSize: 13.5, lineHeight: 21, color: colors.textSecondary, marginBottom: spacing.xl },
 
