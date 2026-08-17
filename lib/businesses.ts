@@ -185,11 +185,19 @@ export async function loadForReview(): Promise<Business[]> {
   return (data ?? []) as Business[];
 }
 
+/**
+ * The review decision, in one write.
+ *
+ * Approving publishes: there is no waiting room between yes and live,
+ * because the charge happens at the same moment. When billing lands, a
+ * failed charge is what moves a listing to 'payment_failed' — approval
+ * itself stays a single transition.
+ */
 export async function decide(id: string, approve: boolean, note?: string) {
   const { error } = await supabase
     .from('businesses')
     .update({
-      status: approve ? 'approved' : 'rejected',
+      status: approve ? 'active' : 'rejected',
       review_note: note ?? null,
       approved_at: approve ? new Date().toISOString() : null,
     })

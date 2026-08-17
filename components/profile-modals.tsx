@@ -281,7 +281,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         <>
           <Header title="Help centre" />
           <View style={{ paddingBottom: spacing.xxl }}>
-            <Text style={m.helpLead}>We are a small team and we read everything.</Text>
+            <Text style={m.helpLead}>Our team reads everything.</Text>
             <Text style={m.helpBody}>For any question, a problem, an idea, or just to say hello, email us and we will get back to you.</Text>
             <Pressable style={m.mailBtn} onPress={() => Linking.openURL('mailto:contact@zand.com')}>
               <Ionicons name="mail-outline" size={17} color="#FFF" />

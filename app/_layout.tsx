@@ -132,6 +132,7 @@ export default function RootLayout() {
             <Stack.Screen name="admin" options={{ headerShown: false }} />
             <Stack.Screen name="tpm/post" options={{ headerShown: false }} />
             <Stack.Screen name="local-map" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+            <Stack.Screen name="admin-review" options={{ headerShown: false }} />
             <Stack.Screen name="my-businesses" options={{ headerShown: false }} />
             <Stack.Screen name="business" options={{ headerShown: false, animation: 'slide_from_right' }} />
             <Stack.Screen name="business-new" options={{ headerShown: false, animation: 'slide_from_bottom' }} />

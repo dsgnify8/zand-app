@@ -43,7 +43,6 @@ const STATE: Record<BusinessStatus, { label: string; note: string; tone: string 
 const FILTERS = [
   { k: 'submitted', label: 'Waiting' },
   { k: 'rejected', label: 'Sent back' },
-  { k: 'approved', label: 'Approved' },
   { k: 'active', label: 'Live' },
   { k: 'all', label: 'Everything' },
 ] as const;
@@ -142,7 +141,7 @@ export default function MyBusinesses() {
             <Pressable
               key={b.id}
               style={s.adminRow}
-              onPress={() => router.navigate(('/business-new?id=' + b.id) as any)}
+              onPress={() => router.navigate(('/admin-review?id=' + b.id) as any)}
             >
               {b.photos?.[0] ? (
                 <Image source={bizImage(b.photos[0])} style={s.adminShot} />
@@ -314,8 +313,8 @@ const s = StyleSheet.create({
   search: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: 'rgba(0,0,0,0.04)', borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: 9 },
   searchIn: { flex: 1, fontFamily: fonts.body, fontSize: 13.5, color: colors.textPrimary, padding: 0 },
 
-  filters: { maxHeight: 50, paddingVertical: spacing.sm },
-  filter: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 15, backgroundColor: 'rgba(0,0,0,0.04)' },
+  filters: { flexGrow: 0, paddingVertical: spacing.sm },
+  filter: { paddingHorizontal: 13, paddingVertical: 8, borderRadius: 16, backgroundColor: 'rgba(0,0,0,0.04)', justifyContent: 'center' },
   filterOn: { backgroundColor: 'rgba(34,30,26,0.9)' },
   filterT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary },
   filterTOn: { color: '#FFF' },
