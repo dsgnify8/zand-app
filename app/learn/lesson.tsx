@@ -10,15 +10,24 @@ import { lessonByKey } from '@/constants/curriculum';
 import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep, LetterStep, VowelStep, GapStep, TypeStep } from '@/components/lesson-steps';
 import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
-import { markLessonDone } from '@/lib/learn-progress';
+import { markLessonDone, markPartial } from '@/lib/learn-progress';
 import { markLearnDay } from '@/lib/stats-store';
 import { Art } from '@/components/lang-art';
 import { refreshTomorrow } from '@/lib/reminders';
 import { useEffect } from 'react';
+import { Confetti } from '@/components/confetti';
+import { STAGES, nextStep } from '@/constants/journey';
 
 export default function LessonScreen() {
   const { unit, lesson } = useLocalSearchParams<{ unit: string; lesson: string }>();
   const l = lessonByKey(unit, lesson);
+
+  // The route params give us unit and lesson; the journey is keyed by
+  // step, so find the step that points at this lesson.
+  const thisStep = STAGES.flatMap((st) => st.steps)
+    .find((x) => x.unit === unit && x.lesson === lesson);
+  const after = thisStep ? nextStep(thisStep.key) : null;
+  const finishedChapter = !!after?.endsStage;
 
   const [i, setI] = useState(0);
   const [answered, setAnswered] = useState(false);
@@ -95,13 +104,30 @@ export default function LessonScreen() {
           ) : (
             <Text style={s.finishScore}>Lesson complete</Text>
           )}
-          <Pressable style={[s.cta, s.finishBtn]} onPress={() => { console.log('[EXIT] lesson.tsx'); router.replace('/learn/map' as any); }}>
-            <Text style={s.ctaT}>Done</Text>
+          {finishedChapter ? (
+            <Text style={s.chapterDone}>That is the chapter finished.</Text>
+          ) : null}
+
+          {after ? (
+            <Pressable style={[s.cta, s.finishBtn]} onPress={() => router.replace(after.step.route as any)}>
+              <Text style={s.ctaT}>
+                {finishedChapter ? 'Start the next chapter' : 'Continue'}
+              </Text>
+            </Pressable>
+          ) : (
+            <Pressable style={[s.cta, s.finishBtn]} onPress={() => router.replace('/learn/map' as any)}>
+              <Text style={s.ctaT}>Done</Text>
+            </Pressable>
+          )}
+
+          <Pressable hitSlop={10} onPress={() => router.replace('/learn/map' as any)} style={{ marginTop: spacing.md }}>
+            <Text style={s.again}>Back to the map</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setAnswered(false); setScore({ right: 0, total: 0 }); setDone(false); }}>
             <Text style={s.again}>Go through it again</Text>
           </Pressable>
         </View>
+        <Confetti show={finishedChapter} />
       </SafeAreaView>
     );
   }
@@ -109,7 +135,11 @@ export default function LessonScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => { console.log('[EXIT] lesson.tsx'); router.replace('/learn/map' as any); }}>
+        <Pressable hitSlop={12} onPress={() => {
+            // remember how far in they were, so the map can show it
+            if (!done && i > 0) markPartial(unit, lesson, Math.round((i / l.steps.length) * 100));
+            router.replace('/learn/map' as any);
+          }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
@@ -179,5 +209,6 @@ const s = StyleSheet.create({
   finishT: { fontFamily: fonts.body, fontSize: 22, color: lw.ink, marginTop: spacing.sm },
   finishRule: { width: 40, height: 1, backgroundColor: lw.rule, marginVertical: spacing.lg },
   finishScore: { fontFamily: fonts.body, fontSize: 14, color: lw.muted, marginBottom: spacing.xxl },
+  chapterDone: { fontFamily: fonts.bodyStrong, fontSize: 13, color: lw.gold, textAlign: 'center', marginBottom: spacing.md, letterSpacing: 0.2 },
   again: { fontFamily: fonts.body, fontSize: 13, color: lw.muted, marginTop: spacing.lg },
 });

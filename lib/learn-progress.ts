@@ -44,6 +44,34 @@ export async function markLessonDone(unit: string, lesson: string, score: number
   syncStages();
 }
 
+// How far through a lesson someone got before leaving. Kept separate
+// from `done` because a half-finished lesson is not a completion — it is
+// a place to come back to, and the map draws it differently.
+let partial: Record<string, number> = {};
+const P_KEY = 'learn:partial';
+
+export async function loadPartial() {
+  try {
+    const v = await AsyncStorage.getItem(P_KEY);
+    if (v) partial = JSON.parse(v);
+  } catch {}
+  emit();
+}
+
+export async function markPartial(unit: string, lesson: string, pct: number) {
+  const k = unit + '|' + lesson;
+  // never move backwards, and a finished lesson does not need a marker
+  if (pct <= (partial[k] ?? 0) || pct >= 100) return;
+  partial[k] = pct;
+  console.log('[partial]', k, pct);
+  try { await AsyncStorage.setItem(P_KEY, JSON.stringify(partial)); syncTouch(); } catch {}
+  emit();
+}
+
+export function lessonPartial(unit: string, lesson: string): number {
+  return partial[unit + '|' + lesson] ?? 0;
+}
+
 export function isLessonDone(unit: string, lesson: string) {
   return done.some((d) => d.unit === unit && d.lesson === lesson);
 }

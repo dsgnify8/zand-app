@@ -95,6 +95,12 @@ export default function AdminScreen() {
               <View style={s.statCard}><Text style={s.statN}>{signups ?? '—'}</Text><Text style={s.statL}>ACTIVE READERS</Text></View>
               <View style={s.statCard}><Text style={s.statN}>{totalReads ?? '—'}</Text><Text style={s.statL}>TOTAL READS</Text></View>
             </View>
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-businesses' as any)}>
+              <Ionicons name="storefront-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Business listings</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-content' as any)}>
               <Ionicons name="create-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Edit content</Text>

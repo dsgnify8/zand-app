@@ -106,7 +106,7 @@ function GlassButton({
 export default function Onboarding() {
   // Entered with ?step=2 when a signed-out user asks to sign in, so the
   // auth page reuses this screen's design rather than the bare form.
-  const { step: wantStep } = useLocalSearchParams<{ step?: string }>();
+  const { step: wantStep, next: nextRoute } = useLocalSearchParams<{ step?: string; next?: string }>();
   const { signUp, signIn } = useAuth();
   const [step, setStep] = useState(Number(wantStep) || 0);
   const [lang, setLang] = useState('en');
@@ -152,7 +152,8 @@ export default function Onboarding() {
     if (error) { setAuthErr(error); return; }
     try { await AsyncStorage.setItem('onboarded', '1'); } catch {}
     onboardingDone();
-    router.replace('/(tabs)' as any);
+    // Back to whatever sent them here, if anything did.
+    router.replace((nextRoute ? String(nextRoute) : '/(tabs)') as any);
   };
 
   const goAuth = async (to: string) => {
@@ -166,13 +167,14 @@ export default function Onboarding() {
       <LinearGradient
         colors={
           step === 0
-            ? ['#FDFBF7', '#F8F2E9', '#F2EADC']
+            ? ['#EFE5D5', '#FDFBF7', '#EFE5D5']   // light centred, beige above and below
             : step === 1
-            ? ['#F2EADC', '#EADFCB', '#DFD0B6']
-            : ['#DFD0B6', '#E6DCCB', '#f6f3f1']
+            ? ['#FDFBF7', '#F2EADC', '#DFD0B6']   // light at the top, deepening down
+            : ['#DFD0B6', '#E6DCCB', '#f6f3f1']   // resolves into the home paper
         }
-        start={{ x: 0, y: 0.15 }}
-        end={{ x: 1, y: 0.85 }}
+        locations={step === 0 ? [0, 0.5, 1] : [0, 0.45, 1]}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }}
         locations={[0, 0.55, 1]}
         start={{ x: 0.1, y: 0 }}
         end={{ x: 0.9, y: 1 }}

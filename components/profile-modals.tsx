@@ -102,6 +102,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     { key: 'account', i: 'person-outline', t: tset(SETTINGS.account), x: tset(SETTINGS.accountX) },
     { key: 'language', i: 'language-outline', t: tset(SETTINGS.language), x: { en: 'English', fa: 'فارسی' }[curLang] ?? 'English' },
     { key: 'notifications', i: 'notifications-outline', t: tset(SETTINGS.notifications), x: tset(SETTINGS.notificationsX) },
+    { key: 'businesses', i: 'storefront-outline', t: 'Your businesses', x: 'List one, or manage what you have' },
     { key: 'help', i: 'help-circle-outline', t: tset(SETTINGS.help), x: tset(SETTINGS.helpX) },
     { key: 'terms', i: 'document-text-outline', t: tset(SETTINGS.terms), x: tset(SETTINGS.termsX) },
   ] as const;

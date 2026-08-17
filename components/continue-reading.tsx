@@ -10,6 +10,7 @@ import { useAuth } from '@/lib/auth';
 import { EmptyState } from '@/components/empty-state';
 import { useSaved } from '@/lib/saved-store';
 import { resolveMany } from '@/lib/resolve-saved';
+import { DEMO } from '@/lib/demo-mode';
 
 export type ContinueItem = {
   key: string;
@@ -41,7 +42,9 @@ export function ContinueReading({ label }: { label?: string }) {
   // cast: a saved key knows what it is and where it lives, but not how
   // far through it you are, so the progress fields stay neutral until we
   // track per-item position.
-  const items: ContinueItem[] = session
+  // In demo mode we always show the seeded three, so the screen looks
+  // the same whoever is signed in. Off, it is their real history.
+  const items: ContinueItem[] = (session && !DEMO)
     ? resolveMany(recent).slice(0, 6).map((r) => ({
         key: r.key,
         title: r.title,

@@ -507,3 +507,33 @@ export const LEVEL_ENTRY: Record<string, string> = {
   intermediate: 'feelings',
   advanced: 'conversation',
 };
+
+
+/**
+ * What comes after a given step, walking into the next stage when the
+ * current one runs out. Returns null at the very end of the journey.
+ *
+ * `endsStage` tells the caller they have just finished a chapter, which
+ * is worth marking rather than sliding silently into the next one.
+ */
+export function nextStep(stepKey: string): { step: JourneyStep; endsStage: boolean } | null {
+  for (let si = 0; si < STAGES.length; si++) {
+    const steps = STAGES[si].steps;
+    const i = steps.findIndex((x) => x.key === stepKey);
+    if (i === -1) continue;
+
+    if (i + 1 < steps.length) {
+      return { step: steps[i + 1], endsStage: false };
+    }
+    // last step of this stage: hand back the first of the next one
+    const next = STAGES[si + 1];
+    if (!next || !next.steps.length) return null;
+    return { step: next.steps[0], endsStage: true };
+  }
+  return null;
+}
+
+/** True when this step is the last in its stage. */
+export function isLastOfStage(stepKey: string): boolean {
+  return STAGES.some((st) => st.steps.length > 0 && st.steps[st.steps.length - 1].key === stepKey);
+}

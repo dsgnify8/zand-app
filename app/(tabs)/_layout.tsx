@@ -35,6 +35,7 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 8} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
+      <Tabs.Screen name="local" options={{ title: t(NAV.local), tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
       <Tabs.Screen name="profile" options={{ title: t(NAV.profile), tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
     </Tabs>
   );

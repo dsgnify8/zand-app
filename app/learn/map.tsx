@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES, SIDE_QUESTS, type JourneyStep } from '@/constants/journey';
-import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, lessonPartial, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
 import { ExpressionCard } from '@/components/expression-card';
@@ -56,6 +56,7 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
       ]),
     ).start();
   }
+  const pct = st.unit && st.lesson ? lessonPartial(st.unit, st.lesson) : 0;
   const ring = pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.18] });
   const ringOp = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.5, 0] });
 
@@ -66,7 +67,12 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
           {isNext ? (
             <Animated.View style={[s.ring, { transform: [{ scale: ring }], opacity: ringOp }]} />
           ) : null}
-          <View style={[s.node, done && s.nodeDone, isNext && s.nodeNext]}>
+          {/* A part-finished lesson gets a partial ring, so you can see
+              where you stopped rather than it looking untouched. */}
+          {!done && pct > 0 ? (
+            <View style={[s.nodeArc, { borderTopColor: lw.gold, transform: [{ rotate: (pct * 3.6) + 'deg' }] }]} />
+          ) : null}
+          <View style={[s.node, done && s.nodeDone, isNext && s.nodeNext, !done && pct > 0 && s.nodeStarted]}>
             {done ? (
               <Ionicons name="checkmark" size={22} color="#FFF" />
             ) : (
@@ -83,9 +89,14 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
   );
 }
 
+let lastScrollY = 0;
+
 export default function MapScreen() {
   const { session } = useAuth();
     const scrollRef = useRef<ScrollView>(null);
+  // Where they were when they last left. Kept outside the component so
+  // it survives navigating away and back, which is the whole point.
+  const restored = useRef(false);
   const stageOffsets = useRef<Record<string, number>>({});
   const [pickOpen, setPickOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
@@ -158,10 +169,19 @@ export default function MapScreen() {
 
       <ScrollView
         ref={scrollRef}
+        onContentSizeChange={() => {
+          // Only once per mount, and only if they had actually scrolled;
+          // otherwise every layout pass would fight the user.
+          if (!restored.current && lastScrollY > 40) {
+            restored.current = true;
+            scrollRef.current?.scrollTo({ y: lastScrollY, animated: false });
+          }
+        }}
         contentContainerStyle={s.body}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={120}
         onScroll={(e) => {
+          lastScrollY = e.nativeEvent.contentOffset.y;
           const y = e.nativeEvent.contentOffset.y + 80;
           const entries = Object.entries(stageOffsets.current).sort((a, b) => a[1] - b[1]);
           let idx = 0;
@@ -185,8 +205,7 @@ export default function MapScreen() {
           return (
           <View
             key={stage.key}
-            style={stage.key !== 'letters' ? s.stageCourse : undefined}
-            style={s.stage}
+            style={[s.stage, stage.key !== 'letters' && s.stageCourse]}
             onLayout={(e) => { stageOffsets.current[stage.key] = e.nativeEvent.layout.y; }}
           >
             {band ? (
@@ -337,6 +356,8 @@ const s = StyleSheet.create({
   nodeTap: { alignItems: 'center' },
   nodeWrap: { alignItems: 'center', justifyContent: 'center' },
   ring: { position: 'absolute', width: 62, height: 62, borderRadius: 31, backgroundColor: lw.greenPale },
+  nodeArc: { position: 'absolute', width: 54, height: 54, borderRadius: 27, borderWidth: 3, borderColor: 'transparent' },
+  nodeStarted: { borderColor: lw.gold, borderWidth: 2 },
   node: { width: 54, height: 54, borderRadius: 27, backgroundColor: lw.surface, borderWidth: 1.5, borderColor: lw.greenPale, alignItems: 'center', justifyContent: 'center' },
   nodeDone: { backgroundColor: lw.green, borderColor: lw.green },
   nodeNext: { backgroundColor: lw.green, borderColor: lw.green },

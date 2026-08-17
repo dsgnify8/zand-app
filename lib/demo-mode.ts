@@ -9,7 +9,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const DEMO = false;
+export const DEMO = true;
 
 // Only these are wiped. Anything not listed here survives.
 const REPLAY = [
@@ -17,6 +17,8 @@ const REPLAY = [
   'onboarding:seen',
   'learn:level',      // the beginner/elementary questionnaire
   'learn:asked',
+  'tpm:read',         // which TPM pieces have been read
+  'tpm:sub',          // the TPM subscription state
 ];
 
 export async function resetForDemo() {

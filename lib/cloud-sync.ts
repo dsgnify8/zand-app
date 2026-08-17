@@ -30,6 +30,7 @@ import { supabase } from '@/lib/supabase';
 
 const KEYS = [
   'learn:done',
+  'learn:partial',
   'learn:strength',
   'stats:v1',
   'liked:articles',
@@ -111,6 +112,14 @@ function mergeOne(key: StoreKey, local: any, cloud: any) {
   if (cloud == null) return local;
   switch (key) {
     case 'learn:done': return mergeDone(local, cloud);
+    case 'learn:partial': {
+      // furthest point wins per lesson; progress should never go back
+      const out: any = { ...(cloud ?? {}) };
+      Object.entries(local ?? {}).forEach(([k, v]: any) => {
+        out[k] = Math.max(v ?? 0, out[k] ?? 0);
+      });
+      return out;
+    }
     case 'learn:strength': return mergeStrength(local, cloud);
     case 'stats:v1': return mergeStats(local, cloud);
     case 'liked:articles':

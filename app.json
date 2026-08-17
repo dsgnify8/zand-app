@@ -22,7 +22,18 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_KEY_HERE"
+        }
+      }
     },
     "web": {
       "output": "static",
@@ -43,11 +54,25 @@
         }
       ],
       "expo-font",
-      "expo-audio"
+      "expo-audio",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Zand uses your location to show Iranian-owned businesses near you.",
+          "locationWhenInUsePermission": "Zand uses your location to show Iranian-owned businesses near you.",
+          "isIosBackgroundLocationEnabled": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "49a1e4eb-8a8e-4c31-8b36-3eea28f98356"
+      }
     }
   }
 }
