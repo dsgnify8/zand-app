@@ -115,7 +115,7 @@ export default function Local() {
           <>
 
         {/* top bar */}
-        <View style={s.top}>
+        <View style={[s.top, fa && { flexDirection: 'row-reverse' }]}>
           <Text style={s.kicker}>{fa ? 'محلی' : 'LOCAL'}</Text>
           <Pressable hitSlop={10} onPress={() => setInfoOpen((v) => !v)}>
             <Ionicons name="information-circle-outline" size={20} color={colors.textSecondary} />
@@ -150,8 +150,8 @@ export default function Local() {
         </Text>
 
         {/* where */}
-        <View style={s.whereRow}>
-          <Pressable style={s.where} onPress={() => setPlaceOpen((v) => !v)}>
+        <View style={[s.whereRow, fa && { flexDirection: 'row-reverse', alignSelf: 'flex-end' }]}>
+          <Pressable style={[s.where, fa && { flexDirection: 'row-reverse' }]} onPress={() => setPlaceOpen((v) => !v)}>
             <Ionicons name="location-outline" size={15} color={colors.textPrimary} />
             <Text style={s.whereT}>{where}</Text>
             <Ionicons name={placeOpen ? 'chevron-up' : 'chevron-down'} size={13} color={colors.textSecondary} />
@@ -196,10 +196,10 @@ export default function Local() {
         ) : null}
 
         {/* search */}
-        <View style={s.search}>
+        <View style={[s.search, fa && { flexDirection: 'row-reverse' }]}>
           <Ionicons name="search" size={15} color={colors.textSecondary} />
           <TextInput
-            style={s.searchIn}
+            style={[s.searchIn, fa && { textAlign: 'right', writingDirection: 'rtl' }]}
             value={query}
             onChangeText={setQuery}
             placeholder={fa ? 'دنبال چه می‌گردی؟' : 'What are you looking for?'}

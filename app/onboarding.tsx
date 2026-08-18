@@ -272,7 +272,7 @@ export default function Onboarding() {
                 </>
               ) : (
                 <>
-                  <Text style={s.formTitle}>
+                  <Text style={[s.formTitle, lang === 'fa' && s.rtl]}>
                     {lang === 'fa' ? (mode === 'up' ? 'یک حساب بساز' : 'خوش آمدی') : (mode === 'up' ? 'Create an account' : 'Welcome back')}
                   </Text>
                   <Text style={[s.blurb, lang === 'fa' && s.rtl]}>
@@ -306,7 +306,7 @@ export default function Onboarding() {
                       label={lang === 'fa' ? 'رمز عبور' : 'PASSWORD'}
                       value={pass}
                       onChange={setPass}
-                      placeholder={lang === 'fa' ? 'دست‌کم شش نویسه' : 'At least six characters'}
+                      placeholder={lang === 'fa' ? 'حداقل ۶ کاراکتر' : 'At least six characters'}
                       secure
                     />
                   </View>
