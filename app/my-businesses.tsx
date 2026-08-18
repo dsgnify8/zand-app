@@ -313,10 +313,10 @@ const s = StyleSheet.create({
   search: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: 'rgba(0,0,0,0.04)', borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: 9 },
   searchIn: { flex: 1, fontFamily: fonts.body, fontSize: 13.5, color: colors.textPrimary, padding: 0 },
 
-  filters: { flexGrow: 0, paddingVertical: spacing.sm },
+  filters: { flexGrow: 0, paddingVertical: spacing.sm, minHeight: 46 },
   filter: { paddingHorizontal: 13, paddingVertical: 8, borderRadius: 16, backgroundColor: 'rgba(0,0,0,0.04)', justifyContent: 'center' },
   filterOn: { backgroundColor: 'rgba(34,30,26,0.9)' },
-  filterT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary },
+  filterT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, includeFontPadding: false },
   filterTOn: { color: '#FFF' },
 
   adminRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(0,0,0,0.06)' },

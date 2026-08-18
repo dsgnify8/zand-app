@@ -30,3 +30,18 @@ export async function resetForDemo() {
     console.log('[demo] reset failed', e);
   }
 }
+
+
+/**
+ * Whether to dress the app with seeded content.
+ *
+ * True when nobody is signed in — a visitor should see what the app
+ * becomes rather than an empty shell — and true for the admin account,
+ * which is the one used to show the app. False for everyone else,
+ * because a real user seeing a stranger's streak and reading history as
+ * their own is worse than seeing nothing at all.
+ */
+export function showDemoData(email?: string | null) {
+  if (!email) return true;                       // signed out
+  return email === 'nojan.zandesh@gmail.com';    // the demo account
+}

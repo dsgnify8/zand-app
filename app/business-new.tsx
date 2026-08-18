@@ -548,6 +548,7 @@ const s = StyleSheet.create({
   kws: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: spacing.sm },
   kw: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 13, backgroundColor: 'rgba(0,0,0,0.045)' },
   kwT: { fontFamily: fonts.body, fontSize: 12, color: colors.textPrimary },
+  missing: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl, backgroundColor: 'rgba(0,0,0,0.035)', borderRadius: radius.md, paddingVertical: spacing.md, paddingHorizontal: spacing.lg },
   err: { fontFamily: fonts.body, fontSize: 12.5, color: '#B3261E', marginTop: spacing.md },
 
   cta: { backgroundColor: colors.accent, borderRadius: radius.lg, paddingVertical: 14, alignItems: 'center' },

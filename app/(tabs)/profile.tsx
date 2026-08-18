@@ -42,6 +42,7 @@ import { SignedOutOverlay } from '@/components/signed-out-overlay';
 import { EmptyState } from '@/components/empty-state';
 import { useSavedBusinesses } from '@/lib/saved-businesses';
 import { loadBusiness, categoryLabel } from '@/lib/businesses';
+import { showDemoData } from '@/lib/demo-mode';
 
 type Tab = 'you' | 'library' | 'friends' | 'progress';
 
@@ -73,21 +74,25 @@ const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
 /* ---------------- You ---------------- */
 
 function StreakCard() {
+  const { user: streakUser } = useAuth();
+  const realStats = useStats();
+  const demo = showDemoData(streakUser?.email);
+  const streakDays = demo ? ME.streak : ((realStats as any)?.streakDays ?? 0);
   return (
     <View style={s.streak}>
       <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
       <View style={s.streakRow}>
         <View style={s.streakLeft}>
-          <Text style={s.streakN}>{ME.streak}</Text>
+          <Text style={s.streakN}>{streakDays}</Text>
           <Text style={s.streakL}>{t(PROFILE.daysRow)}</Text>
           <View style={s.streakDays}>
-            {DAYS.slice(-7).map((d, i) => (
+            {(demo ? DAYS.slice(-7) : []).map((d: any, i: number) => (
               <View key={i} style={[s.dayPip, d && s.dayPipOn]} />
             ))}
           </View>
-          <Text style={s.streakNote}>{ME.freezes} rest days left this month</Text>
+          <Text style={s.streakNote}>{demo ? ME.freezes + ' rest days left this month' : (streakDays === 0 ? 'Finish a lesson to start your streak' : 'Keep going')}</Text>
         </View>
-        <StreakPlant streak={ME.streak} />
+        <StreakPlant streak={streakDays} />
       </View>
     </View>
   );
@@ -566,7 +571,11 @@ function ProgressTab() {
   const [achvOpen, setAchvOpen] = useState(false);
   const miles = milestoneStatus(stats);
   const unlocked = miles.filter((m) => m.achieved).length;
-  useEffect(() => { setStreak(ME.streak); }, []);
+  const { user: progUser } = useAuth();
+  const progStats = useStats();
+  const progDemo = showDemoData(progUser?.email);
+  const progStreak = progDemo ? ME.streak : ((progStats as any)?.streakDays ?? 0);
+  useEffect(() => { setStreak(progStreak); }, [progStreak]);
   const finished = stats.finished;
   const shown = showAllFinished ? finished : finished.slice(0, 10);
 
@@ -574,9 +583,9 @@ function ProgressTab() {
     <>
       <View style={s.progHero}>
         <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
-        <StreakPlant streak={ME.streak} size={1.25} />
-        <Text style={s.progN}>{ME.streak} days</Text>
-        <Text style={s.progX}>Longest you have ever gone: {ME.longest}</Text>
+        <StreakPlant streak={progStreak} size={1.25} />
+        <Text style={s.progN}>{progStreak} days</Text>
+        <Text style={s.progX}>{progDemo ? 'Longest you have ever gone: ' + ME.longest : (progStreak === 0 ? 'Your first day starts when you finish a lesson' : 'Longest you have ever gone: ' + progStreak)}</Text>
       </View>
 
       <Text style={s.sectionLabel}>{t(APP.yourPersian)}</Text>
@@ -646,7 +655,15 @@ export default function Profile() {
   const { tab: wantTab } = useLocalSearchParams<{ tab?: string }>();
   const [tab, setTab] = useState<Tab>((wantTab as Tab) || 'you');
   const [settings, setSettings] = useState(false);
-  const pending = INBOX.filter((i) => !i.done).length;
+  // A dot means something is genuinely waiting: a friend request, or
+  // something sent that has not been opened. Seeded demo data must not
+  // light it up, or the badge stops meaning anything.
+  const { user: me } = useAuth();
+  const { incoming: pendReq } = useFriends(me?.id);
+  const { items: pendInbox } = useInbox(me?.id);
+  const pending = me
+    ? (pendReq?.length ?? 0) + (pendInbox ?? []).filter((i: any) => !i.done).length
+    : 0;
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>

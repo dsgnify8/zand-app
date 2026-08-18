@@ -11,7 +11,7 @@ import { useFriendDeepLink } from '@/lib/deep-links';
 import { loadHidden } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { loadStats } from '@/lib/stats-store';
-import { loadLang } from '@/lib/i18n';
+import { loadLang, useLang } from '@/lib/i18n';
 import { loadSaved } from '@/lib/saved-store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { loadAllFrames } from '@/lib/image-frames';
@@ -78,6 +78,7 @@ function AuthGate() {
 }
 
 export default function RootLayout() {
+  const { lang: appLang } = useLang();
   // push anything pending when the app goes to the background, so a
   // force quit inside the debounce window does not lose progress
   useEffect(() => {
@@ -116,7 +117,7 @@ export default function RootLayout() {
       <SRSProvider>
         <ReadingProvider>
           <GlossaryProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <ThemeProvider key={appLang} value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack
             screenOptions={{
               animation: 'fade',

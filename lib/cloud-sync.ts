@@ -151,8 +151,35 @@ function mergeOne(key: StoreKey, local: any, cloud: any) {
 // Called on sign-in. Pulls the cloud row, merges it into whatever is on
 // this device, writes the result back to both. Returns true if anything
 // changed locally, so the caller can reload the stores.
+const LAST_USER = 'sync:lastUser';
+
+/**
+ * Wipe local state when a different account signs in.
+ *
+ * Without this, two people sharing a phone inherit each other's
+ * progress: the stores are per-device, so signing out and in again
+ * leaves the previous person's lessons, streak and saves in place. The
+ * merge would then push that stranger's history up to the new account,
+ * which is worse than losing it.
+ *
+ * Same account signing back in: nothing is cleared, because their local
+ * copy is their own and may be ahead of the cloud.
+ */
+async function clearIfDifferentUser(uid: string): Promise<boolean> {
+  try {
+    const prev = await AsyncStorage.getItem(LAST_USER);
+    const switched = !!prev && prev !== uid;
+    if (switched) await AsyncStorage.multiRemove([...KEYS]);
+    await AsyncStorage.setItem(LAST_USER, uid);
+    return switched;
+  } catch {
+    return false;
+  }
+}
+
 export async function pullAndMerge(uid: string): Promise<boolean> {
   userId = uid;
+  const switched = await clearIfDifferentUser(uid);
   try {
     const { data, error } = await supabase
       .from('user_state')
@@ -176,7 +203,9 @@ export async function pullAndMerge(uid: string): Promise<boolean> {
 
     // push the merged result straight back so the cloud has the union too
     await push();
-    return changed;
+    // A switch always needs a reload, even if the cloud had nothing:
+    // the stores are still holding the previous account's data.
+    return changed || switched;
   } catch {
     return false;
   }

@@ -35,6 +35,7 @@ import { INBOX, pr } from '@/constants/profile';
 import { APP } from '@/constants/i18n/app';
 import { useAuth } from '@/lib/auth';
 import { useInbox } from '@/lib/inbox';
+import { useFriends } from '@/lib/friends';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -287,8 +288,21 @@ export default function HomeScreen() {
   // invitation to send rather than someone else's fake message.
   const { session } = useAuth();
   const { items: realInbox } = useInbox(session?.user?.id);
+  const { incoming } = useFriends(session?.user?.id);
+
+  // Anything waiting on them, whatever kind. A friend request and a sent
+  // word are both "someone did something and you have not looked yet",
+  // so they belong in the same queue rather than competing for the slot.
   const pending = session
-    ? (realInbox ?? []).filter((i: any) => !i.done)
+    ? [
+        ...(incoming ?? []).map((r: any) => ({
+          kind: 'friend',
+          from: r.profile?.name ?? 'Someone',
+          fromFa: r.profile?.name ?? '?',
+          note: 'Tap to accept',
+        })),
+        ...(realInbox ?? []).filter((i: any) => !i.done),
+      ]
     : INBOX.filter((i) => !i.done);
 
   useEffect(() => { markActivity(); }, [markActivity]);
@@ -339,11 +353,22 @@ export default function HomeScreen() {
             <FadeIn delay={40}>
               <Pressable style={styles.nudge} onPress={() => router.navigate('/profile?tab=friends' as any)}>
                 <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
-                <View style={styles.nudgeAv}><Text style={styles.nudgeAvT}>{pending[0].fromFa[0]}</Text></View>
+                <View style={styles.nudgeAv}><Text style={styles.nudgeAvT}>{((pending[0] as any).fromFa || (pending[0] as any).from || (pending[0] as any).senderName || '?')[0]}</Text></View>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.nudgeT}>{pending[0].from} {pending[0].kind === 'word' ? t(HOME.sentYouWord) : t(HOME.sentYouTopic)}</Text>
+                  <Text style={styles.nudgeT}>
+                    {(pending[0] as any).from || (pending[0] as any).senderName || 'Someone'}{' '}
+                    {(pending[0] as any).kind === 'friend'
+                      ? (fa ? 'دوستت شد' : 'added you as a friend')
+                      : (pending[0] as any).kind === 'word'
+                      ? t(HOME.sentYouWord)
+                      : t(HOME.sentYouTopic)}
+                  </Text>
                   <Text style={styles.nudgeX}>
-                    {pending.length > 1 ? t(HOME.and) + ' ' + (pending.length - 1) + ' ' + t(HOME.moreWaiting) : '“' + pending[0].note + '”'}
+                    {pending.length > 1
+                      ? t(HOME.and) + ' ' + (pending.length - 1) + ' ' + t(HOME.moreWaiting)
+                      : (pending[0] as any).note
+                      ? '“' + (pending[0] as any).note + '”'
+                      : (pending[0] as any).title ?? (fa ? 'برای دیدن بزن' : 'Tap to see')}
                   </Text>
                 </View>
                 <Ionicons name="arrow-forward" size={16} color={pr.friendA} />

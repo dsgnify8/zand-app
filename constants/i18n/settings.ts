@@ -1,6 +1,8 @@
 import type { T } from '@/lib/i18n';
 
 export const SETTINGS: Record<string, T> = {
+  yourBusinesses: { en: 'Your business', fa: 'کسب‌وکار تو' },
+  yourBusinessesX: { en: 'List one, or manage what you have', fa: 'ثبتش کن، یا آنچه داری را مدیریت کن' },
   deleteAccount: { en: 'Delete my account', fa: 'حذف حساب کاربری' },
   settingsTitle: { en: 'Settings', fa: 'تنظیمات' },
   adminPanel: { en: 'Admin panel', fa: 'پنل مدیریت' },

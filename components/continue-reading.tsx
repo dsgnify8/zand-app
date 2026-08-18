@@ -10,7 +10,7 @@ import { useAuth } from '@/lib/auth';
 import { EmptyState } from '@/components/empty-state';
 import { useSaved } from '@/lib/saved-store';
 import { resolveMany } from '@/lib/resolve-saved';
-import { DEMO } from '@/lib/demo-mode';
+import { DEMO, showDemoData } from '@/lib/demo-mode';
 
 export type ContinueItem = {
   key: string;
@@ -27,6 +27,14 @@ export type ContinueItem = {
 // Signed out this returns the seeded preview, so a visitor sees what the
 // section becomes. Signed in it returns only what this person has
 // actually opened, most recent first — which for a new account is empty.
+// Four ways in, one from each part of the app.
+const START_POINTS = [
+  { key: 'j1', title: 'Cyrus the Great', sub: 'History', image: 'cyrus-cover', route: '/education/topic?topic=cyrus-the-great' },
+  { key: 'j2', title: 'Hafez', sub: 'Literature', image: 'lit-hafez-cover', route: '/literature/reader?author=hafez&page=0' },
+  { key: 'j3', title: 'The land', sub: 'Geography', image: 'geo-cover', route: '/geography' },
+  { key: 'j4', title: 'Taarof', sub: 'Culture', image: 'culture-taarof', route: '/culture/topic?topic=taarof' },
+];
+
 export function continueItems(): ContinueItem[] {
   return READING as ContinueItem[];
 }
@@ -44,7 +52,8 @@ export function ContinueReading({ label }: { label?: string }) {
   // track per-item position.
   // In demo mode we always show the seeded three, so the screen looks
   // the same whoever is signed in. Off, it is their real history.
-  const items: ContinueItem[] = (session && !DEMO)
+  const demo = showDemoData(session?.user?.email);
+  const items: ContinueItem[] = !demo
     ? resolveMany(recent).slice(0, 6).map((r) => ({
         key: r.key,
         title: r.title,
@@ -59,7 +68,27 @@ export function ContinueReading({ label }: { label?: string }) {
   // visitor sees what the section becomes. Signed in, an empty account
   // gets a prompt rather than a silently missing section.
   if (items.length === 0) {
-    if (!session) return null;
+    if (demo) return null;
+    // Rather than an empty shelf, a few doors in. Fixed picks across the
+    // sections, so a new account lands somewhere rather than nowhere.
+    return (
+      <View style={{ marginTop: spacing.xl }}>
+        <Text style={s.label}>{getLang() === 'fa' ? 'از اینجا شروع کن' : 'JUMP INTO'}</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.md }}>
+          {START_POINTS.map((p) => (
+            <Pressable key={p.key} style={s.jumpCard} onPress={() => router.navigate(p.route as any)}>
+              {eduImage(p.image) ? (
+                <Image source={eduImage(p.image)} style={s.jumpShot} />
+              ) : (
+                <View style={[s.jumpShot, { backgroundColor: 'rgba(0,0,0,0.05)' }]} />
+              )}
+              <Text style={s.jumpT} numberOfLines={1}>{p.title}</Text>
+              <Text style={s.jumpX} numberOfLines={1}>{p.sub}</Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+      </View>
+    );
     return (
       <View style={{ marginTop: spacing.xl }}>
         <Text style={s.label}>{_lbl}</Text>
@@ -108,6 +137,10 @@ export function ContinueReading({ label }: { label?: string }) {
 }
 
 const s = StyleSheet.create({
+  jumpCard: { width: 132 },
+  jumpShot: { width: 132, height: 96, borderRadius: 12 },
+  jumpT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: colors.textPrimary, marginTop: 6 },
+  jumpX: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, marginTop: 1 },
   faTitle: { fontFamily: fonts.persian, fontSize: 15, lineHeight: 26, textAlign: 'right' },
   faSub: { fontFamily: fonts.persian, fontSize: 12, textAlign: 'right' },
   label: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 2, color: colors.textSecondary, marginTop: spacing.xxl, marginBottom: spacing.lg },

@@ -17,6 +17,7 @@ const LINKS = [
   { key: 'home', label: 'Home', persian: 'خانه', route: '/', icon: 'home-outline' },
   { key: 'learn', label: 'Learn Persian', persian: 'فارسی یاد بگیر', route: '/learn', icon: 'book-outline' },
   { key: 'explore', label: 'Explore', persian: 'کشف', route: '/explore', icon: 'compass-outline', expandable: true },
+  { key: 'local', label: 'Local', persian: 'محلی', route: '/local', icon: 'storefront-outline' },
   { key: 'profile', label: 'Profile', persian: 'حساب', route: '/profile', icon: 'person-outline' },
 ] as const;
 
@@ -102,12 +103,12 @@ const styles = StyleSheet.create({
   wordmark: { fontFamily: fonts.wordmark, fontSize: 18, letterSpacing: 4, color: colors.textPrimary },
 
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.border },
-  rowLabel: { flex: 1, fontFamily: fonts.body, fontSize: 17, color: colors.textPrimary },
-  rowGlyph: { fontFamily: fonts.persian, fontSize: 16, color: colors.accent },
+  rowLabel: { flex: 1, fontFamily: fonts.body, fontSize: 15, color: colors.textPrimary },
+  rowGlyph: { fontFamily: fonts.persian, fontSize: 14.5, color: colors.accent },
 
   subList: { backgroundColor: colors.surface, borderRadius: 12, marginTop: spacing.sm, marginBottom: spacing.sm, paddingHorizontal: spacing.md },
   subRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border },
-  subLabel: { flex: 1, fontFamily: fonts.body, fontSize: 16, color: colors.textPrimary },
+  subLabel: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary },
 
   footer: { paddingVertical: spacing.lg, alignItems: 'center' },
   footerMark: { fontFamily: fonts.wordmark, fontSize: 13, letterSpacing: 4, color: colors.textSecondary },

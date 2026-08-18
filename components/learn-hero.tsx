@@ -47,9 +47,21 @@ export function LearnHero() {
         <LinearGradient colors={['#E9F0E6', '#D6E4D2']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <Text style={s.fa}>فارسی</Text>
 
-        <Text style={s.kicker}>{next?.stage ? next.stage.roman + '  ·  ' + next.stage.title : 'YOUR PATH'}</Text>
-        <Text style={s.title}>{next ? next.title : 'You have finished the route'}</Text>
-        <Text style={s.blurb}>{next ? next.sub : 'Keep the words alive with review.'}</Text>
+        <Text style={s.kicker}>
+          {doneCount === 0
+            ? 'YOUR LEARNING WORLD'
+            : (next?.stage ? next.stage.roman + '  ·  ' + next.stage.title : 'YOUR PATH')}
+        </Text>
+        <Text style={s.title}>
+          {doneCount === 0
+            ? 'Your journey starts here'
+            : (next ? next.title : 'You have finished the route')}
+        </Text>
+        <Text style={s.blurb}>
+          {doneCount === 0
+            ? 'The letters, then words, then whole sentences. One short step at a time.'
+            : (next ? next.sub : 'Keep the words alive with review.')}
+        </Text>
 
         <View style={s.track}>
           <View style={[s.fill, { width: (pct + '%') as any }]} />
@@ -66,9 +78,18 @@ export function LearnHero() {
       </Pressable>
 
       <View style={s.strip}>
-        <Pressable style={s.chip} onPress={() => router.navigate('/learn/review' as any)}>
-          <Ionicons name="repeat-outline" size={15} color={lw.green} />
-          <Text style={s.chipT}>Review</Text>
+<Pressable
+          style={[s.chip, doneCount === 0 && s.chipOff]}
+          onPress={() => router.navigate((doneCount === 0 ? '/learn/map' : '/learn/review') as any)}
+        >
+          <Ionicons
+            name={doneCount === 0 ? 'play-outline' : 'repeat-outline'}
+            size={15}
+            color={doneCount === 0 ? lw.muted : lw.green}
+          />
+          <Text style={[s.chipT, doneCount === 0 && { color: lw.muted }]}>
+            {doneCount === 0 ? 'Start learning' : 'Review'}
+          </Text>
           {due > 0 ? <View style={s.badge}><Text style={s.badgeT}>{due}</Text></View> : null}
         </Pressable>
         <Pressable style={s.chip} onPress={() => router.navigate('/learn/read' as any)}>
@@ -107,6 +128,7 @@ const s = StyleSheet.create({
   goT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },
 
   strip: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.md },
+  chipOff: { opacity: 0.75 },
   chip: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: lw.surface, borderWidth: 1, borderColor: lw.hair, borderRadius: 14, paddingVertical: 12 },
   chipT: { fontFamily: fonts.body, fontSize: 13, color: lw.ink },
   badge: { backgroundColor: lw.green, borderRadius: 9, minWidth: 18, height: 18, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },

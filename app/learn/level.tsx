@@ -68,17 +68,17 @@ const s = StyleSheet.create({
   back: { alignSelf: 'flex-start', paddingVertical: 6, paddingRight: 12 },
   art: { alignSelf: 'flex-end', opacity: 0.5, marginBottom: -8 },
   eyebrow: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 3, color: lw.muted },
-  title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green, marginTop: spacing.md },
-  sub: { fontFamily: fonts.body, fontSize: 13.5, lineHeight: 20, color: lw.inkSoft, marginTop: spacing.sm },
+  title: { fontFamily: fonts.body, fontSize: 25, lineHeight: 32, color: lw.green, marginTop: spacing.sm },
+  sub: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 18, color: lw.inkSoft, marginTop: 6 },
 
   rule: { height: 1, backgroundColor: lw.rule, marginTop: spacing.lg, opacity: 0.7 },
 
   list: { marginTop: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: lw.hair },
   rowOn: { },
-  roman: { fontFamily: fonts.body, fontSize: 20, color: lw.muted, width: 34 },
+  roman: { fontFamily: fonts.body, fontSize: 17, color: lw.muted, width: 30 },
   romanOn: { color: lw.green },
-  name: { fontFamily: fonts.body, fontSize: 18, color: lw.ink },
+  name: { fontFamily: fonts.body, fontSize: 16, color: lw.ink },
   nameOn: { fontFamily: fonts.bodyStrong, color: lw.green },
   blurb: { fontFamily: fonts.body, fontSize: 12, lineHeight: 17, color: lw.muted, marginTop: 2 },
 

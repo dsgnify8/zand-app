@@ -14,6 +14,8 @@ import { useLearnProgress } from '@/lib/learn-progress';
 import { useStats } from '@/lib/stats-store';
 import { STAGES } from '@/constants/journey';
 import { getLang } from '@/lib/i18n';
+import { showDemoData } from '@/lib/demo-mode';
+import { useAuth } from '@/lib/auth';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -112,9 +114,9 @@ function ContinueCard() {
       <Text style={s.contFa}>{!asked ? 'فا' : (first?.titleFa?.[0] ?? CONTINUE.fa)}</Text>
       <View style={{ flex: 1 }}>
         <Text style={s.contK}>{!asked ? 'BEGIN HERE' : 'PICK UP WHERE YOU STOPPED'}</Text>
-        <Text style={s.contT}>{!asked ? 'Start Persian' : (first?.title ?? CONTINUE.module)}</Text>
-        <Text style={s.contD}>{!asked ? 'find your level' : (first?.titleFa ?? CONTINUE.detail)}</Text>
-        <Text style={s.contX}>{!asked ? 'Two questions, then we begin where you actually are.' : (first?.blurb ?? CONTINUE.x)}</Text>
+        <Text style={s.contT}>{!asked ? 'Start Persian' : (first?.title ?? (demo ? CONTINUE.module : 'Nothing started yet'))}</Text>
+        <Text style={s.contD}>{!asked ? 'find your level' : (first?.titleFa ?? (demo ? CONTINUE.detail : ''))}</Text>
+        <Text style={s.contX}>{!asked ? 'Two questions, then we begin where you actually are.' : (first?.blurb ?? (demo ? CONTINUE.x : 'Open the learning world and take the first step.'))}</Text>
       </View>
       <View style={s.contGo}><Ionicons name="arrow-forward" size={17} color="#FFF" /></View>
     </Pressable>
@@ -159,6 +161,8 @@ function ModuleCard({ mod, i }: { mod: LearnModule; i: number }) {
 }
 
 export default function LearnScreen() {
+  const { user: demoUser } = useAuth();
+  const demo = showDemoData(demoUser?.email);
   // First time in: the level questionnaire is the whole screen.
   const { asked: levelAsked } = useLevel();
   useEffect(() => {

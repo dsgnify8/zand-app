@@ -66,11 +66,6 @@ export type LearnGroup = { key: string; label: string; note: string; modules: Le
 
 export const LEARN_GROUPS: LearnGroup[] = [
   {
-    key: 'start', label: 'START HERE', note: 'The letters first. Everything else needs them.',
-    modules: [
-    ],
-  },
-  {
     key: 'tools', label: 'TOOLS', note: 'For when you need it, not for study.',
     modules: [
       { key: 'translate', title: 'Translate', persian: 'برگردان', x: 'Any language into Persian, and back.',

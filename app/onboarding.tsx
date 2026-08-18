@@ -21,6 +21,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { onboardingDone } from '@/app/_layout';
 import { useAuth } from '@/lib/auth';
+import { setLang as setAppLang, getLang } from '@/lib/i18n';
+import { TpmIcon } from '@/components/tpm-mark';
 
 const LANGS = [
   { code: 'en', label: 'English', native: 'English' },
@@ -52,9 +54,9 @@ function Field({
       <BlurView intensity={34} tint="light" style={StyleSheet.absoluteFill as any} />
       <View style={s.fieldTint} pointerEvents="none" />
       <View style={s.fieldInner}>
-        <Text style={s.fieldL}>{label}</Text>
+        <Text style={[s.fieldL, getLang() === 'fa' && { textAlign: 'right' }]}>{label}</Text>
         <TextInput
-          style={s.input}
+          style={[s.input, getLang() === 'fa' && { textAlign: 'right', writingDirection: 'rtl' }]}
           value={value}
           onChangeText={onChange}
           placeholder={placeholder}
@@ -109,7 +111,15 @@ export default function Onboarding() {
   const { step: wantStep, next: nextRoute } = useLocalSearchParams<{ step?: string; next?: string }>();
   const { signUp, signIn } = useAuth();
   const [step, setStep] = useState(Number(wantStep) || 0);
-  const [lang, setLang] = useState('en');
+  const [lang, setLangLocal] = useState<'en' | 'fa'>(getLang());
+
+  // Applying immediately rather than at the end: the rest of onboarding
+  // should already be in the language they just chose, which is the
+  // first proof the app speaks it.
+  const chooseLang = async (code: 'en' | 'fa') => {
+    setLangLocal(code);
+    await setAppLang(code);
+  };
   const [mode, setMode] = useState<'up' | 'in'>('up');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -173,11 +183,9 @@ export default function Onboarding() {
             : ['#DFD0B6', '#E6DCCB', '#f6f3f1']   // resolves into the home paper
         }
         locations={step === 0 ? [0, 0.5, 1] : [0, 0.45, 1]}
+        locations={[0, 0.55, 1]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
-        locations={[0, 0.55, 1]}
-        start={{ x: 0.1, y: 0 }}
-        end={{ x: 0.9, y: 1 }}
         style={StyleSheet.absoluteFill as any}
       />
 
@@ -191,7 +199,7 @@ export default function Onboarding() {
           <Text style={s.wordmark}>ZAND</Text>
           {step > 0 ? (
             <Pressable hitSlop={12} onPress={finish}>
-              <Text style={s.skip}>Skip</Text>
+              <Text style={s.skip}>{lang === 'fa' ? 'رد کن' : 'Skip'}</Text>
             </Pressable>
           ) : <View style={{ width: 34 }} />}
         </View>
@@ -206,21 +214,24 @@ export default function Onboarding() {
               {step === 0 ? (
                 <>
                   <Text style={s.fa}>زند</Text>
-                  <Text style={s.title}>{lang === 'fa' ? 'خوش آمدی' : 'Welcome'}</Text>
-                  <Text style={s.blurb}>
-                    A world for Persians. The language, the history, the culture, and the
-                    creatives making things in it now.
+                  <Text style={[s.title, lang === 'fa' && s.rtl]}>{lang === 'fa' ? 'خوش آمدی' : 'Welcome'}</Text>
+                  <Text style={[s.blurb, lang === 'fa' && s.rtl]}>
+                    {lang === 'fa'
+                      ? 'جهانی برای ایرانی‌ها. یک قطب‌نما برای تاریخ، فرهنگ، هنر، آدم‌ها و کسب‌وکارها، هر جای دنیا که باشی.'
+                      : 'One compass for history, culture, arts, people and businesses — wherever you are.'}
                   </Text>
 
                   <Frosted style={s.card}>
                     {[
-                      { i: 'book-outline', t: 'Learn the language', x: 'From the alphabet to real conversation' },
-                      { i: 'time-outline', t: 'Know where it comes from', x: 'Twenty-five centuries, told properly' },
-                      { i: 'sparkles-outline', t: 'See what is being made', x: 'The creatives working in our world today' },
+                      { i: 'book-outline', t: 'Learn the language', x: 'And know where it comes from' },
+                      { i: 'tpm', t: 'See what we are', x: 'What our creative world is making today' },
+                      { i: 'storefront-outline', t: 'Local', x: 'Iranian businesses, all over the world' },
                     ].map((r, i) => (
                       <View key={r.t} style={[s.row, i > 0 && s.rowTop]}>
                         <View style={s.rowIcon}>
-                          <Ionicons name={r.i as any} size={17} color={colors.accent} />
+                          {r.i === 'tpm'
+                            ? <TpmIcon size={19} color={colors.accent} />
+                            : <Ionicons name={r.i as any} size={16} color={colors.accent} />}
                         </View>
                         <View style={{ flex: 1 }}>
                           <Text style={s.rowT}>{r.t}</Text>
@@ -232,14 +243,14 @@ export default function Onboarding() {
                 </>
               ) : step === 1 ? (
                 <>
-                  <Text style={s.title}>Which language{'\n'}should the app use?</Text>
-                  <Text style={s.blurb}>You can change this at any time in settings.</Text>
+                  <Text style={[s.title, lang === 'fa' && s.rtl]}>{lang === 'fa' ? 'برنامه به کدام زبان باشد؟' : 'Which language\nshould the app use?'}</Text>
+                  <Text style={[s.blurb, lang === 'fa' && s.rtl]}>{lang === 'fa' ? 'هر وقت خواستی می‌توانی در تنظیمات عوضش کنی.' : 'You can change this at any time in settings.'}</Text>
 
                   <View style={s.langs}>
                     {LANGS.map((l) => {
                       const on = lang === l.code;
                       return (
-                        <Pressable key={l.code} onPress={() => setLang(l.code)} style={{ flex: 1 }}>
+                        <Pressable key={l.code} onPress={() => chooseLang(l.code as 'en' | 'fa')} style={{ flex: 1 }}>
                           <View style={on ? s.langWrapOn : undefined}>
                           <Frosted style={s.langCard} intensity={on ? 60 : 18}>
                             <Text style={[s.langNative, on && s.langOn, l.code === 'fa' && s.langFa]}>
@@ -262,43 +273,47 @@ export default function Onboarding() {
               ) : (
                 <>
                   <Text style={s.formTitle}>
-                    {mode === 'up' ? 'Create an account' : 'Welcome back'}
+                    {lang === 'fa' ? (mode === 'up' ? 'یک حساب بساز' : 'خوش آمدی') : (mode === 'up' ? 'Create an account' : 'Welcome back')}
                   </Text>
-                  <Text style={s.blurb}>
-                    {mode === 'up'
-                      ? 'To keep track of what you read and learn, and to stay connected with your friends.'
-                      : 'Sign in to pick up where you left off.'}
+                  <Text style={[s.blurb, lang === 'fa' && s.rtl]}>
+                    {lang === 'fa'
+                      ? (mode === 'up'
+                        ? 'تا آنچه می‌خوانی و یاد می‌گیری نگه داشته شود، و با دوستانت در ارتباط بمانی.'
+                        : 'وارد شو و از همان‌جا که ماندی ادامه بده.')
+                      : (mode === 'up'
+                        ? 'To keep track of what you read and learn, and to stay connected with your friends.'
+                        : 'Sign in to pick up where you left off.')}
                   </Text>
 
                   <View style={s.form}>
                     {mode === 'up' ? (
                       <Field
-                        label="NAME"
+                        label={lang === 'fa' ? 'نام' : 'NAME'}
                         value={name}
                         onChange={setName}
-                        placeholder="What should we call you?"
+                        placeholder={lang === 'fa' ? 'نام' : 'What should we call you?'}
                         autoCap="words"
                       />
                     ) : null}
                     <Field
-                      label="EMAIL"
+                      label={lang === 'fa' ? 'ایمیل' : 'EMAIL'}
                       value={email}
                       onChange={setEmail}
-                      placeholder="you@example.com"
+                      placeholder={lang === 'fa' ? 'ایمیل' : 'you@example.com'}
                       keyboard="email-address"
                     />
                     <Field
-                      label="PASSWORD"
+                      label={lang === 'fa' ? 'رمز عبور' : 'PASSWORD'}
                       value={pass}
                       onChange={setPass}
-                      placeholder="At least six characters"
+                      placeholder={lang === 'fa' ? 'دست‌کم شش نویسه' : 'At least six characters'}
                       secure
                     />
                   </View>
 
                   <Pressable hitSlop={8} onPress={() => setMode(mode === 'up' ? 'in' : 'up')}>
                     <Text style={s.switchT}>
-                      {mode === 'up' ? 'I already have an account' : 'I need to create one'}
+                      {lang === 'fa' ? (mode === 'up' ? 'حساب دارم' : 'باید یکی بسازم') : (mode === 'up' ? 'I already have an account' : 'I need to create one')}
                     </Text>
                   </Pressable>
                 </>
@@ -315,12 +330,12 @@ export default function Onboarding() {
 
         <View style={s.foot}>
           {step < 2 ? (
-            <GlassButton label="Continue" icon="arrow-forward" primary onPress={() => setStep(step + 1)} />
+            <GlassButton label={lang === 'fa' ? 'ادامه' : 'Continue'} icon="arrow-forward" primary onPress={() => setStep(step + 1)} />
           ) : (
             <>
               {authErr ? <Text style={s.authErr}>{authErr}</Text> : null}
               <GlassButton
-                label={authBusy ? 'One moment…' : (mode === 'up' ? 'Create account' : 'Sign in')}
+                label={authBusy ? (lang === 'fa' ? 'یک لحظه…' : 'One moment…') : lang === 'fa' ? (mode === 'up' ? 'ساختن حساب' : 'ورود') : (mode === 'up' ? 'Create account' : 'Sign in')}
                 primary
                 onPress={doAuth}
               />
@@ -345,6 +360,7 @@ const s = StyleSheet.create({
   scroll: { flexGrow: 1, justifyContent: 'center', paddingHorizontal: spacing.xl, paddingVertical: spacing.xl },
 
   fa: { fontFamily: fonts.persian, fontSize: 44, lineHeight: 70, color: colors.accent, opacity: 0.8 },
+  rtl: { textAlign: 'right', writingDirection: 'rtl' },
   title: { fontFamily: fonts.body, fontSize: 30, lineHeight: 41, letterSpacing: -0.8, color: colors.textPrimary, marginTop: spacing.sm },
   formTitle: { fontFamily: fonts.body, fontSize: 27, lineHeight: 36, letterSpacing: -0.7, color: colors.textPrimary },
   blurb: { fontFamily: fonts.body, fontSize: 14.5, lineHeight: 25, color: colors.textSecondary, marginTop: spacing.sm, maxWidth: 320, opacity: 0.9 },
