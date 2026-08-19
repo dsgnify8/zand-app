@@ -9,8 +9,11 @@ import { STAGES } from '@/constants/journey';
 import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
+import { useAuth } from '@/lib/auth';
+import { getLang } from '@/lib/i18n';
 
 export function LearnHero() {
+  const { session } = useAuth();
   useLearnProgress();
   const { asked, info } = useLevel();
   const { solid, due } = useStrength();
@@ -19,7 +22,6 @@ export function LearnHero() {
   const all = STAGES.flatMap((st) => st.steps.map((x) => ({ ...x, stage: st })));
   const lessons = all.filter((x) => x.kind === 'lesson' && x.unit && x.lesson);
   const doneCount = lessons.filter((x) => isLessonDone(x.unit!, x.lesson!)).length;
-  console.log('[hero] doneCount', doneCount, 'of', lessons.length);
   const next = all.find((x) => !(x.kind === 'lesson' && x.unit && x.lesson && isLessonDone(x.unit, x.lesson)));
   const pct = lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0;
 
@@ -44,6 +46,18 @@ export function LearnHero() {
 
   return (
     <View>
+      {!session ? (
+        <Pressable
+          style={s.signInLine}
+          onPress={() => router.navigate('/onboarding?step=2&next=/learn' as any)}
+        >
+          <Ionicons name="cloud-outline" size={12} color={lw.muted} />
+          <Text style={s.signInT}>
+            {getLang() === 'fa' ? 'برای ذخیرهٔ مسیرت وارد شو' : 'Sign in to keep your journey'}
+          </Text>
+        </Pressable>
+      ) : null}
+
       <Pressable style={s.card} onPress={() => router.navigate('/learn/map' as any)}>
         <LinearGradient colors={['#E9F0E6', '#D6E4D2']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <Text style={s.fa}>فارسی</Text>
@@ -109,6 +123,8 @@ export function LearnHero() {
 }
 
 const s = StyleSheet.create({
+  signInLine: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, paddingVertical: 6, marginBottom: 8 },
+  signInT: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted },
   card: { borderRadius: 22, overflow: 'hidden', padding: spacing.xl, paddingTop: spacing.xxl, minHeight: 230, justifyContent: 'flex-end' },
   fa: { position: 'absolute', top: 14, right: 18, fontFamily: fonts.persian, fontSize: 54, color: lw.green, opacity: 0.14 },
   kicker: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2.2, color: lw.green },

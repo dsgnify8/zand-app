@@ -24,8 +24,8 @@ type Section = {
 
 const SECTIONS: Section[] = [
   { key: 'education', title: 'Education', titleT: EXPLORE.educationTitle, descT: EXPLORE.educationDesc, persian: 'آموزش', description: 'History, culture, art, architecture, and more.', image: 'safavid-isfahan', route: '/section/education' },
-  { key: 'articles', title: 'Articles', titleT: EXPLORE.articlesTitle, descT: EXPLORE.articlesDesc, persian: 'مقاله‌ها', description: 'The people behind the work.', image: 'article-khalili-cover', route: '/section/articles' },
-  { key: 'videos', title: 'Videos', titleT: EXPLORE.videosTitle, descT: EXPLORE.videosDesc, persian: 'ویدیوها', description: 'Watch stories, lessons, and interviews.', image: 'cyrus-pasargadae', route: '/section/videos' },
+  // ARCHIVED: videos — uncomment to bring the section back
+  // { key: 'videos', title: 'Videos', titleT: EXPLORE.videosTitle, descT: EXPLORE.videosDesc, persian: 'ویدیوها', description: 'Watch stories, lessons, and interviews.', image: 'cyrus-pasargadae', route: '/section/videos' },
 ];
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {

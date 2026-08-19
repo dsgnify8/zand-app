@@ -20,8 +20,7 @@ import { TOPICS } from '@/constants/education';
 import { TRADITIONS } from '@/constants/traditions';
 import { LITERATURE_FIGURES, AUTHORS } from '@/constants/literature';
 import { eduImage } from '@/constants/education-images';
-import { STORIES, dailyFor } from '@/constants/stories';
-import { ARTICLES, orderedArticles, articleOfDay } from '@/constants/articles';
+import { dailyFor } from '@/constants/stories';
 import { isHidden, useHidden } from '@/lib/admin';
 import { FramedImage } from '@/components/framed-image';
 import { CultureCover } from '@/components/culture-cover';
@@ -48,7 +47,7 @@ const PILLAR_T: Record<string, any> = {
   History: SECTIONS.history, Culture: SECTIONS.culture, Geography: SECTIONS.geography,
   Literature: SECTIONS.literature, Language: SECTIONS.language, Articles: SECTIONS.articles,
 };
-const PILLARS = ['History', 'Culture', 'Geography', 'Literature', 'Language', 'Articles'] as const;
+const PILLARS = ['History', 'Culture', 'Geography', 'Literature', 'Language'] as const;
 type Pillar = (typeof PILLARS)[number];
 
 function coverFor(authorKey?: string) {
@@ -59,12 +58,6 @@ function coverFor(authorKey?: string) {
 function cardsFor(pillar: Pillar): Card[] {
   if (pillar === 'History') {
     return TOPICS.map((t) => ({ key: t.key, title: t.name, sub: t.years, image: t.cover, route: '/education/topic?topic=' + t.key }));
-  }
-  if (pillar === 'Articles') {
-    return orderedArticles().filter((a: any) => !isHidden(a.key)).map((a: any) => ({
-      key: a.key, title: a.title, sub: a.tag, image: a.cover,
-      route: '/article?article=' + a.key,
-    }));
   }
   if (pillar === 'Culture') {
     const culture = CULTURE_TOPICS.filter((t: any) => t.key !== 'nowruz').map((t: any) => ({
@@ -194,50 +187,6 @@ function Countdown() {
   );
 }
 
-function ArticleStoryCard({ a }: { a: any }) {
-  const src = eduImage(a.cover);
-  return (
-    <Pressable style={styles.story} onPress={() => router.navigate(('/article?article=' + a.key) as any)}>
-      <FramedImage name={a.cover} source={src} style={StyleSheet.absoluteFill as any}
-        onPress={() => router.navigate(('/article?article=' + a.key) as any)}>
-        <LinearGradient colors={['rgba(20,14,10,0.6)', 'rgba(20,14,10,0.1)', 'rgba(20,14,10,0.55)', 'rgba(20,14,10,0.96)']} locations={[0, 0.32, 0.62, 1]} style={StyleSheet.absoluteFill as any} />
-        <View style={styles.storyTop} pointerEvents="none">
-          <Text style={styles.storyWho}>{a.tag}</Text>
-          <View style={styles.storyDot} />
-          <Text style={styles.storyWho}>{a.readMins} min</Text>
-        </View>
-        <View style={styles.storyBody} pointerEvents="none">
-          <Text style={styles.storyHook}>{a.title}</Text>
-          <Text style={styles.storyTitle} numberOfLines={2}>{a.excerpt ?? a.standfirst}</Text>
-        </View>
-      </FramedImage>
-    </Pressable>
-  );
-}
-
-function StoryCard({ st }: { st: any }) {
-  const src = eduImage(st.image);
-  const go = st.article ? ('/article?article=' + st.article) : '/section/articles';
-  return (
-    <Pressable style={styles.story} onPress={() => router.navigate(go as any)}>
-      {src ? <Image source={src} style={styles.storyImg} resizeMode="cover" /> : <View style={[styles.storyImg, styles.bandPh]} />}
-      <LinearGradient colors={['transparent', 'rgba(20,14,10,0.55)', 'rgba(20,14,10,0.95)']} locations={[0, 0.4, 1]} style={StyleSheet.absoluteFill as any} />
-      <View style={styles.storyBody}>
-        <View style={[styles.storyTag, { borderColor: st.tint }]}>
-          <Text style={[styles.storyTagT, { color: st.tint }]}>{st.tag}</Text>
-        </View>
-        <Text style={styles.storyHook}>{st.hook}</Text>
-        <Text style={styles.storyTitle}>{st.title}</Text>
-        <View style={styles.storyFoot}>
-          <Text style={styles.storyWho}>{st.where}</Text>
-          <View style={styles.storyDot} />
-          <Text style={styles.storyWho}>{st.read}</Text>
-        </View>
-      </View>
-    </Pressable>
-  );
-}
-
 function BandCard({ card }: { card: Card }) {
   const src = card.image ? eduImage(card.image) : undefined;
   const uploaded = card.image ? !!getFrame(card.image).uri : false;
@@ -274,7 +223,6 @@ export default function HomeScreen() {
   useLang();
   const fact = getDailyFact();
   useHidden();
-  const dailyArticle = articleOfDay();
   const { learnedLetters, markActivity } = useProgress();
   const [pillar, setPillar] = useState<Pillar>('History');
   const [daily] = useState(() => dailyFor());
@@ -420,18 +368,6 @@ export default function HomeScreen() {
 
           <FadeIn delay={150}><ContinueReading label={t(APP.keepReading)} /></FadeIn>
 
-          <FadeIn delay={210}>
-            <View style={styles.labelRow}>
-              <Text style={[styles.sectionLabelInline, fa && styles.faRight]}>{t(APP.stories)}</Text>
-              <Pressable hitSlop={8} onPress={() => router.navigate('/section/articles' as any)}>
-                <Text style={styles.seeAll}>all of them</Text>
-              </Pressable>
-            </View>
-          </FadeIn>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.band} contentContainerStyle={styles.bandInner}>
-            {ARTICLES.filter((a) => !isHidden(a.key)).slice(0, 8).map((a) => <ArticleStoryCard key={a.key} a={a} />)}
-          </ScrollView>
-
           <FadeIn delay={180}><Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.explore)}</Text></FadeIn>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabScroll} contentContainerStyle={styles.tabRow}>
@@ -449,24 +385,6 @@ export default function HomeScreen() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.band} contentContainerStyle={styles.bandInner}>
             {cards.map((c) => <BandCard key={pillar + c.key} card={c} />)}
           </ScrollView>
-
-          {dailyArticle ? (
-          <FadeIn delay={240}>
-            <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.newThisWeek)}</Text>
-            <Pressable style={styles.featuredCard} onPress={() => router.navigate(('/article?article=' + dailyArticle.key) as any)}>
-              <View style={styles.formatTag}><Text style={styles.formatTagText}>{dailyArticle.tag}</Text></View>
-              <Text style={styles.featuredTitle}>{dailyArticle.title}</Text>
-              <Text style={styles.featuredBlurb} numberOfLines={2}>{dailyArticle.excerpt ?? dailyArticle.standfirst}</Text>
-              <View style={styles.guestRow}>
-                <View style={styles.guestText}>
-                  <Text style={styles.guestName}>{dailyArticle.subject ?? ''}</Text>
-                  <Text style={styles.guestRole}>{dailyArticle.readMins} min read</Text>
-                </View>
-                <Ionicons name="arrow-forward" size={20} color={colors.accent} />
-              </View>
-            </Pressable>
-          </FadeIn>
-          ) : null}
 
           <FadeIn delay={270}>
             <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.jumpBackIn)}</Text>
@@ -518,7 +436,7 @@ const styles = StyleSheet.create({
   greeting: { fontFamily: fonts.heading, fontSize: 30, color: colors.textPrimary, marginTop: spacing.md },
   faRight: { textAlign: 'right', writingDirection: 'rtl' },
   faRowRev: { flexDirection: 'row-reverse' },
-  sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5, marginTop: spacing.xl, marginBottom: spacing.sm },
+  sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5, marginTop: spacing.lg, marginBottom: spacing.sm },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl, marginBottom: spacing.sm },
   sectionLabelInline: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5 },
   seeAll: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.accent },

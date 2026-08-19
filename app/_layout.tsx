@@ -185,7 +185,6 @@ export default function RootLayout() {
             <Stack.Screen name="nowruz/index" options={{ headerShown: false }} />
             <Stack.Screen name="culture/index" options={{ headerShown: false }} />
             <Stack.Screen name="culture/topic" options={{ headerShown: false }} />
-            <Stack.Screen name="article/index" options={{ headerShown: false }} />
             <Stack.Screen name="education/topic" options={{ headerShown: false, animation: 'fade' }} />
             <Stack.Screen name="education/reader" options={{ headerShown: false }} />
             <Stack.Screen name="search" options={{ headerShown: false, animation: 'fade' }} />

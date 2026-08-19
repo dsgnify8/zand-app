@@ -5,14 +5,12 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
-import { ARTICLES } from '@/constants/articles';
 import { useIsAdmin, useHidden, hideArticle, unhideArticle, isHidden } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 
 export default function AdminScreen() {
   const isAdmin = useIsAdmin();
   useHidden();
-  const [tab, setTab] = useState<'articles' | 'analytics'>('articles');
   const [signups, setSignups] = useState<number | null>(null);
   const [topReads, setTopReads] = useState<{ item_key: string; n: number }[]>([]);
   const [totalReads, setTotalReads] = useState<number | null>(null);
@@ -50,46 +48,7 @@ export default function AdminScreen() {
         <View style={{ width: 24 }} />
       </View>
 
-      <View style={s.tabs}>
-        {(['articles', 'analytics'] as const).map((t) => (
-          <Pressable key={t} style={[s.tab, tab === t && s.tabOn]} onPress={() => setTab(t)}>
-            <Text style={[s.tabT, tab === t && s.tabTOn]}>{t === 'articles' ? 'Articles' : 'Analytics'}</Text>
-          </Pressable>
-        ))}
-      </View>
-
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
-        {tab === 'articles' ? (
-          <View style={{ gap: spacing.sm }}>
-            <Text style={s.hint}>Hide an article to remove it from the app for everyone. Unhide to bring it back.</Text>
-            {ARTICLES.map((a) => {
-              const hidden = isHidden(a.key);
-              return (
-                <View key={a.key} style={[s.row, hidden && s.rowHidden]}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[s.rowT, hidden && s.rowTHidden]} numberOfLines={1}>{a.title}</Text>
-                    <Text style={s.rowS}>{a.tag}  ·  {hidden ? 'HIDDEN' : 'live'}</Text>
-                  </View>
-                  <Pressable style={[s.btn, hidden ? s.btnUnhide : s.btnHide]} onPress={() => {
-                    if (hidden) {
-                      Alert.alert('Bring it back?', 'This article will return to the app for everyone.', [
-                        { text: 'Cancel', style: 'cancel' },
-                        { text: 'Unhide', onPress: () => unhideArticle(a.key) },
-                      ]);
-                    } else {
-                      Alert.alert('Remove from app?', 'This archives the article and removes it from everyone\u2019s app, including their saves and favourites. You can bring it back any time.', [
-                        { text: 'Cancel', style: 'cancel' },
-                        { text: 'Remove', style: 'destructive', onPress: () => hideArticle(a.key) },
-                      ]);
-                    }
-                  }}>
-                    <Text style={[s.btnT, { color: hidden ? colors.accent : '#C4433F' }]}>{hidden ? 'Unhide' : 'Remove'}</Text>
-                  </Pressable>
-                </View>
-              );
-            })}
-          </View>
-        ) : (
           <View style={{ gap: spacing.lg }}>
             <View style={s.statRow}>
               <View style={s.statCard}><Text style={s.statN}>{signups ?? '—'}</Text><Text style={s.statL}>ACTIVE READERS</Text></View>
@@ -134,7 +93,6 @@ export default function AdminScreen() {
             })}
             <Text style={s.hint}>Signup totals are also in your Supabase dashboard under Authentication.</Text>
           </View>
-        )}
       </ScrollView>
     </SafeAreaView>
   );

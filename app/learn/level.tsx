@@ -25,7 +25,7 @@ export default function LevelScreen() {
         <Pressable hitSlop={12} style={s.back} onPress={() => (router.canGoBack() ? router.back() : router.replace('/' as any))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
-        <Art name="cypress" size={92} style={s.art} />
+        <Art name="cypress" size={68} style={s.art} />
         <Text style={s.eyebrow}>PERSIAN  ·  فارسی</Text>
         <Text style={s.title}>Where do{'\n'}you start?</Text>
         <Text style={s.sub}>
@@ -63,28 +63,28 @@ export default function LevelScreen() {
 
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: lw.bg },
-  body: { paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: spacing.lg },
+  body: { paddingHorizontal: spacing.xl, paddingTop: 4, paddingBottom: spacing.md },
 
   back: { alignSelf: 'flex-start', paddingVertical: 6, paddingRight: 12 },
-  art: { alignSelf: 'flex-end', opacity: 0.5, marginBottom: -8 },
+  art: { alignSelf: 'flex-end', opacity: 0.5, marginBottom: -14, marginTop: -6 },
   eyebrow: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 3, color: lw.muted },
   title: { fontFamily: fonts.body, fontSize: 25, lineHeight: 32, color: lw.green, marginTop: spacing.sm },
   sub: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 18, color: lw.inkSoft, marginTop: 6 },
 
-  rule: { height: 1, backgroundColor: lw.rule, marginTop: spacing.lg, opacity: 0.7 },
+  rule: { height: 1, backgroundColor: lw.rule, marginTop: spacing.md, opacity: 0.7 },
 
   list: { marginTop: spacing.sm },
-  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: lw.hair },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: lw.hair },
   rowOn: { },
   roman: { fontFamily: fonts.body, fontSize: 17, color: lw.muted, width: 30 },
   romanOn: { color: lw.green },
   name: { fontFamily: fonts.body, fontSize: 16, color: lw.ink },
   nameOn: { fontFamily: fonts.bodyStrong, color: lw.green },
-  blurb: { fontFamily: fonts.body, fontSize: 12, lineHeight: 17, color: lw.muted, marginTop: 2 },
+  blurb: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 16, color: lw.muted, marginTop: 1 },
 
-  cta: { backgroundColor: lw.green, borderRadius: 26, paddingVertical: 14, alignItems: 'center', marginTop: spacing.xl },
+  cta: { backgroundColor: lw.green, borderRadius: 26, paddingVertical: 13, alignItems: 'center', marginTop: spacing.lg },
   ctaOff: { backgroundColor: lw.greenPale },
   ctaT: { fontFamily: fonts.bodyStrong, fontSize: 15, color: '#FFF', letterSpacing: 0.3 },
 
-  skip: { fontFamily: fonts.body, fontSize: 13, color: lw.muted, textAlign: 'center', marginTop: spacing.md },
+  skip: { fontFamily: fonts.body, fontSize: 13, color: lw.muted, textAlign: 'center', marginTop: spacing.sm },
 });

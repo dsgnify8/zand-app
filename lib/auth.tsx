@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { setAdminEmail } from '@/lib/admin';
-import { pullAndMerge, syncStop, syncFlush } from '@/lib/cloud-sync';
+import { pullAndMerge, syncStop, syncFlush, clearOnSignOut } from '@/lib/cloud-sync';
 
 type AuthState = {
   session: Session | null;
@@ -98,6 +98,24 @@ export function AuthProvider({ children }: { children: any }) {
         }
       } else {
         syncStop();
+        // Signed out means the journey goes with the account. Clear the
+        // stores, then reload them so the screens show the empty state
+        // rather than keeping the old numbers in memory.
+        await clearOnSignOut();
+        try {
+          const [{ loadLearnProgress, loadPartial }, { loadStrength }, { loadStats }, { loadSaved }, { loadLevel }] =
+            await Promise.all([
+              import('@/lib/learn-progress'),
+              import('@/lib/word-strength'),
+              import('@/lib/stats-store'),
+              import('@/lib/saved-store'),
+              import('@/lib/learn-level'),
+            ]);
+          await Promise.all([
+            loadLearnProgress(), loadPartial(), loadStrength(),
+            loadStats(), loadSaved(), loadLevel(),
+          ]);
+        } catch {}
       }
     })();
     return () => { cancelled = true; };

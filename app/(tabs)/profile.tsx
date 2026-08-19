@@ -19,7 +19,6 @@ import { useInbox, markLearned } from '@/lib/inbox';
 import { FriendsSheet } from '@/components/friends-sheet';
 import { FramedImage } from '@/components/framed-image';
 import { CultureCover } from '@/components/culture-cover';
-import { ARTICLES } from '@/constants/articles';
 import { resolveMany } from '@/lib/resolve-saved';
 import { useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
 import { AchievementsSheet } from '@/components/achievements-sheet';
@@ -317,7 +316,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
           {[0, 1].map((col) => (
             <View key={col} style={s.pinCol}>
               {arts.filter((_, i) => i % 2 === col).map((a) => (
-                <Pressable key={a.key} style={s.pinCard} onPress={() => router.navigate(('/article?article=' + a.key) as any)}>
+                <Pressable key={a.key} style={s.pinCard} onPress={() => router.navigate(a.route as any)}>
                   <View style={[s.pinImg, { height: 130 + ((a.title.length * 7) % 90) }]}>
                     {a.kind === 'culture' && a.accent && a.glyph && !libImage(a.image) ? (
                       <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
@@ -363,7 +362,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
 
 function LibraryTab() {
   const items = useSavedItems();
-  const [filter, setFilter] = useState<'all' | 'article' | 'word' | 'topic' | 'verse'>('all');
+  const [filter, setFilter] = useState<'all' | 'word' | 'topic' | 'verse'>('all');
   const [libView, setLibView] = useState<null | 'history' | 'favourites' | 'watched' | 'saved'>(null);
   const list = filter === 'all' ? items : items.filter((x) => x.kind === filter);
 
@@ -383,7 +382,8 @@ function LibraryTab() {
         {[
           { key: 'history', i: 'time-outline', t: t(PROFILE.history), x: t(PROFILE.historyX) },
           { key: 'favourites', i: 'heart-outline', t: t(PROFILE.favourites), x: t(PROFILE.favouritesX) },
-          { key: 'watched', i: 'play-circle-outline', t: t(PROFILE.watched), x: t(PROFILE.watchedX) },
+          // ARCHIVED: videos — uncomment to bring the Watched tab back
+          // { key: 'watched', i: 'play-circle-outline', t: t(PROFILE.watched), x: t(PROFILE.watchedX) },
           { key: 'saved', i: 'bookmark-outline', t: t(PROFILE.saveLater), x: t(PROFILE.saveLaterX) },
         ].map((g) => (
           <Pressable key={g.key} style={s.gridCell} onPress={() => setLibView(g.key)}>
@@ -396,7 +396,7 @@ function LibraryTab() {
 
       <Text style={s.sectionLabel}>{t(PROFILE.mySaved)}</Text>
       <View style={s.chipsTight}>
-        {(['all', 'article', 'word', 'verse', 'topic'] as const).map((f) => (
+        {(['all', 'word', 'verse', 'topic'] as const).map((f) => (
           <Pressable key={f} style={[s.chip, filter === f && s.chipOn]} onPress={() => setFilter(f)}>
             <Text style={[s.chipT, filter === f && s.chipTOn]}>{f === 'all' ? 'All' : f + 's'}</Text>
           </Pressable>

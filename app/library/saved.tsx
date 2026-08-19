@@ -14,7 +14,6 @@ import { APP } from '@/constants/i18n/app';
 const TABS: { key: ContentType; label: string }[] = [
   { key: 'video', label: 'Videos' },
   { key: 'podcast', label: 'Podcasts' },
-  { key: 'article', label: 'Articles' },
 ];
 
 export default function SavedScreen() {
@@ -59,7 +58,7 @@ export default function SavedScreen() {
           )
         ) : (
           <Text style={styles.empty}>
-            {tab === 'podcast' ? 'Saved podcasts will appear here.' : 'Saved articles will appear here.'}
+            {tab === 'podcast' ? 'Saved podcasts will appear here.' : 'Saved videos will appear here.'}
           </Text>
         )}
       </ScrollView>

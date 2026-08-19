@@ -251,6 +251,28 @@ export function syncTouch() {
 
 // Called on sign-out. Stops syncing but leaves the local data alone, so
 // the device keeps working and a later sign-in merges cleanly.
+/**
+ * Signing out clears the learning journey from this device.
+ *
+ * Progress belongs to an account, not to a phone. Leaving it behind
+ * would show the next person to open the app someone else's streak, and
+ * would make "sign out" mean something weaker than it says. Nothing is
+ * lost: it is in the cloud row and comes back on sign-in.
+ *
+ * Language, notification preferences and crop positions stay — those are
+ * settings for this device, not records of a person.
+ */
+export async function clearOnSignOut() {
+  try {
+    await AsyncStorage.multiRemove([
+      'learn:done', 'learn:partial', 'learn:strength', 'learn:level', 'learn:asked',
+      'stats:v1', 'saved:articles', 'liked:articles', 'recent:articles',
+      'scroll:articles', 'saved:businesses', 'usage:v1',
+    ]);
+    await AsyncStorage.removeItem('sync:lastUser');
+  } catch {}
+}
+
 export function syncStop() {
   userId = null;
   if (timer) { clearTimeout(timer); timer = null; }

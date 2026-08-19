@@ -3,7 +3,6 @@
 import { TOPICS, findTopic } from '@/constants/education';
 import { AUTHORS, findAuthor } from '@/constants/literature';
 import { CULTURE_TOPICS } from '@/constants/culture';
-import { articleByKey } from '@/constants/articles';
 import { isHidden } from '@/lib/admin';
 
 export type Resolved = {
@@ -36,10 +35,9 @@ export function resolveSavedKey(key: string): Resolved | null {
     if (!c) return null;
     return { key, kind: 'culture', title: (c as any).title, sub: 'Culture', image: 'culture-' + (c as any).key, route: '/culture/topic?topic=' + (c as any).key, accent: (c as any).accent, glyph: (c as any).glyph, persian: (c as any).persian };
   }
-  // bare article key, or art- prefix
-  const ak = key.startsWith('art-') ? key.slice(4) : key;
-  const a = articleByKey(ak);
-  if (a && !isHidden(a.key)) return { key, kind: 'article', title: a.title, sub: a.tag + '  ·  ' + a.readMins + ' min', image: a.cover, route: '/article?article=' + a.key };
+  // Articles were removed from the app. Old saves and history still
+  // carry their keys, and returning null here is what makes them quietly
+  // disappear from the library rather than resolving to a dead page.
   return null;
 }
 

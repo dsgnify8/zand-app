@@ -10,7 +10,6 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 const EXPLORE_SECTIONS = [
   { label: 'Education', fa: 'آموزش', route: '/section/education', icon: 'school-outline' },
   { label: 'Videos', fa: 'ویدیوها', route: '/section/videos', icon: 'play-circle-outline' },
-  { label: 'Articles', fa: 'مقاله‌ها', route: '/section/articles', icon: 'newspaper-outline' },
 ] as const;
 
 const LINKS = [

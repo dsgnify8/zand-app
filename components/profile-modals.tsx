@@ -8,7 +8,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { pr, ME, SEND_CATEGORIES, RECENT, WORD_BANK } from '@/constants/profile';
-import { ARTICLES } from '@/constants/articles';
 import { applyLanguage } from '@/lib/apply-language';
 import { getLang, t as tset, useLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -401,11 +400,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
   const [sent, setSent] = useState<string | null>(null);
   const [q, setQ] = useState('');
 
-  const articlesCat = {
-    key: 'articles', label: 'Articles', icon: 'newspaper-outline', tint: '#8C6A3F', searchable: true,
-    items: ARTICLES.map((a) => ({ key: a.key, title: a.title, tr: a.title, en: a.tag + '  ·  ' + a.readMins + ' min', sub: a.tag })),
-  };
-  const CATS = [articlesCat, ...SEND_CATEGORIES];
+  const CATS = [...SEND_CATEGORIES];
   const active = CATS.find((c) => c.key === cat);
   const needle = q.trim().toLowerCase();
   const hits = needle
