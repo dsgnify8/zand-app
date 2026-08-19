@@ -1,3 +1,4 @@
+import { imageOverride } from '@/lib/image-overrides';
 // Maps content image keys to bundled assets. Add a line as you add each image.
 export const EDU_IMAGES: Record<string, any> = {
   'modern-cover': require('../assets/education/modern-cover.jpeg'),
@@ -196,5 +197,10 @@ export const EDU_IMAGES: Record<string, any> = {
 };
 
 export function eduImage(key?: string) {
-  return key ? EDU_IMAGES[key] : undefined;
+  if (!key) return undefined;
+  // An uploaded image wins over the bundled one. Everything in the app
+  // draws through here, so one check covers every screen.
+  const url = imageOverride(key);
+  if (url) return { uri: url };
+  return EDU_IMAGES[key];
 }

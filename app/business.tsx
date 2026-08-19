@@ -198,7 +198,7 @@ export default function BusinessPage() {
           <Text style={[s.name, fa && b.name_fa ? s.nameFa : null]}>{name}</Text>
           <Text style={s.meta}>
             {categoryLabel(b.category, fa)}
-            {b.city ? '  ·  ' + b.city : ''}
+            {(fa && b.city_fa) || b.city ? '  ·  ' + ((fa && b.city_fa) || b.city) : ''}
             {b.country ? ', ' + b.country : ''}
           </Text>
 

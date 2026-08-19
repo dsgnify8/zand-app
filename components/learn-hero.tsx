@@ -19,6 +19,7 @@ export function LearnHero() {
   const all = STAGES.flatMap((st) => st.steps.map((x) => ({ ...x, stage: st })));
   const lessons = all.filter((x) => x.kind === 'lesson' && x.unit && x.lesson);
   const doneCount = lessons.filter((x) => isLessonDone(x.unit!, x.lesson!)).length;
+  console.log('[hero] doneCount', doneCount, 'of', lessons.length);
   const next = all.find((x) => !(x.kind === 'lesson' && x.unit && x.lesson && isLessonDone(x.unit, x.lesson)));
   const pct = lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0;
 
@@ -79,17 +80,12 @@ export function LearnHero() {
 
       <View style={s.strip}>
 <Pressable
-          style={[s.chip, doneCount === 0 && s.chipOff]}
-          onPress={() => router.navigate((doneCount === 0 ? '/learn/map' : '/learn/review') as any)}
+          style={[s.chip, due === 0 && s.chipOff]}
+          disabled={due === 0}
+          onPress={() => router.navigate('/learn/review' as any)}
         >
-          <Ionicons
-            name={doneCount === 0 ? 'play-outline' : 'repeat-outline'}
-            size={15}
-            color={doneCount === 0 ? lw.muted : lw.green}
-          />
-          <Text style={[s.chipT, doneCount === 0 && { color: lw.muted }]}>
-            {doneCount === 0 ? 'Start learning' : 'Review'}
-          </Text>
+          <Ionicons name="repeat-outline" size={15} color={due === 0 ? lw.muted : lw.green} />
+          <Text style={[s.chipT, due === 0 && { color: lw.muted }]}>Review</Text>
           {due > 0 ? <View style={s.badge}><Text style={s.badgeT}>{due}</Text></View> : null}
         </Pressable>
         <Pressable style={s.chip} onPress={() => router.navigate('/learn/read' as any)}>

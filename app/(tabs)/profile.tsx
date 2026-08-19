@@ -86,11 +86,25 @@ function StreakCard() {
           <Text style={s.streakN}>{streakDays}</Text>
           <Text style={s.streakL}>{t(PROFILE.daysRow)}</Text>
           <View style={s.streakDays}>
-            {(demo ? DAYS.slice(-7) : []).map((d: any, i: number) => (
+            {(demo
+              ? DAYS.slice(-7)
+              // one pip per day, lit for the days inside the current run
+              : Array.from({ length: 7 }, (_, i) => i >= 7 - Math.min(7, streakDays))
+            ).map((d: any, i: number) => (
               <View key={i} style={[s.dayPip, d && s.dayPipOn]} />
             ))}
           </View>
-          <Text style={s.streakNote}>{demo ? ME.freezes + ' rest days left this month' : (streakDays === 0 ? 'Finish a lesson to start your streak' : 'Keep going')}</Text>
+          <Text style={s.streakNote}>
+            {demo
+              ? ME.freezes + ' rest days left this month'
+              : streakDays === 0
+              ? 'Finish a lesson to start your streak'
+              : streakDays === 1
+              ? 'One day in. Come back tomorrow to keep it.'
+              : streakDays < 7
+              ? (7 - streakDays) + ' more days to your first week'
+              : 'Keep going'}
+          </Text>
         </View>
         <StreakPlant streak={streakDays} />
       </View>
@@ -102,11 +116,26 @@ function KeepReading() {
   return <ContinueReading label={t(PROFILE.pickUp)} />;
 }
 function DiscoverRow() {
+  const { recent } = useSaved();
+  const day = Math.floor(Date.now() / 86400000);
+  const discoverToday = (() => {
+    const unseen = DISCOVER.filter((d) => !recent.includes(d.key));
+    const pool = unseen.length ? unseen : DISCOVER;
+    // rotate the starting point by the day, so the order changes without
+    // being random — a person seeing the same card twice in a day is
+    // fine, seeing it reshuffle every render is not
+    const start = day % pool.length;
+    return [...pool.slice(start), ...pool.slice(0, start)].slice(0, 3);
+  })();
+
   return (
     <View style={{ marginTop: spacing.xl }}>
       <Text style={s.sectionLabel}>{t(PROFILE.notSeen)}</Text>
       <View style={{ gap: spacing.md }}>
-        {DISCOVER.map((d) => {
+        {/* A different three each day, drawn from the pool and skipping
+            anything already opened. Same set all day so it does not
+            shuffle under someone mid-scroll. */}
+        {discoverToday.map((d) => {
           const src = eduImage(d.image);
           return (
             <Pressable key={d.key} style={s.disc} onPress={() => router.navigate(d.route as any)}>
@@ -127,7 +156,23 @@ function DiscoverRow() {
 }
 
 function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLibrary: () => void }) {
-  const pending = INBOX.filter((i) => !i.done);
+  // Real things waiting: a friend request, or something sent that has
+  // not been opened. Seeded items only stand in for a visitor.
+  const { user: youUser } = useAuth();
+  const youDemo = showDemoData(youUser?.email);
+  const { incoming: youReq } = useFriends(youUser?.id);
+  const { items: youInbox } = useInbox(youUser?.id);
+  const pending = youDemo
+    ? INBOX.filter((i) => !i.done)
+    : [
+        ...(youReq ?? []).map((r: any) => ({
+          kind: 'friend', from: r.profile?.name ?? 'Someone', fromFa: r.profile?.name ?? '?',
+          note: 'wants to connect', done: false,
+        })),
+        ...(youInbox ?? []).filter((i: any) => !i.done).map((i: any) => ({
+          ...i, from: i.senderName ?? 'A friend', fromFa: i.senderName ?? '?',
+        })),
+      ];
   return (
     <>
       {pending.length > 0 ? (
@@ -497,15 +542,22 @@ function FriendsTab() {
       {/* Preview of what the page becomes — locked when you have no friends,
           shown as a labelled example once you do. */}
       <View style={hasActivity ? undefined : s.previewWrap} pointerEvents={hasActivity ? 'auto' : 'none'}>
-        <Text style={s.sectionLabel}>{hasActivity ? t(PROFILE.exampleSend) : t(PROFILE.aPreview)}</Text>
+        {hasActivity ? null : (
+          <Text style={s.sectionLabel}>{t(PROFILE.aPreview)}</Text>
+        )}
         <View style={{ gap: spacing.md, opacity: hasActivity ? 1 : 0.9 }}>
-          {INBOX.filter((x) => x.kind === 'word').slice(0, 1).map((i) => (
-            <View key={i.key} style={s.inbox}>
+          {(hasActivity && !showDemoData(user?.email)
+              ? []
+              : showDemoData(user?.email)
+              ? INBOX.filter((x) => x.kind === 'word')
+              : (inbox ?? []).filter((x: any) => x.kind === 'word')
+            ).slice(0, 1).map((i: any) => (
+            <View key={i.key ?? i.id ?? 'inbox'} style={s.inbox}>
               <View style={s.inboxTop}>
-                <View style={s.avatar}><Text style={s.avatarT}>{i.fromFa[0]}</Text></View>
+                <View style={s.avatar}><Text style={s.avatarT}>{((i.fromFa || i.from || i.senderName || '?') as string)[0]}</Text></View>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.inboxFrom}>{i.from} {t(PROFILE.sentYou)} {KIND_LABEL_T[i.kind] ? t(KIND_LABEL_T[i.kind]) : t(PROFILE.something)}</Text>
-                  <Text style={s.inboxWhen}>{i.when}</Text>
+                  <Text style={s.inboxFrom}>{i.from || i.senderName || 'A friend'} {t(PROFILE.sentYou)} {KIND_LABEL_T[i.kind] ? t(KIND_LABEL_T[i.kind]) : t(PROFILE.something)}</Text>
+                  <Text style={s.inboxWhen}>{i.when || ''}</Text>
                 </View>
                 <View style={s.newDot} />
               </View>
@@ -575,6 +627,15 @@ function ProgressTab() {
   const progStats = useStats();
   const progDemo = showDemoData(progUser?.email);
   const progStreak = progDemo ? ME.streak : ((progStats as any)?.streakDays ?? 0);
+  const ps: any = progStats ?? {};
+  const realProgStats = [
+    { v: String(ps.lessonsFinished ?? 0), k: 'lessons finished' },
+    { v: String(ps.wordsSolid ?? 0), k: 'words solid' },
+    { v: String(ps.topicsFinished ?? 0), k: 'topics read' },
+    { v: String(ps.articlesRead ?? 0), k: 'articles read' },
+    { v: String(ps.thingsSaved ?? 0), k: 'things saved' },
+    { v: String(ps.learnDays ?? 0), k: 'days learning' },
+  ];
   useEffect(() => { setStreak(progStreak); }, [progStreak]);
   const finished = stats.finished;
   const shown = showAllFinished ? finished : finished.slice(0, 10);

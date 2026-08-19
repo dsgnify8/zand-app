@@ -24,6 +24,7 @@ import { TOPICS } from '@/constants/education';
 import { AUTHORS } from '@/constants/literature';
 import { useAuth } from '@/lib/auth';
 import { contentHash, listOverrides, saveOverride, clearOverride, loadOverrides } from '@/lib/content-overrides';
+import { getLang } from '@/lib/i18n';
 
 type Row = {
   en: string;          // original English, the identity
@@ -74,6 +75,7 @@ function useRows(section: Row['section'], topicKey: string | null) {
 }
 
 export default function AdminContent() {
+  const fa = getLang() === 'fa';
   const { user } = useAuth();
   const [section, setSection] = useState<Row['section']>('education');
   const [topicKey, setTopicKey] = useState<string | null>(null);

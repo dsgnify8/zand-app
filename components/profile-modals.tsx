@@ -10,7 +10,7 @@ import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { pr, ME, SEND_CATEGORIES, RECENT, WORD_BANK } from '@/constants/profile';
 import { ARTICLES } from '@/constants/articles';
 import { applyLanguage } from '@/lib/apply-language';
-import { useLang, t as tset } from '@/lib/i18n';
+import { getLang, t as tset, useLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { useIsAdmin } from '@/lib/admin';
 import { ReminderRow } from '@/components/reminder-row';
@@ -394,6 +394,7 @@ export function RenameSheet({ open, onClose, friend, onSave }: any) {
 /* ---------------- Send something back ---------------- */
 
 export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose: () => void; to: string; toId?: string }) {
+  const fa = getLang() === 'fa';
   const { user } = useAuth();
   const [mode, setMode] = useState<'browse' | 'recent'>('browse');
   const [cat, setCat] = useState<string | null>(null);

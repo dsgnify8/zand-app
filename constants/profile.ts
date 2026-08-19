@@ -53,7 +53,7 @@ export type Discover = { key: string; kicker: string; title: string; x: string; 
 export const DISCOVER: Discover[] = [
   { key: 'd1', kicker: 'YOU HAVE NOT OPENED THIS', title: 'Rudaki', x: 'The first poet. A hundred thousand verses written, about a thousand surviving.', image: 'lit-rudaki-cover', route: '/literature/reader?author=rudaki&page=0', tint: '#8C3A2E' },
   { key: 'd2', kicker: 'NEW', title: 'Typical Persian', x: 'Fourteen cards. The joke on the front, the truth underneath.', image: 'zand-vakil-bazaar', route: '/culture/topic?topic=typical', tint: '#3E6E78' },
-  { key: 'd3', kicker: 'BECAUSE YOU READ HAFEZ', title: 'Saadi', x: 'The other poet of Shiraz. They lie within sight of one another.', image: 'lit-saadi-cover', route: '/literature/reader?author=saadi&page=0', tint: '#B08A46' },
+  { key: 'd3', kicker: 'WORTH YOUR TIME', title: 'Saadi', x: 'The other poet of Shiraz. They lie within sight of one another.', image: 'lit-saadi-cover', route: '/literature/reader?author=saadi&page=0', tint: '#B08A46' },
 ];
 
 export type SavedItem = { key: string; kind: 'word' | 'topic' | 'verse'; title: string; sub: string; route?: string };

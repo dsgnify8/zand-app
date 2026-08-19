@@ -37,7 +37,7 @@ const emit = () => listeners.forEach((l) => l());
 export async function loadUsage() {
   try {
     const v = await AsyncStorage.getItem(KEY);
-    if (v) usage = { speak: [], listen: [], ...JSON.parse(v) };
+    usage = v ? { speak: [], listen: [], ...JSON.parse(v) } : { speak: [], listen: [] };
   } catch {}
   prune();
   emit();

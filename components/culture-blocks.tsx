@@ -18,6 +18,7 @@ const ROUNDS: Round[] = [
 ];
 
 export function TaarofSim() {
+  const fa = getLang() === 'fa';
   const [step, setStep] = useState(0);
   const [ending, setEnding] = useState<null | 'greedy' | 'perfect' | 'lost'>(null);
   const shake = useRef(new Animated.Value(0)).current;
@@ -100,6 +101,7 @@ const DEL_WORDS = [
 ];
 
 export function DelMap() {
+  const fa = getLang() === 'fa';
   const [open, setOpen] = useState<number | null>(null);
   const pulse = useRef(new Animated.Value(0)).current;
 
@@ -217,6 +219,7 @@ export function TypicalCards() {
 /* ---------- The zurkhaneh ---------- */
 
 export function Zurkhaneh() {
+  const fa = getLang() === 'fa';
   const [on, setOn] = useState(false);
   const swing = useRef(new Animated.Value(0)).current;
   const drum = useRef(new Animated.Value(0)).current;
@@ -278,6 +281,7 @@ export function Zurkhaneh() {
 /* ---------- The rice pot ---------- */
 
 export function RicePot() {
+  const fa = getLang() === 'fa';
   const [lifted, setLifted] = useState(false);
   const a = useRef(new Animated.Value(0)).current;
 

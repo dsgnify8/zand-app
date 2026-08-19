@@ -36,6 +36,7 @@ import { APP } from '@/constants/i18n/app';
 import { useAuth } from '@/lib/auth';
 import { useInbox } from '@/lib/inbox';
 import { useFriends } from '@/lib/friends';
+import { showDemoData } from '@/lib/demo-mode';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -293,7 +294,10 @@ export default function HomeScreen() {
   // Anything waiting on them, whatever kind. A friend request and a sent
   // word are both "someone did something and you have not looked yet",
   // so they belong in the same queue rather than competing for the slot.
-  const pending = session
+  // Seeded items are for the admin account only now. Signed out means
+  // an empty queue and the invitation to send something, not a stranger's
+  // message.
+  const pending = !showDemoData(session?.user?.email)
     ? [
         ...(incoming ?? []).map((r: any) => ({
           kind: 'friend',

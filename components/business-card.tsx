@@ -54,7 +54,7 @@ export function BusinessCard({
 
   const wa = (b.socials ?? {}).whatsapp;
   const name = fa && b.name_fa ? b.name_fa : b.name;
-  const blurb = b.tagline ?? b.description;
+  const blurb = fa ? (b.tagline_fa ?? b.description_fa ?? b.tagline ?? b.description) : (b.tagline ?? b.description);
 
   return (
     <View style={s.card}>
@@ -125,7 +125,7 @@ export function BusinessCard({
 
           {b.badge ? (
             <View style={s.badge}>
-              <Text style={s.badgeT}>{b.badge}</Text>
+              <Text style={s.badgeT}>{(fa && b.badge_fa) || b.badge}</Text>
             </View>
           ) : null}
 
@@ -144,7 +144,7 @@ export function BusinessCard({
         </View>
         <Text style={s.meta} numberOfLines={1}>
           {categoryLabel(b.category, fa)}
-          {b.city ? '  ·  ' + b.city : ''}
+          {(fa && b.city_fa) || b.city ? '  ·  ' + ((fa && b.city_fa) || b.city) : ''}
         </Text>
         {blurb ? <Text style={s.blurb} numberOfLines={2}>{blurb}</Text> : null}
       </Pressable>

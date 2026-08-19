@@ -40,6 +40,7 @@ import { loadUsage } from '@/lib/usage';
 import { LangSwitchOverlay } from '@/components/lang-switch-overlay';
 import { loadNotifPrefs } from '@/lib/notif-prefs';
 import { loadSavedBusinesses } from '@/lib/saved-businesses';
+import { loadImageOverrides } from '@/lib/image-overrides';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -102,8 +103,19 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
-  useEffect(() => { resetForDemo().then(() => { loadLevel(); });
-    loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden(); loadLevel(); loadLearnProgress(); loadPartial(); loadStrength(); loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides(); loadUsage(); loadNotifPrefs(); loadSavedBusinesses(); }, []);
+  // Order matters here. The demo wipe has to finish before anything
+  // reads storage, or every store loads the previous session's data into
+  // memory and then the wipe deletes it from underneath them — leaving
+  // the app showing numbers that no longer exist anywhere on disk.
+  useEffect(() => {
+    (async () => {
+      await resetForDemo();
+      loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden();
+      loadLevel(); loadLearnProgress(); loadPartial(); loadStrength();
+      loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides();
+      loadUsage(); loadNotifPrefs(); loadImageOverrides(); loadSavedBusinesses();
+    })();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -138,6 +150,7 @@ export default function RootLayout() {
             <Stack.Screen name="business" options={{ headerShown: false, animation: 'slide_from_right' }} />
             <Stack.Screen name="business-new" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
             <Stack.Screen name="admin-businesses" options={{ headerShown: false }} />
+            <Stack.Screen name="admin-images" options={{ headerShown: false }} />
             <Stack.Screen name="admin-content" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />

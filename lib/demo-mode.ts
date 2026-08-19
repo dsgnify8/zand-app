@@ -1,18 +1,27 @@
 // Demo mode.
 //
-// On each launch this clears only the two things worth showing from the
-// start: the onboarding flow, and the language-level questionnaire.
-// Everything else stays put, so reading progress, lessons completed,
-// friends, streaks and stats all look lived-in.
+// On each launch this clears everything a previous session left behind,
+// so the app opens the way a new user would find it. That includes
+// progress and streaks: the whole point is to see what someone sees on
+// their first day, and a lived-in app is exactly what we are not
+// testing.
 //
 // Set DEMO to false before shipping.
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const DEMO = true;
+export const DEMO = false;
 
-// Only these are wiped. Anything not listed here survives.
+// Wiped on every launch while DEMO is on.
 const REPLAY = [
+  'learn:done',       // lessons finished
+  'learn:partial',    // half-finished lessons
+  'learn:strength',   // word review counts
+  'stats:v1',         // streak, counters, milestones
+  'saved:articles',
+  'liked:articles',
+  'recent:articles',
+  'saved:businesses',
   'onboarded',        // the welcome and language screens
   'onboarding:seen',
   'learn:level',      // the beginner/elementary questionnaire
@@ -22,10 +31,11 @@ const REPLAY = [
 ];
 
 export async function resetForDemo() {
+  console.log('[demo] resetForDemo called, DEMO =', DEMO);
   if (!DEMO) return;
   try {
     await AsyncStorage.multiRemove(REPLAY);
-    console.log('[demo] intro and level reset; progress kept');
+    console.log('[demo] everything reset');
   } catch (e) {
     console.log('[demo] reset failed', e);
   }
@@ -35,13 +45,13 @@ export async function resetForDemo() {
 /**
  * Whether to dress the app with seeded content.
  *
- * True when nobody is signed in — a visitor should see what the app
- * becomes rather than an empty shell — and true for the admin account,
- * which is the one used to show the app. False for everyone else,
- * because a real user seeing a stranger's streak and reading history as
- * their own is worse than seeing nothing at all.
+ * Only the admin account. Everyone else, signed in or out, sees their
+ * own state — which for a new arrival is empty, and should be.
  */
 export function showDemoData(email?: string | null) {
-  if (!email) return true;                       // signed out
+  // Signed out shows nothing seeded either. A visitor looking at someone
+  // else's streak and reading history is worse than a visitor looking at
+  // an empty app that explains itself.
+  if (!email) return false;
   return email === 'nojan.zandesh@gmail.com';    // the demo account
 }

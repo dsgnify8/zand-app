@@ -30,7 +30,7 @@ const KEY = 'learn:strength';
 export async function loadStrength() {
   try {
     const v = await AsyncStorage.getItem(KEY);
-    if (v) words = JSON.parse(v);
+    words = v ? JSON.parse(v) : {};
     emit();
   } catch {}
 }

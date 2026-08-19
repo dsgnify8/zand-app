@@ -40,7 +40,7 @@ const emit = () => listeners.forEach((l) => l());
 export async function loadNotifPrefs() {
   try {
     const v = await AsyncStorage.getItem(KEY);
-    if (v) prefs = { ...DEFAULTS, ...JSON.parse(v) };
+    prefs = v ? { ...DEFAULTS, ...JSON.parse(v) } : { ...DEFAULTS };
   } catch {}
   emit();
   scheduleIdle();

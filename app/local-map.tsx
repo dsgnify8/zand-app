@@ -279,7 +279,7 @@ export default function LocalMap() {
               <Text style={s.sheetName}>{fa && sel.name_fa ? sel.name_fa : sel.name}</Text>
               <Text style={s.sheetMeta}>
                 {categoryLabel(sel.category, fa)}
-                {sel.city ? '  ·  ' + sel.city : ''}
+                {(fa && sel.city_fa) || sel.city ? '  ·  ' + ((fa && sel.city_fa) || sel.city) : ''}
               </Text>
               {sel.tagline ? <Text style={s.sheetTag} numberOfLines={2}>{sel.tagline}</Text> : null}
             </Pressable>
@@ -344,7 +344,7 @@ export default function LocalMap() {
               {fa && sel.name_fa ? sel.name_fa : sel.name}
             </Text>
             <Text style={s.peekX} numberOfLines={1}>
-              {categoryLabel(sel.category, fa)}{sel.city ? '  ·  ' + sel.city : ''}
+              {categoryLabel(sel.category, fa)}{(fa && sel.city_fa) || sel.city ? '  ·  ' + ((fa && sel.city_fa) || sel.city) : ''}
             </Text>
             {sel.tagline ? <Text style={s.peekTag} numberOfLines={1}>{sel.tagline}</Text> : null}
           </View>
@@ -395,7 +395,7 @@ export default function LocalMap() {
               <View style={{ flex: 1 }}>
                 <Text style={s.peekT} numberOfLines={1}>{fa && b.name_fa ? b.name_fa : b.name}</Text>
                 <Text style={s.peekX} numberOfLines={1}>
-                  {categoryLabel(b.category, fa)}{b.city ? '  ·  ' + b.city : ''}
+                  {categoryLabel(b.category, fa)}{(fa && b.city_fa) || b.city ? '  ·  ' + ((fa && b.city_fa) || b.city) : ''}
                 </Text>
                 {b.tagline ? <Text style={s.peekTag} numberOfLines={2}>{b.tagline}</Text> : null}
               </View>

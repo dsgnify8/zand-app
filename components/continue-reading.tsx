@@ -137,8 +137,8 @@ export function ContinueReading({ label }: { label?: string }) {
 }
 
 const s = StyleSheet.create({
-  jumpCard: { width: 132 },
-  jumpShot: { width: 132, height: 96, borderRadius: 12 },
+  jumpCard: { width: 148 },
+  jumpShot: { width: 148, height: 176, borderRadius: 13 },
   jumpT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: colors.textPrimary, marginTop: 6 },
   jumpX: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, marginTop: 1 },
   faTitle: { fontFamily: fonts.persian, fontSize: 15, lineHeight: 26, textAlign: 'right' },

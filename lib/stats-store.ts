@@ -32,7 +32,7 @@ const KEY = 'stats:v1';
 export async function loadStats() {
   try {
     const v = await AsyncStorage.getItem(KEY);
-    if (v) state = { ...EMPTY, ...JSON.parse(v) };
+    state = v ? { ...EMPTY, ...JSON.parse(v) } : { ...EMPTY };
     emit();
   } catch {}
 }

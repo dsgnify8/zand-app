@@ -13,7 +13,9 @@ const KEY = 'learn:done';
 export async function loadLearnProgress() {
   try {
     const v = await AsyncStorage.getItem(KEY);
-    if (v) done = JSON.parse(v);
+    // An empty store must empty the array, not leave the previous
+    // account's data sitting in memory.
+    done = v ? JSON.parse(v) : [];
     emit();
   } catch {}
 }
@@ -53,7 +55,7 @@ const P_KEY = 'learn:partial';
 export async function loadPartial() {
   try {
     const v = await AsyncStorage.getItem(P_KEY);
-    if (v) partial = JSON.parse(v);
+    partial = v ? JSON.parse(v) : {};
   } catch {}
   emit();
 }

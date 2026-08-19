@@ -27,6 +27,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/lib/supabase';
+import { DEMO } from '@/lib/demo-mode';
 
 const KEYS = [
   'learn:done',
@@ -178,6 +179,11 @@ async function clearIfDifferentUser(uid: string): Promise<boolean> {
 }
 
 export async function pullAndMerge(uid: string): Promise<boolean> {
+  // Demo mode wipes local storage on every launch so the app opens as a
+  // new user would find it. Pulling the cloud copy straight afterwards
+  // undoes that entirely, so while DEMO is on we do not sync at all.
+  if (DEMO) { userId = uid; return false; }
+
   userId = uid;
   const switched = await clearIfDifferentUser(uid);
   try {
@@ -233,6 +239,10 @@ async function push() {
 // Call after any store persists. Debounced, so a burst of writes during
 // one lesson results in a single upload.
 export function syncTouch() {
+  // Nothing goes up while DEMO is on either. Local storage is wiped on
+  // every launch, so pushing that emptiness would erase whatever the
+  // account actually has.
+  if (DEMO) return;
   if (!userId) return;
   dirty = true;
   if (timer) clearTimeout(timer);

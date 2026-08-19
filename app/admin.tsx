@@ -101,6 +101,12 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-images' as any)}>
+              <Ionicons name="image-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Images</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-content' as any)}>
               <Ionicons name="create-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Edit content</Text>

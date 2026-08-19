@@ -7,6 +7,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { expandQuery, buildSearchIndex } from '@/lib/business-search';
 
 export type BusinessStatus =
   | 'draft' | 'submitted' | 'rejected' | 'approved' | 'active' | 'lapsed';
@@ -35,6 +36,9 @@ export type Business = {
   photos?: string[];
   keywords?: string[];
   badge?: string | null;
+  badge_fa?: string | null;
+  city_fa?: string | null;
+  search_fa?: string | null;
   paid_until?: string | null;
   created_at?: string;
   submitted_at?: string | null;
@@ -100,13 +104,16 @@ export async function loadBusinesses(opts: {
   if (opts.country) q = q.ilike('country', opts.country);
   if (opts.query) {
     const t = opts.query.trim();
-    // keywords are an array, so they need a containment check rather
-    // than a like; the rest is a plain text match across the fields
-    // someone would reasonably expect to search.
-    q = q.or(
-      `name.ilike.%${t}%,name_fa.ilike.%${t}%,tagline.ilike.%${t}%,` +
-      `description.ilike.%${t}%,keywords.cs.{"${t.toLowerCase()}"}`,
-    );
+    // A Persian query is widened into the English terms it implies, so
+    // someone typing غذا finds a listing that only ever said "food".
+    const terms = expandQuery(t);
+    const ors: string[] = [];
+    terms.forEach((w) => {
+      ors.push(`name.ilike.%${w}%`, `name_fa.ilike.%${w}%`, `tagline.ilike.%${w}%`,
+               `description.ilike.%${w}%`, `search_fa.ilike.%${w}%`,
+               `keywords.cs.{"${w.toLowerCase()}"}`);
+    });
+    q = q.or(ors.join(','));
   }
 
   if (opts.near) {
@@ -163,6 +170,9 @@ export async function saveBusiness(b: Partial<Business> & { owner_id: string }) 
   const { data, error } = b.id
     ? await supabase.from('businesses').update(row).eq('id', b.id).select().maybeSingle()
     : await supabase.from('businesses').insert(row).select().maybeSingle();
+  // Rebuild the Persian index in the background. Never awaited: a slow
+  // translation must not make saving feel slow.
+  if (data) buildSearchIndex(data as any);
   return { data: data as Business | null, error: error?.message };
 }
 

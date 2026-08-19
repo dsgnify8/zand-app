@@ -111,12 +111,16 @@ function ContinueCard() {
   return (
     <Pressable style={s.cont} onPress={() => router.navigate(dest as any)}>
       <LinearGradient colors={['#E3EBE0', '#CBDAC8']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
-      <Text style={s.contFa}>{!asked ? 'فا' : (first?.titleFa?.[0] ?? CONTINUE.fa)}</Text>
+      <Text style={s.contFa}>{!asked ? 'فا' : 'زند'}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={s.contK}>{!asked ? 'BEGIN HERE' : 'PICK UP WHERE YOU STOPPED'}</Text>
-        <Text style={s.contT}>{!asked ? 'Start Persian' : (first?.title ?? (demo ? CONTINUE.module : 'Nothing started yet'))}</Text>
-        <Text style={s.contD}>{!asked ? 'find your level' : (first?.titleFa ?? (demo ? CONTINUE.detail : ''))}</Text>
-        <Text style={s.contX}>{!asked ? 'Two questions, then we begin where you actually are.' : (first?.blurb ?? (demo ? CONTINUE.x : 'Open the learning world and take the first step.'))}</Text>
+        <Text style={s.contK}>{!asked ? 'BEGIN HERE' : 'YOUR LEARNING WORLD'}</Text>
+        <Text style={s.contT}>{!asked ? 'Start Persian' : 'Enter your journey'}</Text>
+        <Text style={s.contD}>{!asked ? 'find your level' : 'راه تو'}</Text>
+        <Text style={s.contX}>
+          {!asked
+            ? 'Two questions, then we begin where you actually are.'
+            : 'The letters, then words, then whole sentences. Pick up wherever you stopped.'}
+        </Text>
       </View>
       <View style={s.contGo}><Ionicons name="arrow-forward" size={17} color="#FFF" /></View>
     </Pressable>

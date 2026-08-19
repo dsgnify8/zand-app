@@ -20,7 +20,7 @@ const emit = () => listeners.forEach((l) => l());
 export async function loadSavedBusinesses() {
   try {
     const v = await AsyncStorage.getItem(KEY);
-    if (v) saved = JSON.parse(v);
+    saved = v ? JSON.parse(v) : [];
   } catch {}
   emit();
 }
