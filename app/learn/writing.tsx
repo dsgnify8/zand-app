@@ -9,6 +9,8 @@ import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { PERSIAN_ALPHABET, positionalForms } from '@/constants/persian-alphabet';
 import { WRITING } from '@/constants/writing';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 const FORM_LABELS = ['FINAL · DETACHED', 'FINAL · ATTACHED', 'MEDIAL', 'INITIAL'];
 
@@ -26,11 +28,11 @@ export default function WritingScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
-          <Text style={styles.backBtnText}>Learn</Text>
+          <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Writing</Text>
+          <Text style={styles.title}>{tl(LEARN.writing)}</Text>
           <Text style={styles.glyph}>نوشتن</Text>
         </View>
         <Text style={styles.subtitle}>Form each letter by hand. Follow the guide, then copy it onto paper.</Text>
@@ -60,8 +62,8 @@ export default function WritingScreen() {
         </View>
 
         <View style={styles.infoRow}>
-          <View style={styles.infoChip}><Text style={styles.infoLabel}>STROKES</Text><Text style={styles.infoValue}>{w.strokes}</Text></View>
-          <View style={styles.infoChip}><Text style={styles.infoLabel}>DOTS</Text><Text style={styles.infoValueSm}>{w.dots}</Text></View>
+          <View style={styles.infoChip}><Text style={styles.infoLabel}>{tl(LEARN.strokes)}</Text><Text style={styles.infoValue}>{w.strokes}</Text></View>
+          <View style={styles.infoChip}><Text style={styles.infoLabel}>{tl(LEARN.dots)}</Text><Text style={styles.infoValueSm}>{w.dots}</Text></View>
         </View>
 
         <Text style={styles.tip}>{w.tip}</Text>
@@ -72,7 +74,7 @@ export default function WritingScreen() {
           </View>
         ) : null}
 
-        <Text style={styles.sectionLabel}>THE FOUR FORMS</Text>
+        <Text style={styles.sectionLabel}>{tl(LEARN.fourForms)}</Text>
         <View style={styles.formsRow}>
           {formValues.map((f, idx) => (
             <View key={idx} style={[styles.formCol, idx > 0 && styles.formColBorder]}>
@@ -82,7 +84,7 @@ export default function WritingScreen() {
           ))}
         </View>
 
-        <Text style={styles.sectionLabel}>PRACTICE ON PAPER</Text>
+        <Text style={styles.sectionLabel}>{tl(LEARN.practiceOnPaper)}</Text>
         <View style={styles.practice}>
           <View style={[styles.guideLine, styles.practiceBase]} />
           <Text style={[styles.practiceGlyph, { opacity: 0.9 }]}>{letter.char}</Text>
@@ -90,15 +92,15 @@ export default function WritingScreen() {
           <Text style={[styles.practiceGlyph, { opacity: 0.2 }]}>{letter.char}</Text>
           <Text style={[styles.practiceGlyph, { opacity: 0.1 }]}>{letter.char}</Text>
         </View>
-        <Text style={styles.practiceCaption}>Copy the letter onto your own paper, working right to left.</Text>
+        <Text style={styles.practiceCaption}>{tl(LEARN.practiceX)}</Text>
 
         <View style={styles.nav}>
           <Pressable style={[styles.navBtn, i === 0 && styles.navDisabled]} disabled={i === 0} onPress={() => setI((v) => v - 1)}>
             <Ionicons name="chevron-back" size={18} color={i === 0 ? lw.hair : lw.ink} />
-            <Text style={[styles.navText, i === 0 && styles.navTextDisabled]}>Previous</Text>
+            <Text style={[styles.navText, i === 0 && styles.navTextDisabled]}>{tl(LEARN.previous)}</Text>
           </Pressable>
           <Pressable style={[styles.navBtn, i === total - 1 && styles.navDisabled]} disabled={i === total - 1} onPress={() => setI((v) => v + 1)}>
-            <Text style={[styles.navText, i === total - 1 && styles.navTextDisabled]}>Next</Text>
+            <Text style={[styles.navText, i === total - 1 && styles.navTextDisabled]}>{tl(LEARN.next)}</Text>
             <Ionicons name="chevron-forward" size={18} color={i === total - 1 ? lw.hair : lw.ink} />
           </Pressable>
         </View>

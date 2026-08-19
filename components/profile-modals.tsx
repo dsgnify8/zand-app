@@ -394,7 +394,7 @@ export function RenameSheet({ open, onClose, friend, onSave }: any) {
 
 export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose: () => void; to: string; toId?: string }) {
   const fa = getLang() === 'fa';
-  const { user } = useAuth();
+  const { user, displayName } = useAuth();
   const [mode, setMode] = useState<'browse' | 'recent'>('browse');
   const [cat, setCat] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
@@ -411,7 +411,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
     setSent(label);
     bump('thingsSent');
     if (user?.id && toId) {
-      sendItem({ sender: user.id, recipient: toId, ...payload }).catch(() => {});
+      sendItem({ sender: user.id, recipient: toId, senderName: displayName, ...payload }).catch(() => {});
     }
   };
 

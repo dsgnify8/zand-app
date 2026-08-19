@@ -8,6 +8,8 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { LEVELS, setLevel, skipLevel, type Level } from '@/lib/learn-level';
 import { Art } from '@/components/lang-art';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function LevelScreen() {
   const [picked, setPicked] = useState<Level | null>(null);
@@ -50,11 +52,11 @@ export default function LevelScreen() {
         </View>
 
         <Pressable style={[s.cta, !picked && s.ctaOff]} disabled={!picked} onPress={go}>
-          <Text style={s.ctaT}>Begin</Text>
+          <Text style={s.ctaT}>{tl(LEARN.begin)}</Text>
         </Pressable>
 
         <Pressable hitSlop={10} onPress={async () => { await skipLevel(); router.replace('/learn' as any); }}>
-          <Text style={s.skip}>I would rather just look around</Text>
+          <Text style={s.skip}>{tl(LEARN.ratherLookAround)}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -73,8 +75,8 @@ const s = StyleSheet.create({
 
   rule: { height: 1, backgroundColor: lw.rule, marginTop: spacing.md, opacity: 0.7 },
 
-  list: { marginTop: spacing.sm },
-  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: lw.hair },
+  list: { marginTop: spacing.md },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: lw.hair },
   rowOn: { },
   roman: { fontFamily: fonts.body, fontSize: 17, color: lw.muted, width: 30 },
   romanOn: { color: lw.green },

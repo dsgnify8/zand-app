@@ -8,6 +8,8 @@ import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { DECKS } from '@/constants/flashcards';
 import { useSRS, cardId } from '@/lib/srs-store';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function FlashcardsHome() {
   const { dueCount } = useSRS();
@@ -18,11 +20,11 @@ export default function FlashcardsHome() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
-          <Text style={styles.backBtnText}>Learn</Text>
+          <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Flashcards</Text>
+          <Text style={styles.title}>{tl(LEARN.flashcards)}</Text>
           <Text style={styles.glyph}>کارت‌ها</Text>
         </View>
         <Text style={styles.subtitle}>Build your first Persian words — reviews return when they are due.</Text>
@@ -38,7 +40,7 @@ export default function FlashcardsHome() {
                   {due > 0 ? (
                     <View style={styles.duePill}><Text style={styles.dueText}>{due} due</Text></View>
                   ) : (
-                    <View style={styles.doneRow}><Ionicons name="checkmark-circle" size={14} color={lw.muted} /><Text style={styles.doneText}>All caught up</Text></View>
+                    <View style={styles.doneRow}><Ionicons name="checkmark-circle" size={14} color={lw.muted} /><Text style={styles.doneText}>{tl(LEARN.allCaughtUp)}</Text></View>
                   )}
                 </View>
                 <Text style={styles.cardGlyph}>{d.persian}</Text>

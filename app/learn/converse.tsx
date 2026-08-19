@@ -9,6 +9,8 @@ import { lw } from '@/constants/lang-theme';
 import { supabase } from '@/lib/supabase';
 import { speak } from '@/lib/speak';
 import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib/listen';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 const LANGS = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -134,7 +136,7 @@ export default function ConverseScreen() {
         <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn' as any))}>
           <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
         </Pressable>
-        <Text style={s.navT}>Conversation</Text>
+        <Text style={s.navT}>{tl(LEARN.conversation)}</Text>
         <Pressable hitSlop={12} onPress={() => setTurns([])}>
           <Ionicons name="refresh-outline" size={19} color={lw.muted} />
         </Pressable>
@@ -182,7 +184,7 @@ export default function ConverseScreen() {
         <Pressable style={s.backdrop} onPress={() => setPicking(null)}>
           <Pressable style={s.sheet} onPress={() => {}}>
             <View style={s.grab} />
-            <Text style={s.sheetT}>Which language?</Text>
+            <Text style={s.sheetT}>{tl(LEARN.whichLanguage)}</Text>
             <ScrollView showsVerticalScrollIndicator={false}>
               {LANGS.map((l) => {
                 const on = (picking === 'top' ? top : bottom) === l.code;

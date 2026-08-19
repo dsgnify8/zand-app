@@ -10,6 +10,8 @@ import { PERSIAN_ALPHABET, positionalForms, type PersianLetter } from '@/constan
 import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 const CARD_HEIGHT = 300;
 const FORM_LABELS = [['FINAL', 'DETACHED'], ['FINAL', 'ATTACHED'], ['MEDIAL', ''], ['INITIAL', '']];
@@ -62,12 +64,12 @@ function FlipCard({ letter, index, width, height, letterSize, compact, flipped, 
         <Text style={styles.name}>{letter.name}</Text>
         <Text style={styles.sound}>/ {letter.sound} /</Text>
         {compact ? <Text style={styles.holdHint}>hold for the forms</Text> : null}
-        {!compact ? <Text style={styles.backLabel}>HOW IT SOUNDS</Text> : null}
+        {!compact ? <Text style={styles.backLabel}>{tl(LEARN.howItSounds)}</Text> : null}
         {!compact && letter.note ? <Text style={styles.noteText}>{letter.note}</Text> : null}
         {!compact ? <View style={styles.backDivider} /> : null}
         {compact ? null : letter.exampleWord ? (
           <>
-            <Text style={styles.backLabel}>ENGLISH EXAMPLE</Text>
+            <Text style={styles.backLabel}>{tl(LEARN.englishExample)}</Text>
             <Text style={styles.exampleText}>
               {letter.exampleWord}
               {letter.exampleHint ? <Text style={styles.exampleHint}>{'  ·  ' + letter.exampleHint}</Text> : null}
@@ -75,7 +77,7 @@ function FlipCard({ letter, index, width, height, letterSize, compact, flipped, 
           </>
         ) : letter.exampleHint ? (
           <>
-            <Text style={styles.backLabel}>HOW TO SAY IT</Text>
+            <Text style={styles.backLabel}>{tl(LEARN.howToSayIt)}</Text>
             <Text style={styles.exampleText}>{letter.exampleHint}</Text>
           </>
         ) : null}
@@ -111,7 +113,7 @@ function LetterSheet({ letter, onClose }: { letter: PersianLetter | null; onClos
             </View>
           ))}
           <Pressable style={sheetS.close} onPress={onClose}>
-            <Text style={sheetS.closeT}>Close</Text>
+            <Text style={sheetS.closeT}>{tl(LEARN.close)}</Text>
           </Pressable>
         </Pressable>
       </Pressable>
@@ -193,12 +195,12 @@ export default function AlphabetScreen() {
       >
         <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
-          <Text style={styles.backBtnText}>Learn</Text>
+          <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>
 
         <View style={styles.headerCard}>
           <View style={styles.headerRow}>
-            <Text style={styles.headerTitle}>Persian Alphabet</Text>
+            <Text style={styles.headerTitle}>{tl(LEARN.persianAlphabet)}</Text>
             <Text style={styles.headerGlyph}>الفبا</Text>
           </View>
           <Text style={styles.headerSub}>34 letters · four positional forms</Text>
@@ -209,15 +211,15 @@ export default function AlphabetScreen() {
 
         <View style={styles.toggles}>
           <Pressable style={[styles.toggle, mode === 'names' && styles.toggleActive]} onPress={flipAllToNames}>
-            <Text style={[styles.toggleText, mode === 'names' && styles.toggleTextActive]}>Flip all to names</Text>
+            <Text style={[styles.toggleText, mode === 'names' && styles.toggleTextActive]}>{tl(LEARN.flipAllToNames)}</Text>
           </Pressable>
           <Pressable style={[styles.toggle, mode === 'letters' && styles.toggleActive]} onPress={showLetters}>
-            <Text style={[styles.toggleText, mode === 'letters' && styles.toggleTextActive]}>Show letters</Text>
+            <Text style={[styles.toggleText, mode === 'letters' && styles.toggleTextActive]}>{tl(LEARN.showLetters)}</Text>
           </Pressable>
         </View>
 
         <View style={styles.viewRow}>
-          <Text style={styles.helper}>Tap any card to flip it</Text>
+          <Text style={styles.helper}>{tl(LEARN.tapAnyCard)}</Text>
           <View style={styles.viewToggle}>
             <Pressable style={[styles.viewBtn, view === 'list' && styles.viewBtnOn]} onPress={() => setView('list')}>
               <Ionicons name="square-outline" size={15} color={view === 'list' ? lw.surface : lw.muted} />

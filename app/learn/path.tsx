@@ -8,6 +8,8 @@ import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
 import { useLearnProgress, isLessonDone, lessonScore } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function PathScreen() {
   useLearnProgress();
@@ -25,7 +27,7 @@ export default function PathScreen() {
       </View>
 
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
-        <Text style={s.eyebrow}>YOUR PATH</Text>
+        <Text style={s.eyebrow}>{tl(LEARN.yourPath)}</Text>
         <Text style={s.title}>Persian,{'\n'}in order</Text>
         <Text style={s.sub}>
           Work down it, or go anywhere you like. Nothing is locked.
@@ -34,8 +36,8 @@ export default function PathScreen() {
         <Pressable style={s.review} onPress={() => router.replace('/learn/review' as any)}>
           <View style={s.reviewIcon}><Ionicons name="repeat" size={17} color={lw.green} /></View>
           <View style={{ flex: 1 }}>
-            <Text style={s.reviewT}>Review what you know</Text>
-            <Text style={s.reviewX}>Ten words, drawn from everything you have finished.</Text>
+            <Text style={s.reviewT}>{tl(LEARN.reviewTitle)}</Text>
+            <Text style={s.reviewX}>{tl(LEARN.reviewX)}</Text>
           </View>
           <Ionicons name="chevron-forward" size={16} color={lw.muted} />
         </Pressable>
@@ -85,7 +87,7 @@ export default function PathScreen() {
         })}
 
         <View style={s.more}>
-          <Text style={s.moreT}>More units are being written.</Text>
+          <Text style={s.moreT}>{tl(LEARN.moreUnits)}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -9,6 +9,8 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { lw } from '@/constants/lang-theme';
 import { findQuiz } from '@/constants/quizzes';
 import { useProgress } from '@/lib/progress-store';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function QuizPlay() {
   const { cat } = useLocalSearchParams<{ cat: string }>();
@@ -32,7 +34,7 @@ export default function QuizPlay() {
   if (!quiz) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-        <View style={styles.center}><Text style={styles.notFound}>Quiz not found.</Text></View>
+        <View style={styles.center}><Text style={styles.notFound}>{tl(LEARN.quizNotFound)}</Text></View>
       </SafeAreaView>
     );
   }
@@ -121,8 +123,8 @@ export default function QuizPlay() {
             <Text style={styles.summaryTitle}>{quiz.title}</Text>
             <Text style={styles.summaryScore}>{score} / {total}</Text>
             <Text style={styles.summaryLine}>{score === total ? 'Perfect score!' : score >= total / 2 ? 'Well done.' : 'Keep practising.'}</Text>
-            <Pressable style={styles.primaryBtn} onPress={restart}><Text style={styles.primaryText}>Try again</Text></Pressable>
-            <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>Choose another quiz</Text></Pressable>
+            <Pressable style={styles.primaryBtn} onPress={restart}><Text style={styles.primaryText}>{tl(LEARN.tryAgain)}</Text></Pressable>
+            <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>{tl(LEARN.chooseAnother)}</Text></Pressable>
           </View>
         )}
       </View>

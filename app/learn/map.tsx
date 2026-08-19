@@ -15,6 +15,8 @@ import { Art, type ArtName } from '@/components/lang-art';
 import { ReminderRow } from '@/components/reminder-row';
 import { useAuth } from '@/lib/auth';
 import { getLang } from '@/lib/i18n';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 // Where each level joins the route. Shown as a marker between stages.
 const LEVEL_BAND: Record<string, { label: string; sub: string }> = {
@@ -189,7 +191,7 @@ export default function MapScreen() {
           if (idx !== activeStage) setActiveStage(idx);
         }}
       >
-        <Text style={s.eyebrow}>YOUR ROUTE</Text>
+        <Text style={s.eyebrow}>{tl(LEARN.yourRoute)}</Text>
         <Text style={s.title}>Persian,{'\n'}step by step</Text>
         {solid + shaky > 0 ? (
           <Text style={s.strength}>
@@ -265,8 +267,8 @@ export default function MapScreen() {
         ); })}
 
         <View style={s.side}>
-          <Text style={s.sideLabel}>OFF THE ROUTE</Text>
-          <Text style={s.sideX}>Useful whenever you want them. Not required.</Text>
+          <Text style={s.sideLabel}>{tl(LEARN.offRoute)}</Text>
+          <Text style={s.sideX}>{tl(LEARN.offRouteX)}</Text>
           <View style={s.sideList}>
             {SIDE_QUESTS.map((st) => (
               <Pressable key={st.key} style={s.sideRow} onPress={() => router.replace(st.route as any)}>
@@ -283,8 +285,8 @@ export default function MapScreen() {
             <Pressable style={s.sideRow} onPress={() => router.replace('/learn/phrasebook' as any)}>
               <View style={s.sideDot} />
               <View style={{ flex: 1 }}>
-                <Text style={s.sideT}>Phrasebook</Text>
-                <Text style={s.sideSub}>Fifty things worth being able to say</Text>
+                <Text style={s.sideT}>{tl(LEARN.phrasebook)}</Text>
+                <Text style={s.sideSub}>{tl(LEARN.phrasebookCount)}</Text>
               </View>
               <Ionicons name="chevron-forward" size={15} color={lw.muted} />
             </Pressable>
@@ -293,7 +295,7 @@ export default function MapScreen() {
 
         <View style={s.end}>
           <Text style={s.endFa}>ادامه دارد</Text>
-          <Text style={s.endT}>More stages are being written</Text>
+          <Text style={s.endT}>{tl(LEARN.moreComing)}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

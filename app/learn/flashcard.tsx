@@ -10,6 +10,8 @@ import { ZandHeader } from '@/components/zand-header';
 import { findDeck } from '@/constants/flashcards';
 import { useProgress } from '@/lib/progress-store';
 import { useSRS, cardId } from '@/lib/srs-store';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function DeckStudyScreen() {
   const { deck: deckKey } = useLocalSearchParams<{ deck: string }>();
@@ -78,14 +80,14 @@ export default function DeckStudyScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader />
       {!deck ? (
-        <View style={styles.center}><Text style={styles.notFound}>Deck not found.</Text></View>
+        <View style={styles.center}><Text style={styles.notFound}>{tl(LEARN.deckNotFound)}</Text></View>
       ) : queue === null ? (
         <View style={styles.center}><ActivityIndicator color={lw.green} /></View>
       ) : (
         <View style={styles.container}>
           <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
             <Ionicons name="chevron-back" size={20} color={lw.muted} />
-            <Text style={styles.backBtnText}>Flashcards</Text>
+            <Text style={styles.backBtnText}>{tl(LEARN.flashcards)}</Text>
           </Pressable>
 
           <View style={styles.titleRow}>
@@ -102,7 +104,7 @@ export default function DeckStudyScreen() {
                 </Text>
                 <Pressable style={[styles.prevBtn, pos === 0 && styles.prevDisabled]} onPress={goBack} disabled={pos === 0}>
                   <Ionicons name="arrow-undo" size={15} color={pos === 0 ? lw.hair : lw.muted} />
-                  <Text style={[styles.prevText, pos === 0 && styles.prevTextDisabled]}>Previous</Text>
+                  <Text style={[styles.prevText, pos === 0 && styles.prevTextDisabled]}>{tl(LEARN.previous)}</Text>
                 </Pressable>
               </View>
 
@@ -123,26 +125,26 @@ export default function DeckStudyScreen() {
               <View style={styles.actions}>
                 <Pressable style={[styles.actionBtn, styles.learningBtn]} onPress={() => grade(false)}>
                   <Ionicons name="refresh" size={18} color={lw.muted} />
-                  <Text style={styles.learningText}>Still learning</Text>
+                  <Text style={styles.learningText}>{tl(LEARN.stillLearning)}</Text>
                 </Pressable>
                 <Pressable style={[styles.actionBtn, styles.knownBtn]} onPress={() => grade(true)}>
                   <Ionicons name="checkmark" size={18} color={lw.surface} />
-                  <Text style={styles.knownText}>Got it</Text>
+                  <Text style={styles.knownText}>{tl(LEARN.gotIt)}</Text>
                 </Pressable>
               </View>
             </>
           ) : (
             <View style={styles.summary}>
               <Text style={styles.summaryGlyph}>آفرین</Text>
-              <Text style={styles.summaryTitle}>Session complete</Text>
+              <Text style={styles.summaryTitle}>{tl(LEARN.sessionComplete)}</Text>
               <Text style={styles.summaryLine}>{knownCount} known · {missedCount} to review</Text>
               {missedCount > 0 ? (
                 <Pressable style={styles.primaryBtn} onPress={reviewMissed}>
                   <Text style={styles.primaryText}>Review {missedCount} still learning</Text>
                 </Pressable>
               ) : null}
-              <Pressable style={styles.secondaryBtn} onPress={restart}><Text style={styles.secondaryText}>Study whole deck</Text></Pressable>
-              <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>Back to decks</Text></Pressable>
+              <Pressable style={styles.secondaryBtn} onPress={restart}><Text style={styles.secondaryText}>{tl(LEARN.studyWholeDeck)}</Text></Pressable>
+              <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>{tl(LEARN.backToDecks)}</Text></Pressable>
             </View>
           )}
         </View>

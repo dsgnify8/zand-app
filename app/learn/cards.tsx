@@ -11,6 +11,8 @@ import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
 import { useMetered } from '@/lib/use-metered';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 type Card = { fa: string; tr: string; en: string; literal?: string };
 
@@ -51,7 +53,7 @@ export default function CardsScreen() {
   if (cards.length === 0) {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
-        <View style={s.mid}><Text style={s.muted}>No cards here yet.</Text></View>
+        <View style={s.mid}><Text style={s.muted}>{tl(LEARN.noCardsYet)}</Text></View>
       </SafeAreaView>
     );
   }
@@ -88,10 +90,10 @@ export default function CardsScreen() {
               : 'The ones you did not know will keep coming back until they stick.'}
           </Text>
           <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on cards'); router.replace('/learn/map' as any); }}>
-            <Text style={s.ctaT}>Done</Text>
+            <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setShown(false); setKnown([]); setDone(false); flip.setValue(0); }}>
-            <Text style={s.again}>Again</Text>
+            <Text style={s.again}>{tl(LEARN.again)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -139,15 +141,15 @@ export default function CardsScreen() {
       <View style={s.footer}>
         {!shown ? (
           <Pressable style={s.cta} onPress={reveal}>
-            <Text style={s.ctaT}>Show me</Text>
+            <Text style={s.ctaT}>{tl(LEARN.showMe)}</Text>
           </Pressable>
         ) : (
           <View style={s.judge}>
             <Pressable style={[s.judgeBtn, s.judgeNo]} onPress={() => advance(false)}>
-              <Text style={s.judgeNoT}>Not yet</Text>
+              <Text style={s.judgeNoT}>{tl(LEARN.notYet)}</Text>
             </Pressable>
             <Pressable style={[s.judgeBtn, s.judgeYes]} onPress={() => advance(true)}>
-              <Text style={s.judgeYesT}>I knew it</Text>
+              <Text style={s.judgeYesT}>{tl(LEARN.iKnewIt)}</Text>
             </Pressable>
           </View>
         )}

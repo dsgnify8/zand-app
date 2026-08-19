@@ -12,6 +12,8 @@ import { supabase } from '@/lib/supabase';
 import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib/listen';
 import { setAudioModeAsync } from 'expo-audio';
 import { useMetered } from '@/lib/use-metered';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 const LANGS: { code: string; label: string; native: string }[] = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -140,7 +142,7 @@ export default function TranslateScreen() {
         <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </Pressable>
-        <Text style={s.navTitle}>Translate</Text>
+        <Text style={s.navTitle}>{tl(LEARN.translate)}</Text>
         <View style={{ width: 24 }} />
       </View>
 
@@ -150,14 +152,14 @@ export default function TranslateScreen() {
         {/* language pair */}
         <View style={s.pair}>
           <Pressable style={s.pairSide} onPress={() => setPicking('from')}>
-            <Text style={s.pairLabel}>FROM</Text>
+            <Text style={s.pairLabel}>{tl(LEARN.from)}</Text>
             <Text style={s.pairLang}>{labelOf(from)}</Text>
           </Pressable>
           <Pressable style={s.swapBtn} onPress={swap} hitSlop={10}>
             <Ionicons name="swap-horizontal" size={18} color={colors.accent} />
           </Pressable>
           <Pressable style={[s.pairSide, { alignItems: 'flex-end' }]} onPress={() => setPicking('to')}>
-            <Text style={s.pairLabel}>TO</Text>
+            <Text style={s.pairLabel}>{tl(LEARN.to)}</Text>
             <Text style={s.pairLang}>{labelOf(to)}</Text>
           </Pressable>
         </View>
@@ -168,7 +170,7 @@ export default function TranslateScreen() {
         <TextInput
           ref={inputRef}
           style={[s.input, isFa(from) && s.inputRtl]}
-          placeholder="Type anything"
+          placeholder={tl(LEARN.typeAnything)}
           placeholderTextColor={colors.textSecondary}
           value={input}
           onChangeText={setInput}
@@ -186,7 +188,7 @@ export default function TranslateScreen() {
               ? <ActivityIndicator size="small" color={lw.green} />
               : <Ionicons name="mic" size={17} color={listening ? '#FFF' : lw.green} />}
             <Text style={[s.micT, listening && s.micTOn]}>
-              {listening ? 'tap to stop' : hearing ? 'thinking…' : 'tap to speak'}
+              {listening ? tl(LEARN.tapToStop) : hearing ? tl(LEARN.thinking) : tl(LEARN.tapToSpeak)}
             </Text>
           </Pressable>
         </View>
@@ -195,7 +197,7 @@ export default function TranslateScreen() {
           <View style={s.inputTools}>
             <Pressable hitSlop={8} onPress={clear}><Text style={s.clearT}>Clear</Text></Pressable>
             <Pressable style={[s.go, loading && { opacity: 0.6 }]} onPress={translate} disabled={loading}>
-              {loading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={s.goT}>Translate</Text>}
+              {loading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={s.goT}>{tl(LEARN.translate)}</Text>}
             </Pressable>
           </View>
         ) : null}
@@ -304,7 +306,7 @@ export default function TranslateScreen() {
         <Pressable style={s.backdrop} onPress={() => setPicking(null)}>
           <Pressable style={s.sheet} onPress={() => {}}>
             <View style={s.grab} />
-            <Text style={s.sheetTitle}>{picking === 'from' ? 'Translate from' : 'Translate to'}</Text>
+            <Text style={s.sheetTitle}>{picking === 'from' ? tl(LEARN.translate) + ' — ' + tl(LEARN.from) : tl(LEARN.translate) + ' — ' + tl(LEARN.to)}</Text>
             <ScrollView showsVerticalScrollIndicator={false}>
               {LANGS.map((l) => {
                 const active = (picking === 'from' ? from : to) === l.code;

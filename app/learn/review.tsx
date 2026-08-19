@@ -11,6 +11,8 @@ import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
 import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 type Card = { fa: string; tr: string; en: string };
 
@@ -65,10 +67,10 @@ export default function ReviewScreen() {
         <View style={s.mid}>
           <Art name="bird" size={104} style={{ opacity: 0.5, marginBottom: 8 }} />
           <Text style={s.emptyFa}>هنوز نه</Text>
-          <Text style={s.emptyT}>Nothing to review yet</Text>
-          <Text style={s.emptyX}>Finish a lesson or two and your words will collect here.</Text>
+          <Text style={s.emptyT}>{tl(LEARN.nothingToReview)}</Text>
+          <Text style={s.emptyX}>{tl(LEARN.nothingToReviewX)}</Text>
           <Pressable style={s.cta} onPress={() => router.replace('/learn/path' as any)}>
-            <Text style={s.ctaT}>Go to your path</Text>
+            <Text style={s.ctaT}>{tl(LEARN.goToPath)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -106,10 +108,10 @@ export default function ReviewScreen() {
             {pct >= 80 ? 'These are yours now.' : 'The ones you missed will come round again.'}
           </Text>
           <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on review'); router.replace('/learn/map' as any); }}>
-            <Text style={s.ctaT}>Done</Text>
+            <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
-            <Text style={s.again}>Again</Text>
+            <Text style={s.again}>{tl(LEARN.again)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -129,7 +131,7 @@ export default function ReviewScreen() {
       </View>
 
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
-        <Text style={s.label}>WHAT DOES THIS MEAN</Text>
+        <Text style={s.label}>{tl(LEARN.whatDoesThisMean)}</Text>
 
         <Pressable style={s.faWrap} onPress={() => speak(card.fa, 'fa')}>
           <Text style={s.fa}>{card.fa}</Text>

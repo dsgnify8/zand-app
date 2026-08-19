@@ -18,18 +18,28 @@ export type SentItem = {
 };
 
 export async function sendItem(payload: {
-  sender: string; recipient: string; kind: string;
+  sender: string; recipient: string; kind: string; senderName?: string;
   item_key?: string; title?: string; fa?: string; tr?: string; en?: string; note?: string;
 }) {
-  const res = await supabase.from('sent_items').insert(payload);
+  const { senderName, ...row } = payload as any;
+  const res = await supabase.from('sent_items').insert(row);
   // Tell them, if they have a device registered and have not switched
   // this off. Fire and forget: a failed notification must never fail
   // the send itself.
   supabase.functions.invoke('send-push', {
     body: {
       userId: (payload as any).recipient,
-      title: 'Something came for you',
-      body: (payload as any).title ?? 'A friend sent you something.',
+      // Name what arrived. "Something came for you" makes someone open
+      // the app to find out what; saying it plainly is more use and
+      // more respectful of their attention.
+      title: (senderName ?? 'A friend') + ' sent you '
+        + ((payload as any).kind === 'word' ? 'a word'
+          : (payload as any).kind === 'topic' ? 'a topic'
+          : (payload as any).kind === 'poet' ? 'a poet'
+          : 'something'),
+      body: (payload as any).fa
+        ? (payload as any).fa + ((payload as any).en ? '  ·  ' + (payload as any).en : '')
+        : ((payload as any).title ?? ''),
       category: 'friends',
       data: { tab: 'friends' },
     },

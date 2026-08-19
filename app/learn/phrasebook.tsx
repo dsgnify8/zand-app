@@ -10,6 +10,8 @@ import { PHRASE_SETS, type PhraseSet } from '@/constants/phrasebook';
 import { speak } from '@/lib/speak';
 import { Art } from '@/components/lang-art';
 import { SendPhraseSheet } from '@/components/send-phrase-sheet';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 function PhraseRow({ p, onSend }: { p: { fa: string; tr: string; en: string; note?: string }; onSend: (p: any) => void }) {
   return (
@@ -57,13 +59,13 @@ export default function PhrasebookScreen() {
           <>
             <Art name="samovar" size={84} style={{ alignSelf: 'flex-end', opacity: 0.45, marginBottom: -6 }} />
             <Text style={s.title}>Say it{'\n'}right away</Text>
-            <Text style={s.sub}>Tap any line to hear it. Hold it to send to a friend.</Text>
+            <Text style={s.sub}>{tl(LEARN.phrasebookX)}</Text>
 
             <View style={s.search}>
               <Ionicons name="search" size={15} color={lw.muted} />
               <TextInput
                 style={s.searchIn}
-                placeholder="Search in English or Persian"
+                placeholder={tl(LEARN.searchBoth)}
                 placeholderTextColor={lw.muted}
                 value={q}
                 onChangeText={setQ}

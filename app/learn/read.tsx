@@ -9,6 +9,8 @@ import { lw } from '@/constants/lang-theme';
 import { READINGS, readingByKey, type Gloss } from '@/constants/readings';
 import { speak } from '@/lib/speak';
 import { Art } from '@/components/lang-art';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function ReadScreen() {
   const { text } = useLocalSearchParams<{ text?: string }>();
@@ -27,9 +29,9 @@ export default function ReadScreen() {
         </View>
         <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
           <Art name="book" size={88} style={{ alignSelf: 'flex-end', opacity: 0.5, marginBottom: -4 }} />
-          <Text style={s.eyebrow}>READING</Text>
+          <Text style={s.eyebrow}>{tl(LEARN.reading)}</Text>
           <Text style={s.title}>Real Persian,{'\n'}a little at a time</Text>
-          <Text style={s.sub}>Tap any word you do not know. Nothing is hidden from you.</Text>
+          <Text style={s.sub}>{tl(LEARN.readingX)}</Text>
           <View style={s.list}>
             {READINGS.map((x) => (
               <Pressable key={x.key} style={s.row} onPress={() => router.replace(('/learn/read?text=' + x.key) as any)}>

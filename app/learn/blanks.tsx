@@ -8,6 +8,8 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 type Round = {
   before: string;   // words before the gap
@@ -93,7 +95,7 @@ export default function BlanksScreen() {
           </Pressable>
         </View>
         <View style={s.mid}>
-          <Text style={s.muted}>Not enough sentences here yet.</Text>
+          <Text style={s.muted}>{tl(LEARN.notEnoughSentences)}</Text>
         </View>
       </SafeAreaView>
     );
@@ -114,10 +116,10 @@ export default function BlanksScreen() {
             {pct >= 75 ? 'You are reading, not guessing.' : 'Go back through the lessons and these will come.'}
           </Text>
           <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on blanks'); router.replace('/learn/map' as any); }}>
-            <Text style={s.ctaT}>Done</Text>
+            <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
-            <Text style={s.again}>Again</Text>
+            <Text style={s.again}>{tl(LEARN.again)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -148,7 +150,7 @@ export default function BlanksScreen() {
       </View>
 
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
-        <Text style={s.label}>FINISH THE SENTENCE</Text>
+        <Text style={s.label}>{tl(LEARN.finishTheSentence)}</Text>
         <Text style={s.en}>{r.en}</Text>
 
         <View style={s.sentence}>

@@ -17,6 +17,8 @@ import { refreshTomorrow } from '@/lib/reminders';
 import { useEffect } from 'react';
 import { Confetti } from '@/components/confetti';
 import { STAGES, nextStep } from '@/constants/journey';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function LessonScreen() {
   const { unit, lesson } = useLocalSearchParams<{ unit: string; lesson: string }>();
@@ -38,7 +40,7 @@ export default function LessonScreen() {
   if (!l) {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
-        <View style={s.mid}><Text style={s.muted}>Lesson not found.</Text></View>
+        <View style={s.mid}><Text style={s.muted}>{tl(LEARN.lessonNotFound)}</Text></View>
       </SafeAreaView>
     );
   }
@@ -102,10 +104,10 @@ export default function LessonScreen() {
           {score.total > 0 ? (
             <Text style={s.finishScore}>{score.right} of {score.total} right  ·  {pctScore}%</Text>
           ) : (
-            <Text style={s.finishScore}>Lesson complete</Text>
+            <Text style={s.finishScore}>{tl(LEARN.lessonComplete)}</Text>
           )}
           {finishedChapter ? (
-            <Text style={s.chapterDone}>That is the chapter finished.</Text>
+            <Text style={s.chapterDone}>{tl(LEARN.chapterFinished)}</Text>
           ) : null}
 
           {after ? (
@@ -116,15 +118,15 @@ export default function LessonScreen() {
             </Pressable>
           ) : (
             <Pressable style={[s.cta, s.finishBtn]} onPress={() => router.replace('/learn/map' as any)}>
-              <Text style={s.ctaT}>Done</Text>
+              <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
             </Pressable>
           )}
 
           <Pressable hitSlop={10} onPress={() => router.replace('/learn/map' as any)} style={{ marginTop: spacing.md }}>
-            <Text style={s.again}>Back to the map</Text>
+            <Text style={s.again}>{tl(LEARN.backToMap)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setAnswered(false); setScore({ right: 0, total: 0 }); setDone(false); }}>
-            <Text style={s.again}>Go through it again</Text>
+            <Text style={s.again}>{tl(LEARN.goThroughAgain)}</Text>
           </Pressable>
         </View>
         <Confetti show={finishedChapter} />

@@ -11,7 +11,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  ActivityIndicator, Animated, Dimensions, Image, Linking, Platform, Pressable, ScrollView,
+  ActivityIndicator, Animated, Dimensions, Image, Linking, PanResponder, Platform, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -55,6 +55,44 @@ export default function LocalMap() {
   const [listOpen, setListOpen] = useState(false);
   const [sheet, setSheet] = useState(false);
   const sheetFade = useRef(new Animated.Value(0)).current;
+
+  // How far down the sheet has been dragged. Separate from the fade so
+  // the two can be driven independently: the fade is the open and close
+  // animation, this is the finger.
+  const dragY = useRef(new Animated.Value(0)).current;
+
+  const sheetPan = useRef(
+    PanResponder.create({
+      // Claim only a downward drag, and only once it is clearly vertical
+      // — otherwise a swipe across the photograph gets swallowed.
+      onMoveShouldSetPanResponder: (_e, g) =>
+        g.dy > 6 && Math.abs(g.dy) > Math.abs(g.dx) * 1.6,
+      onPanResponderMove: (_e, g) => {
+        if (g.dy > 0) dragY.setValue(g.dy);
+      },
+      onPanResponderRelease: (_e, g) => {
+        // far enough, or thrown hard enough
+        const gone = g.dy > 110 || g.vy > 0.9;
+        if (gone) {
+          Animated.timing(dragY, { toValue: 420, duration: 180, useNativeDriver: true })
+            .start(() => {
+              setSheet(false);
+              dragY.setValue(0);
+            });
+        } else {
+          Animated.spring(dragY, {
+            toValue: 0,
+            useNativeDriver: true,
+            bounciness: 6,
+            speed: 14,
+          }).start();
+        }
+      },
+      onPanResponderTerminate: () => {
+        Animated.spring(dragY, { toValue: 0, useNativeDriver: true }).start();
+      },
+    }),
+  ).current;
   const [shot, setShot] = useState(0);
 
   useEffect(() => {
@@ -240,17 +278,26 @@ export default function LocalMap() {
             <Pressable style={{ flex: 1 }} onPress={() => setSheet(false)} />
           </Animated.View>
           <Animated.View
+            {...sheetPan.panHandlers}
             style={[
               s.sheet,
               {
                 opacity: sheetFade,
-                // a short rise as it fades, so it reads as coming from
-                // the card rather than materialising
-                transform: [{ translateY: sheetFade.interpolate({ inputRange: [0, 1], outputRange: [26, 0] }) }],
+                transform: [
+                  // the open animation and the drag, added together
+                  { translateY: Animated.add(
+                    sheetFade.interpolate({ inputRange: [0, 1], outputRange: [26, 0] }),
+                    dragY,
+                  ) },
+                ],
               },
             ]}
           >
-            <View style={s.grab} />
+            {/* a wider grip than the bar itself, so the drag is easy to
+                start without aiming */}
+            <View style={s.grabZone}>
+              <View style={s.grab} />
+            </View>
 
             {sel.photos?.length ? (
               <View>
@@ -350,7 +397,7 @@ export default function LocalMap() {
           </View>
           <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
         </Pressable>
-      ) : listOpen && items.length && !sheet ? (
+      ) : listOpen && items.length ? (
         // A swipeable row of every business in view, nearest first. Moving
         // through it pans the map, so the card and the pin stay in step.
         <ScrollView
@@ -368,6 +415,8 @@ export default function LocalMap() {
             const i = Math.round(e.nativeEvent.contentOffset.x / (CARD_W + 10));
             const b = items[i];
             if (!b) return;
+            // the panel above follows the rail
+            if (sheet) setShot(0);
             // Highlight the pin for whatever card is now in front, so the
             // map and the rail always agree about what you are looking at.
             setSel(b);
@@ -447,7 +496,8 @@ const s = StyleSheet.create({
   railCard: { width: CARD_W, marginRight: 10, flexDirection: 'row', alignItems: 'center', gap: spacing.sm, backgroundColor: '#FFF', borderRadius: 18, padding: spacing.sm, shadowColor: '#000', shadowOpacity: 0.16, shadowRadius: 14, shadowOffset: { width: 0, height: 5 }, elevation: 5 },
   railShot: { width: 76, height: 76, borderRadius: 14 },
   sheetBack: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 },
-  sheet: { position: 'absolute', left: 0, right: 0, bottom: 0, maxHeight: '78%', backgroundColor: '#FFF', borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingHorizontal: spacing.lg, paddingTop: 10, paddingBottom: spacing.xxl, shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: -6 }, elevation: 12 },
+  sheet: { position: 'absolute', left: 0, right: 0, bottom: 128, maxHeight: '64%', backgroundColor: '#FFF', borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingHorizontal: spacing.lg, paddingTop: 10, paddingBottom: spacing.xxl, shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: -6 }, elevation: 12 },
+  grabZone: { paddingTop: 4, paddingBottom: 10, alignItems: 'center' },
   grab: { alignSelf: 'center', width: 36, height: 4, borderRadius: 2, backgroundColor: 'rgba(0,0,0,0.14)', marginBottom: spacing.md },
   sheetShotWrap: { borderRadius: 16, overflow: 'hidden', marginBottom: spacing.md },
   sheetDots: { position: 'absolute', bottom: 22, alignSelf: 'center', flexDirection: 'row', gap: 4 },

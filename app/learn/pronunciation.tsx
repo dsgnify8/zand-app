@@ -11,6 +11,8 @@ import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { DECKS } from '@/constants/flashcards';
 import { PRON_WORDS } from '@/constants/pron-words';
 import { useMetered } from '@/lib/use-metered';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 type Item = { id: string; fa: string; roman: string; en: string; kind: string };
 
@@ -50,20 +52,20 @@ export default function PronunciationScreen() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
-          <Text style={styles.backBtnText}>Learn</Text>
+          <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Pronunciation</Text>
+          <Text style={styles.title}>{tl(LEARN.pronunciation)}</Text>
           <Text style={styles.glyph}>تلفظ</Text>
         </View>
-        <Text style={styles.subtitle}>Tap the speaker to hear it. Search in English or Persian.</Text>
+        <Text style={styles.subtitle}>{tl(LEARN.pronunciationX)}</Text>
 
         <View style={styles.field}>
           <Ionicons name="search" size={18} color={lw.muted} />
           <TextInput
             style={styles.input}
-            placeholder="Search a letter or word…"
+            placeholder={tl(LEARN.searchLetterOrWord)}
             placeholderTextColor={lw.muted}
             value={query}
             onChangeText={setQuery}
@@ -77,10 +79,10 @@ export default function PronunciationScreen() {
         {query.length === 0 ? (
           <View style={styles.tabs}>
             <Pressable style={[styles.tab, tab === 'letters' && styles.tabActive]} onPress={() => setTab('letters')}>
-              <Text style={[styles.tabText, tab === 'letters' && styles.tabTextActive]}>Letters</Text>
+              <Text style={[styles.tabText, tab === 'letters' && styles.tabTextActive]}>{tl(LEARN.letters)}</Text>
             </Pressable>
             <Pressable style={[styles.tab, tab === 'words' && styles.tabActive]} onPress={() => setTab('words')}>
-              <Text style={[styles.tabText, tab === 'words' && styles.tabTextActive]}>Words</Text>
+              <Text style={[styles.tabText, tab === 'words' && styles.tabTextActive]}>{tl(LEARN.words)}</Text>
             </Pressable>
           </View>
         ) : (

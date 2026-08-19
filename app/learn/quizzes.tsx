@@ -7,6 +7,8 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { QUIZ_CATEGORIES } from '@/constants/quizzes';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function QuizzesHome() {
   const totalQs = QUIZ_CATEGORIES.reduce((n, c) => n + c.questions.length, 0);
@@ -17,20 +19,20 @@ export default function QuizzesHome() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
-          <Text style={styles.backBtnText}>Learn</Text>
+          <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>
 
         <View style={styles.hero}>
           <View style={styles.heroIcon}><Ionicons name="ribbon-outline" size={34} color={lw.surface} /></View>
           <View style={styles.titleRow}>
-            <Text style={styles.title}>Quizzes</Text>
+            <Text style={styles.title}>{tl(LEARN.quizzes)}</Text>
             <Text style={styles.glyph}>آزمون</Text>
           </View>
-          <Text style={styles.subtitle}>Test what you have learned. Choose a quiz to begin.</Text>
+          <Text style={styles.subtitle}>{tl(LEARN.quizzesX)}</Text>
           <Text style={styles.count}>{totalQs} questions across {QUIZ_CATEGORIES.length} quizzes</Text>
         </View>
 
-        <Text style={styles.sectionLabel}>CHOOSE A QUIZ</Text>
+        <Text style={styles.sectionLabel}>{tl(LEARN.chooseQuiz)}</Text>
         <View style={styles.list}>
           {QUIZ_CATEGORIES.map((c) => (
             <Pressable key={c.key} style={styles.card} onPress={() => router.replace('/learn/quiz-play?cat=' + c.key as any)}>

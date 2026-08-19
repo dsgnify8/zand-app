@@ -9,6 +9,8 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { lw } from '@/constants/lang-theme';
 import { findCategory } from '@/constants/fill-blank';
 import { useProgress } from '@/lib/progress-store';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 function shuffle<T>(arr: T[], seed: number): T[] {
   const a = [...arr];
@@ -38,7 +40,7 @@ export default function FillBlankPlay() {
   if (!category) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-        <View style={styles.center}><Text style={styles.notFound}>Category not found.</Text></View>
+        <View style={styles.center}><Text style={styles.notFound}>{tl(LEARN.categoryNotFound)}</Text></View>
       </SafeAreaView>
     );
   }
@@ -85,7 +87,7 @@ export default function FillBlankPlay() {
             </View>
 
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollBody} showsVerticalScrollIndicator={false}>
-              <Text style={styles.promptLabel}>COMPLETE THE SENTENCE</Text>
+              <Text style={styles.promptLabel}>{tl(LEARN.completeSentence)}</Text>
               <Text style={styles.prompt}>{q.en}</Text>
 
               <View style={styles.sentenceCard}>
@@ -114,7 +116,7 @@ export default function FillBlankPlay() {
             <View style={styles.footer}>
               {!checked ? (
                 <Pressable style={[styles.cta, !selected && styles.ctaDisabled]} disabled={!selected} onPress={check}>
-                  <Text style={styles.ctaText}>Check</Text>
+                  <Text style={styles.ctaText}>{tl(LEARN.check)}</Text>
                 </Pressable>
               ) : (
                 <Animated.View style={[styles.bannerBox, correct ? styles.bannerGood : styles.bannerBad, { transform: [{ translateY: bannerTranslate }] }]}>
@@ -137,8 +139,8 @@ export default function FillBlankPlay() {
             <Text style={styles.summaryGlyph}>آفرین</Text>
             <Text style={styles.summaryTitle}>{category.title} complete</Text>
             <Text style={styles.summaryLine}>{score} of {total} correct</Text>
-            <Pressable style={styles.primaryBtn} onPress={restart}><Text style={styles.primaryText}>Try again</Text></Pressable>
-            <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>Choose another category</Text></Pressable>
+            <Pressable style={styles.primaryBtn} onPress={restart}><Text style={styles.primaryText}>{tl(LEARN.tryAgain)}</Text></Pressable>
+            <Pressable style={styles.secondaryBtn} onPress={() => router.replace('/learn/map' as any)}><Text style={styles.secondaryText}>{tl(LEARN.chooseAnotherCategory)}</Text></Pressable>
           </View>
         )}
       </View>

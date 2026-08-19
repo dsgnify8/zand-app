@@ -182,9 +182,22 @@ function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLib
             <Text style={s.alertT}>
               {pending[0].from} {t(PROFILE.sentYou)} {pending[0].kind === 'word' ? t(PROFILE.aWord) : t(PROFILE.aTopic)}
             </Text>
-            <Text style={s.alertX}>
-              {pending.length > 1 ? 'and ' + (pending.length - 1) + ' more waiting' : pending[0].note}
-            </Text>
+            {/* what actually arrived: the Persian and its meaning for a
+                word, the title for anything else */}
+            {(pending[0] as any).fa ? (
+              <View style={s.alertWord}>
+                <Text style={s.alertFa}>{(pending[0] as any).fa}</Text>
+                {(pending[0] as any).tr ? <Text style={s.alertTr}>{(pending[0] as any).tr}</Text> : null}
+                {(pending[0] as any).en ? <Text style={s.alertEn}>{(pending[0] as any).en}</Text> : null}
+              </View>
+            ) : (pending[0] as any).title ? (
+              <Text style={s.alertX}>{(pending[0] as any).title}</Text>
+            ) : (pending[0] as any).note ? (
+              <Text style={s.alertX}>{(pending[0] as any).note}</Text>
+            ) : null}
+            {pending.length > 1 ? (
+              <Text style={s.alertMore}>and {pending.length - 1} more waiting</Text>
+            ) : null}
           </View>
           <Ionicons name="arrow-forward" size={16} color={pr.friendA} />
         </Pressable>
@@ -436,18 +449,23 @@ function FriendsTab() {
 
   return (
     <>
-      <View style={s.frHero}>
-        <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
-        <Text style={s.frHeroFa}>بفرست</Text>
-        <Text style={s.frHeroT}>{t(PROFILE.teachEachOther)}</Text>
-        <Text style={s.frHeroX}>Send a friend anything worth learning: a word, a poet, a place, a story. They learn it, then send one back.</Text>
-      </View>
+      {/* The pitch only shows to someone who has nobody yet. With
+          friends and things arriving, the page leads with those. */}
+      {!hasActivity ? (
+        <>
+          <View style={s.frHero}>
+            <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+            <Text style={s.frHeroFa}>بفرست</Text>
+            <Text style={s.frHeroT}>{t(PROFILE.teachEachOther)}</Text>
+            <Text style={s.frHeroX}>Send a friend anything worth learning: a word, a poet, a place, a story. They learn it, then send one back.</Text>
+          </View>
 
-      <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
-        <Ionicons name="person-add" size={17} color="#FFF" />
-        <Text style={s.frMainBtnT}>{t(PROFILE.findFriends)}</Text>
-        {incoming.length > 0 ? (<View style={s.frBadge}><Text style={s.frBadgeT}>{incoming.length}</Text></View>) : null}
-      </Pressable>
+          <Pressable style={s.frMainBtn} onPress={() => setFriendsOpen(true)}>
+            <Ionicons name="person-add" size={17} color="#FFF" />
+            <Text style={s.frMainBtnT}>{t(PROFILE.findFriends)}</Text>
+          </Pressable>
+        </>
+      ) : null}
 
       {/* Real incoming requests (always live) */}
       {incoming.length > 0 ? (
@@ -523,7 +541,12 @@ function FriendsTab() {
       {/* Real accepted friends (if any) */}
       {hasFriends ? (
         <>
-          <Text style={s.sectionLabel}>{t(PROFILE.yourPeople)}</Text>
+          <View style={s.peopleRow}>
+            <Text style={[s.sectionLabel, { marginTop: 0 }]}>{t(PROFILE.yourPeople)}</Text>
+            <Pressable hitSlop={10} onPress={() => setFriendsOpen(true)} style={s.plus}>
+              <Ionicons name="add" size={16} color={pr.friendA} />
+            </Pressable>
+          </View>
           <View style={{ gap: spacing.sm }}>
             {accepted.map((r) => (
               <Pressable key={r.id} style={s.friendRow} onPress={() => setSendTo({ name: r.profile.name, id: r.profile.id })}>
@@ -824,6 +847,13 @@ const s = StyleSheet.create({
   badge: { position: 'absolute', top: 5, right: 9, width: 6, height: 6, borderRadius: 3, backgroundColor: pr.readA },
 
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  peopleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl, marginBottom: spacing.sm },
+  plus: { width: 26, height: 26, borderRadius: 13, backgroundColor: 'rgba(0,0,0,0.05)', alignItems: 'center', justifyContent: 'center' },
+  alertWord: { marginTop: 6 },
+  alertFa: { fontFamily: fonts.persian, fontSize: 20, color: pr.ink },
+  alertTr: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, marginTop: 1 },
+  alertEn: { fontFamily: fonts.bodyStrong, fontSize: 13, color: pr.ink, marginTop: 3 },
+  alertMore: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, marginTop: 5 },
   sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: pr.dim, marginTop: spacing.xl, marginBottom: spacing.md },
   phDark: { backgroundColor: 'rgba(36,28,25,0.25)' },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.md },

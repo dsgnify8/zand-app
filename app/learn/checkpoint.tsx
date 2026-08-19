@@ -11,6 +11,8 @@ import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
 import { record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 type Q =
   | { kind: 'meaning'; fa: string; tr: string; answer: string; options: string[] }
@@ -92,7 +94,7 @@ export default function CheckpointScreen() {
   if (qs.length === 0) {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
-        <View style={s.mid}><Text style={s.muted}>Finish some lessons in this chapter first.</Text></View>
+        <View style={s.mid}><Text style={s.muted}>{tl(LEARN.finishLessonsFirst)}</Text></View>
       </SafeAreaView>
     );
   }
@@ -119,7 +121,7 @@ export default function CheckpointScreen() {
             <Text style={s.ctaT}>{passed ? 'Carry on' : 'Back to the chapter'}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
-            <Text style={s.again}>Try again</Text>
+            <Text style={s.again}>{tl(LEARN.tryAgain)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -156,7 +158,7 @@ export default function CheckpointScreen() {
 
         {q.kind === 'meaning' ? (
           <>
-            <Text style={s.label}>WHAT DOES THIS MEAN</Text>
+            <Text style={s.label}>{tl(LEARN.whatDoesThisMean)}</Text>
             <Pressable style={s.faWrap} onPress={() => speak(q.fa, 'fa')}>
               <Text style={s.fa}>{q.fa}</Text>
               <Ionicons name="volume-low-outline" size={15} color={lw.muted} />
@@ -164,14 +166,14 @@ export default function CheckpointScreen() {
           </>
         ) : q.kind === 'hear' ? (
           <>
-            <Text style={s.label}>WHAT DID YOU HEAR</Text>
+            <Text style={s.label}>{tl(LEARN.whatDidYouHear)}</Text>
             <Pressable style={s.playBig} onPress={() => speak(q.fa, 'fa')}>
               <Ionicons name="volume-medium-outline" size={26} color={lw.green} />
             </Pressable>
           </>
         ) : (
           <>
-            <Text style={s.label}>HOW DO YOU SAY THIS</Text>
+            <Text style={s.label}>{tl(LEARN.howDoYouSay)}</Text>
             <Text style={s.prompt}>{q.en}</Text>
           </>
         )}

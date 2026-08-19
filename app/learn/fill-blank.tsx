@@ -7,6 +7,8 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { BLANK_CATEGORIES } from '@/constants/fill-blank';
+import { LEARN } from '@/constants/i18n/learn';
+import { t as tl } from '@/lib/i18n';
 
 export default function FillBlankHome() {
   const totalWords = BLANK_CATEGORIES.reduce((n, c) => n + c.questions.length, 0);
@@ -17,20 +19,20 @@ export default function FillBlankHome() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
-          <Text style={styles.backBtnText}>Learn</Text>
+          <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>
 
         <View style={styles.hero}>
           <View style={styles.heroIcon}><Ionicons name="create-outline" size={34} color={lw.surface} /></View>
           <View style={styles.titleRow}>
-            <Text style={styles.title}>Fill the Blank</Text>
+            <Text style={styles.title}>{tl(LEARN.fillTheBlank)}</Text>
             <Text style={styles.glyph}>جای خالی</Text>
           </View>
           <Text style={styles.subtitle}>Complete the sentence with the right word. Choose a category to begin.</Text>
           <Text style={styles.count}>{totalWords} sentences across {BLANK_CATEGORIES.length} categories</Text>
         </View>
 
-        <Text style={styles.sectionLabel}>CHOOSE A CATEGORY</Text>
+        <Text style={styles.sectionLabel}>{tl(LEARN.chooseCategory)}</Text>
         <View style={styles.list}>
           {BLANK_CATEGORIES.map((c) => (
             <Pressable key={c.key} style={styles.card} onPress={() => router.replace('/learn/fill-blank-play?cat=' + c.key as any)}>
