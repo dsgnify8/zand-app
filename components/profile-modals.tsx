@@ -9,7 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { pr, ME, SEND_CATEGORIES, RECENT, WORD_BANK } from '@/constants/profile';
 import { applyLanguage } from '@/lib/apply-language';
-import { useLangProbe, getLang, t as tset, useLang } from '@/lib/i18n';
+import { getLang, t as tset, useLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { useIsAdmin } from '@/lib/admin';
 import { ReminderRow } from '@/components/reminder-row';
@@ -38,7 +38,6 @@ function Sheet({ open, onClose, children }: any) {
 /* ---------------- Settings ---------------- */
 
 export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
-  useLangProbe('Settings');
   const [panel, setPanel] = useState<null | 'account' | 'language' | 'notifications' | 'help' | 'terms'>(null);
   const [confirmDel, setConfirmDel] = useState(false);
   const [delPass, setDelPass] = useState('');

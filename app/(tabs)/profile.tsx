@@ -10,12 +10,13 @@ import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS
 import { useSaved } from '@/lib/saved-store';
 import { useProgress } from '@/lib/progress-store';
 import { VideoTile } from '@/components/video-tile';
-import { useLangProbe, t, useLang } from '@/lib/i18n';
+import { t, useLang } from '@/lib/i18n';
 import { PROFILE } from '@/constants/i18n/profile';
 import { ContinueReading } from '@/components/continue-reading';
 import { useAuth } from '@/lib/auth';
 import { useFriends, acceptRequest, removeFriendship } from '@/lib/friends';
-import { useInbox, markLearned } from '@/lib/inbox';
+import { useInbox, useOutbox, itemRoute, markLearned } from '@/lib/inbox';
+import { syncNudges, cancelNudge } from '@/lib/friend-nudges';
 import { FriendsSheet } from '@/components/friends-sheet';
 import { FramedImage } from '@/components/framed-image';
 import { CultureCover } from '@/components/culture-cover';
@@ -499,6 +500,11 @@ function FriendsTab() {
   const { user } = useAuth();
   const { accepted, incoming, loading: friendsLoading, refresh } = useFriends(user?.id);
   const { items: inbox, refresh: refreshInbox } = useInbox(user?.id);
+  const { items: outbox, refresh: refreshOutbox } = useOutbox(user?.id);
+
+  // Keep the pending nudges in step with what is actually unlearned.
+  // Cheap, idempotent, and the inbox is the only place that knows.
+  useEffect(() => { syncNudges(inbox); }, [inbox]);
   const [friendsOpen, setFriendsOpen] = useState(false);
   const [sendTo, setSendTo] = useState<{ name: string; id: string } | null>(null);
 
@@ -558,7 +564,15 @@ function FriendsTab() {
           <Text style={s.sectionLabel}>{t(PROFILE.waitingForYou)}</Text>
           <View style={{ gap: spacing.md }}>
             {inbox.map((it) => (
-              <View key={it.id} style={[s.inbox, it.learned && s.inboxDone]}>
+              <Pressable
+                key={it.id}
+                style={[s.inbox, it.learned && s.inboxDone]}
+                onPress={() => {
+                  // A word is its own card; everything else has a page.
+                  const to = itemRoute(it);
+                  if (to) router.navigate(to as any);
+                }}
+              >
                 <View style={s.inboxTop}>
                   <View style={s.avatar}><Text style={s.avatarT}>{(it.senderName || '?')[0].toUpperCase()}</Text></View>
                   <View style={{ flex: 1 }}>
@@ -588,12 +602,50 @@ function FriendsTab() {
                     <Text style={s.sendBackT}>{t(PROFILE.sendBack)}</Text>
                   </Pressable>
                 ) : (
-                  <Pressable style={s.complete} onPress={async () => { await markLearned(it.id); refreshInbox(); }}>
+                  <Pressable style={s.complete} onPress={async () => { await markLearned(it.id); await cancelNudge(it.id); refreshInbox(); }}>
                     <Text style={s.completeT}>{t(PROFILE.markLearned)}</Text>
                     <Ionicons name="checkmark" size={14} color="#FFF" />
                   </Pressable>
                 )}
-              </View>
+              </Pressable>
+            ))}
+          </View>
+        </>
+      ) : null}
+
+      {/* Your side of it: what you sent, and whether it landed. */}
+      {outbox.length > 0 ? (
+        <>
+          <Text style={s.sectionLabel}>{t(PROFILE.yourSends)}</Text>
+          <View style={{ gap: spacing.sm }}>
+            {outbox.slice(0, 8).map((it) => (
+              <Pressable
+                key={'out-' + it.id}
+                style={s.friendRow}
+                onPress={() => {
+                  const to = itemRoute(it);
+                  if (to) router.navigate(to as any);
+                }}
+              >
+                <View style={[s.avatar, s.avatarSm]}>
+                  <Text style={s.avatarT}>{(it.recipientName || '?')[0].toUpperCase()}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.friendN} numberOfLines={1}>
+                    {it.fa || it.title || t(PROFILE.something)}
+                  </Text>
+                  <Text style={s.friendL}>
+                    {it.learned
+                      ? (it.recipientName ?? '') + ' ' + t(PROFILE.theyLearnedIt)
+                      : t(PROFILE.sentWaiting) + ' ' + (it.recipientName ?? '')}
+                  </Text>
+                </View>
+                <Ionicons
+                  name={it.learned ? 'checkmark-circle' : 'time-outline'}
+                  size={17}
+                  color={it.learned ? pr.streakA : pr.dim}
+                />
+              </Pressable>
             ))}
           </View>
         </>
@@ -803,8 +855,6 @@ function ProgressTab() {
 /* ---------------- The page ---------------- */
 
 export default function Profile() {
-  const _n = useRef(Math.random().toString(36).slice(2, 5));
-  console.log('[L] BODY', _n.current, 'lang=' + require('@/lib/i18n').getLang());
   // Subscribe to the language. Without this the screen only re-renders
   // when something else pushes it, so a switch made elsewhere does not
   // reach it until you navigate away and back.
@@ -826,13 +876,10 @@ export default function Profile() {
     : 0;
 
   return (
-    // Keyed on the language: changing writingDirection and textAlign on
-    // already-mounted native Text views does not reliably take effect on
-    // iOS. Recreating this subtree is what makes a live switch repaint.
-    <SafeAreaView key={require('@/lib/i18n').getLang()} style={s.safe} edges={['top']}>
+    <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.header}>
         <View>
-          <Text style={s.hello}>{t(PROFILE.welcome)}{console.log('[L] JSX ', _n.current, t(PROFILE.welcome)) as any}</Text>
+          <Text style={s.hello}>{t(PROFILE.welcome)}</Text>
           <Text style={s.name}>{displayName}</Text>
         </View>
         <Pressable hitSlop={10} onPress={() => setSettings(true)}>

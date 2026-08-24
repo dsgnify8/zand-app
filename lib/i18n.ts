@@ -8,19 +8,7 @@ export type Lang = 'en' | 'fa';
 
 let lang: Lang = 'en';
 const listeners = new Set<() => void>();
-let seq = 0;
-const emit = () => {
-  seq += 1;
-  console.log('[L] emit #' + seq + ' -> ' + listeners.size + ' listeners, lang=' + lang);
-  listeners.forEach((l) => l());
-};
-
-/** Render counter, so a screen can report whether it re-rendered on an emit. */
-export function useLangProbe(name: string) {
-  const now = useLang().lang;
-  console.log('[L] render ' + name + ' lang=' + now + ' emit=' + seq);
-  return now;
-}
+const emit = () => listeners.forEach((l) => l());
 
 /** Subscribe to language changes. Returns an unsubscribe. */
 export function onLangChange(fn: () => void) {

@@ -135,12 +135,20 @@ export default function RootLayout() {
       <SRSProvider>
         <ReadingProvider>
           <GlossaryProvider>
-        {/* Deliberately not keyed on the language. useLang() above re-renders
-            this tree on every change, which is enough for the getLang() calls
-            throughout the app; keying it here remounted everything instead and
-            wiped all local state — open sheets, selected panels, scroll
-            positions — on every switch. */}
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        {/* Keyed on the language, deliberately.
+            
+            Fifty-odd files read the language at render. Making each of them
+            re-render reliably on a change proved not to be achievable —
+            subscriptions fire, components render with the right value, and
+            some of them still show the old language until navigated away
+            from. A remount sidesteps all of it: the tree is rebuilt, so
+            there is nothing left holding the previous language.
+            
+            This costs local state on every switch. That is the trade, and
+            it is worth it — changing language is a once-ever action, and a
+            half-translated screen is not something a Persian-only reader
+            should ever see. */}
+        <ThemeProvider key={appLang} value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack
             screenOptions={{
               animation: 'fade',
@@ -166,6 +174,9 @@ export default function RootLayout() {
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/map" options={{ headerShown: false }} />
+            <Stack.Screen name="local-countries" options={{ headerShown: false }} />
+            <Stack.Screen name="local-country" options={{ headerShown: false }} />
+            <Stack.Screen name="local-categories" options={{ headerShown: false }} />
             <Stack.Screen name="learn/cards" options={{ headerShown: false }} />
             <Stack.Screen name="learn/blanks" options={{ headerShown: false }} />
             <Stack.Screen name="learn/read" options={{ headerShown: false }} />

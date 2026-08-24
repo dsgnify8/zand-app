@@ -66,11 +66,11 @@ export type LearnGroup = { key: string; label: string; note: string; modules: Le
 
 export const LEARN_GROUPS: LearnGroup[] = [
   {
-    key: 'tools', label: 'TOOLS', note: 'For when you need it, not for study.',
+    key: 'tools', label: 'TOOLS', labelFa: 'ابزارها', note: 'For when you need it, not for study.', noteFa: 'برای وقتی که لازمت می‌شود، نه برای درس خواندن.',
     modules: [
-      { key: 'translate', title: 'Translate', persian: 'برگردان', x: 'Any language into Persian, and back.',
+      { key: 'translate', title: 'Translate', persian: 'برگردان', x: 'Any language into Persian, and back.', xFa: 'هر زبانی به فارسی، و برعکس.',
         icon: 'swap-horizontal-outline', tint: '#3F5D46', route: '/learn/translate', done: 0, total: 0, unit: '' },
-      { key: 'phrasebook', title: 'Phrasebook', persian: 'عبارت‌ها', x: 'Fifty things worth being able to say. Tap any line to hear it.',
+      { key: 'phrasebook', title: 'Phrasebook', persian: 'عبارت‌ها', x: 'Fifty things worth being able to say. Tap any line to hear it.', xFa: 'پنجاه چیز که ارزش گفتن دارد. هر سطر را بزن تا بشنوی.',
         icon: 'chatbubbles-outline', tint: '#4A6B50', route: '/learn/phrasebook', done: 0, total: 50, unit: 'phrases' },
     ],
   },

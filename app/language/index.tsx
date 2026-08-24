@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { lang, LANG_CHAPTERS, type LangBlock } from '@/constants/language';
 
+import { LEARN } from '@/constants/i18n/learn';
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
@@ -126,8 +127,8 @@ function Block({ b }: { b: LangBlock }) {
     case 'learncta': return (
       <Pressable style={styles.cta} onPress={() => router.replace('/(tabs)/learn' as any)}>
         <Text style={styles.ctaGlyph}>ا ب پ</Text>
-        <Text style={styles.ctaTitle}>{getLang() === 'fa' ? 'فارسی بیاموز' : 'Learn Farsi'}</Text>
-        <Text style={styles.ctaSub}>{getLang() === 'fa' ? 'از الفبا تا گفت‌وگوی واقعی؛ قدم به قدم.' : 'From the alphabet to real conversation, step by step.'}</Text>
+        <Text style={styles.ctaTitle}>{getLang() === 'fa' ? 'فارسی بیاموز' : t(LEARN.learnFarsi)}</Text>
+        <Text style={styles.ctaSub}>{getLang() === 'fa' ? 'از الفبا تا گفت‌وگوی واقعی؛ قدم به قدم.' : t(LEARN.learnFarsiX)}</Text>
         <View style={styles.ctaBtn}>
           <Text style={styles.ctaBtnText}>{getLang() === 'fa' ? 'شروع' : 'BEGIN'}</Text>
           <Ionicons name="arrow-forward" size={14} color={lang.bg} />
@@ -190,7 +191,7 @@ export default function LanguageScreen() {
           const on = c.key === active;
           return (
             <Pressable key={c.key} onPress={() => jump(c.key)} style={styles.navTab}>
-              <Text style={[styles.navText, on && styles.navTextOn]} numberOfLines={1}>{c.nav}</Text>
+              <Text style={[styles.navText, on && styles.navTextOn]} numberOfLines={1}>{getLang() === 'fa' && (c as any).navFa ? (c as any).navFa : c.nav}</Text>
               <View style={[styles.navRule, on && styles.navRuleOn]} />
             </Pressable>
           );
@@ -209,7 +210,7 @@ export default function LanguageScreen() {
           <View style={styles.head}>
             <Text style={styles.glyph}>فارسی</Text>
             <Text style={styles.title}>{t(PAGES.langHead)}</Text>
-            <Text style={styles.sub}>Where Persian came from, and how it survived.</Text>
+            <Text style={styles.sub}>{t(LEARN.cameFromSurvived)}</Text>
           </View>
         </FadeIn>
 

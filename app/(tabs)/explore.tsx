@@ -20,7 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { useLangProbe, useLang, t as tr, getLang } from '@/lib/i18n';
+import { useLang, t as tr, getLang } from '@/lib/i18n';
 import { SECTIONS } from '@/constants/i18n/sections';
 import { eduImage } from '@/constants/education-images';
 import { TOPICS as HISTORY_TOPICS } from '@/constants/education';
@@ -36,6 +36,7 @@ import { TopicsRail } from '@/components/topics-rail';
 import { TraditionsWheel } from '@/components/traditions-wheel';
 import { LanguageCard } from '@/components/language-card';
 
+import { EXPLORE } from '@/constants/i18n/explore';
 const { width: W } = Dimensions.get('window');
 const CARD_W = W - spacing.lg * 2;
 
@@ -237,7 +238,6 @@ function WorldCard({ w, index, fa }: { w: World; index: number; fa: boolean }) {
 /* ---------------- the page ---------------- */
 
 export default function Explore() {
-  useLangProbe('Explore');
   // Subscribe to the language. Without this the screen only re-renders
   // when something else pushes it, so a switch made elsewhere does not
   // reach it until you navigate away and back.
@@ -283,11 +283,11 @@ export default function Explore() {
                 <Text style={s.sectionT}>{tr(SECTIONS.geography)}</Text>
               </View>
               <View style={s.moreRowTop}>
-                <Text style={s.moreT}>The land, in full</Text>
+                <Text style={s.moreT}>{tr(EXPLORE.geoInFull)}</Text>
                 <Ionicons name="arrow-forward" size={13} color={colors.accent} />
               </View>
             </View>
-            <Text style={s.sectionX}>Where the country sits, what the land did to it, and why the cities are where they are.</Text>
+            <Text style={s.sectionX}>{tr(EXPLORE.geoBlurb)}</Text>
           </Pressable>
           <View style={s.mapWrap}>
             <IranProvinceMap />

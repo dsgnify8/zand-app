@@ -67,6 +67,40 @@ export const LEARN = {
   completeSentence: { en: 'COMPLETE THE SENTENCE', fa: 'جمله را کامل کن' },
   notEnoughSentences: { en: 'Not enough sentences here yet.', fa: 'هنوز جملهٔ کافی اینجا نیست.' },
 
+  // the alphabet panel on the learn tab
+  tapWhatYouRead: {
+    en: 'Tap the ones you can read on sight. Be honest, it is only for you.',
+    fa: 'آن‌هایی را که به‌محض دیدن می‌خوانی بزن. راستش را بزن، فقط برای خودت است.',
+  },
+  noneMarked: {
+    en: 'Nothing marked yet. Start with alef, be, pe. They are the easy three.',
+    fa: 'هنوز چیزی علامت نزده‌ای. با الف، ب، پ شروع کن. این سه از همه ساده‌ترند.',
+  },
+  allThirtyTwo: { en: 'All thirty two. Now go and read something.', fa: 'هر سی‌ودو تا. حالا برو یک چیزی بخوان.' },
+
+  // the way into the journey
+  startPersian: { en: 'Start Persian', fa: 'فارسی را شروع کن' },
+  enterJourney: { en: 'Enter your journey', fa: 'وارد مسیرت شو' },
+  twoQuestions: {
+    en: 'Two questions, then we begin where you actually are.',
+    fa: 'دو تا سؤال، بعد از همان‌جایی که واقعاً هستی شروع می‌کنیم.',
+  },
+  lettersThenWords: {
+    en: 'The letters, then words, then whole sentences. Pick up wherever you stopped.',
+    fa: 'اول حروف، بعد واژه‌ها، بعد جمله‌های کامل. از هر جا که ماندی ادامه بده.',
+  },
+  whereFrom: { en: 'Where does any of this come from?', fa: 'این‌ها همه از کجا آمده‌اند؟' },
+  whereFromX: { en: 'The story of the language, in Education.', fa: 'داستان این زبان، در بخش آموزش.' },
+  learnFarsi: { en: 'Learn Farsi', fa: 'فارسی یاد بگیر' },
+  learnFarsiX: {
+    en: 'From the alphabet to real conversation, step by step.',
+    fa: 'از الفبا تا گفت‌وگوی واقعی، قدم‌به‌قدم.',
+  },
+  cameFromSurvived: {
+    en: 'Where Persian came from, and how it survived.',
+    fa: 'فارسی از کجا آمد، و چطور ماند.',
+  },
+
   // the alphabet
   alphabet: { en: 'The alphabet', fa: 'الفبا' },
   howItSounds: { en: 'HOW IT SOUNDS', fa: 'چطور صدا می‌دهد' },

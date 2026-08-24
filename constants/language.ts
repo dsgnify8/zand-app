@@ -33,7 +33,7 @@ export const LANG_CHAPTERS: LangChapter[] = [
   {
     key: 'l1',
     title: 'The Family', titleFa: 'خانواده',
-    nav: 'The Root',
+    nav: 'The Root', navFa: 'ریشه',
     subtitle: 'WHERE PERSIAN COMES FROM', subtitleFa: 'فارسی از کجا می‌آید',
     pages: [
       { blocks: [
@@ -69,7 +69,7 @@ export const LANG_CHAPTERS: LangChapter[] = [
   {
     key: 'l2',
     title: 'Three Thousand Years', titleFa: 'سه هزار سال',
-    nav: 'The Journey',
+    nav: 'The Journey', navFa: 'سفر',
     subtitle: 'THE THREE AGES OF PERSIAN', subtitleFa: 'سه دورهٔ زبان فارسی',
     pages: [
       { blocks: [
@@ -91,7 +91,7 @@ export const LANG_CHAPTERS: LangChapter[] = [
   {
     key: 'l3',
     title: 'What Arabic Took', titleFa: 'عربی چه گرفت',
-    nav: 'The Conquest',
+    nav: 'The Conquest', navFa: 'فتح',
     subtitle: 'AND WHAT IT COULD NOT', subtitleFa: 'و چه چیزی را نتوانست',
     pages: [
       { blocks: [
@@ -121,7 +121,7 @@ export const LANG_CHAPTERS: LangChapter[] = [
   {
     key: 'l4',
     title: 'Words You Already Speak', titleFa: 'واژه‌هایی که پیش‌تر می‌گویی',
-    nav: 'In English',
+    nav: 'In English', navFa: 'در انگلیسی',
     subtitle: 'PERSIAN IN YOUR MOUTH', subtitleFa: 'فارسی، در دهان جهان',
     pages: [
       { blocks: [

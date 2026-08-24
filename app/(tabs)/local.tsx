@@ -15,7 +15,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { useLang, getLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import {
   CATEGORIES, categoryLabel, loadBusinesses, dist, type Business,
@@ -28,7 +28,9 @@ const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 import { currentPlace, findPlace, hasLocation, type Place } from '@/lib/geo';
 import { BusinessCard } from '@/components/business-card';
+import { LocalDrawer } from '@/components/local-drawer';
 
+import { LOCAL } from '@/constants/i18n/local';
 export default function Local() {
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
@@ -47,6 +49,7 @@ export default function Local() {
   const [items, setItems] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [drawer, setDrawer] = useState(false);
 
   /* ---------------- where ---------------- */
 
@@ -104,8 +107,8 @@ export default function Local() {
   };
 
   const where = place
-    ? [place.city, place.country].filter(Boolean).join(', ') || 'Near you'
-    : (fa ? 'همه‌جا' : 'Everywhere');
+    ? [place.city, place.country].filter(Boolean).join(', ') || t(LOCAL.nearYou)
+    : (fa ? 'همه‌جا' : t(LOCAL.everywhere));
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
@@ -120,7 +123,10 @@ export default function Local() {
 
         {/* top bar */}
         <View style={[s.top, fa && { flexDirection: 'row-reverse' }]}>
-          <Text style={s.kicker}>{fa ? 'محلی' : 'LOCAL'}</Text>
+          <Pressable hitSlop={12} onPress={() => setDrawer(true)} style={{ marginRight: 12 }}>
+            <Ionicons name="menu-outline" size={22} color={colors.textPrimary} />
+          </Pressable>
+          <Text style={[s.kicker, { flex: 1 }]}>{fa ? 'محلی' : 'LOCAL'}</Text>
           <Pressable hitSlop={10} onPress={() => setInfoOpen((v) => !v)}>
             <Ionicons name="information-circle-outline" size={20} color={colors.textSecondary} />
           </Pressable>
@@ -129,17 +135,13 @@ export default function Local() {
         {infoOpen ? (
           <Pressable style={s.info} onPress={listYours}>
             <Text style={s.infoT}>
-              {fa
-                ? 'کسب‌وکار خودت را اینجا ثبت کن'
-                : 'Run one of these? Put it on the map.'}
+              {t(LOCAL.runOne)}
             </Text>
             <Text style={s.infoX}>
-              {fa
-                ? 'ثبت کن، ما بررسی می‌کنیم، و بعد در فهرست می‌آید.'
-                : 'Send it in, we read every one, and it goes up once approved.'}
+              {t(LOCAL.runOneX)}
             </Text>
             <View style={s.infoCta}>
-              <Text style={s.infoCtaT}>{fa ? 'ثبت کسب‌وکار' : 'List a business'}</Text>
+              <Text style={s.infoCtaT}>{t(LOCAL.listBusiness)}</Text>
               <Ionicons name="arrow-forward" size={13} color={colors.accent} />
             </View>
           </Pressable>
@@ -147,10 +149,10 @@ export default function Local() {
 
         {/* header */}
         <Text style={[s.title, fa && s.titleFa]}>
-          {fa ? 'ایرانی‌ها به نام‌ساختن مشهورند.' : 'Persians are known for making\na name for themselves.'}
+          {t(LOCAL.knownFor)}
         </Text>
         <Text style={[s.sub, fa && s.subFa]}>
-          {fa ? 'اینجا می‌توانی پیدایشان کنی.' : 'Here is where to find them.'}
+          {t(LOCAL.whereToFind)}
         </Text>
 
         {/* where */}
@@ -175,14 +177,14 @@ export default function Local() {
               {locating
                 ? <ActivityIndicator size="small" color={colors.accent} />
                 : <Ionicons name="navigate-outline" size={14} color={colors.accent} />}
-              <Text style={s.mineT}>{fa ? 'موقعیت من' : 'Use my location'}</Text>
+              <Text style={s.mineT}>{t(LOCAL.useMyLocation)}</Text>
             </Pressable>
             <View style={s.row}>
               <TextInput
                 style={[s.input, { flex: 1 }]}
                 value={placeText}
                 onChangeText={setPlaceText}
-                placeholder={fa ? 'استکهلم، دبی، گوتنبرگ…' : 'Stockholm, Dubai, Gothenburg…'}
+                placeholder={t(LOCAL.cityPlaceholder)}
                 placeholderTextColor={colors.textSecondary}
                 onSubmitEditing={lookUp}
                 returnKeyType="search"
@@ -193,7 +195,7 @@ export default function Local() {
             </View>
             {place ? (
               <Pressable onPress={() => { setPlace(null); setPlaceOpen(false); }}>
-                <Text style={s.clearT}>{fa ? 'همه‌جا را نشان بده' : 'Show everywhere'}</Text>
+                <Text style={s.clearT}>{t(LOCAL.showEverywhere)}</Text>
               </Pressable>
             ) : null}
           </View>
@@ -206,10 +208,21 @@ export default function Local() {
             style={[s.searchIn, fa && { textAlign: 'right', writingDirection: 'rtl' }]}
             value={query}
             onChangeText={setQuery}
-            placeholder={fa ? 'دنبال چه می‌گردی؟' : 'What are you looking for?'}
+            placeholder={fa ? '' : t(LOCAL.searchPlaceholder)}
             placeholderTextColor={colors.textSecondary}
             autoCorrect={false}
           />
+          {/* RN ignores textAlign on a placeholder until the field has
+              content, so a Persian placeholder puts its question mark on the
+              wrong side. Drawn as our own Text instead. */}
+          {fa && !query ? (
+            <Text
+              pointerEvents="none"
+              style={[s.searchIn, { position: 'absolute', right: 40, textAlign: 'right', writingDirection: 'rtl', color: colors.textSecondary }]}
+            >
+              {t(LOCAL.searchPlaceholder)}
+            </Text>
+          ) : null}
           {query ? (
             <Pressable hitSlop={8} onPress={() => setQuery('')}>
               <Ionicons name="close-circle" size={15} color={colors.textSecondary} />
@@ -217,23 +230,20 @@ export default function Local() {
           ) : null}
         </View>
 
-        {/* categories */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={s.cats} contentContainerStyle={{ gap: 7, paddingRight: spacing.lg }}>
-          <Pressable style={[s.cat, !cat && s.catOn]} onPress={() => setCat(null)}>
-            <Text style={[s.catT, !cat && s.catTOn]}>{fa ? 'همه' : 'All'}</Text>
-          </Pressable>
-          {CATEGORIES.map((c) => {
-            const on = cat === c.key;
-            return (
-              <Pressable key={c.key} style={[s.cat, on && s.catOn]} onPress={() => setCat(on ? null : c.key)}>
-                <Ionicons name={c.icon as any} size={12} color={on ? '#FFF' : colors.textSecondary} />
-                <Text style={[s.catT, on && s.catTOn]}>{fa ? c.fa : c.en}</Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
+
 
           </>
+        }
+        ListFooterComponent={
+          <LocalDrawer
+            open={drawer}
+            onClose={() => setDrawer(false)}
+            onPick={(k) => {
+              if (k === 'country') router.navigate('/local-countries' as any);
+              else if (k === 'category') router.navigate('/local-categories' as any);
+              else listYours();
+            }}
+          />
         }
         ListEmptyComponent={
           loading ? (
@@ -242,12 +252,10 @@ export default function Local() {
             <View style={s.empty}>
               <Ionicons name="storefront-outline" size={20} color={colors.textSecondary} />
               <Text style={s.emptyT}>
-                {fa
-                  ? 'اینجا هنوز چیزی ثبت نشده. شاید تو اولی باشی.'
-                  : 'Nothing here yet. Yours could be the first.'}
+                {t(LOCAL.nothingYet)}
               </Text>
               <Pressable onPress={listYours}>
-                <Text style={s.emptyCta}>{fa ? 'ثبت کسب‌وکار' : 'List a business'}</Text>
+                <Text style={s.emptyCta}>{t(LOCAL.listBusiness)}</Text>
               </Pressable>
             </View>
           )

@@ -6,8 +6,9 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { PROVINCE_DOTS, type ProvinceDot } from '@/constants/geography';
 import { eduImage } from '@/constants/education-images';
-import { useLang, getLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 
+import { EXPLORE } from '@/constants/i18n/explore';
 const MAP_RATIO = 1100 / 847;
 
 export function IranProvinceMap() {
@@ -35,7 +36,7 @@ export function IranProvinceMap() {
         ))}
       </View>
 
-      <Text style={styles.hint}>Touch a province</Text>
+      <Text style={styles.hint}>{t(EXPLORE.touchProvince)}</Text>
 
       <Modal transparent visible={!!open} animationType="fade" onRequestClose={() => setOpen(null)}>
         <Pressable style={styles.backdrop} onPress={() => setOpen(null)}>

@@ -92,6 +92,9 @@ export const PROFILE: Record<string, T> = {
   filterRecent: { en: 'What you just read', fa: 'تازه‌خوانده‌ها' },
   noMatches: { en: 'Nothing matches. Try the Persian or the English.', fa: 'چیزی پیدا نشد. فارسی یا انگلیسی را امتحان کن.' },
 
+  yourSends: { en: 'WHAT YOU SENT', fa: 'چیزهایی که فرستادی' },
+  theyLearnedIt: { en: 'learned it', fa: 'یاد گرفت' },
+  sentWaiting: { en: 'waiting for', fa: 'منتظرِ' },
   sentYou: { en: 'sent you', fa: 'برایت فرستاد' },
   aWord: { en: 'a word', fa: 'یک واژه' },
   aTopic: { en: 'a topic', fa: 'یک موضوع' },

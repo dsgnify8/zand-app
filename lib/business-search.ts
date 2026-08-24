@@ -213,8 +213,13 @@ async function fillMissingPersian(b: {
         body: { text, from: 'en', to: 'fa' },
       });
       const out = (data?.text ?? '').trim();
+      console.log('[fa-fill]', field, '->', out ? out.slice(0, 40) : 'EMPTY');
       if (out) patch[field] = out;
-    } catch {}
+    } catch (e) {
+      // Was an empty catch. A failing translate call left every listing in
+      // English with nothing to show for it.
+      console.log('[fa-fill] FAILED', field, e);
+    }
   }
 
   if (Object.keys(patch).length) {

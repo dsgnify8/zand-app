@@ -13,10 +13,11 @@ import { ALPHABET, LEARN_GROUPS, CONTINUE, LEARN_STATS, type LearnModule } from 
 import { useLearnProgress } from '@/lib/learn-progress';
 import { useStats } from '@/lib/stats-store';
 import { STAGES } from '@/constants/journey';
-import { useLang, getLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { showDemoData } from '@/lib/demo-mode';
 import { useAuth } from '@/lib/auth';
 
+import { LEARN } from '@/constants/i18n/learn';
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -75,7 +76,7 @@ function AlphabetPanel({ known, toggle }: { known: string[]; toggle: (n: string)
       <View style={s.panelHead}>
         <View style={{ flex: 1 }}>
           <Text style={s.panelT}>{known.length} of {ALPHABET.length}</Text>
-          <Text style={s.panelX}>Tap the ones you can read on sight. Be honest, it is only for you.</Text>
+          <Text style={s.panelX}>{t(LEARN.tapWhatYouRead)}</Text>
         </View>
         <Text style={s.panelPct}>{pct}%</Text>
       </View>
@@ -95,9 +96,9 @@ function AlphabetPanel({ known, toggle }: { known: string[]; toggle: (n: string)
       </View>
 
       {known.length === 0 ? (
-        <Text style={s.panelNote}>Nothing marked yet. Start with alef, be, pe. They are the easy three.</Text>
+        <Text style={s.panelNote}>{t(LEARN.noneMarked)}</Text>
       ) : known.length === ALPHABET.length ? (
-        <Text style={s.panelNote}>All thirty two. Now go and read something.</Text>
+        <Text style={s.panelNote}>{t(LEARN.allThirtyTwo)}</Text>
       ) : (
         <Text style={s.panelNote}>{ALPHABET.length - known.length} to go.</Text>
       )}
@@ -121,12 +122,12 @@ function ContinueCard() {
       <Text style={s.contFa}>{!asked ? 'فا' : 'زند'}</Text>
       <View style={{ flex: 1 }}>
         <Text style={s.contK}>{!asked ? 'BEGIN HERE' : 'YOUR LEARNING WORLD'}</Text>
-        <Text style={s.contT}>{!asked ? 'Start Persian' : 'Enter your journey'}</Text>
+        <Text style={s.contT}>{!asked ? t(LEARN.startPersian) : t(LEARN.enterJourney)}</Text>
         <Text style={s.contD}>{!asked ? 'find your level' : 'راه تو'}</Text>
         <Text style={s.contX}>
           {!asked
-            ? 'Two questions, then we begin where you actually are.'
-            : 'The letters, then words, then whole sentences. Pick up wherever you stopped.'}
+            ? t(LEARN.twoQuestions)
+            : t(LEARN.lettersThenWords)}
         </Text>
       </View>
       <View style={s.contGo}><Ionicons name="arrow-forward" size={17} color="#FFF" /></View>
@@ -151,7 +152,7 @@ function ModuleCard({ mod, i }: { mod: LearnModule; i: number }) {
               <Text style={s.modT}>{mod.title}</Text>
               <Text style={[s.modFa, { color: mod.tint }]}>{mod.persian}</Text>
             </View>
-            <Text style={s.modX}>{mod.x}</Text>
+            <Text style={s.modX}>{getLang() === 'fa' && (mod as any).xFa ? (mod as any).xFa : mod.x}</Text>
           </View>
           <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
         </View>
@@ -273,8 +274,8 @@ export default function LearnScreen() {
             <Pressable style={s.tie} onPress={() => router.navigate('/language' as any)}>
               <Ionicons name="book-outline" size={15} color="#4A6B50" />
               <View style={{ flex: 1 }}>
-                <Text style={s.tieT}>Where does any of this come from?</Text>
-                <Text style={s.tieX}>The story of the language, in Education.</Text>
+                <Text style={s.tieT}>{t(LEARN.whereFrom)}</Text>
+                <Text style={s.tieX}>{t(LEARN.whereFromX)}</Text>
               </View>
               <Ionicons name="arrow-forward" size={14} color="#4A6B50" />
             </Pressable>

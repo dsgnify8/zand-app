@@ -24,4 +24,10 @@ export const EXPLORE: Record<string, T> = {
     en: 'Watch stories, lessons, and interviews.',
     fa: 'روایت‌ها، درس‌ها و گفت‌وگوها.',
   },
+  geoInFull: { en: 'The land, in full', fa: 'تمام سرزمین' },
+  geoBlurb: {
+    en: 'Where the country sits, what the land did to it, and why the cities are where they are.',
+    fa: 'این کشور کجا نشسته، زمین با آن چه کرده، و چرا شهرها همان‌جایی هستند که هستند.',
+  },
+  touchProvince: { en: 'Touch a province', fa: 'روی یک استان بزن' },
 };

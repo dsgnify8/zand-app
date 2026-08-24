@@ -19,6 +19,7 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import { useEffect, useState } from 'react';
 import { syncTouch } from '@/lib/cloud-sync';
+import { getLang } from '@/lib/i18n';
 
 export type NotifPrefs = {
   learning: boolean;
@@ -75,8 +76,11 @@ export async function scheduleIdle() {
     await Notifications.scheduleNotificationAsync({
       identifier: IDLE_ID,
       content: {
-        title: 'Still here when you are',
-        body: 'Your place is saved. Pick up where you left off.',
+        // Composed on this device, so it can be in this reader's language.
+        title: getLang() === 'fa' ? 'هر وقت خواستی، همین‌جاست' : 'Still here when you are',
+        body: getLang() === 'fa'
+          ? 'جایت محفوظ است. از همان‌جا ادامه بده.'
+          : 'Your place is saved. Pick up where you left off.',
       },
       trigger: Platform.OS === 'ios'
         ? ({ seconds: IDLE_DAYS * 24 * 60 * 60, repeats: false } as any)

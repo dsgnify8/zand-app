@@ -6,9 +6,11 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+import { getLang } from '@/lib/i18n';
 
 const K_ON = 'remind:on';
 const K_HOUR = 'remind:hour';
+const DAILY_ID = 'daily-reminder';
 
 let enabled = false;
 let hour = 19;            // early evening by default
@@ -33,6 +35,10 @@ export async function loadReminders() {
   } catch {}
 }
 
+async function cancelDaily() {
+  try { await Notifications.cancelScheduledNotificationAsync(DAILY_ID); } catch {}
+}
+
 export function remindersOn() { return enabled; }
 export function reminderHour() { return hour; }
 
@@ -52,7 +58,10 @@ export async function setReminders(on: boolean) {
   emit();
   try { await AsyncStorage.setItem(K_ON, on ? '1' : '0'); } catch {}
   if (on) await schedule();
-  else await Notifications.cancelAllScheduledNotificationsAsync();
+  // Only this reminder. cancelAll took the idle nudge and every friend
+  // nudge with it — turning off one notification should not silently
+  // disable the others.
+  else await cancelDaily();
   return on;
 }
 
@@ -82,21 +91,32 @@ async function pickBody(): Promise<{ title: string; body: string }> {
     const next = STAGES.flatMap((s: any) => s.steps)
       .find((x: any) => x.kind === 'lesson' && x.unit && x.lesson && !isLessonDone(x.unit, x.lesson));
     if (next) {
-      return { title: 'Where you left off', body: next.title + '. ' + next.sub + '.' };
+      return {
+        title: getLang() === 'fa' ? 'از همان‌جا که ماندی' : 'Where you left off',
+        body: next.title + '. ' + next.sub + '.',
+      };
     }
 
     const e = expressionOfDay();
     return { title: e.fa, body: e.literal + '  ·  ' + e.en };
   } catch {
-    return { title: 'ده دقیقه فارسی', body: 'A few minutes of Persian is enough to keep it.' };
+    return getLang() === 'fa'
+      ? { title: 'ده دقیقه فارسی', body: 'چند دقیقه فارسی کافی است تا از دستت نرود.' }
+      : { title: 'Ten minutes of Persian', body: 'A few minutes of Persian is enough to keep it.' };
   }
 }
 
 export async function schedule() {
   try {
-    await Notifications.cancelAllScheduledNotificationsAsync();
+    // Only this one. cancelAll here wiped the idle nudge and every friend
+    // nudge on every launch, since loadReminders calls this at startup.
+    await cancelDaily();
     const { title, body } = await pickBody();
     await Notifications.scheduleNotificationAsync({
+      // Named, so cancelDaily can find it. Without an identifier the only
+      // way to stop it was cancelAll, which took every other scheduled
+      // notification with it.
+      identifier: DAILY_ID,
       content: { title, body },
       trigger: Platform.OS === 'ios'
         ? ({ hour, minute: 0, repeats: true } as any)

@@ -15,7 +15,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { useLang, getLang } from '@/lib/i18n';
+import { t, useLang, getLang } from '@/lib/i18n';
 import { loadBusiness, categoryLabel, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { FounderFlip } from '@/components/founder-flip';
@@ -25,6 +25,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { NearbyPlaces } from '@/components/nearby-places';
 import { isSavedBusiness, toggleSavedBusiness, shareBusiness } from '@/lib/saved-businesses';
 
+import { LOCAL } from '@/constants/i18n/local';
 // A listing photo is either a storage path or a bundled demo image.
 const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
@@ -98,7 +99,7 @@ export default function BusinessPage() {
             <Ionicons name="chevron-back" size={22} color={colors.textPrimary} />
           </Pressable>
         </View>
-        <Text style={s.dim}>{fa ? 'پیدا نشد.' : 'Not found.'}</Text>
+        <Text style={s.dim}>{fa ? 'پیدا نشد.' : t(LOCAL.notFound)}</Text>
       </SafeAreaView>
     );
   }
@@ -221,7 +222,7 @@ export default function BusinessPage() {
             {b.lat != null ? (
               <Pressable style={s.act} onPress={directions}>
                 <Ionicons name="navigate-outline" size={16} color={colors.accent} />
-                <Text style={s.actT}>{fa ? 'مسیر' : 'Directions'}</Text>
+                <Text style={s.actT}>{fa ? 'مسیر' : t(LOCAL.directions)}</Text>
               </Pressable>
             ) : null}
             {b.website ? (
@@ -230,7 +231,7 @@ export default function BusinessPage() {
                 onPress={() => Linking.openURL(b.website!.startsWith('http') ? b.website! : 'https://' + b.website)}
               >
                 <Ionicons name="globe-outline" size={16} color={colors.accent} />
-                <Text style={s.actT}>{fa ? 'وب‌سایت' : 'Website'}</Text>
+                <Text style={s.actT}>{fa ? 'وب‌سایت' : t(LOCAL.website)}</Text>
               </Pressable>
             ) : null}
           </View>
@@ -246,7 +247,7 @@ export default function BusinessPage() {
             >
               <Text style={s.blockL}>{fa ? 'نشانی' : 'ADDRESS'}</Text>
               <View style={s.addrRow}>
-                <Text style={[s.blockV, fa && s.rtl, { flex: 1 }]}>{b.address || (fa ? 'روی نقشه' : 'See it on the map')}</Text>
+                <Text style={[s.blockV, fa && s.rtl, { flex: 1 }]}>{b.address || (fa ? 'روی نقشه' : t(LOCAL.seeOnMap))}</Text>
                 {b.lat != null ? (
                   <View style={s.mapChip}>
                     <Ionicons name="map-outline" size={14} color={colors.accent} />
@@ -286,7 +287,7 @@ export default function BusinessPage() {
           <Text style={s.foot}>
             {fa
               ? 'این کسب‌وکار خودش را در فهرست زند ثبت کرده است.'
-              : 'This business listed itself on Zand.'}
+              : t(LOCAL.selfListed)}
           </Text>
           </View>
         </FounderFlip>
