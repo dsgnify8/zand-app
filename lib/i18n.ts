@@ -1,6 +1,6 @@
 // Language state + a tiny translation helper.
 // Strings live in section files (constants/i18n/*.ts) as { en, fa } pairs.
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { I18nManager } from 'react-native';
 
@@ -8,7 +8,19 @@ export type Lang = 'en' | 'fa';
 
 let lang: Lang = 'en';
 const listeners = new Set<() => void>();
-const emit = () => { console.log('[lang] emit to', listeners.size, 'listeners'); listeners.forEach((l) => l()); }; // TEMP-LANG-LOG
+let seq = 0;
+const emit = () => {
+  seq += 1;
+  console.log('[L] emit #' + seq + ' -> ' + listeners.size + ' listeners, lang=' + lang);
+  listeners.forEach((l) => l());
+};
+
+/** Render counter, so a screen can report whether it re-rendered on an emit. */
+export function useLangProbe(name: string) {
+  const now = useLang().lang;
+  console.log('[L] render ' + name + ' lang=' + now + ' emit=' + seq);
+  return now;
+}
 
 /** Subscribe to language changes. Returns an unsubscribe. */
 export function onLangChange(fn: () => void) {
@@ -27,7 +39,6 @@ export async function loadLang() {
 }
 
 export async function setLang(v: Lang) {
-  console.log('[lang] setLang called with', v, 'was', lang); // TEMP-LANG-LOG
   lang = v;
   emit();
   try { await AsyncStorage.setItem(KEY, v); } catch {}
@@ -44,17 +55,15 @@ export function t(entry: T): string {
 }
 
 export function useLang() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => { console.log('[lang] subscriber ticked'); tick((n) => n + 1); }; // TEMP-LANG-LOG
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
-  // Read through getLang() rather than closing over `lang`. The module
-  // binding resolves once, so returning it directly handed back the value
-  // from first evaluation on every render — the subscribers ticked, the
-  // component re-rendered, and useLang reported the old language forever
-  // while t() reported the new one.
-  const now = getLang();
+  // useSyncExternalStore, not useState + a listener set. `lang` is an
+  // external store read during render, and React 18 is free to bail out of
+  // a re-render driven by a plain setState from outside its own graph —
+  // which is why some subscribed components updated on a switch and others
+  // did not. This is the API for exactly this shape.
+  const now = useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => lang,
+  );
   return { lang: now, isRTL: now === 'fa', t, setLang };
 }
+

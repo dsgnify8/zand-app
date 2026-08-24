@@ -9,7 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { pr, ME, SEND_CATEGORIES, RECENT, WORD_BANK } from '@/constants/profile';
 import { applyLanguage } from '@/lib/apply-language';
-import { getLang, t as tset, useLang } from '@/lib/i18n';
+import { useLangProbe, getLang, t as tset, useLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { useIsAdmin } from '@/lib/admin';
 import { ReminderRow } from '@/components/reminder-row';
@@ -21,6 +21,7 @@ import { supabase } from '@/lib/supabase';
 import { useNotifPrefs, setNotifPref } from '@/lib/notif-prefs';
 import { APP } from '@/constants/i18n/app';
 
+import { PROFILE } from '@/constants/i18n/profile';
 function Sheet({ open, onClose, children }: any) {
   return (
     <Modal transparent visible={open} animationType="slide" onRequestClose={onClose}>
@@ -37,6 +38,7 @@ function Sheet({ open, onClose, children }: any) {
 /* ---------------- Settings ---------------- */
 
 export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useLangProbe('Settings');
   const [panel, setPanel] = useState<null | 'account' | 'language' | 'notifications' | 'help' | 'terms'>(null);
   const [confirmDel, setConfirmDel] = useState(false);
   const [delPass, setDelPass] = useState('');
@@ -47,7 +49,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     // Re-authenticate first. This proves it is really them and not
     // someone who picked up an unlocked phone, and it is the standard
     // pattern for a destructive, irreversible action.
-    if (!delPass.trim()) { setDelErr('Enter your password to confirm.'); return; }
+    if (!delPass.trim()) { setDelErr(t(PROFILE.confirmPassword)); return; }
     setDelBusy(true);
     setDelErr(null);
     const { error: authErr } = await supabase.auth.signInWithPassword({
@@ -56,7 +58,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     });
     if (authErr) {
       setDelBusy(false);
-      setDelErr('That password is not right.');
+      setDelErr(t(PROFILE.wrongPassword));
       return;
     }
     try {
@@ -88,7 +90,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     const { error } = await fn(editVal.trim());
     setEditBusy(false);
     if (error) { setEditMsg(error); return; }
-    setEditMsg(editField === 'email' ? 'Check your new email to confirm the change.' : 'Saved.');
+    setEditMsg(editField === 'email' ? t(PROFILE.checkNewEmail) : 'Saved.');
     if (editField !== 'email') setTimeout(() => setEditField(null), 700);
   };
   const isAdmin = useIsAdmin();
@@ -173,7 +175,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
             </Pressable>
             <Pressable style={m.field} onPress={() => startEdit('phone', phone)}>
               <Text style={m.fieldL}>{tset(SETTINGS.phone)}</Text>
-              <View style={m.fieldRow}><Text style={m.fieldV}>{phone || 'Add your number'}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
+              <View style={m.fieldRow}><Text style={m.fieldV}>{phone || t(PROFILE.addNumber)}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
             </Pressable>
             <View style={m.field}><Text style={m.fieldL}>{tset(SETTINGS.memberSince)}</Text><Text style={m.fieldV}>{ME.since}</Text></View>
 
@@ -190,7 +192,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               ) : (
                 <Text style={m.dangerT}>
                   {confirmDel
-                    ? 'Tap again to permanently delete your account'
+                    ? t(PROFILE.deleteAgain)
                     : tset(SETTINGS.deleteAccount)}
                 </Text>
               )}
@@ -211,14 +213,14 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
                 />
                 {delErr ? <Text style={m.delErr}>{delErr}</Text> : null}
                 <Pressable onPress={() => setConfirmDel(false)} style={{ paddingVertical: 10 }}>
-                  <Text style={m.dangerCancel}>Keep my account</Text>
+                  <Text style={m.dangerCancel}>{t(PROFILE.keepAccount)}</Text>
                 </Pressable>
               </>
             ) : null}
 
             {editField ? (
               <View style={m.editBox}>
-                <Text style={m.editLabel}>{editField === 'name' ? 'Your name' : editField === 'email' ? 'New email' : 'Phone number'}</Text>
+                <Text style={m.editLabel}>{editField === 'name' ? t(PROFILE.fieldName) : editField === 'email' ? t(PROFILE.fieldEmail) : t(PROFILE.fieldPhone)}</Text>
                 <TextInput style={m.editInput} value={editVal} onChangeText={setEditVal}
                   autoCapitalize={editField === 'name' ? 'words' : 'none'}
                   keyboardType={editField === 'email' ? 'email-address' : editField === 'phone' ? 'phone-pad' : 'default'}
@@ -227,12 +229,12 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
                 <View style={m.editBtns}>
                   <Pressable style={m.editCancel} onPress={() => setEditField(null)}><Text style={m.editCancelT}>{tset(SETTINGS.cancel)}</Text></Pressable>
                   <Pressable style={[m.editSave, editBusy && { opacity: 0.6 }]} onPress={saveEdit} disabled={editBusy}>
-                    <Text style={m.editSaveT}>{editBusy ? 'Saving…' : 'Save'}</Text>
+                    <Text style={m.editSaveT}>{editBusy ? t(PROFILE.saving) : 'Save'}</Text>
                   </Pressable>
                 </View>
               </View>
             ) : null}
-            <Text style={m.footNote}>Any questions about your information? Get in touch at contact@zand.com.</Text>
+            <Text style={m.footNote}>{t(PROFILE.dataQuestions)}</Text>
           </View>
         </>
       ) : null}
@@ -241,7 +243,6 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         <>
           <Header title="Language" />
           <View style={{ paddingBottom: spacing.xxl }}>
-            {console.log('[lang] row: curLang=', curLang, ' getLang()=', getLang()) as any}
             {[
               { code: 'en', label: 'English' },
               { code: 'fa', label: 'فارسی' },
@@ -268,10 +269,10 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
           <View style={{ paddingBottom: spacing.xxl }}>
             <View style={{ marginBottom: spacing.lg }}><ReminderRow /></View>
             {[
-              { k: 'learning', t: 'Language practice', x: 'A daily nudge to keep your streak' },
-              { k: 'idle', t: 'Pick up where you left off', x: 'If you have not opened something in a few days' },
-              { k: 'articles', t: 'Something new', x: 'When a new piece or topic goes up' },
-              { k: 'friends', t: 'From friends', x: 'When someone sends you a word or topic' },
+              { k: 'learning', t: t(PROFILE.notifLearning), x: t(PROFILE.notifLearningX) },
+              { k: 'idle', t: t(PROFILE.notifIdle), x: t(PROFILE.notifIdleX) },
+              { k: 'articles', t: t(PROFILE.notifNew), x: t(PROFILE.notifNewX) },
+              { k: 'friends', t: t(PROFILE.notifFriends), x: t(PROFILE.notifFriendsX) },
             ].map((n) => (
               <Pressable key={n.k} style={m.notifRow} onPress={() => setNotifPref(n.k as any, !(notif as any)[n.k])}>
                 <View style={{ flex: 1 }}>
@@ -291,7 +292,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         <>
           <Header title="Help centre" />
           <View style={{ paddingBottom: spacing.xxl }}>
-            <Text style={m.helpLead}>Our team reads everything.</Text>
+            <Text style={m.helpLead}>{t(PROFILE.helpRead)}</Text>
             <Text style={m.helpBody}>For any question, a problem, an idea, or just to say hello, email us and we will get back to you.</Text>
             <Pressable style={m.mailBtn} onPress={() => Linking.openURL('mailto:contact@zand.com')}>
               <Ionicons name="mail-outline" size={17} color="#FFF" />
@@ -303,15 +304,15 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
 
       {panel === 'terms' ? (
         <>
-          <Header title="Terms and privacy" />
+          <Header title={t(PROFILE.termsTitle)} />
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl }}>
-            <Text style={m.termsH}>Your data</Text>
-            <Text style={m.termsP}>ZAND keeps your progress, saved items, and preferences on your device. We do not sell your data.</Text>
-            <Text style={m.termsH}>Content and credit</Text>
-            <Text style={m.termsP}>Some articles draw on outside reporting, always credited with a link to the source. Historical and cultural content is written for ZAND.</Text>
-            <Text style={m.termsH}>Using the app</Text>
-            <Text style={m.termsP}>ZAND is here to help you learn and stay connected to Persian heritage. Please use it kindly.</Text>
-            <Text style={m.footNote}>Questions about any of this? Email contact@zand.com.</Text>
+            <Text style={m.termsH}>{t(PROFILE.termsData)}</Text>
+            <Text style={m.termsP}>{t(PROFILE.termsDataX)}</Text>
+            <Text style={m.termsH}>{t(PROFILE.termsCredit)}</Text>
+            <Text style={m.termsP}>{t(PROFILE.termsCreditX)}</Text>
+            <Text style={m.termsH}>{t(PROFILE.termsUsing)}</Text>
+            <Text style={m.termsP}>{t(PROFILE.termsUsingX)}</Text>
+            <Text style={m.footNote}>{t(PROFILE.termsContact)}</Text>
           </ScrollView>
         </>
       ) : null}
@@ -342,14 +343,14 @@ export function AddFriendSheet({ open, onClose }: { open: boolean; onClose: () =
         </Pressable>
       </View>
 
-      <Text style={m.headX}>Send them a link, or find them by the email they signed up with.</Text>
+      <Text style={m.headX}>{t(PROFILE.findByLink)}</Text>
 
       <Pressable style={m.bigOption} onPress={share}>
         <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <Ionicons name="link-outline" size={22} color={pr.friendA} />
         <View style={{ flex: 1 }}>
-          <Text style={m.bigT}>Share your link</Text>
-          <Text style={m.bigX}>They tap it, and you are connected. Nothing else to do.</Text>
+          <Text style={m.bigT}>{t(PROFILE.shareLink)}</Text>
+          <Text style={m.bigX}>{t(PROFILE.shareLinkX)}</Text>
         </View>
         <Ionicons name="arrow-forward" size={16} color={pr.friendA} />
       </Pressable>
@@ -362,7 +363,7 @@ export function AddFriendSheet({ open, onClose }: { open: boolean; onClose: () =
         <View style={m.emailBtn}><Text style={m.emailBtnT}>Find</Text></View>
       </Pressable>
 
-      <Text style={m.footNote}>They must already have an account for this to work. If they do not, send the link instead.</Text>
+      <Text style={m.footNote}>{t(PROFILE.needAccount)}</Text>
     </Sheet>
   );
 }
@@ -374,7 +375,7 @@ export function RenameSheet({ open, onClose, friend, onSave }: any) {
   return (
     <Sheet open={open} onClose={onClose}>
       <View style={m.head}>
-        <Text style={m.headT}>What do you call them</Text>
+        <Text style={m.headT}>{t(PROFILE.nicknameLabel)}</Text>
         <Pressable hitSlop={10} onPress={onClose}>
           <Ionicons name="close" size={21} color={colors.textPrimary} />
         </Pressable>
@@ -434,7 +435,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
           <View style={m.sentTick}><Ionicons name="checkmark" size={26} color="#FFF" /></View>
           <Text style={m.sentT}>Sent to {to}</Text>
           <Text style={m.sentX}>{sent}</Text>
-          <Text style={m.sentNote}>They will get a notification. Now it is their turn.</Text>
+          <Text style={m.sentNote}>{t(PROFILE.theirTurn)}</Text>
           <Pressable style={m.sentBtn} onPress={close}>
             <Text style={m.sentBtnT}>{tset(APP.done)}</Text>
           </Pressable>
@@ -499,7 +500,9 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
                   ) : null}
                 </View>
                 <Text style={m.searchNote}>
-                  {q ? hits.length + ' of ' + WORD_BANK.length + ' words' : 'The ten people send most. Search for any of the ' + WORD_BANK.length + '.'}
+                  {q
+                    ? t(PROFILE.wordHits).replace('{n}', String(hits.length)).replace('{total}', String(WORD_BANK.length))
+                    : t(PROFILE.wordBankNote).replace('{total}', String(WORD_BANK.length))}
                 </Text>
               </>
             ) : null}
@@ -515,7 +518,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
                 </Pressable>
               ))}
               {active.searchable && q && hits.length === 0 ? (
-                <Text style={m.noHits}>Nothing matches. Try the Persian or the English.</Text>
+                <Text style={m.noHits}>{t(PROFILE.noMatches)}</Text>
               ) : null}
             </View>
           </>

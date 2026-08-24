@@ -135,6 +135,37 @@ export const PROFILE: Record<string, T> = {
   fieldPhone: { en: 'Phone number', fa: 'شمارهٔ تلفن' },
   dataQuestions: { en: 'Any questions about your information? Get in touch at contact@zand.com.', fa: 'دربارهٔ اطلاعاتت سؤالی داری؟ با ما در contact@zand.com در تماس باش.' },
 
+  // help and terms
+  helpRead: { en: 'Our team reads everything.', fa: 'تیم ما همه را می‌خواند.' },
+  termsTitle: { en: 'Terms and privacy', fa: 'شرایط و حریم خصوصی' },
+  termsData: { en: 'Your data', fa: 'اطلاعات تو' },
+  termsDataX: {
+    en: 'ZAND keeps your progress, saved items, and preferences on your device. We do not sell your data.',
+    fa: 'زند پیشرفت، ذخیره‌شده‌ها و تنظیماتت را روی دستگاه خودت نگه می‌دارد. ما اطلاعاتت را نمی‌فروشیم.',
+  },
+  // Sources and authorship, not licensing — hence منابع rather than حق مؤلف.
+  termsCredit: { en: 'Content and credit', fa: 'محتوا و منابع' },
+  termsCreditX: {
+    en: 'Some articles draw on outside reporting, always credited with a link to the source. Historical and cultural content is written for ZAND.',
+    fa: 'بعضی مطالب به گزارش‌های بیرونی تکیه دارند و همیشه با لینک به منبع اصلی نام برده می‌شوند. محتوای تاریخی و فرهنگی برای زند نوشته شده است.',
+  },
+  // برنامه rather than اپ: the loanword is what people say, but this is the
+  // most formal screen in the app.
+  termsUsing: { en: 'Using the app', fa: 'استفاده از برنامه' },
+  termsUsingX: {
+    en: 'ZAND is here to help you learn and stay connected to Persian heritage. Please use it kindly.',
+    fa: 'زند برای این است که یاد بگیری و با میراث ایرانی در پیوند بمانی. با مهربانی ازش استفاده کن.',
+  },
+  termsContact: { en: 'Questions about any of this? Email contact@zand.com.', fa: 'پرسشی داری؟ به contact@zand.com ایمیل بزن.' },
+
+  // Placeholders, not concatenation: Persian leads with the count and does
+  // not repeat the noun, so the pieces cannot be glued in English order.
+  wordHits: { en: '{n} of {total} words', fa: '{n} واژه از {total}' },
+  wordBankNote: {
+    en: 'The ten people send most. Search for any of the {total}.',
+    fa: 'ده واژه‌ای که بیشتر از همه فرستاده می‌شوند. از میان {total} واژه جست‌وجو کن.',
+  },
+
   // notifications
   notifLearning: { en: 'Language practice', fa: 'تمرین زبان' },
   notifLearningX: { en: 'A daily nudge to keep your streak', fa: 'یادآوری روزانه برای حفظ رکوردت' },

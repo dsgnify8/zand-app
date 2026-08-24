@@ -2,13 +2,19 @@ import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
-import { useLang } from '@/lib/i18n';
+import { getLang, t } from '@/lib/i18n';
 import { NAV } from '@/constants/i18n/nav';
 import { TpmIcon } from '@/components/tpm-mark';
 import { tpm } from '@/constants/tpm-theme';
 
 export default function TabLayout() {
-  const { t, lang } = useLang();
+  // Deliberately NOT useLang(). Every Tabs.Screen is declared in this
+  // function, so subscribing here re-renders the navigator on a language
+  // change — which rebuilds its screen registry underneath the screens
+  // trying to update, and leaves stale subscribed copies behind. The tab
+  // titles below are resolved at render, so they follow the language via
+  // whatever re-renders this for navigation reasons.
+  const lang = getLang();
   const labelFont = lang === 'fa' ? fonts.persian : fonts.body;
 
   return (

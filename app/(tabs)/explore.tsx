@@ -20,7 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { useLang, t as tr, getLang } from '@/lib/i18n';
+import { useLangProbe, useLang, t as tr, getLang } from '@/lib/i18n';
 import { SECTIONS } from '@/constants/i18n/sections';
 import { eduImage } from '@/constants/education-images';
 import { TOPICS as HISTORY_TOPICS } from '@/constants/education';
@@ -237,6 +237,7 @@ function WorldCard({ w, index, fa }: { w: World; index: number; fa: boolean }) {
 /* ---------------- the page ---------------- */
 
 export default function Explore() {
+  useLangProbe('Explore');
   // Subscribe to the language. Without this the screen only re-renders
   // when something else pushes it, so a switch made elsewhere does not
   // reach it until you navigate away and back.

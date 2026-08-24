@@ -10,7 +10,7 @@ import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS
 import { useSaved } from '@/lib/saved-store';
 import { useProgress } from '@/lib/progress-store';
 import { VideoTile } from '@/components/video-tile';
-import { t, useLang } from '@/lib/i18n';
+import { useLangProbe, t, useLang } from '@/lib/i18n';
 import { PROFILE } from '@/constants/i18n/profile';
 import { ContinueReading } from '@/components/continue-reading';
 import { useAuth } from '@/lib/auth';
@@ -312,8 +312,9 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
   // array as the items — a sentinel with __header rather than a nested map,
   // so there is still only one copy of the row markup below.
   const KIND_LABEL: Record<string, string> = {
-    word: 'Words', verse: 'Verses', topic: 'Topics', poet: 'Poets',
-    place: 'Places', culture: 'Culture', business: 'Businesses', other: 'Everything else',
+    word: t(PROFILE.kindWords), verse: t(PROFILE.kindVerses), topic: t(PROFILE.kindTopics),
+    poet: t(PROFILE.kindPoets), place: t(PROFILE.kindPlaces), culture: t(PROFILE.kindCulture),
+    business: t(PROFILE.kindBusinesses), other: t(PROFILE.kindOther),
   };
   let rows: any[] = items;
   if (view === 'saved') {
@@ -331,10 +332,10 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
 
   const TITLE: Record<string, string> = { history: t(PROFILE.history), favourites: t(PROFILE.favourites), watched: t(PROFILE.watched), saved: t(PROFILE.saveLater) };
   const EMPTY: Record<string, string> = {
-    history: 'Nothing opened yet. Start reading and it shows up here.',
-    favourites: 'No favourites yet. Tap the heart on anything you love.',
+    history: t(PROFILE.emptyHistory),
+    favourites: t(PROFILE.emptyFavourites),
     watched: 'No videos watched yet.',
-    saved: 'Nothing saved yet. Tap the bookmark to keep something for later.',
+    saved: t(PROFILE.emptySaved),
   };
 
   return (
@@ -431,7 +432,7 @@ function LibraryTab() {
         <LinearGradient colors={[pr.saveA, pr.saveB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <Text style={s.libN}>{items.length}</Text>
         <Text style={s.libL}>{t(PROFILE.thingsKept)}</Text>
-        <Text style={s.libX}>Everything you tapped save on, in one place.</Text>
+        <Text style={s.libX}>{t(PROFILE.libraryBlurb)}</Text>
       </View>
 
       <Text style={s.sectionLabel}>{t(PROFILE.yourLibrary)}</Text>
@@ -740,7 +741,7 @@ function ProgressTab() {
         <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <StreakPlant streak={progStreak} size={1.25} />
         <Text style={s.progN}>{progStreak} days</Text>
-        <Text style={s.progX}>{progDemo ? 'Longest you have ever gone: ' + ME.longest : ((progStats as any)?.streakNudge ? t(PROFILE.streakNudge) : progStreak > 0 ? 'Longest you have ever gone: ' + progStreak : '')}</Text>
+        <Text style={s.progX}>{progDemo ? t(PROFILE.longestRun) + ' ' + ME.longest : ((progStats as any)?.streakNudge ? t(PROFILE.streakNudge) : progStreak > 0 ? t(PROFILE.longestRun) + ' ' + progStreak : '')}</Text>
       </View>
 
       <Text style={s.sectionLabel}>{t(APP.yourPersian)}</Text>
@@ -751,7 +752,7 @@ function ProgressTab() {
         {[
           { v: stats.topicsFinished, k: 'Topics finished', kT: PROFILE.topicsFinished, i: 'book',
             items: () => fromFinished('topic-') },
-          { v: (stats as any).poetsRead ?? 0, k: 'Poets read', i: 'book-outline',
+          { v: (stats as any).poetsRead ?? 0, k: 'Poets read', kT: PROFILE.poetsRead, i: 'book-outline',
             items: () => fromFinished('poet-') },
           { v: stats.pagesRead, k: 'Pages read', kT: PROFILE.pagesRead, i: 'document-text' },
           { v: stats.thingsSaved, k: 'Things saved', kT: PROFILE.thingsSaved, i: 'bookmark',
@@ -786,7 +787,7 @@ function ProgressTab() {
         <Ionicons name="chevron-forward" size={16} color={pr.dim} />
       </Pressable>
 
-      <Text style={s.finEmpty}>Hold any of these to see what is behind it.</Text>
+      <Text style={s.finEmpty}>{t(PROFILE.holdForMore)}</Text>
 
       <AchievementsSheet open={achvOpen} onClose={() => setAchvOpen(false)} />
       <StatItemsSheet
@@ -802,6 +803,8 @@ function ProgressTab() {
 /* ---------------- The page ---------------- */
 
 export default function Profile() {
+  const _n = useRef(Math.random().toString(36).slice(2, 5));
+  console.log('[L] BODY', _n.current, 'lang=' + require('@/lib/i18n').getLang());
   // Subscribe to the language. Without this the screen only re-renders
   // when something else pushes it, so a switch made elsewhere does not
   // reach it until you navigate away and back.
@@ -823,10 +826,13 @@ export default function Profile() {
     : 0;
 
   return (
-    <SafeAreaView style={s.safe} edges={['top']}>
+    // Keyed on the language: changing writingDirection and textAlign on
+    // already-mounted native Text views does not reliably take effect on
+    // iOS. Recreating this subtree is what makes a live switch repaint.
+    <SafeAreaView key={require('@/lib/i18n').getLang()} style={s.safe} edges={['top']}>
       <View style={s.header}>
         <View>
-          <Text style={s.hello}>{t(PROFILE.welcome)}</Text>
+          <Text style={s.hello}>{t(PROFILE.welcome)}{console.log('[L] JSX ', _n.current, t(PROFILE.welcome)) as any}</Text>
           <Text style={s.name}>{displayName}</Text>
         </View>
         <Pressable hitSlop={10} onPress={() => setSettings(true)}>
@@ -835,13 +841,13 @@ export default function Profile() {
       </View>
 
       <View style={s.tabs}>
-        {tabsFor().map((t) => {
-          const on = t.k === tab;
+        {tabsFor().map((tb) => {
+          const on = tb.k === tab;
           return (
-            <Pressable key={t.k} style={[s.tab, on && s.tabOn]} onPress={() => setTab(t.k)}>
-              <Ionicons name={(t.icon + (on ? '' : '-outline')) as any} size={15} color={on ? colors.surface : pr.dim} />
-              <Text style={[s.tabT, on && s.tabTOn]}>{t.label}</Text>
-              {t.k === 'friends' && pending > 0 && !on ? <View style={s.badge} /> : null}
+            <Pressable key={tb.k} style={[s.tab, on && s.tabOn]} onPress={() => setTab(tb.k)}>
+              <Ionicons name={(tb.icon + (on ? '' : '-outline')) as any} size={15} color={on ? colors.surface : pr.dim} />
+              <Text style={[s.tabT, on && s.tabTOn]}>{tb.label}</Text>
+              {tb.k === 'friends' && pending > 0 && !on ? <View style={s.badge} /> : null}
             </Pressable>
           );
         })}
