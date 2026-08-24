@@ -4,9 +4,14 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
 
+import { useLang } from '@/lib/i18n';
 const SPAN = 5000;
 
 export function CalendarDrift() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [running, setRunning] = useState(false);
   const t = useRef(new Animated.Value(0)).current;
   const [year, setYear] = useState(0);

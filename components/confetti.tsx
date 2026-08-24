@@ -12,11 +12,16 @@ import { Animated, Dimensions, Easing, StyleSheet, View } from 'react-native';
 
 import { lw } from '@/constants/lang-theme';
 
+import { useLang } from '@/lib/i18n';
 const { width: W, height: H } = Dimensions.get('window');
 const COLOURS = [lw.gold, lw.green, '#C9634B', '#7BA05B', '#E4C062'];
 const COUNT = 34;
 
 function Piece({ delay }: { delay: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const t = useRef(new Animated.Value(0)).current;
 
   // fixed per piece, so nothing jitters between frames

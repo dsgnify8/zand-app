@@ -14,6 +14,10 @@ import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 function ThreadShimmer({ delay }: { delay: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const v = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     const loop = Animated.loop(
@@ -31,6 +35,10 @@ function ThreadShimmer({ delay }: { delay: number }) {
 }
 
 function FloatingSymbol({ symbol, delay }: { symbol: string; delay: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const float = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     const loop = Animated.loop(
@@ -51,6 +59,10 @@ function FloatingSymbol({ symbol, delay }: { symbol: string; delay: number }) {
 }
 
 function Section({ section, index, last }: { section: TraditionSection; index: number; last: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const rise = useRef(new Animated.Value(16)).current;
 
@@ -110,6 +122,10 @@ function Section({ section, index, last }: { section: TraditionSection; index: n
 }
 
 function AnimatedHeader({ t }: { t: any }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.94)).current;
   useEffect(() => {
@@ -134,6 +150,10 @@ function AnimatedHeader({ t }: { t: any }) {
 }
 
 export default function TraditionScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { tradition: key } = useLocalSearchParams<{ tradition: string }>();
   const t = findTradition(key);
 

@@ -3,8 +3,13 @@ import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, spacing } from '@/constants/zand-theme';
 
+import { useLang } from '@/lib/i18n';
 /* Sabzeh. It grows with the streak and it never stops moving. */
 export function StreakPlant({ streak, size = 1 }: { streak: number; size?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const blades = Math.max(3, Math.min(11, 3 + Math.floor(streak / 2)));
   const grow = useRef(new Animated.Value(0)).current;
   const sway = useRef(new Animated.Value(0)).current;

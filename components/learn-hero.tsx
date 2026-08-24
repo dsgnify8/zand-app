@@ -10,9 +10,13 @@ import { isLessonDone, journeyPosition, useLearnProgress } from '@/lib/learn-pro
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
 import { useAuth } from '@/lib/auth';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 export function LearnHero() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { session } = useAuth();
   useLearnProgress();
   const { asked: chosen, ready, info } = useLevel();

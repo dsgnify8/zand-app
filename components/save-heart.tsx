@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 
 import { useSaved } from '@/lib/saved-store';
 import { useAuth } from '@/lib/auth';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 // A small heart + bookmark pair, wired to the saved-store. Works for any
 // keyed item: topics, poets, culture cards. Stops propagation so tapping
@@ -22,6 +22,10 @@ export function SaveHeart({
   itemKey: string; size?: number; tint?: string; gap?: number;
   likeColor?: string; saveColor?: string;
 }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { isLiked, isSaved, toggleLike, toggleSave } = useSaved();
   const { session } = useAuth();
   const [hint, setHint] = useState(false);

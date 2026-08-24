@@ -100,6 +100,10 @@ function cardsFor(pillar: Pillar): Card[] {
 }
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const rise = useRef(new Animated.Value(12)).current;
   useEffect(() => {
@@ -149,6 +153,10 @@ function nextTurn() {
 }
 
 function Countdown() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [turn] = useState(nextTurn);
   const [left, setLeft] = useState(turn ? turn.t - Date.now() : 0);
 

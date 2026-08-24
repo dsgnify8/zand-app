@@ -27,6 +27,10 @@ type Props = {
 };
 
 export function SectionHub({ glyph, title, subtitle, items, showBack, backLabel = 'Back' }: Props) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader showSearch={!showBack} />

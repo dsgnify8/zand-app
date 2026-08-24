@@ -12,7 +12,7 @@ import { speak, prewarm } from '@/lib/speak';
 import { record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 type Q =
   | { kind: 'meaning'; fa: string; tr: string; answer: string; options: string[] }
@@ -80,6 +80,10 @@ function questionsFor(stageKey?: string): Q[] {
 }
 
 export default function CheckpointScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { stage } = useLocalSearchParams<{ stage?: string }>();
   const stageInfo = STAGES.find((s) => s.key === stage);
   const qs = useMemo(() => questionsFor(stage), [stage]);

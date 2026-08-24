@@ -14,7 +14,7 @@ import { ExpressionCard } from '@/components/expression-card';
 import { Art, type ArtName } from '@/components/lang-art';
 import { ReminderRow } from '@/components/reminder-row';
 import { useAuth } from '@/lib/auth';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { LEARN } from '@/constants/i18n/learn';
 import { t as tl } from '@/lib/i18n';
 
@@ -47,6 +47,10 @@ function stepDone(st: JourneyStep) {
 }
 
 function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const done = stepDone(st);
   const pulse = useRef(new Animated.Value(0)).current;
 
@@ -94,6 +98,10 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
 let lastScrollY = 0;
 
 export default function MapScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { session } = useAuth();
   const jumped = useRef(false);
     const scrollRef = useRef<ScrollView>(null);

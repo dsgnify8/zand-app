@@ -20,7 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
 import { useIsAdmin } from '@/lib/admin';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import {
   categoryLabel, loadForReview, myBusinesses,
   type Business, type BusinessStatus,
@@ -48,6 +48,10 @@ const FILTERS = [
 ] as const;
 
 export default function MyBusinesses() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { user, session } = useAuth();
   const isAdmin = useIsAdmin();
   const fa = getLang() === 'fa';

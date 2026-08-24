@@ -6,11 +6,15 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { findTerm } from '@/constants/glossary';
 import { useGlossary } from '@/lib/glossary-store';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { router } from 'expo-router';
 
 // Renders a paragraph where {{term-id|visible text}} becomes a tappable link.
 export function GlossaryText({ text }: { text: string }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [openId, setOpenId] = useState<string | null>(null);
   const { isSaved, toggleSaved } = useGlossary();

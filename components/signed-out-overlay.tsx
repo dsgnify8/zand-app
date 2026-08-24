@@ -10,9 +10,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 export function SignedOutOverlay() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
 
   return (

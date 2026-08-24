@@ -12,6 +12,10 @@ import { APP } from '@/constants/i18n/app';
 const SUGGESTIONS = ['Alphabet', 'History', 'Poetry', 'Nowruz', 'Food', 'Podcasts'];
 
 export default function SearchScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [query, setQuery] = useState('');
   const results = useMemo(() => searchZand(query), [query]);
 

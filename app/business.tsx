@@ -15,7 +15,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { loadBusiness, categoryLabel, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { FounderFlip } from '@/components/founder-flip';
@@ -63,6 +63,10 @@ function socialUrl(key: string, v: string) {
 }
 
 export default function BusinessPage() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { id } = useLocalSearchParams<{ id: string }>();
   const fa = getLang() === 'fa';
   const [b, setB] = useState<Business | null>(null);

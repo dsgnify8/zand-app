@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { nz, HAFT_SEEN, SEEN_GUESTS, NOWRUZ_MOMENTS } from '@/constants/nowruz';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const W = Dimensions.get('window').width;
 
@@ -19,6 +19,10 @@ function nextMoment() {
 }
 
 export function Tahvil() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [target] = useState(nextMoment);
   const [left, setLeft] = useState(target - Date.now());
@@ -130,6 +134,10 @@ function SeenGlyph({ k }: { k: string }) {
 }
 
 export function HaftSeen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [i, setI] = useState(0);
   const ref = useRef<ScrollView>(null);
@@ -186,6 +194,10 @@ export function HaftSeen() {
 
 /* The guests: everything on the table that is not an S. */
 export function Guests() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [open, setOpen] = useState<string | null>(null);
   return (
@@ -210,6 +222,10 @@ export function Guests() {
 
 /* Chaharshanbe Suri. Jump it. */
 export function Fire() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [jumped, setJumped] = useState(false);
   const y = useRef(new Animated.Value(0)).current;
@@ -267,6 +283,10 @@ export function Fire() {
 
 /* Sizdah Bedar. Tie a knot, make a wish, let it go. */
 export function Knot() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [state, setState] = useState<0 | 1 | 2>(0);
   const tie = useRef(new Animated.Value(0)).current;

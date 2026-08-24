@@ -12,7 +12,7 @@ import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 type Card = { fa: string; tr: string; en: string };
 
@@ -44,6 +44,10 @@ function shuffle<T>(a: T[]) {
 }
 
 export default function ReviewScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   useLearnProgress();
   const pool = useMemo(() => harvest(), []);
   // shakiest and most overdue first, so review targets what is slipping

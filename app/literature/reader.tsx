@@ -54,6 +54,10 @@ function Veil({ surface, hidden, fa }: { surface: string; hidden: string; fa?: b
 }
 
 function Block({ b }: { b: LitBlock }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   // goes through the override layer so admin edits apply without a build
   const tx = (o: any, k: any = 'x') => txt(o, fa, k);
@@ -199,6 +203,10 @@ function Block({ b }: { b: LitBlock }) {
 }
 
 export default function LitReader() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const params = useLocalSearchParams<{ author: string; page: string }>();
   const author = findAuthor(params.author);

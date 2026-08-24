@@ -4,6 +4,7 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { yl, YALDA_MOMENTS } from '@/constants/yalda';
 
+import { useLang } from '@/lib/i18n';
 /* The countdown to the longest night. */
 function nextMoment() {
   const now = Date.now();
@@ -15,6 +16,10 @@ function nextMoment() {
 }
 
 export function Solstice() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [target] = useState(nextMoment);
   const [left, setLeft] = useState(target - Date.now());
 
@@ -64,6 +69,10 @@ const SEEDS = Array.from({ length: 46 }).map((_, i) => {
 });
 
 export function Anar() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [open, setOpen] = useState(false);
   const a = useRef(new Animated.Value(0)).current;
   const seeds = useRef(SEEDS.map(() => new Animated.Value(0))).current;
@@ -122,6 +131,10 @@ export function Anar() {
 const BARS = 24;
 
 export function NightArc() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const grow = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

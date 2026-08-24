@@ -21,11 +21,16 @@ import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
 import { EDU_IMAGES, eduImage } from '@/constants/education-images';
+import { useLang } from '@/lib/i18n';
 import {
   pickAndUpload, clearOverride, listOverrides, loadImageOverrides, imageOverride,
 } from '@/lib/image-overrides';
 
 export default function AdminImages() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const isAdmin = useIsAdmin();
   const { user } = useAuth();
 

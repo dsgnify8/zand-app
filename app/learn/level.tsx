@@ -9,9 +9,13 @@ import { lw } from '@/constants/lang-theme';
 import { LEVELS, setLevel, skipLevel, type Level } from '@/lib/learn-level';
 import { Art } from '@/components/lang-art';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function LevelScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [picked, setPicked] = useState<Level | null>(null);
 
   const go = async () => {

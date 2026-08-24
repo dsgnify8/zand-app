@@ -8,9 +8,13 @@ import { lw } from '@/constants/lang-theme';
 import { ZandHeader } from '@/components/zand-header';
 import { QUIZ_CATEGORIES } from '@/constants/quizzes';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function QuizzesHome() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const totalQs = QUIZ_CATEGORIES.reduce((n, c) => n + c.questions.length, 0);
 
   return (

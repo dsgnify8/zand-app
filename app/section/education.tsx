@@ -35,6 +35,10 @@ const TOPICS: Topic[] = [
 ];
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const rise = useRef(new Animated.Value(12)).current;
   useEffect(() => {
@@ -47,6 +51,10 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function TopicCard({ t }: { t: Topic }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const src = t.image ? eduImage(t.image) : null;
   const open = t.status === 'ready' && !!t.route;
   return (
@@ -92,6 +100,10 @@ function TopicCard({ t }: { t: Topic }) {
 }
 
 export default function EducationScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ZandHeader />

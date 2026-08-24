@@ -10,9 +10,13 @@ import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { cu, CULTURE_TOPICS, CULTURE_PAGES, type CuBlock } from '@/constants/culture';
 import { CultureGround } from '@/app/culture/index';
 import { TaarofSim, DelMap, TypicalCards, Zurkhaneh, RicePot, Dishes, Sweets } from '@/components/culture-blocks';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const a = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.timing(a, { toValue: 1, duration: 480, delay, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
@@ -22,6 +26,10 @@ function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b, accent }: { b: CuBlock; accent: string }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
   const rtl = fa ? styles.rtl : undefined;
@@ -102,6 +110,10 @@ function Block({ b, accent }: { b: CuBlock; accent: string }) {
 }
 
 export default function CultureTopic() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { topic } = useLocalSearchParams<{ topic: string }>();
   const t = CULTURE_TOPICS.find((x) => x.key === topic) ?? CULTURE_TOPICS[0];
   const pages = CULTURE_PAGES[t.key] ?? [];

@@ -10,7 +10,7 @@ import { lw } from '@/constants/lang-theme';
 import { findCategory } from '@/constants/fill-blank';
 import { useProgress } from '@/lib/progress-store';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 function shuffle<T>(arr: T[], seed: number): T[] {
   const a = [...arr];
@@ -24,6 +24,10 @@ function shuffle<T>(arr: T[], seed: number): T[] {
 }
 
 export default function FillBlankPlay() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { cat } = useLocalSearchParams<{ cat: string }>();
   const category = findCategory(cat);
   const { markActivity } = useProgress();

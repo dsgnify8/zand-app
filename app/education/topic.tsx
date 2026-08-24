@@ -12,6 +12,10 @@ import { t, useLang, getLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 export default function TopicScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { topic: key } = useLocalSearchParams<{ topic: string }>();
   const topic = findTopic(key);
 

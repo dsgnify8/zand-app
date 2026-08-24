@@ -16,6 +16,10 @@ import { CityCard } from '@/components/city-card';
 import { PlaceCard } from '@/components/place-card';
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const rise = useRef(new Animated.Value(12)).current;
   useEffect(() => {
@@ -28,6 +32,10 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b }: { b: GeoBlock }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   // Farsi when the app is in Farsi and the block has been translated.
   const fa = getLang() === 'fa';
   const tx = (blk: any) => (fa && blk.fa ? blk.fa : blk.x);
@@ -117,6 +125,10 @@ function Block({ b }: { b: GeoBlock }) {
 }
 
 export default function GeographyScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const scroller = useRef<ScrollView>(null);
   const sectionY = useRef<Record<string, number>>({});
   const { jump: wantJump } = useLocalSearchParams<{ jump?: string }>();

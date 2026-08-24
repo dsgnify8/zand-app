@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { HISTORY_ERAS } from '@/constants/education';
 
+import { useLang } from '@/lib/i18n';
 type Node = { name: string; persian?: string; years: string; topicKey?: string; era: string };
 
 function flat(): Node[] {
@@ -18,6 +19,10 @@ function shortYears(y: string) {
 }
 
 function Node({ n, i }: { n: Node; i: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const open = !!n.topicKey;
 
@@ -67,6 +72,10 @@ function Node({ n, i }: { n: Node; i: number }) {
 }
 
 export function HistoryTimeline() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const nodes = flat();
   return (
     <View style={styles.wrap}>

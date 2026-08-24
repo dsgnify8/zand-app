@@ -11,7 +11,7 @@ import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 const CARD_HEIGHT = 300;
 const FORM_LABELS = [['FINAL', 'DETACHED'], ['FINAL', 'ATTACHED'], ['MEDIAL', ''], ['INITIAL', '']];
@@ -137,6 +137,10 @@ const sheetS = StyleSheet.create({
 });
 
 export default function AlphabetScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { width } = useWindowDimensions();
   const { learnedLetters, markLetterLearned } = useProgress();
   const [flipped, setFlipped] = useState<Set<number>>(new Set());

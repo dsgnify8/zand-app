@@ -74,8 +74,6 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   // with the hook and read with getLang().
   useLang();
   const curLang = getLang();
-  const _id = useRef(Math.random().toString(36).slice(2, 6)); // TEMP-LANG-LOG
-  console.log('[lang] SettingsSheet', _id.current, 'open=', open, 'panel=', panel, 'curLang=', (require('@/lib/i18n').getLang())); // TEMP-LANG-LOG
   const { displayName, user, signOut, updateName, updateEmail, updatePhone } = useAuth();
   const phone = (user?.user_metadata?.phone as string) ?? '';
   const [editField, setEditField] = useState<null | 'name' | 'email' | 'phone'>(null);

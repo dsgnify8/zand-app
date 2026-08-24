@@ -26,6 +26,7 @@ import { loadForReview, decide, categoryLabel, type Business } from '@/lib/busin
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
 
+import { useLang } from '@/lib/i18n';
 // A listing photo is either a storage path or a bundled demo image.
 const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
@@ -39,6 +40,10 @@ const FILTERS = [
 ] as const;
 
 export default function AdminBusinesses() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const isAdmin = useIsAdmin();
   const [all, setAll] = useState<Business[]>([]);
   const [filter, setFilter] = useState<string>('submitted');

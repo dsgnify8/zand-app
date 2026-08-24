@@ -12,7 +12,7 @@ import { eduImage } from '@/constants/education-images';
 import { TpmMark } from '@/components/tpm-mark';
 import { readCount, resetTpm } from '@/lib/tpm-access';
 import { useIsAdmin } from '@/lib/admin';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const W = Dimensions.get('window').width;
 
@@ -25,6 +25,10 @@ const FILTERS = [
 ];
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const a = useRef(new Animated.Value(0)).current;
   Animated.timing(a, { toValue: 1, duration: 460, delay, useNativeDriver: true }).start();
   const y = a.interpolate({ inputRange: [0, 1], outputRange: [14, 0] });
@@ -81,6 +85,10 @@ function BandPost({ p }: { p: TpmPost }) {
 }
 
 export default function TpmScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [filter, setFilter] = useState('all');
   const read = readCount();
   const isAdmin = useIsAdmin();

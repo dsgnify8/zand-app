@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Line, Path, Text as SvgText } from 'react-native-svg';
 
 import { fonts, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 // The rial against the dollar, 1979 to 2026.
 //
@@ -37,6 +37,10 @@ const PAD_T = 16;
 const PAD_B = 30;
 
 export function CurrencyChart({ dark = true }: { dark?: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const ink = dark ? '#EFE7DC' : '#221E1A';
   const dim = dark ? 'rgba(239,231,220,0.45)' : 'rgba(34,30,26,0.45)';
@@ -112,6 +116,10 @@ const BASKET = [
 ];
 
 export function BasketTable({ dark = true }: { dark?: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const ink = dark ? '#EFE7DC' : '#221E1A';
   const dim = dark ? 'rgba(239,231,220,0.5)' : 'rgba(34,30,26,0.5)';

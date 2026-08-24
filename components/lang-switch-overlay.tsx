@@ -11,7 +11,12 @@ import { BlurView } from 'expo-blur';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { registerLangOverlay } from '@/lib/apply-language';
 
+import { useLang } from '@/lib/i18n';
 export function LangSwitchOverlay() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [msg, setMsg] = useState<string | null>(null);
 
   useEffect(() => registerLangOverlay(setMsg), []);

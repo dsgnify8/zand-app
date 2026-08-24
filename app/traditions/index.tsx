@@ -18,6 +18,10 @@ import { APP } from '@/constants/i18n/app';
 type Tab = 'nowruz' | 'yalda';
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const a = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.timing(a, { toValue: 1, duration: 420, delay, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
@@ -29,6 +33,10 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 /* ---------------- Nowruz ---------------- */
 
 function NzBlockView({ b }: { b: NzBlock }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const s = nzStyles;
   const fa = getLang() === 'fa';
   const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
@@ -92,6 +100,10 @@ function NzBlockView({ b }: { b: NzBlock }) {
 /* ---------------- Yalda ---------------- */
 
 function YlBlockView({ b }: { b: YlBlock }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const s = ylStyles;
   const fa = getLang() === 'fa';
   const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
@@ -149,6 +161,10 @@ function YlBlockView({ b }: { b: YlBlock }) {
 /* ---------------- The page ---------------- */
 
 export default function Traditions() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [tab, setTab] = useState<Tab>('nowruz');
   const scroller = useRef<ScrollView>(null);
   const sectionY = useRef<Record<string, number>>({});

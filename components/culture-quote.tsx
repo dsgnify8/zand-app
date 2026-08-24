@@ -16,13 +16,17 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
 import { eduImage } from '@/constants/education-images';
-import { t as tr, getLang } from '@/lib/i18n';
+import { useLang, t as tr, getLang } from '@/lib/i18n';
 import { SECTIONS } from '@/constants/i18n/sections';
 
 const BRICK = '#8C3A2E'; // the history circles
 const ON_BRICK = '#F6EFE9'; // type that has to sit on it
 
 export function CultureQuote() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const bg = eduImage('zand-vakil-bazaar');
 

@@ -20,7 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
 import { SectionBand } from '@/components/section-band';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 // Taken from the two-panel version this replaces, so the seasons keep the
 // colours people already associate with them elsewhere in the app.
@@ -33,6 +33,10 @@ const DIVIDER = 'rgba(40,24,20,0.16)';
 const INNER = 1.06;
 
 export function TraditionsWheel() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
 
   const [W, setW] = useState(340);

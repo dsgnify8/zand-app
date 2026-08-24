@@ -22,6 +22,10 @@ import { FramedImage } from '@/components/framed-image';
 import { txt } from '@/lib/content-overrides';
 
 function BlockView({ b }: { b: Block }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   // Farsi when the app is in Farsi and this block has been translated.
   const fa = getLang() === 'fa';
   // goes through the override layer so admin edits apply without a build
@@ -281,6 +285,10 @@ function Placeholder({ cap, tall, small }: { cap?: string; tall?: boolean; small
 }
 
 function AutoImage({ source, style, maxRatioTall = 0.6, minRatioWide = 1.9 }: { source: any; style?: any; maxRatioTall?: number; minRatioWide?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [ratio, setRatio] = useState<number | null>(null);
   useEffect(() => {
     if (!source) return;
@@ -295,6 +303,10 @@ function AutoImage({ source, style, maxRatioTall = 0.6, minRatioWide = 1.9 }: { 
 }
 
 export default function ReaderScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const params = useLocalSearchParams<{ topic: string; page: string }>();
   const topic = findTopic(params.topic);
 

@@ -3,11 +3,15 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const FIGURES = 5;
 
 export function BaniAdam() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [joined, setJoined] = useState(false);
   const anim = useRef(new Animated.Value(0)).current;

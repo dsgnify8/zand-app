@@ -20,6 +20,10 @@ import { APP } from '@/constants/i18n/app';
 const ALL_IDS = Array.from(new Set(PLAYLISTS.flatMap((p) => p.videos.map((v) => v.id))));
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.timing(fade, { toValue: 1, duration: 400, delay, useNativeDriver: true }).start();
@@ -49,6 +53,10 @@ function Row({ title, persian, ids, onOpen }: { title: string; persian?: string;
 }
 
 export default function VideosScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [active, setActive] = useState('all');
   const { history } = useProgress();
 
@@ -128,6 +136,10 @@ export default function VideosScreen() {
 }
 
 function PlaylistDetail({ pl }: { pl: Playlist }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const seasons = Array.from(new Set(pl.videos.map((v) => v.season).filter(Boolean))) as string[];
   return (
     <FadeIn>

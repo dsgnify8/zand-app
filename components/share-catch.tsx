@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 
+import { useLang } from '@/lib/i18n';
 /* Catch a screenshot and offer to share the page it came from, the way Pinterest does. */
 
 const TITLES: { match: string; label: string }[] = [
@@ -27,6 +28,10 @@ function describe(path: string) {
 }
 
 export function ShareCatch() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [open, setOpen] = useState(false);
   const path = usePathname();
 

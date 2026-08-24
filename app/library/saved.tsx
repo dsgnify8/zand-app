@@ -17,6 +17,10 @@ const TABS: { key: ContentType; label: string }[] = [
 ];
 
 export default function SavedScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { saved } = useProgress();
   const [tab, setTab] = useState<ContentType>('video');
 

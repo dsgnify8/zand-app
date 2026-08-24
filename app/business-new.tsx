@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import {
   CATEGORIES, loadBusiness, saveBusiness, submitBusiness, type Business,
 } from '@/lib/businesses';
@@ -44,6 +44,10 @@ const SOCIALS = [
 ] as const;
 
 export default function BusinessForm() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { user } = useAuth();
   // Editing and creating are the same screen: same fields, same rules.
   // With an id we load the row first; without one we start empty.

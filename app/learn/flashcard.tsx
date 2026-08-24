@@ -11,9 +11,13 @@ import { findDeck } from '@/constants/flashcards';
 import { useProgress } from '@/lib/progress-store';
 import { useSRS, cardId } from '@/lib/srs-store';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function DeckStudyScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { deck: deckKey } = useLocalSearchParams<{ deck: string }>();
   const deck = findDeck(deckKey);
   const { markActivity } = useProgress();

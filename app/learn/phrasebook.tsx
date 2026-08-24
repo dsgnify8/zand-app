@@ -11,7 +11,7 @@ import { speak } from '@/lib/speak';
 import { Art } from '@/components/lang-art';
 import { SendPhraseSheet } from '@/components/send-phrase-sheet';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 function PhraseRow({ p, onSend }: { p: { fa: string; tr: string; en: string; note?: string }; onSend: (p: any) => void }) {
   return (
@@ -28,6 +28,10 @@ function PhraseRow({ p, onSend }: { p: { fa: string; tr: string; en: string; not
 }
 
 export default function PhrasebookScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [open, setOpen] = useState<PhraseSet | null>(null);
   const [q, setQ] = useState('');
   const [sending, setSending] = useState<any>(null);

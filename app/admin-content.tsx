@@ -24,7 +24,7 @@ import { TOPICS } from '@/constants/education';
 import { AUTHORS } from '@/constants/literature';
 import { useAuth } from '@/lib/auth';
 import { contentHash, listOverrides, saveOverride, clearOverride, loadOverrides } from '@/lib/content-overrides';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 type Row = {
   en: string;          // original English, the identity
@@ -75,6 +75,10 @@ function useRows(section: Row['section'], topicKey: string | null) {
 }
 
 export default function AdminContent() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const { user } = useAuth();
   const [section, setSection] = useState<Row['section']>('education');

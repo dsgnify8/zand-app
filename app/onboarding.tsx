@@ -21,7 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { onboardingDone } from '@/app/_layout';
 import { useAuth } from '@/lib/auth';
-import { setLang as setAppLang, getLang } from '@/lib/i18n';
+import { useLang, setLang as setAppLang, getLang } from '@/lib/i18n';
 import { TpmIcon } from '@/components/tpm-mark';
 
 const LANGS = [
@@ -106,6 +106,10 @@ function GlassButton({
 }
 
 export default function Onboarding() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   // Entered with ?step=2 when a signed-out user asks to sign in, so the
   // auth page reuses this screen's design rather than the bare form.
   const { step: wantStep, next: nextRoute } = useLocalSearchParams<{ step?: string; next?: string }>();

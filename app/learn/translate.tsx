@@ -13,7 +13,7 @@ import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib
 import { setAudioModeAsync } from 'expo-audio';
 import { useMetered } from '@/lib/use-metered';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 const LANGS: { code: string; label: string; native: string }[] = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -36,6 +36,10 @@ const K_HISTORY = 'translate:history';
 type Entry = { q: string; a: string; tr?: string | null; from: string; to: string };
 
 export default function TranslateScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { say, listen: metListen, PaywallHost } = useMetered();
   const [from, setFrom] = useState('en');
   const [to, setTo] = useState('fa');

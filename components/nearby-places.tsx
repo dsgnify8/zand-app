@@ -16,10 +16,15 @@ import { categoryLabel, dist, loadBusinesses, type Business } from '@/lib/busine
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
 
+import { useLang } from '@/lib/i18n';
 const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 
 export function NearbyPlaces({ b, fa }: { b: Business; fa: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [items, setItems] = useState<Business[]>([]);
 
   useEffect(() => {

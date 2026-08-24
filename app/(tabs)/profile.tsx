@@ -79,6 +79,10 @@ const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
 /* ---------------- You ---------------- */
 
 function StreakCard() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { user: streakUser } = useAuth();
   const realStats = useStats();
   const demo = showDemoData(streakUser?.email);
@@ -116,9 +120,17 @@ function StreakCard() {
 }
 
 function KeepReading() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   return <ContinueReading label={t(PROFILE.pickUp)} />;
 }
 function DiscoverRow() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { recent } = useSaved();
   const day = Math.floor(Date.now() / 86400000);
   const discoverToday = (() => {
@@ -402,6 +414,10 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
 }
 
 function LibraryTab() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const items = useSavedItems();
   const [filter, setFilter] = useState<string>('all');
   const [libView, setLibView] = useState<null | 'history' | 'favourites' | 'watched' | 'saved'>(null);
@@ -475,6 +491,10 @@ function LibraryTab() {
 /* ---------------- Friends ---------------- */
 
 function FriendsTab() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { user } = useAuth();
   const { accepted, incoming, loading: friendsLoading, refresh } = useFriends(user?.id);
   const { items: inbox, refresh: refreshInbox } = useInbox(user?.id);
@@ -681,6 +701,10 @@ function timeAgo(at: number) {
 }
 
 function ProgressTab() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const stats = useStats();
   const [showAllFinished, setShowAllFinished] = useState(false);
   const [achvOpen, setAchvOpen] = useState(false);

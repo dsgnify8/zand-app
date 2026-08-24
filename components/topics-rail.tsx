@@ -15,7 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 type Topic = { id: string; en: string; fa: string; route: string };
 
@@ -32,6 +32,10 @@ const TOPICS: Topic[] = [
 const FADE_W = 28;
 
 export function TopicsRail({ bleed = spacing.lg }: { bleed?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const ref = useRef<ScrollView>(null);
   const [ready, setReady] = useState(false);

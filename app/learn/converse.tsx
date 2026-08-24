@@ -10,7 +10,7 @@ import { supabase } from '@/lib/supabase';
 import { speak } from '@/lib/speak';
 import { askMic, transcribe, STT_LOCALE, WAV_16K, useAudioRecorder } from '@/lib/listen';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 const LANGS = [
   { code: 'fa', label: 'Persian', native: 'فارسی' },
@@ -58,6 +58,10 @@ function Half({
 }
 
 export default function ConverseScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [top, setTop] = useState('en');
   const [bottom, setBottom] = useState('fa');
   const [turns, setTurns] = useState<Turn[]>([]);

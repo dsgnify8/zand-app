@@ -13,9 +13,14 @@ import { TpmMark } from '@/components/tpm-mark';
 import { canRead, markRead, useTpmAccess } from '@/lib/tpm-access';
 import { Paywall } from '@/components/tpm-paywall';
 
+import { useLang } from '@/lib/i18n';
 const W = Dimensions.get('window').width;
 
 export default function TpmPostScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { post } = useLocalSearchParams<{ post?: string }>();
   const p = tpmPost(post);
   useTpmAccess();

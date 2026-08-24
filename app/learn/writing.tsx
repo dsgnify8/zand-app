@@ -10,11 +10,15 @@ import { ZandHeader } from '@/components/zand-header';
 import { PERSIAN_ALPHABET, positionalForms } from '@/constants/persian-alphabet';
 import { WRITING } from '@/constants/writing';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 const FORM_LABELS = ['FINAL · DETACHED', 'FINAL · ATTACHED', 'MEDIAL', 'INITIAL'];
 
 export default function WritingScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [i, setI] = useState(0);
   const letter = PERSIAN_ALPHABET[i];
   const w = WRITING[letter.char];

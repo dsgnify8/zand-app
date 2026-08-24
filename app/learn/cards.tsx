@@ -12,7 +12,7 @@ import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
 import { useMetered } from '@/lib/use-metered';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 type Card = { fa: string; tr: string; en: string; literal?: string };
 
@@ -35,6 +35,10 @@ function cardsFor(stage?: string): Card[] {
 }
 
 export default function CardsScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { say, listen: metListen, PaywallHost } = useMetered();
   const { stage } = useLocalSearchParams<{ stage?: string }>();
   // the ones you keep missing come round first

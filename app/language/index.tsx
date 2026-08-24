@@ -11,6 +11,10 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { lang, LANG_CHAPTERS, type LangBlock } from '@/constants/language';
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const rise = useRef(new Animated.Value(12)).current;
   useEffect(() => {
@@ -23,6 +27,10 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b }: { b: LangBlock }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const tx = (o: any) => (fa && o.fa ? o.fa : o.x);
   const rtl = fa ? styles.rtl : undefined;
@@ -138,6 +146,10 @@ function Block({ b }: { b: LangBlock }) {
 }
 
 export default function LanguageScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const scroller = useRef<ScrollView>(null);
   const sectionY = useRef<Record<string, number>>({});
   const [active, setActive] = useState(LANG_CHAPTERS[0].key);

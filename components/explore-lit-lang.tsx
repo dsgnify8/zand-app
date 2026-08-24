@@ -15,13 +15,17 @@ import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { eduImage } from '@/constants/education-images';
 import { AUTHORS } from '@/constants/literature';
 
 /* ---------------- literature ---------------- */
 
 export function LiteratureCard() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const cover = eduImage('lit-hafez-cover');
 
@@ -106,6 +110,10 @@ const BORROWED = [
 ];
 
 export function LanguageBorrowed() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
 
   return (

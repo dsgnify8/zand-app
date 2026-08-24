@@ -22,6 +22,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 
+import { useLang } from '@/lib/i18n';
 /* ------------------------------------------------------------------ *
  * The shape a real story would take. Three block kinds, so a story can
  * be written as prose with a quote dropped in wherever it belongs.
@@ -109,6 +110,10 @@ export function FounderFlip({
   fa: boolean;
   story?: FounderStory;
 }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const s = story ?? demoStory(name, city);
 
   const [flipped, setFlipped] = useState(false);

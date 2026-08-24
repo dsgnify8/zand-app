@@ -30,7 +30,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const CARD_H = 330;
 const RULE = 'rgba(140,58,46,0.22)';
@@ -69,6 +69,10 @@ const GLYPHS: Glyph[] = [
 ];
 
 function DriftingLetter({ g, W }: { g: Glyph; W: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const v = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -133,6 +137,10 @@ function DriftingLetter({ g, W }: { g: Glyph; W: number }) {
 }
 
 export function LanguageCard() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [W, setW] = useState(340);
 

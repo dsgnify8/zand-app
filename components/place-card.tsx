@@ -7,7 +7,7 @@ import { dark } from '@/constants/education';
 import { type Place } from '@/constants/geography';
 import { eduImage } from '@/constants/education-images';
 import { GlossaryText } from '@/components/glossary-text';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -16,6 +16,10 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 const MAP_RATIO = 700 / 539;
 
 export function PlaceCard({ place }: { place: Place }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [open, setOpen] = useState(false);
   const map = eduImage('iran-silhouette');
 

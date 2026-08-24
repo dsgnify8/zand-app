@@ -12,7 +12,7 @@ import { DECKS } from '@/constants/flashcards';
 import { PRON_WORDS } from '@/constants/pron-words';
 import { useMetered } from '@/lib/use-metered';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 type Item = { id: string; fa: string; roman: string; en: string; kind: string };
 
@@ -26,6 +26,10 @@ const EXTRA_ITEMS: Item[] = PRON_WORDS.map((w, i) => ({ id: 'X' + i, fa: w.fa, r
 const ALL = [...LETTER_ITEMS, ...WORD_ITEMS, ...EXTRA_ITEMS];
 
 export default function PronunciationScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { say, listen: metListen, PaywallHost } = useMetered();
   const [tab, setTab] = useState<'letters' | 'words'>('letters');
   const [query, setQuery] = useState('');

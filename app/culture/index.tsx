@@ -30,6 +30,10 @@ export function CultureGround() {
 }
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const a = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.timing(a, { toValue: 1, duration: 560, delay, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
@@ -39,6 +43,10 @@ function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function TopicCard({ t, i }: { t: CultureTopic; i: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const press = useRef(new Animated.Value(0)).current;
 
@@ -91,6 +99,10 @@ function TopicCard({ t, i }: { t: CultureTopic; i: number }) {
 }
 
 export default function CultureHub() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   return (
     <View style={styles.root}>
       <CultureGround />

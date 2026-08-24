@@ -10,9 +10,13 @@ import { lw } from '@/constants/lang-theme';
 import { findQuiz } from '@/constants/quizzes';
 import { useProgress } from '@/lib/progress-store';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function QuizPlay() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { cat } = useLocalSearchParams<{ cat: string }>();
   const quiz = findQuiz(cat);
   const { markActivity } = useProgress();

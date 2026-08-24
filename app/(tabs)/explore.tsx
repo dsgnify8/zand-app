@@ -44,6 +44,10 @@ const CARD_W = W - spacing.lg * 2;
 const WORD = 'Explore'.split('');
 
 function BouncingTitle({ visible }: { visible: Animated.Value }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   // One value drives the whole loop; each letter reads its own slice of
   // it. Cheaper than seven animations and keeps the hops evenly spaced.
   const t = useRef(new Animated.Value(0)).current;
@@ -172,6 +176,10 @@ function CultureStrip() {
 }
 
 function Rise({ children, index }: { children: any; index: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const rise = useRef(new Animated.Value(22)).current;
   const fade = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -184,6 +192,10 @@ function Rise({ children, index }: { children: any; index: number }) {
 }
 
 function WorldCard({ w, index, fa }: { w: World; index: number; fa: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const rise = useRef(new Animated.Value(22)).current;
   const fade = useRef(new Animated.Value(0)).current;
 

@@ -10,9 +10,13 @@ import { READINGS, readingByKey, type Gloss } from '@/constants/readings';
 import { speak } from '@/lib/speak';
 import { Art } from '@/components/lang-art';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function ReadScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { text } = useLocalSearchParams<{ text?: string }>();
   const r = readingByKey(text);
   const [word, setWord] = useState<Gloss | null>(null);

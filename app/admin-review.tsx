@@ -26,10 +26,15 @@ import { eduImage } from '@/constants/education-images';
 import { DAYS, DAY_EN, fmtDay, uses12Hour } from '@/lib/hours';
 import { BusinessInsights } from '@/components/business-insights';
 
+import { useLang } from '@/lib/i18n';
 const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 
 export default function AdminReview() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { id } = useLocalSearchParams<{ id: string }>();
   const isAdmin = useIsAdmin();
 

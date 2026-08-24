@@ -9,7 +9,7 @@ import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 type Round = {
   before: string;   // words before the gap
@@ -76,6 +76,10 @@ function roundsFor(stage?: string): Round[] {
 }
 
 export default function BlanksScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { stage } = useLocalSearchParams<{ stage?: string }>();
   const rounds = useMemo(() => roundsFor(stage), [stage]);
 

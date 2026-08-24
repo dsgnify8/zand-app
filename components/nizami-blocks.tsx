@@ -4,10 +4,15 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
 
+import { useLang } from '@/lib/i18n';
 /* Farhad at Bisotun. Strike the mountain until it opens, then the messenger comes. */
 const NEEDED = 12;
 
 export function Mountain() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [hits, setHits] = useState(0);
   const shake = useRef(new Animated.Value(0)).current;
   const gap = useRef(new Animated.Value(0)).current;

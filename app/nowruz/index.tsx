@@ -14,6 +14,10 @@ import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fade = useRef(new Animated.Value(0)).current;
   const rise = useRef(new Animated.Value(12)).current;
   useEffect(() => {
@@ -26,6 +30,10 @@ function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {
 }
 
 function Block({ b }: { b: NzBlock }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   switch (b.t) {
     case 'p': return <Text style={styles.p}>{b.x}</Text>;
     case 'ptext': return <View style={styles.ptext}><GlossaryText text={b.x} /></View>;
@@ -89,6 +97,10 @@ function Block({ b }: { b: NzBlock }) {
 }
 
 export default function NowruzScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const scroller = useRef<ScrollView>(null);
   const sectionY = useRef<Record<string, number>>({});
   const [active, setActive] = useState(NOWRUZ_CHAPTERS[0].key);

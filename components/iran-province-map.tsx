@@ -6,11 +6,15 @@ import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { PROVINCE_DOTS, type ProvinceDot } from '@/constants/geography';
 import { eduImage } from '@/constants/education-images';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const MAP_RATIO = 1100 / 847;
 
 export function IranProvinceMap() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [open, setOpen] = useState<ProvinceDot | null>(null);
   const src = eduImage('iran-provinces');
 

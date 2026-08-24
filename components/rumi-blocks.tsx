@@ -3,7 +3,7 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 /* The sama. Every part of it means something. */
 const PARTS = [
@@ -16,6 +16,10 @@ const PARTS = [
 ];
 
 export function Sama() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [on, setOn] = useState(false);
   const spin = useRef(new Animated.Value(0)).current;
@@ -80,6 +84,10 @@ export function Sama() {
 
 /* The ney. Cut from the reed bed, and crying about it. */
 export function Reed() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [cut, setCut] = useState(false);
   const sep = useRef(new Animated.Value(0)).current;

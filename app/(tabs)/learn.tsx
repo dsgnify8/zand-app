@@ -13,7 +13,7 @@ import { ALPHABET, LEARN_GROUPS, CONTINUE, LEARN_STATS, type LearnModule } from 
 import { useLearnProgress } from '@/lib/learn-progress';
 import { useStats } from '@/lib/stats-store';
 import { STAGES } from '@/constants/journey';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { showDemoData } from '@/lib/demo-mode';
 import { useAuth } from '@/lib/auth';
 
@@ -24,6 +24,10 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 const TINTS = ['#4A6B50', '#5C7F63', '#3F5D46'];
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const a = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.timing(a, { toValue: 1, duration: 520, delay, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
@@ -168,6 +172,10 @@ function ModuleCard({ mod, i }: { mod: LearnModule; i: number }) {
 }
 
 export default function LearnScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { user: demoUser } = useAuth();
   const demo = showDemoData(demoUser?.email);
   // First time in: the level questionnaire is the whole screen.

@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, fontSize, spacing } from '@/constants/zand-theme';
 import { eduImage } from '@/constants/education-images';
 import { READING } from '@/constants/profile';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { EmptyState } from '@/components/empty-state';
 import { useSaved } from '@/lib/saved-store';
@@ -67,6 +67,10 @@ export function continueItems(): ContinueItem[] {
 }
 
 export function ContinueReading({ label }: { label?: string }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const _lbl = label ?? (getLang() === 'fa' ? 'از همون‌جا ادامه بده' : 'PICK UP WHERE YOU LEFT OFF');
   const fa = getLang() === 'fa';
   const { session } = useAuth();

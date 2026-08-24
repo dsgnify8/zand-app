@@ -8,7 +8,12 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin, useHidden, hideArticle, unhideArticle, isHidden } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 
+import { useLang } from '@/lib/i18n';
 export default function AdminScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const isAdmin = useIsAdmin();
   useHidden();
   const [signups, setSignups] = useState<number | null>(null);

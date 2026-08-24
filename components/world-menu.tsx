@@ -33,7 +33,7 @@ import {
 import { router } from 'expo-router';
 
 import { colors, fonts } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const LINE = 'rgba(140,58,46,0.3)';
 const SCRIM = 'rgba(247,242,236,0.965)'; // the page's own cream, near-opaque
@@ -58,6 +58,10 @@ const WORLDS: World[] = [
 ];
 
 export function WorldMenu() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const { width: SW } = useWindowDimensions();
   const anchorRef = useRef<View>(null);

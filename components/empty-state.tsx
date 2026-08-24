@@ -10,7 +10,7 @@ import { router } from 'expo-router';
 
 import { fonts, radius, spacing } from '@/constants/zand-theme';
 import { pr } from '@/constants/profile';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 export function EmptyState({
   icon = 'sparkles-outline',
@@ -27,6 +27,10 @@ export function EmptyState({
   ctaFa?: string;
   to?: string;
 }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
 
   return (

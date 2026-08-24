@@ -9,9 +9,13 @@ import { ZandHeader } from '@/components/zand-header';
 import { DECKS } from '@/constants/flashcards';
 import { useSRS, cardId } from '@/lib/srs-store';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function FlashcardsHome() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { dueCount } = useSRS();
 
   return (

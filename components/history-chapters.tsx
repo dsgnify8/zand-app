@@ -30,7 +30,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const LINE = 'rgba(140,58,46,0.3)'; // same hairline the old track used
 const BRICK = '#8C3A2E'; // same brick the old dots used, at 84pt
@@ -136,6 +136,10 @@ const fanAngles = (n: number) => (n === 3 ? [-40, 0, 40] : n === 2 ? [-30, 30] :
 const openTopic = (key: string) => router.navigate(('/education/topic?topic=' + key) as any);
 
 export function HistoryChapters() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
 
   // Measured rather than taken from Dimensions, because this sits inside the

@@ -3,12 +3,16 @@ import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-nativ
 
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lit } from '@/constants/literature';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 /* The chang: Rudaki's harp. Touch a string and it sounds, silently, for now. */
 const STRINGS = 9;
 
 export function Chang() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const vibes = useRef(Array.from({ length: STRINGS }, () => new Animated.Value(0))).current;
 
@@ -51,6 +55,10 @@ const TOTAL = COLS * ROWS;
 const KEPT = 10;
 
 export function LostVerses() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [faded, setFaded] = useState(false);
   const fade = useRef(new Animated.Value(1)).current;
 

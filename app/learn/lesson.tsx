@@ -20,9 +20,13 @@ import { useEffect } from 'react';
 import { Confetti } from '@/components/confetti';
 import { STAGES, nextStep } from '@/constants/journey';
 import { LEARN } from '@/constants/i18n/learn';
-import { t as tl } from '@/lib/i18n';
+import { useLang, t as tl } from '@/lib/i18n';
 
 export default function LessonScreen() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { unit, lesson } = useLocalSearchParams<{ unit: string; lesson: string }>();
   const raw = lessonByKey(unit, lesson);
 

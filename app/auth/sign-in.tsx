@@ -10,6 +10,10 @@ import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 export default function SignIn() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

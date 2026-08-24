@@ -16,7 +16,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { insightsFor, percentileFor, type Business, type Insight } from '@/lib/businesses';
 
+import { useLang } from '@/lib/i18n';
 export function BusinessInsights({ b, admin = false }: { b: Business; admin?: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const [data, setData] = useState<Insight | null>(null);
   const [pct, setPct] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);

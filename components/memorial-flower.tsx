@@ -8,13 +8,17 @@ import { REMEMBERED, type Remembered } from '@/constants/memorial';
 import { DroopingRose } from '@/components/drooping-rose';
 import { FramedImage } from '@/components/framed-image';
 import { eduImage } from '@/constants/education-images';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 const BOX = 300;   // the illustration is square; dots are placed as fractions
 
 // A flower past saving: stem bent, head down, petals on the ground.
 // Drawn rather than photographed so it carries no one's face.
 export function Memorial({ dark = true }: { dark?: boolean }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [open, setOpen] = useState<Remembered | null>(null);
 

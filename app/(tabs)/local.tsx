@@ -15,7 +15,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import {
   CATEGORIES, categoryLabel, loadBusinesses, dist, type Business,
@@ -30,6 +30,10 @@ import { currentPlace, findPlace, hasLocation, type Place } from '@/lib/geo';
 import { BusinessCard } from '@/components/business-card';
 
 export default function Local() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const { session } = useAuth();
 

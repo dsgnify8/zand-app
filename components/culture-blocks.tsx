@@ -18,6 +18,10 @@ const ROUNDS: Round[] = [
 ];
 
 export function TaarofSim() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [step, setStep] = useState(0);
   const [ending, setEnding] = useState<null | 'greedy' | 'perfect' | 'lost'>(null);
@@ -101,6 +105,10 @@ const DEL_WORDS = [
 ];
 
 export function DelMap() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [open, setOpen] = useState<number | null>(null);
   const pulse = useRef(new Animated.Value(0)).current;
@@ -150,6 +158,10 @@ export function DelMap() {
 const CARD_W = W - 72;
 
 function FlipCard({ card }: { card: any }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [flipped, setFlipped] = useState(false);
   const f = useRef(new Animated.Value(0)).current;
@@ -219,6 +231,10 @@ export function TypicalCards() {
 /* ---------- The zurkhaneh ---------- */
 
 export function Zurkhaneh() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [on, setOn] = useState(false);
   const swing = useRef(new Animated.Value(0)).current;
@@ -281,6 +297,10 @@ export function Zurkhaneh() {
 /* ---------- The rice pot ---------- */
 
 export function RicePot() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const [lifted, setLifted] = useState(false);
   const a = useRef(new Animated.Value(0)).current;
@@ -399,12 +419,16 @@ const styles = StyleSheet.create({
 import { Image, Modal } from 'react-native';
 import { DISHES, SWEETS } from '@/constants/culture';
 import { eduImage } from '@/constants/education-images';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 
 export function Sweets() { return <DishList list={SWEETS} />; }
 export function Dishes() { return <DishList list={DISHES} />; }
 
 function DishList({ list }: { list: any[] }) {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const DISHES = list;
   const [open, setOpen] = useState<number | null>(null);

@@ -20,7 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import MapView, { Marker, type Region } from 'react-native-maps';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { getLang } from '@/lib/i18n';
+import { useLang, getLang } from '@/lib/i18n';
 import { CATEGORIES, categoryLabel, loadBusinesses, trackBusiness, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
@@ -40,6 +40,10 @@ const FALLBACK: Region = {
 };
 
 export default function LocalMap() {
+  // Subscribe to the language so a switch elsewhere reaches this screen
+  // where it stands. The value is deliberately unused: read with
+  // getLang() or t(), which are always current.
+  useLang();
   const fa = getLang() === 'fa';
   const map = useRef<MapView>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
