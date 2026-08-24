@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -31,6 +31,32 @@ export default function PhrasebookScreen() {
   const [open, setOpen] = useState<PhraseSet | null>(null);
   const [q, setQ] = useState('');
   const [sending, setSending] = useState<any>(null);
+
+  // Back closes an open category before it leaves the screen.
+  //
+  // The categories are state rather than routes, so a system back — the iOS
+  // edge swipe, the Android button — has nothing to pop but the whole
+  // phrasebook, which is how you ended up on Learn. This intercepts exactly
+  // one level: with a category open it clears it, otherwise it lets the pop
+  // through untouched.
+  //
+  // The ref is what keeps this to one level. Reading `open` straight from
+  // the closure would go stale, and resubscribing on every change is how you
+  // end up with a stack of listeners each swallowing one press — which is
+  // the bug that once made back walk through every exercise in a lesson.
+  const navigation = useNavigation();
+  const openRef = useRef(open);
+  openRef.current = open;
+
+  useEffect(() => {
+    const stop = (navigation as any).addListener('beforeRemove', (e: any) => {
+      if (!openRef.current) return; // nothing open — leave as normal
+      e.preventDefault();
+      setOpen(null);
+    });
+    return stop;
+  }, [navigation]);
+
 
   const needle = q.trim().toLowerCase();
   const hits = needle

@@ -18,6 +18,10 @@ export const LEVELS: { key: Level; roman: string; name: string; blurb: string; s
 
 let level: Level | null = null;
 let asked = false;
+// Whether the stored answer has been read yet. Without this, `asked`
+// being false is ambiguous: it means either 'they skipped the question'
+// or 'we have not looked yet', and the screens cannot tell them apart.
+let ready = false;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 
@@ -29,22 +33,26 @@ export async function loadLevel() {
     const [l, a] = await AsyncStorage.multiGet([K_LEVEL, K_ASKED]);
     level = (l[1] as Level | null) ?? null;
     asked = a[1] === '1';
-    emit();
   } catch {}
+  // Ready even if the read threw. A failed read is still a settled answer,
+  // and leaving this false would hold every screen in limbo.
+  ready = true;
+  emit();
 }
 
 export async function setLevel(v: Level) {
-  level = v; asked = true; emit();
+  level = v; asked = true; ready = true; emit();
   try { await AsyncStorage.multiSet([[K_LEVEL, v], [K_ASKED, '1']]); syncTouch(); } catch {}
 }
 
 export async function skipLevel() {
-  asked = true; emit();
+  asked = true; ready = true; emit();
   try { await AsyncStorage.setItem(K_ASKED, '1'); syncTouch(); } catch {}
 }
 
 export function getLevel() { return level; }
 export function hasChosen() { return asked; }
+export function isReady() { return ready; }
 
 export function levelInfo(v: Level | null) {
   return LEVELS.find((l) => l.key === v) ?? null;
@@ -57,5 +65,5 @@ export function useLevel() {
     listeners.add(l);
     return () => { listeners.delete(l); };
   }, []);
-  return { level, asked, info: levelInfo(level) };
+  return { level, asked, ready, info: levelInfo(level) };
 }

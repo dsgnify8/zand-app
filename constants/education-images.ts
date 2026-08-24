@@ -194,6 +194,21 @@ export const EDU_IMAGES: Record<string, any> = {
   'article-ferdowsi-cover': require('../assets/education/article-ferdowsi-cover.webp'),
   'article-zandesh-store': require('../assets/education/article-zandesh-store.png'),
   'article-ansari-cover': require('../assets/education/article-ansari-cover.jpg'),
+  'food-baghali-polo': require('../assets/education/food-baghali-polo.jpg'),
+  'food-adas-polo': require('../assets/education/food-adas-polo.jpg'),
+  'food-sabzi-polo-mahi': require('../assets/education/food-sabzi-polo-mahi.jpg'),
+  'food-mirza-ghasemi': require('../assets/education/food-mirza-ghasemi.jpg'),
+  'food-kashk-bademjan': require('../assets/education/food-kashk-bademjan.jpg'),
+  'food-khoresh-karafs': require('../assets/education/food-khoresh-karafs.jpg'),
+  'food-estanboli-polo': require('../assets/education/food-estanboli-polo.jpg'),
+  'food-qottab': require('../assets/education/food-qottab.jpg'),
+  'food-zoolbia-bamieh': require('../assets/education/food-zoolbia-bamieh.jpeg'),
+  'food-sholeh-zard': require('../assets/education/food-sholeh-zard.jpeg'),
+  'food-ranginak': require('../assets/education/food-ranginak.jpg'),
+  'food-halva': require('../assets/education/food-halva.jpg'),
+  'food-nan-berenji': require('../assets/education/food-nan-berenji.jpg'),
+  'geo-great-cities': require('../assets/education/geo-great-cities.jpg'),
+  'geo-the-heart': require('../assets/education/geo-the-heart.jpg'),
 };
 
 export function eduImage(key?: string) {

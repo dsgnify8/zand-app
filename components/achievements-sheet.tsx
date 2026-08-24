@@ -13,8 +13,11 @@ export function AchievementsSheet({ open, onClose }: { open: boolean; onClose: (
 
   return (
     <Modal transparent visible={open} animationType="slide" onRequestClose={onClose}>
-      <Pressable style={s.backdrop} onPress={onClose}>
-        <Pressable style={s.sheet} onPress={() => {}}>
+      <View style={s.backdrop}>
+        {/* Behind the sheet, so a tap outside closes without the sheet
+            itself needing a press handler that would eat the scroll. */}
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
+        <View style={s.sheet}>
           <View style={s.grab} />
           <View style={s.head}>
             <View>
@@ -43,8 +46,8 @@ export function AchievementsSheet({ open, onClose }: { open: boolean; onClose: (
               ))}
             </View>
           </ScrollView>
-        </Pressable>
-      </Pressable>
+        </View>
+      </View>
     </Modal>
   );
 }

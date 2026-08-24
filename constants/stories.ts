@@ -203,7 +203,14 @@ const DYK: Daily[] = [
   { kind: 'fact', fa: 'قنات', title: 'Still running', titleFa: 'هنوز جاری', x: 'Some qanats dug two and a half thousand years ago still carry water today, maintained by hand across a hundred generations.', xFa: 'برخی قنات‌هایی که دو هزار و پانصد سال پیش کنده شده‌اند هنوز آب می‌آورند؛ صد نسل با دست نگهشان داشته‌اند.' },
 ];
 
-const ALL_DAILY: Daily[] = [...DAILY_POOL, ...DYK];
+// Verses are excluded on purpose — the daily slot is for facts. The
+// entries themselves are left in DAILY_POOL; drop 'verse' from this list
+// to bring them back.
+const DAILY_OFF: DailyKind[] = ['verse'];
+
+const ALL_DAILY: Daily[] = [...DAILY_POOL, ...DYK].filter(
+  (x) => !DAILY_OFF.includes(x.kind),
+);
 
 export function dailyFor(d = new Date()) {
   const day = Math.floor(d.getTime() / 86400000);

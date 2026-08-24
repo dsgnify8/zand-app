@@ -102,7 +102,10 @@ function AlphabetPanel({ known, toggle }: { known: string[]; toggle: (n: string)
 }
 
 function ContinueCard() {
-  const { asked } = useLevel();
+  const { asked: chosen, ready } = useLevel();
+  // Unknown counts as chosen, so a returning learner never sees the card
+  // flash the questionnaire for a frame before the stored answer lands.
+  const asked = !ready || chosen;
   // Not chosen a level yet: this card is the way in.
   const first = UNITS[0]?.lessons[0];
   const dest = !asked
@@ -168,10 +171,13 @@ export default function LearnScreen() {
   const { user: demoUser } = useAuth();
   const demo = showDemoData(demoUser?.email);
   // First time in: the level questionnaire is the whole screen.
-  const { asked: levelAsked } = useLevel();
+  const { asked: levelAsked, ready: levelReady } = useLevel();
   useEffect(() => {
-    if (!levelAsked) router.replace('/learn/level' as any);
-  }, [levelAsked]);
+    // Wait for the stored answer. Redirecting on !levelAsked alone fired
+    // before the read resolved, which is why the questionnaire came back on
+    // every cold start no matter what had been picked.
+    if (levelReady && !levelAsked) router.replace('/learn/level' as any);
+  }, [levelReady, levelAsked]);
 
   const [open, setOpen] = useState(false);
   const [known, setKnown] = useState<string[]>([]);

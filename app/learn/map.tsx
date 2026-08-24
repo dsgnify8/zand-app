@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES, SIDE_QUESTS, type JourneyStep } from '@/constants/journey';
-import { isLessonDone, lessonPartial, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, journeyPosition, lessonPartial, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
 import { ExpressionCard } from '@/components/expression-card';
@@ -95,6 +95,7 @@ let lastScrollY = 0;
 
 export default function MapScreen() {
   const { session } = useAuth();
+  const jumped = useRef(false);
     const scrollRef = useRef<ScrollView>(null);
   // Where they were when they last left. Kept outside the component so
   // it survives navigating away and back, which is the whole point.
@@ -108,7 +109,12 @@ export default function MapScreen() {
 
   // the first unfinished step on the route
   const flat = STAGES.flatMap((st) => st.steps);
-  const next = flat.find((st) => !stepDone(st));
+  const pos = journeyPosition(flat);
+  const next = pos.next;
+
+  // Open on the latest thing they touched, finished or half done. Identity
+  // holds because `flat` is built from the same step objects STAGES contains.
+  const targetKey = pos.at ? STAGES.find((st) => st.steps.includes(pos.at))?.key : undefined;
 
   let n = -1;
 
@@ -208,7 +214,21 @@ export default function MapScreen() {
           <View
             key={stage.key}
             style={[s.stage, stage.key !== 'letters' && s.stageCourse]}
-            onLayout={(e) => { stageOffsets.current[stage.key] = e.nativeEvent.layout.y; }}
+            onLayout={(e) => {
+              const y = e.nativeEvent.layout.y;
+              stageOffsets.current[stage.key] = y;
+              // Arriving from the questionnaire: scroll as soon as the stage
+              // being aimed at knows its own position. Waiting on
+              // onContentSizeChange meant reading these offsets before any of
+              // them existed.
+              if (!jumped.current && stage.key === targetKey) {
+                jumped.current = true;
+                restored.current = true; // and do not also restore the old position
+                requestAnimationFrame(() =>
+                  scrollRef.current?.scrollTo({ y: Math.max(0, y - 40), animated: false }),
+                );
+              }
+            }}
           >
             {band ? (
               <View style={s.band}>

@@ -17,7 +17,7 @@ export default function HistoryHub() {
       <ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
           <Ionicons name="chevron-back" size={20} color={colors.textSecondary} />
-          <Text style={styles.backBtnText}>{t(APP.education)}</Text>
+          <Text style={styles.backBtnText}>{t(APP.explore)}</Text>
         </Pressable>
 
         <View style={styles.titleRow}>

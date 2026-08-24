@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { lessonByKey } from '@/constants/curriculum';
+import { useLearnerName, personalise } from '@/lib/learner-name';
+import { withGlosses } from '@/lib/lesson-glossary';
 import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep, LetterStep, VowelStep, GapStep, TypeStep } from '@/components/lesson-steps';
 import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
@@ -22,7 +24,20 @@ import { t as tl } from '@/lib/i18n';
 
 export default function LessonScreen() {
   const { unit, lesson } = useLocalSearchParams<{ unit: string; lesson: string }>();
-  const l = lessonByKey(unit, lesson);
+  const raw = lessonByKey(unit, lesson);
+
+  // The course is written with one name in it; swap in whoever is reading.
+  // personalise walks keys as well as values, because optionTrs is keyed by
+  // the Persian option string — substitute the two at different moments and
+  // the transliteration under that option silently vanishes.
+  //
+  // Then fill in the English glosses the exercises never carried, so a
+  // beginner is never choosing between four words they cannot yet read.
+  const learner = useLearnerName();
+  const l = useMemo(
+    () => (raw ? withGlosses(personalise(raw, learner), learner) : raw),
+    [raw, learner.en, learner.fa, learner.tr],
+  );
 
   // The route params give us unit and lesson; the journey is keyed by
   // step, so find the step that points at this lesson.

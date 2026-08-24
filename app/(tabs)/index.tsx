@@ -72,10 +72,10 @@ function cardsFor(pillar: Pillar): Card[] {
     return [...culture, ...trad];
   }
   const GEO_HOME = [
-    { key: 'g1', title: 'The Heart', sub: 'WHERE IRAN SITS', image: 'iran-crossroads' },
+    { key: 'g1', title: 'The Heart', sub: 'WHERE IRAN SITS', image: 'geo-the-heart' },
     { key: 'g3', title: 'Neighbours', sub: 'IRAN TODAY', image: 'iran-neighbours' },
     { key: 'g4b', title: 'Landscapes', sub: 'THE LAND', image: 'geo-alborz' },
-    { key: 'g5', title: 'Great Cities', sub: 'WHERE THE PEOPLE ARE', image: 'GEO_CITY_IMG' },
+    { key: 'g5', title: 'Great Cities', sub: 'WHERE THE PEOPLE ARE', image: 'geo-great-cities' },
   ];
   if (pillar === 'Geography') {
     return GEO_HOME.map((c) => ({

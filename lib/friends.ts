@@ -61,7 +61,9 @@ export function useFriends(myId: string | undefined) {
   const [rows, setRows] = useState<FriendRow[]>([]);
   const [loading, setLoading] = useState(true);
   const refresh = useCallback(async () => {
-    if (!myId) return;
+    // Signed out there is nothing to fetch — but leaving `loading` true
+    // would hold every consumer in limbo, so settle it here.
+    if (!myId) { setRows([]); setLoading(false); return; }
     setLoading(true);
     setRows(await loadFriendships(myId));
     setLoading(false);

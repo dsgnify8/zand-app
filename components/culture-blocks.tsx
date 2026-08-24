@@ -419,7 +419,9 @@ function DishList({ list }: { list: any[] }) {
             <Text style={[dstyles.name, fa && (dish as any).fa && { fontFamily: fonts.persian }]}>{fa && (dish as any).fa ? (dish as any).fa : dish.name}</Text>
             <Text style={dstyles.tag}>{fa && (dish as any).tagFa ? (dish as any).tagFa : dish.tag}</Text>
           </View>
-          <Text style={dstyles.fa}>{dish.fa}</Text>
+          {/* The counterpart, not always Persian — in the Persian build
+              the name above is already Persian. */}
+          <Text style={dstyles.fa}>{fa ? dish.name : dish.fa}</Text>
           <Ionicons name="image-outline" size={14} color={cu.turquoise} />
         </Pressable>
       ))}
@@ -435,7 +437,7 @@ function DishList({ list }: { list: any[] }) {
               </View>
             )}
             <View style={dstyles.cardBody}>
-              <Text style={dstyles.cardFa}>{d?.fa}</Text>
+              <Text style={dstyles.cardFa}>{fa ? d?.name : d?.fa}</Text>
               <Text style={[dstyles.cardName, fa && (d as any)?.fa && { fontFamily: fonts.persian }]}>{fa && (d as any)?.fa ? (d as any).fa : d?.name}</Text>
               <View style={dstyles.cardRule} />
               <Text style={[dstyles.cardX, fa && (d as any)?.xFa && dstyles.faBody]}>{fa && (d as any)?.xFa ? (d as any).xFa : d?.x}</Text>

@@ -70,6 +70,7 @@ export const PROFILE: Record<string, T> = {
   },
   lastFourteen: { en: 'THE LAST FOURTEEN DAYS', fa: 'چهارده روز گذشته' },
   topicsFinished: { en: 'Topics finished', fa: 'موضوع‌های تمام‌شده' },
+  streakNudge: { en: 'Come back each day to keep your streak', fa: 'هر روز سر بزن تا رشته‌ات نگسلد' },
   articlesRead: { en: 'Articles read', fa: 'مقاله‌های خوانده‌شده' },
   pagesRead: { en: 'Pages read', fa: 'صفحه‌های خوانده‌شده' },
   videosWatched: { en: 'Videos watched', fa: 'ویدیوهای دیده‌شده' },

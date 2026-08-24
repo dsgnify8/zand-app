@@ -69,7 +69,7 @@ export default function ReviewScreen() {
           <Text style={s.emptyFa}>هنوز نه</Text>
           <Text style={s.emptyT}>{tl(LEARN.nothingToReview)}</Text>
           <Text style={s.emptyX}>{tl(LEARN.nothingToReviewX)}</Text>
-          <Pressable style={s.cta} onPress={() => router.replace('/learn/path' as any)}>
+          <Pressable style={s.cta} onPress={() => router.replace('/learn/map' as any)}>
             <Text style={s.ctaT}>{tl(LEARN.goToPath)}</Text>
           </Pressable>
         </View>

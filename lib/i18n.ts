@@ -8,7 +8,7 @@ export type Lang = 'en' | 'fa';
 
 let lang: Lang = 'en';
 const listeners = new Set<() => void>();
-const emit = () => listeners.forEach((l) => l());
+const emit = () => { console.log('[lang] emit to', listeners.size, 'listeners'); listeners.forEach((l) => l()); }; // TEMP-LANG-LOG
 
 /** Subscribe to language changes. Returns an unsubscribe. */
 export function onLangChange(fn: () => void) {
@@ -27,6 +27,7 @@ export async function loadLang() {
 }
 
 export async function setLang(v: Lang) {
+  console.log('[lang] setLang called with', v, 'was', lang); // TEMP-LANG-LOG
   lang = v;
   emit();
   try { await AsyncStorage.setItem(KEY, v); } catch {}
@@ -45,9 +46,15 @@ export function t(entry: T): string {
 export function useLang() {
   const [, tick] = useState(0);
   useEffect(() => {
-    const l = () => tick((n) => n + 1);
+    const l = () => { console.log('[lang] subscriber ticked'); tick((n) => n + 1); }; // TEMP-LANG-LOG
     listeners.add(l);
     return () => { listeners.delete(l); };
   }, []);
-  return { lang, isRTL: lang === 'fa', t, setLang };
+  // Read through getLang() rather than closing over `lang`. The module
+  // binding resolves once, so returning it directly handed back the value
+  // from first evaluation on every render — the subscribers ticked, the
+  // component re-rendered, and useLang reported the old language forever
+  // while t() reported the new one.
+  const now = getLang();
+  return { lang: now, isRTL: now === 'fa', t, setLang };
 }

@@ -18,6 +18,7 @@ import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { getLang } from '@/lib/i18n';
 import { loadBusiness, categoryLabel, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
+import { FounderFlip } from '@/components/founder-flip';
 import { eduImage } from '@/constants/education-images';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -194,7 +195,8 @@ export default function BusinessPage() {
           </Pressable>
         </Animated.View>
 
-        <View style={s.body}>
+        <FounderFlip name={name} city={(fa && b.city_fa) || b.city} fa={fa}>
+          <View style={s.body}>
           <Text style={[s.name, fa && b.name_fa ? s.nameFa : null]}>{name}</Text>
           <Text style={s.meta}>
             {categoryLabel(b.category, fa)}
@@ -282,7 +284,8 @@ export default function BusinessPage() {
               ? 'این کسب‌وکار خودش را در فهرست زند ثبت کرده است.'
               : 'This business listed itself on Zand.'}
           </Text>
-        </View>
+          </View>
+        </FounderFlip>
       </Animated.ScrollView>
     </View>
   );
@@ -304,7 +307,9 @@ const s = StyleSheet.create({
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.55)' },
   dotOn: { backgroundColor: '#FFF' },
 
-  body: { padding: spacing.lg, marginTop: -22, borderTopLeftRadius: 22, borderTopRightRadius: 22, backgroundColor: colors.background },
+  // The lap over the photo and the rounded top now belong to FounderFlip,
+  // which is the card; this is just its front face.
+  body: { padding: spacing.lg, backgroundColor: colors.background },
   name: { fontFamily: fonts.bodyStrong, fontSize: 22, letterSpacing: -0.5, color: colors.textPrimary },
   nameFa: { fontFamily: fonts.persian, fontSize: 21, textAlign: 'right' },
   meta: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary, marginTop: 4 },

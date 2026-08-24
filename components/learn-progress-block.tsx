@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES } from '@/constants/journey';
-import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, journeyPosition, useLearnProgress } from '@/lib/learn-progress';
 import { useStrength } from '@/lib/word-strength';
 import { useLevel } from '@/lib/learn-level';
 
@@ -18,14 +18,17 @@ export function LearnProgressBlock() {
   const done = lessons.filter((x) => isLessonDone(x.unit!, x.lesson!)).length;
   const pct = lessons.length ? Math.round((done / lessons.length) * 100) : 0;
 
-  // which chapter you are in
-  const current = STAGES.find((st) =>
-    st.steps.some((x) => x.kind === 'lesson' && x.unit && x.lesson && !isLessonDone(x.unit, x.lesson)),
-  );
-  const chaptersDone = STAGES.filter((st) =>
-    st.steps.filter((x) => x.kind === 'lesson' && x.unit && x.lesson)
-      .every((x) => isLessonDone(x.unit!, x.lesson!)),
-  ).length;
+  // which chapter you are in — the one holding the latest thing touched
+  const at = journeyPosition(STAGES.flatMap((st) => st.steps)).at;
+  const current = at ? STAGES.find((st) => st.steps.includes(at)) : STAGES[0];
+
+  const chaptersDone = STAGES.filter((st) => {
+    const ls = st.steps.filter((x) => x.kind === 'lesson' && x.unit && x.lesson);
+    // [].every() is true, so a stage containing no lessons at all counted as
+    // a finished chapter from the very first launch. Hence the requirement
+    // that there be something to finish.
+    return ls.length > 0 && ls.every((x) => isLessonDone(x.unit!, x.lesson!));
+  }).length;
 
   if (!asked && done === 0) {
     return (

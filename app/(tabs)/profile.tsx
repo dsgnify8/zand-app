@@ -36,6 +36,7 @@ const libImage = (img?: string | null) => {
 import { StreakPlant } from '@/components/streak-plant';
 import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
 import { LearnProgressBlock } from '@/components/learn-progress-block';
+import { StatItemsSheet, type StatItem } from '@/components/stat-items-sheet';
 import { APP } from '@/constants/i18n/app';
 import { SignedOutOverlay } from '@/components/signed-out-overlay';
 import { EmptyState } from '@/components/empty-state';
@@ -56,6 +57,11 @@ const KIND_LABEL: Record<string, string> = {
 const KIND_ICON_IN: Record<string, any> = {
   topic: 'book-outline', poet: 'book', place: 'location-outline', article: 'newspaper-outline',
 };
+
+// Everything that can be saved. The filter row lists all of them, empty or
+// not, so the row says what the library is for rather than only what happens
+// to be in it today.
+const SAVE_KINDS = ['word', 'verse', 'topic', 'poet', 'place'] as const;
 
 
 function useSavedItems() {
@@ -96,13 +102,11 @@ function StreakCard() {
           <Text style={s.streakNote}>
             {demo
               ? ME.freezes + ' rest days left this month'
-              : streakDays === 0
-              ? 'Finish a lesson to start your streak'
-              : streakDays === 1
-              ? 'One day in. Come back tomorrow to keep it.'
-              : streakDays < 7
+              : (realStats as any)?.streakNudge
+              ? t(PROFILE.streakNudge)
+              : streakDays < 7 && streakDays > 0
               ? (7 - streakDays) + ' more days to your first week'
-              : 'Keep going'}
+              : ''}
           </Text>
         </View>
         <StreakPlant streak={streakDays} />
@@ -162,13 +166,13 @@ function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLib
   const { incoming: youReq } = useFriends(youUser?.id);
   const { items: youInbox } = useInbox(youUser?.id);
   const pending = youDemo
-    ? INBOX.filter((i) => !i.done)
+    ? INBOX.filter((i) => !i.learned)
     : [
         ...(youReq ?? []).map((r: any) => ({
           kind: 'friend', from: r.profile?.name ?? 'Someone', fromFa: r.profile?.name ?? '?',
           note: 'wants to connect', done: false,
         })),
-        ...(youInbox ?? []).filter((i: any) => !i.done).map((i: any) => ({
+        ...(youInbox ?? []).filter((i: any) => !i.learned).map((i: any) => ({
           ...i, from: i.senderName ?? 'A friend', fromFa: i.senderName ?? '?',
         })),
       ];
@@ -291,6 +295,28 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
 
   const items = view === 'saved' ? [...bizCards, ...arts] : arts;
 
+  // Saved holds one of everything the app can keep, so it reads better under
+  // headings than as one long list. The headers are folded into the same
+  // array as the items — a sentinel with __header rather than a nested map,
+  // so there is still only one copy of the row markup below.
+  const KIND_LABEL: Record<string, string> = {
+    word: 'Words', verse: 'Verses', topic: 'Topics', poet: 'Poets',
+    place: 'Places', culture: 'Culture', business: 'Businesses', other: 'Everything else',
+  };
+  let rows: any[] = items;
+  if (view === 'saved') {
+    const by = new Map<string, any[]>();
+    items.forEach((it: any) => {
+      const k = it.kind ?? 'other';
+      if (!by.has(k)) by.set(k, []);
+      by.get(k)!.push(it);
+    });
+    rows = Array.from(by).flatMap(([kind, list]) => [
+      { __header: KIND_LABEL[kind] ?? kind, key: 'h-' + kind },
+      ...list,
+    ]);
+  }
+
   const TITLE: Record<string, string> = { history: t(PROFILE.history), favourites: t(PROFILE.favourites), watched: t(PROFILE.watched), saved: t(PROFILE.saveLater) };
   const EMPTY: Record<string, string> = {
     history: 'Nothing opened yet. Start reading and it shows up here.',
@@ -350,7 +376,9 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
         </View>
       ) : (
         <View style={{ gap: spacing.sm }}>
-          {items.map((a) => (
+          {rows.map((a: any) => a.__header ? (
+            <Text key={a.key} style={s.sectionLabel}>{a.__header}</Text>
+          ) : (
             <Pressable key={a.key} style={s.saveRow} onPress={() => router.navigate(a.route as any)}>
               <View style={s.saveThumb}>
                 {a.kind === 'culture' && a.accent && a.glyph && !libImage(a.image) ? (
@@ -375,7 +403,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
 
 function LibraryTab() {
   const items = useSavedItems();
-  const [filter, setFilter] = useState<'all' | 'word' | 'topic' | 'verse'>('all');
+  const [filter, setFilter] = useState<string>('all');
   const [libView, setLibView] = useState<null | 'history' | 'favourites' | 'watched' | 'saved'>(null);
   const list = filter === 'all' ? items : items.filter((x) => x.kind === filter);
 
@@ -393,7 +421,7 @@ function LibraryTab() {
       <Text style={s.sectionLabel}>{t(PROFILE.yourLibrary)}</Text>
       <View style={s.grid}>
         {[
-          { key: 'history', i: 'time-outline', t: t(PROFILE.history), x: t(PROFILE.historyX) },
+          // History removed: what you have opened is already the home rail.
           { key: 'favourites', i: 'heart-outline', t: t(PROFILE.favourites), x: t(PROFILE.favouritesX) },
           // ARCHIVED: videos — uncomment to bring the Watched tab back
           // { key: 'watched', i: 'play-circle-outline', t: t(PROFILE.watched), x: t(PROFILE.watchedX) },
@@ -408,13 +436,22 @@ function LibraryTab() {
       </View>
 
       <Text style={s.sectionLabel}>{t(PROFILE.mySaved)}</Text>
-      <View style={s.chipsTight}>
-        {(['all', 'word', 'verse', 'topic'] as const).map((f) => (
-          <Pressable key={f} style={[s.chip, filter === f && s.chipOn]} onPress={() => setFilter(f)}>
-            <Text style={[s.chipT, filter === f && s.chipTOn]}>{f === 'all' ? 'All' : f + 's'}</Text>
-          </Pressable>
-        ))}
-      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={s.chipsTight}
+      >
+        {(['all', ...SAVE_KINDS] as string[]).map((f) => {
+          const n = f === 'all' ? items.length : items.filter((x) => x.kind === f).length;
+          return (
+            <Pressable key={f} style={[s.chip, filter === f && s.chipOn]} onPress={() => setFilter(f)}>
+              <Text style={[s.chipT, filter === f && s.chipTOn]}>
+                {(f === 'all' ? 'All' : f + 's') + (n > 0 ? '  ' + n : '')}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
 
       <View style={{ gap: spacing.sm }}>
         {list.map((it) => (
@@ -439,7 +476,7 @@ function LibraryTab() {
 
 function FriendsTab() {
   const { user } = useAuth();
-  const { accepted, incoming, refresh } = useFriends(user?.id);
+  const { accepted, incoming, loading: friendsLoading, refresh } = useFriends(user?.id);
   const { items: inbox, refresh: refreshInbox } = useInbox(user?.id);
   const [friendsOpen, setFriendsOpen] = useState(false);
   const [sendTo, setSendTo] = useState<{ name: string; id: string } | null>(null);
@@ -451,7 +488,10 @@ function FriendsTab() {
     <>
       {/* The pitch only shows to someone who has nobody yet. With
           friends and things arriving, the page leads with those. */}
-      {!hasActivity ? (
+      {/* Wait for the fetch. An empty list mid-load is not the same as
+          having nobody, and showing the pitch on that flashes it at people
+          who do have friends. */}
+      {!hasActivity && !friendsLoading ? (
         <>
           <View style={s.frHero}>
             <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
@@ -655,13 +695,20 @@ function ProgressTab() {
     { v: String(ps.lessonsFinished ?? 0), k: 'lessons finished' },
     { v: String(ps.wordsSolid ?? 0), k: 'words solid' },
     { v: String(ps.topicsFinished ?? 0), k: 'topics read' },
-    { v: String(ps.articlesRead ?? 0), k: 'articles read' },
     { v: String(ps.thingsSaved ?? 0), k: 'things saved' },
     { v: String(ps.learnDays ?? 0), k: 'days learning' },
   ];
   useEffect(() => { setStreak(progStreak); }, [progStreak]);
-  const finished = stats.finished;
-  const shown = showAllFinished ? finished : finished.slice(0, 10);
+  // What sits behind each number. Only the counters that actually record
+  // what they counted can offer a list — pages read and things sent are
+  // totals with nothing itemised behind them.
+  const savedItems = useSavedItems();
+  const [statSheet, setStatSheet] = useState<{ title: string; items: StatItem[] } | null>(null);
+
+  const fromFinished = (prefix: string): StatItem[] =>
+    (stats.finished ?? [])
+      .filter((f: any) => f.key.startsWith(prefix))
+      .map((f: any) => ({ key: f.key, title: f.title, sub: f.sub, route: f.route, meta: timeAgo(f.at) }));
 
   return (
     <>
@@ -669,7 +716,7 @@ function ProgressTab() {
         <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
         <StreakPlant streak={progStreak} size={1.25} />
         <Text style={s.progN}>{progStreak} days</Text>
-        <Text style={s.progX}>{progDemo ? 'Longest you have ever gone: ' + ME.longest : (progStreak === 0 ? 'Your first day starts when you finish a lesson' : 'Longest you have ever gone: ' + progStreak)}</Text>
+        <Text style={s.progX}>{progDemo ? 'Longest you have ever gone: ' + ME.longest : ((progStats as any)?.streakNudge ? t(PROFILE.streakNudge) : progStreak > 0 ? 'Longest you have ever gone: ' + progStreak : '')}</Text>
       </View>
 
       <Text style={s.sectionLabel}>{t(APP.yourPersian)}</Text>
@@ -678,19 +725,32 @@ function ProgressTab() {
       <Text style={s.sectionLabel}>{t(PROFILE.whatDoing)}</Text>
       <View style={s.statGrid}>
         {[
-          { v: stats.topicsFinished, k: 'Topics finished', kT: PROFILE.topicsFinished, i: 'book' },
-          { v: stats.articlesRead, k: 'Articles read', kT: PROFILE.articlesRead, i: 'newspaper' },
+          { v: stats.topicsFinished, k: 'Topics finished', kT: PROFILE.topicsFinished, i: 'book',
+            items: () => fromFinished('topic-') },
+          { v: (stats as any).poetsRead ?? 0, k: 'Poets read', i: 'book-outline',
+            items: () => fromFinished('poet-') },
           { v: stats.pagesRead, k: 'Pages read', kT: PROFILE.pagesRead, i: 'document-text' },
-          { v: stats.videosWatched, k: 'Videos watched', kT: PROFILE.videosWatched, i: 'play-circle' },
-          { v: stats.thingsSaved, k: 'Things saved', kT: PROFILE.thingsSaved, i: 'bookmark' },
+          { v: stats.thingsSaved, k: 'Things saved', kT: PROFILE.thingsSaved, i: 'bookmark',
+            items: () => savedItems.map((x: any) => ({ key: x.key, title: x.title, sub: x.sub, route: x.route })) },
           { v: stats.thingsSent, k: 'Sent to friends', kT: PROFILE.sentToFriends, i: 'paper-plane' },
-        ].map((st) => (
-          <View key={st.k} style={s.statCell}>
-            <Ionicons name={st.i as any} size={16} color={pr.saveA} />
-            <Text style={s.statV}>{st.v}</Text>
-            <Text style={s.statK}>{st.kT ? t(st.kT) : st.k}</Text>
-          </View>
-        ))}
+        ].map((st: any) => {
+          // Only the ones with something itemised behind them open.
+          const list = st.items ? st.items() : [];
+          const holdable = !!st.items && list.length > 0;
+          return (
+            <Pressable
+              key={st.k}
+              style={s.statCell}
+              disabled={!holdable}
+              delayLongPress={280}
+              onLongPress={() => setStatSheet({ title: st.kT ? t(st.kT) : st.k, items: list })}
+            >
+              <Ionicons name={st.i as any} size={16} color={pr.saveA} />
+              <Text style={s.statV}>{st.v}</Text>
+              <Text style={s.statK}>{st.kT ? t(st.kT) : st.k}</Text>
+            </Pressable>
+          );
+        })}
       </View>
 
       <Pressable style={s.achvCard} onPress={() => setAchvOpen(true)}>
@@ -702,32 +762,15 @@ function ProgressTab() {
         <Ionicons name="chevron-forward" size={16} color={pr.dim} />
       </Pressable>
 
-      <View style={s.finHead}>
-        <Text style={s.sectionLabel}>{t(PROFILE.finished)}</Text>
-        {finished.length > 10 ? (
-          <Pressable hitSlop={8} onPress={() => setShowAllFinished((v) => !v)}>
-            <Text style={s.seeAll}>{showAllFinished ? t(PROFILE.showLess) : t(PROFILE.seeAll) + ' ' + finished.length}</Text>
-          </Pressable>
-        ) : null}
-      </View>
-      {finished.length === 0 ? (
-        <Text style={s.finEmpty}>Finish a topic or an article and it lands here.</Text>
-      ) : (
-        <View style={{ gap: spacing.sm }}>
-          {shown.map((f) => (
-            <Pressable key={f.key} style={s.doneRow} onPress={() => f.route && router.navigate(f.route as any)}>
-              <View style={s.doneTick}><Ionicons name="checkmark" size={12} color="#FFF" /></View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.doneT} numberOfLines={1}>{f.title}</Text>
-                <Text style={s.doneS}>{f.sub}</Text>
-              </View>
-              <Text style={s.doneW}>{timeAgo(f.at)}</Text>
-            </Pressable>
-          ))}
-        </View>
-      )}
+      <Text style={s.finEmpty}>Hold any of these to see what is behind it.</Text>
 
       <AchievementsSheet open={achvOpen} onClose={() => setAchvOpen(false)} />
+      <StatItemsSheet
+        open={!!statSheet}
+        title={statSheet?.title ?? ''}
+        items={statSheet?.items ?? []}
+        onClose={() => setStatSheet(null)}
+      />
     </>
   );
 }
@@ -735,6 +778,10 @@ function ProgressTab() {
 /* ---------------- The page ---------------- */
 
 export default function Profile() {
+  // Subscribe to the language. Without this the screen only re-renders
+  // when something else pushes it, so a switch made elsewhere does not
+  // reach it until you navigate away and back.
+  useLang();
   const { displayName, session } = useAuth();
   const { tab: wantTab } = useLocalSearchParams<{ tab?: string }>();
   const [tab, setTab] = useState<Tab>((wantTab as Tab) || 'you');
@@ -746,7 +793,9 @@ export default function Profile() {
   const { incoming: pendReq } = useFriends(me?.id);
   const { items: pendInbox } = useInbox(me?.id);
   const pending = me
-    ? (pendReq?.length ?? 0) + (pendInbox ?? []).filter((i: any) => !i.done).length
+    // `learned`, not `done` — SentItem has no `done` field, so the old
+    // check was !undefined and every item stayed pending forever.
+    ? (pendReq?.length ?? 0) + (pendInbox ?? []).filter((i: any) => !i.learned).length
     : 0;
 
   return (

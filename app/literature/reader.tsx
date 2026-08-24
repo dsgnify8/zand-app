@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { bump, recordFinished } from '@/lib/stats-store';
 import { SaveHeart } from '@/components/save-heart';
 import { Image, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -207,6 +208,25 @@ export default function LitReader() {
   const total = pages.length;
   const p = Math.max(0, Math.min(total, parseInt(params.page ?? '0', 10) || 0));
   const isEnd = p >= total;
+
+  // Nothing here recorded anything before, so a poet read cover to cover was
+  // invisible to the rest of the app. Sits with the other derived values and
+  // after the not-found return, matching app/education/reader.tsx — both
+  // depend on `author` being stable for a given route, which it is.
+  useEffect(() => {
+    bump('pagesRead');
+    if (isEnd || p + 1 >= total) {
+      recordFinished(
+        {
+          key: 'poet-' + author.key,
+          title: author.name,
+          sub: 'Literature  ·  finished',
+          route: '/literature/reader?author=' + author.key + '&page=0',
+        },
+        'poetsRead',
+      );
+    }
+  }, [author.key, p, isEnd, total]);
   const goto = (n: number) => router.replace('/literature/reader?author=' + author.key + '&page=' + n as any);
 
   if (isEnd) {

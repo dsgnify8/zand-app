@@ -101,3 +101,43 @@ export function useLearnProgress() {
   }, []);
   return { done, doneCount: done.length };
 }
+
+
+/**
+ * Where the learner actually is on the route.
+ *
+ * `at` is the furthest step they have touched — a lesson either finished or
+ * left part way. That is what screens should open on: "the latest thing you
+ * were doing", not "the first thing you have not done". The two are only the
+ * same on a route where every step can be completed, and four of the six
+ * step kinds here cannot be.
+ *
+ * `next` is what to offer them: the same step if it is unfinished, otherwise
+ * the one after it.
+ *
+ * Nothing touched yet gives both as the very first step, which for a new
+ * learner is the alphabet — correct, and the reason this does not simply
+ * skip to the first lesson.
+ */
+export function journeyPosition<T extends { kind: string; unit?: string; lesson?: string }>(
+  flat: T[],
+) {
+  const touchedAt = (st: T) =>
+    st.kind === 'lesson' && st.unit && st.lesson
+      ? isLessonDone(st.unit, st.lesson) || lessonPartial(st.unit, st.lesson) > 0
+      : false;
+
+  let last = -1;
+  flat.forEach((st, i) => { if (touchedAt(st)) last = i; });
+
+  const atIndex = last < 0 ? 0 : last;
+  const at = flat[atIndex];
+
+  // Finished the thing they were on? Then next is the step after it.
+  const atDone =
+    at && at.kind === 'lesson' && at.unit && at.lesson && isLessonDone(at.unit, at.lesson);
+  const nextIndex =
+    last < 0 ? 0 : atDone ? Math.min(atIndex + 1, flat.length - 1) : atIndex;
+
+  return { at, next: flat[nextIndex], atIndex, nextIndex, started: last >= 0 };
+}

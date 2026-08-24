@@ -10,7 +10,7 @@ import { loadLevel } from '@/lib/learn-level';
 import { useFriendDeepLink } from '@/lib/deep-links';
 import { loadHidden } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
-import { loadStats } from '@/lib/stats-store';
+import { loadStats, markVisitDay } from '@/lib/stats-store';
 import { loadLang, useLang } from '@/lib/i18n';
 import { loadSaved } from '@/lib/saved-store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -110,10 +110,16 @@ export default function RootLayout() {
   useEffect(() => {
     (async () => {
       await resetForDemo();
-      loadAllFrames(); loadSaved(); loadLang(); loadStats(); loadHidden();
+      loadAllFrames(); loadSaved(); loadLang(); loadHidden();
       loadLevel(); loadLearnProgress(); loadPartial(); loadStrength();
       loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides();
       loadUsage(); loadNotifPrefs(); loadImageOverrides(); loadSavedBusinesses();
+
+      // Awaited, unlike the rest. markVisitDay writes the streak through the
+      // stats store, so if the load were still in flight it would land on top
+      // and the streak would quietly reset to whatever was on disk.
+      await loadStats();
+      markVisitDay();
     })();
   }, []);
 
@@ -129,7 +135,12 @@ export default function RootLayout() {
       <SRSProvider>
         <ReadingProvider>
           <GlossaryProvider>
-        <ThemeProvider key={appLang} value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        {/* Deliberately not keyed on the language. useLang() above re-renders
+            this tree on every change, which is enough for the getLang() calls
+            throughout the app; keying it here remounted everything instead and
+            wiped all local state — open sheets, selected panels, scroll
+            positions — on every switch. */}
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack
             screenOptions={{
               animation: 'fade',
@@ -154,7 +165,6 @@ export default function RootLayout() {
             <Stack.Screen name="admin-content" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
-            <Stack.Screen name="learn/path" options={{ headerShown: false }} />
             <Stack.Screen name="learn/map" options={{ headerShown: false }} />
             <Stack.Screen name="learn/cards" options={{ headerShown: false }} />
             <Stack.Screen name="learn/blanks" options={{ headerShown: false }} />

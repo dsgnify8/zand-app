@@ -20,16 +20,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { t as tr, getLang } from '@/lib/i18n';
+import { useLang, t as tr, getLang } from '@/lib/i18n';
 import { SECTIONS } from '@/constants/i18n/sections';
 import { eduImage } from '@/constants/education-images';
 import { TOPICS as HISTORY_TOPICS } from '@/constants/education';
 import { AUTHORS } from '@/constants/literature';
 import { CULTURE_TOPICS } from '@/constants/culture';
 import { IranProvinceMap } from '@/components/iran-province-map';
-import { HistoryTrack } from '@/components/history-track';
+import { HistoryChapters } from '@/components/history-chapters';
 import { TraditionsPanels, LanguageScripts } from '@/components/explore-sections';
-import { LiteratureCard, LanguageBorrowed } from '@/components/explore-lit-lang';
+import { LanguageBorrowed } from '@/components/explore-lit-lang';
+import { PoetDeck } from '@/components/poet-deck';
+import { CultureQuote } from '@/components/culture-quote';
+import { TopicsRail } from '@/components/topics-rail';
+import { TraditionsWheel } from '@/components/traditions-wheel';
+import { LanguageCard } from '@/components/language-card';
 
 const { width: W } = Dimensions.get('window');
 const CARD_W = W - spacing.lg * 2;
@@ -220,6 +225,10 @@ function WorldCard({ w, index, fa }: { w: World; index: number; fa: boolean }) {
 /* ---------------- the page ---------------- */
 
 export default function Explore() {
+  // Subscribe to the language. Without this the screen only re-renders
+  // when something else pushes it, so a switch made elsewhere does not
+  // reach it until you navigate away and back.
+  useLang();
   const fa = getLang() === 'fa';
   const y = useRef(new Animated.Value(0)).current;
 
@@ -238,35 +247,22 @@ export default function Explore() {
         scrollEventThrottle={16}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y } } }], { useNativeDriver: true })}
       >
-        <View style={s.header} pointerEvents="none">
+        <View style={s.header} pointerEvents="box-none">
           <BouncingTitle visible={headOpacity as any} />
           <Animated.Text style={[s.kicker, { opacity: headOpacity }]}>
             {fa ? 'هر چیزی که اینجا هست' : 'EVERYTHING WE HAVE'}
           </Animated.Text>
+
+          <TopicsRail />
         </View>
 
         {/* History: a road down the page rather than a card to open. */}
         <Rise index={0}>
-          <Pressable onPress={() => router.navigate('/education/history' as any)}>
-            <View style={s.headRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={s.sectionFa}>تاریخ</Text>
-                <Text style={s.sectionT}>{tr(SECTIONS.history)}</Text>
-              </View>
-              <View style={s.moreRowTop}>
-                <Text style={s.moreT}>Learn history</Text>
-                <Ionicons name="arrow-forward" size={13} color={colors.accent} />
-              </View>
-            </View>
-            <Text style={s.sectionX}>Twenty-five centuries, in the order they happened.</Text>
-          </Pressable>
-          <HistoryTrack />
+          <HistoryChapters />
         </Rise>
 
-        {WORLDS.map((w) => <WorldCard key={w.key} w={w} index={1} fa={fa} />)}
-
         {/* Geography: the map itself, on the page. */}
-        <Rise index={4}>
+        <Rise index={1}>
           <Pressable onPress={() => router.navigate('/geography' as any)}>
             <View style={s.headRow}>
               <View style={{ flex: 1 }}>
@@ -285,54 +281,20 @@ export default function Explore() {
           </View>
         </Rise>
 
+        <Rise index={2}>
+          <PoetDeck />
+        </Rise>
+
         <Rise index={3}>
-          <Pressable onPress={() => router.navigate('/literature' as any)}>
-            <View style={s.headRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={s.sectionFa}>ادبیات</Text>
-                <Text style={s.sectionT}>{tr(SECTIONS.literature)}</Text>
-              </View>
-              <View style={s.moreRowTop}>
-                <Text style={s.moreT}>All seven</Text>
-                <Ionicons name="arrow-forward" size={13} color={colors.accent} />
-              </View>
-            </View>
-          </Pressable>
-          <LiteratureCard />
+          <CultureQuote />
         </Rise>
 
         <Rise index={5}>
-          <Pressable onPress={() => router.navigate('/traditions' as any)}>
-            <View style={s.headRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={s.sectionFa}>آیین‌ها</Text>
-                <Text style={s.sectionT}>{tr(SECTIONS.traditions)}</Text>
-              </View>
-              <View style={s.moreRowTop}>
-                <Text style={s.moreT}>The whole year</Text>
-                <Ionicons name="arrow-forward" size={13} color={colors.accent} />
-              </View>
-            </View>
-            <Text style={s.sectionX}>Two nights the year turns on, six months apart.</Text>
-          </Pressable>
-          <TraditionsPanels />
+          <TraditionsWheel />
         </Rise>
 
         <Rise index={6}>
-          <Pressable onPress={() => router.navigate('/language' as any)}>
-            <View style={s.headRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={s.sectionFa}>زبان</Text>
-                <Text style={s.sectionT}>{tr(SECTIONS.language)}</Text>
-              </View>
-              <View style={s.moreRowTop}>
-                <Text style={s.moreT}>Where it came from</Text>
-                <Ionicons name="arrow-forward" size={13} color={colors.accent} />
-              </View>
-            </View>
-            <Text style={s.sectionX}>Older than the script it is written in, and further travelled than you would think.</Text>
-          </Pressable>
-          <LanguageBorrowed />
+          <LanguageCard />
         </Rise>
 
 

@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES } from '@/constants/journey';
-import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, journeyPosition, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 import { useStats } from '@/lib/stats-store';
 
@@ -16,7 +16,7 @@ export function ContinueLearning() {
   const stats = useStats();
 
   const all = STAGES.flatMap((st) => st.steps.map((x) => ({ ...x, stage: st })));
-  const next = all.find((x) => !(x.kind === 'lesson' && x.unit && x.lesson && isLessonDone(x.unit, x.lesson)));
+  const next = journeyPosition(all).next;
   const days = stats.learnDays ?? 0;
 
   return (

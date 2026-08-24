@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES } from '@/constants/journey';
-import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, journeyPosition, useLearnProgress } from '@/lib/learn-progress';
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
 import { useAuth } from '@/lib/auth';
@@ -15,14 +15,16 @@ import { getLang } from '@/lib/i18n';
 export function LearnHero() {
   const { session } = useAuth();
   useLearnProgress();
-  const { asked, info } = useLevel();
+  const { asked: chosen, ready, info } = useLevel();
+  // Same as the continue card: not loaded is not the same as not chosen.
+  const asked = !ready || chosen;
   const { solid, due } = useStrength();
 
   // where you are on the route
   const all = STAGES.flatMap((st) => st.steps.map((x) => ({ ...x, stage: st })));
   const lessons = all.filter((x) => x.kind === 'lesson' && x.unit && x.lesson);
   const doneCount = lessons.filter((x) => isLessonDone(x.unit!, x.lesson!)).length;
-  const next = all.find((x) => !(x.kind === 'lesson' && x.unit && x.lesson && isLessonDone(x.unit, x.lesson)));
+  const next = journeyPosition(all).next;
   const pct = lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0;
 
   // first run: the questionnaire is the way in

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { bump } from '@/lib/stats-store';
 import { sendItem } from '@/lib/inbox';
 import { ActivityIndicator, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -68,7 +68,14 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
     setDelBusy(false);
     setConfirmDel(false);
   };
-  const { lang: curLang } = useLang();
+  // Subscription only. The value destructured out of useLang() goes stale
+  // here — proven with logs: curLang read 'en' in the same render where
+  // getLang() read 'fa'. Cause unknown. Until it is understood, subscribe
+  // with the hook and read with getLang().
+  useLang();
+  const curLang = getLang();
+  const _id = useRef(Math.random().toString(36).slice(2, 6)); // TEMP-LANG-LOG
+  console.log('[lang] SettingsSheet', _id.current, 'open=', open, 'panel=', panel, 'curLang=', (require('@/lib/i18n').getLang())); // TEMP-LANG-LOG
   const { displayName, user, signOut, updateName, updateEmail, updatePhone } = useAuth();
   const phone = (user?.user_metadata?.phone as string) ?? '';
   const [editField, setEditField] = useState<null | 'name' | 'email' | 'phone'>(null);
@@ -236,11 +243,16 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         <>
           <Header title="Language" />
           <View style={{ paddingBottom: spacing.xxl }}>
+            {console.log('[lang] row: curLang=', curLang, ' getLang()=', getLang()) as any}
             {[
               { code: 'en', label: 'English' },
               { code: 'fa', label: 'فارسی' },
             ].map((l) => {
-              const on = curLang === l.code;
+              // Read fresh. curLang, destructured from useLang() at the top of
+              // this component, reports the previous language here for reasons
+              // the logs have not explained; getLang() in the same render is
+              // correct. Revisit if the row log ever shows them agreeing.
+              const on = getLang() === l.code;
               return (
                 <Pressable key={l.code} style={m.langRow} onPress={() => applyLanguage(l.code as any)}>
                   <Text style={[m.langT, on && { color: pr.goldA }]}>{l.label}</Text>

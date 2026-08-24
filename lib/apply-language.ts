@@ -25,6 +25,7 @@ export function registerLangOverlay(fn: (msg: string | null) => void) {
 }
 
 export async function applyLanguage(next: Lang) {
+  console.log('[lang] applyLanguage', next); // TEMP-LANG-LOG
   const msg = next === 'fa' ? 'در حال تغییر به فارسی…' : 'Switching to English…';
   overlayFn?.(msg);
 
