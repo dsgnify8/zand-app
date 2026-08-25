@@ -8,7 +8,7 @@
 // Backdrop tap closes; so does picking anything, before the navigation
 // happens, so the panel is never still on screen under the new page.
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Easing,
@@ -25,10 +25,11 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { getLang, t } from '@/lib/i18n';
 import { LOCAL } from '@/constants/i18n/local';
 
-export type DrawerPick = 'country' | 'category' | 'list';
+export type DrawerPick = 'home' | 'city' | 'category' | 'list';
 
 const ROWS: { key: DrawerPick; icon: string; label: any; sub: any }[] = [
-  { key: 'country', icon: 'earth-outline', label: LOCAL.byCountryTitle, sub: LOCAL.byCountryX },
+  { key: 'home', icon: 'storefront-outline', label: LOCAL.localHome, sub: LOCAL.localHomeX },
+  { key: 'city', icon: 'earth-outline', label: LOCAL.byCityTitle, sub: LOCAL.byCityX },
   { key: 'category', icon: 'grid-outline', label: LOCAL.byCategoryTitle, sub: LOCAL.byCategoryX },
   { key: 'list', icon: 'add-circle-outline', label: LOCAL.listBusiness, sub: LOCAL.listBusinessX },
 ];
@@ -46,7 +47,10 @@ export function LocalDrawer({
   const { width: W } = useWindowDimensions();
   const panel = Math.min(340, W * 0.78);
 
+  // Reset on every mount: the panel is unmounted when closed, so this
+  // must start from nothing or it would appear already open.
   const slide = useRef(new Animated.Value(0)).current;
+  useEffect(() => { if (open) slide.setValue(0); }, [open]);
 
   useEffect(() => {
     Animated.timing(slide, {
@@ -68,13 +72,24 @@ export function LocalDrawer({
     setTimeout(() => onPick(k), 160);
   };
 
-  // Nothing mounted at all when closed, so it cannot eat touches.
-  if (!open && (slide as any).__getValue?.() === 0) return null;
+  // Closed means gone, with nothing conditional about it.
+  //
+  // Two earlier versions gated this on the closing animation so the panel
+  // could slide out. Both had states where the gate never cleared, which
+  // left a full-screen layer over the page with a live scrim — the screen
+  // looked frozen because every touch was landing on an invisible
+  // backdrop. Losing the slide-out is worth not being able to strand
+  // someone on a dead page.
+  if (!open) return null;
 
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents={open ? 'auto' : 'none'}>
+    <View style={StyleSheet.absoluteFill} pointerEvents={open ? 'auto' : 'none'} collapsable={false}>
       <Animated.View style={[StyleSheet.absoluteFill, { opacity: slide }]}>
-        <Pressable style={[StyleSheet.absoluteFill, st.scrim]} onPress={onClose} />
+        <Pressable
+          style={[StyleSheet.absoluteFill, st.scrim]}
+          pointerEvents={open ? 'auto' : 'none'}
+          onPress={onClose}
+        />
       </Animated.View>
 
       <Animated.View

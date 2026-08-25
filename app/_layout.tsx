@@ -166,18 +166,14 @@ export default function RootLayout() {
             <Stack.Screen name="local-map" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
             <Stack.Screen name="admin-review" options={{ headerShown: false }} />
             <Stack.Screen name="my-businesses" options={{ headerShown: false }} />
-            <Stack.Screen name="business" options={{ headerShown: false, animation: 'slide_from_right' }} />
-            <Stack.Screen name="business-new" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
             <Stack.Screen name="admin-businesses" options={{ headerShown: false }} />
             <Stack.Screen name="admin-images" options={{ headerShown: false }} />
+            <Stack.Screen name="admin-cities" options={{ headerShown: false }} />
+            <Stack.Screen name="admin-stories" options={{ headerShown: false }} />
             <Stack.Screen name="admin-content" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/map" options={{ headerShown: false }} />
-            <Stack.Screen name="local-countries" options={{ headerShown: false }} />
-            <Stack.Screen name="local-country" options={{ headerShown: false }} />
-            <Stack.Screen name="local-categories" options={{ headerShown: false }} />
-            <Stack.Screen name="local-saved" options={{ headerShown: false }} />
             <Stack.Screen name="learn/cards" options={{ headerShown: false }} />
             <Stack.Screen name="learn/blanks" options={{ headerShown: false }} />
             <Stack.Screen name="learn/read" options={{ headerShown: false }} />

@@ -21,7 +21,7 @@ import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, Text, View 
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
-import { Motif, motifFor } from '@/components/persian-motifs';
+import { layoutFor } from '@/lib/founder-stories';
 
 import { useLang } from '@/lib/i18n';
 /* ------------------------------------------------------------------ *
@@ -98,6 +98,14 @@ function demoStory(name: string, city?: string): FounderStory {
 
 const SPIN = { duration: 520, easing: Easing.inOut(Easing.cubic) };
 
+/** Four corners for the wash, indexed by the story's seed. */
+const WASH = [
+  { start: { x: 0.1, y: 0 }, end: { x: 0.9, y: 1 } },
+  { start: { x: 0.9, y: 0 }, end: { x: 0.1, y: 1 } },
+  { start: { x: 0, y: 0.85 }, end: { x: 1, y: 0.1 } },
+  { start: { x: 0.5, y: 0 }, end: { x: 0.5, y: 1 } },
+] as const;
+
 export function FounderFlip({
   children,
   name,
@@ -118,9 +126,13 @@ export function FounderFlip({
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
-  const s = story ?? demoStory(name, city);
+  // No story, no back. demoStory was a placeholder while the real ones
+  // were being written; leaving it in would mean every listing appearing
+  // to have a founder's account, most of them the same invented woman.
+  const s = story;
 
   const [flipped, setFlipped] = useState(false);
+  const layout = layoutFor(motifKey ?? name);
   const [frontH, setFrontH] = useState(0);
   const [backH, setBackH] = useState(0);
 
@@ -159,6 +171,13 @@ export function FounderFlip({
   const frontSpin = spin.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '180deg'] });
   const backSpin = spin.interpolate({ inputRange: [0, 1], outputRange: ['180deg', '360deg'] });
 
+  // Nothing to turn over. The card keeps its chrome — the rounded top and
+  // the lap over the photograph belong to it — but there is no back face
+  // and no control implying there is one.
+  if (!s) {
+    return <View style={st.card}>{children}</View>;
+  }
+
   return (
     <Animated.View style={[st.card, measured ? { height: h } : null]}>
       {/* Front — the listing. Stays in flow so it sets the card's height. */}
@@ -185,11 +204,18 @@ export function FounderFlip({
             hairline. The story should feel like a different surface to the
             listing, not the same page with other words on it. */}
         <View pointerEvents="none" style={st.frost} />
-        {/* The mark, behind everything. Large and faint: the story is the
-            thing, this is the paper it is printed on. */}
-        <View pointerEvents="none" style={st.motif}>
-          <Motif name={motifFor(motifKey ?? name)} size={260} />
-        </View>
+        {/* A wash rather than a mark: a drawing behind the text was
+            competing with it. The corner it comes from from a different corner per story. Small, but
+            it is the first thing the eye reads on turning the card, and
+            four of them means two listings side by side never open the
+            same way. */}
+        <LinearGradient
+          pointerEvents="none"
+          colors={['rgba(196,168,148,0.22)', 'rgba(214,196,180,0.10)', 'rgba(255,255,255,0)']}
+          start={WASH[layout.wash].start}
+          end={WASH[layout.wash].end}
+          style={StyleSheet.absoluteFill as any}
+        />
         <LinearGradient
           pointerEvents="none"
           colors={['rgba(255,255,255,0.66)', 'rgba(255,255,255,0.12)', 'rgba(255,255,255,0)']}
@@ -199,41 +225,84 @@ export function FounderFlip({
         <View pointerEvents="none" style={st.frostEdge} />
 
         <View style={[st.inner, fa && { alignItems: 'flex-end' }]}>
-          <Text style={[st.eyebrow, fa && st.rtl]}>
-            {fa ? 'داستان بنیان‌گذار' : 'FOUNDER\u2019S STORY'}
-          </Text>
+          {/* Centred or ranged left, by the story's seed. The most
+              visible of the variations, so it carries most of the work of
+              making two stories look unlike each other. */}
+          <View style={layout.head === 'centre' ? st.headCentre : undefined}>
+            <Text style={[st.eyebrow, fa && st.rtl, layout.head === 'centre' && st.tc]}>
+              {fa ? 'داستان بنیان‌گذار' : 'FOUNDER\u2019S STORY'}
+            </Text>
 
-          <Text style={[st.founder, fa && st.rtl]}>
-            {fa ? s.founderFa ?? s.founder : s.founder}
-          </Text>
-          <Text style={[st.role, fa && st.rtl]}>
-            {(fa ? s.roleFa ?? s.role : s.role) ?? ''}
-            {s.since ? '  ·  ' + (fa ? 'از ' + s.since : 'since ' + s.since) : ''}
-          </Text>
+            <Text style={[st.founder, fa && st.rtl, layout.head === 'centre' && st.tc]}>
+              {fa ? s.founderFa ?? s.founder : s.founder}
+            </Text>
+            <Text style={[st.role, fa && st.rtl, layout.head === 'centre' && st.tc]}>
+              {(fa ? s.roleFa ?? s.role : s.role) ?? ''}
+              {s.since ? '  ·  ' + (fa ? 'از ' + s.since : 'since ' + s.since) : ''}
+            </Text>
+          </View>
 
           {s.blocks.map((b, i) => {
             if (b.t === 'rule') return <View key={i} style={st.rule} />;
 
             if (b.t === 'quote') {
+              // Three settings, chosen by the story's seed. Different
+              // enough to read as different designs, quiet enough that
+              // none of them shouts — a pull-quote that competes with the
+              // prose is a pull-quote nobody finishes.
+              const body = fa ? b.fa ?? b.x : b.x;
+              const attrib = b.by ? '\u2014 ' + (fa ? b.byFa ?? b.by : b.by) : null;
+
+              if (layout.quote === 'centre') {
+                return (
+                  <View key={i} style={st.qCentre}>
+                    <Text style={[st.qCentreT, fa && st.rtl]}>{body}</Text>
+                    {attrib ? <Text style={[st.qCentreBy, fa && st.rtl]}>{attrib}</Text> : null}
+                  </View>
+                );
+              }
+
+              if (layout.quote === 'rule') {
+                return (
+                  <View key={i} style={st.qRule}>
+                    <View style={st.qRuleLine} />
+                    <Text style={[st.qRuleT, fa && st.rtl]}>{body}</Text>
+                    {attrib ? <Text style={[st.qRuleBy, fa && st.rtl]}>{attrib}</Text> : null}
+                    <View style={st.qRuleLine} />
+                  </View>
+                );
+              }
+
               return (
                 <View
                   key={i}
                   style={[st.quoteWrap, fa ? st.quoteWrapFa : st.quoteWrapEn]}
                 >
                   <Text style={[st.mark, fa && st.markFa]}>{fa ? '»' : '\u201C'}</Text>
-                  <Text style={[st.quote, fa && st.rtl]}>{fa ? b.fa ?? b.x : b.x}</Text>
-                  {b.by ? (
-                    <Text style={[st.by, fa && st.rtl]}>
-                      {'\u2014 ' + (fa ? b.byFa ?? b.by : b.by)}
-                    </Text>
-                  ) : null}
+                  <Text style={[st.quote, fa && st.rtl]}>{body}</Text>
+                  {attrib ? <Text style={[st.by, fa && st.rtl]}>{attrib}</Text> : null}
                 </View>
+              );
+            }
+
+            // A capital on the opening paragraph, on roughly one story in
+            // five. Any more often and it reads as a template rather than
+            // as something someone chose. Never in Persian: the script has
+            // no capitals and a large first letter would simply be a large
+            // letter.
+            const text = fa ? b.fa ?? b.x : b.x;
+            if (layout.drop && !fa && i === 0 && text.length > 40) {
+              return (
+                <Text key={i} style={st.para}>
+                  <Text style={st.dropCap}>{text.slice(0, 1)}</Text>
+                  {text.slice(1)}
+                </Text>
               );
             }
 
             return (
               <Text key={i} style={[st.para, fa && st.rtlPara]}>
-                {fa ? b.fa ?? b.x : b.x}
+                {text}
               </Text>
             );
           })}
@@ -271,7 +340,6 @@ const st = StyleSheet.create({
   // opacity there is, so the veil is cool and near-neutral instead, and the
   // sheen above it does the rest of the work.
   frost: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(247,246,245,0.80)' },
-  motif: { position: 'absolute', right: -40, top: 40, opacity: 1 },
   frostEdge: {
     position: 'absolute',
     top: 10,
@@ -377,4 +445,34 @@ const st = StyleSheet.create({
   sTOn: { color: colors.background, fontSize: 19 },
 
   rtl: { writingDirection: 'rtl', textAlign: 'right' },
+  /* centred: alone between paragraphs, no marks, wider leading */
+  qCentre: { marginVertical: spacing.xl, paddingHorizontal: spacing.md },
+  qCentreT: {
+    fontFamily: fonts.heading, fontSize: 21, lineHeight: 32,
+    color: colors.textPrimary, textAlign: 'center',
+  },
+  qCentreBy: {
+    fontFamily: fonts.body, fontSize: 11, letterSpacing: 1.2,
+    color: colors.textSecondary, textAlign: 'center', marginTop: spacing.sm,
+  },
+
+  /* ruled: a hairline above and below, running the full measure */
+  qRule: { marginVertical: spacing.xl, gap: spacing.md },
+  qRuleLine: { height: StyleSheet.hairlineWidth, backgroundColor: 'rgba(40,28,24,0.22)' },
+  qRuleT: {
+    fontFamily: fonts.body, fontSize: 15, lineHeight: 25,
+    color: colors.textPrimary,
+  },
+  qRuleBy: {
+    fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.6,
+    color: colors.textSecondary,
+  },
+  headCentre: { alignItems: 'center' },
+  tc: { textAlign: 'center' },
+  dropCap: {
+    fontFamily: fonts.heading,
+    fontSize: 40,
+    lineHeight: 40,
+    color: colors.textPrimary,
+  },
 });

@@ -149,6 +149,18 @@ export default function AdminReview() {
             {b.description ? <Text style={s.desc}>{b.description}</Text> : null}
             {b.description_fa ? <Text style={[s.desc, s.descFa]}>{b.description_fa}</Text> : null}
 
+            {/* Their pitch, if they made one. Approving the listing does
+                not approve this — it is only here so the person deciding
+                has seen it. */}
+            {b.has_story ? (
+              <View style={s.pitch}>
+                <Text style={s.pitchL}>THEY OFFERED A STORY</Text>
+                <Text style={s.pitchT}>
+                  {b.story_pitch?.trim() || 'Ticked the box but left it blank.'}
+                </Text>
+              </View>
+            ) : null}
+
             <Fact label="Address" value={b.address || '—'} />
             <Fact label="Coordinates" value={b.lat != null ? `${b.lat.toFixed(4)}, ${b.lng?.toFixed(4)}` : '—'} />
             <Fact label="Timezone" value={b.timezone || '—'} />
@@ -267,4 +279,10 @@ const s = StyleSheet.create({
   approve: { flex: 1.4, backgroundColor: colors.accent },
   actT: { fontFamily: fonts.bodyStrong, fontSize: 13 },
   chargeNote: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.md },
+  pitch: {
+    backgroundColor: 'rgba(0,0,0,0.035)', borderRadius: 12,
+    padding: spacing.md, marginTop: spacing.md,
+  },
+  pitchL: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 1.6, color: colors.textSecondary },
+  pitchT: { fontFamily: fonts.body, fontSize: 13, lineHeight: 20, color: colors.textPrimary, marginTop: 6 },
 });

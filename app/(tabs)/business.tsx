@@ -19,6 +19,7 @@ import { t, useLang, getLang } from '@/lib/i18n';
 import { loadBusiness, categoryLabel, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { FounderFlip } from '@/components/founder-flip';
+import { useStory, toCardStory, layoutFor } from '@/lib/founder-stories';
 import { ACT_TINT } from '@/components/local-tints';
 import { BusinessActionBar } from '@/components/business-action-bar';
 import { eduImage } from '@/constants/education-images';
@@ -26,6 +27,7 @@ import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NearbyPlaces } from '@/components/nearby-places';
 import { isSavedBusiness, toggleSavedBusiness, shareBusiness } from '@/lib/saved-businesses';
+import { CollectionSheet } from '@/components/collection-sheet';
 
 import { LOCAL } from '@/constants/i18n/local';
 // A listing photo is either a storage path or a bundled demo image.
@@ -84,6 +86,18 @@ export default function BusinessPage() {
       setLoading(false);
     })();
   }, [id]);
+
+  // Above the early return: a hook called only when the listing has
+  // loaded is a hook called conditionally, and React counts them.
+  const { story } = useStory(b?.id);
+  // Tap saves. Holding files it — the uncommon act, so it can afford a
+  // sheet; the common one should cost nothing.
+  const [filing, setFiling] = useState(false);
+  const savePop = useRef(new Animated.Value(1)).current;
+  const bump = () => {
+    savePop.setValue(0.8);
+    Animated.spring(savePop, { toValue: 1, friction: 4, tension: 180, useNativeDriver: true }).start();
+  };
 
   if (loading) {
     return (
@@ -162,10 +176,11 @@ export default function BusinessPage() {
                 ))}
               </ScrollView>
               {photos.length > 1 ? (
-                <View style={s.dots}>
-                  {photos.map((_, i) => (
-                    <View key={i} style={[s.dot, i === shot && s.dotOn]} />
-                  ))}
+                /* A count rather than dots, here. Past four or five, dots
+                   stop being countable — and on a page you chose to open,
+                   knowing there are six photographs is worth knowing. */
+                <View style={s.shotCount}>
+                  <Text style={s.shotCountT}>{shot + 1} / {photos.length}</Text>
                 </View>
               ) : null}
             </>
@@ -184,7 +199,9 @@ export default function BusinessPage() {
             <Pressable
               style={s.roundBtn}
               hitSlop={8}
-              onPress={() => { toggleSavedBusiness(b.id); setSavedTick((n) => n + 1); }}
+              onPress={() => { toggleSavedBusiness(b.id); setSavedTick((n) => n + 1); bump(); }}
+              onLongPress={() => { if (!isSavedBusiness(b.id)) toggleSavedBusiness(b.id); setSavedTick((n) => n + 1); setFiling(true); }}
+              delayLongPress={280}
             >
               <Ionicons
                 name={isSavedBusiness(b.id) ? 'bookmark' : 'bookmark-outline'}
@@ -202,7 +219,16 @@ export default function BusinessPage() {
           </Pressable>
         </Animated.View>
 
-        <FounderFlip name={name} city={(fa && b.city_fa) || b.city} fa={fa} motifKey={b.id}>
+        <FounderFlip
+          name={name}
+          city={(fa && b.city_fa) || b.city}
+          fa={fa}
+          motifKey={b.id}
+          /* Only an approved story reaches the card. Without one the flip
+             control does not render at all — a card that turns over to
+             show nothing is worse than one that does not turn. */
+          story={story && story.approved ? toCardStory(story) : undefined}
+        >
           <View style={s.body}>
           <Text style={[s.name, fa && b.name_fa ? s.nameFa : null]}>{name}</Text>
           <Text style={s.meta}>
@@ -225,12 +251,33 @@ export default function BusinessPage() {
             >
               <Text style={[s.blockL, { color: ACT_TINT.address }]}>{t(LOCAL.addressLabel)}</Text>
               <View style={s.addrRow}>
-                <Text style={[s.blockV, fa && s.rtl, { flex: 1 }]}>{b.address || (fa ? 'روی نقشه' : t(LOCAL.seeOnMap))}</Text>
+                <Text style={[s.blockV, fa && s.rtl, { flex: 1 }]}>{b.address || t(LOCAL.seeOnMap)}</Text>
                 {b.lat != null ? (
                   <View style={s.mapChip}>
                     <Ionicons name="map-outline" size={14} color={colors.accent} />
                   </View>
                 ) : null}
+              </View>
+            </Pressable>
+          ) : b.website ? (
+            /* No door, so the website takes the slot. The owner names it,
+               because a URL is an instruction to a machine and this line is
+               read by a person. */
+            <Pressable
+              style={s.block}
+              onPress={() =>
+                Linking.openURL(b.website!.startsWith('http') ? b.website! : 'https://' + b.website)
+              }
+            >
+              <Text style={[s.blockL, { color: ACT_TINT.website }]}>{t(LOCAL.website).toUpperCase()}</Text>
+              <View style={s.addrRow}>
+                <Text style={[s.blockV, fa && s.rtl, { flex: 1 }]} numberOfLines={1}>
+                  {b.website_label
+                    || b.website!.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '')}
+                </Text>
+                <View style={s.mapChip}>
+                  <Ionicons name="open-outline" size={14} color={colors.accent} />
+                </View>
               </View>
             </Pressable>
           ) : null}
@@ -262,14 +309,11 @@ export default function BusinessPage() {
 
           <NearbyPlaces b={b} fa={fa} />
 
-          <Text style={s.foot}>
-            {fa
-              ? 'این کسب‌وکار خودش را در فهرست زند ثبت کرده است.'
-              : t(LOCAL.selfListed)}
-          </Text>
           </View>
         </FounderFlip>
       </Animated.ScrollView>
+
+      <CollectionSheet businessId={b.id} open={filing} onClose={() => setFiling(false)} />
 
       <BusinessActionBar
         phone={b.phone}
@@ -321,8 +365,16 @@ const s = StyleSheet.create({
   hourD: { fontFamily: fonts.body, fontSize: 13, color: colors.textSecondary },
   hourV: { fontFamily: fonts.body, fontSize: 13, color: colors.textPrimary },
 
-  socials: { flexDirection: 'row', gap: 8 },
-  social: { width: 42, height: 42, borderRadius: 14, backgroundColor: 'rgba(0,0,0,0.04)', alignItems: 'center', justifyContent: 'center' },
+  socials: { flexDirection: 'row', gap: spacing.md },
+  // No tile behind them. These marks are already shapes; a rounded square
+  // apiece turns a row of logos into a row of buttons.
+  social: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
 
   foot: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl, opacity: 0.8 },
+  shotCount: {
+    position: 'absolute', bottom: 14, right: spacing.lg,
+    backgroundColor: 'rgba(20,17,16,0.5)',
+    borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4,
+  },
+  shotCountT: { fontFamily: fonts.body, fontSize: 11, color: 'rgba(255,255,255,0.95)' },
 });

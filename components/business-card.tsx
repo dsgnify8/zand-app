@@ -30,12 +30,14 @@ const GAP = spacing.lg;
 const W = Dimensions.get('window').width - GAP * 2;
 
 export function BusinessCard({
-  b, fa, km, onOpen,
+  b, fa, km, onOpen, onFile,
 }: {
   b: Business;
   fa: boolean;
   km?: number | null;
   onOpen: () => void;
+  /** Held rather than tapped: the caller opens the collection sheet. */
+  onFile?: (id: string) => void;
 }) {
   const shots = b.photos ?? [];
   const [i, setI] = useState(0);
@@ -103,6 +105,10 @@ export function BusinessCard({
                 </Pressable>
               ) : null}
 
+              {/* Dots here, a count on the listing itself. In a feed you
+                  have not committed to anything yet, and a number on every
+                  card is noise; once you are on the page, knowing how many
+                  photographs there are is worth having. */}
               <View style={s.dots}>
                 {shots.map((_, n) => (
                   <View key={n} style={[s.dot, n === i && s.dotOn]} />
@@ -115,6 +121,8 @@ export function BusinessCard({
             style={s.save}
             hitSlop={8}
             onPress={() => { toggleSavedBusiness(b.id); setTick((n) => n + 1); }}
+            onLongPress={() => { if (!isSavedBusiness(b.id)) toggleSavedBusiness(b.id); setTick((n) => n + 1); onFile?.(b.id); }}
+            delayLongPress={280}
           >
             <Ionicons
               name={isSavedBusiness(b.id) ? 'bookmark' : 'bookmark-outline'}

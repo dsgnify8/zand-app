@@ -84,7 +84,10 @@ export function NearbyPlaces({ b, fa }: { b: Business; fa: boolean }) {
               </Text>
               <Text style={s.meta} numberOfLines={1}>
                 {categoryLabel(x.category, fa)}
-                {km != null ? '  ·  ' + (km < 1 ? '<1' : Math.round(km)) + ' km' : ''}
+                {/* The city, not a distance. Someone who found this listing
+                    by searching Dubai is not asking how far it is from
+                    wherever they happen to be standing. */}
+                {x.city ? '  ·  ' + ((fa && x.city_fa) || x.city) : ''}
               </Text>
             </Pressable>
           );

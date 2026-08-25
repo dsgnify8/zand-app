@@ -58,6 +58,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen name="local" options={{ tabBarLabel: () => <TabLabel k={NAV.local} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="local-cities" options={{ href: null }} />
+      <Tabs.Screen name="local-city" options={{ href: null }} />
+      <Tabs.Screen name="local-categories" options={{ href: null }} />
+      <Tabs.Screen name="local-saved" options={{ href: null }} />
+      <Tabs.Screen name="business" options={{ href: null }} />
+      <Tabs.Screen name="business-new" options={{ href: null }} />
       <Tabs.Screen name="profile" options={{ tabBarLabel: () => <TabLabel k={NAV.profile} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
     </Tabs>
   );

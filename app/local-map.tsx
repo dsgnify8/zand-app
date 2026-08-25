@@ -15,7 +15,7 @@ import {
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import MapView, { Marker, type Region } from 'react-native-maps';
 
@@ -49,7 +49,18 @@ export default function LocalMap() {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rail = useRef<ScrollView>(null);
 
-  const [region, setRegion] = useState<Region>(FALLBACK);
+  // Opened from a city page with a centre already worked out, so start
+  // there rather than at the fallback and then panning.
+  const { lat: qLat, lng: qLng, z: qZ } = useLocalSearchParams<{ lat?: string; lng?: string; z?: string }>();
+  const opened = qLat && qLng
+    ? {
+        latitude: Number(qLat),
+        longitude: Number(qLng),
+        latitudeDelta: Number(qZ) || 0.35,
+        longitudeDelta: Number(qZ) || 0.35,
+      }
+    : null;
+  const [region, setRegion] = useState<Region>(opened ?? FALLBACK);
   const [items, setItems] = useState<Business[]>([]);
   const [sel, setSel] = useState<Business | null>(null);
   const [cat, setCat] = useState<string | null>(null);
@@ -110,6 +121,10 @@ export default function LocalMap() {
   /* ---------------- start where they are ---------------- */
 
   useEffect(() => {
+    // Unless they were sent somewhere specific. Arriving on a city and
+    // then being slid back to your own location a second later is worse
+    // than never having centred at all.
+    if (opened) return;
     (async () => {
       if (await hasLocation()) {
         const p = await currentPlace();

@@ -71,6 +71,18 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-cities' as any)}>
+              <Ionicons name="business-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>City covers</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-stories' as any)}>
+              <Ionicons name="book-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Founder stories</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-content' as any)}>
               <Ionicons name="create-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Edit content</Text>

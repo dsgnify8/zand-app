@@ -399,6 +399,26 @@ export default function BusinessForm() {
               autoCapitalize="none"
             />
           </View>
+
+          {/* Only once there is a link to name. Asking someone to title a
+              website they have not given is a question with no answer.
+              This is what the page shows in place of an address when a
+              listing has no door — the URL still opens, it is just not
+              what gets read. */}
+          {(b.website ?? '').trim() ? (
+            <View style={[s.row, { marginTop: spacing.sm }]}>
+              <View style={s.socIcon}>
+                <Ionicons name="pricetag-outline" size={15} color={colors.textSecondary} />
+              </View>
+              <TextInput
+                style={[s.input, { flex: 1 }]}
+                value={b.website_label ?? ''}
+                onChangeText={(v) => set({ website_label: v })}
+                placeholder="Call it something — Our online store"
+                placeholderTextColor={colors.textSecondary}
+              />
+            </View>
+          ) : null}
           <View style={[s.row, { marginTop: spacing.sm }]}>
             <View style={s.socIcon}><Ionicons name="logo-whatsapp" size={15} color={colors.textSecondary} /></View>
             <TextInput
@@ -457,6 +477,42 @@ export default function BusinessForm() {
               />
             </View>
           ))}
+
+          {/* The last question, and the only one that is not a fact.
+              Separated from the rest so it reads as an invitation rather
+              than another required field — and it changes nothing about
+              whether the listing goes up. */}
+          <View style={s.storyRule} />
+          <Text style={[s.label, { marginTop: spacing.xl }]}>WHAT'S YOUR STORY?</Text>
+
+          <Pressable
+            style={[s.row, { marginTop: spacing.sm, alignItems: 'flex-start' }]}
+            onPress={() => set({ has_story: !b.has_story })}
+          >
+            <View style={[s.check, b.has_story && s.checkOn]}>
+              {b.has_story ? <Ionicons name="checkmark" size={13} color="#FFF" /> : null}
+            </View>
+            <Text style={s.checkT}>Yes, and I'd like to tell it</Text>
+          </Pressable>
+
+          {b.has_story ? (
+            <>
+              <Text style={s.storyNote}>
+                Not required, and listing does not depend on it. If there is
+                something worth telling — how it started, who started it, what
+                nearly stopped it — write it here.
+              </Text>
+              <TextInput
+                style={[s.input, s.storyBox]}
+                value={b.story_pitch ?? ''}
+                onChangeText={(v) => set({ story_pitch: v })}
+                placeholder="Take as long as you like."
+                placeholderTextColor={colors.textSecondary}
+                multiline
+                textAlignVertical="top"
+              />
+            </>
+          ) : null}
 
           {/* hours */}
           <Text style={[s.label, { marginTop: spacing.xl }]}>HOURS</Text>
@@ -539,6 +595,23 @@ const s = StyleSheet.create({
   foundT: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textPrimary },
 
   photos: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+
+  storyRule: {
+    height: StyleSheet.hairlineWidth, backgroundColor: colors.border,
+    marginTop: spacing.xxl,
+  },
+  check: {
+    width: 20, height: 20, borderRadius: 6, marginTop: 1,
+    borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  checkOn: { backgroundColor: colors.textPrimary, borderColor: colors.textPrimary },
+  checkT: { fontFamily: fonts.body, fontSize: 13.5, color: colors.textPrimary, flex: 1 },
+  storyNote: {
+    fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19,
+    color: colors.textSecondary, marginTop: spacing.md,
+  },
+  storyBox: { marginTop: spacing.sm, minHeight: 130, paddingTop: 12 },
   photoWrap: { width: 88, height: 88, borderRadius: 12, overflow: 'hidden' },
   photo: { width: '100%', height: '100%' },
   photoX: { position: 'absolute', top: 4, right: 4, width: 20, height: 20, borderRadius: 10, backgroundColor: 'rgba(0,0,0,0.55)', alignItems: 'center', justifyContent: 'center' },

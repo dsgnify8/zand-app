@@ -29,6 +29,7 @@ const bizImage = (path: string) =>
 import { currentPlace, findPlace, hasLocation, type Place } from '@/lib/geo';
 import { BusinessCard } from '@/components/business-card';
 import { LocalDrawer } from '@/components/local-drawer';
+import { CollectionSheet } from '@/components/collection-sheet';
 import { BigRail, NewRail, SeeAllHead, GridCard, feedSections } from '@/components/local-feed';
 import { PlaceChip } from '@/components/local-place-chip';
 import { LocalHeroBg } from '@/components/local-hero';
@@ -53,6 +54,8 @@ export default function Local() {
   const [loading, setLoading] = useState(true);
   const [infoOpen, setInfoOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  // One sheet for the whole feed rather than one per card.
+  const [filing, setFiling] = useState<string | null>(null);
   // The wash cannot live inside the list — a ScrollView clips its children,
   // so it could never paint up behind the status bar. It sits outside and
   // is moved by the scroll offset instead, which looks the same and reaches
@@ -332,6 +335,7 @@ export default function Local() {
               fa={fa}
               km={km}
               onOpen={() => router.navigate(('/business?id=' + biz.id) as any)}
+              onFile={setFiling}
             />
           );
         }}
@@ -342,11 +346,17 @@ export default function Local() {
         <Ionicons name="map-outline" size={16} color="#FFF" />
         <Text style={s.mapBtnT}>{fa ? 'نقشه' : 'Map'}</Text>
       </Pressable>
+      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
+
       <LocalDrawer
         open={drawer}
         onClose={() => setDrawer(false)}
         onPick={(k) => {
-          if (k === 'country') router.navigate('/local-countries' as any);
+          // Already on the feed: closing the drawer *is* the action. The
+          // early return here previously left the overlay mounted with its
+          // scrim up, which froze the screen.
+          if (k === 'home') { setDrawer(false); return; }
+          if (k === 'city') router.navigate('/local-cities' as any);
           else if (k === 'category') router.navigate('/local-categories' as any);
           else listYours();
         }}

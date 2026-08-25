@@ -44,6 +44,15 @@ export type Business = {
   // Set by an admin, not by owners. Fills the top of the feed when there
   // is no location to sort by.
   featured?: boolean;
+  /**
+   * What to call the website on the page — "Our online store" rather than
+   * a forty-character URL. Only used where there is no address, since an
+   * address always takes that slot.
+   */
+  website_label?: string | null;
+  /** Offered at submission; whether it becomes a page is decided later. */
+  has_story?: boolean;
+  story_pitch?: string | null;
   submitted_at?: string | null;
 };
 

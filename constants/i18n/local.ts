@@ -17,12 +17,22 @@ export const LOCAL: Record<string, T> = {
   closestTo: { en: 'CLOSEST TO', fa: 'نزدیک‌ترین‌ها به' },
   newestHere: { en: 'JUST ADDED', fa: 'تازه اضافه‌شده‌ها' },
 
+  everythingSaved: { en: 'EVERYTHING SAVED', fa: 'همهٔ ذخیره‌شده‌ها' },
+  folderEmpty: { en: 'Nothing in this folder yet.', fa: 'هنوز چیزی در این پوشه نیست.' },
+  saveTo: { en: 'Save to', fa: 'ذخیره در' },
+  newFolder: { en: 'New folder', fa: 'پوشهٔ جدید' },
+  folderName: { en: 'Name it', fa: 'نام‌گذاری' },
+  savedAnyway: { en: 'Saved either way — folders are optional.', fa: 'در هر صورت ذخیره شد؛ ایجاد پوشه اختیاری است.' },
   savedTitle: { en: 'Saved', fa: 'ذخیره‌شده‌ها' },
   nothingSaved: { en: 'Nothing saved yet', fa: 'هنوز چیزی ذخیره نکرده‌ای' },
   nothingSavedX: { en: 'Tap the bookmark on any listing to keep it here.', fa: 'روی نشان کتاب هر کسب‌وکاری بزن تا اینجا بماند.' },
   browseLocal: { en: 'Browse Local', fa: 'گشتی بزن' },
 
   // browsing
+  localHome: { en: 'Local home', fa: 'خانهٔ محلی' },
+  localHomeX: { en: 'back to the feed', fa: 'برگرد به صفحهٔ اصلی' },
+  byCityTitle: { en: 'By city', fa: 'بر اساس شهر' },
+  byCityX: { en: 'every place, gathered by where it is', fa: 'همه‌جا، بر اساس شهر' },
   byCountryTitle: { en: 'By country', fa: 'بر اساس کشور' },
   byCountryX: { en: 'every place, gathered by where it is', fa: 'همه‌جا، بر اساس کشور' },
   pickACategory: { en: 'Pick a category to see everywhere it exists.', fa: 'یک دسته انتخاب کن تا همه‌جای دنیا را ببینی.' },
@@ -32,6 +42,7 @@ export const LOCAL: Record<string, T> = {
   chooseYourPlace: { en: 'CHOOSE YOUR PLACE', fa: 'کشورت را انتخاب کن' },
   menu: { en: 'Browse', fa: 'گشتن' },
 
+  categories: { en: 'Categories', fa: 'دسته‌ها' },
   allCategories: { en: 'All categories', fa: 'همهٔ دسته‌ها' },
   everything: { en: 'Everything', fa: 'همه' },
   byCountry: { en: 'BY COUNTRY', fa: 'بر اساس کشور' },
