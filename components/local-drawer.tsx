@@ -12,13 +12,13 @@ import { useEffect, useRef } from 'react';
 import {
   Animated,
   Easing,
-  Modal,
   Pressable,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
 } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
@@ -44,7 +44,7 @@ export function LocalDrawer({
 }) {
   const fa = getLang() === 'fa';
   const { width: W } = useWindowDimensions();
-  const panel = Math.min(300, W * 0.62);
+  const panel = Math.min(340, W * 0.78);
 
   const slide = useRef(new Animated.Value(0)).current;
 
@@ -68,8 +68,11 @@ export function LocalDrawer({
     setTimeout(() => onPick(k), 160);
   };
 
+  // Nothing mounted at all when closed, so it cannot eat touches.
+  if (!open && (slide as any).__getValue?.() === 0) return null;
+
   return (
-    <Modal transparent visible={open} animationType="none" onRequestClose={onClose}>
+    <View style={StyleSheet.absoluteFill} pointerEvents={open ? 'auto' : 'none'}>
       <Animated.View style={[StyleSheet.absoluteFill, { opacity: slide }]}>
         <Pressable style={[StyleSheet.absoluteFill, st.scrim]} onPress={onClose} />
       </Animated.View>
@@ -87,6 +90,8 @@ export function LocalDrawer({
           },
         ]}
       >
+        <BlurView intensity={38} tint="light" style={StyleSheet.absoluteFill} />
+        <View style={[StyleSheet.absoluteFill, st.veil]} />
         <View style={st.inner}>
           <Text style={[st.kicker, fa && st.rtl]}>{fa ? 'محلی' : 'LOCAL'}</Text>
 
@@ -107,7 +112,7 @@ export function LocalDrawer({
           ))}
         </View>
       </Animated.View>
-    </Modal>
+    </View>
   );
 }
 
@@ -117,13 +122,16 @@ const st = StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    backgroundColor: colors.background,
+    // Glass, not a panel: a little of the feed reads through so the drawer
+    // feels laid over the page rather than replacing it.
+    overflow: 'hidden',
     shadowColor: '#2A1A14',
     shadowOpacity: 0.2,
     shadowRadius: 24,
     shadowOffset: { width: 0, height: 0 },
     elevation: 16,
   },
+  veil: { backgroundColor: 'rgba(250,247,243,0.72)' },
   inner: { paddingTop: 90, paddingHorizontal: spacing.lg, gap: spacing.xs },
 
   kicker: {

@@ -41,6 +41,9 @@ export type Business = {
   search_fa?: string | null;
   paid_until?: string | null;
   created_at?: string;
+  // Set by an admin, not by owners. Fills the top of the feed when there
+  // is no location to sort by.
+  featured?: boolean;
   submitted_at?: string | null;
 };
 

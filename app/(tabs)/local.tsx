@@ -5,9 +5,9 @@
 // Everything else — the map, listing your own — sits at the edges so it
 // is findable without being in the way.
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  ActivityIndicator, FlatList, Image, Pressable, ScrollView,
+  ActivityIndicator, Animated, Dimensions, FlatList, Image, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -29,6 +29,9 @@ const bizImage = (path: string) =>
 import { currentPlace, findPlace, hasLocation, type Place } from '@/lib/geo';
 import { BusinessCard } from '@/components/business-card';
 import { LocalDrawer } from '@/components/local-drawer';
+import { BigRail, NewRail, SeeAllHead, GridCard, feedSections } from '@/components/local-feed';
+import { PlaceChip } from '@/components/local-place-chip';
+import { LocalHeroBg } from '@/components/local-hero';
 
 import { LOCAL } from '@/constants/i18n/local';
 export default function Local() {
@@ -50,6 +53,11 @@ export default function Local() {
   const [loading, setLoading] = useState(true);
   const [infoOpen, setInfoOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  // The wash cannot live inside the list — a ScrollView clips its children,
+  // so it could never paint up behind the status bar. It sits outside and
+  // is moved by the scroll offset instead, which looks the same and reaches
+  // the top of the screen.
+  const heroY = useRef(new Animated.Value(0)).current;
 
   /* ---------------- where ---------------- */
 
@@ -106,15 +114,50 @@ export default function Local() {
       : ('/onboarding?step=2&next=/business-new' as any));
   };
 
+  // Three passes over the same set: what is near, what is new, and all of
+  // it. The last section is "see all", so it keeps everything.
+  const { top, fresh, all } = feedSections(items, place ? { lat: place.lat, lng: place.lng } : null);
+  const [grid, setGrid] = useState(false);
+  // A search is a request for results, not for browsing: the grid shows
+  // more of them at once, so it wins while there is a query.
+  const searching = !!query.trim();
+  const showGrid = grid || searching;
+  const cardW = (Dimensions.get('window').width - spacing.lg * 2 - spacing.md) / 2;
+  const pairs = all.reduce((rows: any[][], b, i) => {
+    if (i % 2 === 0) rows.push([b]);
+    else rows[rows.length - 1].push(b);
+    return rows;
+  }, []);
+
   const where = place
     ? [place.city, place.country].filter(Boolean).join(', ') || t(LOCAL.nearYou)
     : (fa ? 'همه‌جا' : t(LOCAL.everywhere));
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
-      <FlatList
-        data={loading ? [] : items}
-        keyExtractor={(x) => x.id}
+      <Animated.View
+        pointerEvents="none"
+        style={{
+          position: 'absolute', top: -80, left: 0, right: 0,
+          transform: [{
+            translateY: heroY.interpolate({
+              inputRange: [0, 1], outputRange: [0, -1],
+              extrapolateLeft: 'clamp',
+            }),
+          }],
+        }}
+      >
+        <LocalHeroBg />
+      </Animated.View>
+
+      <Animated.FlatList
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: heroY } } }], { useNativeDriver: true })}
+        scrollEventThrottle={16}
+        // Chunked into pairs for the grid rather than switching
+        // numColumns, which requires a new key and so remounts the list —
+        // and remounting throws the reader back to the top of the page.
+        data={loading ? [] : (showGrid ? pairs : all) as any}
+        keyExtractor={(x: any) => (Array.isArray(x) ? 'row-' + x[0].id : x.id)}
         contentContainerStyle={s.body}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -126,9 +169,11 @@ export default function Local() {
           <Pressable hitSlop={12} onPress={() => setDrawer(true)} style={{ marginRight: 12 }}>
             <Ionicons name="menu-outline" size={22} color={colors.textPrimary} />
           </Pressable>
-          <Text style={[s.kicker, { flex: 1 }]}>{fa ? 'محلی' : 'LOCAL'}</Text>
-          <Pressable hitSlop={10} onPress={() => setInfoOpen((v) => !v)}>
-            <Ionicons name="information-circle-outline" size={20} color={colors.textSecondary} />
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <PlaceChip label={where} active={!!place} onPress={() => setPlaceOpen((v) => !v)} />
+          </View>
+          <Pressable hitSlop={10} onPress={() => router.navigate('/local-saved' as any)}>
+            <Ionicons name="bookmark-outline" size={19} color={colors.textPrimary} />
           </Pressable>
         </View>
 
@@ -149,27 +194,26 @@ export default function Local() {
 
         {/* header */}
         <Text style={[s.title, fa && s.titleFa]}>
-          {t(LOCAL.knownFor)}
+          {(() => {
+            // Split on the emphasised word so it can be lifted without
+            // holding the headline as three separate strings.
+            const full = t(LOCAL.knownFor);
+            const em = t(LOCAL.knownForEm);
+            const i = full.indexOf(em);
+            if (i < 0) return full;
+            return (
+              <>
+                {full.slice(0, i)}
+                <Text style={s.titleEm}>{em}</Text>
+                {full.slice(i + em.length)}
+              </>
+            );
+          })()}
         </Text>
         <Text style={[s.sub, fa && s.subFa]}>
           {t(LOCAL.whereToFind)}
         </Text>
 
-        {/* where */}
-        <View style={[s.whereRow, fa && { flexDirection: 'row-reverse', alignSelf: 'flex-end' }]}>
-          <Pressable style={[s.where, fa && { flexDirection: 'row-reverse' }]} onPress={() => setPlaceOpen((v) => !v)}>
-            <Ionicons name="location-outline" size={15} color={colors.textPrimary} />
-            <Text style={s.whereT}>{where}</Text>
-            <Ionicons name={placeOpen ? 'chevron-up' : 'chevron-down'} size={13} color={colors.textSecondary} />
-          </Pressable>
-          {/* Clearing the place is a one-tap thing, not something to go
-              hunting for inside the picker. */}
-          {place ? (
-            <Pressable style={s.whereX} hitSlop={8} onPress={() => { setPlace(null); setPlaceOpen(false); }}>
-              <Ionicons name="close" size={13} color={colors.textSecondary} />
-            </Pressable>
-          ) : null}
-        </View>
 
         {placeOpen ? (
           <View style={s.placeBox}>
@@ -230,20 +274,23 @@ export default function Local() {
           ) : null}
         </View>
 
+        {searching ? null : <BigRail
+          items={top}
+          place={place ? { lat: place.lat, lng: place.lng } : null}
+          placeLabel={where}
+          onOpen={(b) => router.navigate(('/business?id=' + b.id) as any)}
+        />}
+
+        {searching ? null : <NewRail
+          items={fresh}
+          onOpen={(b) => router.navigate(('/business?id=' + b.id) as any)}
+        />}
+
+        <SeeAllHead n={all.length} grid={showGrid} onGrid={setGrid} />
+
 
 
           </>
-        }
-        ListFooterComponent={
-          <LocalDrawer
-            open={drawer}
-            onClose={() => setDrawer(false)}
-            onPick={(k) => {
-              if (k === 'country') router.navigate('/local-countries' as any);
-              else if (k === 'category') router.navigate('/local-categories' as any);
-              else listYours();
-            }}
-          />
         }
         ListEmptyComponent={
           loading ? (
@@ -261,9 +308,24 @@ export default function Local() {
           )
         }
         renderItem={({ item: biz }) => {
-          const km = place && biz.lat != null
+          const km = place && !showGrid && (biz as any).lat != null
             ? dist(place.lat, place.lng, biz.lat, biz.lng ?? 0)
             : null;
+          if (showGrid) {
+            const row: any[] = biz as any;
+            return (
+              <View style={{ flexDirection: 'row', gap: spacing.md, marginBottom: spacing.lg }}>
+                {row.map((one: any) => (
+                  <GridCard
+                    key={one.id}
+                    b={one}
+                    width={cardW}
+                    onOpen={() => router.navigate(('/business?id=' + one.id) as any)}
+                  />
+                ))}
+              </View>
+            );
+          }
           return (
             <BusinessCard
               b={biz}
@@ -280,6 +342,15 @@ export default function Local() {
         <Ionicons name="map-outline" size={16} color="#FFF" />
         <Text style={s.mapBtnT}>{fa ? 'نقشه' : 'Map'}</Text>
       </Pressable>
+      <LocalDrawer
+        open={drawer}
+        onClose={() => setDrawer(false)}
+        onPick={(k) => {
+          if (k === 'country') router.navigate('/local-countries' as any);
+          else if (k === 'category') router.navigate('/local-categories' as any);
+          else listYours();
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -297,9 +368,19 @@ const s = StyleSheet.create({
   infoCta: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: spacing.md },
   infoCtaT: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.accent },
 
-  title: { fontFamily: fonts.body, fontSize: 23, lineHeight: 31, letterSpacing: -0.6, color: colors.textPrimary },
+  title: {
+    fontFamily: fonts.body, fontSize: 23, lineHeight: 31, letterSpacing: -0.6,
+    color: colors.textPrimary,
+    textAlign: 'center', marginTop: spacing.xl, paddingHorizontal: spacing.md,
+  },
   titleFa: { fontFamily: fonts.persian, fontSize: 17.5, lineHeight: 34, textAlign: 'right' },
-  sub: { fontFamily: fonts.body, fontSize: 13, lineHeight: 20, color: colors.textSecondary, marginTop: 5 },
+  // Lighter and warmer than the rest of the line, so it reads as light
+  // falling on the word rather than as a different colour.
+  titleEm: { color: 'rgba(60,42,34,0.42)' },
+  sub: {
+    fontFamily: fonts.body, fontSize: 13, lineHeight: 20, color: colors.textSecondary,
+    marginTop: 6, textAlign: 'center',
+  },
   subFa: { fontFamily: fonts.persian, fontSize: 14, lineHeight: 28, textAlign: 'right' },
 
   whereRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: spacing.lg },
@@ -315,7 +396,19 @@ const s = StyleSheet.create({
   go: { width: 42, borderRadius: radius.md, backgroundColor: 'rgba(34,30,26,0.9)', alignItems: 'center', justifyContent: 'center' },
   clearT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, textAlign: 'center', paddingVertical: 6 },
 
-  search: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: 'rgba(0,0,0,0.04)', borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: 10, marginTop: spacing.lg },
+  search: {
+    flexDirection: 'row', alignItems: 'center', gap: 8,
+    // Translucent rather than the flat grey: on the wash a solid field
+    // looks stuck on rather than part of the page.
+    // Glass rather than a panel: low fill so the colour reads through, and
+    // a bright edge to catch the light the way the reference does.
+    backgroundColor: 'rgba(255,255,255,0.34)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.68)',
+    borderRadius: 999,
+    paddingHorizontal: spacing.md, paddingVertical: 12,
+    marginTop: spacing.xl,
+  },
   searchIn: { flex: 1, fontFamily: fonts.body, fontSize: 13.5, color: colors.textPrimary, padding: 0 },
 
   cats: { marginTop: spacing.md, marginBottom: spacing.lg, marginHorizontal: -spacing.lg, paddingHorizontal: spacing.lg },

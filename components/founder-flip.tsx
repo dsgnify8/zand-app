@@ -21,6 +21,7 @@ import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, Text, View 
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
+import { Motif, motifFor } from '@/components/persian-motifs';
 
 import { useLang } from '@/lib/i18n';
 /* ------------------------------------------------------------------ *
@@ -103,12 +104,15 @@ export function FounderFlip({
   city,
   fa,
   story,
+  motifKey,
 }: {
   children: any;
   name: string;
   city?: string;
   fa: boolean;
   story?: FounderStory;
+  /** Usually the business id. Decides which mark sits behind the story. */
+  motifKey?: string;
 }) {
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
@@ -181,6 +185,11 @@ export function FounderFlip({
             hairline. The story should feel like a different surface to the
             listing, not the same page with other words on it. */}
         <View pointerEvents="none" style={st.frost} />
+        {/* The mark, behind everything. Large and faint: the story is the
+            thing, this is the paper it is printed on. */}
+        <View pointerEvents="none" style={st.motif}>
+          <Motif name={motifFor(motifKey ?? name)} size={260} />
+        </View>
         <LinearGradient
           pointerEvents="none"
           colors={['rgba(255,255,255,0.66)', 'rgba(255,255,255,0.12)', 'rgba(255,255,255,0)']}
@@ -262,6 +271,7 @@ const st = StyleSheet.create({
   // opacity there is, so the veil is cool and near-neutral instead, and the
   // sheen above it does the rest of the work.
   frost: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(247,246,245,0.80)' },
+  motif: { position: 'absolute', right: -40, top: 40, opacity: 1 },
   frostEdge: {
     position: 'absolute',
     top: 10,

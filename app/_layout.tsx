@@ -177,6 +177,7 @@ export default function RootLayout() {
             <Stack.Screen name="local-countries" options={{ headerShown: false }} />
             <Stack.Screen name="local-country" options={{ headerShown: false }} />
             <Stack.Screen name="local-categories" options={{ headerShown: false }} />
+            <Stack.Screen name="local-saved" options={{ headerShown: false }} />
             <Stack.Screen name="learn/cards" options={{ headerShown: false }} />
             <Stack.Screen name="learn/blanks" options={{ headerShown: false }} />
             <Stack.Screen name="learn/read" options={{ headerShown: false }} />

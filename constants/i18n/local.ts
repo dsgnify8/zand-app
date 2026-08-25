@@ -11,6 +11,17 @@
 import type { T } from '@/lib/i18n';
 
 export const LOCAL: Record<string, T> = {
+  popular: { en: 'POPULAR', fa: 'محبوب‌ها' },
+  justAdded: { en: 'JUST ADDED', fa: 'تازه‌ها' },
+  seeAll: { en: 'SEE ALL', fa: 'همه' },
+  closestTo: { en: 'CLOSEST TO', fa: 'نزدیک‌ترین‌ها به' },
+  newestHere: { en: 'JUST ADDED', fa: 'تازه اضافه‌شده‌ها' },
+
+  savedTitle: { en: 'Saved', fa: 'ذخیره‌شده‌ها' },
+  nothingSaved: { en: 'Nothing saved yet', fa: 'هنوز چیزی ذخیره نکرده‌ای' },
+  nothingSavedX: { en: 'Tap the bookmark on any listing to keep it here.', fa: 'روی نشان کتاب هر کسب‌وکاری بزن تا اینجا بماند.' },
+  browseLocal: { en: 'Browse Local', fa: 'گشتی بزن' },
+
   // browsing
   byCountryTitle: { en: 'By country', fa: 'بر اساس کشور' },
   byCountryX: { en: 'every place, gathered by where it is', fa: 'همه‌جا، بر اساس کشور' },
@@ -41,6 +52,10 @@ export const LOCAL: Record<string, T> = {
   // "making a name for themselves" is a pun that does not cross. نام‌درکردن
   // keeps the sense and loses the play; worth revisiting if a better line
   // turns up.
+  // The one word in the headline that lifts. Kept here because it is a
+  // different word in each language, and in Persian it is not even in the
+  // same position in the sentence.
+  knownForEm: { en: 'making', fa: 'نام‌درکردن' },
   knownFor: {
     en: 'Persians are known for making\na name for themselves.',
     fa: 'ایرانی‌ها به نام‌درکردن معروف‌اند.',
@@ -57,6 +72,11 @@ export const LOCAL: Record<string, T> = {
   nothingYet: { en: 'Nothing here yet. Yours could be the first.', fa: 'هنوز اینجا چیزی نیست. مال تو می‌تواند اولی باشد.' },
 
   // a single business
+  call: { en: 'Call', fa: 'تماس' },
+  addressLabel: { en: 'ADDRESS', fa: 'نشانی' },
+  hoursLabel: { en: 'HOURS', fa: 'ساعت کار' },
+  socialLabel: { en: 'SOCIAL', fa: 'شبکه‌های اجتماعی' },
+  nearbyLabel: { en: 'NEARBY', fa: 'همین نزدیکی' },
   notFound: { en: 'Not found.', fa: 'پیدا نشد.' },
   directions: { en: 'Directions', fa: 'مسیر' },
   website: { en: 'Website', fa: 'وبسایت' },
