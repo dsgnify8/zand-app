@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Animated,
+  KeyboardAvoidingView,
+  Platform,
   Easing,
   Image,
   Modal,
@@ -22,6 +24,7 @@ import {
   View,
 } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
@@ -110,13 +113,19 @@ export function CollectionSheet({
     setNaming(false);
     if (data) {
       await addToCollection(data.id, businessId);
-      refresh();
+      // Naming a folder and putting the listing in it is the whole errand.
+      // Leaving the sheet up afterwards makes someone dismiss a thing that
+      // has already finished.
+      onClose();
     }
   };
 
   return (
     <Modal transparent visible={open} animationType="fade" onRequestClose={onClose}>
-      <View style={st.wrap}>
+      <KeyboardAvoidingView
+        style={st.wrap}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
 
         <Animated.View
@@ -137,7 +146,19 @@ export function CollectionSheet({
             </Pressable>
           </View>
 
-          {loading ? (
+          {!user?.id ? (
+            <View style={st.signedOut}>
+              <Ionicons name="bookmark" size={20} color={colors.accent} />
+              <Text style={[st.signedOutT, fa && st.rtl]}>{t(LOCAL.savedNoAccount)}</Text>
+              <Text style={[st.signedOutX, fa && st.rtl]}>{t(LOCAL.foldersNeedAccount)}</Text>
+              <Pressable
+                style={st.signIn}
+                onPress={() => { onClose(); router.navigate('/onboarding?step=2' as any); }}
+              >
+                <Text style={st.signInT}>{t(LOCAL.signIn)}</Text>
+              </Pressable>
+            </View>
+          ) : loading ? (
             <ActivityIndicator style={{ marginVertical: spacing.xl }} color={colors.accent} />
           ) : (
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.lg }}>
@@ -205,7 +226,7 @@ export function CollectionSheet({
             </ScrollView>
           )}
         </Animated.View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -256,4 +277,15 @@ const st = StyleSheet.create({
     textAlign: 'center', marginTop: spacing.lg,
   },
   rtl: { writingDirection: 'rtl', textAlign: 'right' },
+  signedOut: { alignItems: 'center', gap: 6, paddingVertical: spacing.xl, paddingHorizontal: spacing.lg },
+  signedOutT: { fontFamily: fonts.bodyStrong, fontSize: 15, color: colors.textPrimary, marginTop: 4 },
+  signedOutX: {
+    fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19,
+    color: colors.textSecondary, textAlign: 'center',
+  },
+  signIn: {
+    backgroundColor: colors.textPrimary, borderRadius: 999,
+    paddingHorizontal: spacing.xl, paddingVertical: 10, marginTop: spacing.md,
+  },
+  signInT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
 });

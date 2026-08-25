@@ -19,6 +19,12 @@ export const LOCAL: Record<string, T> = {
 
   everythingSaved: { en: 'EVERYTHING SAVED', fa: 'همهٔ ذخیره‌شده‌ها' },
   folderEmpty: { en: 'Nothing in this folder yet.', fa: 'هنوز چیزی در این پوشه نیست.' },
+  savedNoAccount: { en: 'Saved on this phone', fa: 'روی همین گوشی ذخیره شد' },
+  foldersNeedAccount: {
+    en: 'Folders need an account, so they follow you to another phone.',
+    fa: 'برای ساختن پوشه باید حساب داشته باشی تا روی گوشی دیگر هم همراهت بیاید.',
+  },
+  signIn: { en: 'Sign in', fa: 'ورود' },
   saveTo: { en: 'Save to', fa: 'ذخیره در' },
   newFolder: { en: 'New folder', fa: 'پوشهٔ جدید' },
   folderName: { en: 'Name it', fa: 'نام‌گذاری' },

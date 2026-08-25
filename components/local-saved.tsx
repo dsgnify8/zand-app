@@ -7,13 +7,13 @@
 // A soft shadow under each card rather than a border: these are objects on
 // a shelf, and an outline would make them look like buttons.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View,
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
@@ -37,7 +37,13 @@ export function SavedBusinesses() {
   const { user, session } = useAuth();
 
   const savedIds = useSavedBusinesses();
-  const { items: collections, loading: colsLoading } = useCollections(user?.id);
+  const { items: collections, loading: colsLoading, refresh: refreshCols } = useCollections(user?.id);
+
+  // A folder made from the sheet on another screen will not be in the list
+  // this page loaded on mount, so ask again whenever it comes forward.
+  useFocusEffect(
+    useCallback(() => { refreshCols(); }, [refreshCols]),
+  );
   const [all, setAll] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
   const [drawer, setDrawer] = useState(false);

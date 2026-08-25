@@ -18,8 +18,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
+import { LISTING } from '@/constants/i18n/listing';
 import { useAuth } from '@/lib/auth';
-import { useLang, getLang } from '@/lib/i18n';
+import { t as tr, useLang, getLang } from '@/lib/i18n';
 import {
   CATEGORIES, loadBusiness, saveBusiness, submitBusiness, type Business,
 } from '@/lib/businesses';
@@ -111,7 +112,7 @@ export default function BusinessForm() {
     setLocating(true);
     const p = await currentPlace();
     setLocating(false);
-    if (!p) { setErr('We could not read your location. You can type the area instead.'); return; }
+    if (!p) { setErr(tr(LISTING.noLocation)); return; }
     applyPlace(p);
   };
 
@@ -120,7 +121,7 @@ export default function BusinessForm() {
     setLocating(true);
     const p = await findPlace(placeText);
     setLocating(false);
-    if (!p) { setErr('We could not find that place. Try a city or district.'); return; }
+    if (!p) { setErr(tr(LISTING.noPlace)); return; }
     applyPlace(p);
   };
 
@@ -181,7 +182,7 @@ export default function BusinessForm() {
     setSaving(true);
     setErr(null);
     const { data, error } = await saveBusiness({ ...(b as any), owner_id: user.id });
-    if (error || !data?.id) { setSaving(false); setErr(error ?? 'Could not save.'); return; }
+    if (error || !data?.id) { setSaving(false); setErr(error ?? tr(LISTING.couldNotSave)); return; }
     // Something already live or approved is being edited, not submitted;
     // pushing it back through review would take it down for no reason.
     if (b.status === 'active' || b.status === 'approved') {
@@ -202,13 +203,13 @@ export default function BusinessForm() {
       <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
         <View style={s.doneWrap}>
           <View style={s.doneIcon}><Ionicons name="checkmark" size={26} color={colors.accent} /></View>
-          <Text style={s.doneT}>Sent for review</Text>
+          <Text style={s.doneT}>{tr(LISTING.sent)}</Text>
           <Text style={s.doneX}>
             We read every listing before it goes up. You will hear back here, usually within a
             couple of days. Nothing to pay until it is approved.
           </Text>
           <Pressable style={s.cta} onPress={() => router.replace('/local' as any)}>
-            <Text style={s.ctaT}>Back to Local</Text>
+            <Text style={s.ctaT}>{tr(LISTING.backToLocal)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -223,7 +224,7 @@ export default function BusinessForm() {
         <Pressable hitSlop={12} onPress={() => router.replace('/local' as any)}>
           <Ionicons name="close" size={22} color={colors.textPrimary} />
         </Pressable>
-        <Text style={s.headT}>{editId ? 'Edit listing' : 'List a business'}</Text>
+        <Text style={s.headT}>{editId ? tr(LISTING.titleEdit) : tr(LISTING.titleNew)}</Text>
         <View style={{ width: 22 }} />
       </View>
 
@@ -232,7 +233,7 @@ export default function BusinessForm() {
           {(['edit', 'stats'] as const).map((t) => (
             <Pressable key={t} style={[s.tab, tab === t && s.tabOn]} onPress={() => setTab(t)}>
               <Text style={[s.tabT, tab === t && s.tabTOn]}>
-                {t === 'edit' ? 'Listing' : 'How it is doing'}
+                {t === 'edit' ? tr(LISTING.tabListing) : tr(LISTING.tabStats)}
               </Text>
             </Pressable>
           ))}
@@ -252,12 +253,13 @@ export default function BusinessForm() {
           </Text>
 
           {/* name */}
-          <Text style={s.label}>NAME</Text>
+          <Text style={s.label}>{tr(LISTING.nameLabel)}</Text>
           <TextInput
             style={s.input}
             value={b.name ?? ''}
             onChangeText={(v) => set({ name: v })}
-            placeholder="What it is called"
+            placeholder={tr(LISTING.namePlaceholder)}
+            {...(fa ? { textAlign: "right" as const, writingDirection: "rtl" as const } : {})}
             placeholderTextColor={colors.textSecondary}
           />
 
@@ -272,7 +274,7 @@ export default function BusinessForm() {
           />
 
           {/* category */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>CATEGORY</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.categoryLabel)}</Text>
           <View style={s.cats}>
             {CATEGORIES.map((c) => {
               const on = b.category === c.key;
@@ -290,12 +292,12 @@ export default function BusinessForm() {
           </View>
 
           {/* location */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>WHERE IT IS</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.whereItIs)}</Text>
           <Pressable style={s.locBtn} onPress={useMyLocation} disabled={locating}>
             {locating
               ? <ActivityIndicator size="small" color={colors.accent} />
               : <Ionicons name="navigate-outline" size={15} color={colors.accent} />}
-            <Text style={s.locBtnT}>Use my current location</Text>
+            <Text style={s.locBtnT}>{tr(LISTING.useMyLocation)}</Text>
           </Pressable>
 
           <Text style={s.or}>or type the area</Text>
@@ -304,7 +306,8 @@ export default function BusinessForm() {
               style={[s.input, { flex: 1 }]}
               value={placeText}
               onChangeText={setPlaceText}
-              placeholder="Central Gothenburg, Dubai Marina…"
+              placeholder={tr(LISTING.areaPlaceholder)}
+                {...(fa ? { textAlign: "right" as const, writingDirection: "rtl" as const } : {})}
               placeholderTextColor={colors.textSecondary}
               onSubmitEditing={lookUp}
               returnKeyType="search"
@@ -318,7 +321,7 @@ export default function BusinessForm() {
             <View style={s.found}>
               <Ionicons name="location" size={13} color={colors.accent} />
               <Text style={s.foundT}>
-                {[b.city, b.country].filter(Boolean).join(', ') || 'Pinned'}
+                {[b.city, b.country].filter(Boolean).join(', ') || tr(LISTING.pinned)}
               </Text>
             </View>
           ) : null}
@@ -327,7 +330,8 @@ export default function BusinessForm() {
             style={[s.input, { marginTop: spacing.md }]}
             value={b.address ?? ''}
             onChangeText={(v) => set({ address: v })}
-            placeholder="Street address (optional)"
+            placeholder={tr(LISTING.streetAddress)}
+            {...(fa ? { textAlign: "right" as const, writingDirection: "rtl" as const } : {})}
             placeholderTextColor={colors.textSecondary}
           />
 
@@ -335,12 +339,12 @@ export default function BusinessForm() {
           <Text style={[s.label, { marginTop: spacing.xl }]}>
             PHOTOS {(b.photos?.length ?? 0) > 0 ? `· ${b.photos!.length} of ${MAX_PHOTOS}` : ''}
           </Text>
-          <Text style={s.hint}>The first one is the cover.</Text>
+          <Text style={s.hint}>{tr(LISTING.firstIsCover)}</Text>
           <View style={s.photos}>
             {(b.photos ?? []).map((p, i) => (
               <View key={p} style={s.photoWrap}>
                 <Image source={bizImage(p)} style={s.photo} />
-                {i === 0 ? <View style={s.coverTag}><Text style={s.coverTagT}>COVER</Text></View> : null}
+                {i === 0 ? <View style={s.coverTag}><Text style={s.coverTagT}>{tr(LISTING.coverLabel)}</Text></View> : null}
                 <Pressable style={s.photoX} hitSlop={6} onPress={() => dropPhoto(p)}>
                   <Ionicons name="close" size={12} color="#FFF" />
                 </Pressable>
@@ -356,12 +360,13 @@ export default function BusinessForm() {
           </View>
 
           {/* about */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>ABOUT</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.aboutLabel)}</Text>
           <TextInput
             style={[s.input, s.area]}
             value={b.description ?? ''}
             onChangeText={(v) => set({ description: v })}
-            placeholder="What you do, and what makes it worth the trip."
+            placeholder={tr(LISTING.aboutPlaceholder)}
+            {...(fa ? { textAlign: "right" as const, writingDirection: "rtl" as const } : {})}
             placeholderTextColor={colors.textSecondary}
             multiline
           />
@@ -376,14 +381,14 @@ export default function BusinessForm() {
           />
 
           {/* contact */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>CONTACT</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.contactLabel)}</Text>
           <View style={s.row}>
             <View style={s.socIcon}><Ionicons name="call-outline" size={15} color={colors.textSecondary} /></View>
             <TextInput
               style={[s.input, { flex: 1 }]}
               value={b.phone ?? ''}
               onChangeText={(v) => set({ phone: v })}
-              placeholder="Phone"
+              placeholder={tr(LISTING.phone)}
               placeholderTextColor={colors.textSecondary}
               keyboardType="phone-pad"
             />
@@ -394,7 +399,7 @@ export default function BusinessForm() {
               style={[s.input, { flex: 1 }]}
               value={b.website ?? ''}
               onChangeText={(v) => set({ website: v })}
-              placeholder="Website"
+              placeholder={tr(LISTING.website)}
               placeholderTextColor={colors.textSecondary}
               autoCapitalize="none"
             />
@@ -414,7 +419,7 @@ export default function BusinessForm() {
                 style={[s.input, { flex: 1 }]}
                 value={b.website_label ?? ''}
                 onChangeText={(v) => set({ website_label: v })}
-                placeholder="Call it something — Our online store"
+                placeholder={tr(LISTING.websiteLabel)}
                 placeholderTextColor={colors.textSecondary}
               />
             </View>
@@ -425,15 +430,15 @@ export default function BusinessForm() {
               style={[s.input, { flex: 1 }]}
               value={(b.socials ?? {}).whatsapp ?? ''}
               onChangeText={(v) => set({ socials: { ...(b.socials ?? {}), whatsapp: v } })}
-              placeholder="WhatsApp number"
+              placeholder={tr(LISTING.whatsapp)}
               placeholderTextColor={colors.textSecondary}
               keyboardType="phone-pad"
             />
           </View>
 
           {/* keywords */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>KEYWORDS</Text>
-          <Text style={s.hint}>Up to four. Helps people find you when they search.</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.keywordsLabel)}</Text>
+          <Text style={s.hint}>{tr(LISTING.keywordsHint)}</Text>
           <View style={s.row}>
             <TextInput
               style={[s.input, { flex: 1 }]}
@@ -461,7 +466,7 @@ export default function BusinessForm() {
           ) : null}
 
           {/* socials */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>SOCIAL</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.socialLabel)}</Text>
           {SOCIALS.map((sc) => (
             <View key={sc.key} style={[s.row, { marginTop: spacing.sm }]}>
               <View style={s.socIcon}>
@@ -483,7 +488,7 @@ export default function BusinessForm() {
               than another required field — and it changes nothing about
               whether the listing goes up. */}
           <View style={s.storyRule} />
-          <Text style={[s.label, { marginTop: spacing.xl }]}>WHAT'S YOUR STORY?</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.storyLabel)}</Text>
 
           <Pressable
             style={[s.row, { marginTop: spacing.sm, alignItems: 'flex-start' }]}
@@ -492,21 +497,20 @@ export default function BusinessForm() {
             <View style={[s.check, b.has_story && s.checkOn]}>
               {b.has_story ? <Ionicons name="checkmark" size={13} color="#FFF" /> : null}
             </View>
-            <Text style={s.checkT}>Yes, and I'd like to tell it</Text>
+            <Text style={s.checkT}>{tr(LISTING.storyYes)}</Text>
           </Pressable>
 
           {b.has_story ? (
             <>
               <Text style={s.storyNote}>
-                Not required, and listing does not depend on it. If there is
-                something worth telling — how it started, who started it, what
-                nearly stopped it — write it here.
+                {tr(LISTING.storyNote)}
               </Text>
               <TextInput
                 style={[s.input, s.storyBox]}
                 value={b.story_pitch ?? ''}
                 onChangeText={(v) => set({ story_pitch: v })}
-                placeholder="Take as long as you like."
+                placeholder={tr(LISTING.storyPlaceholder)}
+                {...(fa ? { textAlign: "right" as const, writingDirection: "rtl" as const } : {})}
                 placeholderTextColor={colors.textSecondary}
                 multiline
                 textAlignVertical="top"
@@ -515,8 +519,8 @@ export default function BusinessForm() {
           ) : null}
 
           {/* hours */}
-          <Text style={[s.label, { marginTop: spacing.xl }]}>HOURS</Text>
-          <Text style={s.hint}>Leave a day blank if you are closed.</Text>
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.hoursLabel)}</Text>
+          <Text style={s.hint}>{tr(LISTING.hoursHint)}</Text>
           {DAYS.map((d) => (
             <View key={d} style={[s.row, { marginTop: 6, alignItems: 'center' }]}>
               <Text style={s.day}>{DAY_LABEL[d]}</Text>
@@ -545,7 +549,7 @@ export default function BusinessForm() {
           >
             {saving
               ? <ActivityIndicator size="small" color="#FFF" />
-              : <Text style={s.ctaT}>{b.status === 'active' || b.status === 'approved' ? 'Save changes' : 'Send for review'}</Text>}
+              : <Text style={s.ctaT}>{b.status === 'active' || b.status === 'approved' ? tr(LISTING.saveChanges) : tr(LISTING.sendForReview)}</Text>}
           </Pressable>
 
           <Text style={s.foot}>
@@ -576,7 +580,13 @@ const s = StyleSheet.create({
   hint: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, opacity: 0.8, marginBottom: 8 },
 
   input: { fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary, backgroundColor: 'rgba(0,0,0,0.035)', borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: 11 },
-  inputFa: { fontFamily: fonts.persian, fontSize: 14.5, lineHeight: 28 },
+  // Direction as well as the face. A Persian string in a left-aligned
+  // field puts its trailing punctuation on the wrong side, which is the
+  // same fault the Local search had.
+  inputFa: {
+    fontFamily: fonts.persian, fontSize: 14.5, lineHeight: 28,
+    textAlign: 'right', writingDirection: 'rtl',
+  },
   area: { minHeight: 92, textAlignVertical: 'top', paddingTop: 11 },
 
   row: { flexDirection: 'row', gap: spacing.sm },
