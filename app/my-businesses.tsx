@@ -232,7 +232,7 @@ export default function MyBusinesses() {
 
                   {b.status === 'active' ? (
                     <View style={s.liveRow}>
-                      <Pressable onPress={() => router.navigate(('/business?id=' + b.id) as any)}>
+                      <Pressable onPress={() => router.navigate(('/local/business?id=' + b.id) as any)}>
                         <Text style={s.liveLink}>View listing</Text>
                       </Pressable>
                       <Pressable onPress={() => router.navigate(('/business-new?id=' + b.id) as any)}>

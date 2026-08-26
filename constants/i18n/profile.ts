@@ -40,7 +40,7 @@ export const PROFILE: Record<string, T> = {
   favouritesX: { en: 'the ones you loved', fa: 'آن‌هایی که دوست داشتی' },
   watched: { en: 'Watched', fa: 'دیده‌شده‌ها' },
   watchedX: { en: 'videos you watched', fa: 'ویدیوهایی که دیده‌ای' },
-  saveLater: { en: 'Save for later', fa: 'بماند برای بعد' },
+  saveLater: { en: 'Saved', fa: 'ذخیره‌شده‌ها' },
   saveLaterX: { en: 'to come back to', fa: 'که بعداً برگردی سراغش' },
   libraryBlurb: { en: 'Everything you tapped save on, in one place.', fa: 'همهٔ چیزهایی که ذخیره کرده‌ای، یکجا.' },
 

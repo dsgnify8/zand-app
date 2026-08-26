@@ -32,7 +32,10 @@ function toggle(list: 'liked' | 'saved', key: string) {
   const has = state[list].includes(key);
   state = { ...state, [list]: has ? state[list].filter((k) => k !== key) : [key, ...state[list]] };
   emit(); persist();
-  if (!has && list === 'saved') { import('@/lib/stats-store').then((m) => m.bump('thingsSaved')).catch(() => {}); }
+  // Recount rather than bump. A bump only fired for one of the lists and
+  // only when adding, so favourites never counted and nothing ever came
+  // back off. Counting what is there cannot drift.
+  import('@/lib/stats-store').then((m) => m.recountSaved()).catch(() => {});
 }
 
 export function markRead(key: string) {
@@ -50,6 +53,11 @@ export function getScroll(key: string): number {
 
 export const toggleLike = (k: string) => toggle('liked', k);
 export const toggleSave = (k: string) => toggle('saved', k);
+
+/** The live sets. For counting, where a read from disk would lag. */
+export function savedState() {
+  return state;
+}
 
 export function useSaved() {
   const [, tick] = useState(0);

@@ -91,7 +91,7 @@ export function CategoryBrowse() {
 
   const onDrawerPick = (k: DrawerPick) => {
     if (k === 'home') { router.navigate('/local' as any); return; }
-    if (k === 'city') { router.navigate('/local-cities' as any); return; }
+    if (k === 'city') { router.navigate('/local/cities' as any); return; }
     if (k === 'category') { setDrawer(false); return; }
     router.navigate(session
       ? ('/business-new' as any)
@@ -157,7 +157,7 @@ export function CategoryBrowse() {
                   b={b}
                   fa={fa}
                   dark
-                  onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                  onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
                 onFile={setFiling}
                 />
               ))}

@@ -8,7 +8,6 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system/legacy';
 
 import { fonts, spacing } from '@/constants/zand-theme';
-import { ar } from '@/constants/articles';
 import { getFrame, saveFrame, clearFrame } from '@/lib/image-frames';
 import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
@@ -144,11 +143,11 @@ export function ReframeEditor({ name, source, onClose }: { name: string; source?
 
           <View style={s.actions}>
             <Pressable style={s.action} onPress={upload}>
-              <Ionicons name="cloud-upload-outline" size={17} color={ar.ink} />
+              <Ionicons name="cloud-upload-outline" size={17} color={'#221E1A'} />
               <Text style={s.actionT}>{t(APP.upload)}</Text>
             </Pressable>
             <Pressable style={s.action} onPress={reset}>
-              <Ionicons name="refresh-outline" size={17} color={ar.ink} />
+              <Ionicons name="refresh-outline" size={17} color={'#221E1A'} />
               <Text style={s.actionT}>{t(APP.reset)}</Text>
             </Pressable>
           </View>
@@ -178,7 +177,7 @@ const s = StyleSheet.create({
   gridH: { position: 'absolute', top: '33.33%', bottom: '33.33%', left: 0, right: 0, borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.18)' },
   actions: { flexDirection: 'row', gap: spacing.md, paddingHorizontal: spacing.lg, marginTop: spacing.lg },
   action: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7, backgroundColor: '#FFF', borderRadius: 12, paddingVertical: spacing.md },
-  actionT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: ar.ink },
+  actionT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#221E1A' },
   saveBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7, backgroundColor: '#E0C079', borderRadius: 14, paddingVertical: spacing.md, marginHorizontal: spacing.lg, marginTop: spacing.md },
   saveT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#241C19' },
   note: { fontFamily: fonts.body, fontSize: 10, color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginVertical: spacing.md },

@@ -125,7 +125,7 @@ export default function TpmScreen() {
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl }}>
           <Rise>
             <View style={s.intro}>
-              <Text style={s.introT}>Creatives{'\n'}by TPM</Text>
+              <Text style={s.introT}>Curated{'\n'}by TPM</Text>
               <Text style={s.introX}>
                 The people making things, and the rooms they make them in. Published by The Persian Mag.
               </Text>

@@ -28,7 +28,11 @@ export function AchievementsSheet({ open, onClose }: { open: boolean; onClose: (
           </View>
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl }}>
             <View style={s.grid}>
-              {miles.map((m) => (
+              {/* Earned first. Someone opening this wants to see what they
+                  have, not scroll past a dozen locked ones to find it. */}
+              {[...miles]
+                .sort((a, b) => Number(b.achieved) - Number(a.achieved))
+                .map((m) => (
                 <View key={m.key} style={[s.card, m.achieved && s.cardOn]}>
                   <View style={[s.badge, m.achieved && s.badgeOn]}>
                     <Ionicons name={m.achieved ? 'trophy' : 'lock-closed-outline'} size={22} color={m.achieved ? '#8A6D1F' : colors.textSecondary} />

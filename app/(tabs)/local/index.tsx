@@ -182,7 +182,7 @@ export default function Local() {
           <View style={{ flex: 1, alignItems: 'center' }}>
             <PlaceChip label={where} active={!!place} onPress={() => setPlaceOpen((v) => !v)} />
           </View>
-          <Pressable hitSlop={10} onPress={() => router.navigate('/local-saved' as any)}>
+          <Pressable hitSlop={10} onPress={() => router.navigate('/local/saved' as any)}>
             <Ionicons name="bookmark-outline" size={19} color={colors.textPrimary} />
           </Pressable>
         </View>
@@ -320,7 +320,7 @@ export default function Local() {
 
         {searching ? null : <NewRail
           items={fresh}
-          onOpen={(b) => router.navigate(('/business?id=' + b.id) as any)}
+          onOpen={(b) => router.navigate(('/local/business?id=' + b.id) as any)}
         />}
 
         <SeeAllHead
@@ -366,7 +366,7 @@ export default function Local() {
                     key={one.id}
                     b={one}
                     width={cardW}
-                    onOpen={() => router.navigate(('/business?id=' + one.id) as any)}
+                    onOpen={() => router.navigate(('/local/business?id=' + one.id) as any)}
                   />
                 ))}
               </View>
@@ -377,7 +377,7 @@ export default function Local() {
               b={biz}
               fa={fa}
               km={km}
-              onOpen={() => router.navigate(('/business?id=' + biz.id) as any)}
+              onOpen={() => router.navigate(('/local/business?id=' + biz.id) as any)}
               onFile={setFiling}
             />
           );
@@ -410,8 +410,8 @@ export default function Local() {
           // early return here previously left the overlay mounted with its
           // scrim up, which froze the screen.
           if (k === 'home') { setDrawer(false); return; }
-          if (k === 'city') router.navigate('/local-cities' as any);
-          else if (k === 'category') router.navigate('/local-categories' as any);
+          if (k === 'city') router.navigate('/local/cities' as any);
+          else if (k === 'category') router.navigate('/local/categories' as any);
           else listYours();
         }}
       />

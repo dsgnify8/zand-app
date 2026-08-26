@@ -1,5 +1,5 @@
 // Tracks lifetime activity for milestones and the progress tab.
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { syncTouch } from '@/lib/cloud-sync';
 
@@ -38,6 +38,49 @@ export async function loadStats() {
   try {
     const v = await AsyncStorage.getItem(KEY);
     state = v ? { ...EMPTY, ...JSON.parse(v) } : { ...EMPTY };
+
+  // Two things here are readings rather than records, and both are
+  // recomputed on every load for the same reason: a stored count has to be
+  // remembered at every site that could change it, and it only takes one
+  // that forgets — or one reload like this — for it to drift.
+  //
+  // The streak is computed from visit:days.
+  // auth.tsx calls this again once the session resolves, which is after
+  // boot, which is why the streak was set correctly and then vanished.
+  try {
+    const raw = await AsyncStorage.getItem('visit:days');
+    const days: string[] = raw ? JSON.parse(raw) : [];
+    if (days.length) {
+      const v = analyseVisits(days);
+      state = { ...state, streakDays: v.streak, streakNudge: v.nudge, visitDays: days.length };
+    }
+  } catch {}
+
+  recountSent().catch(() => {});
+
+  // And what is kept is counted from what is actually there — every list
+  // in the saved store, plus saved listings. bump('thingsSaved') only
+  // fired for one of those lists, so favourites and businesses never
+  // counted at all.
+  try {
+    // Read from storage rather than asking each store, deliberately: a
+    // store has to have loaded before it can answer, and depending on load
+    // order is what put the streak wrong for five days.
+    const [likedRaw, savedRaw, bizRaw] = await Promise.all([
+      AsyncStorage.getItem('liked:articles'),
+      AsyncStorage.getItem('saved:articles'),
+      AsyncStorage.getItem('saved:businesses'),
+    ]);
+    const count = (raw: string | null) => {
+      if (!raw) return 0;
+      const v = JSON.parse(raw);
+      return Array.isArray(v) ? v.length : Object.keys(v ?? {}).length;
+    };
+    state = {
+      ...state,
+      thingsSaved: count(likedRaw) + count(savedRaw) + count(bizRaw),
+    };
+  } catch {}
     emit();
   } catch {}
 }
@@ -68,8 +111,15 @@ export async function markLearnDay() {
  * different thing and get their own count. The streak follows visits, so it
  * belongs to everyone using the app rather than only the language learners.
  */
+// TEMP: one per module instance. If the boot code and the profile card
+// print different ids, there are two copies of this file in the bundle
+// and each has its own state.
+const MODULE_ID = Math.random().toString(36).slice(2, 7);
+console.log('[store] stats-store loaded as', MODULE_ID);
+
 let lastVisitDay = '';
 export async function markVisitDay() {
+  console.log('[streak] markVisitDay called, lastVisitDay =', lastVisitDay);
   const today = new Date().toISOString().slice(0, 10);
   if (lastVisitDay === today) return;
   lastVisitDay = today;
@@ -83,6 +133,7 @@ export async function markVisitDay() {
       await AsyncStorage.setItem('visit:days', JSON.stringify(next));
       setField('visitDays', next.length);
     }
+    console.log('[streak] days:', JSON.stringify(next), '-> streak', analyseVisits(next).streak);
     const v = analyseVisits(next);
     setStreak(v.streak);
     setNudge(v.nudge);
@@ -182,7 +233,9 @@ export function syncVideosWatched(count: number) {
 }
 
 export function setStreak(days: number) {
+  console.log('[streak] setStreak', days, 'was', state.streakDays);
   if (state.streakDays !== days) { state = { ...state, streakDays: days }; emit(); persist(); }
+  console.log('[streak]', MODULE_ID, 'state now', state.streakDays, 'listeners', listeners.size);
 }
 
 // Milestone definitions
@@ -226,12 +279,86 @@ export function milestoneStatus(s: Stats) {
   });
 }
 
-export function useStats() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => tick((n) => n + 1);
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
+/**
+ * The current stats.
+ *
+ * A function rather than the exported binding: every setter here replaces
+ * the object, so anything holding a reference keeps whatever existed when
+ * it took it.
+ */
+/**
+ * Count what is kept, from the stores themselves.
+ *
+ * Exported so a save can call it: the count is a reading of three lists,
+ * and a reading taken once at launch is wrong the moment anything changes.
+ */
+/**
+ * How many things have gone to friends.
+ *
+ * From sent_items rather than a counter: thingsSent was declared and read
+ * but never written, so the milestone for six sends could never be
+ * reached however many you sent.
+ */
+export async function recountSent() {
+  try {
+    const { supabase } = await import('@/lib/supabase');
+    const { data: me } = await supabase.auth.getUser();
+    if (!me.user?.id) return;
+    const { count } = await supabase
+      .from('sent_items')
+      .select('id', { count: 'exact', head: true })
+      .eq('sender', me.user.id);
+    const n = count ?? 0;
+    if (state.thingsSent !== n) {
+      state = { ...state, thingsSent: n };
+      emit();
+      persist();
+    }
+  } catch {}
+}
+
+export async function recountSaved() {
+  try {
+    // From the stores' own state, not from storage. Both write
+    // asynchronously and neither awaits, so a count read from disk is
+    // always one save behind — it would show yesterday's number.
+    const [saved, biz] = await Promise.all([
+      import('@/lib/saved-store'),
+      import('@/lib/saved-businesses'),
+    ]);
+    const sv: any = saved.savedState?.() ?? {};
+    const n = (sv.liked?.length ?? 0)
+      + (sv.saved?.length ?? 0)
+      + (biz.savedBusinesses?.().length ?? 0);
+    if (state.thingsSaved !== n) {
+      state = { ...state, thingsSaved: n };
+      emit();
+      persist();
+    }
+  } catch {}
+}
+
+export function stats() {
   return state;
+}
+
+// TEMP
+export function debugState() {
+  return { id: MODULE_ID, streak: state.streakDays, listeners: listeners.size };
+}
+
+export function storeId() { return MODULE_ID; }
+
+export function useStats() {
+  // useSyncExternalStore rather than useState plus a listener set.
+  //
+  // `state` here is an external store read during render, and React is
+  // free to bail out of a re-render driven by a setState fired outside its
+  // own graph — which is what left the card showing zero while the store
+  // held five. This is the API for exactly this shape, and it re-reads on
+  // every render rather than closing over anything.
+  return useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => state,
+  );
 }

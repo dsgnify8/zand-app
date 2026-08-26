@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +15,28 @@ import { Paywall } from '@/components/tpm-paywall';
 
 import { useLang } from '@/lib/i18n';
 const W = Dimensions.get('window').width;
+
+/**
+ * Render *emphasis* and **strong** inside a line.
+ *
+ * A sentence that lifts once in a page is worth having; a block-level
+ * emphasis would break the line to do it, which is the opposite of the
+ * effect. Marked in the copy, so whoever writes the piece decides where
+ * it falls rather than the renderer.
+ */
+function inline(x: string, base: any, em: any, strong: any) {
+  const parts = x.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).filter(Boolean);
+  if (parts.length === 1) return x;
+  return parts.map((piece, i) => {
+    if (piece.startsWith('**') && piece.endsWith('**')) {
+      return <Text key={i} style={strong}>{piece.slice(2, -2)}</Text>;
+    }
+    if (piece.startsWith('*') && piece.endsWith('*')) {
+      return <Text key={i} style={em}>{piece.slice(1, -1)}</Text>;
+    }
+    return piece;
+  });
+}
 
 export default function TpmPostScreen() {
   // Subscribe to the language so a switch elsewhere reaches this screen
@@ -75,8 +97,68 @@ export default function TpmPostScreen() {
           {/* the piece itself, faded out and cut short when locked */}
           <View style={locked ? s.lockedWrap : undefined}>
             <View style={s.body}>
-              {(locked ? p.body.slice(0, 1) : p.body).map((b, i) => {
+              {/* Nine kinds. The variety in these pages comes from how each
+                  piece is marked up rather than from a rule alternating
+                  shapes, which is how a magazine actually works — someone
+                  laid every page out. */}
+              {(locked ? p.body.slice(0, 1) : p.body).map((b: any, i: number) => {
+                if (b.t === 'lead') return (
+                  <View key={i} style={s.leadWrap}>
+                    <Text style={s.lead}>{inline(b.x, s.lead, s.em, s.strong)}</Text>
+                    <View style={s.leadRule} />
+                  </View>
+                );
+
+                if (b.t === 'qa') return (
+                  <View key={i} style={s.qa}>
+                    {b.q ? <Text style={s.qaQ}>{b.q}</Text> : null}
+                    {/* Who is answering, where more than one person is in
+                        the room. Omitted for a single-subject interview,
+                        where repeating the name every time is noise. */}
+                    {b.who ? <Text style={s.qaWho}>{b.who}</Text> : null}
+                    <Text style={s.qaA}>{inline(b.x, s.qaA, s.em, s.strong)}</Text>
+                  </View>
+                );
                 if (b.t === 'h') return <Text key={i} style={s.h}>{b.x}</Text>;
+
+                if (b.t === 'line') return (
+                  <Text key={i} style={s.line}>{b.x}</Text>
+                );
+
+                if (b.t === 'note') return (
+                  <View key={i} style={s.note}>
+                    <Text style={s.noteT}>{b.x}</Text>
+                  </View>
+                );
+
+                if (b.t === 'divider') return (
+                  <View key={i} style={s.dividerWrap}>
+                    <TpmMark size={13} />
+                  </View>
+                );
+
+                if (b.t === 'img') return (
+                  <View key={i} style={s.blockImgWrap}>
+                    <View style={s.blockImg}>
+                      <FramedImage name={b.key} source={eduImage(b.key)} style={StyleSheet.absoluteFill as any} />
+                    </View>
+                    {b.cap ? <Text style={s.cap}>{b.cap}</Text> : null}
+                  </View>
+                );
+
+                if (b.t === 'duo') return (
+                  <View key={i} style={s.blockImgWrap}>
+                    <View style={s.duo}>
+                      {b.keys.map((k: string) => (
+                        <View key={k} style={s.duoImg}>
+                          <FramedImage name={k} source={eduImage(k)} style={StyleSheet.absoluteFill as any} />
+                        </View>
+                      ))}
+                    </View>
+                    {b.cap ? <Text style={s.cap}>{b.cap}</Text> : null}
+                  </View>
+                );
+
                 if (b.t === 'q') return (
                   <View key={i} style={s.quote}>
                     <View style={s.quoteBar} />
@@ -86,7 +168,8 @@ export default function TpmPostScreen() {
                     </View>
                   </View>
                 );
-                return <Text key={i} style={s.p}>{b.x}</Text>;
+
+                return <Text key={i} style={s.p}>{inline(b.x, s.p, s.em, s.strong)}</Text>;
               })}
             </View>
 
@@ -108,6 +191,13 @@ export default function TpmPostScreen() {
           ) : (
             <>
               <View style={s.endRule} />
+
+              {/* Their words. The line says so and goes to them — a
+                  partnership should be legible from inside the piece, not
+                  only from the tab it sits in. */}
+              <Pressable onPress={() => Linking.openURL('https://thepersianmag.net')}>
+                <Text style={s.credit}>Excerpt from The Persian Mag</Text>
+              </Pressable>
               <Text style={s.endMark}>THE PERSIAN MAG</Text>
 
               <View style={s.moreHead}>
@@ -173,4 +263,54 @@ const s = StyleSheet.create({
   moreImg: { width: 84, height: 84, backgroundColor: tpm.paperAlt },
   moreKicker: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.6, color: tpm.red },
   moreT: { fontFamily: fonts.bodyStrong, fontSize: 15, lineHeight: 19, color: tpm.ink, marginTop: 4 },
+  // A statement, not oversized body copy. It was sitting between the two
+  // and reading as neither.
+  leadWrap: { marginBottom: spacing.xl },
+  lead: {
+    fontFamily: fonts.bodyStrong, fontSize: 21, lineHeight: 29,
+    letterSpacing: -0.3, color: tpm.ink,
+  },
+  leadRule: {
+    height: 2, width: 40, backgroundColor: tpm.red,
+    marginTop: spacing.lg,
+  },
+
+  em: { fontStyle: 'italic' },
+  strong: { fontFamily: fonts.bodyStrong },
+
+  // Interviews. The question carries the red so the eye can find the next
+  // one without reading for it.
+  qa: { marginBottom: spacing.lg },
+  qaQ: {
+    fontFamily: fonts.bodyStrong, fontSize: 14.5, lineHeight: 21,
+    color: tpm.red, marginBottom: spacing.sm,
+  },
+  qaA: { fontFamily: fonts.body, fontSize: 15, lineHeight: 25, color: tpm.ink },
+  qaWho: {
+    fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 1.6,
+    color: tpm.muted, marginBottom: 5,
+  },
+
+  credit: {
+    fontFamily: fonts.body, fontSize: 10.5, color: tpm.faint,
+    textAlign: 'center', marginTop: spacing.xl, marginBottom: spacing.xxl,
+  },
+  line: {
+    fontFamily: fonts.bodyStrong, fontSize: 20, lineHeight: 27,
+    color: tpm.ink, marginVertical: spacing.xl, textAlign: 'center',
+  },
+  note: {
+    backgroundColor: tpm.paperAlt, padding: spacing.md,
+    marginVertical: spacing.lg,
+  },
+  noteT: { fontFamily: fonts.body, fontSize: 13, lineHeight: 20, color: tpm.inkSoft },
+  dividerWrap: { alignItems: 'center', marginVertical: spacing.xl },
+  blockImgWrap: { marginVertical: spacing.lg },
+  blockImg: { width: '100%', aspectRatio: 1.2, backgroundColor: tpm.paperAlt },
+  duo: { flexDirection: 'row', gap: 2 },
+  duoImg: { flex: 1, aspectRatio: 0.8, backgroundColor: tpm.paperAlt },
+  cap: {
+    fontFamily: fonts.body, fontSize: 11, color: tpm.muted,
+    marginTop: 7,
+  },
 });

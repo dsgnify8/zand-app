@@ -243,7 +243,7 @@ export default function LocalMap() {
 
       <SafeAreaView style={s.top} edges={['top']} pointerEvents="box-none">
         <View style={s.topRow}>
-          <Pressable style={s.round} onPress={() => router.replace('/local' as any)}>
+          <Pressable style={s.round} onPress={() => (router.canGoBack() ? router.back() : router.replace('/local' as any))}>
             <Ionicons name="chevron-back" size={19} color={colors.textPrimary} />
           </Pressable>
 
@@ -346,7 +346,7 @@ export default function LocalMap() {
               </View>
             ) : null}
 
-            <Pressable onPress={() => router.navigate(('/business?id=' + sel.id) as any)}>
+            <Pressable onPress={() => router.navigate(('/local/business?id=' + sel.id) as any)}>
               <Text style={s.sheetName}>{fa && sel.name_fa ? sel.name_fa : sel.name}</Text>
               <Text style={s.sheetMeta}>
                 {categoryLabel(sel.category, fa)}
@@ -389,7 +389,7 @@ export default function LocalMap() {
               ) : null}
               <Pressable
                 style={[s.sheetAct, s.sheetActMain]}
-                onPress={() => router.navigate(('/business?id=' + sel.id) as any)}
+                onPress={() => router.navigate(('/local/business?id=' + sel.id) as any)}
               >
                 <Text style={[s.sheetActT, { color: '#FFF' }]}>{fa ? 'صفحهٔ کامل' : 'Full page'}</Text>
               </Pressable>
@@ -401,7 +401,7 @@ export default function LocalMap() {
       {sel && !listOpen && !sheet ? (
         <Pressable
           style={s.peek}
-          onPress={() => router.navigate(('/business?id=' + sel.id) as any)}
+          onPress={() => router.navigate(('/local/business?id=' + sel.id) as any)}
         >
           {sel.photos?.[0] ? (
             <Image source={bizImage(sel.photos[0])} style={s.peekShot} />

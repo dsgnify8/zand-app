@@ -62,6 +62,19 @@ export const SEARCH_SYNONYMS: Record<string, string[]> = {
     'گوشت', 'لواشک',
   ],
 
+  candy: [
+    'candy', 'sweets', 'sweet', 'lösgodis', 'losgodis', 'pick and mix',
+    'pick n mix', 'chocolate', 'liquorice', 'lakrits', 'gummy', 'gummies',
+    'ice cream', 'icecream', 'gelato', 'soft serve', 'glass',
+    'souvenir', 'souvenirs', 'gifts', 'gift', 'presents',
+    'tobacco', 'cigarettes', 'snus', 'vape', 'kiosk', 'corner shop',
+    'nuts', 'dried fruit', 'lavashak', 'noghl', 'gaz', 'sohan',
+    // فارسی
+    'شیرینی', 'آبنبات', 'شکلات', 'بستنی', 'سوغات', 'سوغاتی', 'کادو',
+    'هدیه', 'دخانیات', 'سیگار', 'کیوسک', 'آجیل', 'میوه خشک', 'لواشک',
+    'نقل', 'گز', 'سوهان',
+  ],
+
   /* ---------------- looking after yourself ---------------- */
   beauty: [
     'beauty', 'salon', 'hair', 'hairdresser', 'hair stylist', 'hairstyle',

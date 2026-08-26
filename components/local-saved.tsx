@@ -79,14 +79,18 @@ export function SavedBusinesses() {
 
   const onDrawerPick = (k: DrawerPick) => {
     if (k === 'home') { router.navigate('/local' as any); return; }
-    if (k === 'city') { router.navigate('/local-cities' as any); return; }
-    if (k === 'category') { router.navigate('/local-categories' as any); return; }
+    if (k === 'city') { router.navigate('/local/cities' as any); return; }
+    if (k === 'category') { router.navigate('/local/categories' as any); return; }
     router.navigate(session
       ? ('/business-new' as any)
       : ('/onboarding?step=2&next=/business-new' as any));
   };
 
-  const busy = loading || colsLoading;
+  // Contents as well as the list. Waiting only for the folders meant the
+  // page drew empty rails and then filled them, which is the flash.
+  const contentsReady =
+    collections.length === 0 || collections.every((c) => contents[c.id] !== undefined);
+  const busy = loading || colsLoading || !contentsReady;
   const nothing = saved.length === 0 && collections.length === 0;
 
   return (
@@ -126,7 +130,7 @@ export function SavedBusinesses() {
                     <Pressable hitSlop={10} onPress={() => setSharing(c)}>
                       <Ionicons name="person-add-outline" size={16} color={colors.textSecondary} />
                     </Pressable>
-                    <Pressable hitSlop={10} onPress={() => router.navigate(('/local-folder?id=' + c.id) as any)}>
+                    <Pressable hitSlop={10} onPress={() => router.navigate(('/local/folder?id=' + c.id) as any)}>
                       <Ionicons
                         name={fa ? 'chevron-back' : 'chevron-forward'}
                         size={16}
@@ -152,7 +156,7 @@ export function SavedBusinesses() {
                         b={b}
                         fa={fa}
                         width={RAIL_W}
-                        onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                        onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
                         onFile={setFiling}
                       />
                     ))}
@@ -174,7 +178,7 @@ export function SavedBusinesses() {
                 key={b.id}
                 b={b}
                 fa={fa}
-                onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
                 onFile={setFiling}
               />
             ))}

@@ -29,6 +29,8 @@ export async function sendItem(payload: {
 }) {
   const { senderName, ...row } = payload as any;
   const res = await supabase.from('sent_items').insert(row);
+  // Counted from the table rather than bumped, so it cannot drift.
+  import('@/lib/stats-store').then((m) => m.recountSent()).catch(() => {});
   // Tell them, if they have a device registered and have not switched
   // this off. Fire and forget: a failed notification must never fail
   // the send itself.
@@ -87,7 +89,7 @@ export function itemRoute(it: SentItem): string | null {
     case 'poet': return '/literature/reader?author=' + it.item_key + '&page=0';
     case 'culture': return '/culture/topic?topic=' + it.item_key;
     case 'place': return '/geography?jump=' + it.item_key;
-    case 'business': return '/business?id=' + it.item_key;
+    case 'business': return '/local/business?id=' + it.item_key;
     default: return null; // a word has no page of its own; the card is it
   }
 }

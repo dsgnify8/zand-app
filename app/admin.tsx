@@ -99,11 +99,11 @@ export default function AdminScreen() {
             {topReads.length === 0 ? (
               <Text style={s.dim}>No reads logged yet.</Text>
             ) : topReads.map((r, i) => {
-              const art = ARTICLES.find((a) => a.key === r.item_key);
+              // ARTICLES removed with the old reading page; the key is the title now.
               return (
                 <View key={r.item_key} style={s.analyRow}>
                   <Text style={s.analyRank}>{i + 1}</Text>
-                  <Text style={s.analyT} numberOfLines={1}>{art?.title ?? r.item_key}</Text>
+                  <Text style={s.analyT} numberOfLines={1}>{r.item_key}</Text>
                   <Text style={s.analyN}>{r.n}</Text>
                 </View>
               );

@@ -20,7 +20,7 @@ export function useFriendDeepLink(myId: string | undefined) {
       const token = parsed.queryParams?.t as string | undefined;
       if (token) {
         const res = await joinFolderByToken(token);
-        if (res?.id) router.navigate(('/local-folder?id=' + res.id) as any);
+        if (res?.id) router.navigate(('/local/folder?id=' + res.id) as any);
         return;
       }
 

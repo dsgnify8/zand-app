@@ -110,7 +110,7 @@ export default function RootLayout() {
   // the app showing numbers that no longer exist anywhere on disk.
   useEffect(() => {
     (async () => {
-      await resetForDemo();
+      try { await resetForDemo(); } catch (e) { console.log('[boot] resetForDemo', e); }
       loadAllFrames(); loadSaved(); loadLang(); loadHidden(); loadOpened();
       loadLevel(); loadLearnProgress(); loadPartial(); loadStrength();
       loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides();
@@ -119,8 +119,14 @@ export default function RootLayout() {
       // Awaited, unlike the rest. markVisitDay writes the streak through the
       // stats store, so if the load were still in flight it would land on top
       // and the streak would quietly reset to whatever was on disk.
-      await loadStats();
-      markVisitDay();
+      //
+      // Guarded individually: an unhandled throw anywhere above meant this
+      // never ran, which is why the streak sat at zero for days with no
+      // error to show for it.
+      console.log('[boot] loading stats');
+      try { await loadStats(); } catch (e) { console.log('[boot] loadStats', e); }
+      console.log('[boot] marking visit');
+      try { markVisitDay(); } catch (e) { console.log('[boot] markVisitDay', e); }
     })();
   }, []);
 

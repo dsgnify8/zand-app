@@ -76,7 +76,14 @@ export function BusinessCard({
   const blurb = fa ? (b.tagline_fa ?? b.description_fa ?? b.tagline ?? b.description) : (b.tagline ?? b.description);
 
   return (
-    <View style={s.card}>
+    <View style={[
+      s.card,
+      small && s.cardSmall,
+      // The width on the container as well as its children. Without it the
+      // card lays out at whatever the parent offers for one frame and then
+      // snaps to its real size — the flicker on the first row of a rail.
+      width != null && { width: w },
+    ]}>
       {/* photos */}
       <View>
         <View style={[s.shotWrap, { width: w, height: small ? 150 : 210 }, { width: w, height: small ? 150 : 210 }]}>

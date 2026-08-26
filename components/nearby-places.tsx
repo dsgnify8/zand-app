@@ -70,7 +70,7 @@ export function NearbyPlaces({ b, fa }: { b: Business; fa: boolean }) {
             <Pressable
               key={x.id}
               style={s.card}
-              onPress={() => router.replace(('/business?id=' + x.id) as any)}
+              onPress={() => router.replace(('/local/business?id=' + x.id) as any)}
             >
               {x.photos?.[0] ? (
                 <Image source={bizImage(x.photos[0])} style={s.shot} />

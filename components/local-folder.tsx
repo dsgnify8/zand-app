@@ -82,7 +82,7 @@ export function FolderPage() {
           style: 'destructive',
           onPress: async () => {
             if (id) await leaveCollection(id);
-            router.navigate('/local-saved' as any);
+            router.navigate('/local/saved' as any);
           },
         },
       ],
@@ -105,7 +105,7 @@ export function FolderPage() {
           style: 'destructive',
           onPress: async () => {
             if (id) await deleteCollection(id);
-            router.navigate('/local-saved' as any);
+            router.navigate('/local/saved' as any);
           },
         },
       ],
@@ -115,7 +115,7 @@ export function FolderPage() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={[s.top, fa && { flexDirection: 'row-reverse' }]}>
-        <Pressable hitSlop={12} onPress={() => router.navigate('/local-saved' as any)}>
+        <Pressable hitSlop={12} onPress={() => router.navigate('/local/saved' as any)}>
           <Ionicons name={fa ? 'chevron-forward' : 'chevron-back'} size={22} color={colors.textPrimary} />
         </Pressable>
         <Text style={s.topT} numberOfLines={1}>{folder?.name ?? ''}</Text>
@@ -171,7 +171,7 @@ export function FolderPage() {
                   key={b.id}
                   b={b}
                   fa={fa}
-                  onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                  onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
                   onFile={setFiling}
                 />
               ))}

@@ -33,18 +33,15 @@ export function isSubscribed() { return subscribed; }
 export function hasRead(key: string) { return read.includes(key); }
 
 // True when this post can be opened.
-export function canRead(key: string) {
-  // Already opened: never lock something the reader has seen.
-  if (read.includes(key)) return true;
-
-  if (DEMO_ALWAYS_SHOW) {
-    // Demo: the wall returns every FREE_READS new pieces, whether or not
-    // the reader has subscribed, so it can be shown repeatedly while testing.
-    return sinceWall < FREE_READS;
-  }
-
-  if (subscribed) return true;
-  return read.length < FREE_READS;
+export function canRead(_key: string) {
+  // Everything is readable. The wall was built when TPM inside ZAND was
+  // going to be a subscription; it is a partnership instead, and counting
+  // someone's free reads is the wrong first impression of a magazine we
+  // want people to fall into.
+  //
+  // Kept as a function rather than removed so the call sites stay honest
+  // about asking — if a wall ever returns, it returns here.
+  return true;
 }
 
 export function readsLeft() {

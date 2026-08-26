@@ -1,7 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
-import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useRef, useState, useEffect } from 'react';
+import { ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router, useLocalSearchParams } from 'expo-router';
+import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -10,7 +10,7 @@ import { pr, ME, READING, DISCOVER, SAVED, FRIENDS, INBOX, STATS, FINISHED, DAYS
 import { useSaved } from '@/lib/saved-store';
 import { useProgress } from '@/lib/progress-store';
 import { VideoTile } from '@/components/video-tile';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { PROFILE } from '@/constants/i18n/profile';
 import { ContinueReading } from '@/components/continue-reading';
 import { useAuth } from '@/lib/auth';
@@ -21,7 +21,7 @@ import { FriendsSheet } from '@/components/friends-sheet';
 import { FramedImage } from '@/components/framed-image';
 import { CultureCover } from '@/components/culture-cover';
 import { resolveMany } from '@/lib/resolve-saved';
-import { useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
+import { storeId, debugState, useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
 import { AchievementsSheet } from '@/components/achievements-sheet';
 import { eduImage } from '@/constants/education-images';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
@@ -40,6 +40,7 @@ import { LearnProgressBlock } from '@/components/learn-progress-block';
 import { StatItemsSheet, type StatItem } from '@/components/stat-items-sheet';
 import { APP } from '@/constants/i18n/app';
 import { SignedOutOverlay } from '@/components/signed-out-overlay';
+import { BusinessCard } from '@/components/business-card';
 import { EmptyState } from '@/components/empty-state';
 import { useSavedBusinesses } from '@/lib/saved-businesses';
 import { loadBusiness, categoryLabel } from '@/lib/businesses';
@@ -66,8 +67,12 @@ const SAVE_KINDS = ['word', 'verse', 'topic', 'poet', 'place'] as const;
 
 
 function useSavedItems() {
-  const { saved } = useSaved();
-  return resolveMany(saved);
+  // Both lists. Only `saved` was read, so anything hearted never appeared
+  // here — which is why the strip looked empty for someone who had been
+  // saving things all week.
+  const { liked, saved } = useSaved();
+  const keys = [...saved, ...liked.filter((k: string) => !saved.includes(k))];
+  return resolveMany(keys);
 }
 
 const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
@@ -88,6 +93,7 @@ function StreakCard() {
   const realStats = useStats();
   const demo = showDemoData(streakUser?.email);
   const streakDays = demo ? ME.streak : ((realStats as any)?.streakDays ?? 0);
+  console.log('[streak] card', streakDays, '| hook', (realStats as any)?.streakDays, '| direct', JSON.stringify(debugState()));
   return (
     <View style={s.streak}>
       <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
@@ -289,10 +295,19 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
   // instead of going through resolveMany.
   const savedBiz = useSavedBusinesses();
   const [bizCards, setBizCards] = useState<any[]>([]);
+  // The rows themselves as well as the card shapes: the rail below renders
+  // real listing cards, and a flattened title-and-subtitle cannot carry a
+  // photo pager, a bookmark or the contact chips.
+  const [bizRows, setBizRows] = useState<any[]>([]);
+  // Held back until the listings arrive. Rendering the rest first and then
+  // dropping a rail in is worse than a moment's wait — the page moves
+  // under whatever you were about to tap.
+  const [bizLoading, setBizLoading] = useState(true);
   useEffect(() => {
-    if (view !== 'saved' || savedBiz.length === 0) { setBizCards([]); return; }
+    if (view !== 'saved' || savedBiz.length === 0) { setBizCards([]); setBizRows([]); setBizLoading(false); return; }
     (async () => {
       const rows = await Promise.all(savedBiz.map((id) => loadBusiness(id)));
+      setBizRows(rows.filter(Boolean));
       setBizCards(
         rows.filter(Boolean).map((x: any) => ({
           key: 'biz-' + x.id,
@@ -300,9 +315,10 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
           title: x.name,
           sub: categoryLabel(x.category, false) + (x.city ? '  ·  ' + x.city : ''),
           image: x.photos?.[0] ?? null,
-          route: '/business?id=' + x.id,
+          route: '/local/business?id=' + x.id,
         })),
       );
+      setBizLoading(false);
     })();
   }, [view, savedBiz.join(',')]);
 
@@ -318,6 +334,7 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
     business: t(PROFILE.kindBusinesses), other: t(PROFILE.kindOther),
   };
   let rows: any[] = items;
+  let groups: [string, any[]][] = [];
   if (view === 'saved') {
     const by = new Map<string, any[]>();
     items.forEach((it: any) => {
@@ -329,6 +346,9 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
       { __header: KIND_LABEL[kind] ?? kind, key: 'h-' + kind },
       ...list,
     ]);
+    // Businesses first: they are the ones with somewhere else to go.
+    groups = Array.from(by).sort((x, y) =>
+      x[0] === 'business' ? -1 : y[0] === 'business' ? 1 : 0);
   }
 
   const TITLE: Record<string, string> = { history: t(PROFILE.history), favourites: t(PROFILE.favourites), watched: t(PROFILE.watched), saved: t(PROFILE.saveLater) };
@@ -341,11 +361,16 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
 
   return (
     <View>
-      <Pressable style={s.subBack} hitSlop={10} onPress={onBack}>
-        <Ionicons name="chevron-back" size={20} color={pr.ink} />
-        <Text style={s.subBackT}>{t(PROFILE.yourLibrary)}</Text>
-      </Pressable>
-      <Text style={s.subTitle}>{TITLE[view]}</Text>
+      {/* Where you are and where you came from on one row. Stacked, the
+          title read as a second heading under a first, and the eye had to
+          travel twice to learn one thing. */}
+      <View style={s.subHead}>
+        <Pressable style={s.subBack} hitSlop={10} onPress={onBack}>
+          <Ionicons name="chevron-back" size={18} color={pr.ink} />
+          <Text style={s.subBackT}>{t(PROFILE.yourLibrary)}</Text>
+        </Pressable>
+        <Text style={s.subTitleInline}>{TITLE[view]}</Text>
+      </View>
 
       {view === 'watched' ? (
         watchedIds.length === 0 ? (
@@ -358,6 +383,10 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
             {watchedIds.map((id: string) => <VideoTile key={id} id={id} />)}
           </View>
         )
+      ) : view === 'saved' && bizLoading ? (
+        /* One spinner rather than a page that assembles itself in front of
+           you. */
+        <ActivityIndicator style={{ marginTop: spacing.xxl }} color={pr.saveA} />
       ) : items.length === 0 ? (
         <View style={s.emptyWrap}>
           <Ionicons name={view === 'favourites' ? 'heart-outline' : view === 'saved' ? 'bookmark-outline' : view === 'watched' ? 'play-circle-outline' : 'time-outline'} size={30} color={pr.dim} />
@@ -389,25 +418,59 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
           ))}
         </View>
       ) : (
-        <View style={{ gap: spacing.sm }}>
-          {rows.map((a: any) => a.__header ? (
-            <Text key={a.key} style={s.sectionLabel}>{a.__header}</Text>
-          ) : (
-            <Pressable key={a.key} style={s.saveRow} onPress={() => router.navigate(a.route as any)}>
-              <View style={s.saveThumb}>
-                {a.kind === 'culture' && a.accent && a.glyph && !libImage(a.image) ? (
-                  <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
-                ) : (
-                  <FramedImage name={a.image ?? a.key} source={libImage(a.image)} style={StyleSheet.absoluteFill as any}
-                    onPress={() => router.navigate(a.route as any)} />
-                )}
+        /* A rail per kind rather than one long column. Saved holds one of
+           everything the app can keep, and a list makes twenty words and
+           two poets look like the same thing — the grouping was already
+           here, it was just being drawn vertically. */
+        <View>
+          {groups.map(([kind, list]: any) => (
+            <View key={kind} style={{ marginBottom: spacing.xl }}>
+              <View style={s.railHead}>
+                <Text style={[s.sectionLabel, { marginBottom: 0 }]}>
+                  {KIND_LABEL[kind] ?? kind}
+                  <Text style={s.railN}>{'   ' + list.length}</Text>
+                </Text>
+                {kind === 'business' ? (
+                  <Pressable hitSlop={8} onPress={() => router.navigate('/local/saved' as any)}>
+                    <Text style={s.seeAll}>{t(PROFILE.seeAll)}</Text>
+                  </Pressable>
+                ) : null}
               </View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.saveT} numberOfLines={2}>{a.title}</Text>
-                <Text style={s.saveS}>{a.sub}</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={15} color={pr.dim} />
-            </Pressable>
+
+              {/* Listings get the real card, narrowed — the same one the
+                  folders use. A listing reduced to a title and a thumbnail
+                  loses the things that make it a listing. */}
+              {kind === 'business' ? (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.libRail}>
+                  {bizRows.map((b: any) => (
+                    <BusinessCard
+                      key={b.id}
+                      b={b}
+                      fa={getLang() === 'fa'}
+                      width={244}
+                      onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
+                    />
+                  ))}
+                </ScrollView>
+              ) : (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.libRail}>
+                {list.map((a: any) => (
+                  <Pressable key={a.key} style={s.libCard} onPress={() => router.navigate(a.route as any)}>
+                    <View style={s.libCardImg}>
+                      {a.kind === 'culture' && a.accent && a.glyph && !libImage(a.image) ? (
+                        <CultureCover accent={a.accent} glyph={a.glyph} persian={a.persian} />
+                      ) : (
+                        <FramedImage name={a.image ?? a.key} source={libImage(a.image)} style={StyleSheet.absoluteFill as any}
+                          onPress={() => router.navigate(a.route as any)} />
+                      )}
+                    </View>
+                    <Text style={s.libCardT} numberOfLines={2}>{a.title}</Text>
+                    <Text style={s.libCardS} numberOfLines={1}>{a.sub}</Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+              )}
+            </View>
           ))}
         </View>
       )}
@@ -423,6 +486,11 @@ function LibraryTab() {
   const items = useSavedItems();
   const [filter, setFilter] = useState<string>('all');
   const [libView, setLibView] = useState<null | 'history' | 'favourites' | 'watched' | 'saved'>(null);
+
+  // Tapping Profile while already inside Favourites should come back out,
+  // the way tapping a tab you are on returns you to its top. Without this
+  // the sub-view is a place with only one exit.
+  useFocusEffect(useCallback(() => () => setLibView(null), []));
   const list = filter === 'all' ? items : items.filter((x) => x.kind === filter);
 
   if (libView) return <LibrarySub view={libView} onBack={() => setLibView(null)} />;
@@ -436,7 +504,11 @@ function LibraryTab() {
         <Text style={s.libX}>{t(PROFILE.libraryBlurb)}</Text>
       </View>
 
-      <Text style={s.sectionLabel}>{t(PROFILE.yourLibrary)}</Text>
+      {/* The label and the destination on one row. Two stacked headings
+          made the boxes below look like a subsection of a subsection. */}
+      <View style={s.libHead}>
+        <Text style={[s.sectionLabel, { marginBottom: 0 }]}>{t(PROFILE.yourLibrary)}</Text>
+      </View>
       <View style={s.grid}>
         {[
           // History removed: what you have opened is already the home rail.
@@ -453,46 +525,6 @@ function LibraryTab() {
         ))}
       </View>
 
-      <Text style={s.sectionLabel}>{t(PROFILE.mySaved)}</Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={s.chipsTight}
-      >
-        {(['all', ...SAVE_KINDS] as string[]).map((f) => {
-          const n = f === 'all' ? items.length : items.filter((x) => x.kind === f).length;
-          return (
-            <Pressable key={f} style={[s.chip, filter === f && s.chipOn]} onPress={() => setFilter(f)}>
-              <Text style={[s.chipT, filter === f && s.chipTOn]}>
-                {(f === 'all' ? 'All' : f + 's') + (n > 0 ? '  ' + n : '')}
-              </Text>
-            </Pressable>
-          );
-        })}
-
-        {/* Saved businesses live in their own store and have their own
-            page, so this leaves rather than filters — a chip that always
-            read zero would be worse than no chip. */}
-        <Pressable style={s.chip} onPress={() => router.navigate('/local-saved' as any)}>
-          <Text style={s.chipT}>{t(PROFILE.kindBusinesses)}</Text>
-          <Ionicons name="chevron-forward" size={11} color={pr.dim} />
-        </Pressable>
-      </ScrollView>
-
-      <View style={{ gap: spacing.sm }}>
-        {list.map((it) => (
-          <Pressable key={it.key} style={s.saveRow} onPress={() => (it as any).route && router.navigate((it as any).route)}>
-            <View style={s.saveIcon}>
-              <Ionicons name={KIND_ICON[it.kind] as any} size={15} color={pr.saveA} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={s.saveT} numberOfLines={1}>{it.title}</Text>
-              <Text style={s.saveS}>{it.sub}</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={15} color={pr.dim} />
-          </Pressable>
-        ))}
-      </View>
 
     </>
   );
@@ -1102,4 +1134,29 @@ const s = StyleSheet.create({
   doneT: { fontFamily: fonts.heading, fontSize: fontSize.base, color: colors.textPrimary },
   doneS: { fontFamily: fonts.body, fontSize: 10.5, color: pr.dim },
   doneW: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
+  libHead: {
+    flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
+    marginBottom: spacing.md,
+  },
+  libHeadT: { fontFamily: fonts.heading, fontSize: 26, color: pr.text },
+  subHead: {
+    flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
+    marginBottom: spacing.lg,
+  },
+  // The body face, matching the page titles on By city and By category.
+  // The serif made a one word heading look like a chapter opening.
+  subTitleInline: { fontFamily: fonts.body, fontSize: 16, letterSpacing: 0.2, color: pr.text },
+  railHead: {
+    flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
+    marginBottom: spacing.md,
+  },
+  railN: { fontFamily: fonts.body, fontSize: 10.5, color: pr.dim },
+  libRail: { gap: spacing.md, paddingRight: spacing.lg },
+  libCard: { width: 132 },
+  libCardImg: {
+    width: 132, height: 168, borderRadius: 12, overflow: 'hidden',
+    backgroundColor: 'rgba(40,28,24,0.05)',
+  },
+  libCardT: { fontFamily: fonts.heading, fontSize: 15, lineHeight: 19, color: pr.text, marginTop: 7 },
+  libCardS: { fontFamily: fonts.body, fontSize: 11, color: pr.dim, marginTop: 1 },
 });

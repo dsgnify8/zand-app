@@ -36,8 +36,15 @@ export function savedBusinessIds() {
 export async function toggleSavedBusiness(id: string) {
   saved = saved.includes(id) ? saved.filter((x) => x !== id) : [id, ...saved];
   emit();
+  // After the change, not before: the count is of what is now kept.
+  import('@/lib/stats-store').then((m) => m.recountSaved()).catch(() => {});
   try { await AsyncStorage.setItem(KEY, JSON.stringify(saved)); syncTouch(); } catch {}
   return saved.includes(id);
+}
+
+/** The live list. For counting, where a read from disk would lag. */
+export function savedBusinesses() {
+  return saved;
 }
 
 export function useSavedBusinesses() {
@@ -66,7 +73,7 @@ export async function shareBusiness(b: Business) {
     where ? '📍 ' + where : '',
     b.phone ? '☎ ' + b.phone : '',
     '',
-    'zand://business?id=' + b.id,
+    'zand://local/business?id=' + b.id,
   ].filter(Boolean);
 
   try {

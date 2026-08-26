@@ -65,8 +65,8 @@ function useLocalDrawer() {
 
   const onPick = (k: DrawerPick) => {
     if (k === 'home') { router.navigate('/local' as any); return; }
-    if (k === 'city') { router.navigate('/local-cities' as any); return; }
-    if (k === 'category') { router.navigate('/local-categories' as any); return; }
+    if (k === 'city') { router.navigate('/local/cities' as any); return; }
+    if (k === 'category') { router.navigate('/local/categories' as any); return; }
     router.navigate(session
       ? ('/business-new' as any)
       : ('/onboarding?step=2&next=/business-new' as any));
@@ -175,7 +175,7 @@ export function CityList() {
                 scrollY={y}
                 focus={focus}
                 onPress={() =>
-                  router.navigate(('/local-city?c=' + encodeURIComponent(c.key) +
+                  router.navigate(('/local/city?c=' + encodeURIComponent(c.key) +
                     '&label=' + encodeURIComponent(c.label)) as any)
                 }
               />
@@ -333,7 +333,7 @@ export function CityPage() {
 
           <SafeAreaView edges={['top']} style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
             <View style={[st.heroTop, fa && { flexDirection: 'row-reverse' }]}>
-              <Pressable hitSlop={12} onPress={() => router.navigate('/local-cities' as any)}>
+              <Pressable hitSlop={12} onPress={() => router.navigate('/local/cities' as any)}>
                 <Ionicons name={fa ? 'chevron-forward' : 'chevron-back'} size={22} color={D.text} />
               </Pressable>
               <Pressable
@@ -380,7 +380,7 @@ export function CityPage() {
                 key={b.id}
                 b={b}
                 fa={fa}
-                onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
               onFile={setFiling}
                 onFile={setFiling}
               />
