@@ -102,10 +102,41 @@ export default function TpmPostScreen() {
                   shapes, which is how a magazine actually works — someone
                   laid every page out. */}
               {(locked ? p.body.slice(0, 1) : p.body).map((b: any, i: number) => {
+                // A second kind of opening: a drop capital, no rule, body
+                // size. Every piece starting with the same bold statement
+                // made them look like one template with different words in
+                // it, which is exactly what a magazine is not.
+                if (b.t === 'open') return (
+                  <Text key={i} style={s.openP}>
+                    <Text style={s.dropCap}>{b.x.slice(0, 1)}</Text>
+                    {inline(b.x.slice(1), s.openP, s.em, s.strong)}
+                  </Text>
+                );
+
                 if (b.t === 'lead') return (
                   <View key={i} style={s.leadWrap}>
                     <Text style={s.lead}>{inline(b.x, s.lead, s.em, s.strong)}</Text>
                     <View style={s.leadRule} />
+                  </View>
+                );
+
+                if (b.t === 'term') return (
+                  <View key={i} style={s.term}>
+                    <View style={s.termHead}>
+                      <Text style={s.termT}>{b.x}</Text>
+                      {b.fa ? <Text style={s.termFa}>{b.fa}</Text> : null}
+                    </View>
+                    <Text style={s.termDef}>{inline(b.def, s.termDef, s.em, s.strong)}</Text>
+                  </View>
+                );
+
+                if (b.t === 'term') return (
+                  <View key={i} style={s.term}>
+                    <View style={s.termHead}>
+                      <Text style={s.termT}>{b.x}</Text>
+                      {b.fa ? <Text style={s.termFa}>{b.fa}</Text> : null}
+                    </View>
+                    <Text style={s.termDef}>{inline(b.def, s.termDef, s.em, s.strong)}</Text>
                   </View>
                 );
 
@@ -275,6 +306,15 @@ const s = StyleSheet.create({
     marginTop: spacing.lg,
   },
 
+  openP: {
+    fontFamily: fonts.body, fontSize: 15, lineHeight: 25,
+    color: tpm.ink, marginBottom: spacing.lg,
+  },
+  dropCap: {
+    fontFamily: fonts.bodyStrong, fontSize: 34, lineHeight: 34,
+    color: tpm.red,
+  },
+
   em: { fontStyle: 'italic' },
   strong: { fontFamily: fonts.bodyStrong },
 
@@ -289,6 +329,30 @@ const s = StyleSheet.create({
   qaWho: {
     fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 1.6,
     color: tpm.muted, marginBottom: 5,
+  },
+
+  // A glossary. The word and its Persian on one line, the definition
+  // under it — so the eye can run down the page looking for one entry
+  // rather than reading every line to find it.
+  term: { marginBottom: spacing.lg },
+  termHead: { flexDirection: 'row', alignItems: 'baseline', gap: spacing.sm, flexWrap: 'wrap' },
+  termT: { fontFamily: fonts.bodyStrong, fontSize: 16, color: tpm.ink },
+  termFa: { fontFamily: fonts.persian, fontSize: 15, color: tpm.red },
+  termDef: {
+    fontFamily: fonts.body, fontSize: 14, lineHeight: 22,
+    color: tpm.inkSoft, marginTop: 5,
+  },
+
+  // A glossary. The word and its Persian on one line, the definition
+  // under it — so the eye can run down the page looking for one entry
+  // rather than reading every line to find it.
+  term: { marginBottom: spacing.lg },
+  termHead: { flexDirection: 'row', alignItems: 'baseline', gap: spacing.sm, flexWrap: 'wrap' },
+  termT: { fontFamily: fonts.bodyStrong, fontSize: 16, color: tpm.ink },
+  termFa: { fontFamily: fonts.persian, fontSize: 15, color: tpm.red },
+  termDef: {
+    fontFamily: fonts.body, fontSize: 14, lineHeight: 22,
+    color: tpm.inkSoft, marginTop: 5,
   },
 
   credit: {

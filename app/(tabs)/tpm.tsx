@@ -148,7 +148,10 @@ export default function TpmScreen() {
             </Rise>
           ))}
 
-          {/* the people, as a rail */}
+          {/* The people, as a rail — hidden until there are real ones.
+              A heading over an empty rail says the section is broken; no
+              heading says the section has not started. */}
+          {TPM_CREATIVES.length > 0 ? <>
           <View style={s.creativesHead}>
             <View style={s.hairRule} />
             <Text style={s.creativesL}>{getLang() === 'fa' ? 'آدم‌ها' : 'THE PEOPLE'}</Text>
@@ -166,6 +169,7 @@ export default function TpmScreen() {
               </View>
             ))}
           </ScrollView>
+          </> : null}
 
           <View style={s.foot}>
             <TpmMark size={14} />
