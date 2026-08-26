@@ -10,6 +10,7 @@ import { tpmPost, TPM_POSTS } from '@/constants/tpm-content';
 import { FramedImage } from '@/components/framed-image';
 import { eduImage } from '@/constants/education-images';
 import { TpmMark } from '@/components/tpm-mark';
+import { useSaved } from '@/lib/saved-store';
 import { canRead, markRead, useTpmAccess } from '@/lib/tpm-access';
 import { Paywall } from '@/components/tpm-paywall';
 
@@ -47,6 +48,13 @@ export default function TpmPostScreen() {
   const p = tpmPost(post);
   useTpmAccess();
 
+  // Saving an article uses the same store as everything else kept in the
+  // app, so a piece shows up in the library beside a word or a poem
+  // rather than in a place of its own.
+  const { saved, toggleSave } = useSaved();
+  const savedKey = 'tpm:' + (p?.key ?? '');
+  const isSaved = saved.includes(savedKey);
+
   const [locked, setLocked] = useState(false);
 
   useEffect(() => {
@@ -73,6 +81,16 @@ export default function TpmPostScreen() {
             <Ionicons name="chevron-back" size={23} color={tpm.ink} />
           </Pressable>
           <TpmMark size={24} />
+
+          {/* Kept, or not. The same store as everything else in the app,
+              so an article sits in the library beside a word or a poem. */}
+          <Pressable hitSlop={12} onPress={() => toggleSave(savedKey)}>
+            <Ionicons
+              name={isSaved ? 'bookmark' : 'bookmark-outline'}
+              size={20}
+              color={isSaved ? tpm.red : tpm.ink}
+            />
+          </Pressable>
           <View style={{ width: 23 }} />
         </View>
         <View style={s.rule} />

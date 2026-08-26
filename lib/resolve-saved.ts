@@ -3,11 +3,12 @@
 import { TOPICS, findTopic } from '@/constants/education';
 import { AUTHORS, findAuthor } from '@/constants/literature';
 import { CULTURE_TOPICS } from '@/constants/culture';
+import { TPM_POSTS } from '@/constants/tpm-content';
 import { isHidden } from '@/lib/admin';
 
 export type Resolved = {
   key: string;          // the original store key
-  kind: 'article' | 'topic' | 'poet' | 'culture';
+  kind: 'article' | 'topic' | 'poet' | 'culture' | 'tpm';
   title: string;
   sub: string;
   image?: string;       // eduImage key for a cover
@@ -35,6 +36,19 @@ export function resolveSavedKey(key: string): Resolved | null {
     if (!c) return null;
     return { key, kind: 'culture', title: (c as any).title, sub: 'Culture', image: 'culture-' + (c as any).key, route: '/culture/topic?topic=' + (c as any).key, accent: (c as any).accent, glyph: (c as any).glyph, persian: (c as any).persian };
   }
+  if (key.startsWith('tpm:')) {
+    const t = TPM_POSTS.find((x) => x.key === key.slice(4));
+    if (!t) return null;
+    return {
+      key,
+      kind: 'tpm',
+      title: t.title,
+      sub: 'TPM  ·  ' + t.discipline,
+      image: t.cover,
+      route: '/tpm/post?post=' + t.key,
+    };
+  }
+
   // Articles were removed from the app. Old saves and history still
   // carry their keys, and returning null here is what makes them quietly
   // disappear from the library rather than resolving to a dead page.

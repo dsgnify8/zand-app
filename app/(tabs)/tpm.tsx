@@ -16,12 +16,20 @@ import { useLang, getLang } from '@/lib/i18n';
 
 const W = Dimensions.get('window').width;
 
+/**
+ * What the magazine actually covers.
+ *
+ * The old filters were portrait/studio/feature/archive, which describe how
+ * a piece was filed rather than what it is about. Nobody browsing wants
+ * "features"; they want music, or film, or food.
+ *
+ * Built from the posts, so a new discipline appears on its own.
+ */
 const FILTERS = [
   { key: 'all', label: 'Everything' },
-  { key: 'portrait', label: 'Portraits' },
-  { key: 'studio', label: 'Studios' },
-  { key: 'feature', label: 'Features' },
-  { key: 'archive', label: 'Archive' },
+  ...Array.from(new Set(TPM_POSTS.map((p) => p.discipline)))
+    .sort()
+    .map((d) => ({ key: d, label: d })),
 ];
 
 function Rise({ children, delay = 0 }: { children: any; delay?: number }) {
@@ -93,7 +101,7 @@ export default function TpmScreen() {
   const read = readCount();
   const isAdmin = useIsAdmin();
 
-  const posts = filter === 'all' ? TPM_POSTS : TPM_POSTS.filter((p) => p.kind === filter);
+  const posts = filter === 'all' ? TPM_POSTS : TPM_POSTS.filter((p) => p.discipline === filter);
 
   // lay the feed out in a repeating rhythm: big, pair, band, pair
   const rows: { kind: 'big' | 'pair' | 'band'; items: TpmPost[] }[] = [];

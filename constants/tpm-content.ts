@@ -52,19 +52,59 @@ export type TpmCreative = {
 
 export const TPM_POSTS: TpmPost[] = [
   {
+    key: 'keayaun',
+    kind: 'portrait',
+    title: 'Keayaun climbs the parts of the city you never see',
+    subject: 'Keayaun',
+    discipline: 'Photography',
+    standfirst:
+      'Rooftops, tunnels, and a jump from a moving train on his 22nd '
+      + 'birthday that changed how he thinks about time.',
+    cover: 'tpm-keayaun-cover',
+    images: [],
+    minutes: 5,
+    body: [
+      { t: 'open', x: "In the hidden layers of the city, there exist things that don't catch the eye in everyday life. *Every day as we ride the metro, pass by a bank building, or glimpse an abandoned house, we pass indifferently through their inner layers and move on with our lives.*" },
+
+      { t: 'p', x: "Nevertheless, there are those whose love for uncovering the city's hidden layers is stronger, leading to the emergence of a street exploration activity. Street exploration, once considered an exciting and lightweight activity in urban photography, has gained significant popularity in recent years with the expansion of artists' activities in this field in the virtual space." },
+
+      { t: 'p', x: 'Keayaun, an Iranian explorer residing in Canada, has been familiar with street culture in Iran and the streets of Ekbatan for years. He began his artistic work with portrait photography and graffiti in the corners of Ekbatan, gradually realizing that he wanted to share the hidden layers of the city with his audience through his photos.' },
+
+      { t: 'h', x: 'A rooftop in Toronto' },
+
+      { t: 'p', x: 'After migrating to Canada, in the early days, a photograph became a source of renewed motivation for Keayaun to continue this activity. He says:' },
+
+      { t: 'q', x: 'During those difficult days, I went to the rooftop in Toronto with my camera. Despite having suicidal thoughts, with the help of a friend and reflecting on the promises I made to my mother, I was able to move past those thoughts and return to life. Right there, I took a picture of the view in front of me and shared it on my Instagram page. Much more support came for my photo than I had expected. This made me feel like I belong to a community and that there are people in this world who think like me and appreciate my perspective on life.', who: 'Keayaun' },
+
+      { t: 'p', x: 'Since then, Keayaun has been striving to portray to his audience what lies within the tunnels, atop the rooftops of skyscrapers, and artistically concealed from the public eye, all while preserving his personal identity through his photographs.' },
+
+      { t: 'h', x: 'The risk that is not the height' },
+
+      { t: 'p', x: 'Contrary to common belief that fear of heights and the risk of death are the biggest challenges of this activity, for Keayaun, the greatest challenge is **the risk of getting caught**. That\'s why urban explorers usually obsessively choose buildings and environments where there is generally a possibility of access. Over time, as building security systems have become more sophisticated, this activity has become even more challenging, making entry into certain spaces that were previously possible now impossible.' },
+
+      { t: 'p', x: 'Moreover, with the increasing number of surveillance cameras and facial recognition capabilities, the risk of getting caught increases, and as Keayaun puts it, "In this field, our eyes are always on our shadow." This has led explorers to operate incognito, creating a distance between the artist and their audience. This distance sometimes causes us to forget that they are people just like us, individuals with ordinary lives whom we might pass by on the street or in the subway one day.' },
+
+      { t: 'divider' },
+
+      { t: 'p', x: 'We must not forget that the mortal risks of this activity are very high. Keayaun recounts his most challenging and unforgettable day:' },
+
+      { t: 'q', x: 'On my 22nd birthday, I was on top of a moving train approaching a very narrow tunnel. At that moment, I realized I had to jump off the train; I made this decision in less than four seconds. After jumping, my gears broke, I suffered a brain concussion, and my left shoulder was completely dislocated. At that moment when I lay motionless on the ground, unsure if I would survive or not, the only regret I had was regrets of things left undone. That near-death experience changed my perspective on life forever, and I realized I shouldn\'t procrastinate because there may not be a tomorrow. That moment gave me the courage to live, and now I have no regrets.', who: 'Keayaun' },
+    ],
+  },
+
+  {
     key: 'isam',
     kind: 'feature',
-    title: 'Fereshteye Bad',
+    title: 'Isam is filling a gap in Persian rap nobody else could',
     subject: 'Isam',
     discipline: 'Music',
     standfirst:
-      'The 25-year-old rapper from Toronto who filled a gap in Persian rap '
-      + 'nobody else could — and is finishing his first album.',
+      'The Toronto rapper on writing in two languages, the platforms that ignore Iranian artists, and finishing his first album.',
     cover: 'tpm-isam-cover',
     images: [],
     minutes: 9,
     body: [
-      { t: 'open', x: 'Sam, also known as "Isam," is a 25-year-old Iranian rapper (born on August 5, 1999) living in Toronto, Canada. He is perhaps one of the few Iranian rappers whose unique voice and melodies are enjoyed by Iranian music audiences of all tastes. He began his career by designing covers for other musicians\' tracks and quickly became one of the most prominent figures in the Iranian rap scene in recent years.' },
+      { t: 'open', x: 'Sam, also known as "Isam," is a 27-year-old Iranian rapper (born on August 5, 1999) living in Toronto, Canada. He is perhaps one of the few Iranian rappers whose unique voice and melodies are enjoyed by Iranian music audiences of all tastes. He began his career by designing covers for other musicians\' tracks and quickly became one of the most prominent figures in the Iranian rap scene in recent years.' },
 
       { t: 'p', x: 'His adventurous spirit and unique position in the world of rap music have filled a void that no artist had been able to fill with such quality for years. One of the main features of the recent era of Persian rap has been the addition of a modern Western perspective and spirit through the use of English words and phrases in the lyrics of Iranian rappers\' works. Due to living in Europe from a young age, he is well-versed in Western culture and fluent in English, making him an unparalleled example in the new path of Persian rap.' },
 
@@ -106,17 +146,16 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'pozx',
     kind: 'feature',
-    title: 'Everyone is part of their own main stream',
+    title: 'Pozx, the Lo-Fi Guy of Tehran',
     subject: 'Pozx',
     discipline: 'Music',
     standfirst:
-      'The Lo-Fi Guy, from Tehran — on cassette warmth, being expelled '
-      + 'repeatedly, and why he does not believe in mainstream.',
+      'He found the genre by accident at nineteen. On cassette warmth, being expelled repeatedly, and why he does not believe in mainstream.',
     cover: 'tpm-pozx-cover',
     images: [],
     minutes: 10,
     body: [
-      { t: 'open', x: 'Pooria, also known as "POZX" (Pooria On Zodiac\'s Expansion), is a 25-year-old Iranian singer, songwriter, and musician based in Tehran. Most Iranian music enthusiasts recognize him for his involvement in the lo-fi genre, and his choice of the username "The Lo-Fi Guy" on Instagram has reinforced this perception.' },
+      { t: 'open', x: 'Pooria, also known as "POZX" (Pooria On Zodiac\'s Expansion), is a 27-year-old Iranian singer, songwriter, and musician based in Tehran. Most Iranian music enthusiasts recognize him for his involvement in the lo-fi genre, and his choice of the username "The Lo-Fi Guy" on Instagram has reinforced this perception.' },
 
       { t: 'p', x: 'His distinctive lyrical style, which deviates from conventional songwriting rules in popular music genres, his extensive vocabulary, unique performance and expression style, proficiency in playing various instruments including piano, guitar, saxophone, melodica and bass guitar, and his fusion of different styles while focusing on lo-fi, have made him **a truly unique figure in Iranian music**.' },
 
@@ -181,12 +220,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'soheil',
     kind: 'feature',
-    title: 'The podcast is the seed. The community is the tree.',
+    title: 'Soheil Alavi built a podcast with no music and no editing',
     subject: 'Soheil Alavi',
     discipline: 'Podcasting',
     standfirst:
-      'Tabaghe 16 began on a sixteenth floor with no music, no editing, and '
-      + 'no plan. Its founder on honesty, silence, and why he left his startup for it.',
+      'Tabaghe 16 began on a sixteenth floor as founder-to-founder therapy. He has since left his startup for it.',
     cover: 'tpm-soheil-cover',
     images: [],
     minutes: 13,
@@ -302,12 +340,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'slang2',
     kind: 'feature',
-    title: "The Beginner's Guide to Persian Slang, Volume #2",
+    title: 'The Beginner\'s Guide to Persian Slang, Volume #2',
     subject: 'Persian slang',
     discipline: 'Language',
     standfirst:
-      'The words and phrases you will not learn in class or read in '
-      + 'classical literature.',
+      'The words and phrases you will not learn in class or read in classical literature.',
     cover: 'tpm-slang2-cover',
     images: [],
     minutes: 7,
@@ -378,12 +415,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'poobon',
     kind: 'feature',
-    title: 'The quiet periods are when the best ideas are born',
+    title: 'Poobon on a decade at the centre of Iranian music',
     subject: 'Poobon',
     discipline: 'Music',
     standfirst:
-      'A decade at the centre of Iranian popular music, and still refusing '
-      + 'to repeat himself. On drum & bass, Hichkas, Tory Lanez, and silence.',
+      'Drum & bass that should not have worked, collaborations with Hichkas and Tory Lanez, and why the quiet years matter most.',
     cover: 'tpm-poobon-cover',
     images: [],
     minutes: 15,
@@ -478,12 +514,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'niousha',
     kind: 'feature',
-    title: 'It just chips away at your soul',
+    title: 'Niousha Noor on The Persian Version and the cycle it might break',
     subject: 'Niousha Noor',
     discipline: 'Film',
     standfirst:
-      'In conversation with Niousha Noor: can the quintessentially Iranian '
-      + 'cycle of intergenerational trauma be broken?',
+      'The actor on stereotyped auditions, a standing ovation at Sundance, and asking her own mother questions she had never thought to ask.',
     cover: 'tpm-niousha-cover',
     images: [],
     minutes: 11,
@@ -535,12 +570,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'neena',
     kind: 'feature',
-    title: 'The only Persian song I knew all the words to',
+    title: 'Neena Roe grew up in Detroit and sings in Farsi anyway',
     subject: 'Neena Roe',
     discipline: 'Music',
     standfirst:
-      'The cover of our first print edition. A singer from Detroit on '
-      + 'microtones, Tumblr, and why she covered Bordi Az Yadam.',
+      'The cover of our first print edition. On microtones, Tumblr, and the cousin whose favourite song became her first Persian release.',
     cover: 'tpm-neena-cover',
     images: [],
     minutes: 14,
@@ -638,12 +672,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'owdezmubie',
     kind: 'feature',
-    title: 'The Artistry of Owdez and Mubie: A Musical Alchemy',
+    title: 'Owdez and Mubie treat the voice as an instrument',
     subject: 'Owdez & Mubie',
     discipline: 'Music',
     standfirst:
-      'Kamran and Mobina make music where the vocal is treated as an '
-      + 'instrument and the lyric is what turns it into something else.',
+      'Kamran and Mobina on Adamaye Bad, self-made visuals, and the lyric that turns a vocal stem into something else.',
     cover: 'tpm-owdez-cover',
     images: [],
     minutes: 5,
@@ -689,12 +722,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'shahrzad',
     kind: 'feature',
-    title: "Lost but Not Forgotten: Reviving Iran's Flavors",
+    title: 'Shahrzad Shokouhivand is reviving Iran\'s lost flavours',
     subject: 'Shahrzad Shokouhivand',
     discipline: 'Pastry',
     standfirst:
-      'The first Iranian to receive the Ordre du Mérite Agricole, on French '
-      + 'technique, Tabrizi childhoods, and selling pastries one at a time.',
+      'The first Iranian to receive the Ordre du Mérite Agricole, on French technique, a Tabrizi childhood, and selling pastries one at a time.',
     cover: 'tpm-shahrzad-cover',
     images: [],
     minutes: 6,
@@ -740,12 +772,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'golsa',
     kind: 'feature',
-    title: 'Rehearsal: Golsa and the Music of the Streets',
+    title: 'Golsa and the music of the streets',
     subject: 'Golsa',
     discipline: 'Music',
     standfirst:
-      'An interview conducted on a cold uphill street in Tehran, joined '
-      + 'midway by a lawyer named Ramin who was not invited and did not leave.',
+      'An interview on a cold uphill street in Tehran, joined midway by a lawyer named Ramin who was not invited and did not leave.',
     cover: 'tpm-golsa-cover',
     images: [],
     minutes: 6,
@@ -803,12 +834,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'alaei',
     kind: 'portrait',
-    title: 'Women who will not wait for permission',
+    title: 'Forough Alaei photographed the women sneaking into stadiums',
     subject: 'Forough Alaei',
     discipline: 'Photography',
     standfirst:
-      'She disguised herself as a man to photograph the women sneaking into '
-      + "Iran's football stadiums. The series won a World Press Photo prize.",
+      'She disguised herself as a man to document them. The series won a World Press Photo prize.',
     cover: 'tpm-alaei-cover',
     images: [],
     minutes: 3,
@@ -828,19 +858,18 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'lotfi',
     kind: 'portrait',
-    title: 'The jinn in my house at 2am',
+    title: 'Ella Lotfi is redefining what a body can do',
     subject: 'Ella Lotfi',
     discipline: 'Movement',
     standfirst:
-      'Through the curious world of her viral videos, Ella Lotfi seeks to '
-      + 'break barriers and redefine movement.',
+      'A gymnast, dancer and choreographer whose videos went viral as memes — and what competitive gymnastics cost her to get there.',
     cover: 'tpm-lotfi-cover',
     images: [],
     minutes: 6,
     body: [
       { t: 'open', x: "Ella Lotfi's Instagram lately begs a lot of questions. In one video, she's at the gym using a chest press *with her legs*, and in another, she climbs a staircase in a manner that can only be described as being akin to an upside-down spider, while two other guys fall down the same staircase like a couple of rag dolls thrown aimlessly by a child." },
 
-      { t: 'p', x: "A gymnast, rhythmic gymnast, dancer, and choreographer, the 24-year-old defies easy categorisation. She first started creating content during the Covid pandemic, and found an audience on Twitter soon after, where users were posting her videos as memes accompanied by captions such as, 'the jinn in my house at 2am' and 'the toilet hose in my bathroom when it slips while I'm using it'." },
+      { t: 'p', x: "A gymnast, rhythmic gymnast, dancer, and choreographer, the 26-year-old defies easy categorisation. She first started creating content during the Covid pandemic, and found an audience on Twitter soon after, where users were posting her videos as memes accompanied by captions such as, 'the jinn in my house at 2am' and 'the toilet hose in my bathroom when it slips while I'm using it'." },
 
       { t: 'q', x: "At first I wasn't used to it and I would get a little disheartened. But I realised that these reactions would help my work be seen… there are very few people in Iran who know what this type of thing is.", who: 'Ella Lotfi' },
 
@@ -871,12 +900,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'churooks',
     kind: 'feature',
-    title: 'Rehearsal: Churooks',
+    title: 'Churooks are building a scene that does not exist yet',
     subject: 'Churooks',
     discipline: 'Music',
     standfirst:
-      'Four musicians in Tehran making progressive funk rock for a scene '
-      + 'that does not exist yet — so they are building it.',
+      'Four musicians in Tehran making progressive funk rock, giving out stickers, and putting every show at fifty-fifty odds of happening.',
     cover: 'tpm-churooks-cover',
     images: [],
     minutes: 10,
@@ -887,7 +915,7 @@ export const TPM_POSTS: TpmPost[] = [
 
       { t: 'divider' },
 
-      { t: 'qa', q: 'You guys sound incredibly literate in music. Have you studied it academically?', who: 'KOUROSH — DRUMS', x: "I'm 23 now, and I haven't had much formal music education, but I've been playing drums since I was eight or nine. Since starting this project, I've paid a lot of attention to details — those subtle, tasteful rhythmic choices that have inspired me over the years. I try to weave them into Churooks' sound." },
+      { t: 'qa', q: 'You guys sound incredibly literate in music. Have you studied it academically?', who: 'KOUROSH — DRUMS', x: "I'm 25 now, and I haven't had much formal music education, but I've been playing drums since I was eight or nine. Since starting this project, I've paid a lot of attention to details — those subtle, tasteful rhythmic choices that have inspired me over the years. I try to weave them into Churooks' sound." },
 
       { t: 'qa', who: 'KOUROSH', x: "Ali and I usually handle the rhythm section. We bring our initial ideas to the band, but the process is fluid. It's like a puzzle — things evolve constantly until the final version of the song takes shape." },
 
@@ -982,12 +1010,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'jabbar',
     kind: 'portrait',
-    title: "Breakbeats and basements: DJ Jabbar and the sound of Tehran's underground",
+    title: 'DJ Jabbar and the sound of Tehran\'s underground',
     subject: 'DJ Jabbar',
     discipline: 'Music',
     standfirst:
-      'A B-boy from Mashhad who found his sound in a rented basement, a '
-      + 'circus scrapheap, and the streets of Tehran.',
+      'A B-boy from Mashhad who found his sound in a rented basement, a circus scrapheap, and the streets.',
     cover: 'tpm-jabbar-cover',
     images: [],
     minutes: 12,
@@ -1137,12 +1164,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'bybanoo',
     kind: 'feature',
-    title: 'Bags for the rooms where decisions get made',
+    title: 'BY BANOO: the sisters who built the bag they could not find',
     subject: 'Persheng & Perdica Babaheidari',
     discipline: 'Fashion',
     standfirst:
-      'Two Swedish-Iranian sisters left a consultancy and a medical degree '
-      + 'to build the work bag neither of them could find.',
+      'Persheng and Perdica Babaheidari left a consultancy and a medical degree. They now sell to forty countries.',
     cover: 'tpm-bybanoo-cover',
     images: [],
     minutes: 7,
@@ -1208,12 +1234,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'phi',
     kind: 'feature',
-    title: 'Machines and false mirrors',
+    title: 'Ali Phi builds machines and false mirrors',
     subject: 'Ali Phi',
     discipline: 'Transmedia art',
     standfirst:
-      'The Iranian-Canadian transmedia artist on digital waste, Achaemenid '
-      + 'theory, and building spaces that hand people back to themselves.',
+      'The Iranian-Canadian transmedia artist on digital waste, Achaemenid theory, and installations that hand people back to themselves.',
     cover: 'tpm-phi-cover',
     images: [],
     minutes: 7,
@@ -1271,12 +1296,11 @@ export const TPM_POSTS: TpmPost[] = [
   {
     key: 'mahini',
     kind: 'portrait',
-    title: "I don't see it, so it doesn't exist",
+    title: 'Ali Mahini photographs the people nobody looks at',
     subject: 'Ali Mahini',
     discipline: 'Photography',
     standfirst:
-      'A Gen Z photographer turning his lens on the parts of Iranian life '
-      + 'that no eyes are pointed at.',
+      'A Gen Z photographer digging under Iranian identity, and the intellectual space he is trying to destroy.',
     cover: 'tpm-mahini-cover',
     images: [],
     minutes: 5,
