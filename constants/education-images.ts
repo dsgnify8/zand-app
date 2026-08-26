@@ -1,6 +1,18 @@
 import { imageOverride } from '@/lib/image-overrides';
 // Maps content image keys to bundled assets. Add a line as you add each image.
 export const EDU_IMAGES: Record<string, any> = {
+  // Demo listings. Bundled rather than in storage: they ship with the app,
+  // work offline, and cost nobody a request.
+  'berenjak-soho': require('../assets/business/berenjak-soho.jpg'),
+  'berenjak-borough': require('../assets/business/berenjak-borough.jpg'),
+  'berenjak-mayfair': require('../assets/business/berenjak-mayfair.jpg'),
+  'berenjak-little': require('../assets/business/berenjak-little.jpg'),
+  'berenjak-la': require('../assets/business/berenjak-la.jpg'),
+  'berenjak-dubai': require('../assets/business/berenjak-dubai.jpg'),
+  'berenjak-sharjah': require('../assets/business/berenjak-sharjah.jpg'),
+  'berenjak-doha': require('../assets/business/berenjak-doha.jpg'),
+  'berenjak-lusail': require('../assets/business/berenjak-lusail.jpg'),
+
   'modern-cover': require('../assets/education/modern-cover.jpeg'),
   'geo-cities-cover': require('../assets/education/geo-cities-cover.jpg'),
   'geo-heart-cover': require('../assets/education/geo-heart-cover.jpg'),

@@ -37,6 +37,13 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        // A fade rather than a hard cut. These pages are the same world —
+        // Local, its cities, its folders — and snapping between them makes
+        // each feel like somewhere else entirely.
+        animation: 'fade',
+        // And a swipe back, since several of these are reached from one
+        // another rather than from the bar.
+        gestureEnabled: true,
         tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
@@ -62,6 +69,7 @@ export default function TabLayout() {
       <Tabs.Screen name="local-city" options={{ href: null }} />
       <Tabs.Screen name="local-categories" options={{ href: null }} />
       <Tabs.Screen name="local-saved" options={{ href: null }} />
+      <Tabs.Screen name="local-folder" options={{ href: null }} />
       <Tabs.Screen name="business" options={{ href: null }} />
       <Tabs.Screen name="business-new" options={{ href: null }} />
       <Tabs.Screen name="profile" options={{ tabBarLabel: () => <TabLabel k={NAV.profile} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />

@@ -28,6 +28,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { NearbyPlaces } from '@/components/nearby-places';
 import { isSavedBusiness, toggleSavedBusiness, shareBusiness } from '@/lib/saved-businesses';
 import { CollectionSheet } from '@/components/collection-sheet';
+import { markOpened } from '@/lib/opened-businesses';
 
 import { LOCAL } from '@/constants/i18n/local';
 // A listing photo is either a storage path or a bundled demo image.
@@ -90,6 +91,10 @@ export default function BusinessPage() {
   // Above the early return: a hook called only when the listing has
   // loaded is a hook called conditionally, and React counts them.
   const { story } = useStory(b?.id);
+
+  // Remembered so the rail at the top of Local can move on. Local only —
+  // this is a display preference, not something worth a row.
+  useEffect(() => { if (b?.id) markOpened(b.id); }, [b?.id]);
   // Tap saves. Holding files it — the uncommon act, so it can afford a
   // sheet; the common one should cost nothing.
   const [filing, setFiling] = useState(false);
@@ -111,7 +116,7 @@ export default function BusinessPage() {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
         <View style={s.head}>
-          <Pressable hitSlop={12} onPress={() => router.replace('/local' as any)}>
+          <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/local' as any))}>
             <Ionicons name="chevron-back" size={22} color={colors.textPrimary} />
           </Pressable>
         </View>
@@ -214,7 +219,7 @@ export default function BusinessPage() {
             </Pressable>
           </View>
 
-          <Pressable style={s.back} hitSlop={10} onPress={() => router.replace('/local' as any)}>
+          <Pressable style={s.back} hitSlop={10} onPress={() => (router.canGoBack() ? router.back() : router.replace('/local' as any))}>
             <Ionicons name="chevron-back" size={20} color="#FFF" />
           </Pressable>
         </Animated.View>
@@ -238,6 +243,14 @@ export default function BusinessPage() {
           </Text>
 
           {b.tagline ? <Text style={s.tagline}>{fa && b.tagline_fa ? b.tagline_fa : b.tagline}</Text> : null}
+
+          {/* Only where they said yes. The directory still knows the year;
+              this is their page. */}
+          {b.opened_year && b.show_opened !== false ? (
+            <Text style={s.since}>
+              {fa ? 'از ' + b.opened_year : 'Since ' + b.opened_year}
+            </Text>
+          ) : null}
 
 
           {desc ? (
@@ -344,7 +357,9 @@ const s = StyleSheet.create({
   // The lap over the photo and the rounded top now belong to FounderFlip,
   // which is the card; this is just its front face.
   body: { padding: spacing.lg, backgroundColor: colors.background },
-  name: { fontFamily: fonts.bodyStrong, fontSize: 22, letterSpacing: -0.5, color: colors.textPrimary },
+  // The serif the cards use. A listing's name is a name, not a label,
+  // and it should look the same wherever it appears.
+  name: { fontFamily: fonts.heading, fontSize: 30, lineHeight: 36, letterSpacing: -0.4, color: colors.textPrimary },
   nameFa: { fontFamily: fonts.persian, fontSize: 21, textAlign: 'right' },
   meta: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary, marginTop: 4 },
   tagline: { fontFamily: fonts.body, fontSize: 14, lineHeight: 21, color: colors.textPrimary, marginTop: spacing.sm },
@@ -377,4 +392,8 @@ const s = StyleSheet.create({
     borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4,
   },
   shotCountT: { fontFamily: fonts.body, fontSize: 11, color: 'rgba(255,255,255,0.95)' },
+  since: {
+    fontFamily: fonts.body, fontSize: 12, letterSpacing: 1.4,
+    color: colors.textSecondary, marginTop: 6,
+  },
 });

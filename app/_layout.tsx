@@ -40,6 +40,7 @@ import { loadUsage } from '@/lib/usage';
 import { LangSwitchOverlay } from '@/components/lang-switch-overlay';
 import { loadNotifPrefs } from '@/lib/notif-prefs';
 import { loadSavedBusinesses } from '@/lib/saved-businesses';
+import { loadOpened } from '@/lib/opened-businesses';
 import { loadImageOverrides } from '@/lib/image-overrides';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -110,7 +111,7 @@ export default function RootLayout() {
   useEffect(() => {
     (async () => {
       await resetForDemo();
-      loadAllFrames(); loadSaved(); loadLang(); loadHidden();
+      loadAllFrames(); loadSaved(); loadLang(); loadHidden(); loadOpened();
       loadLevel(); loadLearnProgress(); loadPartial(); loadStrength();
       loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides();
       loadUsage(); loadNotifPrefs(); loadImageOverrides(); loadSavedBusinesses();

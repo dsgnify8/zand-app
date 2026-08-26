@@ -20,7 +20,10 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { categoryLabel, dist, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
+import { CategoryBar } from '@/components/category-sheet';
+import { BusinessCard } from '@/components/business-card';
 import { getLang, t } from '@/lib/i18n';
+import { preferUnseen } from '@/lib/opened-businesses';
 import { LOCAL } from '@/constants/i18n/local';
 
 const bizImage = (path: string) =>
@@ -28,6 +31,11 @@ const bizImage = (path: string) =>
 
 const TOP_N = 8;
 const NEW_N = 10;
+
+// What counts as newly opened. Not a rolling window: "opened this year" is
+// a thing someone can say out loud, and a rolling twelve months would drop
+// a place in January for no reason it could explain.
+const THIS_YEAR = new Date().getFullYear();
 
 /**
  * How the feed divides.
@@ -43,19 +51,29 @@ export function feedSections(items: Business[], place: { lat: number; lng: numbe
   const byNew = [...items].sort((a, b) =>
     String(b.created_at ?? '').localeCompare(String(a.created_at ?? '')));
 
-  let top: Business[];
+  // Ranked first, then filtered for what has not been seen — ranking the
+  // unseen alone would put a far-away new place above a near one.
+  let ranked: Business[];
   if (place) {
-    top = [...items]
+    ranked = [...items]
       .filter((b) => b.lat != null)
       .sort((a, b) =>
-        dist(place.lat, place.lng, a.lat!, a.lng ?? 0) - dist(place.lat, place.lng, b.lat!, b.lng ?? 0))
-      .slice(0, TOP_N);
+        dist(place.lat, place.lng, a.lat!, a.lng ?? 0) - dist(place.lat, place.lng, b.lat!, b.lng ?? 0));
   } else {
     const flagged = items.filter((b) => (b as any).featured);
-    top = (flagged.length ? flagged : byNew).slice(0, TOP_N);
+    ranked = flagged.length ? flagged : byNew;
   }
+  const top = preferUnseen(ranked, TOP_N);
 
-  return { top, fresh: byNew.slice(0, NEW_N), all: items };
+  // Opened this year, newest first. Falls back to recently listed while
+  // nobody has filled the year in — an empty section would be worse than
+  // an approximate one.
+  const opened = items
+    .filter((b) => (b as any).opened_year === THIS_YEAR)
+    .sort((a, b) => String(b.created_at ?? '').localeCompare(String(a.created_at ?? '')));
+  const fresh = (opened.length ? opened : byNew).slice(0, NEW_N);
+
+  return { top, fresh, all: items };
 }
 
 /* ================================================================== *
@@ -143,35 +161,26 @@ export function NewRail({
 
   return (
     <View style={st.section}>
-      <Text style={[st.head, fa && st.rtl]}>{t(LOCAL.justAdded)}</Text>
+      <Text style={[st.head, fa && st.rtl]}>{t(LOCAL.newlyOpened)}</Text>
 
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        snapToInterval={244 + spacing.md}
+        decelerationRate="fast"
         contentContainerStyle={[st.rail, fa && { flexDirection: 'row-reverse' }]}
       >
-        {items.map((b) => {
-          const shot = (b.photos ?? [])[0];
-          return (
-            <Pressable key={b.id} style={st.small} onPress={() => onOpen(b)}>
-              <View style={st.smallShot}>
-                {shot ? (
-                  <Image source={bizImage(shot)} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
-                ) : (
-                  <View style={[StyleSheet.absoluteFill as any, st.blank]}>
-                    <Ionicons name="storefront-outline" size={16} color={colors.textSecondary} />
-                  </View>
-                )}
-              </View>
-              <Text style={[st.smallName, fa && st.rtl]} numberOfLines={1}>
-                {fa && b.name_fa ? b.name_fa : b.name}
-              </Text>
-              <Text style={[st.smallMeta, fa && st.rtl]} numberOfLines={1}>
-                {categoryLabel(b.category, fa)}
-              </Text>
-            </Pressable>
-          );
-        })}
+        {/* The same card as the feed, narrower. One card at two sizes
+            rather than a second card that drifts from the first. */}
+        {items.map((b) => (
+          <BusinessCard
+            key={b.id}
+            b={b}
+            fa={fa}
+            width={244}
+            onOpen={() => onOpen(b)}
+          />
+        ))}
       </ScrollView>
     </View>
   );
@@ -182,11 +191,14 @@ export function NewRail({
  * ================================================================== */
 
 export function SeeAllHead({
-  n, grid, onGrid,
+  n, cats, counts, onCats, onClear,
 }: {
   n: number;
-  grid: boolean;
-  onGrid: (g: boolean) => void;
+  /** Empty means everything. */
+  cats: string[];
+  counts?: Record<string, number>;
+  onCats: () => void;
+  onClear: () => void;
 }) {
   const fa = getLang() === 'fa';
   return (
@@ -195,14 +207,10 @@ export function SeeAllHead({
         {t(LOCAL.seeAll)}
         <Text style={st.seeAllN}>{'   ' + n}</Text>
       </Text>
-      <View style={[st.switchRow, fa && { flexDirection: 'row-reverse' }]}>
-        <Pressable hitSlop={8} onPress={() => onGrid(false)}>
-          <Ionicons name="square-outline" size={16} color={grid ? colors.textSecondary : colors.textPrimary} />
-        </Pressable>
-        <Pressable hitSlop={8} onPress={() => onGrid(true)}>
-          <Ionicons name="grid-outline" size={16} color={grid ? colors.textPrimary : colors.textSecondary} />
-        </Pressable>
-      </View>
+      {/* The grid went: on the feed these cards are the point, and half of
+          one is not worth seeing. The room it leaves goes to the filter,
+          which is what someone scrolling a long list actually wants. */}
+      <CategoryBar value={cats} counts={counts} onPress={onCats} onClear={onClear} />
     </View>
   );
 }
@@ -247,7 +255,7 @@ const st = StyleSheet.create({
   rail: { gap: spacing.md, paddingRight: spacing.lg },
 
   /* big */
-  big: { height: 318, borderRadius: 20, overflow: 'hidden', backgroundColor: colors.surface },
+  big: { height: 286, borderRadius: 20, overflow: 'hidden', backgroundColor: colors.surface },
   foot: { position: 'absolute', left: 0, right: 0, bottom: 0, height: 150 },
   bigText: { position: 'absolute', left: spacing.lg, right: spacing.lg, bottom: spacing.lg },
   bigName: {
@@ -256,11 +264,12 @@ const st = StyleSheet.create({
   },
   bigMeta: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, marginTop: 2 },
 
-  /* small */
-  small: { width: 116 },
-  smallShot: { width: 116, height: 116, borderRadius: 13, overflow: 'hidden', backgroundColor: colors.surface },
-  smallName: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.textPrimary, marginTop: 7 },
-  smallMeta: { fontFamily: fonts.body, fontSize: 10.5, color: colors.textSecondary, marginTop: 1 },
+  /* newly opened: closer to the see-all card than to a thumbnail, since
+     this is the section most worth stopping on */
+  small: { width: 208 },
+  smallShot: { width: 208, height: 140, borderRadius: 14, overflow: 'hidden', backgroundColor: colors.surface },
+  smallName: { fontFamily: fonts.heading, fontSize: 18, lineHeight: 23, color: colors.textPrimary, marginTop: 8 },
+  smallMeta: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, marginTop: 1 },
 
   /* see all */
   seeAll: {

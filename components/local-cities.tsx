@@ -26,14 +26,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-import { fonts, spacing } from '@/constants/zand-theme';
+import { colors, fonts, spacing } from '@/constants/zand-theme';
+import { CITY_BACKDROP } from '@/constants/city-images';
+import { BusinessCard } from '@/components/business-card';
 import { CategoryBar, CategorySheet } from '@/components/category-sheet';
+import { CollectionSheet } from '@/components/collection-sheet';
 import { LocalDrawer, type DrawerPick } from '@/components/local-drawer';
 import { useAuth } from '@/lib/auth';
 import { loadBusinesses, categoryLabel, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
 import { cityCoverSource, cityCoverBlurb, useCityCovers } from '@/lib/city-covers';
+import { isDestination } from '@/constants/cities';
 import { getLang, t, useLang } from '@/lib/i18n';
 import { LOCAL } from '@/constants/i18n/local';
 
@@ -77,7 +81,8 @@ function groupCities(items: Business[]) {
   const by = new Map<string, { label: string; list: Business[] }>();
   for (const b of items) {
     const raw = (b.city ?? '').trim();
-    if (!raw) continue;
+    // Somewhere with one listing is not somewhere to browse to.
+    if (!raw || !isDestination(raw)) continue;
     const key = raw.toLowerCase();
     const prev = by.get(key);
     if (prev) prev.list.push(b);
@@ -130,28 +135,23 @@ export function CityList() {
   const focus = H * 0.42;
   const pad = Math.max(0, focus - ROW);
 
-  const backdrop = cities.length ? coverFor(cities[0].key, cities[0].list) : null;
 
   return (
     <Animated.View style={[st.dark, { opacity: enter }]}>
-      {/* One photograph behind everything, held right down so it reads as
-          atmosphere rather than as a picture of somewhere in particular. */}
-      {backdrop ? (
-        <Image source={backdrop} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
-      ) : null}
-      <View style={[StyleSheet.absoluteFill as any, { backgroundColor: 'rgba(16,13,12,0.62)' }]} />
-      <LinearGradient
-        colors={['rgba(16,13,12,0.86)', 'rgba(16,13,12,0.18)', 'rgba(16,13,12,0.88)']}
-        locations={[0, 0.45, 1]}
-        style={StyleSheet.absoluteFill as any}
-      />
+      {/* One of four, changing weekly. Held well down so the names stay
+          the thing being read. */}
+      {/* Fixed rather than rotating. The rotation was a nice idea and this
+          one is better than the others; a page that changes weekly for its
+          own sake is change without a reason. */}
+      <Image source={CITY_BACKDROP} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
+      <View style={[StyleSheet.absoluteFill as any, { backgroundColor: 'rgba(16,13,12,0.72)' }]} />
 
       <SafeAreaView edges={['top']} style={{ flex: 1 }}>
         <View style={[st.topBar, fa && { flexDirection: 'row-reverse' }]}>
           <Pressable hitSlop={12} onPress={() => drawer.setOpen(true)}>
             <Ionicons name="menu-outline" size={22} color={D.text} />
           </Pressable>
-          <Text style={st.topT}>{t(LOCAL.byCityTitle)}</Text>
+          <Text style={[st.topT, st.topTRight]}>{t(LOCAL.byCityTitle)}</Text>
           <View style={{ width: 22 }} />
         </View>
 
@@ -254,6 +254,13 @@ function CityName({
  * One city
  * ================================================================== */
 
+/**
+ * One city.
+ *
+ * Dark at the top, light underneath. The hero needs darkness for the name
+ * to sit on; the listings below do not, and putting them on a dark ground
+ * meant maintaining a second version of every card.
+ */
 export function CityPage() {
   useLang();
   useCityCovers();
@@ -268,13 +275,14 @@ export function CityPage() {
   }, []);
   const fa = getLang() === 'fa';
   const { c, label } = useLocalSearchParams<{ c?: string; label?: string }>();
-  const { width: W } = useWindowDimensions();
+  const { width: W, height: H } = useWindowDimensions();
 
   const [items, setItems] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
-  const [cat, setCat] = useState<string | null>(null);
+  const [cat, setCat] = useState<string[]>([]);
   const [catOpen, setCatOpen] = useState(false);
-  const [grid, setGrid] = useState(true);
+  // Holding a bookmark files it, on every page that shows a card.
+  const [filing, setFiling] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -293,13 +301,10 @@ export function CityPage() {
     if (b.category) m[b.category] = (m[b.category] ?? 0) + 1;
     return m;
   }, {});
-  const shown = cat ? items.filter((b) => b.category === cat) : items;
-  const cardW = grid
-    ? (W - spacing.lg * 2 - spacing.md) / 2
-    : W - spacing.lg * 2;
+  const shown = cat.length ? items.filter((b) => b.category && cat.includes(b.category)) : items;
 
   return (
-    <View style={st.dark}>
+    <View style={st.light}>
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: spacing.xxl * 2 }}
@@ -308,29 +313,33 @@ export function CityPage() {
           transform: [{ translateY: enter.interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }],
         }}
       >
-        <View style={{ height: 440, overflow: 'hidden' }}>
-          {cover ? <Image source={cover} style={StyleSheet.absoluteFill as any} resizeMode="cover" /> : null}
+        {/* The frame is the photograph. Not a fixed height with a picture
+            somewhere inside it — that is what produced a band across the
+            middle every time, because the gradient had to guess where the
+            image ended. */}
+        {/* A colour field rather than a photograph.
+        
+            The covers were five different shapes and no single frame fits
+            a portrait and a panorama both; matching them at source meant
+            re-saving every one and re-doing it whenever a city was added.
+            A gradient costs nothing, never crops, and looks the same on
+            every city — and the page was always about the name anyway. */}
+        <View style={{ height: Math.round(H * 0.32) }}>
           <LinearGradient
-            colors={['rgba(16,13,12,0.55)', 'rgba(16,13,12,0.18)', 'rgba(16,13,12,0.75)', D.bg]}
-            locations={[0, 0.35, 0.8, 1]}
+            colors={['#2E2A26', '#4A403A', colors.background]}
+            locations={[0, 0.45, 1]}
             style={StyleSheet.absoluteFill as any}
           />
 
-          <SafeAreaView edges={['top']}>
+          <SafeAreaView edges={['top']} style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
             <View style={[st.heroTop, fa && { flexDirection: 'row-reverse' }]}>
-              {/* Back to the cities, which is where this was opened from.
-                  Going to the feed made every city a dead end. */}
               <Pressable hitSlop={12} onPress={() => router.navigate('/local-cities' as any)}>
                 <Ionicons name={fa ? 'chevron-forward' : 'chevron-back'} size={22} color={D.text} />
               </Pressable>
-
-              {/* Straight to these listings on the map, not the whole map. */}
               <Pressable
                 hitSlop={12}
                 style={st.mapBtn}
                 onPress={() => {
-                  // The map works in regions, not names, so hand it the
-                  // middle of these listings rather than a city to look up.
                   const pts = items.filter((b) => b.lat != null && b.lng != null);
                   if (pts.length === 0) { router.navigate('/local-map' as any); return; }
                   const lat = pts.reduce((n, b) => n + (b.lat ?? 0), 0) / pts.length;
@@ -356,50 +365,26 @@ export function CityPage() {
           <CategoryBar
             value={cat}
             counts={counts}
-            dark
             onPress={() => setCatOpen(true)}
-            onClear={() => setCat(null)}
+            onClear={() => setCat([])}
           />
-          <View style={[st.switchRow, fa && { flexDirection: 'row-reverse' }]}>
-            <Pressable hitSlop={8} onPress={() => setGrid(false)}>
-              <Ionicons name="square-outline" size={15} color={grid ? D.faint : D.text} />
-            </Pressable>
-            <Pressable hitSlop={8} onPress={() => setGrid(true)}>
-              <Ionicons name="grid-outline" size={15} color={grid ? D.text : D.faint} />
-            </Pressable>
-          </View>
+
         </View>
 
         {loading ? (
           <ActivityIndicator style={{ marginTop: spacing.xl }} color={D.dim} />
         ) : (
           <View style={st.grid}>
-            {shown.map((b) => {
-              const shot = (b.photos ?? [])[0];
-              return (
-                <Pressable
-                  key={b.id}
-                  style={{ width: cardW }}
-                  onPress={() => router.navigate(('/business?id=' + b.id) as any)}
-                >
-                  <View style={[st.shot, { width: cardW, height: grid ? cardW : cardW * 0.62 }]}>
-                    {shot ? (
-                      <Image source={bizImage(shot)} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
-                    ) : (
-                      <View style={[StyleSheet.absoluteFill as any, st.blank]}>
-                        <Ionicons name="storefront-outline" size={18} color={D.faint} />
-                      </View>
-                    )}
-                  </View>
-                  <Text style={[st.cardT, fa && st.rtl]} numberOfLines={1}>
-                    {fa && b.name_fa ? b.name_fa : b.name}
-                  </Text>
-                  <Text style={[st.cardX, fa && st.rtl]} numberOfLines={1}>
-                    {categoryLabel(b.category, fa)}
-                  </Text>
-                </Pressable>
-              );
-            })}
+            {shown.map((b) => (
+              <BusinessCard
+                key={b.id}
+                b={b}
+                fa={fa}
+                onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+              onFile={setFiling}
+                onFile={setFiling}
+              />
+            ))}
           </View>
         )}
       </Animated.ScrollView>
@@ -412,6 +397,8 @@ export function CityPage() {
         onClose={() => setCatOpen(false)}
       />
 
+      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
+
       <LocalDrawer
         open={drawer.open}
         onClose={() => drawer.setOpen(false)}
@@ -423,6 +410,8 @@ export function CityPage() {
 
 const st = StyleSheet.create({
   dark: { flex: 1, backgroundColor: D.bg },
+  // The city page: dark only where the photograph is.
+  light: { flex: 1, backgroundColor: colors.background },
 
   topBar: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
@@ -431,6 +420,10 @@ const st = StyleSheet.create({
   // The body face, not the serif. Cormorant at this size reads as a
   // masthead; these are labels.
   topT: { fontFamily: fonts.body, fontSize: 15, letterSpacing: 0.2, color: D.text },
+  // Ranged right rather than centred: a centred title needs a matching
+  // shape on the other side to look deliberate, and there is only a menu
+  // icon over there.
+  topTRight: { flex: 1, textAlign: 'right' },
 
   row: { height: ROW, justifyContent: 'center', paddingHorizontal: spacing.lg },
   name: {
@@ -456,6 +449,9 @@ const st = StyleSheet.create({
   },
   // Centred, following the reference: the name, the count beneath it in
   // caps, then the line of prose.
+  // Below the photograph, not over it. Type on a picture needs the
+  // picture darkened to stay legible, and darkening a photograph to make
+  // room for words is a poor trade when there is space underneath.
   heroText: {
     position: 'absolute', left: spacing.lg, right: spacing.lg, bottom: spacing.xxl,
     alignItems: 'center',
@@ -466,11 +462,11 @@ const st = StyleSheet.create({
   },
   heroBlurb: {
     fontFamily: fonts.body, fontSize: 13.5, lineHeight: 21,
-    color: D.dim, marginTop: spacing.md, textAlign: 'center', maxWidth: 300,
+    color: 'rgba(246,241,236,0.80)', marginTop: spacing.md, textAlign: 'center', maxWidth: 300,
   },
   heroCount: {
     fontFamily: fonts.body, fontSize: 10, letterSpacing: 2.4,
-    color: D.dim, marginTop: 10, textAlign: 'center',
+    color: 'rgba(246,241,236,0.72)', marginTop: 10, textAlign: 'center',
   },
 
   controls: {
@@ -478,10 +474,7 @@ const st = StyleSheet.create({
     paddingHorizontal: spacing.lg, paddingTop: spacing.lg,
   },
   switchRow: { flexDirection: 'row', gap: spacing.md },
-  grid: {
-    flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md,
-    paddingHorizontal: spacing.lg, paddingTop: spacing.md,
-  },
+  grid: { paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   shot: { borderRadius: 13, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.06)' },
   blank: { alignItems: 'center', justifyContent: 'center' },
   cardT: { fontFamily: fonts.bodyStrong, fontSize: 13.5, color: D.text, marginTop: 8 },

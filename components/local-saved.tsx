@@ -1,54 +1,51 @@
-// What someone kept, and how they filed it.
+// What someone kept.
 //
-// Folders first, two to a row, each carrying the photograph of the first
-// listing put in it. Then everything saved, filed or not — a folder is a
-// way of finding things again, not a place they disappear into.
+// A folder is a row, not a tile. Tiles with cover images looked like
+// somewhere to go; these are shelves, and what matters is what is on them
+// — so each folder shows its contents directly and scrolls sideways.
 //
-// A soft shadow under each card rather than a border: these are objects on
-// a shelf, and an outline would make them look like buttons.
+// Everything saved sits at the foot, filed or not: a folder is a way of
+// finding something again, not a place it disappears into.
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View,
-  useWindowDimensions,
+  ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
-import { categoryLabel, loadBusinesses, type Business } from '@/lib/businesses';
+import { loadBusinesses, type Business } from '@/lib/businesses';
 import { useSavedBusinesses } from '@/lib/saved-businesses';
 import { useCollections, collectionItems, type Collection } from '@/lib/collections';
-import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
-import { eduImage } from '@/constants/education-images';
+import { BusinessCard } from '@/components/business-card';
+import { CollectionSheet } from '@/components/collection-sheet';
+import { ShareFolderSheet } from '@/components/share-folder-sheet';
 import { LocalDrawer, type DrawerPick } from '@/components/local-drawer';
 import { useAuth } from '@/lib/auth';
 import { getLang, t, useLang } from '@/lib/i18n';
 import { LOCAL } from '@/constants/i18n/local';
 
-const bizImage = (path: string) =>
-  isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
+const RAIL_W = 244;
 
 export function SavedBusinesses() {
   useLang();
   const fa = getLang() === 'fa';
-  const { width: W } = useWindowDimensions();
   const { user, session } = useAuth();
 
   const savedIds = useSavedBusinesses();
   const { items: collections, loading: colsLoading, refresh: refreshCols } = useCollections(user?.id);
 
-  // A folder made from the sheet on another screen will not be in the list
-  // this page loaded on mount, so ask again whenever it comes forward.
-  useFocusEffect(
-    useCallback(() => { refreshCols(); }, [refreshCols]),
-  );
   const [all, setAll] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
   const [drawer, setDrawer] = useState(false);
-  const [openCol, setOpenCol] = useState<Collection | null>(null);
-  const [colIds, setColIds] = useState<string[]>([]);
+  const [filing, setFiling] = useState<string | null>(null);
+  const [sharing, setSharing] = useState<Collection | null>(null);
+
+  // Every folder's contents, keyed by folder. Loaded together rather than
+  // one at a time, so the page arrives whole.
+  const [contents, setContents] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     (async () => {
@@ -57,29 +54,28 @@ export function SavedBusinesses() {
     })();
   }, []);
 
+  useFocusEffect(useCallback(() => { refreshCols(); }, [refreshCols]));
+
   useEffect(() => {
     (async () => {
-      if (!openCol) { setColIds([]); return; }
-      setColIds(await collectionItems(openCol.id));
+      const m: Record<string, string[]> = {};
+      await Promise.all(collections.map(async (c) => {
+        m[c.id] = await collectionItems(c.id);
+      }));
+      setContents(m);
     })();
-  }, [openCol?.id]);
+  }, [collections]);
 
   const saved = useMemo(
     () => all.filter((b) => savedIds.includes(b.id)),
     [all, savedIds],
   );
 
-  const shown = openCol
-    ? all.filter((b) => colIds.includes(b.id))
-    : saved;
-
   const byId = useMemo(() => {
     const m: Record<string, Business> = {};
     for (const b of all) m[b.id] = b;
     return m;
   }, [all]);
-
-  const cardW = (W - spacing.lg * 2 - spacing.md) / 2;
 
   const onDrawerPick = (k: DrawerPick) => {
     if (k === 'home') { router.navigate('/local' as any); return; }
@@ -91,28 +87,20 @@ export function SavedBusinesses() {
   };
 
   const busy = loading || colsLoading;
+  const nothing = saved.length === 0 && collections.length === 0;
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={[s.top, fa && { flexDirection: 'row-reverse' }]}>
-        {openCol ? (
-          <Pressable hitSlop={12} onPress={() => setOpenCol(null)}>
-            <Ionicons name={fa ? 'chevron-forward' : 'chevron-back'} size={22} color={colors.textPrimary} />
-          </Pressable>
-        ) : (
-          <Pressable hitSlop={12} onPress={() => setDrawer(true)}>
-            <Ionicons name="menu-outline" size={22} color={colors.textPrimary} />
-          </Pressable>
-        )}
-        <Text style={s.topT} numberOfLines={1}>
-          {openCol ? openCol.name : t(LOCAL.savedTitle)}
-        </Text>
-        <View style={{ width: 22 }} />
+        <Pressable hitSlop={12} onPress={() => setDrawer(true)}>
+          <Ionicons name="menu-outline" size={22} color={colors.textPrimary} />
+        </Pressable>
+        <Text style={[s.topT, s.topTRight]}>{t(LOCAL.savedTitle)}</Text>
       </View>
 
       {busy ? (
         <ActivityIndicator style={{ marginTop: spacing.xxl }} color={colors.accent} />
-      ) : saved.length === 0 && collections.length === 0 ? (
+      ) : nothing ? (
         <View style={s.empty}>
           <Ionicons name="bookmark-outline" size={22} color={colors.textSecondary} />
           <Text style={[s.emptyT, fa && s.rtl]}>{t(LOCAL.nothingSaved)}</Text>
@@ -123,79 +111,85 @@ export function SavedBusinesses() {
         </View>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.body}>
-          {/* folders */}
-          {!openCol && collections.length > 0 ? (
-            <View style={s.folders}>
-              {collections.map((c) => {
-                const cover = c.cover_business_id ? byId[c.cover_business_id] : null;
-                const shot = (cover?.photos ?? [])[0];
-                return (
-                  <Pressable key={c.id} style={{ width: cardW }} onPress={() => setOpenCol(c)}>
-                    <View style={[s.folderShot, { width: cardW, height: cardW }]}>
-                      {shot ? (
-                        <Image source={bizImage(shot)} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
-                      ) : (
-                        <View style={[StyleSheet.absoluteFill as any, s.blank]}>
-                          <Ionicons name="folder-outline" size={20} color={colors.textSecondary} />
-                        </View>
-                      )}
-                    </View>
-                    <Text style={[s.folderT, fa && s.rtl]} numberOfLines={1}>{c.name}</Text>
-                    <Text style={[s.folderX, fa && s.rtl]}>
-                      {c.count ?? 0} {t((c.count ?? 0) === 1 ? LOCAL.place : LOCAL.places)}
-                    </Text>
-                  </Pressable>
-                );
-              })}
-            </View>
-          ) : null}
-
-          {/* everything, or the open folder */}
-          {!openCol ? (
-            <Text style={[s.sectionL, fa && s.rtl]}>
-              {t(LOCAL.everythingSaved)}
-              <Text style={s.sectionN}>{'   ' + saved.length}</Text>
-            </Text>
-          ) : null}
-
-          <View style={s.grid}>
-            {shown.map((b) => {
-              const shot = (b.photos ?? [])[0];
-              return (
-                <Pressable
-                  key={b.id}
-                  style={{ width: cardW }}
-                  onPress={() => router.navigate(('/business?id=' + b.id) as any)}
-                >
-                  <View style={[s.shot, { width: cardW, height: cardW }]}>
-                    {shot ? (
-                      <Image source={bizImage(shot)} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
-                    ) : (
-                      <View style={[StyleSheet.absoluteFill as any, s.blank]}>
-                        <Ionicons name="storefront-outline" size={18} color={colors.textSecondary} />
-                      </View>
-                    )}
+          {/* one rail per folder */}
+          {collections.map((c) => {
+            const ids = contents[c.id] ?? [];
+            const list = ids.map((id) => byId[id]).filter(Boolean);
+            return (
+              <View key={c.id} style={s.section}>
+                <View style={[s.sectionHead, fa && { flexDirection: 'row-reverse' }]}>
+                  <Text style={[s.sectionL, fa && s.rtl]}>
+                    {c.name.toUpperCase()}
+                    <Text style={s.sectionN}>{'   ' + list.length}</Text>
+                  </Text>
+                  <View style={[{ flexDirection: 'row', gap: spacing.md, alignItems: 'center' }, fa && { flexDirection: 'row-reverse' }]}>
+                    <Pressable hitSlop={10} onPress={() => setSharing(c)}>
+                      <Ionicons name="person-add-outline" size={16} color={colors.textSecondary} />
+                    </Pressable>
+                    <Pressable hitSlop={10} onPress={() => router.navigate(('/local-folder?id=' + c.id) as any)}>
+                      <Ionicons
+                        name={fa ? 'chevron-back' : 'chevron-forward'}
+                        size={16}
+                        color={colors.textSecondary}
+                      />
+                    </Pressable>
                   </View>
-                  <Text style={[s.name, fa && s.rtl]} numberOfLines={1}>
-                    {fa && b.name_fa ? b.name_fa : b.name}
-                  </Text>
-                  <Text style={[s.meta, fa && s.rtl]} numberOfLines={1}>
-                    {categoryLabel(b.category, fa)}
-                    {b.city ? '  ·  ' + ((fa && b.city_fa) || b.city) : ''}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
+                </View>
 
-          {openCol && shown.length === 0 ? (
-            <Text style={[s.emptyX, { marginTop: spacing.xl }, fa && s.rtl]}>
-              {t(LOCAL.folderEmpty)}
-            </Text>
-          ) : null}
+                {list.length === 0 ? (
+                  <Text style={[s.railEmpty, fa && s.rtl]}>{t(LOCAL.folderEmpty)}</Text>
+                ) : (
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    snapToInterval={RAIL_W + spacing.md}
+                    decelerationRate="fast"
+                    contentContainerStyle={[s.rail, fa && { flexDirection: 'row-reverse' }]}
+                  >
+                    {list.map((b) => (
+                      <BusinessCard
+                        key={b.id}
+                        b={b}
+                        fa={fa}
+                        width={RAIL_W}
+                        onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                        onFile={setFiling}
+                      />
+                    ))}
+                  </ScrollView>
+                )}
+              </View>
+            );
+          })}
+
+          {/* and everything, filed or not */}
+          <Text style={[s.sectionL, { marginTop: spacing.xl }, fa && s.rtl]}>
+            {t(LOCAL.everythingSaved)}
+            <Text style={s.sectionN}>{'   ' + saved.length}</Text>
+          </Text>
+
+          <View style={s.list}>
+            {saved.map((b) => (
+              <BusinessCard
+                key={b.id}
+                b={b}
+                fa={fa}
+                onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                onFile={setFiling}
+              />
+            ))}
+          </View>
         </ScrollView>
       )}
 
+      <ShareFolderSheet
+        collection={sharing}
+        open={sharing !== null}
+        onClose={() => setSharing(null)}
+        onShared={refreshCols}
+      />
+
+      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
       <LocalDrawer open={drawer} onClose={() => setDrawer(false)} onPick={onDrawerPick} />
     </SafeAreaView>
   );
@@ -204,38 +198,31 @@ export function SavedBusinesses() {
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   top: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: spacing.lg, paddingVertical: spacing.md,
   },
-  topT: { fontFamily: fonts.heading, fontSize: 20, color: colors.textPrimary, flex: 1, textAlign: 'center' },
+  topT: { fontFamily: fonts.body, fontSize: 15, letterSpacing: 0.2, color: colors.textPrimary },
+  topTRight: { flex: 1, textAlign: 'right' },
 
-  body: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl * 2 },
+  body: { paddingBottom: spacing.xxl * 2 },
 
-  folders: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginBottom: spacing.xl },
-  folderShot: {
-    borderRadius: 16, overflow: 'hidden', backgroundColor: colors.surface,
-    // Shadow rather than a border: these are objects on a shelf, and an
-    // outline would make them look like buttons.
-    shadowColor: '#2A1A14',
-    shadowOpacity: 0.14,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 4,
+  section: { marginTop: spacing.lg },
+  sectionHead: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg, marginBottom: spacing.md,
   },
-  folderT: { fontFamily: fonts.bodyStrong, fontSize: 14.5, color: colors.textPrimary, marginTop: 9 },
-  folderX: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, marginTop: 1 },
-
   sectionL: {
     fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 2,
-    color: colors.textSecondary, marginBottom: spacing.md,
+    color: colors.textSecondary, paddingHorizontal: spacing.lg,
   },
   sectionN: { fontFamily: fonts.body, fontSize: 10.5, color: colors.textSecondary },
+  rail: { gap: spacing.md, paddingHorizontal: spacing.lg },
+  railEmpty: {
+    fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary,
+    paddingHorizontal: spacing.lg,
+  },
 
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
-  shot: { borderRadius: 13, overflow: 'hidden', backgroundColor: colors.surface },
-  blank: { alignItems: 'center', justifyContent: 'center' },
-  name: { fontFamily: fonts.bodyStrong, fontSize: 13, color: colors.textPrimary, marginTop: 7 },
-  meta: { fontFamily: fonts.body, fontSize: 11, color: colors.textSecondary, marginTop: 1 },
+  list: { paddingHorizontal: spacing.lg, marginTop: spacing.md },
 
   empty: { alignItems: 'center', gap: spacing.sm, paddingTop: spacing.xxl * 2, paddingHorizontal: spacing.xl },
   emptyT: { fontFamily: fonts.heading, fontSize: 20, color: colors.textPrimary, marginTop: spacing.sm },

@@ -14,6 +14,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { supabase } from '@/lib/supabase';
 import { cityInfo } from '@/constants/cities';
+import { CITY_COVERS } from '@/constants/city-images';
 
 const BUCKET = 'city-covers';
 
@@ -64,7 +65,9 @@ export function cityCoverSource(key: string, fallbackListingPhoto?: any) {
   const url = coverUrl(row?.photo);
   if (url) return { uri: url };
 
-  const bundled = cityInfo(key)?.cover;
+  // The bundled set, then the one-off cover some entries in cities.ts
+  // still carry. An admin-set row has already won by this point.
+  const bundled = (CITY_COVERS ?? {})[key.toLowerCase()] ?? cityInfo(key)?.cover;
   if (bundled) return bundled;
 
   return fallbackListingPhoto ?? null;

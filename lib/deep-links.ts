@@ -1,8 +1,12 @@
 import { useEffect } from 'react';
 import * as Linking from 'expo-linking';
+import { router } from 'expo-router';
+
 import { supabase } from '@/lib/supabase';
+import { joinFolderByToken } from '@/lib/collections';
 
 // Handle zand://add?from=<id> and https://zand.app/add?from=<id>
+// and zand://folder?t=<token> for a shared folder.
 export function useFriendDeepLink(myId: string | undefined) {
   useEffect(() => {
     if (!myId) return;
@@ -10,6 +14,16 @@ export function useFriendDeepLink(myId: string | undefined) {
     const handle = async (url: string | null) => {
       if (!url) return;
       const parsed = Linking.parse(url);
+
+      // A folder link. Joining makes the two people friends as well, so
+      // there is nothing further to do here.
+      const token = parsed.queryParams?.t as string | undefined;
+      if (token) {
+        const res = await joinFolderByToken(token);
+        if (res?.id) router.navigate(('/local-folder?id=' + res.id) as any);
+        return;
+      }
+
       const from = parsed.queryParams?.from as string | undefined;
       if (!from || from === myId) return;
       // create a friendship request from the inviter to me, auto-accepted,

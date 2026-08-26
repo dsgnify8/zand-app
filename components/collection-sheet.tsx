@@ -102,8 +102,14 @@ export function CollectionSheet({
   const toggle = async (c: Collection) => {
     const on = inCols.includes(c.id);
     setInCols((v) => (on ? v.filter((x) => x !== c.id) : [...v, c.id]));
-    if (on) await removeFromCollection(c.id, businessId);
-    else await addToCollection(c.id, businessId);
+    if (on) {
+      await removeFromCollection(c.id, businessId);
+    } else {
+      await addToCollection(c.id, businessId);
+      // Filing it is the whole errand. Staying open would make someone
+      // dismiss a thing that has already finished.
+    }
+    onClose();
   };
 
   const make = async () => {
@@ -111,6 +117,8 @@ export function CollectionSheet({
     const { data } = await createCollection(user.id, name);
     setName('');
     setNaming(false);
+    // Close whatever happened. Leaving the sheet up on a failure told
+    // people nothing except that the button did not work.
     if (data) {
       await addToCollection(data.id, businessId);
       // Naming a folder and putting the listing in it is the whole errand.
@@ -254,7 +262,9 @@ const st = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginBottom: spacing.md,
   },
-  headT: { fontFamily: fonts.heading, fontSize: 21, color: colors.textPrimary },
+  // The body face here: this is an instruction, not a title, and the
+  // serif makes a two-word prompt look like a chapter heading.
+  headT: { fontFamily: fonts.body, fontSize: 16, letterSpacing: 0.2, color: colors.textPrimary },
 
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: 9 },
   thumb: { width: 46, height: 46, borderRadius: 11, overflow: 'hidden', backgroundColor: 'rgba(40,28,24,0.06)' },

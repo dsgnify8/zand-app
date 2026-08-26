@@ -148,7 +148,12 @@ export default function LocalMap() {
       category: cat ?? undefined,
       limit: 300,
     });
-    setItems(rows.filter((b) => b.lat != null && b.lng != null));
+
+    // Fewer markers the further out you are. Three hundred pins on a
+    // continent-wide view is both unreadable and enough native views to
+    // take the app down — which is what a silent crash on zooming out is.
+    const cap = r.latitudeDelta > 20 ? 40 : r.latitudeDelta > 5 ? 90 : 300;
+    setItems(rows.filter((b) => b.lat != null && b.lng != null).slice(0, cap));
     setLoading(false);
   }, [cat]);
 

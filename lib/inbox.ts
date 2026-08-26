@@ -42,6 +42,7 @@ export async function sendItem(payload: {
         + ((payload as any).kind === 'word' ? 'a word'
           : (payload as any).kind === 'topic' ? 'a topic'
           : (payload as any).kind === 'poet' ? 'a poet'
+          : (payload as any).kind === 'business' ? 'a place'
           : 'something'),
       body: (payload as any).fa
         ? (payload as any).fa + ((payload as any).en ? '  ·  ' + (payload as any).en : '')

@@ -469,6 +469,14 @@ function LibraryTab() {
             </Pressable>
           );
         })}
+
+        {/* Saved businesses live in their own store and have their own
+            page, so this leaves rather than filters — a chip that always
+            read zero would be worse than no chip. */}
+        <Pressable style={s.chip} onPress={() => router.navigate('/local-saved' as any)}>
+          <Text style={s.chipT}>{t(PROFILE.kindBusinesses)}</Text>
+          <Ionicons name="chevron-forward" size={11} color={pr.dim} />
+        </Pressable>
       </ScrollView>
 
       <View style={{ gap: spacing.sm }}>

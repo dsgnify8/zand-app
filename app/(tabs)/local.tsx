@@ -30,11 +30,13 @@ import { currentPlace, findPlace, hasLocation, type Place } from '@/lib/geo';
 import { BusinessCard } from '@/components/business-card';
 import { LocalDrawer } from '@/components/local-drawer';
 import { CollectionSheet } from '@/components/collection-sheet';
-import { BigRail, NewRail, SeeAllHead, GridCard, feedSections } from '@/components/local-feed';
+import { CategorySheet } from '@/components/category-sheet';
+import { NewRail, SeeAllHead, GridCard, feedSections } from '@/components/local-feed';
 import { PlaceChip } from '@/components/local-place-chip';
 import { LocalHeroBg } from '@/components/local-hero';
 
 import { LOCAL } from '@/constants/i18n/local';
+import { suggestCities } from '@/constants/cities';
 export default function Local() {
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
@@ -48,7 +50,7 @@ export default function Local() {
   const [placeText, setPlaceText] = useState('');
   const [locating, setLocating] = useState(false);
 
-  const [cat, setCat] = useState<string | null>(null);
+  const [cat, setCat] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [items, setItems] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
@@ -97,12 +99,14 @@ export default function Local() {
     setLoading(true);
     const rows = await loadBusinesses({
       near: place ? { lat: place.lat, lng: place.lng, km: 60 } : undefined,
-      category: cat ?? undefined,
+      // One category server-side is not enough now that several can be
+      // chosen, so the filtering happens below instead.
+
       query: query.trim() || undefined,
     });
     setItems(rows);
     setLoading(false);
-  }, [place?.lat, place?.lng, cat, query]);
+  }, [place?.lat, place?.lng, query]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -119,18 +123,21 @@ export default function Local() {
 
   // Three passes over the same set: what is near, what is new, and all of
   // it. The last section is "see all", so it keeps everything.
-  const { top, fresh, all } = feedSections(items, place ? { lat: place.lat, lng: place.lng } : null);
-  const [grid, setGrid] = useState(false);
+  // Defensive: a sheet handing back null rather than an empty list would
+  // otherwise take the whole tab down.
+  const cats = cat ?? [];
+  const shown = cats.length
+    ? items.filter((x) => x.category && cats.includes(x.category))
+    : items;
+  const { top, fresh, all } = feedSections(shown, place ? { lat: place.lat, lng: place.lng } : null);
+  // Single cards only here; the filter took the grid's place.
+  const [catOpen, setCatOpen] = useState(false);
   // A search is a request for results, not for browsing: the grid shows
   // more of them at once, so it wins while there is a query.
   const searching = !!query.trim();
-  const showGrid = grid || searching;
+  const showGrid = false;
   const cardW = (Dimensions.get('window').width - spacing.lg * 2 - spacing.md) / 2;
-  const pairs = all.reduce((rows: any[][], b, i) => {
-    if (i % 2 === 0) rows.push([b]);
-    else rows[rows.length - 1].push(b);
-    return rows;
-  }, []);
+
 
   const where = place
     ? [place.city, place.country].filter(Boolean).join(', ') || t(LOCAL.nearYou)
@@ -159,7 +166,7 @@ export default function Local() {
         // Chunked into pairs for the grid rather than switching
         // numColumns, which requires a new key and so remounts the list —
         // and remounting throws the reader back to the top of the page.
-        data={loading ? [] : (showGrid ? pairs : all) as any}
+        data={loading ? [] : all}
         keyExtractor={(x: any) => (Array.isArray(x) ? 'row-' + x[0].id : x.id)}
         contentContainerStyle={s.body}
         showsVerticalScrollIndicator={false}
@@ -240,6 +247,28 @@ export default function Local() {
                 <Ionicons name="arrow-forward" size={15} color="#FFF" />
               </Pressable>
             </View>
+            {/* Cities we actually list in, matched as they type. Answers on
+                the first keystroke and costs nothing — a geocoder round
+                trip per letter would be slower and less useful, since a
+                directory should offer the places it has. */}
+            {placeText.trim().length > 0 && suggestCities(placeText).length > 0 ? (
+              <View style={s.sugg}>
+                {suggestCities(placeText).map((c) => (
+                  <Pressable
+                    key={c.key}
+                    style={s.suggRow}
+                    onPress={async () => {
+                      const p = await findPlace(c.label);
+                      if (p) { setPlace(p); setPlaceOpen(false); setPlaceText(''); }
+                    }}
+                  >
+                    <Ionicons name="location-outline" size={14} color={colors.textSecondary} />
+                    <Text style={s.suggT}>{c.label}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            ) : null}
+
             {place ? (
               <Pressable onPress={() => { setPlace(null); setPlaceOpen(false); }}>
                 <Text style={s.clearT}>{t(LOCAL.showEverywhere)}</Text>
@@ -255,17 +284,29 @@ export default function Local() {
             style={[s.searchIn, fa && { textAlign: 'right', writingDirection: 'rtl' }]}
             value={query}
             onChangeText={setQuery}
-            placeholder={fa ? '' : t(LOCAL.searchPlaceholder)}
+            /* Our own placeholder in both languages, drawn below. RN
+               applies textAlign to a placeholder unreliably, and the
+               direction of the last one can survive a language change on
+               the native view — which is why the English one came back
+               with its question mark still on the left. */
+            placeholder=""
+
             placeholderTextColor={colors.textSecondary}
             autoCorrect={false}
           />
           {/* RN ignores textAlign on a placeholder until the field has
               content, so a Persian placeholder puts its question mark on the
               wrong side. Drawn as our own Text instead. */}
-          {fa && !query ? (
+          {!query ? (
             <Text
               pointerEvents="none"
-              style={[s.searchIn, { position: 'absolute', right: 40, textAlign: 'right', writingDirection: 'rtl', color: colors.textSecondary }]}
+              style={[
+                s.searchIn,
+                { position: 'absolute', color: colors.textSecondary },
+                fa
+                  ? { right: 40, textAlign: 'right', writingDirection: 'rtl' }
+                  : { left: 40, textAlign: 'left', writingDirection: 'ltr' },
+              ]}
             >
               {t(LOCAL.searchPlaceholder)}
             </Text>
@@ -277,19 +318,21 @@ export default function Local() {
           ) : null}
         </View>
 
-        {searching ? null : <BigRail
-          items={top}
-          place={place ? { lat: place.lat, lng: place.lng } : null}
-          placeLabel={where}
-          onOpen={(b) => router.navigate(('/business?id=' + b.id) as any)}
-        />}
-
         {searching ? null : <NewRail
           items={fresh}
           onOpen={(b) => router.navigate(('/business?id=' + b.id) as any)}
         />}
 
-        <SeeAllHead n={all.length} grid={showGrid} onGrid={setGrid} />
+        <SeeAllHead
+          n={all.length}
+          cats={cats}
+          counts={items.reduce((m: Record<string, number>, x: any) => {
+            if (x.category) m[x.category] = (m[x.category] ?? 0) + 1;
+            return m;
+          }, {})}
+          onCats={() => setCatOpen(true)}
+          onClear={() => setCat([])}
+        />
 
 
 
@@ -346,6 +389,17 @@ export default function Local() {
         <Ionicons name="map-outline" size={16} color="#FFF" />
         <Text style={s.mapBtnT}>{fa ? 'نقشه' : 'Map'}</Text>
       </Pressable>
+      <CategorySheet
+        open={catOpen}
+        value={cats}
+        counts={items.reduce((m: Record<string, number>, x: any) => {
+          if (x.category) m[x.category] = (m[x.category] ?? 0) + 1;
+          return m;
+        }, {})}
+        onPick={setCat}
+        onClose={() => setCatOpen(false)}
+      />
+
       <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
 
       <LocalDrawer
@@ -442,4 +496,10 @@ const s = StyleSheet.create({
 
   mapBtn: { position: 'absolute', bottom: spacing.xl, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 24, backgroundColor: colors.textPrimary },
   mapBtnT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
+  sugg: { marginTop: spacing.sm, gap: 2 },
+  suggRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 8,
+    paddingVertical: 9, paddingHorizontal: spacing.sm,
+  },
+  suggT: { fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary },
 });

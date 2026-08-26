@@ -6,6 +6,7 @@
 
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/supabase';
+import { eduImage } from '@/constants/education-images';
 
 export const MAX_PHOTOS = 6;
 
@@ -66,7 +67,19 @@ export function bundledKey(path: string) {
   return path.slice(5);
 }
 
+/**
+ * A photo that already lives somewhere else.
+ *
+ * Storage paths and bundled keys never start with a scheme, so this is
+ * unambiguous.
+ */
+export function isRemote(path: string) {
+  return /^https?:\/\//.test(path);
+}
+
 export function photoUrl(path: string): string {
+  // Already a URL: nothing to resolve.
+  if (isRemote(path)) return path;
   if (isBundled(path)) return '';   // callers use eduImage() for these
   const { data } = supabase.storage.from('business-photos').getPublicUrl(path);
   return data.publicUrl;
@@ -74,4 +87,21 @@ export function photoUrl(path: string): string {
 
 export async function removePhoto(path: string) {
   try { await supabase.storage.from('business-photos').remove([path]); } catch {}
+}
+
+
+/**
+ * A listing photo, whatever kind it is.
+ *
+ * Three cases: a bundled demo key, a full URL, or a storage path. This
+ * lived as an identical two-line helper in fifteen files, which is fifteen
+ * places to change when a fourth case turns up.
+ *
+ * The import of eduImage is deliberate and slightly awkward — constants
+ * importing from lib would be the wrong direction, so it sits here.
+ */
+export function bizImage(path: string) {
+  return isBundled(path)
+    ? eduImage(bundledKey(path))
+    : { uri: photoUrl(path) };
 }

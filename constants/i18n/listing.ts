@@ -42,6 +42,17 @@ export const LISTING: Record<string, T> = {
   namePlaceholder: { en: 'What it is called', fa: 'اسمش چیست' },
   categoryLabel: { en: 'CATEGORY', fa: 'دسته' },
 
+  // when it opened
+  openedLabel: { en: 'WHEN IT OPENED', fa: 'کی باز شد' },
+  // Named rather than left to be guessed at: someone reading Persian
+  // has every reason to think a four-digit year means ۱۴۰۴.
+  openedHint: {
+    en: 'Gregorian year, e.g. 2019.',
+    fa: 'سال میلادی، مثلاً ۲۰۱۹. (نه شمسی)',
+  },
+  openedPlaceholder: { en: '2019', fa: '۲۰۱۹' },
+  showOpened: { en: 'Show this on my page', fa: 'روی صفحه‌ام نشان بده' },
+
   // photos
   coverLabel: { en: 'COVER', fa: 'عکس اصلی' },
   firstIsCover: { en: 'The first one is the cover.', fa: 'اولی می‌شود عکس اصلی.' },
@@ -74,7 +85,7 @@ export const LISTING: Record<string, T> = {
 
   // the story
   storyLabel: { en: "WHAT'S YOUR STORY?", fa: 'داستانت چیست؟' },
-  storyYes: { en: "Yes, and I'd like to tell it", fa: 'بله، و دوست دارم تعریفش کنم' },
+  storyYes: { en: "I'd like to share it", fa: 'دوست دارم تعریفش کنم' },
   storyNote: {
     en: 'Not required, and listing does not depend on it. If there is something worth telling — how it started, who started it, what nearly stopped it — write it here.',
     fa: 'اجباری نیست و ثبت آگهی به آن بستگی ندارد. اگر چیزی هست که ارزش گفتن دارد — اینکه چطور شروع شد، چه کسی شروعش کرد، چه چیزی نزدیک بود متوقفش کند — همین‌جا بنویس.',

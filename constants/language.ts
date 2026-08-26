@@ -151,7 +151,7 @@ export const LANG_CHAPTERS: LangChapter[] = [
   {
     key: 'l5',
     title: 'Alive and Spoken', titleFa: 'زنده و گفته‌شده',
-    nav: 'Today',
+    nav: 'Today', navFa: 'امروز',
     subtitle: 'THE LANGUAGE NOW', subtitleFa: 'این زبان، امروز',
     pages: [
       { blocks: [

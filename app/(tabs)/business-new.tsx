@@ -335,6 +335,38 @@ export default function BusinessForm() {
             placeholderTextColor={colors.textSecondary}
           />
 
+          {/* When it opened. Two things: the year, which decides whether it
+              shows under Newly opened, and whether the owner wants it on
+              their own page. Someone can tell us 1998 without wanting
+              "since 1998" printed under their name. */}
+          <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.openedLabel)}</Text>
+          <Text style={[s.hint, fa && { textAlign: 'right', writingDirection: 'rtl' }]}>
+            {tr(LISTING.openedHint)}
+          </Text>
+          <View style={[s.row, fa && { flexDirection: 'row-reverse' }]}>
+            <TextInput
+              style={[s.input, { width: 110 }]}
+              value={b.opened_year ? String(b.opened_year) : ''}
+              onChangeText={(v) => {
+                const n = parseInt(v.replace(/[^0-9]/g, ''), 10);
+                set({ opened_year: Number.isFinite(n) ? n : undefined });
+              }}
+              placeholder={tr(LISTING.openedPlaceholder)}
+              placeholderTextColor={colors.textSecondary}
+              keyboardType="number-pad"
+              maxLength={4}
+            />
+            <Pressable
+              style={[s.row, { flex: 1, alignItems: 'center' }, fa && { flexDirection: 'row-reverse' }]}
+              onPress={() => set({ show_opened: b.show_opened === false })}
+            >
+              <View style={[s.check, b.show_opened !== false && s.checkOn]}>
+                {b.show_opened !== false ? <Ionicons name="checkmark" size={13} color="#FFF" /> : null}
+              </View>
+              <Text style={s.checkT}>{tr(LISTING.showOpened)}</Text>
+            </Pressable>
+          </View>
+
           {/* photos */}
           <Text style={[s.label, { marginTop: spacing.xl }]}>
             PHOTOS {(b.photos?.length ?? 0) > 0 ? `· ${b.photos!.length} of ${MAX_PHOTOS}` : ''}

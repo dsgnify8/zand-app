@@ -35,7 +35,8 @@ export function CategoryBar({
   onPress,
   onClear,
 }: {
-  value: string | null;
+  /** Empty means everything. */
+  value: string[];
   counts?: Record<string, number>;
   dark?: boolean;
   onPress: () => void;
@@ -49,10 +50,14 @@ export function CategoryBar({
     <View style={[st.barRow, fa && { flexDirection: 'row-reverse' }]}>
       <Pressable style={[st.bar, { borderColor: line }]} onPress={onPress}>
         <Text style={[st.barT, { color: ink }]}>
-          {value ? categoryLabel(value, fa) : t(LOCAL.categories)}
+          {value.length === 0
+            ? t(LOCAL.categories)
+            : value.length === 1
+              ? categoryLabel(value[0], fa)
+              : t(LOCAL.categories) + '  ' + value.length}
         </Text>
       </Pressable>
-      {value ? (
+      {value.length > 0 ? (
         <Pressable hitSlop={10} onPress={onClear} style={[st.bar, { borderColor: line }]}>
           <Text style={[st.barT, { color: ink }]}>×</Text>
         </Pressable>
@@ -69,9 +74,10 @@ export function CategorySheet({
   onClose,
 }: {
   open: boolean;
-  value: string | null;
+  /** Empty means everything. */
+  value: string[];
   counts?: Record<string, number>;
-  onPick: (key: string | null) => void;
+  onPick: (keys: string[]) => void;
   onClose: () => void;
 }) {
   const fa = getLang() === 'fa';
@@ -112,29 +118,33 @@ export function CategorySheet({
         >
           {/* The same material as the drawer: blur with a dark veil, so
               the two overlays in Local read as one thing. */}
-          <BlurView intensity={70} tint="light" style={StyleSheet.absoluteFill} />
+          <BlurView intensity={40} tint="light" style={StyleSheet.absoluteFill} />
           <View style={[StyleSheet.absoluteFill, st.veil]} />
 
           <View style={st.grab} />
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={st.boxes}>
             <Pressable
-              style={[st.box, !value && st.boxOn]}
-              onPress={() => { onPick(null); onClose(); }}
+              style={[st.box, value.length === 0 && st.boxOn]}
+              onPress={() => onPick([])}
             >
-              <Text style={[st.boxT, !value && st.boxTOn, fa && st.boxTFa]}>
+              <Text style={[st.boxT, value.length === 0 && st.boxTOn, fa && st.boxTFa]}>
                 {t(LOCAL.everything)}
               </Text>
             </Pressable>
 
             {shown.map((c) => {
-              const on = value === c.key;
+              const on = value.includes(c.key);
               const n = counts?.[c.key];
               return (
                 <Pressable
                   key={c.key}
                   style={[st.box, on && st.boxOn]}
-                  onPress={() => { onPick(on ? null : c.key); onClose(); }}
+                  // Stays open: picking several is the point, and closing
+                  // after each would make two choices feel like a fight.
+                  onPress={() =>
+                    onPick(on ? value.filter((k) => k !== c.key) : [...value, c.key])
+                  }
                 >
                   <Text style={[st.boxT, on && st.boxTOn, fa && st.boxTFa]}>
                     {categoryLabel(c.key, fa)}
@@ -186,9 +196,9 @@ const st = StyleSheet.create({
     paddingVertical: 7,
   },
   boxOn: { borderColor: 'rgba(40,28,24,0.75)', backgroundColor: 'rgba(40,28,24,0.05)' },
-  boxT: { fontFamily: fonts.body, fontSize: 11.5, color: 'rgba(40,28,24,0.72)' },
+  boxT: { fontFamily: fonts.body, fontSize: 11.5, color: 'rgba(40,28,24,0.88)' },
   boxTOn: { color: 'rgba(40,28,24,0.95)' },
   boxTFa: { fontFamily: fonts.persian, fontSize: 12 },
-  veil: { backgroundColor: 'rgba(250,247,243,0.30)' },
+  veil: { backgroundColor: 'rgba(250,247,243,0.62)' },
   boxN: { fontSize: 10, color: 'rgba(40,28,24,0.38)' },
 });

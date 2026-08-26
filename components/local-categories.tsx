@@ -31,6 +31,8 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { CATEGORIES, categoryLabel, loadBusinesses, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
+import { BusinessCard } from '@/components/business-card';
+import { CollectionSheet } from '@/components/collection-sheet';
 import { LocalDrawer, type DrawerPick } from '@/components/local-drawer';
 import { useAuth } from '@/lib/auth';
 import { getLang, t, useLang } from '@/lib/i18n';
@@ -58,7 +60,8 @@ export function CategoryBrowse() {
   const [items, setItems] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
   const [pick, setPick] = useState<string[]>([]);
-  const [grid, setGrid] = useState(true);
+  // Holding a bookmark files it, on every page that shows a card.
+  const [filing, setFiling] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -85,9 +88,6 @@ export function CategoryBrowse() {
     [items, pick],
   );
 
-  const cardW = grid
-    ? (W - spacing.lg * 2 - spacing.md) / 2
-    : W - spacing.lg * 2;
 
   const onDrawerPick = (k: DrawerPick) => {
     if (k === 'home') { router.navigate('/local' as any); return; }
@@ -108,7 +108,7 @@ export function CategoryBrowse() {
           <Pressable hitSlop={12} onPress={() => setDrawer(true)}>
             <Ionicons name="menu-outline" size={22} color={D.text} />
           </Pressable>
-          <Text style={st.topT}>{t(LOCAL.byCategoryTitle)}</Text>
+          <Text style={[st.topT, st.topTRight]}>{t(LOCAL.byCategoryTitle)}</Text>
           <View style={{ width: 22 }} />
         </View>
 
@@ -147,48 +147,26 @@ export function CategoryBrowse() {
               <Text style={[st.resultN, fa && st.rtl]}>
                 {list.length} {t(list.length === 1 ? LOCAL.place : LOCAL.places).toUpperCase()}
               </Text>
-              <View style={[st.switchRow, fa && { flexDirection: 'row-reverse' }]}>
-                <Pressable hitSlop={8} onPress={() => setGrid(false)}>
-                  <Ionicons name="square-outline" size={15} color={grid ? D.faint : D.text} />
-                </Pressable>
-                <Pressable hitSlop={8} onPress={() => setGrid(true)}>
-                  <Ionicons name="grid-outline" size={15} color={grid ? D.text : D.faint} />
-                </Pressable>
-              </View>
+
             </View>
 
-            <View style={[st.grid, !grid && { gap: spacing.lg }]}>
-              {list.map((b) => {
-                const shot = (b.photos ?? [])[0];
-                return (
-                  <Pressable
-                    key={b.id}
-                    style={{ width: cardW }}
-                    onPress={() => router.navigate(('/business?id=' + b.id) as any)}
-                  >
-                    <View style={[st.shot, { width: cardW, height: grid ? cardW : cardW * 0.62 }]}>
-                      {shot ? (
-                        <Image source={bizImage(shot)} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
-                      ) : (
-                        <View style={[StyleSheet.absoluteFill as any, st.blank]}>
-                          <Ionicons name="storefront-outline" size={18} color={D.faint} />
-                        </View>
-                      )}
-                    </View>
-                    <Text style={[st.cardT, fa && st.rtl]} numberOfLines={1}>
-                      {fa && b.name_fa ? b.name_fa : b.name}
-                    </Text>
-                    <Text style={[st.cardX, fa && st.rtl]} numberOfLines={1}>
-                      {categoryLabel(b.category, fa)}
-                      {b.city ? '  ·  ' + ((fa && b.city_fa) || b.city) : ''}
-                    </Text>
-                  </Pressable>
-                );
-              })}
+            <View style={st.grid}>
+              {list.map((b) => (
+                <BusinessCard
+                  key={b.id}
+                  b={b}
+                  fa={fa}
+                  dark
+                  onOpen={() => router.navigate(('/business?id=' + b.id) as any)}
+                onFile={setFiling}
+                />
+              ))}
             </View>
           </ScrollView>
         )}
       </SafeAreaView>
+
+      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
 
       <LocalDrawer open={drawer} onClose={() => setDrawer(false)} onPick={onDrawerPick} />
     </View>
@@ -203,6 +181,10 @@ const st = StyleSheet.create({
     paddingHorizontal: spacing.lg, paddingVertical: spacing.md,
   },
   topT: { fontFamily: fonts.body, fontSize: 15, letterSpacing: 0.2, color: D.text },
+  // Ranged right rather than centred: a centred title needs a matching
+  // shape on the other side to look deliberate, and there is only a menu
+  // icon over there.
+  topTRight: { flex: 1, textAlign: 'right' },
 
   boxes: {
     flexDirection: 'row', flexWrap: 'wrap', gap: 7,
@@ -228,10 +210,7 @@ const st = StyleSheet.create({
   resultN: { fontFamily: fonts.body, fontSize: 10, letterSpacing: 2.2, color: D.dim },
   switchRow: { flexDirection: 'row', gap: spacing.md },
 
-  grid: {
-    flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md,
-    paddingHorizontal: spacing.lg,
-  },
+  grid: { paddingHorizontal: spacing.lg },
   shot: { borderRadius: 13, overflow: 'hidden', backgroundColor: D.raised },
   blank: { alignItems: 'center', justifyContent: 'center' },
   cardT: { fontFamily: fonts.bodyStrong, fontSize: 13.5, color: D.text, marginTop: 8 },

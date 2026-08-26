@@ -8,6 +8,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { expandQuery, buildSearchIndex } from '@/lib/business-search';
+import { categoriesFor } from '@/constants/search-synonyms';
 
 export type BusinessStatus =
   | 'draft' | 'submitted' | 'rejected' | 'approved' | 'active' | 'lapsed';
@@ -44,6 +45,11 @@ export type Business = {
   // Set by an admin, not by owners. Fills the top of the feed when there
   // is no location to sort by.
   featured?: boolean;
+  /** Gregorian. Decides what appears under Newly opened. */
+  opened_year?: number | null;
+  /** Whether the owner wants it on their own page. The section uses the
+   *  year either way — this is about their page, not about what we know. */
+  show_opened?: boolean;
   /**
    * What to call the website on the page — "Our online store" rather than
    * a forty-character URL. Only used where there is no address, since an
@@ -123,6 +129,13 @@ export async function loadBusinesses(opts: {
                `description.ilike.%${w}%`, `search_fa.ilike.%${w}%`,
                `keywords.cs.{"${w.toLowerCase()}"}`);
     });
+
+    // And the categories the words imply. Nobody searches "restaurant" —
+    // they search kebab, or dinner, or غذا, and a listing that never uses
+    // any of those words is still the answer. Matching the category means
+    // the right places turn up whatever words they happen to contain.
+    categoriesFor(t).forEach((c) => ors.push(`category.eq.${c}`));
+
     q = q.or(ors.join(','));
   }
 

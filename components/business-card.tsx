@@ -22,15 +22,23 @@ import { categoryLabel, trackBusiness, type Business } from '@/lib/businesses';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
 import { isSavedBusiness, toggleSavedBusiness } from '@/lib/saved-businesses';
+import { removeFromAllCollections } from '@/lib/collections';
 
 const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
+
+const DARK = {
+  name: '#F6F1EC',
+  meta: 'rgba(246,241,236,0.62)',
+  line: 'rgba(246,241,236,0.16)',
+  chip: 'rgba(246,241,236,0.08)',
+};
 
 const GAP = spacing.lg;
 const W = Dimensions.get('window').width - GAP * 2;
 
 export function BusinessCard({
-  b, fa, km, onOpen, onFile,
+  b, fa, km, onOpen, onFile, dark, width,
 }: {
   b: Business;
   fa: boolean;
@@ -38,8 +46,17 @@ export function BusinessCard({
   onOpen: () => void;
   /** Held rather than tapped: the caller opens the collection sheet. */
   onFile?: (id: string) => void;
+  /** Narrower than the feed, for a horizontal rail. Everything scales with
+   *  it — the same card, smaller, rather than a different card. */
+  width?: number;
+  /** For the city and category pages, which run on a dark ground. One
+   *  card on two surfaces rather than two cards that drift apart. */
+  dark?: boolean;
 }) {
   const shots = b.photos ?? [];
+  const ink = dark ? DARK : null;
+  const w = width ?? W;
+  const small = width != null && width < W * 0.8;
   const [i, setI] = useState(0);
   const [, setTick] = useState(0);
   const scroll = useRef<ScrollView>(null);
@@ -47,11 +64,11 @@ export function BusinessCard({
   const go = (n: number) => {
     const next = Math.max(0, Math.min(shots.length - 1, n));
     setI(next);
-    scroll.current?.scrollTo({ x: next * W, animated: true });
+    scroll.current?.scrollTo({ x: next * w, animated: true });
   };
 
   const onEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    setI(Math.round(e.nativeEvent.contentOffset.x / W));
+    setI(Math.round(e.nativeEvent.contentOffset.x / w));
   };
 
   const wa = (b.socials ?? {}).whatsapp;
@@ -62,7 +79,7 @@ export function BusinessCard({
     <View style={s.card}>
       {/* photos */}
       <View>
-        <View style={s.shotWrap}>
+        <View style={[s.shotWrap, { width: w, height: small ? 150 : 210 }, { width: w, height: small ? 150 : 210 }]}>
           {shots.length ? (
             <ScrollView
               ref={scroll}
@@ -73,12 +90,12 @@ export function BusinessCard({
             >
               {shots.map((p) => (
                 <Pressable key={p} onPress={onOpen}>
-                  <Image source={bizImage(p)} style={{ width: W, height: 210 }} />
+                  <Image source={bizImage(p)} style={{ width: w, height: small ? 150 : 210 }} />
                 </Pressable>
               ))}
             </ScrollView>
           ) : (
-            <View style={[s.shotEmpty, { width: W, height: 210 }]}>
+            <View style={[s.shotEmpty, { width: w, height: small ? 150 : 210 }]}>
               <Ionicons name="storefront-outline" size={24} color={colors.textSecondary} />
             </View>
           )}
@@ -120,7 +137,15 @@ export function BusinessCard({
           <Pressable
             style={s.save}
             hitSlop={8}
-            onPress={() => { toggleSavedBusiness(b.id); setTick((n) => n + 1); }}
+            onPress={() => {
+              // Unsaving is a removal everywhere, folders included: one
+              // control, one meaning.
+              if (isSavedBusiness(b.id)) removeFromAllCollections(b.id);
+              toggleSavedBusiness(b.id);
+              setTick((n) => n + 1);
+            }}
+            onLongPress={() => { if (!isSavedBusiness(b.id)) toggleSavedBusiness(b.id); setTick((n) => n + 1); onFile?.(b.id); }}
+            delayLongPress={280}
             onLongPress={() => { if (!isSavedBusiness(b.id)) toggleSavedBusiness(b.id); setTick((n) => n + 1); onFile?.(b.id); }}
             delayLongPress={280}
           >
@@ -148,9 +173,9 @@ export function BusinessCard({
       {/* words */}
       <Pressable onPress={onOpen} style={s.body}>
         <View style={s.titleRow}>
-          <Text style={[s.name, fa && b.name_fa ? s.nameFa : null]} numberOfLines={1}>{name}</Text>
+          <Text style={[s.name, fa && b.name_fa ? s.nameFa : null, ink && { color: ink.name }]} numberOfLines={1}>{name}</Text>
         </View>
-        <Text style={s.meta} numberOfLines={1}>
+        <Text style={[s.meta, ink && { color: ink.meta }]} numberOfLines={1}>
           {categoryLabel(b.category, fa)}
           {(fa && b.city_fa) || b.city ? '  ·  ' + ((fa && b.city_fa) || b.city) : ''}
         </Text>
@@ -161,27 +186,27 @@ export function BusinessCard({
       {(b.phone || wa || b.website) ? (
         <View style={s.acts}>
           {b.phone ? (
-            <Pressable style={s.act} onPress={() => { trackBusiness(b.id, 'call'); Linking.openURL('tel:' + b.phone); }}>
+            <Pressable style={[s.act, ink && { backgroundColor: ink.chip }]} onPress={() => { trackBusiness(b.id, 'call'); Linking.openURL('tel:' + b.phone); }}>
               <Ionicons name="call-outline" size={14} color={colors.textPrimary} />
-              <Text style={s.actT}>{fa ? 'تماس' : 'Call'}</Text>
+              <Text style={[s.actT, ink && { color: ink.name }]}>{fa ? 'تماس' : 'Call'}</Text>
             </Pressable>
           ) : null}
           {wa ? (
             <Pressable
-              style={s.act}
+              style={[s.act, ink && { backgroundColor: ink.chip }]}
               onPress={() => { trackBusiness(b.id, 'whatsapp'); Linking.openURL('https://wa.me/' + wa.replace(/[^\d]/g, '')); }}
             >
               <Ionicons name="logo-whatsapp" size={14} color={colors.textPrimary} />
-              <Text style={s.actT}>WhatsApp</Text>
+              <Text style={[s.actT, ink && { color: ink.name }]}>WhatsApp</Text>
             </Pressable>
           ) : null}
           {b.website ? (
             <Pressable
-              style={s.act}
+              style={[s.act, ink && { backgroundColor: ink.chip }]}
               onPress={() => Linking.openURL(b.website!.startsWith('http') ? b.website! : 'https://' + b.website)}
             >
               <Ionicons name="globe-outline" size={14} color={colors.textPrimary} />
-              <Text style={s.actT}>{fa ? 'وب‌سایت' : 'Website'}</Text>
+              <Text style={[s.actT, ink && { color: ink.name }]}>{fa ? 'وب‌سایت' : 'Website'}</Text>
             </Pressable>
           ) : null}
         </View>
@@ -192,8 +217,9 @@ export function BusinessCard({
 
 const s = StyleSheet.create({
   card: { marginBottom: spacing.xl },
+  cardSmall: { marginBottom: 0 },
 
-  shotWrap: { width: W, height: 210, borderRadius: 16, overflow: 'hidden', backgroundColor: 'rgba(0,0,0,0.04)' },
+  shotWrap: { height: 210, borderRadius: 16, overflow: 'hidden', backgroundColor: 'rgba(0,0,0,0.04)' },
   shotEmpty: { alignItems: 'center', justifyContent: 'center' },
 
   arrow: { position: 'absolute', top: '50%', marginTop: -14, width: 28, height: 28, alignItems: 'center', justifyContent: 'center' },
@@ -212,7 +238,7 @@ const s = StyleSheet.create({
 
   body: { paddingTop: spacing.md },
   titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  name: { fontFamily: fonts.bodyStrong, fontSize: 15.5, letterSpacing: -0.2, color: colors.textPrimary, flex: 1 },
+  name: { fontFamily: fonts.heading, fontSize: 20, lineHeight: 25, letterSpacing: -0.2, color: colors.textPrimary, flex: 1 },
   nameFa: { fontFamily: fonts.persian, fontSize: 16, textAlign: 'right' },
   meta: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary, marginTop: 2 },
   blurb: { fontFamily: fonts.body, fontSize: 13, lineHeight: 19, color: colors.textSecondary, marginTop: 5 },

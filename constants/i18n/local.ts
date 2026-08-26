@@ -12,6 +12,7 @@ import type { T } from '@/lib/i18n';
 
 export const LOCAL: Record<string, T> = {
   popular: { en: 'POPULAR', fa: 'محبوب‌ها' },
+  newlyOpened: { en: 'NEWLY OPENED', fa: 'تازه‌بازشده‌ها' },
   justAdded: { en: 'JUST ADDED', fa: 'تازه‌ها' },
   seeAll: { en: 'SEE ALL', fa: 'همه' },
   closestTo: { en: 'CLOSEST TO', fa: 'نزدیک‌ترین‌ها به' },
@@ -25,6 +26,29 @@ export const LOCAL: Record<string, T> = {
     fa: 'برای ساختن پوشه باید حساب داشته باشی تا روی گوشی دیگر هم همراهت بیاید.',
   },
   signIn: { en: 'Sign in', fa: 'ورود' },
+  shareWithFriend: { en: 'Share with a friend', fa: 'با یک دوست' },
+  shareLinkShort: { en: 'Send a link', fa: 'فرستادن لینک' },
+  justYou: { en: 'just you', fa: 'فقط خودت' },
+  keepThis: { en: 'keep this', fa: 'نفر این را دارند' },
+  deleteFolder: { en: 'Delete folder', fa: 'حذف پوشه' },
+  deleteFolderX: { en: 'What is in it stays saved.', fa: 'چیزهایی که داخلش است ذخیره می‌ماند.' },
+  deleteFolderShared: {
+    en: 'This folder is shared. Deleting it removes it for everyone in it. What is in it stays saved for each of you.',
+    fa: 'این پوشه مشترک است. با حذفش برای همه پاک می‌شود. چیزهایی که داخلش است برای هرکدام ذخیره می‌ماند.',
+  },
+  leaveFolder: { en: 'Leave this folder', fa: 'از این پوشه بیرون بیا' },
+  leaveFolderX: {
+    en: 'It stays with whoever else is in it. You can be added again.',
+    fa: 'پوشه برای بقیه می‌ماند. دوباره هم می‌توانند اضافه‌ات کنند.',
+  },
+  cancel: { en: 'Cancel', fa: 'بی‌خیال' },
+  shareFolder: { en: 'Share', fa: 'هم‌رسانی' },
+  shareFolderX: {
+    en: 'They keep the same folder, not a copy — whatever either of you adds, both see.',
+    fa: 'همان پوشه را با هم دارید، نه یک کپی؛ هرچه هرکدام اضافه کند، دیگری هم می‌بیند.',
+  },
+  alreadyIn: { en: 'in', fa: 'دارد' },
+  noFriendsYet: { en: 'Add a friend first.', fa: 'اول یک دوست اضافه کن.' },
   saveTo: { en: 'Save to', fa: 'ذخیره در' },
   newFolder: { en: 'New folder', fa: 'پوشهٔ جدید' },
   folderName: { en: 'Name it', fa: 'نام‌گذاری' },

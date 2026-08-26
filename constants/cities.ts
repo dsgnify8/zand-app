@@ -50,6 +50,18 @@ export const CITIES: Record<string, CityInfo> = {
   },
 };
 
+/**
+ * Cities that exist in the data but not as a place to browse.
+ *
+ * A listing in Lusail or Great Tew is real and belongs on the feed and the
+ * map. Neither is somewhere anyone browses *to* — a city page with one
+ * restaurant on it promises more than it has.
+ */
+const NOT_A_DESTINATION = ['lusail', 'great tew', 'sharjah'];
+
+export const isDestination = (city: string | null | undefined) =>
+  !!city && !NOT_A_DESTINATION.includes(city.trim().toLowerCase());
+
 export const cityInfo = (city: string | null | undefined): CityInfo | null =>
   city ? CITIES[city.trim().toLowerCase()] ?? null : null;
 
@@ -57,3 +69,31 @@ export const cityBlurb = (city: string | null | undefined, fa: boolean) => {
   const c = cityInfo(city);
   return c ? (fa ? c.fa : c.en) : null;
 };
+
+
+/**
+ * Cities to offer as someone types.
+ *
+ * Matched against the ones we know rather than a geocoder: it answers on
+ * the first keystroke, costs nothing, and a directory should suggest the
+ * places it actually has listings in before it suggests anywhere else.
+ *
+ * Prefix matches first, then anything containing the text — so "lo" leads
+ * with London and still finds Los Angeles.
+ */
+export function suggestCities(text: string, limit = 5) {
+  const q = text.trim().toLowerCase();
+  if (q.length < 1) return [];
+
+  const names = Object.keys(CITIES).filter(isDestination);
+  const starts = names.filter((n) => n.startsWith(q));
+  const has = names.filter((n) => !n.startsWith(q) && n.includes(q));
+
+  return [...starts, ...has]
+    .slice(0, limit)
+    .map((key) => ({
+      key,
+      // Title case for display: the map is keyed lowercase.
+      label: key.replace(/\b\w/g, (c) => c.toUpperCase()),
+    }));
+}
