@@ -507,7 +507,7 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
             ) : null}
             <View style={{ gap: spacing.sm }}>
               {(active.searchable && q ? hits : active.items).map((it: any, i: number) => (
-                <Pressable key={i} style={m.pick} onPress={() => deliver({ kind: active?.key === 'articles' ? 'article' : (it as any).fa ? 'word' : 'poet', item_key: (it as any).key, title: it.title, fa: (it as any).fa, tr: (it as any).tr, en: (it as any).en }, it.tr ?? it.title)}>
+                <Pressable key={i} style={m.pick} onPress={() => deliver({ kind: active?.key === 'tpm' ? 'tpm' : active?.key === 'articles' ? 'article' : (it as any).fa ? 'word' : 'poet', item_key: (it as any).key ?? (it.route?.split('post=')[1]), title: it.title, fa: (it as any).fa, tr: (it as any).tr, en: (it as any).en }, it.tr ?? it.title)}>
                   {(it.fa) ? <Text style={[m.pickFa, { color: active.tint }]}>{it.fa}</Text> : <View style={[m.pickIcon, { backgroundColor: active.tint + '18' }]}><Ionicons name={active.icon as any} size={14} color={active.tint} /></View>}
                   <View style={{ flex: 1 }}>
                     <Text style={m.pickT}>{it.tr ?? it.title}</Text>

@@ -45,6 +45,7 @@ export async function sendItem(payload: {
           : (payload as any).kind === 'topic' ? 'a topic'
           : (payload as any).kind === 'poet' ? 'a poet'
           : (payload as any).kind === 'business' ? 'a place'
+          : (payload as any).kind === 'tpm' ? 'an article'
           : 'something'),
       body: (payload as any).fa
         ? (payload as any).fa + ((payload as any).en ? '  ·  ' + (payload as any).en : '')
@@ -90,6 +91,7 @@ export function itemRoute(it: SentItem): string | null {
     case 'culture': return '/culture/topic?topic=' + it.item_key;
     case 'place': return '/geography?jump=' + it.item_key;
     case 'business': return '/local/business?id=' + it.item_key;
+    case 'tpm': return '/tpm/post?post=' + it.item_key;
     default: return null; // a word has no page of its own; the card is it
   }
 }

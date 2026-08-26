@@ -1,3 +1,4 @@
+import { TPM_POSTS } from '@/constants/tpm-content';
 // Profile: mock state. Wire to real storage later.
 
 export const pr = {
@@ -125,6 +126,21 @@ export type SendCat = { key: string; label: string; icon: string; tint: string; 
 
 // The ten people actually send. Everything else is behind the search.
 export const SEND_CATEGORIES: SendCat[] = [
+  // Built from the posts themselves rather than listed by hand, so a piece
+  // added to the magazine is sendable the same day without anyone
+  // remembering to add it here twice.
+  {
+    key: 'tpm',
+    label: 'TPM',
+    icon: 'newspaper-outline',
+    tint: '#C8442E',
+    items: TPM_POSTS.map((p) => ({
+      title: p.title,
+      sub: p.subject + '  ·  ' + p.discipline,
+      route: '/tpm/post?post=' + p.key,
+    })),
+  },
+
   { key: 'words', label: 'Words', icon: 'language-outline', tint: '#417270', searchable: true, items: [
     { fa: 'دلتنگ', title: 'deltang', sub: 'heart tight  ·  missing someone' },
     { fa: 'تعارف', title: 'taarof', sub: 'the rule nobody explains' },

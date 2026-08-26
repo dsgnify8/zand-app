@@ -8,11 +8,19 @@ import { NAV } from '@/constants/i18n/nav';
 import { TpmIcon } from '@/components/tpm-mark';
 import { tpm } from '@/constants/tpm-theme';
 
-function TabLabel({ k }: { k: any }) {
+function TabLabel({ k, focused }: { k: any; focused?: boolean }) {
   useLang();
   const fa = getLang() === 'fa';
   return (
-    <Text style={{ fontFamily: fa ? fonts.persian : fonts.body, fontSize: fa ? 12 : 11 }}>
+    <Text
+      style={{
+        // Weight as well as colour. A tint difference alone is easy to
+        // miss at this size, and the label is the part people read.
+        fontFamily: focused ? fonts.bodyStrong : (fa ? fonts.persian : fonts.body),
+        fontSize: fa ? 12 : 11,
+        color: focused ? colors.accent : 'rgba(40,28,24,0.38)',
+      }}
+    >
       {t(k)}
     </Text>
   );
@@ -44,8 +52,11 @@ export default function TabLayout() {
         // And a swipe back, since several of these are reached from one
         // another rather than from the bar.
         gestureEnabled: true,
+        // A real difference, not a shade. The active tab was a slightly
+        // darker version of the inactive one, which reads as a rendering
+        // artefact rather than as an answer to "where am I".
         tabBarActiveTintColor: colors.accent,
-        tabBarInactiveTintColor: colors.textSecondary,
+        tabBarInactiveTintColor: 'rgba(40,28,24,0.38)',
         tabBarStyle: {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
@@ -54,9 +65,9 @@ export default function TabLayout() {
         tabBarLabelStyle: { fontFamily: labelFont, fontSize: lang === 'fa' ? 12 : 11 },
       }}
     >
-      <Tabs.Screen name="index" options={{ tabBarLabel: () => <TabLabel k={NAV.home} />, tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="learn" options={{ tabBarLabel: () => <TabLabel k={NAV.learn} />, tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="explore" options={{ tabBarLabel: () => <TabLabel k={NAV.explore} />, tabBarIcon: ({ color, size }) => <Ionicons name="compass-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="index" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.home} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="learn" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.learn} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="explore" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="compass-outline" size={size} color={color} /> }} />
       <Tabs.Screen
         name="tpm"
         options={{
@@ -64,9 +75,9 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 8} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
-      <Tabs.Screen name="local" options={{ tabBarLabel: () => <TabLabel k={NAV.local} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
       <Tabs.Screen name="business-new" options={{ href: null }} />
-      <Tabs.Screen name="profile" options={{ tabBarLabel: () => <TabLabel k={NAV.profile} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="profile" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.profile} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
     </Tabs>
   );
 }
