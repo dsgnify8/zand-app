@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin, useHidden, hideArticle, unhideArticle, isHidden } from '@/lib/admin';
+import { AnalyticsBoard } from '@/components/analytics-board';
 import { supabase } from '@/lib/supabase';
 
 import { useLang } from '@/lib/i18n';
@@ -16,26 +17,7 @@ export default function AdminScreen() {
   useLang();
   const isAdmin = useIsAdmin();
   useHidden();
-  const [signups, setSignups] = useState<number | null>(null);
-  const [topReads, setTopReads] = useState<{ item_key: string; n: number }[]>([]);
-  const [totalReads, setTotalReads] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (!isAdmin || tab !== 'analytics') return;
-    (async () => {
-      // total events + top read items
-      const { data: events } = await supabase.from('events').select('item_key');
-      if (events) {
-        setTotalReads(events.length);
-        const counts: Record<string, number> = {};
-        for (const e of events as any[]) counts[e.item_key] = (counts[e.item_key] ?? 0) + 1;
-        setTopReads(Object.entries(counts).map(([item_key, n]) => ({ item_key, n })).sort((a, b) => b.n - a.n).slice(0, 10));
-      }
-      // signups: count profiles via auth admin is not available client-side; approximate by distinct users in events
-      const { data: users } = await supabase.from('events').select('user_id');
-      if (users) setSignups(new Set((users as any[]).map((u) => u.user_id)).size);
-    })();
-  }, [isAdmin, tab]);
 
   if (!isAdmin) {
     return (
@@ -55,13 +37,24 @@ export default function AdminScreen() {
 
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
           <View style={{ gap: spacing.lg }}>
-            <View style={s.statRow}>
-              <View style={s.statCard}><Text style={s.statN}>{signups ?? '—'}</Text><Text style={s.statL}>ACTIVE READERS</Text></View>
-              <View style={s.statCard}><Text style={s.statN}>{totalReads ?? '—'}</Text><Text style={s.statL}>TOTAL READS</Text></View>
-            </View>
-            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-businesses' as any)}>
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-listings' as any)}>
               <Ionicons name="storefront-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Business listings</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
+            {/* Pending submissions, waiting on a yes or a no. Separate
+                from the listings table: one is a queue you work through,
+                the other is everything that already exists. */}
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-businesses' as any)}>
+              <Ionicons name="checkmark-circle-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Review queue</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-featured' as any)}>
+              <Ionicons name="star-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Featured listings</Text>
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
@@ -83,9 +76,9 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
-            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-content' as any)}>
-              <Ionicons name="create-outline" size={16} color={colors.accent} />
-              <Text style={s.editRowT}>Edit content</Text>
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-featured' as any)}>
+              <Ionicons name="star-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Featured listings</Text>
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
@@ -95,20 +88,11 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
-            <Text style={s.sectionL}>MOST READ</Text>
-            {topReads.length === 0 ? (
-              <Text style={s.dim}>No reads logged yet.</Text>
-            ) : topReads.map((r, i) => {
-              // ARTICLES removed with the old reading page; the key is the title now.
-              return (
-                <View key={r.item_key} style={s.analyRow}>
-                  <Text style={s.analyRank}>{i + 1}</Text>
-                  <Text style={s.analyT} numberOfLines={1}>{r.item_key}</Text>
-                  <Text style={s.analyN}>{r.n}</Text>
-                </View>
-              );
-            })}
-            <Text style={s.hint}>Signup totals are also in your Supabase dashboard under Authentication.</Text>
+            {/* Four questions, each answered by a number and opening to
+                the list behind it. The old block put every read on the
+                screen at once, most of them from a page that no longer
+                exists. */}
+            <AnalyticsBoard />
           </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,5 +1,6 @@
-import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import { Tabs, useSegments } from 'expo-router';
+import { StyleSheet, Text } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
@@ -8,7 +9,7 @@ import { NAV } from '@/constants/i18n/nav';
 import { TpmIcon } from '@/components/tpm-mark';
 import { tpm } from '@/constants/tpm-theme';
 
-function TabLabel({ k, focused }: { k: any; focused?: boolean }) {
+function TabLabel({ k, focused, dark }: { k: any; focused?: boolean; dark?: boolean }) {
   useLang();
   const fa = getLang() === 'fa';
   return (
@@ -18,7 +19,9 @@ function TabLabel({ k, focused }: { k: any; focused?: boolean }) {
         // miss at this size, and the label is the part people read.
         fontFamily: focused ? fonts.bodyStrong : (fa ? fonts.persian : fonts.body),
         fontSize: fa ? 12 : 11,
-        color: focused ? colors.accent : 'rgba(40,28,24,0.38)',
+        color: focused
+          ? (dark ? '#F6F1EC' : colors.accent)
+          : (dark ? 'rgba(246,241,236,0.42)' : 'rgba(40,28,24,0.38)'),
       }}
     >
       {t(k)}
@@ -39,6 +42,10 @@ export default function TabLayout() {
   // the thing that leaked instances before.
   useLang();
   const lang = getLang();
+
+  // Which page is under the bar. Only the city browsing pages run dark.
+  const segments = useSegments();
+  const dark = segments.join('/').includes('local/cities');
   const labelFont = lang === 'fa' ? fonts.persian : fonts.body;
 
   return (
@@ -55,19 +62,33 @@ export default function TabLayout() {
         // A real difference, not a shade. The active tab was a slightly
         // darker version of the inactive one, which reads as a rendering
         // artefact rather than as an answer to "where am I".
-        tabBarActiveTintColor: colors.accent,
-        tabBarInactiveTintColor: 'rgba(40,28,24,0.38)',
+        tabBarActiveTintColor: dark ? '#F6F1EC' : colors.accent,
+        tabBarInactiveTintColor: dark ? 'rgba(246,241,236,0.42)' : 'rgba(40,28,24,0.38)',
+        // Translucent, with the page showing through. A solid cream bar
+        // under a dark page reads as a strip of another app stuck to the
+        // bottom of this one.
+        // The bar takes the page's ground rather than one fixed colour.
+        // On the dark browsing pages a cream bar reads as a strip of
+        // another app stuck to the bottom of this one.
         tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
-          borderTopWidth: 1,
+          position: 'absolute',
+          backgroundColor: dark ? 'rgba(14,11,10,0.55)' : 'rgba(250,247,243,0.86)',
+          borderTopColor: dark ? 'rgba(246,241,236,0.10)' : 'rgba(40,28,24,0.08)',
+          borderTopWidth: StyleSheet.hairlineWidth,
         },
+        tabBarBackground: () => (
+          <BlurView
+            intensity={dark ? 40 : 28}
+            tint={dark ? 'dark' : 'light'}
+            style={StyleSheet.absoluteFill}
+          />
+        ),
         tabBarLabelStyle: { fontFamily: labelFont, fontSize: lang === 'fa' ? 12 : 11 },
       }}
     >
-      <Tabs.Screen name="index" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.home} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="learn" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.learn} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="explore" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="compass-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="index" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.home} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="learn" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.learn} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="explore" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="compass-outline" size={size} color={color} /> }} />
       <Tabs.Screen
         name="tpm"
         options={{
@@ -75,9 +96,9 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 8} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
-      <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
       <Tabs.Screen name="business-new" options={{ href: null }} />
-      <Tabs.Screen name="profile" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.profile} focused={focused} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="profile" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.profile} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
     </Tabs>
   );
 }

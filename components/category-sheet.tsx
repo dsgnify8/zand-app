@@ -49,7 +49,7 @@ export function CategoryBar({
   return (
     <View style={[st.barRow, fa && { flexDirection: 'row-reverse' }]}>
       <Pressable style={[st.bar, { borderColor: line }]} onPress={onPress}>
-        <Text style={[st.barT, { color: ink }]}>
+        <Text style={[st.barT, { color: '#F6F1EC' }]}>
           {value.length === 0
             ? t(LOCAL.categories)
             : value.length === 1
@@ -162,11 +162,14 @@ export function CategorySheet({
 
 const st = StyleSheet.create({
   barRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  // Dark box, light text. An outlined control on a cream page reads as
+  // an empty field waiting to be filled rather than a thing to press.
   bar: {
-    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: 'rgba(28,20,17,0.92)',
+    borderWidth: 0,
     borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
   },
   barT: { fontFamily: fonts.body, fontSize: 11, letterSpacing: 0.2 },
 

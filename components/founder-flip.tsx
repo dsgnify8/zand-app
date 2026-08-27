@@ -16,7 +16,7 @@
 // records — the block types are the point, not the words.
 
 import { useRef, useState } from 'react';
-import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -241,6 +241,15 @@ export function FounderFlip({
               {s.since ? '  ·  ' + (fa ? 'از ' + s.since : 'since ' + s.since) : ''}
             </Text>
           </View>
+
+          {/* The founder, where there is one. Above the story rather than
+              inside it: you want to see who is talking before you read
+              what they said. */}
+          {(s as any).photo ? (
+            <View style={st.portrait}>
+              <Image source={{ uri: (s as any).photo }} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
+            </View>
+          ) : null}
 
           {s.blocks.map((b, i) => {
             if (b.t === 'rule') return <View key={i} style={st.rule} />;
@@ -474,5 +483,9 @@ const st = StyleSheet.create({
     fontSize: 40,
     lineHeight: 40,
     color: colors.textPrimary,
+  },
+  portrait: {
+    width: '100%', aspectRatio: 1.3, borderRadius: 12, overflow: 'hidden',
+    backgroundColor: 'rgba(40,28,24,0.06)', marginBottom: spacing.lg,
   },
 });

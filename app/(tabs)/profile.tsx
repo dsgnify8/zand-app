@@ -551,6 +551,13 @@ function FriendsTab() {
   const hasFriends = accepted.length > 0;
   const hasActivity = hasFriends || inbox.length > 0;
 
+  // Nothing until the friends fetch lands. The sections below each render
+  // from their own list, so without this the tab assembles itself in front
+  // of you — which is what the flash was when switching from Progress.
+  if (friendsLoading) {
+    return <ActivityIndicator style={{ marginTop: spacing.xxl }} color={pr.friendA} />;
+  }
+
   return (
     <>
       {/* The pitch only shows to someone who has nobody yet. With
@@ -599,11 +606,14 @@ function FriendsTab() {
       ) : null}
 
       {/* Real inbox: things friends actually sent me */}
-      {inbox.length > 0 ? (
+      {inbox.some((it) => !it.learned) ? (
         <>
           <Text style={s.sectionLabel}>{t(PROFILE.waitingForYou)}</Text>
           <View style={{ gap: spacing.md }}>
-            {inbox.map((it) => (
+            {/* Learned things leave. The inbox is what is waiting for
+                you, and something you have finished sitting in it makes
+                the list feel unread when it is not. */}
+            {inbox.filter((it) => !it.learned).map((it) => (
               <Pressable
                 key={it.id}
                 style={[s.inbox, it.learned && s.inboxDone]}
@@ -617,6 +627,15 @@ function FriendsTab() {
                   <View style={s.avatar}><Text style={s.avatarT}>{(it.senderName || '?')[0].toUpperCase()}</Text></View>
                   <View style={{ flex: 1 }}>
                     <Text style={s.inboxFrom}>{it.senderName} {t(PROFILE.sentYou)} {KIND_LABEL_T[it.kind] ? t(KIND_LABEL_T[it.kind]) : t(PROFILE.something)}</Text>
+                    {/* When, under who. Something that arrived two hours
+                        ago and something from last week are different
+                        things, and the card said neither. */}
+                    {it.created_at ? (
+                      /* The local timeAgo takes a timestamp, not an ISO
+                         string — hence NaN. Parsed here rather than
+                         changing a helper a dozen other places use. */
+                      <Text style={s.inboxWhen}>{timeAgo(Date.parse(it.created_at))}</Text>
+                    ) : null}
                   </View>
                   {it.learned ? <Ionicons name="checkmark-circle" size={19} color={pr.streakA} /> : <View style={s.newDot} />}
                 </View>
@@ -631,7 +650,15 @@ function FriendsTab() {
                   ) : (
                     <>
                       <Ionicons name={KIND_ICON_IN[it.kind] ?? 'sparkles'} size={20} color={pr.friendA} />
-                      <Text style={[s.wordTr, { marginTop: 6 }]}>{it.title}</Text>
+                      <Text style={[s.wordTr, { marginTop: 8 }]}>{it.title}</Text>
+                      {/* What it is, under what it is called. A title alone
+                          told you nothing about why it had been sent. */}
+                      {it.en ? (
+                        <>
+                          <View style={s.wordRule} />
+                          <Text style={s.wordEn}>{it.en}</Text>
+                        </>
+                      ) : null}
                     </>
                   )}
                 </View>
@@ -1099,11 +1126,17 @@ const s = StyleSheet.create({
   inboxFrom: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.textPrimary },
   inboxWhen: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
   newDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: pr.friendA },
-  inboxCard: { alignItems: 'center', backgroundColor: 'rgba(65,114,112,0.08)', borderRadius: 10, paddingVertical: spacing.lg, marginTop: spacing.md },
+  // Horizontal padding as well as vertical: an article title runs to two
+  // or three lines and was touching both edges.
+  inboxCard: {
+    alignItems: 'center', backgroundColor: 'rgba(65,114,112,0.08)',
+    borderRadius: 10, paddingVertical: spacing.lg, paddingHorizontal: spacing.lg,
+    marginTop: spacing.md,
+  },
   wordFa: { fontFamily: fonts.persian, fontSize: 28, color: pr.friendA },
-  wordTr: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary, marginTop: 2 },
+  wordTr: { fontFamily: fonts.heading, fontSize: fontSize.lg, lineHeight: 26, color: colors.textPrimary, marginTop: 2, textAlign: 'center' },
   wordRule: { width: 20, height: 1, backgroundColor: pr.friendA, opacity: 0.5, marginVertical: spacing.sm },
-  wordEn: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, fontStyle: 'italic' },
+  wordEn: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, fontStyle: 'italic', textAlign: 'center' },
   inboxKindTag: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.5, color: pr.friendA, marginTop: 4 },
   inboxNote: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, fontStyle: 'italic', textAlign: 'center', marginTop: spacing.md },
   complete: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: pr.friendA, borderRadius: 20, paddingVertical: 9, marginTop: spacing.md },
@@ -1159,4 +1192,9 @@ const s = StyleSheet.create({
   },
   libCardT: { fontFamily: fonts.heading, fontSize: 15, lineHeight: 19, color: pr.text, marginTop: 7 },
   libCardS: { fontFamily: fonts.body, fontSize: 11, color: pr.dim, marginTop: 1 },
+  inboxWhen: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, marginTop: 2 },
+  inboxNote: {
+    fontFamily: fonts.body, fontSize: 13, fontStyle: 'italic',
+    color: pr.dim, textAlign: 'center', marginTop: spacing.md,
+  },
 });

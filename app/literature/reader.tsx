@@ -5,6 +5,7 @@ import { Image, ScrollView, StyleSheet, Text, View, Pressable } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { logEvent } from '@/lib/admin';
 
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { lit, findAuthor, type LitBlock, type Author } from '@/constants/literature';
@@ -209,6 +210,9 @@ export default function LitReader() {
   useLang();
   const fa = getLang() === 'fa';
   const params = useLocalSearchParams<{ author: string; page: string }>();
+
+  // For the admin board: which poets people actually read.
+  useEffect(() => { if (params.author) logEvent('poet', params.author); }, [params.author]);
   const author = findAuthor(params.author);
   if (!author) return <SafeAreaView style={styles.safe} edges={['top']}><View style={styles.center}><Text style={styles.dim}>Not found.</Text></View></SafeAreaView>;
 

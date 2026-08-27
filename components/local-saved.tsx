@@ -80,7 +80,6 @@ export function SavedBusinesses() {
   const onDrawerPick = (k: DrawerPick) => {
     if (k === 'home') { router.navigate('/local' as any); return; }
     if (k === 'city') { router.navigate('/local/cities' as any); return; }
-    if (k === 'category') { router.navigate('/local/categories' as any); return; }
     router.navigate(session
       ? ('/business-new' as any)
       : ('/onboarding?step=2&next=/business-new' as any));
@@ -122,10 +121,15 @@ export function SavedBusinesses() {
             return (
               <View key={c.id} style={s.section}>
                 <View style={[s.sectionHead, fa && { flexDirection: 'row-reverse' }]}>
-                  <Text style={[s.sectionL, fa && s.rtl]}>
-                    {c.name.toUpperCase()}
-                    <Text style={s.sectionN}>{'   ' + list.length}</Text>
-                  </Text>
+                  <Pressable
+                    style={{ flex: 1 }}
+                    onPress={() => router.navigate(('/local/folder?id=' + c.id) as any)}
+                  >
+                    <Text style={[s.sectionL, { paddingHorizontal: 0 }, fa && s.rtl]}>
+                      {c.name.toUpperCase()}
+                      <Text style={s.sectionN}>{'   ' + list.length}</Text>
+                    </Text>
+                  </Pressable>
                   <View style={[{ flexDirection: 'row', gap: spacing.md, alignItems: 'center' }, fa && { flexDirection: 'row-reverse' }]}>
                     <Pressable hitSlop={10} onPress={() => setSharing(c)}>
                       <Ionicons name="person-add-outline" size={16} color={colors.textSecondary} />

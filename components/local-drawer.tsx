@@ -25,12 +25,11 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { getLang, t } from '@/lib/i18n';
 import { LOCAL } from '@/constants/i18n/local';
 
-export type DrawerPick = 'home' | 'city' | 'category' | 'list';
+export type DrawerPick = 'home' | 'city' | 'list';
 
 const ROWS: { key: DrawerPick; icon: string; label: any; sub: any }[] = [
   { key: 'home', icon: 'storefront-outline', label: LOCAL.localHome, sub: LOCAL.localHomeX },
   { key: 'city', icon: 'earth-outline', label: LOCAL.byCityTitle, sub: LOCAL.byCityX },
-  { key: 'category', icon: 'grid-outline', label: LOCAL.byCategoryTitle, sub: LOCAL.byCategoryX },
   { key: 'list', icon: 'add-circle-outline', label: LOCAL.listBusiness, sub: LOCAL.listBusinessX },
 ];
 

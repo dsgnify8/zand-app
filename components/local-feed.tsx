@@ -35,7 +35,24 @@ const NEW_N = 10;
 // What counts as newly opened. Not a rolling window: "opened this year" is
 // a thing someone can say out loud, and a rolling twelve months would drop
 // a place in January for no reason it could explain.
-const THIS_YEAR = new Date().getFullYear();
+/**
+ * Today's order for a fixed set.
+ *
+ * Seeded by the date rather than random, so every device agrees on what
+ * today looks like — and so it changes overnight on its own. Being
+ * seventh on Monday is not being seventh forever.
+ */
+function shuffleForToday<T>(items: T[]): T[] {
+  const d = new Date();
+  let seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    const j = seed % (i + 1);
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
 
 /**
  * How the feed divides.
@@ -65,13 +82,13 @@ export function feedSections(items: Business[], place: { lat: number; lng: numbe
   }
   const top = preferUnseen(ranked, TOP_N);
 
-  // Opened this year, newest first. Falls back to recently listed while
-  // nobody has filled the year in — an empty section would be worse than
-  // an approximate one.
-  const opened = items
-    .filter((b) => (b as any).opened_year === THIS_YEAR)
-    .sort((a, b) => String(b.created_at ?? '').localeCompare(String(a.created_at ?? '')));
-  const fresh = (opened.length ? opened : byNew).slice(0, NEW_N);
+  // Chosen by an admin rather than measured. "Popular" from view counts
+  // would mean the same three listings forever, since being at the top is
+  // what makes something popular in the first place.
+  const picked = items
+    .filter((b: any) => b.featured)
+    .sort((a: any, b: any) => (a.featured_rank ?? 999) - (b.featured_rank ?? 999));
+  const fresh = shuffleForToday(picked.length ? picked : byNew.slice(0, NEW_N));
 
   return { top, fresh, all: items };
 }
@@ -161,7 +178,7 @@ export function NewRail({
 
   return (
     <View style={st.section}>
-      <Text style={[st.head, fa && st.rtl]}>{t(LOCAL.newlyOpened)}</Text>
+      <Text style={[st.head, fa && st.rtl]}>{t(LOCAL.popular)}</Text>
 
       <ScrollView
         horizontal
@@ -205,7 +222,6 @@ export function SeeAllHead({
     <View style={[st.seeAll, fa && { flexDirection: 'row-reverse' }]}>
       <Text style={[st.head, { marginBottom: 0 }, fa && st.rtl]}>
         {t(LOCAL.seeAll)}
-        <Text style={st.seeAllN}>{'   ' + n}</Text>
       </Text>
       {/* The grid went: on the feed these cards are the point, and half of
           one is not worth seeing. The room it leaves goes to the filter,

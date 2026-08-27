@@ -218,6 +218,9 @@ export function toCardStory(story: FounderStory) {
     founder: story.name,
     founderFa: story.name_fa ?? undefined,
     since: story.since ?? undefined,
+    // The first photo, as a portrait above the story. The card had no way
+    // to show one, so an uploaded picture went nowhere.
+    photo: (story.photos ?? [])[0] ? storyPhotoUrl((story.photos ?? [])[0]) : undefined,
     blocks,
   };
 }

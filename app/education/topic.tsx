@@ -2,6 +2,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { SaveHeart } from '@/components/save-heart';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { logEvent } from '@/lib/admin';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -17,6 +18,9 @@ export default function TopicScreen() {
   // getLang() or t(), which are always current.
   useLang();
   const { topic: key } = useLocalSearchParams<{ topic: string }>();
+
+  // For the admin board: which pieces people open.
+  useEffect(() => { if (key) logEvent('topic', key); }, [key]);
   const topic = findTopic(key);
 
   if (!topic) {

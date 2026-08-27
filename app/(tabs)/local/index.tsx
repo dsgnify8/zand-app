@@ -318,7 +318,10 @@ export default function Local() {
           ) : null}
         </View>
 
-        {searching ? null : <NewRail
+        {/* Nothing until the listings are in. The fallback fills the rail
+            with whatever is newest when nothing is featured, so on a slow
+            load you see ten cards and then one. */}
+        {searching || loading ? null : <NewRail
           items={fresh}
           onOpen={(b) => router.navigate(('/local/business?id=' + b.id) as any)}
         />}
@@ -411,7 +414,6 @@ export default function Local() {
           // scrim up, which froze the screen.
           if (k === 'home') { setDrawer(false); return; }
           if (k === 'city') router.navigate('/local/cities' as any);
-          else if (k === 'category') router.navigate('/local/categories' as any);
           else listYours();
         }}
       />

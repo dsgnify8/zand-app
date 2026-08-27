@@ -12,6 +12,7 @@ import { eduImage } from '@/constants/education-images';
 import { TpmMark } from '@/components/tpm-mark';
 import { useSaved } from '@/lib/saved-store';
 import { canRead, markRead, useTpmAccess } from '@/lib/tpm-access';
+import { logEvent } from '@/lib/admin';
 import { Paywall } from '@/components/tpm-paywall';
 
 import { useLang } from '@/lib/i18n';
@@ -61,6 +62,9 @@ export default function TpmPostScreen() {
     if (!p) return;
     if (canRead(p.key)) markRead(p.key);
     else setLocked(true);
+
+    // For the admin board: which pieces people actually open.
+    logEvent('tpm', p.key);
   }, [p?.key]);
 
   if (!p) {

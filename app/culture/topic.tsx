@@ -4,6 +4,7 @@ import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { logEvent } from '@/lib/admin';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
@@ -115,6 +116,9 @@ export default function CultureTopic() {
   // getLang() or t(), which are always current.
   useLang();
   const { topic } = useLocalSearchParams<{ topic: string }>();
+
+  // For the admin board: which pieces people open.
+  useEffect(() => { if (topic) logEvent('culture', topic); }, [topic]);
   const t = CULTURE_TOPICS.find((x) => x.key === topic) ?? CULTURE_TOPICS[0];
   const pages = CULTURE_PAGES[t.key] ?? [];
 
