@@ -16,6 +16,8 @@ export type SentItem = {
   created_at: string;
   // The item this one answers, if it answers one. Null starts a thread.
   reply_to?: number | null;
+  /** Whether I have sent something back for this. Computed on load. */
+  answered?: boolean;
   senderName?: string;
   // Filled by loadOutbox only.
   recipientName?: string;
@@ -74,7 +76,22 @@ export async function loadInbox(myId: string): Promise<SentItem[]> {
   const { data: profs } = await supabase.from('profiles').select('id, name').in('id', senderIds);
   const byId: Record<string, string> = {};
   for (const p of (profs ?? []) as any[]) byId[p.id] = p.name;
-  return rows.map((r) => ({ ...r, senderName: byId[r.sender] ?? 'A friend' }));
+
+  // Which of these have been answered. One query rather than a lookup per
+  // card, and read from the table rather than remembered in memory — an
+  // exchange should still be closed after the app restarts.
+  const { data: replies } = await supabase
+    .from('sent_items')
+    .select('reply_to')
+    .eq('sender', myId)
+    .not('reply_to', 'is', null);
+  const answered = new Set((replies ?? []).map((r: any) => r.reply_to));
+
+  return rows.map((r) => ({
+    ...r,
+    senderName: byId[r.sender] ?? 'A friend',
+    answered: answered.has(r.id),
+  }));
 }
 
 /**

@@ -275,6 +275,7 @@ export default function Explore() {
         </Rise>
 
         {/* Geography: the map itself, on the page. */}
+        <View style={{ height: spacing.xxl }} />
         <Rise index={1}>
           <Pressable onPress={() => router.navigate('/geography' as any)}>
             <View style={s.headRow}>
@@ -294,6 +295,7 @@ export default function Explore() {
           </View>
         </Rise>
 
+        <View style={{ height: spacing.xxl }} />
         <Rise index={2}>
           <PoetDeck />
         </Rise>

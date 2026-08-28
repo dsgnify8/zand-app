@@ -1,18 +1,19 @@
 import { Image, View } from 'react-native';
 
-// The Persian Mag's own mark, used as supplied rather than redrawn.
-// No tint is applied: the file has a background, so tinting fills the whole
-// rectangle rather than just the letterforms.
-const LOGO = require('../assets/brand/tpm-logo.png');
+// The Persian Mag's own mark, as supplied. Two files rather than one
+// tinted: the red is theirs and the white is theirs, and tinting a mark
+// someone else designed is a decision that is not ours to make.
+const LOGO_RED = require('../assets/brand/tpm-logo-red.png');
+const LOGO_WHITE = require('../assets/brand/tpm-logo-white.png');
 
 // natural proportions of the file
 const RATIO = 2.6;
 
-export function TpmMark({ size = 26 }: { size?: number; color?: string }) {
+export function TpmMark({ size = 26, white }: { size?: number; color?: string; white?: boolean }) {
   return (
     <View pointerEvents="none">
       <Image
-        source={LOGO}
+        source={white ? LOGO_WHITE : LOGO_RED}
         style={{ width: size * RATIO, height: size }}
         resizeMode="contain"
       />
@@ -34,7 +35,7 @@ export function TpmIcon({ size = 24, color }: { size?: number; color?: string })
       }}
     >
       <Image
-        source={LOGO}
+        source={LOGO_RED}
         style={{ width: size * 1.9, height: size }}
         resizeMode="contain"
       />

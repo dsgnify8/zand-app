@@ -439,7 +439,9 @@ const STORY_W = 250;
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { flex: 1 },
-  container: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl },
+  // Room for the tab bar. It floats over the page now rather than sitting
+  // under it, so the last card needs to clear it.
+  container: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl * 2.4 },
 
   greeting: { fontFamily: fonts.heading, fontSize: 30, color: colors.textPrimary, marginTop: spacing.md },
   faRight: { textAlign: 'right', writingDirection: 'rtl' },

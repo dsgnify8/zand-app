@@ -93,7 +93,7 @@ export default function TabLayout() {
         name="tpm"
         options={{
           title: 'TPM',
-          tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 8} color={focused ? tpm.red : colors.textSecondary} />,
+          tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 16} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
       <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />

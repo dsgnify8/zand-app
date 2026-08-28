@@ -5,11 +5,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
+import { BlurView } from 'expo-blur';
+
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 
 const EXPLORE_SECTIONS = [
-  { label: 'Education', fa: 'آموزش', route: '/section/education', icon: 'school-outline' },
-  { label: 'Videos', fa: 'ویدیوها', route: '/section/videos', icon: 'play-circle-outline' },
+  // What Explore actually holds. Education and Videos were sections from
+  // an earlier shape of the page and led to places nobody arrives at now.
+  { label: 'History', fa: 'تاریخ', route: '/section/education', icon: 'hourglass-outline' },
+  { label: 'Geography', fa: 'جغرافیا', route: '/geography', icon: 'map-outline' },
+  { label: 'Poets', fa: 'شاعران', route: '/literature', icon: 'book-outline' },
+  { label: 'Culture', fa: 'فرهنگ', route: '/culture', icon: 'color-palette-outline' },
 ] as const;
 
 const LINKS = [
@@ -36,6 +42,8 @@ export default function MenuScreen() {
       <Pressable style={styles.dismiss} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} />
 
       <View style={styles.sheet}>
+        {/* The page underneath, faintly. */}
+        <BlurView intensity={34} tint="light" style={StyleSheet.absoluteFill} />
         <SafeAreaView edges={['bottom']}>
           <View style={styles.grab} />
 
@@ -88,10 +96,13 @@ export default function MenuScreen() {
 }
 
 const styles = StyleSheet.create({
-  overlay: { flex: 1, backgroundColor: 'rgba(20,16,12,0.4)', justifyContent: 'flex-end' },
+  overlay: { flex: 1, backgroundColor: 'rgba(20,16,12,0.28)', justifyContent: 'flex-end' },
   dismiss: { flex: 1 },
   sheet: {
-    backgroundColor: colors.background,
+    // Translucent over a blur, so the page it covers is still faintly
+    // there. A solid panel makes the menu feel like a different screen.
+    backgroundColor: 'rgba(250,247,243,0.72)',
+    overflow: 'hidden',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingHorizontal: spacing.lg,
@@ -106,7 +117,15 @@ const styles = StyleSheet.create({
   rowGlyph: { fontFamily: fonts.persian, fontSize: 14.5, color: colors.accent },
 
   subList: { backgroundColor: colors.surface, borderRadius: 12, marginTop: spacing.sm, marginBottom: spacing.sm, paddingHorizontal: spacing.md },
-  subRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border },
+  // The same row as everything else in the menu, indented and a shade
+  // darker. Boxing them made them look like a different component
+  // dropped into the middle of a list.
+  subRow: {
+    flexDirection: 'row', alignItems: 'center', gap: spacing.md,
+    paddingVertical: spacing.md, paddingLeft: spacing.xl,
+    backgroundColor: 'rgba(40,28,24,0.03)',
+    borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border,
+  },
   subLabel: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary },
 
   footer: { paddingVertical: spacing.lg, alignItems: 'center' },

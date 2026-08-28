@@ -6,7 +6,7 @@
 // is findable without being in the way.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
+import { Easing,
   ActivityIndicator, Animated, Dimensions, FlatList, Image, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
@@ -54,6 +54,16 @@ export default function Local() {
   const [query, setQuery] = useState('');
   const [items, setItems] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // The list fades rather than swapping. Changing location replaces every
+  // card at once, and without this the whole page blinks.
+  const swap = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    swap.setValue(0);
+    Animated.timing(swap, {
+      toValue: 1, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true,
+    }).start();
+  }, [place?.lat, place?.lng]);
   const [infoOpen, setInfoOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
   // One sheet for the whole feed rather than one per card.
@@ -161,6 +171,7 @@ export default function Local() {
       </Animated.View>
 
       <Animated.FlatList
+        style={{ opacity: swap }}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: heroY } } }], { useNativeDriver: true })}
         scrollEventThrottle={16}
         // Chunked into pairs for the grid rather than switching

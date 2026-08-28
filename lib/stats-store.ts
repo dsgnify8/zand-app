@@ -115,11 +115,9 @@ export async function markLearnDay() {
 // print different ids, there are two copies of this file in the bundle
 // and each has its own state.
 const MODULE_ID = Math.random().toString(36).slice(2, 7);
-console.log('[store] stats-store loaded as', MODULE_ID);
 
 let lastVisitDay = '';
 export async function markVisitDay() {
-  console.log('[streak] markVisitDay called, lastVisitDay =', lastVisitDay);
   const today = new Date().toISOString().slice(0, 10);
   if (lastVisitDay === today) return;
   lastVisitDay = today;
@@ -133,7 +131,6 @@ export async function markVisitDay() {
       await AsyncStorage.setItem('visit:days', JSON.stringify(next));
       setField('visitDays', next.length);
     }
-    console.log('[streak] days:', JSON.stringify(next), '-> streak', analyseVisits(next).streak);
     const v = analyseVisits(next);
     setStreak(v.streak);
     setNudge(v.nudge);
@@ -233,9 +230,7 @@ export function syncVideosWatched(count: number) {
 }
 
 export function setStreak(days: number) {
-  console.log('[streak] setStreak', days, 'was', state.streakDays);
   if (state.streakDays !== days) { state = { ...state, streakDays: days }; emit(); persist(); }
-  console.log('[streak]', MODULE_ID, 'state now', state.streakDays, 'listeners', listeners.size);
 }
 
 // Milestone definitions

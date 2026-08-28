@@ -3,6 +3,7 @@ import { imageOverride } from '@/lib/image-overrides';
 export const EDU_IMAGES: Record<string, any> = {
   'biz-arianas-1': require('../assets/business/biz-arianas-1.jpg'),
   'biz-taftoon-1': require('../assets/business/biz-taftoon-1.jpg'),
+  'biz-eyval-1': require('../assets/business/biz-eyval-1.jpg'),
   'biz-rumis-1': require('../assets/business/biz-rumis-1.jpg'),
   'biz-4gott-1': require('../assets/business/biz-4gott-1.jpg'),
   'biz-4gott-2': require('../assets/business/biz-4gott-2.jpg'),

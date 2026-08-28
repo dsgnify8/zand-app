@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SaveHeart } from '@/components/save-heart';
 import { SafeAreaView } from 'react-native-safe-area-context';

@@ -124,13 +124,13 @@ export default function TpmScreen() {
     <View style={{ flex: 1, backgroundColor: tpm.paper }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
         <View style={s.head}>
-          <TpmMark size={56} />
+          <TpmMark size={84} />
           <View style={{ width: 20 }} />
         </View>
 
         <View style={s.rule} />
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl * 2.4 }}>
           <Rise>
             <View style={s.intro}>
               <Text style={s.introT}>Curated{'\n'}by TPM</Text>

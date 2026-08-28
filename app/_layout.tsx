@@ -123,9 +123,7 @@ export default function RootLayout() {
       // Guarded individually: an unhandled throw anywhere above meant this
       // never ran, which is why the streak sat at zero for days with no
       // error to show for it.
-      console.log('[boot] loading stats');
       try { await loadStats(); } catch (e) { console.log('[boot] loadStats', e); }
-      console.log('[boot] marking visit');
       try { markVisitDay(); } catch (e) { console.log('[boot] markVisitDay', e); }
     })();
   }, []);

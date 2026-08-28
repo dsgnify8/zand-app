@@ -9,10 +9,25 @@
 // empty. An upload is an improvement on the shipped state, never a
 // dependency of it.
 
+import { useSyncExternalStore } from 'react';
+
 import { supabase } from '@/lib/supabase';
 import * as ImagePicker from 'expo-image-picker';
 
 let overrides = new Map<string, string>();
+
+// Anything showing an overridden image needs telling when they arrive.
+// The load is async and the pages render first, so without this a
+// chapter draws its bundled placeholder and never looks again.
+const listeners = new Set<() => void>();
+const emit = () => listeners.forEach((l) => l());
+
+export function useImageOverrides() {
+  return useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => overrides,
+  );
+}
 
 export async function loadImageOverrides() {
   try {
@@ -21,6 +36,7 @@ export async function loadImageOverrides() {
     const next = new Map<string, string>();
     data.forEach((r: any) => next.set(r.key, r.url));
     overrides = next;
+    emit();
   } catch {
     // the bundled images stand
   }
@@ -77,6 +93,7 @@ export async function uploadFor(key: string, uri: string, userId?: string) {
     if (error) return { error: error.message };
 
     overrides.set(key, url);
+    emit();
     return { url };
   } catch (e) {
     return { error: String(e) };

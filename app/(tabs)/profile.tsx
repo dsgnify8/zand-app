@@ -93,7 +93,6 @@ function StreakCard() {
   const realStats = useStats();
   const demo = showDemoData(streakUser?.email);
   const streakDays = demo ? ME.streak : ((realStats as any)?.streakDays ?? 0);
-  console.log('[streak] card', streakDays, '| hook', (realStats as any)?.streakDays, '| direct', JSON.stringify(debugState()));
   return (
     <View style={s.streak}>
       <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
@@ -548,6 +547,11 @@ function FriendsTab() {
   const [friendsOpen, setFriendsOpen] = useState(false);
   const [sendTo, setSendTo] = useState<{ name: string; id: string } | null>(null);
 
+  // Which cards have been answered, and which one opened the sheet. The
+  // send happens elsewhere, so the row that started it has to be
+  // remembered until the sheet reports back.
+  const [replyingTo, setReplyingTo] = useState<number | null>(null);
+
   const hasFriends = accepted.length > 0;
   const hasActivity = hasFriends || inbox.length > 0;
 
@@ -606,14 +610,14 @@ function FriendsTab() {
       ) : null}
 
       {/* Real inbox: things friends actually sent me */}
-      {inbox.some((it) => !it.learned) ? (
+      {inbox.some((it) => !it.learned || !it.answered) ? (
         <>
           <Text style={s.sectionLabel}>{t(PROFILE.waitingForYou)}</Text>
           <View style={{ gap: spacing.md }}>
-            {/* Learned things leave. The inbox is what is waiting for
-                you, and something you have finished sitting in it makes
-                the list feel unread when it is not. */}
-            {inbox.filter((it) => !it.learned).map((it) => (
+            {/* Learned but unanswered stays. Marking something learned is
+                half the exchange; the card leaves when you have sent one
+                back. */}
+            {inbox.filter((it) => !it.learned || !it.answered).map((it) => (
               <Pressable
                 key={it.id}
                 style={[s.inbox, it.learned && s.inboxDone]}
@@ -664,7 +668,13 @@ function FriendsTab() {
                 </View>
                 {it.note ? <Text style={s.inboxNote}>“{it.note}”</Text> : null}
                 {it.learned ? (
-                  <Pressable style={s.sendBack} onPress={() => setSendTo({ name: it.senderName ?? '', id: it.sender })}>
+                  <Pressable
+                    style={s.sendBack}
+                    onPress={() => {
+                      setReplyingTo(it.id);
+                      setSendTo({ name: it.senderName ?? '', id: it.sender });
+                    }}
+                  >
                     <Ionicons name="arrow-undo" size={13} color={pr.friendA} />
                     <Text style={s.sendBackT}>{t(PROFILE.sendBack)}</Text>
                   </Pressable>
@@ -804,7 +814,17 @@ function FriendsTab() {
 
       </View>
 
-      <SendSheet open={sendTo !== null} onClose={() => setSendTo(null)} to={sendTo?.name ?? ''} toId={sendTo?.id} />
+      <SendSheet
+        open={sendTo !== null}
+        replyTo={replyingTo}
+        onClose={() => {
+          // The send itself records what it answered, so closing only has
+          // to ask the inbox again. Backing out without sending leaves the
+          // card exactly where it was, which is correct.
+          setReplyingTo(null);
+          setSendTo(null);
+          refreshInbox();
+        }} to={sendTo?.name ?? ''} toId={sendTo?.id} />
       <FriendsSheet open={friendsOpen} onClose={() => { setFriendsOpen(false); refresh(); }} />
     </>
   );
@@ -1039,7 +1059,7 @@ const s = StyleSheet.create({
   tabTOn: { color: colors.surface },
   badge: { position: 'absolute', top: 5, right: 9, width: 6, height: 6, borderRadius: 3, backgroundColor: pr.readA },
 
-  container: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  container: { padding: spacing.lg, paddingBottom: spacing.xxl * 2.4 },
   peopleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl, marginBottom: spacing.sm },
   plus: { width: 26, height: 26, borderRadius: 13, backgroundColor: 'rgba(0,0,0,0.05)', alignItems: 'center', justifyContent: 'center' },
   alertWord: { marginTop: 6 },

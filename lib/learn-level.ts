@@ -1,5 +1,5 @@
 // Which level the learner picked, and whether they have been asked yet.
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { syncTouch } from '@/lib/cloud-sync';
 
@@ -59,11 +59,22 @@ export function levelInfo(v: Level | null) {
 }
 
 export function useLevel() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => tick((n) => n + 1);
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
-  return { level, asked, ready, info: levelInfo(level) };
+  // Read through the store on every render rather than closing over the
+  // module variables. The setters reassign them, so a hook that captured
+  // them once kept reporting the values from first evaluation — which is
+  // why the onboarding prompt came back after it had been answered.
+  return useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => snapshot(),
+  );
+}
+
+// One object, cached, so useSyncExternalStore does not see a new
+// reference on every call and loop.
+let snap = { level, asked, ready, info: levelInfo(level) };
+function snapshot() {
+  if (snap.level !== level || snap.asked !== asked || snap.ready !== ready) {
+    snap = { level, asked, ready, info: levelInfo(level) };
+  }
+  return snap;
 }

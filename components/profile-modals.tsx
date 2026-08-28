@@ -402,7 +402,16 @@ export function RenameSheet({ open, onClose, friend, onSave }: any) {
 
 /* ---------------- Send something back ---------------- */
 
-export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose: () => void; to: string; toId?: string }) {
+export function SendSheet({ open, onClose, to, toId, replyTo }: {
+  open: boolean;
+  onClose: () => void;
+  to: string;
+  toId?: string;
+  /** The item being answered, when this was opened from a card. Recorded
+   *  on the send so the exchange survives a relaunch — a flag in memory
+   *  would forget by morning. */
+  replyTo?: number | null;
+}) {
   const fa = getLang() === 'fa';
   const { user, displayName } = useAuth();
   const [mode, setMode] = useState<'browse' | 'recent'>('browse');
@@ -421,7 +430,13 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
     setSent(label);
     bump('thingsSent');
     if (user?.id && toId) {
-      sendItem({ sender: user.id, recipient: toId, senderName: displayName, ...payload }).catch(() => {});
+      sendItem({
+        sender: user.id,
+        recipient: toId,
+        senderName: displayName,
+        reply_to: replyTo ?? undefined,
+        ...payload,
+      }).catch(() => {});
     }
   };
 
@@ -507,7 +522,10 @@ export function SendSheet({ open, onClose, to, toId }: { open: boolean; onClose:
             ) : null}
             <View style={{ gap: spacing.sm }}>
               {(active.searchable && q ? hits : active.items).map((it: any, i: number) => (
-                <Pressable key={i} style={m.pick} onPress={() => deliver({ kind: active?.key === 'tpm' ? 'tpm' : active?.key === 'articles' ? 'article' : (it as any).fa ? 'word' : 'poet', item_key: (it as any).key ?? (it.route?.split('post=')[1]), title: it.title, fa: (it as any).fa, tr: (it as any).tr, // `sub` is what SendItem actually carries; `en` was always
+                <Pressable key={i} style={m.pick} onPress={() => deliver({ kind: active?.key === 'tpm' ? 'tpm' : active?.key === 'articles' ? 'article' : (it as any).fa ? 'word' : 'poet', item_key: (it as any).key ?? (it.route?.split('post=')[1]), title: it.title, fa: (it as any).fa, // SendItem carries the transliteration in `title` — `tr` is only on
+                    // the word-bank entries, so a word sent from a category
+                    // arrived with the Persian and nothing under it.
+                    tr: (it as any).tr ?? it.title, // `sub` is what SendItem actually carries; `en` was always
                     // undefined, which is why nothing had a description.
                     en: (it as any).en ?? it.sub }, it.tr ?? it.title)}>
                   {(it.fa) ? <Text style={[m.pickFa, { color: active.tint }]}>{it.fa}</Text> : <View style={[m.pickIcon, { backgroundColor: active.tint + '18' }]}><Ionicons name={active.icon as any} size={14} color={active.tint} /></View>}

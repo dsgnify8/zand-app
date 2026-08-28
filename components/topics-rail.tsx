@@ -94,24 +94,27 @@ export function TopicsRail({ bleed = spacing.lg }: { bleed?: number }) {
 const st = StyleSheet.create({
   // The header centres its children, so without this the rail would size
   // to its content and sit in the middle rather than running off both edges.
-  wrap: { marginTop: 14, alignSelf: 'stretch' },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 20 },
+  // More room, and more air under it. At the old size the rule sat close
+  // enough to the labels to read as an underline on all of them rather
+  // than as a line the selection travels along.
+  wrap: { marginTop: 18, alignSelf: 'stretch' },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 26 },
 
   // The kicker's voice, stepped back: same letterspacing, less presence.
   item: {
     fontFamily: fonts.body,
-    fontSize: 11,
+    fontSize: 12.5,
     letterSpacing: 2.6,
     textTransform: 'uppercase',
     color: colors.textSecondary,
     opacity: 0.55,
-    paddingVertical: 6,
+    paddingVertical: 10,
   },
   // Persian has no capitals, and letterspacing pulls its joined letters
   // apart, so neither applies here.
   itemFa: {
     fontFamily: fonts.persian,
-    fontSize: 13,
+    fontSize: 15,
     letterSpacing: 0,
     textTransform: 'none',
     writingDirection: 'rtl',

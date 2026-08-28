@@ -48,9 +48,12 @@ const LEAD = 150; // spine drawn above the section, up toward the page title
 const RAIL_TOP = 58; // the break opens here
 const RAIL_BOTTOM = 24; // and closes here
 const CORNER = 30; // radius of the U-turns
-const ROW_H = 124; // vertical gap between horizontal runs
-const HEAD_GAP = 96; // header bottom to the first run
-const CIRCLE_R = 42;
+const ROW_H = 104; // vertical gap between horizontal runs
+const HEAD_GAP = 88; // header bottom to the first run
+// Smaller, and closer together. This section is a way into the history
+// pages rather than the history itself, and at the old size it read as
+// the destination.
+const CIRCLE_R = 34;
 // 02 and 04 run smaller, so the track has a rhythm rather than four
 // identical discs. Index matches CHAPTERS.
 const RADII = [36, 30, 36, 28];
@@ -281,19 +284,15 @@ export function HistoryChapters() {
             : { paddingLeft: SPINE_X + 26, paddingRight: 4 },
         ]}
       >
-        {!fa ? <Text style={st.eyebrow}>تاریخ</Text> : null}
+        {/* One line, and only one. The chapters below say what this is
+            better than a sentence describing them could — and the header
+            was competing with the first of them for the same space. */}
         <View style={[st.headRow, fa && { flexDirection: 'row-reverse' }]}>
-          <Text style={[st.h1, fa && st.rtl]}>{fa ? 'تاریخ' : 'History'}</Text>
           <View style={[st.moreRow, fa && { flexDirection: 'row-reverse' }]}>
             <Text style={[st.moreT, fa && st.rtl]}>{fa ? 'تاریخ را بیاموز' : 'Learn history'}</Text>
             <Ionicons name={fa ? 'arrow-back' : 'arrow-forward'} size={13} color={colors.accent} />
           </View>
         </View>
-        <Text style={[st.sub, fa && st.rtl]}>
-          {fa
-            ? 'بیست‌وپنج سده، به همان ترتیب که گذشت.'
-            : 'Twenty-five centuries, in the order they happened.'}
-        </Text>
       </Pressable>
 
       {/* Tapping the empty track closes an open chapter. Sits under the rows,
@@ -478,14 +477,19 @@ const st = StyleSheet.create({
   },
   headRow: {
     flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    // Ranged right. It is a way out of this section rather than a title
+    // for it, and things that lead somewhere else belong on the side you
+    // read towards.
+    justifyContent: 'flex-end',
     alignSelf: 'stretch',
   },
   h1: { fontFamily: fonts.heading, fontSize: 32, color: colors.textPrimary, letterSpacing: -0.4 },
   moreRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   moreT: { fontFamily: fonts.body, fontSize: 13, color: colors.accent },
-  sub: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary, marginTop: 8 },
+  // Unused now the header is one line, kept because a description may
+  // come back and this is where it belongs.
+  sub: { fontFamily: fonts.body, fontSize: 14, lineHeight: 20, color: colors.textSecondary },
 
   num: {
     fontFamily: fonts.body,

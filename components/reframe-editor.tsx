@@ -8,7 +8,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system/legacy';
 
 import { fonts, spacing } from '@/constants/zand-theme';
+import { useAuth } from '@/lib/auth';
 import { getFrame, saveFrame, clearFrame } from '@/lib/image-frames';
+import { uploadFor } from '@/lib/image-overrides';
 import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
@@ -32,6 +34,10 @@ function useImageSize(source?: ImageSourcePropType, uri?: string) {
 export function ReframeEditor({ name, source, onClose }: { name: string; source?: ImageSourcePropType; onClose: () => void }) {
   const start = getFrame(name);
   const [uri, setUri] = useState<string | undefined>(start.uri);
+  // A failed upload has to say so. Silently keeping the old picture is
+  // how the local-only version went unnoticed for weeks.
+  const [err, setErr] = useState<string | null>(null);
+  const { user } = useAuth();
   const size = useImageSize(source, uri);
   const src: ImageSourcePropType | undefined = uri ? { uri } : source;
 
@@ -92,14 +98,15 @@ export function ReframeEditor({ name, source, onClose }: { name: string; source?
         try {
           const dir = (FileSystem.documentDirectory ?? '') + 'frames/';
           await FileSystem.makeDirectoryAsync(dir, { intermediates: true }).catch(() => {});
-          const ext = (picked.split('.').pop() || 'jpg').split('?')[0].toLowerCase();
-          const safe = ['jpg', 'jpeg', 'png', 'webp', 'heic'].includes(ext) ? ext : 'jpg';
-          const dest = dir + name.replace(/[^a-z0-9-]/gi, '_') + '-' + Date.now() + '.' + safe;
-          await FileSystem.copyAsync({ from: picked, to: dest });
-          setUri(dest);
-        } catch {
-          // if the copy fails, fall back rather than losing the pick entirely
-          setUri(picked);
+          // To the server, not to this phone. Copying it into the app's
+          // own directory meant the picture existed on exactly one device
+          // and nobody else ever saw it — which is what "a locally
+          // uploaded image wins" quietly cost us.
+          const r = await uploadFor(name, picked, user?.id);
+          if ((r as any)?.error) { setErr((r as any).error); return; }
+          setUri((r as any).url);
+        } catch (e) {
+          setErr(String(e));
         }
       }
     } catch {}
@@ -157,7 +164,9 @@ export function ReframeEditor({ name, source, onClose }: { name: string; source?
             <Text style={s.saveT}>{t(APP.saveFraming)}</Text>
           </Pressable>
 
-          <Text style={s.note}>Everyone will see it this way. Editing {name}</Text>
+          <Text style={s.note}>
+            {err ?? 'Everyone will see it this way. Editing ' + name}
+          </Text>
         </SafeAreaView>
       </View>
     </Modal>

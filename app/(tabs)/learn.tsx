@@ -288,7 +288,7 @@ export default function LearnScreen() {
 
 const s = StyleSheet.create({
   statsWrap: { marginTop: spacing.xxl },
-  container: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl },
+  container: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl * 2.4 },
 
   head: { paddingTop: spacing.lg, paddingBottom: spacing.lg, position: 'relative' },
   watermark: { position: 'absolute', right: -12, top: -12, fontFamily: fonts.persian, fontSize: 86, color: '#241C19', opacity: 0.07 },
