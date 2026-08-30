@@ -106,7 +106,7 @@ export default function AdminReview() {
           <Ionicons name="chevron-back" size={22} color={colors.textPrimary} />
         </Pressable>
         <Text style={s.headT}>{b.status}</Text>
-        <Pressable hitSlop={12} onPress={() => router.navigate(('/business-new?id=' + b.id) as any)}>
+        <Pressable hitSlop={12} onPress={() => router.navigate(('/local/business-new?id=' + b.id) as any)}>
           <Ionicons name="create-outline" size={19} color={colors.textPrimary} />
         </Pressable>
       </View>

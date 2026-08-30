@@ -1,7 +1,7 @@
 import { Tabs, useSegments } from 'expo-router';
 import { StyleSheet, Text } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
 import { getLang, t, useLang } from '@/lib/i18n';
@@ -86,9 +86,9 @@ export default function TabLayout() {
         tabBarLabelStyle: { fontFamily: labelFont, fontSize: lang === 'fa' ? 12 : 11 },
       }}
     >
-      <Tabs.Screen name="index" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.home} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="learn" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.learn} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="explore" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="compass-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="index" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.home} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} strokeWidth={1} /> }} />
+      <Tabs.Screen name="learn" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.learn} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Feather name="book-open" size={size} color={color} strokeWidth={1} /> }} />
+      <Tabs.Screen name="explore" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Feather name="compass" size={size} color={color} strokeWidth={1} /> }} />
       <Tabs.Screen
         name="tpm"
         options={{
@@ -96,9 +96,8 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 16} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
-      <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="storefront-outline" size={size} color={color} /> }} />
-      <Tabs.Screen name="business-new" options={{ href: null }} />
-      <Tabs.Screen name="profile" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.profile} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} /> }} />
+      <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Feather name="shopping-bag" size={size} color={color} strokeWidth={1} /> }} />
+      <Tabs.Screen name="profile" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.profile} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} strokeWidth={1} /> }} />
     </Tabs>
   );
 }

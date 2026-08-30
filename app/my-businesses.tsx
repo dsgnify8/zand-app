@@ -182,7 +182,7 @@ export default function MyBusinesses() {
         {loading ? (
           <ActivityIndicator style={{ marginTop: spacing.xxl }} color={colors.accent} />
         ) : all.length === 0 ? (
-          <Pitch onStart={() => router.navigate('/business-new' as any)} cta="List a business" />
+          <Pitch onStart={() => router.navigate('/local/business-new' as any)} cta="List a business" />
         ) : (
           <>
             {all.map((b) => {
@@ -191,7 +191,7 @@ export default function MyBusinesses() {
                 <View key={b.id} style={s.card}>
                   <Pressable
                     style={s.cardTop}
-                    onPress={() => router.navigate(('/business-new?id=' + b.id) as any)}
+                    onPress={() => router.navigate(('/local/business-new?id=' + b.id) as any)}
                   >
                     {b.photos?.[0] ? (
                       <Image source={bizImage(b.photos[0])} style={s.shot} />
@@ -218,7 +218,7 @@ export default function MyBusinesses() {
                     <View style={s.reviewNote}>
                       <Text style={s.reviewNoteL}>WHAT WE ASKED FOR</Text>
                       <Text style={s.reviewNoteT}>{b.review_note}</Text>
-                      <Pressable onPress={() => router.navigate(('/business-new?id=' + b.id) as any)}>
+                      <Pressable onPress={() => router.navigate(('/local/business-new?id=' + b.id) as any)}>
                         <Text style={s.reviewNoteCta}>Make the change and send it again</Text>
                       </Pressable>
                     </View>
@@ -235,7 +235,7 @@ export default function MyBusinesses() {
                       <Pressable onPress={() => router.navigate(('/local/business?id=' + b.id) as any)}>
                         <Text style={s.liveLink}>View listing</Text>
                       </Pressable>
-                      <Pressable onPress={() => router.navigate(('/business-new?id=' + b.id) as any)}>
+                      <Pressable onPress={() => router.navigate(('/local/business-new?id=' + b.id) as any)}>
                         <Text style={s.liveLink}>Edit or see how it is doing</Text>
                       </Pressable>
                     </View>
@@ -244,7 +244,7 @@ export default function MyBusinesses() {
               );
             })}
 
-            <Pressable style={s.newBtn} onPress={() => router.navigate('/business-new' as any)}>
+            <Pressable style={s.newBtn} onPress={() => router.navigate('/local/business-new' as any)}>
               <Ionicons name="add" size={16} color="#FFF" />
               <Text style={s.newBtnT}>Add another</Text>
             </Pressable>

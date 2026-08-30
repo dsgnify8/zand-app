@@ -58,12 +58,16 @@ export default function Local() {
   // The list fades rather than swapping. Changing location replaces every
   // card at once, and without this the whole page blinks.
   const swap = useRef(new Animated.Value(1)).current;
+  // Fades in when the rows land, not when the place changes. Those are
+  // a network round trip apart, and fading on the earlier one shows the
+  // previous city's listings under the new city's name.
   useEffect(() => {
+    if (loading) return;
     swap.setValue(0);
     Animated.timing(swap, {
       toValue: 1, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true,
     }).start();
-  }, [place?.lat, place?.lng]);
+  }, [loading, place?.lat, place?.lng]);
   const [infoOpen, setInfoOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
   // One sheet for the whole feed rather than one per card.
@@ -90,9 +94,23 @@ export default function Local() {
 
   const useMine = async () => {
     setLocating(true);
+    // Fade out while the device is asked where it is. Everywhere is
+    // instant so its fade lands on its own; this one takes a moment, and
+    // without starting the fade first the list is already redrawing by
+    // the time the coordinates arrive.
+    Animated.timing(swap, {
+      toValue: 0, duration: 160, easing: Easing.in(Easing.quad), useNativeDriver: true,
+    }).start();
+
     const p = await currentPlace();
     setLocating(false);
     if (p) { setPlace(p); setPlaceOpen(false); }
+    else {
+      // Nothing came back, so nothing changes — bring the list back.
+      Animated.timing(swap, {
+        toValue: 1, duration: 200, easing: Easing.out(Easing.quad), useNativeDriver: true,
+      }).start();
+    }
   };
 
   const lookUp = async () => {
@@ -105,18 +123,31 @@ export default function Local() {
 
   /* ---------------- what ---------------- */
 
+  // The query the list actually runs on, a beat behind what is being
+  // typed. Querying per keystroke means a round trip per letter and a
+  // page that blanks five times while someone types "kebab".
+  const [settled, setSettled] = useState('');
+  useEffect(() => {
+    const id = setTimeout(() => setSettled(query.trim()), 280);
+    return () => clearTimeout(id);
+  }, [query]);
+
   const load = useCallback(async () => {
-    setLoading(true);
+    // Blank when the place changes, since the old city's listings under
+    // a new city's name reads as a glitch. Not when refining a search:
+    // there the results are narrowing, and watching them narrow is the
+    // whole point.
+    setLoading(!settled);
     const rows = await loadBusinesses({
       near: place ? { lat: place.lat, lng: place.lng, km: 60 } : undefined,
       // One category server-side is not enough now that several can be
       // chosen, so the filtering happens below instead.
 
-      query: query.trim() || undefined,
+      query: settled || undefined,
     });
     setItems(rows);
     setLoading(false);
-  }, [place?.lat, place?.lng, query]);
+  }, [place?.lat, place?.lng, settled]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -127,8 +158,8 @@ export default function Local() {
     // Signing in should return them to what they were doing, not to the
     // home screen. The onboarding screen honours ?next=.
     router.navigate(session
-      ? ('/business-new' as any)
-      : ('/onboarding?step=2&next=/business-new' as any));
+      ? ('/local/business-new' as any)
+      : ('/onboarding?step=2&next=/local/business-new' as any));
   };
 
   // Three passes over the same set: what is near, what is new, and all of
@@ -170,6 +201,10 @@ export default function Local() {
         <LocalHeroBg />
       </Animated.View>
 
+      {/* The page arrives whole. The header draws immediately and the
+          sections fill in behind it, so without this the hero, the chip
+          and the search bar appear and then everything jumps as the rails
+          land underneath them. */}
       <Animated.FlatList
         style={{ opacity: swap }}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: heroY } } }], { useNativeDriver: true })}

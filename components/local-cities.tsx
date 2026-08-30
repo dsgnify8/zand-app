@@ -67,8 +67,8 @@ function useLocalDrawer() {
     if (k === 'home') { router.navigate('/local' as any); return; }
     if (k === 'city') { router.navigate('/local/cities' as any); return; }
     router.navigate(session
-      ? ('/business-new' as any)
-      : ('/onboarding?step=2&next=/business-new' as any));
+      ? ('/local/business-new' as any)
+      : ('/onboarding?step=2&next=/local/business-new' as any));
   };
 
   return { open, setOpen, onPick };
@@ -260,6 +260,27 @@ function CityName({
  * to sit on; the listings below do not, and putting them on a dark ground
  * meant maintaining a second version of every card.
  */
+/**
+ * A city's two colours.
+ *
+ * Seeded from the name, so Dubai is always the same and never the same as
+ * Doha. Four pairs rather than a generated hue, because a random warm
+ * colour is usually a bad warm colour — these were chosen.
+ */
+const CITY_PALETTES: [string, string][] = [
+  ['#5A473E', '#9C8270'],   // terracotta
+  ['#4E463A', '#9A8A66'],   // saffron
+  ['#544048', '#9A7078'],   // rose
+  ['#454A40', '#7E8468'],   // olive
+  ['#4A3E48', '#8A7280'],   // plum
+];
+
+function cityColours(name: string): [string, string] {
+  let n = 0;
+  for (let i = 0; i < name.length; i++) n = (n * 31 + name.charCodeAt(i)) % 9973;
+  return CITY_PALETTES[n % CITY_PALETTES.length];
+}
+
 export function CityPage() {
   useLang();
   useCityCovers();
@@ -323,10 +344,10 @@ export function CityPage() {
             re-saving every one and re-doing it whenever a city was added.
             A gradient costs nothing, never crops, and looks the same on
             every city — and the page was always about the name anyway. */}
-        <View style={{ height: Math.round(H * 0.32) }}>
+        <View style={{ height: Math.round(H * 0.44) }}>
           <LinearGradient
-            colors={['#2E2A26', '#4A403A', colors.background]}
-            locations={[0, 0.45, 1]}
+            colors={[...cityColours(name), colors.background]}
+            locations={[0, 0.72, 1]}
             style={StyleSheet.absoluteFill as any}
           />
 
@@ -451,8 +472,10 @@ const st = StyleSheet.create({
   // Below the photograph, not over it. Type on a picture needs the
   // picture darkened to stay legible, and darkening a photograph to make
   // room for words is a poor trade when there is space underneath.
+  // Up on the colour rather than down in the fade. The panel grew to
+  // give the gradient room; the type should not travel with it.
   heroText: {
-    position: 'absolute', left: spacing.lg, right: spacing.lg, bottom: spacing.xxl,
+    position: 'absolute', left: spacing.lg, right: spacing.lg, bottom: '32%',
     alignItems: 'center',
   },
   heroName: {

@@ -81,8 +81,8 @@ export function SavedBusinesses() {
     if (k === 'home') { router.navigate('/local' as any); return; }
     if (k === 'city') { router.navigate('/local/cities' as any); return; }
     router.navigate(session
-      ? ('/business-new' as any)
-      : ('/onboarding?step=2&next=/business-new' as any));
+      ? ('/local/business-new' as any)
+      : ('/onboarding?step=2&next=/local/business-new' as any));
   };
 
   // Contents as well as the list. Waiting only for the folders meant the
