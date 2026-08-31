@@ -550,7 +550,7 @@ const s = StyleSheet.create({
 
   // Clear of the tab bar, which floats over the page now rather than
   // sitting under it — at spacing.xl the button was behind it.
-  mapBtn: { position: 'absolute', bottom: spacing.xxl * 2, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 24, backgroundColor: colors.textPrimary },
+  mapBtn: { position: 'absolute', bottom: spacing.xxl * 2, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 24, backgroundColor: 'rgba(28,20,17,0.82)' },
   mapBtnT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
   sugg: { marginTop: spacing.sm, gap: 2 },
   suggRow: {

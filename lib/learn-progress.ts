@@ -1,5 +1,5 @@
 // Which lessons have been finished, and how well.
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { syncTouch } from '@/lib/cloud-sync';
 
@@ -25,13 +25,38 @@ async function syncStages() {
   try {
     const { STAGES } = await import('@/constants/journey');
     const { setField } = await import('@/lib/stats-store');
-    const finished = STAGES.filter((st: any) =>
-      st.steps
-        .filter((x: any) => x.kind === 'lesson' && x.unit && x.lesson)
-        .every((x: any) => isLessonDone(x.unit, x.lesson)),
-    ).length;
+    // Every step, not only the lessons. A stage with a quiz and a deck of
+    // flashcards in it was counting as finished while both were untouched,
+    // because neither could be seen.
+    const stepIsDone = (x: any) =>
+      x.kind === 'lesson' && x.unit && x.lesson
+        ? isLessonDone(x.unit, x.lesson)
+        : isLessonDone(x.key, x.key);
+
+    const finished = STAGES.filter((st: any) => st.steps.every(stepIsDone)).length;
     setField('stagesFinished', finished);
+
+    // And the lessons themselves. Five achievements are keyed to this and
+    // nothing had ever set it, so all five were unreachable and the
+    // profile counted zero however much anyone learned.
+    setField('lessonsFinished', done.length);
   } catch {}
+}
+
+/**
+ * A step is finished.
+ *
+ * Named for lessons because that is all it recorded at first, but it is
+ * really a pair of keys and a score. Steps that are not lessons — a deck
+ * of flashcards, a quiz, the alphabet — pass their own key as both, which
+ * keeps one store and one shape for the whole journey.
+ */
+export async function markStepDone(key: string, score = 100) {
+  return markLessonDone(key, key, score);
+}
+
+export function isStepDone(key: string) {
+  return isLessonDone(key, key);
 }
 
 export async function markLessonDone(unit: string, lesson: string, score: number) {
@@ -93,13 +118,20 @@ export function nextLesson(units: { key: string; lessons: { key: string }[] }[])
 }
 
 export function useLearnProgress() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => tick((n) => n + 1);
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
-  return { done, doneCount: done.length };
+  // Read through the store on every render. The setters reassign `done`,
+  // so a hook that closed over it kept handing back the array from first
+  // evaluation — a finished lesson would not reach the level screen, the
+  // profile counters or the achievements.
+  return useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => snapshot(),
+  );
+}
+
+let snap = { done, doneCount: done.length };
+function snapshot() {
+  if (snap.done !== done) snap = { done, doneCount: done.length };
+  return snap;
 }
 
 

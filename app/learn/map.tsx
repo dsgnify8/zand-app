@@ -42,8 +42,11 @@ const ICON: Record<string, string> = {
 const WAVE = [0, 46, 64, 46, 0, -46, -64, -46];
 
 function stepDone(st: JourneyStep) {
+  // Lessons are keyed by unit and lesson; everything else by its own key.
+  // Returning false for the second kind meant 24 of the 69 steps could
+  // never be marked, however many times someone did them.
   if (st.kind === 'lesson' && st.unit && st.lesson) return isLessonDone(st.unit, st.lesson);
-  return false;
+  return isLessonDone(st.key, st.key);
 }
 
 function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: boolean }) {

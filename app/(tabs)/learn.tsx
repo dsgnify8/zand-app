@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLevel } from '@/lib/learn-level';
 import { LearnHero } from '@/components/learn-hero';
 import { UNITS } from '@/constants/curriculum';
 import { Animated, Easing, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { useFocusEffect, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -192,6 +192,19 @@ export default function LearnScreen() {
   const [known, setKnown] = useState<string[]>([]);
   const y = useRef(new Animated.Value(0)).current;
 
+  // Where they were. A long route means finishing a lesson halfway down
+  // and coming back to the top, hunting for your place each time.
+  const scroller = useRef<any>(null);
+  const lastY = useRef(0);
+  useFocusEffect(
+    useCallback(() => {
+      if (lastY.current > 0) {
+        // No animation: this is a restoration, not a movement.
+        requestAnimationFrame(() => scroller.current?.scrollTo({ y: lastY.current, animated: false }));
+      }
+    }, []),
+  );
+
   const toggle = (n: string) =>
     setKnown((k) => (k.includes(n) ? k.filter((x) => x !== n) : [...k, n]));
 
@@ -215,8 +228,18 @@ export default function LearnScreen() {
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <ScrollTint y={y} />
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+        {/* The scroll survives a lesson. Coming back to the top of a long
+            route after finishing something halfway down means hunting for
+            your place every time. */}
         <Animated.ScrollView
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y } } }], { useNativeDriver: true })}
+          ref={scroller}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y } } }],
+            {
+              useNativeDriver: true,
+              listener: (e: any) => { lastY.current = e.nativeEvent.contentOffset.y; },
+            },
+          )}
           scrollEventThrottle={16}
           contentContainerStyle={s.container}
           showsVerticalScrollIndicator={false}

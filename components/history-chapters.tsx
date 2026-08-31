@@ -287,12 +287,7 @@ export function HistoryChapters() {
         {/* One line, and only one. The chapters below say what this is
             better than a sentence describing them could — and the header
             was competing with the first of them for the same space. */}
-        <View style={[st.headRow, fa && { flexDirection: 'row-reverse' }]}>
-          <View style={[st.moreRow, fa && { flexDirection: 'row-reverse' }]}>
-            <Text style={[st.moreT, fa && st.rtl]}>{fa ? 'تاریخ را بیاموز' : 'Learn history'}</Text>
-            <Ionicons name={fa ? 'arrow-back' : 'arrow-forward'} size={13} color={colors.accent} />
-          </View>
-        </View>
+
       </Pressable>
 
       {/* Tapping the empty track closes an open chapter. Sits under the rows,
@@ -462,6 +457,17 @@ export function HistoryChapters() {
           </Animated.View>
         );
       })}
+
+      {/* Under the illustration rather than over it. The chapters say what
+          this section is; the link is what you reach for once you have
+          looked at them. */}
+      <Pressable
+        onPress={() => router.navigate('/section/education' as any)}
+        style={[st.learnRow, fa && { flexDirection: 'row-reverse' }]}
+      >
+        <Text style={[st.moreT, fa && st.rtl]}>{fa ? 'تاریخ را بیاموز' : 'Learn history'}</Text>
+        <Ionicons name={fa ? 'arrow-back' : 'arrow-forward'} size={13} color={colors.accent} />
+      </Pressable>
     </View>
   );
 }
@@ -486,6 +492,10 @@ const st = StyleSheet.create({
   },
   h1: { fontFamily: fonts.heading, fontSize: 32, color: colors.textPrimary, letterSpacing: -0.4 },
   moreRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  learnRow: {
+    position: 'absolute', bottom: 0, right: 20,
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+  },
   moreT: { fontFamily: fonts.body, fontSize: 13, color: colors.accent },
   // Unused now the header is one line, kept because a description may
   // come back and this is where it belongs.

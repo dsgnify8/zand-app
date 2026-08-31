@@ -52,9 +52,23 @@ export default function PhrasebookScreen() {
   const openRef = useRef(open);
   openRef.current = open;
 
+  // Back closes an open phrase before it leaves the screen. On a native
+  // stack that cannot be done by preventing the removal — iOS has already
+  // taken the view away by the time JS is consulted, and the router is
+  // then out of step with what is on screen.
+  //
+  // So the swipe is turned off while something is open. The gesture never
+  // starts, the hardware back button still routes through the listener,
+  // and nothing is ever half-removed.
+  useEffect(() => {
+    (navigation as any).setOptions({ gestureEnabled: !open });
+  }, [navigation, open]);
+
   useEffect(() => {
     const stop = (navigation as any).addListener('beforeRemove', (e: any) => {
-      if (!openRef.current) return; // nothing open — leave as normal
+      if (!openRef.current) return;
+      // Android's hardware back only. The swipe is disabled above, so
+      // this never fires for a gesture.
       e.preventDefault();
       setOpen(null);
     });
