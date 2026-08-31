@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router , useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
-import { isLessonDone, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, markStepDone, useLearnProgress } from '@/lib/learn-progress';
 import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
@@ -44,6 +44,7 @@ function shuffle<T>(a: T[]) {
 }
 
 export default function ReviewScreen() {
+  const { step } = useLocalSearchParams<{ step?: string }>();
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
@@ -96,7 +97,13 @@ export default function ReviewScreen() {
   };
 
   const next = () => {
-    if (i + 1 >= rounds.length) { setDone(true); return; }
+    if (i + 1 >= rounds.length) {
+      setDone(true);
+      // Ten words is a session, and a session is the step. Nothing stops
+      // anyone coming back — this records that they reached the end once.
+      if (step) markStepDone(String(step));
+      return;
+    }
     setI((v) => v + 1); setPicked(null);
   };
 

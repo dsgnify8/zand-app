@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -8,6 +8,7 @@ import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES, SIDE_QUESTS, type JourneyStep } from '@/constants/journey';
 import { isLessonDone, journeyPosition, lessonPartial, useLearnProgress } from '@/lib/learn-progress';
+import { StageComplete } from '@/components/stage-complete';
 import { useLevel } from '@/lib/learn-level';
 import { useStrength } from '@/lib/word-strength';
 import { ExpressionCard } from '@/components/expression-card';
@@ -115,6 +116,28 @@ export default function MapScreen() {
   const [pickOpen, setPickOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   useLearnProgress();
+
+  // The moment a stage tips from unfinished to finished. Compared against
+  // the last render rather than checked on mount, so it fires once when it
+  // happens rather than every time the map is opened.
+  const [celebrating, setCelebrating] = useState<number | null>(null);
+  const wasDone = useRef<Set<number> | null>(null);
+
+  useEffect(() => {
+    const now = new Set<number>();
+    STAGES.forEach((st: any, i: number) => {
+      if (st.steps.length > 0 && st.steps.every((x: any) => stepDone(x))) now.add(i);
+    });
+
+    // First run establishes the baseline. Without this, opening the map
+    // for the first time would celebrate everything already done.
+    if (wasDone.current === null) { wasDone.current = now; return; }
+
+    for (const i of now) {
+      if (!wasDone.current.has(i)) { setCelebrating(i); break; }
+    }
+    wasDone.current = now;
+  });
   const { info } = useLevel();
   const { solid, shaky } = useStrength();
 
@@ -329,6 +352,19 @@ export default function MapScreen() {
           <Text style={s.endT}>{tl(LEARN.moreComing)}</Text>
         </View>
       </ScrollView>
+      <StageComplete
+        open={celebrating !== null}
+        roman={celebrating !== null ? STAGES[celebrating].roman : ''}
+        title={celebrating !== null ? STAGES[celebrating].title : ''}
+        titleFa={celebrating !== null ? (STAGES[celebrating] as any).titleFa : undefined}
+        onClose={() => setCelebrating(null)}
+        onNext={() => {
+          setCelebrating(null);
+          const nxt = STAGES[(celebrating ?? 0) + 1];
+          const first = nxt?.steps?.[0];
+          if (first?.route) router.navigate(first.route as any);
+        }}
+      />
     </SafeAreaView>
   );
 }

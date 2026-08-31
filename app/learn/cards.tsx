@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -40,7 +41,10 @@ export default function CardsScreen() {
   // getLang() or t(), which are always current.
   useLang();
   const { say, listen: metListen, PaywallHost } = useMetered();
-  const { stage } = useLocalSearchParams<{ stage?: string }>();
+  // `stage` says which part of the journey; `step` says which door. A
+  // stage holds several steps, so without the second this screen could
+  // not record what had just been finished.
+  const { stage, step } = useLocalSearchParams<{ stage?: string; step?: string }>();
   // the ones you keep missing come round first
   const cards = useMemo(() => prioritise(cardsFor(stage)), [stage]);
 
@@ -72,7 +76,12 @@ export default function CardsScreen() {
   const advance = (gotIt: boolean) => {
     record(card.fa, gotIt);
     if (gotIt) setKnown((v) => [...v, card.fa]);
-    if (i + 1 >= cards.length) { setDone(true); return; }
+    if (i + 1 >= cards.length) {
+      setDone(true);
+      // Through the deck is through the step.
+      if (step) markStepDone(String(step));
+      return;
+    }
     Animated.sequence([
       Animated.timing(slide, { toValue: -1, duration: 160, useNativeDriver: true }),
       Animated.timing(slide, { toValue: 0, duration: 0, useNativeDriver: true }),

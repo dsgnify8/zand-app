@@ -76,23 +76,41 @@ export async function markLessonDone(unit: string, lesson: string, score: number
 // a place to come back to, and the map draws it differently.
 let partial: Record<string, number> = {};
 const P_KEY = 'learn:partial';
+let partialStep: Record<string, number> = {};
+const PS_KEY = 'learn:partial-step';
 
 export async function loadPartial() {
   try {
     const v = await AsyncStorage.getItem(P_KEY);
+    // Assigned, not merged: a cleared store has to mean an empty one, or
+    // stale values survive a wipe.
     partial = v ? JSON.parse(v) : {};
+    const sv = await AsyncStorage.getItem(PS_KEY);
+    partialStep = sv ? JSON.parse(sv) : {};
   } catch {}
   emit();
 }
 
-export async function markPartial(unit: string, lesson: string, pct: number) {
+export async function markPartial(unit: string, lesson: string, pct: number, step?: number) {
   const k = unit + '|' + lesson;
   // never move backwards, and a finished lesson does not need a marker
   if (pct <= (partial[k] ?? 0) || pct >= 100) return;
   partial[k] = pct;
-  console.log('[partial]', k, pct);
-  try { await AsyncStorage.setItem(P_KEY, JSON.stringify(partial)); syncTouch(); } catch {}
+  // The step as well as the percentage. The ring only needs how far;
+  // coming back needs where — and a percentage cannot say which question
+  // someone was on without assuming the lesson never changes length.
+  if (step !== undefined) partialStep[k] = step;
+  try {
+    await AsyncStorage.setItem(P_KEY, JSON.stringify(partial));
+    await AsyncStorage.setItem(PS_KEY, JSON.stringify(partialStep));
+    syncTouch();
+  } catch {}
   emit();
+}
+
+/** Where they stopped, for coming back to. */
+export function lessonStep(unit: string, lesson: string): number {
+  return partialStep[unit + '|' + lesson] ?? 0;
 }
 
 export function lessonPartial(unit: string, lesson: string): number {

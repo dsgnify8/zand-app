@@ -200,12 +200,18 @@ export function setField(field: keyof Stats, value: number) {
   if ((state as any)[field] === value) return;
   state = { ...state, [field]: value };
   emit(); persist();
+  // Every milestone is keyed to a stat, so a stat changing is the only
+  // moment one can be earned.
+  checkMilestones();
 }
 
 export function bump(field: keyof Stats, by = 1) {
   if (typeof (state as any)[field] === 'number') {
     state = { ...state, [field]: (state as any)[field] + by };
     emit(); persist();
+    // Same as setField: this is a stat changing, so a milestone may have
+    // just been reached.
+    checkMilestones();
   }
 }
 
@@ -266,6 +272,39 @@ export const MILESTONES: Milestone[] = [
   { key: 'sent6', label: '6 sent to friends', field: 'thingsSent', target: 6 },
   { key: 'stages10', label: '10 chapters finished', field: 'stagesFinished', target: 10 },
 ];
+
+/**
+ * Milestones earned since the last check.
+ *
+ * Kept here rather than in a screen: a milestone is usually earned in the
+ * middle of a lesson, and a watcher living on the map would only notice
+ * once someone happened to walk past it.
+ */
+let seen: Set<string> | null = null;
+const milestoneListeners = new Set<(label: string) => void>();
+
+export function onMilestone(fn: (label: string) => void) {
+  milestoneListeners.add(fn);
+  return () => { milestoneListeners.delete(fn); };
+}
+
+export function checkMilestones() {
+  const now = new Set(
+    milestoneStatus(stats()).filter((m) => m.achieved).map((m) => m.key),
+  );
+
+  // The first pass sets the baseline. Without it, opening the app would
+  // announce everything ever earned, one after another.
+  if (seen === null) { seen = now; return; }
+
+  for (const m of milestoneStatus(stats())) {
+    if (m.achieved && !seen.has(m.key)) {
+      milestoneListeners.forEach((fn) => fn(m.label));
+      break;   // one at a time; the rest will announce on the next change
+    }
+  }
+  seen = now;
+}
 
 export function milestoneStatus(s: Stats) {
   return MILESTONES.map((m) => {

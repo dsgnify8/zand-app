@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
@@ -15,6 +16,12 @@ import { useLang, t as tl } from '@/lib/i18n';
 const FORM_LABELS = ['FINAL · DETACHED', 'FINAL · ATTACHED', 'MEDIAL', 'INITIAL'];
 
 export default function WritingScreen() {
+  // A reference screen rather than an exercise: the step is meeting the
+  // letters, and opening it is meeting them. Recorded once on arrival so
+  // the map and the stage count can see it.
+  const { step } = useLocalSearchParams<{ step?: string }>();
+  useEffect(() => { if (step) markStepDone(String(step)); }, [step]);
+
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.

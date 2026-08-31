@@ -52,8 +52,19 @@ function questionsFor(stageKey?: string): Q[] {
 
   const qs: Q[] = [];
   for (const w of shuffle(words).slice(0, 10)) {
-    const others = shuffle(words.filter((x) => x.fa !== w.fa)).slice(0, 3);
     const roll = Math.random();
+
+    // Distractors have to differ in the field the question actually shows.
+    // Excluding by `fa` alone let two different Persian words with the
+    // same English gloss both appear as options — the learner then had two
+    // identical buttons, one of which was right, and the exercise locked.
+    const field = roll < 0.4 ? 'en' : 'fa';
+    const seen = new Set([w[field]]);
+    const others = shuffle(words).filter((x) => {
+      if (seen.has(x[field])) return false;
+      seen.add(x[field]);
+      return true;
+    }).slice(0, 3);
 
     if (roll < 0.4) {
       qs.push({
@@ -183,13 +194,17 @@ export default function CheckpointScreen() {
         )}
 
         <View style={{ gap: spacing.sm, marginTop: spacing.xl }}>
-          {q.options.map((o: string) => {
+          {q.options.map((o: string, oi: number) => {
             const isAnswer = o === q.answer;
             const isPicked = o === picked;
             const persian = q.kind !== 'meaning';
             return (
               <Pressable
-                key={o}
+                // Index, not the word. A question whose distractors happen
+                // to repeat a word gave two children the same key, and
+                // React then dropped one and mismatched the rest — which
+                // is what locked the exercise mid-answer.
+                key={o + ':' + oi}
                 disabled={!!picked}
                 onPress={() => answer(o)}
                 style={[

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -80,7 +81,9 @@ export default function BlanksScreen() {
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
-  const { stage } = useLocalSearchParams<{ stage?: string }>();
+  // Which door, not just which neighbourhood — a stage holds several
+  // steps and the screen has to know which one it is to record it.
+  const { stage, step } = useLocalSearchParams<{ stage?: string; step?: string }>();
   const rounds = useMemo(() => roundsFor(stage), [stage]);
 
   const [i, setI] = useState(0);
@@ -137,7 +140,15 @@ export default function BlanksScreen() {
   };
 
   const next = () => {
-    if (i + 1 >= rounds.length) { setDone(true); return; }
+    if (i + 1 >= rounds.length) {
+      setDone(true);
+      // With the score. A quiz finished at forty percent is finished, but
+      // the number is what tells the map whether to send them back.
+      // With the score. `next` fires from its own button press, so the
+      // last answer has already settled into `right`.
+      if (step) markStepDone(String(step), Math.round((right / rounds.length) * 100));
+      return;
+    }
     setI((v) => v + 1); setPicked(null);
   };
 

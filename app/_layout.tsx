@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { resetForDemo } from '@/lib/demo-mode';
+import { MilestoneToast } from '@/components/milestone-toast';
+import { onMilestone } from '@/lib/stats-store';
 import { loadTpmAccess } from '@/lib/tpm-access';
 import { loadRemoteFrames } from '@/lib/image-frames';
 import { loadReminders } from '@/lib/reminders';
@@ -90,6 +92,10 @@ export default function RootLayout() {
     return () => sub.remove();
   }, []);
   const colorScheme = useColorScheme();
+
+  // What was just earned, if anything. Subscribed once at the root.
+  const [milestone, setMilestone] = useState<string | null>(null);
+  useEffect(() => onMilestone(setMilestone), []);
   const [splashDone, setSplashDone] = useState(false);
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -111,10 +117,17 @@ export default function RootLayout() {
   useEffect(() => {
     (async () => {
       try { await resetForDemo(); } catch (e) { console.log('[boot] resetForDemo', e); }
-      loadAllFrames(); loadSaved(); loadLang(); loadHidden(); loadOpened();
-      loadLevel(); loadLearnProgress(); loadPartial(); loadStrength();
-      loadReminders(); loadTpmAccess(); loadRemoteFrames(); loadOverrides();
-      loadUsage(); loadNotifPrefs(); loadImageOverrides(); loadSavedBusinesses();
+      // Awaited together rather than fired and forgotten. Any screen
+      // that reads a store as it mounts was racing these — the lesson
+      // resume lost, which is why a half-finished lesson restarted.
+      //
+      // In parallel, so this costs the slowest read rather than the sum.
+      await Promise.all([
+        loadAllFrames(), loadSaved(), loadLang(), loadHidden(), loadOpened(),
+        loadLevel(), loadLearnProgress(), loadPartial(), loadStrength(),
+        loadReminders(), loadTpmAccess(), loadRemoteFrames(), loadOverrides(),
+        loadUsage(), loadNotifPrefs(), loadImageOverrides(), loadSavedBusinesses(),
+      ].map((p) => Promise.resolve(p).catch(() => {})));
 
       // Awaited, unlike the rest. markVisitDay writes the streak through the
       // stats store, so if the load were still in flight it would land on top
@@ -153,6 +166,14 @@ export default function RootLayout() {
             it is worth it — changing language is a once-ever action, and a
             half-translated screen is not something a Persian-only reader
             should ever see. */}
+        {/* Over everything, so a milestone earned mid-lesson appears
+            there rather than waiting for someone to visit the map. */}
+        <MilestoneToast
+          label={milestone}
+          onOpen={() => { setMilestone(null); router.navigate('/profile' as any); }}
+          onDone={() => setMilestone(null)}
+        />
+
         <ThemeProvider key={appLang} value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack
             screenOptions={{

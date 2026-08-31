@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -12,11 +12,10 @@ import { withGlosses } from '@/lib/lesson-glossary';
 import { MeetStep, SenseStep, SentenceStep, NoteStep, ChoiceStep, BuildStep, WriteStep, LetterStep, VowelStep, GapStep, TypeStep } from '@/components/lesson-steps';
 import { bump } from '@/lib/stats-store';
 import { prewarm } from '@/lib/speak';
-import { markLessonDone, markPartial } from '@/lib/learn-progress';
+import { lessonStep, markLessonDone, markPartial } from '@/lib/learn-progress';
 import { markLearnDay } from '@/lib/stats-store';
 import { Art } from '@/components/lang-art';
 import { refreshTomorrow } from '@/lib/reminders';
-import { useEffect } from 'react';
 import { Confetti } from '@/components/confetti';
 import { STAGES, nextStep } from '@/constants/journey';
 import { LEARN } from '@/constants/i18n/learn';
@@ -50,7 +49,20 @@ export default function LessonScreen() {
   const after = thisStep ? nextStep(thisStep.key) : null;
   const finishedChapter = !!after?.endsStage;
 
+  // Start where they stopped. A lesson abandoned at question eight and
+  // resumed from question one is a lesson nobody finishes twice.
+  //
+  // Read in an effect rather than as initial state: loadPartial() is
+  // fired at boot without being awaited, so on a cold start the store is
+  // often still empty at the moment this screen mounts.
   const [i, setI] = useState(0);
+  const resumed = useRef(false);
+  useEffect(() => {
+    if (resumed.current) return;
+    const at = lessonStep(String(unit), String(lesson));
+    if (at > 0) setI(at);
+    resumed.current = true;
+  }, [unit, lesson]);
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState({ right: 0, total: 0 });
   const [done, setDone] = useState(false);
@@ -158,7 +170,7 @@ export default function LessonScreen() {
       <View style={s.top}>
         <Pressable hitSlop={12} onPress={() => {
             // remember how far in they were, so the map can show it
-            if (!done && i > 0) markPartial(unit, lesson, Math.round((i / l.steps.length) * 100));
+            if (!done && i > 0) markPartial(unit, lesson, Math.round((i / l.steps.length) * 100), i);
             router.replace('/learn/map' as any);
           }}>
           <Ionicons name="close" size={22} color={lw.muted} />
