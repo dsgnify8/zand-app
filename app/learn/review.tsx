@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router , useLocalSearchParams } from 'expo-router';
@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { UNITS } from '@/constants/curriculum';
-import { isLessonDone, markStepDone, useLearnProgress } from '@/lib/learn-progress';
+import { isLessonDone, lessonStep, markPartial, markStepDone, useLearnProgress } from '@/lib/learn-progress';
 import { speak, prewarm } from '@/lib/speak';
 import { prioritise, record } from '@/lib/word-strength';
 import { Art } from '@/components/lang-art';
@@ -54,7 +54,16 @@ export default function ReviewScreen() {
   // shakiest and most overdue first, so review targets what is slipping
   const rounds = useMemo(() => prioritise(pool).slice(0, 10), [pool]);
 
+  // Resume where they stopped. Keyed by the step, which for these is
+  // both halves of the pair — they have no unit and lesson of their own.
   const [i, setI] = useState(0);
+  const resumed = useRef(false);
+  useEffect(() => {
+    if (resumed.current || !step) return;
+    const at = lessonStep(String(step), String(step));
+    if (at > 0) setI(at);
+    resumed.current = true;
+  }, [step]);
   const [picked, setPicked] = useState<string | null>(null);
   const [right, setRight] = useState(0);
   const [done, setDone] = useState(false);
@@ -65,7 +74,11 @@ export default function ReviewScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
         <View style={s.top}>
-          <Pressable hitSlop={12} onPress={() => { console.log('[X] pressed on review'); router.replace('/learn/map' as any); }}>
+          <Pressable hitSlop={12} onPress={() => {
+            // How far in, so coming back returns them here.
+            if (step && i > 0) markPartial(String(step), String(step), Math.round((i / rounds.length) * 100), i);
+            router.replace('/learn/map' as any);
+          }}>
             <Ionicons name="chevron-back" size={22} color={lw.inkSoft} />
           </Pressable>
         </View>
@@ -118,7 +131,7 @@ export default function ReviewScreen() {
           <Text style={s.emptyX}>
             {pct >= 80 ? 'These are yours now.' : 'The ones you missed will come round again.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on review'); router.replace('/learn/map' as any); }}>
+          <Pressable style={s.cta} onPress={() => { router.replace('/learn/map' as any); }}>
             <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
@@ -134,7 +147,11 @@ export default function ReviewScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => { console.log('[EXIT] review.tsx'); router.replace('/learn/map' as any); }}>
+        <Pressable hitSlop={12} onPress={() => {
+            // How far in, so coming back returns them here.
+            if (step && i > 0) markPartial(String(step), String(step), Math.round((i / rounds.length) * 100), i);
+            router.replace('/learn/map' as any);
+          }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>

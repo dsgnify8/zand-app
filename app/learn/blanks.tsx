@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
-import { markStepDone } from '@/lib/learn-progress';
+import { lessonStep, markPartial, markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -86,7 +86,16 @@ export default function BlanksScreen() {
   const { stage, step } = useLocalSearchParams<{ stage?: string; step?: string }>();
   const rounds = useMemo(() => roundsFor(stage), [stage]);
 
+  // Resume where they stopped. Keyed by the step, which for these is
+  // both halves of the pair — they have no unit and lesson of their own.
   const [i, setI] = useState(0);
+  const resumed = useRef(false);
+  useEffect(() => {
+    if (resumed.current || !step) return;
+    const at = lessonStep(String(step), String(step));
+    if (at > 0) setI(at);
+    resumed.current = true;
+  }, [step]);
   const [picked, setPicked] = useState<string | null>(null);
   const [right, setRight] = useState(0);
   const [done, setDone] = useState(false);
@@ -97,7 +106,11 @@ export default function BlanksScreen() {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
         <View style={s.top}>
-          <Pressable hitSlop={12} onPress={() => { console.log('[X] pressed on blanks'); router.replace('/learn/map' as any); }}>
+          <Pressable hitSlop={12} onPress={() => {
+            // How far in, so coming back returns them here.
+            if (step && i > 0) markPartial(String(step), String(step), Math.round((i / rounds.length) * 100), i);
+            router.replace('/learn/map' as any);
+          }}>
             <Ionicons name="close" size={22} color={lw.muted} />
           </Pressable>
         </View>
@@ -122,7 +135,7 @@ export default function BlanksScreen() {
           <Text style={s.finX}>
             {pct >= 75 ? 'You are reading, not guessing.' : 'Go back through the lessons and these will come.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on blanks'); router.replace('/learn/map' as any); }}>
+          <Pressable style={s.cta} onPress={() => { router.replace('/learn/map' as any); }}>
             <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
@@ -157,7 +170,11 @@ export default function BlanksScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => { console.log('[EXIT] blanks.tsx'); router.replace('/learn/map' as any); }}>
+        <Pressable hitSlop={12} onPress={() => {
+            // How far in, so coming back returns them here.
+            if (step && i > 0) markPartial(String(step), String(step), Math.round((i / rounds.length) * 100), i);
+            router.replace('/learn/map' as any);
+          }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>

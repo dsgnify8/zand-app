@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
-import { markStepDone } from '@/lib/learn-progress';
+import { lessonStep, markPartial, markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -48,7 +48,16 @@ export default function CardsScreen() {
   // the ones you keep missing come round first
   const cards = useMemo(() => prioritise(cardsFor(stage)), [stage]);
 
+  // Resume where they stopped. Keyed by the step, which for these is
+  // both halves of the pair — they have no unit and lesson of their own.
   const [i, setI] = useState(0);
+  const resumed = useRef(false);
+  useEffect(() => {
+    if (resumed.current || !step) return;
+    const at = lessonStep(String(step), String(step));
+    if (at > 0) setI(at);
+    resumed.current = true;
+  }, [step]);
   const [shown, setShown] = useState(false);
   const [known, setKnown] = useState<string[]>([]);
   const [done, setDone] = useState(false);
@@ -102,7 +111,7 @@ export default function CardsScreen() {
               ? 'Every one of them. Come back tomorrow and see if they stayed.'
               : 'The ones you did not know will keep coming back until they stick.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => { console.log('[X] pressed on cards'); router.replace('/learn/map' as any); }}>
+          <Pressable style={s.cta} onPress={() => { router.replace('/learn/map' as any); }}>
             <Text style={s.ctaT}>{tl(LEARN.done)}</Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setShown(false); setKnown([]); setDone(false); flip.setValue(0); }}>
@@ -124,7 +133,11 @@ export default function CardsScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <View style={s.top}>
-        <Pressable hitSlop={12} onPress={() => { console.log('[X] pressed on cards'); router.replace('/learn/map' as any); }}>
+        <Pressable hitSlop={12} onPress={() => {
+            // How far in, so coming back returns them here.
+            if (step && i > 0) markPartial(String(step), String(step), Math.round((i / cards.length) * 100), i);
+            router.replace('/learn/map' as any);
+          }}>
           <Ionicons name="close" size={22} color={lw.muted} />
         </Pressable>
         <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
