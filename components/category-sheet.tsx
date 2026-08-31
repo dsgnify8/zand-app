@@ -59,7 +59,7 @@ export function CategoryBar({
       </Pressable>
       {value.length > 0 ? (
         <Pressable hitSlop={10} onPress={onClear} style={[st.bar, { borderColor: line }]}>
-          <Text style={[st.barT, { color: ink }]}>×</Text>
+          <Text style={[st.barT, { color: '#F6F1EC' }]}>×</Text>
         </Pressable>
       ) : null}
     </View>

@@ -491,9 +491,11 @@ const st = StyleSheet.create({
     color: 'rgba(246,241,236,0.72)', marginTop: 10, textAlign: 'center',
   },
 
+  // Up under the banner. Only this block moves — the name, the count and
+  // the blurb stay where they sit on the colour.
   controls: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg, paddingTop: spacing.lg,
+    paddingHorizontal: spacing.lg, paddingTop: 0, marginTop: -spacing.lg,
   },
   switchRow: { flexDirection: 'row', gap: spacing.md },
   grid: { paddingHorizontal: spacing.lg, paddingTop: spacing.md },

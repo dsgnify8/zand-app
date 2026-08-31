@@ -142,7 +142,10 @@ export default function LocalMap() {
   const loadHere = useCallback(async (r: Region) => {
     setLoading(true);
     // half the visible span, in km, is a fair radius for the box query
-    const km = Math.max(2, (r.latitudeDelta * 111) / 2);
+    // Bounded at both ends. Zoomed all the way out this was asking for a
+    // ten-thousand-kilometre radius, which is every listing there will
+    // ever be — the marker cap below saves the render, but not the query.
+    const km = Math.min(2000, Math.max(2, (r.latitudeDelta * 111) / 2));
     const rows = await loadBusinesses({
       near: { lat: r.latitude, lng: r.longitude, km },
       category: cat ?? undefined,

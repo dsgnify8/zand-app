@@ -58,11 +58,17 @@ export default function Local() {
   // The list fades rather than swapping. Changing location replaces every
   // card at once, and without this the whole page blinks.
   const swap = useRef(new Animated.Value(1)).current;
-  // Fades in when the rows land, not when the place changes. Those are
-  // a network round trip apart, and fading on the earlier one shows the
-  // previous city's listings under the new city's name.
+  // Fades only when the place changes, and only once its rows have
+  // landed. Keying on `loading` alone meant every settled search snapped
+  // the list to nothing and faded it back — a flash per search.
+  const faded = useRef<string | null>(null);
   useEffect(() => {
-    if (loading) return;
+    const here = (place?.lat ?? '') + ',' + (place?.lng ?? '');
+    if (loading) { faded.current = here; return; }
+    if (faded.current === null) { faded.current = here; return; }
+    if (faded.current !== here) return;
+
+    faded.current = null;
     swap.setValue(0);
     Animated.timing(swap, {
       toValue: 1, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true,
@@ -542,7 +548,9 @@ const s = StyleSheet.create({
   emptyT: { fontFamily: fonts.body, fontSize: 13, color: colors.textSecondary, textAlign: 'center', maxWidth: 250 },
   emptyCta: { fontFamily: fonts.bodyStrong, fontSize: 13, color: colors.accent, marginTop: 4 },
 
-  mapBtn: { position: 'absolute', bottom: spacing.xl, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 24, backgroundColor: colors.textPrimary },
+  // Clear of the tab bar, which floats over the page now rather than
+  // sitting under it — at spacing.xl the button was behind it.
+  mapBtn: { position: 'absolute', bottom: spacing.xxl * 2, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 24, backgroundColor: colors.textPrimary },
   mapBtnT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: '#FFF' },
   sugg: { marginTop: spacing.sm, gap: 2 },
   suggRow: {

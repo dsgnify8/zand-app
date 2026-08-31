@@ -62,6 +62,12 @@ export const SEARCH_SYNONYMS: Record<string, string[]> = {
     'گوشت', 'لواشک',
   ],
 
+  dessert: [
+    'dessert', 'ice cream', 'bastani', 'gelato', 'baklava', 'baghlava',
+    'sweets', 'faloodeh', 'falooda', 'sorbet', 'دسر', 'بستنی', 'باقلوا',
+    'فالوده', 'شیرینی',
+  ],
+
   candy: [
     'candy', 'sweets', 'sweet', 'lösgodis', 'losgodis', 'pick and mix',
     'pick n mix', 'chocolate', 'liquorice', 'lakrits', 'gummy', 'gummies',
