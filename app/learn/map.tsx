@@ -58,14 +58,21 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
   const done = stepDone(st);
   const pulse = useRef(new Animated.Value(0)).current;
 
-  if (isNext) {
-    Animated.loop(
+  // In an effect, and stopped on the way out. Started in the render body
+  // this began a fresh loop every time anything re-rendered, and the old
+  // ones carried on — a map left open collected animations until it
+  // stuttered.
+  useEffect(() => {
+    if (!isNext) return;
+    const loop = Animated.loop(
       Animated.sequence([
         Animated.timing(pulse, { toValue: 1, duration: 1400, useNativeDriver: true }),
         Animated.timing(pulse, { toValue: 0, duration: 1400, useNativeDriver: true }),
       ]),
-    ).start();
-  }
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [isNext]);
   const pct = st.unit && st.lesson ? lessonPartial(st.unit, st.lesson) : 0;
   const ring = pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.18] });
   const ringOp = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.5, 0] });
@@ -92,6 +99,14 @@ function Node({ st, index, isNext }: { st: JourneyStep; index: number; isNext: b
         </View>
         <View style={s.nodeText}>
           <Text style={[s.nodeT, done && s.nodeTDone]} numberOfLines={1}>{st.title}</Text>
+          {/* The next step says what you are walking into. A pulse tells
+              you where to go; this tells you what is there — and whether
+              you are starting it or returning to it. */}
+          {isNext ? (
+            <Text style={s.nodeNow} numberOfLines={1}>
+              {pct > 0 ? 'Continue  ·  ' + pct + '% in' : 'Start here'}
+            </Text>
+          ) : null}
           <Text style={s.nodeX} numberOfLines={1}>{st.sub}</Text>
         </View>
       </Pressable>
@@ -108,11 +123,25 @@ export default function MapScreen() {
   useLang();
   const { session } = useAuth();
   const jumped = useRef(false);
-    const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ScrollView>(null);
+  const stageOffsets = useRef<Record<string, number>>({});
+
+  // Open where they are. A route this long always opening at the top
+  // makes it feel longer every time someone returns to it — twelve steps
+  // in should not mean twelve steps of scrolling.
+  const landed = useRef(false);
+  useEffect(() => {
+    if (landed.current) return;
+    const key = STAGES[activeStage]?.key;
+    const y = key ? stageOffsets.current[key] : undefined;
+    if (y === undefined) return;   // not measured yet; try again next render
+    landed.current = true;
+    // No animation. This is where the page starts, not somewhere it moves to.
+    requestAnimationFrame(() => scrollRef.current?.scrollTo({ y: Math.max(0, y - 40), animated: false }));
+  });
   // Where they were when they last left. Kept outside the component so
   // it survives navigating away and back, which is the whole point.
   const restored = useRef(false);
-  const stageOffsets = useRef<Record<string, number>>({});
   const [pickOpen, setPickOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   useLearnProgress();
@@ -433,6 +462,10 @@ const s = StyleSheet.create({
   nodeText: { alignItems: 'center', marginTop: spacing.sm, maxWidth: 200 },
   nodeT: { fontFamily: fonts.body, fontSize: 14.5, color: lw.ink },
   nodeTDone: { color: lw.inkSoft },
+  nodeNow: {
+    fontFamily: fonts.bodyStrong, fontSize: 10.5, letterSpacing: 0.4,
+    color: lw.gold, marginTop: 2, marginBottom: 1,
+  },
   nodeX: { fontFamily: fonts.body, fontSize: 11.5, color: lw.muted, marginTop: 2, textAlign: 'center' },
 
   side: { marginTop: spacing.xxl * 1.4, paddingTop: spacing.xl, borderTopWidth: 1, borderTopColor: lw.hair },

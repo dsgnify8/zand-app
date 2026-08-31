@@ -2,7 +2,7 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 // Aliased: react-native exports an Animated of its own and this file
 // uses both. Reanimated's is only here for the library fade.
 import Reanimated, { FadeIn } from 'react-native-reanimated';
-import { ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Modal, ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -533,6 +533,10 @@ function FriendsTab() {
   // remembered until the sheet reports back.
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
 
+  // Everything sent, behind a sheet. Five on the page is a reminder;
+  // forty is a filing cabinet.
+  const [sentOpen, setSentOpen] = useState(false);
+
   const hasFriends = accepted.length > 0;
   const hasActivity = hasFriends || inbox.length > 0;
 
@@ -672,11 +676,41 @@ function FriendsTab() {
       ) : null}
 
       {/* Your side of it: what you sent, and whether it landed. */}
+      {hasFriends ? (
+        <>
+          <View style={s.peopleRow}>
+            <Text style={[s.sectionLabel, { marginTop: 0 }]}>{t(PROFILE.yourPeople)}</Text>
+            <Pressable hitSlop={10} onPress={() => setFriendsOpen(true)} style={s.plus}>
+              <Ionicons name="add" size={16} color={pr.friendA} />
+            </Pressable>
+          </View>
+          <View style={{ gap: spacing.sm }}>
+            {accepted.map((r) => (
+              <Pressable key={r.id} style={s.friendRow} onPress={() => setSendTo({ name: r.profile.name, id: r.profile.id })}>
+                <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.friendN}>{r.profile.name}</Text>
+                  <Text style={s.friendL}>{t(APP.tapToSend)}</Text>
+                </View>
+                <Ionicons name="paper-plane-outline" size={16} color={pr.friendA} />
+              </Pressable>
+            ))}
+          </View>
+        </>
+      ) : null}
+
       {outbox.length > 0 ? (
         <>
-          <Text style={s.sectionLabel}>{t(PROFILE.yourSends)}</Text>
+          <View style={s.sentHead}>
+            <Text style={[s.sectionLabel, { marginBottom: 0 }]}>{t(PROFILE.yourSends)}</Text>
+            {outbox.length > 5 ? (
+              <Pressable hitSlop={8} onPress={() => setSentOpen(true)}>
+                <Text style={s.seeAll}>{t(PROFILE.seeAll)}</Text>
+              </Pressable>
+            ) : null}
+          </View>
           <View style={{ gap: spacing.sm }}>
-            {outbox.slice(0, 8).map((it) => (
+            {outbox.slice(0, 5).map((it) => (
               <Pressable
                 key={'out-' + it.id}
                 style={s.friendRow}
@@ -710,29 +744,6 @@ function FriendsTab() {
       ) : null}
 
       {/* Real accepted friends (if any) */}
-      {hasFriends ? (
-        <>
-          <View style={s.peopleRow}>
-            <Text style={[s.sectionLabel, { marginTop: 0 }]}>{t(PROFILE.yourPeople)}</Text>
-            <Pressable hitSlop={10} onPress={() => setFriendsOpen(true)} style={s.plus}>
-              <Ionicons name="add" size={16} color={pr.friendA} />
-            </Pressable>
-          </View>
-          <View style={{ gap: spacing.sm }}>
-            {accepted.map((r) => (
-              <Pressable key={r.id} style={s.friendRow} onPress={() => setSendTo({ name: r.profile.name, id: r.profile.id })}>
-                <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
-                <View style={{ flex: 1 }}>
-                  <Text style={s.friendN}>{r.profile.name}</Text>
-                  <Text style={s.friendL}>{t(APP.tapToSend)}</Text>
-                </View>
-                <Ionicons name="paper-plane-outline" size={16} color={pr.friendA} />
-              </Pressable>
-            ))}
-          </View>
-        </>
-      ) : null}
-
       {/* Preview of what the page becomes — locked when you have no friends,
           shown as a labelled example once you do. */}
       <View style={hasActivity ? undefined : s.previewWrap} pointerEvents={hasActivity ? 'auto' : 'none'}>
@@ -794,6 +805,42 @@ function FriendsTab() {
         </View>
 
       </View>
+
+      {/* Everything ever sent, scrollable. The page shows five as a
+          reminder of the exchange; this is the record. */}
+      <Modal visible={sentOpen} transparent animationType="slide" onRequestClose={() => setSentOpen(false)}>
+        <Pressable style={s.sheetBack} onPress={() => setSentOpen(false)} />
+        <View style={s.sheetBody}>
+        <Text style={s.sheetHead}>{t(PROFILE.yourSends)}</Text>
+        <ScrollView style={{ maxHeight: 420 }} showsVerticalScrollIndicator={false}>
+          <View style={{ gap: spacing.sm, paddingBottom: spacing.xl }}>
+            {outbox.map((it) => (
+              <Pressable
+                key={'all-' + it.id}
+                style={s.friendRow}
+                onPress={() => {
+                  setSentOpen(false);
+                  const to = itemRoute(it);
+                  if (to) router.navigate(to as any);
+                }}
+              >
+                <View style={[s.avatar, s.avatarSm]}>
+                  <Text style={s.avatarT}>{(it.recipientName || '?')[0].toUpperCase()}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.friendN} numberOfLines={1}>
+                    {it.fa || it.title || t(PROFILE.something)}
+                  </Text>
+                  <Text style={s.friendL} numberOfLines={1}>
+                    {it.recipientName}{it.learned ? '  ·  ' + t(PROFILE.theyLearnedIt) : ''}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
+        </ScrollView>
+        </View>
+      </Modal>
 
       <SendSheet
         open={sendTo !== null}
@@ -1051,6 +1098,14 @@ const s = StyleSheet.create({
   phDark: { backgroundColor: 'rgba(36,28,25,0.25)' },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.md },
   sectionLabelInline: { fontFamily: fonts.bodyStrong, fontSize: 9, letterSpacing: 2, color: pr.dim },
+  sentHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.md },
+  sheetBack: { flex: 1, backgroundColor: 'rgba(20,16,12,0.4)' },
+  sheetBody: {
+    backgroundColor: colors.background,
+    borderTopLeftRadius: 24, borderTopRightRadius: 24,
+    paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.xxl,
+  },
+  sheetHead: { fontFamily: fonts.heading, fontSize: 19, color: colors.textPrimary, marginBottom: spacing.lg },
   seeAll: { fontFamily: fonts.bodyStrong, fontSize: 10.5, color: pr.saveA },
   savedChip: { width: 132, backgroundColor: colors.surface, borderRadius: 11, borderWidth: 1, borderColor: pr.hair, padding: spacing.md, gap: 3 },
   savedChipT: { fontFamily: fonts.heading, fontSize: fontSize.base, color: colors.textPrimary },
@@ -1109,7 +1164,14 @@ const s = StyleSheet.create({
   saveT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
   saveS: { fontFamily: fonts.body, fontSize: 11, color: pr.dim, marginTop: 1 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginTop: spacing.md },
-  gridCell: { width: '47%', backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg, gap: 5 },
+  // A warm wash rather than flat surface. These two are the way into
+  // everything anyone has kept, and a plain bordered box did not read as
+  // worth opening.
+  gridCell: {
+    width: '47%', borderRadius: 14, padding: spacing.lg, gap: 5,
+    backgroundColor: 'rgba(65,114,112,0.07)',
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(65,114,112,0.16)',
+  },
   gridT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
   gridX: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
 
