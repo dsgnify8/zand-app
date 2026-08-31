@@ -1,4 +1,7 @@
 import { useCallback, useRef, useState, useEffect } from 'react';
+// Aliased: react-native exports an Animated of its own and this file
+// uses both. Reanimated's is only here for the library fade.
+import Reanimated, { FadeIn } from 'react-native-reanimated';
 import { ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
@@ -46,7 +49,7 @@ import { useSavedBusinesses } from '@/lib/saved-businesses';
 import { loadBusiness, categoryLabel } from '@/lib/businesses';
 import { showDemoData } from '@/lib/demo-mode';
 
-type Tab = 'you' | 'library' | 'friends' | 'progress';
+type Tab = 'you' | 'friends' | 'progress';
 
 const KIND_LABEL_T: Record<string, any> = {
   word: PROFILE.aWord, topic: PROFILE.aTopic, poet: PROFILE.aPoet,
@@ -77,7 +80,6 @@ function useSavedItems() {
 
 const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
   { k: 'you', label: t(PROFILE.you), icon: 'sparkles' },
-  { k: 'library', label: t(PROFILE.library), icon: 'bookmark' },
   { k: 'friends', label: t(PROFILE.friends), icon: 'people' },
   { k: 'progress', label: t(PROFILE.progress), icon: 'leaf' },
 ];
@@ -176,7 +178,10 @@ function DiscoverRow() {
   );
 }
 
-function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLibrary: () => void }) {
+function YouTab({ onGoFriends }: { onGoFriends: () => void }) {
+  // The library opens here now rather than on a tab of its own. Two cards
+  // pointing at two pages did not need a third place to live.
+  const [libView, setLibView] = useState<null | 'favourites' | 'saved'>(null);
   // Real things waiting: a friend request, or something sent that has
   // not been opened. Seeded items only stand in for a visitor.
   const { user: youUser } = useAuth();
@@ -194,6 +199,14 @@ function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLib
           ...i, from: i.senderName ?? 'A friend', fromFa: i.senderName ?? '?',
         })),
       ];
+  if (libView) {
+    return (
+      <Reanimated.View entering={FadeIn.duration(220)}>
+        <LibrarySub view={libView} onBack={() => setLibView(null)} />
+      </Reanimated.View>
+    );
+  }
+
   return (
     <>
       {pending.length > 0 ? (
@@ -227,9 +240,31 @@ function YouTab({ onGoFriends, onGoLibrary }: { onGoFriends: () => void; onGoLib
 
       <StreakCard />
       <KeepReading />
-      <SavedStrip onSeeAll={onGoLibrary} />
+      <LibrarySection onOpen={setLibView} />
       <DiscoverRow />
     </>
+  );
+}
+
+function LibrarySection({ onOpen }: { onOpen: (v: 'favourites' | 'saved') => void }) {
+  useLang();
+
+  return (
+    <View style={{ marginTop: spacing.xl }}>
+      <Text style={s.sectionLabelInline}>{t(PROFILE.yourLibrary)}</Text>
+      <View style={s.grid}>
+        {[
+          { key: 'favourites' as const, i: 'heart-outline', t: t(PROFILE.favourites), x: t(PROFILE.favouritesX) },
+          { key: 'saved' as const, i: 'bookmark-outline', t: t(PROFILE.saveLater), x: t(PROFILE.saveLaterX) },
+        ].map((g) => (
+          <Pressable key={g.key} style={s.gridCell} onPress={() => onOpen(g.key)}>
+            <Ionicons name={g.i as any} size={19} color={pr.saveA} />
+            <Text style={s.gridT}>{g.t}</Text>
+            <Text style={s.gridX}>{g.x}</Text>
+          </Pressable>
+        ))}
+      </View>
+    </View>
   );
 }
 
@@ -476,60 +511,6 @@ function LibrarySub({ view, onBack }: { view: 'history' | 'favourites' | 'watche
     </View>
   );
 }
-
-function LibraryTab() {
-  // Subscribe to the language so a switch elsewhere reaches this screen
-  // where it stands. The value is deliberately unused: read with
-  // getLang() or t(), which are always current.
-  useLang();
-  const items = useSavedItems();
-  const [filter, setFilter] = useState<string>('all');
-  const [libView, setLibView] = useState<null | 'history' | 'favourites' | 'watched' | 'saved'>(null);
-
-  // Tapping Profile while already inside Favourites should come back out,
-  // the way tapping a tab you are on returns you to its top. Without this
-  // the sub-view is a place with only one exit.
-  useFocusEffect(useCallback(() => () => setLibView(null), []));
-  const list = filter === 'all' ? items : items.filter((x) => x.kind === filter);
-
-  if (libView) return <LibrarySub view={libView} onBack={() => setLibView(null)} />;
-
-  return (
-    <>
-      <View style={s.libHero}>
-        <LinearGradient colors={[pr.saveA, pr.saveB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
-        <Text style={s.libN}>{items.length}</Text>
-        <Text style={s.libL}>{t(PROFILE.thingsKept)}</Text>
-        <Text style={s.libX}>{t(PROFILE.libraryBlurb)}</Text>
-      </View>
-
-      {/* The label and the destination on one row. Two stacked headings
-          made the boxes below look like a subsection of a subsection. */}
-      <View style={s.libHead}>
-        <Text style={[s.sectionLabel, { marginBottom: 0 }]}>{t(PROFILE.yourLibrary)}</Text>
-      </View>
-      <View style={s.grid}>
-        {[
-          // History removed: what you have opened is already the home rail.
-          { key: 'favourites', i: 'heart-outline', t: t(PROFILE.favourites), x: t(PROFILE.favouritesX) },
-          // ARCHIVED: videos — uncomment to bring the Watched tab back
-          // { key: 'watched', i: 'play-circle-outline', t: t(PROFILE.watched), x: t(PROFILE.watchedX) },
-          { key: 'saved', i: 'bookmark-outline', t: t(PROFILE.saveLater), x: t(PROFILE.saveLaterX) },
-        ].map((g) => (
-          <Pressable key={g.key} style={s.gridCell} onPress={() => setLibView(g.key)}>
-            <Ionicons name={g.i as any} size={19} color={pr.saveA} />
-            <Text style={s.gridT}>{g.t}</Text>
-            <Text style={s.gridX}>{g.x}</Text>
-          </Pressable>
-        ))}
-      </View>
-
-
-    </>
-  );
-}
-
-/* ---------------- Friends ---------------- */
 
 function FriendsTab() {
   // Subscribe to the language so a switch elsewhere reaches this screen
@@ -988,8 +969,7 @@ export default function Profile() {
       </View>
 
       <ScrollView contentContainerStyle={s.container} showsVerticalScrollIndicator={false}>
-        {tab === 'you' ? <YouTab onGoFriends={() => setTab('friends')} onGoLibrary={() => setTab('library')} /> : null}
-        {tab === 'library' ? <LibraryTab /> : null}
+        {tab === 'you' ? <YouTab onGoFriends={() => setTab('friends')} /> : null}
         {tab === 'friends' ? <FriendsTab /> : null}
         {tab === 'progress' ? <ProgressTab /> : null}
       </ScrollView>
@@ -1128,7 +1108,7 @@ const s = StyleSheet.create({
   saveIcon: { width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(62,110,120,0.1)', alignItems: 'center', justifyContent: 'center' },
   saveT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
   saveS: { fontFamily: fonts.body, fontSize: 11, color: pr.dim, marginTop: 1 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginTop: spacing.md },
   gridCell: { width: '47%', backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg, gap: 5 },
   gridT: { fontFamily: fonts.heading, fontSize: fontSize.lg, color: colors.textPrimary },
   gridX: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },

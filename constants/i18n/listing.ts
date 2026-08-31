@@ -18,8 +18,8 @@ export const LISTING: Record<string, T> = {
   tabStats: { en: 'How it is doing', fa: 'چطور پیش می‌رود' },
 
   // what happens after
-  sent: { en: 'Sent for review', fa: 'برای بررسی فرستاده شد' },
-  backToLocal: { en: 'Back to Local', fa: 'برگرد به محلی' },
+  sent: { en: 'Sent for review', fa: 'برای بررسی ارسال شد.' },
+  backToLocal: { en: 'Back to Local', fa: 'بازگشت به محلی' },
   couldNotSave: { en: 'Could not save.', fa: 'ذخیره نشد.' },
 
   // where
@@ -30,11 +30,11 @@ export const LISTING: Record<string, T> = {
   streetAddress: { en: 'Street address (optional)', fa: 'نشانی خیابان (اختیاری)' },
   noLocation: {
     en: 'We could not read your location. You can type the area instead.',
-    fa: 'موقعیتت را نتوانستیم بخوانیم. می‌توانی خودت منطقه را بنویسی.',
+    fa: 'نتوانستیم موقعیتت را پیدا کنیم. می‌توانی منطقه را خودت وارد کنی.',
   },
   noPlace: {
     en: 'We could not find that place. Try a city or district.',
-    fa: 'آنجا را پیدا نکردیم. یک شهر یا محله را امتحان کن.',
+    fa: 'نتوانستیم این مکان را پیدا کنیم. نام یک شهر یا محله را وارد کن.',
   },
 
   // the basics

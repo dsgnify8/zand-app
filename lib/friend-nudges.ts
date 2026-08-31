@@ -33,15 +33,15 @@ const AFTER_DAYS = 3;
  * launch and the next reads as a machine talking.
  */
 const LINES: { en: string; fa: string }[] = [
-  { en: '{name} sent you something three days ago.', fa: 'سه روز پیش {name} چیزی برایت فرستاد.' },
-  { en: 'Still waiting: the word {name} sent.', fa: 'هنوز منتظرت است: واژه‌ای که {name} فرستاد.' },
-  { en: '{name} is waiting to hear what you thought.', fa: '{name} منتظر است ببیند نظرت چیست.' },
-  { en: 'Three days. {name} has not forgotten.', fa: 'سه روز گذشت. {name} یادش نرفته.' },
-  { en: 'Learn it, then send {name} one back.', fa: 'یادش بگیر، بعد یکی برای {name} بفرست.' },
-  { en: 'Something from {name} is still unopened.', fa: 'چیزی از {name} هنوز باز نشده.' },
-  { en: 'Your turn. {name} went first.', fa: 'نوبت توست. {name} شروع کرد.' },
-  { en: 'One word from {name}, still waiting.', fa: 'یک واژه از {name}، هنوز منتظر.' },
-  { en: 'Three days since {name} sent you something.', fa: 'سه روز از فرستادن {name} گذشته.' },
+  { en: '{name} sent you something three days ago.', fa: '{name} سه روز پیش چیزی برایت فرستاد.' },
+  { en: 'Still waiting: the word {name} sent.', fa: 'هنوز منتظر توست: واژه‌ای که {name} فرستاده.' },
+  { en: '{name} is waiting to hear what you thought.', fa: '{name} منتظر است بداند نظرت چه بوده.' },
+  { en: 'Three days. {name} has not forgotten.', fa: 'سه روز گذشته. {name} فراموشت نکرده.' },
+  { en: 'Learn it, then send {name} one back.', fa: 'یادش بگیر، بعد یکی هم برای {name} بفرست.' },
+  { en: 'Something from {name} is still unopened.', fa: 'چیزی که {name} فرستاده هنوز باز نشده.' },
+  { en: 'Your turn. {name} went first.', fa: 'نوبت توست. {name} اول فرستاد.' },
+  { en: 'One word from {name}, still waiting.', fa: 'یک واژه از {name}، هنوز منتظر است.' },
+  { en: 'Three days since {name} sent you something.', fa: 'سه روز است که {name} چیزی برایت فرستاده.' },
 ];
 
 const TITLE = { en: 'From a friend', fa: 'از یک دوست' };
