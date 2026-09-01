@@ -40,6 +40,13 @@ const KEYS = [
   // worst thing this app could forget.
   'visit:days',
   'streak:mended',
+  // Days on which someone actually learned something, as opposed to
+  // days they opened the app. Two milestones hang off this.
+  'learn:days',
+  // The language someone chose. Unsynced, a reinstall put a Persian
+  // reader back into English.
+  'app:lang',
+  'local:opened',
   'learn:strength',
   'stats:v1',
   'liked:articles',

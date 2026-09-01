@@ -135,6 +135,9 @@ export async function markVisitDay() {
     visitDays = next;
     if (!days.includes(today)) {
       await AsyncStorage.setItem('visit:days', JSON.stringify(next));
+      // Or it stays on this phone. Being in KEYS only matters if
+      // something tells the sync that the key has moved.
+      syncTouch();
       // And in memory, or the week's pips keep reading the list as it was
       // at boot — without today in it, which is one pip short every time.
       visitDays = next;
