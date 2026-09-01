@@ -24,7 +24,7 @@ import { FriendsSheet } from '@/components/friends-sheet';
 import { FramedImage } from '@/components/framed-image';
 import { CultureCover } from '@/components/culture-cover';
 import { resolveMany } from '@/lib/resolve-saved';
-import { storeId, debugState, useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
+import { visitedDays, storeId, debugState, useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
 import { AchievementsSheet } from '@/components/achievements-sheet';
 import { eduImage } from '@/constants/education-images';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
@@ -86,6 +86,30 @@ const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
 
 /* ---------------- You ---------------- */
 
+/**
+ * This week, Monday to Sunday, lit where they showed up.
+ *
+ * Read from the visit log rather than counted back from the streak: a run
+ * of three has to land on the right three days, and a number cannot say
+ * which those were.
+ */
+function weekPips(): boolean[] {
+  const days = visitedDays();
+  const now = new Date();
+  // getDay() is Sunday-first; shift so Monday is 0.
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const key = d.getFullYear() + '-'
+      + String(d.getMonth() + 1).padStart(2, '0') + '-'
+      + String(d.getDate()).padStart(2, '0');
+    return days.includes(key);
+  });
+}
+
 function StreakCard() {
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
@@ -103,11 +127,11 @@ function StreakCard() {
           <Text style={s.streakN}>{streakDays}</Text>
           <Text style={s.streakL}>{t(PROFILE.daysRow)}</Text>
           <View style={s.streakDays}>
-            {(demo
-              ? DAYS.slice(-7)
-              // one pip per day, lit for the days inside the current run
-              : Array.from({ length: 7 }, (_, i) => i >= 7 - Math.min(7, streakDays))
-            ).map((d: any, i: number) => (
+            {/* One pip per weekday, Monday first — not "the last N of
+                seven". Three days ending Tuesday should light Sunday,
+                Monday and Tuesday where they fall in the week, which is
+                what someone glancing at it expects to see. */}
+            {(demo ? DAYS.slice(-7) : weekPips()).map((d: any, i: number) => (
               <View key={i} style={[s.dayPip, d && s.dayPipOn]} />
             ))}
           </View>
@@ -533,6 +557,10 @@ function FriendsTab() {
   // remembered until the sheet reports back.
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
 
+  // Folded down, this session. Not persisted: tucking something away for
+  // now should not mean hiding it for good.
+  const [folded, setFolded] = useState<number[]>([]);
+
   // Everything sent, behind a sheet. Five on the page is a reminder;
   // forty is a filing cabinet.
   const [sentOpen, setSentOpen] = useState(false);
@@ -603,6 +631,23 @@ function FriendsTab() {
                 half the exchange; the card leaves when you have sent one
                 back. */}
             {inbox.filter((it) => !it.learned || !it.answered).map((it) => (
+              folded.includes(it.id) ? (
+                // Folded: one line, and a tap to bring it back.
+                <Pressable
+                  key={it.id}
+                  style={s.inboxFold}
+                  onPress={() => setFolded((v) => v.filter((x) => x !== it.id))}
+                >
+                  <View style={[s.avatar, s.avatarSm]}>
+                    <Text style={s.avatarT}>{(it.senderName || '?')[0].toUpperCase()}</Text>
+                  </View>
+                  <Text style={s.inboxFoldT} numberOfLines={1}>
+                    {it.senderName} {t(PROFILE.sentYou)}{' '}
+                    {KIND_LABEL_T[it.kind] ? t(KIND_LABEL_T[it.kind]) : t(PROFILE.something)}
+                  </Text>
+                  <Ionicons name="chevron-down" size={15} color={pr.dim} />
+                </Pressable>
+              ) : (
               <Pressable
                 key={it.id}
                 style={[s.inbox, it.learned && s.inboxDone]}
@@ -612,6 +657,16 @@ function FriendsTab() {
                   if (to) router.navigate(to as any);
                 }}
               >
+                {/* Not now. Folds the card to a line rather than marking
+                    it learned — those are different answers and the card
+                    only offered one of them. */}
+                <Pressable
+                  hitSlop={10}
+                  style={s.inboxFoldBtn}
+                  onPress={(e) => { e.stopPropagation(); setFolded((v) => [...v, it.id]); }}
+                >
+                  <Ionicons name="close" size={15} color={pr.dim} />
+                </Pressable>
                 <View style={s.inboxTop}>
                   <View style={s.avatar}><Text style={s.avatarT}>{(it.senderName || '?')[0].toUpperCase()}</Text></View>
                   <View style={{ flex: 1 }}>
@@ -670,6 +725,7 @@ function FriendsTab() {
                   </Pressable>
                 )}
               </Pressable>
+              )
             ))}
           </View>
         </>
@@ -1191,6 +1247,15 @@ const s = StyleSheet.create({
   frHeroT: { fontFamily: fonts.heading, fontSize: 26, color: '#241C19', marginTop: 2 },
   frHeroX: { fontFamily: fonts.body, fontSize: 12, lineHeight: 19, color: 'rgba(36,28,25,0.68)', marginTop: spacing.sm, textAlign: 'center' },
   inbox: { backgroundColor: colors.surface, borderRadius: 13, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg },
+  // The folded state: one row, the sender, and a chevron back.
+  inboxFold: {
+    flexDirection: 'row', alignItems: 'center', gap: spacing.sm,
+    paddingVertical: spacing.md, paddingHorizontal: spacing.md,
+    backgroundColor: 'rgba(0,0,0,0.03)', borderRadius: 12,
+  },
+  inboxFoldT: { flex: 1, fontFamily: fonts.body, fontSize: 13, color: pr.dim },
+  inboxFoldBtn: { position: 'absolute', top: spacing.sm, right: spacing.sm, zIndex: 2 },
+
   inboxDone: { opacity: 0.62 },
   inboxTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   avatar: { width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(65,114,112,0.14)', alignItems: 'center', justifyContent: 'center' },

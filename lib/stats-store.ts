@@ -50,6 +50,8 @@ export async function loadStats() {
   try {
     const raw = await AsyncStorage.getItem('visit:days');
     const days: string[] = raw ? JSON.parse(raw) : [];
+    // Kept for the week's pips, which need the dates rather than a count.
+    visitDays = days;
     if (days.length) {
       const v = analyseVisits(days);
       state = { ...state, streakDays: v.streak, streakNudge: v.nudge, visitDays: days.length };
@@ -129,6 +131,9 @@ export async function markVisitDay() {
     const next = days.includes(today) ? days : [...days, today].slice(-400);
     if (!days.includes(today)) {
       await AsyncStorage.setItem('visit:days', JSON.stringify(next));
+      // And in memory, or the week's pips keep reading the list as it was
+      // at boot — without today in it, which is one pip short every time.
+      visitDays = next;
       setField('visitDays', next.length);
     }
     const v = analyseVisits(next);
@@ -371,6 +376,15 @@ export async function recountSaved() {
     }
   } catch {}
 }
+
+/**
+ * The days someone opened the app, as YYYY-MM-DD.
+ *
+ * Kept in memory by the same read that computes the streak, because the
+ * week's pips render synchronously and cannot await a store.
+ */
+let visitDays: string[] = [];
+export function visitedDays() { return visitDays; }
 
 export function stats() {
   return state;
