@@ -49,7 +49,8 @@ export default function SignIn() {
             autoCapitalize="none" keyboardType="email-address" value={email} onChangeText={setEmail} />
           <View style={s.pwWrap}>
             <TextInput style={s.pwInput} placeholder="Password" placeholderTextColor={colors.textSecondary}
-              secureTextEntry={!showPw} value={password} onChangeText={setPassword} />
+              secureTextEntry={!showPw} value={password} onChangeText={setPassword}
+              returnKeyType="go" onSubmitEditing={submit} />
             <Pressable hitSlop={8} onPress={() => setShowPw((v) => !v)} style={s.eye}>
               <Ionicons name={showPw ? 'eye-off-outline' : 'eye-outline'} size={20} color={colors.textSecondary} />
             </Pressable>

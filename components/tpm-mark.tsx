@@ -7,7 +7,10 @@ const LOGO_RED = require('../assets/brand/tpm-logo-red.png');
 const LOGO_WHITE = require('../assets/brand/tpm-logo-white.png');
 
 // natural proportions of the file
-const RATIO = 2.6;
+// The cropped file's true proportions. The original was a print-ready
+// A4 with the mark floating in the middle, so `contain` fitted the whole
+// page into the box and the logo arrived small and surrounded by nothing.
+const RATIO = 2000 / 900;
 
 export function TpmMark({ size = 26, white }: { size?: number; color?: string; white?: boolean }) {
   return (

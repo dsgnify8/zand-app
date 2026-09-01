@@ -127,7 +127,7 @@ export default function TpmScreen() {
             margin. The spacer beside it was centring it in a row that had
             nothing else in it. */}
         <View style={s.head}>
-          <TpmMark size={120} />
+          <TpmMark size={48} />
         </View>
 
         <View style={s.rule} />
@@ -198,7 +198,7 @@ export default function TpmScreen() {
 }
 
 const s = StyleSheet.create({
-  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: spacing.md, paddingRight: spacing.lg, paddingVertical: 4 },
+  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: spacing.md, paddingRight: spacing.lg, paddingTop: 4, paddingBottom: spacing.sm },
   rule: { height: 2, backgroundColor: tpm.ink },
 
   intro: { paddingHorizontal: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.lg },

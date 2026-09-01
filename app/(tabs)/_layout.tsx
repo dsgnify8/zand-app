@@ -94,7 +94,7 @@ export default function TabLayout() {
         name="tpm"
         options={{
           title: 'TPM',
-          tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 16} color={focused ? tpm.red : colors.textSecondary} />,
+          tabBarIcon: ({ focused, size }) => <TpmIcon size={size - 6} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
       {/* Pressing the tab always lands on the Local feed. Arriving at a

@@ -64,6 +64,10 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
       await supabase.functions.invoke('delete-account');
       await AsyncStorage.clear();   // nothing of theirs stays on the device
       await signOut();
+              // Explicitly to sign-in. Someone signing out already has an
+              // account, and without a destination the stack simply showed
+              // whichever auth screen it saw last.
+              router.replace('/auth/sign-in' as any);
       onClose();
     } catch {}
     setDelBusy(false);
@@ -159,7 +163,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               ))}
             </View>
 
-            <Pressable style={m.signOut} onPress={async () => { await signOut(); onClose(); }}><Ionicons name="log-out-outline" size={16} color={pr.readA} /><Text style={m.signOutT}>{tset(SETTINGS.signOut)}</Text></Pressable>
+            <Pressable style={m.signOut} onPress={async () => { await signOut(); onClose(); router.replace('/auth/sign-in' as any); }}><Ionicons name="log-out-outline" size={16} color={pr.readA} /><Text style={m.signOutT}>{tset(SETTINGS.signOut)}</Text></Pressable>
             <Text style={m.version}>ZAND  ·  Rooted Living</Text>
           </ScrollView>
         </>

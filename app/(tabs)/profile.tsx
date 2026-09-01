@@ -1113,6 +1113,9 @@ export default function Profile() {
   const { displayName, session } = useAuth();
   const { tab: wantTab } = useLocalSearchParams<{ tab?: string }>();
   const [tab, setTab] = useState<Tab>((wantTab as Tab) || 'you');
+  // As initial state this only worked on a cold mount. Arriving from the
+  // home card while Profile was already mounted left you on You.
+  useEffect(() => { if (wantTab) setTab(wantTab as Tab); }, [wantTab]);
   const [settings, setSettings] = useState(false);
   // A dot means something is genuinely waiting: a friend request, or
   // something sent that has not been opened. Seeded demo data must not
