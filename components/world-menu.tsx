@@ -97,6 +97,18 @@ export function WorldMenu() {
   };
 
   const close = (then?: () => void) => {
+    // Guarded. An interrupted animation would leave the menu open with
+    // the navigation it was closing for never happening — the same trap
+    // the splash screen had, where a callback was treated as a promise.
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      setVisible(false);
+      then?.();
+    };
+    setTimeout(finish, 600);
+
     Animated.parallel([
       ...items.map((v) =>
         Animated.timing(v, {
@@ -113,10 +125,7 @@ export function WorldMenu() {
         easing: Easing.in(Easing.quad),
         useNativeDriver: true,
       }),
-    ]).start(() => {
-      setVisible(false);
-      then?.();
-    });
+    ]).start(finish);
   };
 
   const pick = (route: string) => close(() => router.navigate(route as any));

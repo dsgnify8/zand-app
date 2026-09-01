@@ -356,14 +356,6 @@ const s = StyleSheet.create({
   // A glossary. The word and its Persian on one line, the definition
   // under it — so the eye can run down the page looking for one entry
   // rather than reading every line to find it.
-  term: { marginBottom: spacing.lg },
-  termHead: { flexDirection: 'row', alignItems: 'baseline', gap: spacing.sm, flexWrap: 'wrap' },
-  termT: { fontFamily: fonts.bodyStrong, fontSize: 16, color: tpm.ink },
-  termFa: { fontFamily: fonts.persian, fontSize: 15, color: tpm.red },
-  termDef: {
-    fontFamily: fonts.body, fontSize: 14, lineHeight: 22,
-    color: tpm.inkSoft, marginTop: 5,
-  },
 
   // A glossary. The word and its Persian on one line, the definition
   // under it — so the eye can run down the page looking for one entry

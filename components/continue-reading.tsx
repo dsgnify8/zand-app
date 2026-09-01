@@ -23,7 +23,6 @@ export type ContinueItem = {
 };
 
 // Single source for both the home rail and the profile rail.
-// TODO at launch: return real progress from the reading store instead of READING.
 // Signed out this returns the seeded preview, so a visitor sees what the
 // section becomes. Signed in it returns only what this person has
 // actually opened, most recent first — which for a new account is empty.

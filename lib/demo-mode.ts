@@ -31,14 +31,11 @@ const REPLAY = [
 ];
 
 export async function resetForDemo() {
-  console.log('[demo] resetForDemo called, DEMO =', DEMO);
   if (!DEMO) return;
   try {
     await AsyncStorage.multiRemove(REPLAY);
-    console.log('[demo] everything reset');
-  } catch (e) {
-    console.log('[demo] reset failed', e);
-  }
+    } catch (e) {
+    }
 }
 
 

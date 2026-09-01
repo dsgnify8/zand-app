@@ -19,7 +19,7 @@ function sameAddress(a?: string | null, b?: string | null) {
 let _adminEmail: string | null = null;
 const adminListeners = new Set<() => void>();
 export function setAdminEmail(email: string | null) {
-  console.log('[admin] signed in as:', email, '| expecting:', ADMIN_EMAIL, '| match:', email === ADMIN_EMAIL); _adminEmail = email; adminListeners.forEach((l) => l()); }
+  _adminEmail = email; adminListeners.forEach((l) => l()); }
 export function isAdmin() { return sameAddress(_adminEmail, ADMIN_EMAIL); }
 
 export function useIsAdmin() {

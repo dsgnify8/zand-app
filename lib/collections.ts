@@ -85,7 +85,6 @@ export async function createCollection(ownerId: string, name: string) {
     .maybeSingle();
   // TEMP: the sheet discards this, so a policy refusing the insert looks
   // like nothing happening at all.
-  console.log('[folder] create', name, '->', data?.id ?? 'NO ROW', error?.message ?? '');
   return { data: data as Collection | null, error: error?.message };
 }
 
@@ -135,8 +134,6 @@ export async function addToCollection(collectionId: string, businessId: string) 
       business_id: businessId,
       added_by: me.user?.id ?? null,
     });
-  console.log('[folder] add ->', addErr?.message ?? 'ok');
-
   // Filing something is saving it. Otherwise a listing sits in a folder
   // with an empty bookmark, which reads as not saved.
   if (!isSavedBusiness(businessId)) await toggleSavedBusiness(businessId);

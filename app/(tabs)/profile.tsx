@@ -1393,14 +1393,14 @@ const s = StyleSheet.create({
     flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
     marginBottom: spacing.md,
   },
-  libHeadT: { fontFamily: fonts.heading, fontSize: 26, color: pr.text },
+  libHeadT: { fontFamily: fonts.heading, fontSize: 26, color: pr.ink },
   subHead: {
     flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
     marginBottom: spacing.lg,
   },
   // The body face, matching the page titles on By city and By category.
   // The serif made a one word heading look like a chapter opening.
-  subTitleInline: { fontFamily: fonts.body, fontSize: 16, letterSpacing: 0.2, color: pr.text },
+  subTitleInline: { fontFamily: fonts.body, fontSize: 16, letterSpacing: 0.2, color: pr.ink },
   railHead: {
     flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
     marginBottom: spacing.md,
@@ -1412,7 +1412,7 @@ const s = StyleSheet.create({
     width: 132, height: 168, borderRadius: 12, overflow: 'hidden',
     backgroundColor: 'rgba(40,28,24,0.05)',
   },
-  libCardT: { fontFamily: fonts.heading, fontSize: 15, lineHeight: 19, color: pr.text, marginTop: 7 },
+  libCardT: { fontFamily: fonts.heading, fontSize: 15, lineHeight: 19, color: pr.ink, marginTop: 7 },
   libCardS: { fontFamily: fonts.body, fontSize: 11, color: pr.dim, marginTop: 1 },
   inboxWhen: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, marginTop: 2 },
   inboxNote: {

@@ -50,8 +50,7 @@ export async function transcribe(uri: string, lang = 'fa-IR'): Promise<string | 
     // what did we actually record?
     try {
       const info = await FileSystem.getInfoAsync(uri);
-      console.log('[listen] file', uri.split('/').pop(), 'exists:', info.exists, 'size:', (info as any).size);
-    } catch {}
+      } catch {}
     const audio = await FileSystem.readAsStringAsync(uri, { encoding: 'base64' as any });
     const { data, error } = await supabase.functions.invoke('listen', { body: { audio, lang } });
     if (error) { console.log('[listen] fn error', error.message); return null; }
