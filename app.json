@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "zand",
+    "name": "ZAND",
     "slug": "zand",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,8 +11,13 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "ZAND uses the microphone so you can speak instead of typing, and to translate a conversation out loud."
-      }
+        "NSMicrophoneUsageDescription": "ZAND uses the microphone so you can speak instead of typing, and to translate a conversation out loud.",
+        "NSLocationWhenInUseUsageDescription": "ZAND uses your location to show Iranian businesses near you.",
+        "NSPhotoLibraryUsageDescription": "ZAND needs photo access so you can add pictures to your listing.",
+        "NSCameraUsageDescription": "ZAND uses the camera so you can photograph your business."
+      },
+      "bundleIdentifier": "com.zandapplication.zand",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
@@ -44,12 +49,12 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#FAF7F3",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#1C1411"
           }
         }
       ],
@@ -61,13 +66,6 @@
           "locationAlwaysAndWhenInUsePermission": "Zand uses your location to show Iranian-owned businesses near you.",
           "locationWhenInUsePermission": "Zand uses your location to show Iranian-owned businesses near you.",
           "isIosBackgroundLocationEnabled": false
-        }
-      ],
-      [
-        "@stripe/stripe-react-native",
-        {
-          "merchantIdentifier": "merchant.com.zand",
-          "enableGooglePay": true
         }
       ]
     ],
