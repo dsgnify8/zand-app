@@ -32,6 +32,14 @@ import { DEMO } from '@/lib/demo-mode';
 const KEYS = [
   'learn:done',
   'learn:partial',
+  // Where in a lesson someone stopped. Added alongside learn:partial,
+  // which records how far — one is useless without the other.
+  'learn:partial-step',
+  // The streak's raw material. Unsynced, a new phone meant a streak of
+  // one however long someone had been coming — which is the single
+  // worst thing this app could forget.
+  'visit:days',
+  'streak:mended',
   'learn:strength',
   'stats:v1',
   'liked:articles',

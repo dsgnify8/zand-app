@@ -129,6 +129,10 @@ export async function markVisitDay() {
     // Bounded: a streak only ever needs to look back from today, and an
     // unbounded array would grow for the life of the install.
     const next = days.includes(today) ? days : [...days, today].slice(-400);
+    // Set unconditionally. Inside the branch below it only ran on the
+    // first launch of a day — open the app twice and the pips reverted to
+    // the list as it was at boot, one day short.
+    visitDays = next;
     if (!days.includes(today)) {
       await AsyncStorage.setItem('visit:days', JSON.stringify(next));
       // And in memory, or the week's pips keep reading the list as it was
@@ -238,6 +242,20 @@ export function recordFinished(
 
 export function syncVideosWatched(count: number) {
   if (state.videosWatched !== count) { state = { ...state, videosWatched: count }; emit(); persist(); }
+}
+
+/**
+ * Recount from a list of days.
+ *
+ * For mending: the gap has been filled in storage, and the streak has to
+ * be recomputed from the repaired list rather than incremented, since
+ * filling one day can join two runs into a much longer one.
+ */
+export function refreshStreakFromDays(days: string[]) {
+  visitDays = days;
+  const v = analyseVisits(days);
+  setStreak(v.streak);
+  setField('visitDays', days.length);
 }
 
 export function setStreak(days: number) {

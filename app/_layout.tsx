@@ -8,6 +8,7 @@ import { loadRemoteFrames } from '@/lib/image-frames';
 import { loadReminders } from '@/lib/reminders';
 import { loadStrength } from '@/lib/word-strength';
 import { loadLearnProgress, loadPartial } from '@/lib/learn-progress';
+import { loadMend } from '@/lib/streak-mend';
 import { loadLevel } from '@/lib/learn-level';
 import { useFriendDeepLink } from '@/lib/deep-links';
 import { loadHidden } from '@/lib/admin';
@@ -127,6 +128,7 @@ export default function RootLayout() {
         loadLevel(), loadLearnProgress(), loadPartial(), loadStrength(),
         loadReminders(), loadTpmAccess(), loadRemoteFrames(), loadOverrides(),
         loadUsage(), loadNotifPrefs(), loadImageOverrides(), loadSavedBusinesses(),
+        loadMend(),
       ].map((p) => Promise.resolve(p).catch(() => {})));
 
       // Awaited, unlike the rest. markVisitDay writes the streak through the

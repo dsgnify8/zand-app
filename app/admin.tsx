@@ -6,6 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin, useHidden, hideArticle, unhideArticle, isHidden } from '@/lib/admin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { forgetMend } from '@/lib/streak-mend';
+import { refreshStreakFromDays } from '@/lib/stats-store';
 import { AnalyticsBoard } from '@/components/analytics-board';
 import { supabase } from '@/lib/supabase';
 
@@ -37,6 +40,29 @@ export default function AdminScreen() {
 
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
           <View style={{ gap: spacing.lg }}>
+            {/* Trims the visit log to the current unbroken run and
+                recounts. For undoing a mend that joined runs it should
+                not have — this device only. */}
+            <Pressable style={s.editRow} onPress={async () => {
+              const raw = await AsyncStorage.getItem('visit:days');
+              const days: string[] = raw ? JSON.parse(raw) : [];
+              const sorted = Array.from(new Set(days)).sort();
+              const run: string[] = [];
+              for (let i = sorted.length - 1; i >= 0; i--) {
+                if (!run.length) { run.unshift(sorted[i]); continue; }
+                const gap = (new Date(run[0]).getTime() - new Date(sorted[i]).getTime()) / 86400000;
+                if (gap !== 1) break;
+                run.unshift(sorted[i]);
+              }
+              await AsyncStorage.setItem('visit:days', JSON.stringify(run));
+              await forgetMend();
+              refreshStreakFromDays(run);
+            }}>
+              <Ionicons name="refresh-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Trim streak to current run</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-listings' as any)}>
               <Ionicons name="storefront-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Business listings</Text>

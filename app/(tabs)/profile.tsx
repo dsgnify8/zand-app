@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useRef, useState, useEffect } from 'react';
 // Aliased: react-native exports an Animated of its own and this file
 // uses both. Reanimated's is only here for the library fade.
@@ -24,7 +25,8 @@ import { FriendsSheet } from '@/components/friends-sheet';
 import { FramedImage } from '@/components/framed-image';
 import { CultureCover } from '@/components/culture-cover';
 import { resolveMany } from '@/lib/resolve-saved';
-import { visitedDays, storeId, debugState, useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
+import { refreshStreakFromDays, visitedDays, storeId, debugState, useStats, milestoneStatus, setStreak } from '@/lib/stats-store';
+import { mendableDay, mendDay } from '@/lib/streak-mend';
 import { AchievementsSheet } from '@/components/achievements-sheet';
 import { eduImage } from '@/constants/education-images';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
@@ -87,6 +89,28 @@ const tabsFor = (): { k: Tab; label: string; icon: string }[] => [
 /* ---------------- You ---------------- */
 
 /**
+ * What to say under the number.
+ *
+ * A streak with nothing to reach for is a streak someone stops counting,
+ * so this always names the next mark: the first week, a fortnight, a
+ * month, a hundred days, then every hundred after that.
+ */
+function nextMark(days: number): string {
+  const marks = [7, 14, 30, 60, 100];
+  const target = marks.find((m) => m > days)
+    ?? (Math.floor(days / 100) + 1) * 100;
+  const left = target - days;
+  const name =
+    target === 7 ? 'your first week'
+    : target === 14 ? 'two weeks'
+    : target === 30 ? 'a month'
+    : target === 60 ? 'two months'
+    : target === 100 ? 'a hundred days'
+    : target + ' days';
+  return left === 1 ? '1 more day to ' + name : left + ' more days to ' + name;
+}
+
+/**
  * This week, Monday to Sunday, lit where they showed up.
  *
  * Read from the visit log rather than counted back from the streak: a run
@@ -119,6 +143,26 @@ function StreakCard() {
   const realStats = useStats();
   const demo = showDemoData(streakUser?.email);
   const streakDays = demo ? ME.streak : ((realStats as any)?.streakDays ?? 0);
+
+  // A single missed day, mendable once every sixty. Checked on render
+  // rather than at boot so it appears the moment someone returns.
+  const [mendable, setMendable] = useState<string | null>(null);
+  const [mending, setMending] = useState(false);
+  const mendPop = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (demo) return;
+    setMendable(mendableDay(visitedDays()));
+  }, [demo, streakDays]);
+
+  const claim = async () => {
+    if (!mendable) return;
+    setMending(true);
+    const next = await mendDay(visitedDays(), mendable);
+    // The pip springs in, then the number catches up.
+    Animated.spring(mendPop, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true }).start();
+    setTimeout(() => { refreshStreakFromDays(next); setMendable(null); setMending(false); }, 320);
+  };
   return (
     <View style={s.streak}>
       <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
@@ -135,15 +179,24 @@ function StreakCard() {
               <View key={i} style={[s.dayPip, d && s.dayPipOn]} />
             ))}
           </View>
-          <Text style={s.streakNote}>
-            {demo
-              ? ME.freezes + ' rest days left this month'
-              : (realStats as any)?.streakNudge
-              ? t(PROFILE.streakNudge)
-              : streakDays < 7 && streakDays > 0
-              ? (7 - streakDays) + ' more days to your first week'
-              : ''}
-          </Text>
+          {/* The offer comes first when there is one: a missed day is
+              the only thing here that expires. */}
+          {mendable && !demo ? (
+            <Pressable style={s.mend} onPress={claim} disabled={mending}>
+              <Ionicons name="sparkles-outline" size={12} color={pr.streakA} />
+              <Text style={s.mendT}>
+                {mending ? 'Mending…' : 'You missed a day. Mend it?'}
+              </Text>
+            </Pressable>
+          ) : (
+            <Text style={s.streakNote}>
+              {demo
+                ? ME.freezes + ' rest days left this month'
+                : streakDays > 0
+                ? nextMark(streakDays)
+                : ''}
+            </Text>
+          )}
         </View>
         <StreakPlant streak={streakDays} />
       </View>
@@ -557,9 +610,22 @@ function FriendsTab() {
   // remembered until the sheet reports back.
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
 
-  // Folded down, this session. Not persisted: tucking something away for
-  // now should not mean hiding it for good.
+  // Folded down, and it stays that way. Reopening the tab to find
+  // everything expanded again undoes the one thing the fold was for.
   const [folded, setFolded] = useState<number[]>([]);
+  // Nothing renders until the folded set is read. Drawing first and
+  // collapsing after is a flash of the previous state on every visit.
+  const [foldReady, setFoldReady] = useState(false);
+  useEffect(() => {
+    AsyncStorage.getItem('inbox:folded')
+      .then((v) => { if (v) setFolded(JSON.parse(v)); })
+      .catch(() => {})
+      .finally(() => setFoldReady(true));
+  }, []);
+  useEffect(() => {
+    if (!foldReady) return;   // the first write would be the empty default
+    AsyncStorage.setItem('inbox:folded', JSON.stringify(folded)).catch(() => {});
+  }, [folded, foldReady]);
 
   // Everything sent, behind a sheet. Five on the page is a reminder;
   // forty is a filing cabinet.
@@ -571,7 +637,7 @@ function FriendsTab() {
   // Nothing until the friends fetch lands. The sections below each render
   // from their own list, so without this the tab assembles itself in front
   // of you — which is what the flash was when switching from Progress.
-  if (friendsLoading) {
+  if (friendsLoading || !foldReady) {
     return <ActivityIndicator style={{ marginTop: spacing.xxl }} color={pr.friendA} />;
   }
 
@@ -1197,6 +1263,16 @@ const s = StyleSheet.create({
   streakDays: { flexDirection: 'row', gap: 4, marginTop: spacing.md },
   dayPip: { width: 16, height: 4, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.28)' },
   dayPipOn: { backgroundColor: '#FFF' },
+  // Small, and quiet enough that it reads as an offer rather than an
+  // alert. Nothing has gone wrong; something can be put right.
+  mend: {
+    flexDirection: 'row', alignItems: 'center', gap: 5,
+    alignSelf: 'flex-start', marginTop: 6,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    borderRadius: 999, paddingHorizontal: 9, paddingVertical: 4,
+  },
+  mendT: { fontFamily: fonts.bodyStrong, fontSize: 9.5, color: pr.streakA },
+
   streakNote: { fontFamily: fonts.body, fontSize: 10, color: 'rgba(255,255,255,0.75)', marginTop: spacing.sm },
 
   rail: { gap: spacing.md, paddingRight: spacing.lg },
