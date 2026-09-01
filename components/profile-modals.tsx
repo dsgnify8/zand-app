@@ -164,18 +164,55 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         <>
           <Header title="Account" />
           <View style={{ paddingBottom: spacing.xxl }}>
-            <Pressable style={m.field} onPress={() => startEdit('name', displayName)}>
-              <Text style={m.fieldL}>{tset(SETTINGS.name)}</Text>
-              <View style={m.fieldRow}><Text style={m.fieldV}>{displayName}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
-            </Pressable>
-            <Pressable style={m.field} onPress={() => startEdit('email', email)}>
-              <Text style={m.fieldL}>{tset(SETTINGS.email)}</Text>
-              <View style={m.fieldRow}><Text style={m.fieldV}>{email}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
-            </Pressable>
-            <Pressable style={m.field} onPress={() => startEdit('phone', phone)}>
-              <Text style={m.fieldL}>{tset(SETTINGS.phone)}</Text>
-              <View style={m.fieldRow}><Text style={m.fieldV}>{phone || tset(PROFILE.addNumber)}</Text><Ionicons name="pencil-outline" size={14} color={pr.dim} /></View>
-            </Pressable>
+            {([
+              { f: 'name' as const, label: tset(SETTINGS.name), value: displayName, keyboard: 'default' as const },
+              { f: 'email' as const, label: tset(SETTINGS.email), value: email, keyboard: 'email-address' as const },
+              { f: 'phone' as const, label: tset(SETTINGS.phone), value: phone || tset(PROFILE.addNumber), keyboard: 'phone-pad' as const },
+            ]).map((row) => {
+              const editing = editField === row.f;
+              return (
+                <Pressable
+                  key={row.f}
+                  style={m.field}
+                  onPress={() => { if (!editing) startEdit(row.f, row.f === 'phone' ? phone : row.value); }}
+                >
+                  <Text style={m.fieldL}>{row.label}</Text>
+                  <View style={m.fieldRow}>
+                    {editing ? (
+                      <>
+                        <TextInput
+                          style={[m.fieldV, m.fieldInput]}
+                          value={editVal}
+                          onChangeText={setEditVal}
+                          keyboardType={row.keyboard}
+                          autoCapitalize={row.f === 'name' ? 'words' : 'none'}
+                          autoCorrect={false}
+                          autoFocus
+                          onSubmitEditing={saveEdit}
+                          returnKeyType="done"
+                        />
+                        <Pressable hitSlop={10} onPress={saveEdit} disabled={editBusy}>
+                          <Ionicons
+                            name="checkmark"
+                            size={18}
+                            color={editBusy ? pr.dim : colors.accent}
+                          />
+                        </Pressable>
+                        <Pressable hitSlop={10} onPress={() => { setEditField(null); setEditMsg(''); }}>
+                          <Ionicons name="close" size={17} color={pr.dim} />
+                        </Pressable>
+                      </>
+                    ) : (
+                      <>
+                        <Text style={m.fieldV}>{row.value}</Text>
+                        <Ionicons name="pencil-outline" size={14} color={pr.dim} />
+                      </>
+                    )}
+                  </View>
+                  {editing && editMsg ? <Text style={m.fieldMsg}>{editMsg}</Text> : null}
+                </Pressable>
+              );
+            })}
             <View style={m.field}><Text style={m.fieldL}>{tset(SETTINGS.memberSince)}</Text><Text style={m.fieldV}>{ME.since}</Text></View>
 
             {/* Deliberately quiet and at the bottom: findable by anyone
@@ -217,22 +254,6 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               </>
             ) : null}
 
-            {editField ? (
-              <View style={m.editBox}>
-                <Text style={m.editLabel}>{editField === 'name' ? tset(PROFILE.fieldName) : editField === 'email' ? tset(PROFILE.fieldEmail) : tset(PROFILE.fieldPhone)}</Text>
-                <TextInput style={m.editInput} value={editVal} onChangeText={setEditVal}
-                  autoCapitalize={editField === 'name' ? 'words' : 'none'}
-                  keyboardType={editField === 'email' ? 'email-address' : editField === 'phone' ? 'phone-pad' : 'default'}
-                  autoFocus placeholderTextColor={pr.dim} />
-                {editMsg ? <Text style={m.editMsg}>{editMsg}</Text> : null}
-                <View style={m.editBtns}>
-                  <Pressable style={m.editCancel} onPress={() => setEditField(null)}><Text style={m.editCancelT}>{tset(SETTINGS.cancel)}</Text></Pressable>
-                  <Pressable style={[m.editSave, editBusy && { opacity: 0.6 }]} onPress={saveEdit} disabled={editBusy}>
-                    <Text style={m.editSaveT}>{editBusy ? tset(PROFILE.saving) : tset(APP.save)}</Text>
-                  </Pressable>
-                </View>
-              </View>
-            ) : null}
             <Text style={m.footNote}>{tset(PROFILE.dataQuestions)}</Text>
           </View>
         </>
@@ -293,9 +314,9 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
           <View style={{ paddingBottom: spacing.xxl }}>
             <Text style={m.helpLead}>{tset(PROFILE.helpRead)}</Text>
             <Text style={m.helpBody}>For any question, a problem, an idea, or just to say hello, email us and we will get back to you.</Text>
-            <Pressable style={m.mailBtn} onPress={() => Linking.openURL('mailto:contact@zand.com')}>
+            <Pressable style={m.mailBtn} onPress={() => Linking.openURL('mailto:admin@zandapplication.com')}>
               <Ionicons name="mail-outline" size={17} color="#FFF" />
-              <Text style={m.mailBtnT}>contact@zand.com</Text>
+              <Text style={m.mailBtnT}>admin@zandapplication.com</Text>
             </Pressable>
           </View>
         </>
@@ -594,6 +615,10 @@ const m = StyleSheet.create({
   rowT: { fontFamily: fonts.bodyStrong, fontSize: 13, color: colors.textPrimary },
   rowX: { fontFamily: fonts.body, fontSize: 10.5, color: pr.dim },
 
+  // The input sits exactly where the value did, so nothing shifts when
+  // the pencil is pressed.
+  fieldInput: { flex: 1, paddingVertical: 0 },
+  fieldMsg: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, marginTop: 6 },
   fieldRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   editBox: { backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: colors.border, padding: spacing.md, marginTop: spacing.md },
   editLabel: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.5, color: pr.dim, marginBottom: 6 },

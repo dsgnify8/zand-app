@@ -27,6 +27,7 @@ import { TOPICS as HISTORY_TOPICS } from '@/constants/education';
 import { AUTHORS } from '@/constants/literature';
 import { CULTURE_TOPICS } from '@/constants/culture';
 import { IranProvinceMap } from '@/components/iran-province-map';
+import { ZandHeader } from '@/components/zand-header';
 import { HistoryChapters } from '@/components/history-chapters';
 import { TraditionsPanels, LanguageScripts } from '@/components/explore-sections';
 import { LanguageBorrowed } from '@/components/explore-lit-lang';
@@ -254,6 +255,40 @@ export default function Explore() {
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
+        {/* The history spine runs up the page, breaks at the wordmark,
+            and carries on above it. 38 = the page's own padding plus the
+            spine's offset within the chapters. */}
+        {/* The spine belongs to the history section, so it leaves the
+            header once that section has scrolled past. Fading over 420pt
+            rather than cutting, so it retreats rather than blinking. */}
+        <ZandHeader
+          spine={{
+            x: 42,
+            colour: 'rgba(140,58,46,0.3)',
+            // On where the timeline runs vertically, off where it turns
+            // and runs across. The header's segment is the same line, so
+            // it should be present exactly when the line is.
+            // On through the first chapter, then in step with the
+            // illustration's own turns: off where the line runs across,
+            // on where it runs down. The last stretch after the modern
+            // age brings it back and it stays.
+            // The header's segment is the top of the same run the
+            // chapters draw. It belongs on screen while that run is, and
+            // the run ends where the first chapter begins — so one fade,
+            // not a rhythm. Trying to match the illustration's turns was
+            // guessing at geometry the component already knows.
+            // One fade, at the first turn. The header's segment is the
+            // top of the chapters' own run and it belongs on screen while
+            // that run is — bringing it back at later turns made the line
+            // flicker rather than travel.
+            opacity: y.interpolate({
+              inputRange: [0, 260, 340],
+              outputRange: [1, 1, 0],
+              extrapolate: 'clamp',
+            }),
+          }}
+        />
+
       <Animated.ScrollView
         contentContainerStyle={s.body}
         showsVerticalScrollIndicator={false}

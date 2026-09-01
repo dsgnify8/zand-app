@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLevel } from '@/lib/learn-level';
 import { LearnHero } from '@/components/learn-hero';
+import { ZandHeader } from '@/components/zand-header';
 import { UNITS } from '@/constants/curriculum';
 import { Animated, Easing, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -234,6 +235,8 @@ export default function LearnScreen() {
         {/* The scroll survives a lesson. Coming back to the top of a long
             route after finishing something halfway down means hunting for
             your place every time. */}
+        <ZandHeader />
+
         <Animated.ScrollView
           ref={scroller}
           onScroll={Animated.event(

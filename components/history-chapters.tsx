@@ -43,7 +43,10 @@ const BRICK = '#8C3A2E'; // same brick the old dots used, at 84pt
  * phone, which dropped the title straight on top of chapter 01.
  * ------------------------------------------------------------------ */
 const SPINE_X = 18; // where the line runs down, inside the page's own padding
-const LEAD = 150; // spine drawn above the section, up toward the page title
+// The spine starts above the section and runs up behind the header, so
+// the timeline reads as something the page was laid over rather than
+// something that begins partway down it.
+const LEAD = 330;
 // Where the topics rail crosses the lead-in, measured up from the section top.
 const RAIL_TOP = 58; // the break opens here
 const RAIL_BOTTOM = 24; // and closes here

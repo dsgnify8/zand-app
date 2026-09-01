@@ -68,7 +68,10 @@ export default function Forgot() {
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   flex: { flex: 1 },
-  body: { flex: 1, justifyContent: 'center', paddingHorizontal: spacing.xl },
+  // flexGrow rather than flex: as a scroll container this needs to be
+  // able to grow past the screen when the keyboard arrives, which flex: 1
+  // forbids.
+  body: { flexGrow: 1, justifyContent: 'center', paddingHorizontal: spacing.xl, paddingVertical: spacing.xxl },
   back: { flexDirection: 'row', alignItems: 'center', gap: 3, position: 'absolute', top: spacing.lg, left: spacing.lg },
   backT: { fontFamily: fonts.body, fontSize: 15, color: colors.textPrimary },
   title: { fontFamily: fonts.heading, fontSize: 32, color: colors.textPrimary },

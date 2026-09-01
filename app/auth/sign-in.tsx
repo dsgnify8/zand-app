@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -33,7 +33,14 @@ export default function SignIn() {
   return (
     <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.flex}>
-        <View style={s.body}>
+        {/* Scrollable, so the keyboard pushes the form up rather than
+            covering it. Padding behaviour needs something that can move;
+            a fixed View gives it nothing to work with. */}
+        <ScrollView
+          contentContainerStyle={s.body}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
           <Text style={s.wordmark}>ZAND</Text>
           <Text style={s.title}>{t(APP.welcomeBack)}</Text>
           <Text style={s.sub}>Sign in to keep your streak, saves, and friends.</Text>
@@ -64,7 +71,7 @@ export default function SignIn() {
               <Text style={s.footerLink}>{t(APP.createAccount)}</Text>
             </Pressable>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -73,7 +80,10 @@ export default function SignIn() {
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   flex: { flex: 1 },
-  body: { flex: 1, justifyContent: 'center', paddingHorizontal: spacing.xl },
+  // flexGrow rather than flex: as a scroll container this needs to be
+  // able to grow past the screen when the keyboard arrives, which flex: 1
+  // forbids.
+  body: { flexGrow: 1, justifyContent: 'center', paddingHorizontal: spacing.xl, paddingVertical: spacing.xxl },
   wordmark: { fontFamily: fonts.wordmark, fontSize: 20, letterSpacing: 5, color: colors.accent, marginBottom: spacing.xxl },
   title: { fontFamily: fonts.heading, fontSize: 34, color: colors.textPrimary },
   sub: { fontFamily: fonts.body, fontSize: 14, lineHeight: 21, color: colors.textSecondary, marginTop: spacing.sm, marginBottom: spacing.xl },

@@ -136,7 +136,7 @@ export const PROFILE: Record<string, T> = {
   fieldName: { en: 'Your name', fa: 'نام' },
   fieldEmail: { en: 'New email', fa: 'ایمیل جدید' },
   fieldPhone: { en: 'Phone number', fa: 'شمارهٔ تلفن' },
-  dataQuestions: { en: 'Any questions about your information? Get in touch at contact@zand.com.', fa: 'دربارهٔ اطلاعاتت سؤالی داری؟ با ما در contact@zand.com در تماس باش.' },
+  dataQuestions: { en: 'Any questions about your information? Get in touch at admin@zandapplication.com.', fa: 'دربارهٔ اطلاعاتت سؤالی داری؟ با ما در admin@zandapplication.com در تماس باش.' },
 
   // help and terms
   helpRead: { en: 'Our team reads everything.', fa: 'تیم ما همه را می‌خواند.' },
@@ -159,7 +159,7 @@ export const PROFILE: Record<string, T> = {
     en: 'ZAND is here to help you learn and stay connected to Persian heritage. Please use it kindly.',
     fa: 'زند برای این است که یاد بگیری و با میراث ایرانی در پیوند بمانی. با مهربانی ازش استفاده کن.',
   },
-  termsContact: { en: 'Questions about any of this? Email contact@zand.com.', fa: 'پرسشی داری؟ به contact@zand.com ایمیل بزن.' },
+  termsContact: { en: 'Questions about any of this? Email admin@zandapplication.com.', fa: 'پرسشی داری؟ به admin@zandapplication.com ایمیل بزن.' },
 
   // Placeholders, not concatenation: Persian leads with the count and does
   // not repeat the noun, so the pieces cannot be glued in English order.
