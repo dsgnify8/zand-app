@@ -121,7 +121,12 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
         </Pressable>
       ) : <View style={{ width: 22 }} />}
       <Text style={m.headT}>{title}</Text>
-      <Pressable hitSlop={10} onPress={close}><Ionicons name="close" size={21} color={colors.textPrimary} /></Pressable>
+      {/* From a panel this steps back to the settings list; only from
+          the list itself does it close the sheet. Dropping straight to
+          the profile from three levels in is a jump, not a dismissal. */}
+      <Pressable hitSlop={10} onPress={() => (panel ? setPanel(null) : close())}>
+        <Ionicons name="close" size={21} color={colors.textPrimary} />
+      </Pressable>
     </View>
   );
 
