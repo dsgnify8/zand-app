@@ -462,7 +462,7 @@ export function HistoryChapters() {
           this section is; the link is what you reach for once you have
           looked at them. */}
       <Pressable
-        onPress={() => router.navigate('/section/education' as any)}
+        onPress={() => router.navigate('/education/history' as any)}
         style={[st.learnRow, fa && { flexDirection: 'row-reverse' }]}
       >
         <Text style={[st.moreT, fa && st.rtl]}>{fa ? 'تاریخ را بیاموز' : 'Learn history'}</Text>

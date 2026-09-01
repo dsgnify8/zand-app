@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { bump, recordFinished } from '@/lib/stats-store';
 import { SaveHeart } from '@/components/save-heart';
 import { Image, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
@@ -219,6 +219,17 @@ export default function LitReader() {
   const pages = flatten(author);
   const total = pages.length;
   const p = Math.max(0, Math.min(total, parseInt(params.page ?? '0', 10) || 0));
+
+  // A page reached is a page read. `pagesRead` was declared, defaulted to
+  // zero and never set — so the pillar showed nothing and the twenty-page
+  // milestone could not be earned however much anyone read.
+  const counted = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    const k = params.author + ':' + p;
+    if (counted.current.has(k)) return;
+    counted.current.add(k);
+    bump('pagesRead');
+  }, [params.author, p]);
   const isEnd = p >= total;
 
   // Nothing here recorded anything before, so a poet read cover to cover was

@@ -917,13 +917,24 @@ function ProgressTab() {
       <Text style={s.sectionLabel}>{t(PROFILE.whatDoing)}</Text>
       <View style={s.statGrid}>
         {[
-          { v: stats.topicsFinished, k: 'Topics finished', kT: PROFILE.topicsFinished, i: 'book',
-            items: () => fromFinished('topic-') },
-          { v: (stats as any).poetsRead ?? 0, k: 'Poets read', kT: PROFILE.poetsRead, i: 'book-outline',
-            items: () => fromFinished('poet-') },
+          // Everything under Explore. Poets were counted separately and
+          // also inside this, so the two numbers overlapped and neither
+          // answered "how much have I read".
+          {
+            v: (stats.topicsFinished ?? 0) + ((stats as any).poetsRead ?? 0),
+            k: 'Topics finished', kT: PROFILE.topicsFinished, i: 'book',
+            items: () => [...fromFinished('topic-'), ...fromFinished('poet-'), ...fromFinished('culture-')],
+          },
           { v: stats.pagesRead, k: 'Pages read', kT: PROFILE.pagesRead, i: 'document-text' },
-          { v: stats.thingsSaved, k: 'Things saved', kT: PROFILE.thingsSaved, i: 'bookmark',
-            items: () => savedItems.map((x: any) => ({ key: x.key, title: x.title, sub: x.sub, route: x.route })) },
+          // Everything kept, and a tap rather than a hold: this one has a
+          // page of its own to go to.
+          // Everything kept, listed here rather than routed: the saved
+          // page lives inside the You tab's own state, so there is no
+          // address to send anyone to.
+          {
+            v: stats.thingsSaved, k: 'Things saved', kT: PROFILE.thingsSaved, i: 'bookmark',
+            items: () => savedItems.map((x: any) => ({ key: x.key, title: x.title, sub: x.sub, route: x.route })),
+          },
           { v: stats.thingsSent, k: 'Sent to friends', kT: PROFILE.sentToFriends, i: 'paper-plane' },
         ].map((st: any) => {
           // Only the ones with something itemised behind them open.
@@ -933,11 +944,12 @@ function ProgressTab() {
             <Pressable
               key={st.k}
               style={s.statCell}
-              disabled={!holdable}
+              disabled={!holdable && !st.route}
               delayLongPress={280}
-              onLongPress={() => setStatSheet({ title: st.kT ? t(st.kT) : st.k, items: list })}
+              onPress={st.route ? () => router.navigate(st.route as any) : undefined}
+              onLongPress={holdable ? () => setStatSheet({ title: st.kT ? t(st.kT) : st.k, items: list }) : undefined}
             >
-              <Ionicons name={st.i as any} size={16} color={pr.saveA} />
+              <Ionicons name={st.i as any} size={16} color="#A65F42" />
               <Text style={s.statV}>{st.v}</Text>
               <Text style={s.statK}>{st.kT ? t(st.kT) : st.k}</Text>
             </Pressable>
@@ -954,7 +966,6 @@ function ProgressTab() {
         <Ionicons name="chevron-forward" size={16} color={pr.dim} />
       </Pressable>
 
-      <Text style={s.finEmpty}>{t(PROFILE.holdForMore)}</Text>
 
       <AchievementsSheet open={achvOpen} onClose={() => setAchvOpen(false)} />
       <StatItemsSheet
@@ -1220,6 +1231,8 @@ const s = StyleSheet.create({
   calPip: { flex: 1, height: 34, borderRadius: 5, backgroundColor: 'rgba(36,28,25,0.07)' },
   calPipOn: { backgroundColor: pr.streakA },
   statGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginTop: spacing.xl },
+  // A warm ground rather than a flat panel, and the icon in clay rather
+  // than the blue it borrowed from the save colour.
   statCell: { width: '47%', backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg },
   statV: { fontFamily: fonts.heading, fontSize: 28, color: colors.textPrimary },
   statK: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textPrimary, marginTop: 2 },

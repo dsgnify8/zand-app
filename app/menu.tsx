@@ -12,7 +12,7 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 const EXPLORE_SECTIONS = [
   // What Explore actually holds. Education and Videos were sections from
   // an earlier shape of the page and led to places nobody arrives at now.
-  { label: 'History', fa: 'تاریخ', route: '/section/education', icon: 'hourglass-outline' },
+  { label: 'History', fa: 'تاریخ', route: '/education/history', icon: 'hourglass-outline' },
   { label: 'Geography', fa: 'جغرافیا', route: '/geography', icon: 'map-outline' },
   { label: 'Poets', fa: 'شاعران', route: '/literature', icon: 'book-outline' },
   { label: 'Culture', fa: 'فرهنگ', route: '/culture', icon: 'color-palette-outline' },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   sheet: {
     // Translucent over a blur, so the page it covers is still faintly
     // there. A solid panel makes the menu feel like a different screen.
-    backgroundColor: 'rgba(250,247,243,0.72)',
+    backgroundColor: 'rgba(250,247,243,0.94)',
     overflow: 'hidden',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   subRow: {
     flexDirection: 'row', alignItems: 'center', gap: spacing.md,
     paddingVertical: spacing.md, paddingLeft: spacing.xl,
-    backgroundColor: 'rgba(40,28,24,0.03)',
+    backgroundColor: 'transparent',
     borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border,
   },
   subLabel: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary },

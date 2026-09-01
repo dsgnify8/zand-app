@@ -177,7 +177,7 @@ export default function LearnScreen() {
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
-  const { user: demoUser } = useAuth();
+  const { user: demoUser, session } = useAuth();
   const demo = showDemoData(demoUser?.email);
   // First time in: the level questionnaire is the whole screen.
   const { asked: levelAsked, ready: levelReady } = useLevel();
@@ -185,8 +185,11 @@ export default function LearnScreen() {
     // Wait for the stored answer. Redirecting on !levelAsked alone fired
     // before the read resolved, which is why the questionnaire came back on
     // every cold start no matter what had been picked.
-    if (levelReady && !levelAsked) router.replace('/learn/level' as any);
-  }, [levelReady, levelAsked]);
+    // Only for someone signed in. Signing out clears the level, and
+    // without this the first thing a signed-out person sees is a
+    // questionnaire about where to start learning.
+    if (session && levelReady && !levelAsked) router.replace('/learn/level' as any);
+  }, [session, levelReady, levelAsked]);
 
   const [open, setOpen] = useState(false);
   const [known, setKnown] = useState<string[]>([]);
