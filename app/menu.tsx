@@ -16,6 +16,7 @@ const EXPLORE_SECTIONS = [
   { label: 'Geography', fa: 'جغرافیا', route: '/geography', icon: 'map-outline' },
   { label: 'Poets', fa: 'شاعران', route: '/literature', icon: 'book-outline' },
   { label: 'Culture', fa: 'فرهنگ', route: '/culture', icon: 'color-palette-outline' },
+  { label: 'Language', fa: 'زبان', route: '/language', icon: 'chatbubbles-outline' },
 ] as const;
 
 const LINKS = [
@@ -120,13 +121,16 @@ const styles = StyleSheet.create({
   // The same row as everything else in the menu, indented and a shade
   // darker. Boxing them made them look like a different component
   // dropped into the middle of a list.
+  // Smaller than the rows above them, indented, and on a shade of the
+  // sheet rather than a panel of their own — these are inside Explore,
+  // not beside it.
   subRow: {
-    flexDirection: 'row', alignItems: 'center', gap: spacing.md,
-    paddingVertical: spacing.md, paddingLeft: spacing.xl,
-    backgroundColor: 'transparent',
-    borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border,
+    flexDirection: 'row', alignItems: 'center', gap: spacing.sm,
+    paddingVertical: 11, paddingLeft: spacing.xl, paddingRight: spacing.md,
+    backgroundColor: 'rgba(40,28,24,0.035)',
+    borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(40,28,24,0.05)',
   },
-  subLabel: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary },
+  subLabel: { flex: 1, fontFamily: fonts.body, fontSize: 13, color: colors.textSecondary },
 
   footer: { paddingVertical: spacing.lg, alignItems: 'center' },
   footerMark: { fontFamily: fonts.wordmark, fontSize: 13, letterSpacing: 4, color: colors.textSecondary },
