@@ -190,7 +190,11 @@ function Rise({ children, index }: { children: any; index: number }) {
       Animated.timing(fade, { toValue: 1, duration: 520, delay: 90 + index * 80, useNativeDriver: true }),
     ]).start();
   }, []);
-  return <Animated.View style={{ opacity: fade, transform: [{ translateY: rise }] }}>{children}</Animated.View>;
+  return (
+    <Animated.View style={{ opacity: fade, transform: [{ translateY: rise }] }}>
+      {children}
+    </Animated.View>
+  );
 }
 
 function WorldCard({ w, index, fa }: { w: World; index: number; fa: boolean }) {
@@ -288,6 +292,25 @@ export default function Explore() {
             }),
           }}
         />
+
+      {/* One wash behind the whole page, taller than the content and
+          anchored to the screen rather than the scroll. Per-section
+          gradients showed their own edges however soft they were — with
+          one, there is no edge to see. */}
+      <LinearGradient
+        pointerEvents="none"
+        colors={[
+          'transparent',
+          'rgba(120,96,80,0.085)',
+          'transparent',
+          'rgba(120,96,80,0.07)',
+          'transparent',
+        ]}
+        locations={[0, 0.22, 0.45, 0.72, 1]}
+        start={{ x: 0.15, y: 0 }}
+        end={{ x: 0.85, y: 1 }}
+        style={StyleSheet.absoluteFill}
+      />
 
       <Animated.ScrollView
         contentContainerStyle={s.body}
