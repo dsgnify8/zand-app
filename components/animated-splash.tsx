@@ -22,6 +22,15 @@ export function AnimatedSplash({ onDone }: { onDone: () => void }) {
       Animated.delay(820),
       Animated.timing(container, { toValue: 0, duration: 520, easing: Easing.in(Easing.ease), useNativeDriver: true }),
     ]).start(() => onDone());
+
+    // And a hard stop. If the sequence is interrupted — a backgrounded
+    // app, a dropped frame at the wrong moment — the callback never
+    // fires and this screen has no exit. Nobody should be trapped on a
+    // logo.
+    // 620+520+1150+620+820+520 is 4.25s, so this only fires when the
+    // sequence has genuinely stalled rather than cutting it short.
+    const bail = setTimeout(onDone, 6000);
+    return () => clearTimeout(bail);
   }, []);
 
   const zandScale = zand.interpolate({ inputRange: [0, 1], outputRange: [0.94, 1] });

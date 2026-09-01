@@ -108,7 +108,13 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    // Hidden when the fonts land, or after four seconds regardless. A
+    // font that fails to load in a release build leaves this false
+    // forever, and the app then sits on the splash screen with no way
+    // out — which is worse than a page in a fallback face.
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
+    const bail = setTimeout(() => SplashScreen.hideAsync().catch(() => {}), 4000);
+    return () => clearTimeout(bail);
   }, [fontsLoaded]);
 
   // Order matters here. The demo wipe has to finish before anything

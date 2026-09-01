@@ -14,7 +14,8 @@
         "NSMicrophoneUsageDescription": "ZAND uses the microphone so you can speak instead of typing, and to translate a conversation out loud.",
         "NSLocationWhenInUseUsageDescription": "ZAND uses your location to show Iranian businesses near you.",
         "NSPhotoLibraryUsageDescription": "ZAND needs photo access so you can add pictures to your listing.",
-        "NSCameraUsageDescription": "ZAND uses the camera so you can photograph your business."
+        "NSCameraUsageDescription": "ZAND uses the camera so you can photograph your business.",
+        "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.zandapplication.zand",
       "buildNumber": "1"
