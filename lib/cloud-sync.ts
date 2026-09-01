@@ -193,7 +193,33 @@ async function clearIfDifferentUser(uid: string): Promise<boolean> {
   }
 }
 
+/**
+ * Whether a pull is in flight.
+ *
+ * Signing in clears local storage for the incoming account and then
+ * fetches theirs. Between those two moments every store reads empty —
+ * which had the Learn tab deciding nobody had answered the level question
+ * and sending them back to onboarding they had done weeks ago.
+ */
+let pulling = false;
+const pullListeners = new Set<() => void>();
+export function isSyncing() { return pulling; }
+export function onSyncChange(fn: () => void) {
+  pullListeners.add(fn);
+  return () => { pullListeners.delete(fn); };
+}
+const setPulling = (v: boolean) => { pulling = v; pullListeners.forEach((f) => f()); };
+
 export async function pullAndMerge(uid: string): Promise<boolean> {
+  setPulling(true);
+  try {
+    return await pullAndMergeInner(uid);
+  } finally {
+    setPulling(false);
+  }
+}
+
+async function pullAndMergeInner(uid: string): Promise<boolean> {
   // Demo mode wipes local storage on every launch so the app opens as a
   // new user would find it. Pulling the cloud copy straight afterwards
   // undoes that entirely, so while DEMO is on we do not sync at all.
@@ -214,10 +240,20 @@ export async function pullAndMerge(uid: string): Promise<boolean> {
 
     for (const key of KEYS) {
       const raw = await AsyncStorage.getItem(key);
-      const local = raw ? JSON.parse(raw) : null;
+      // Not everything here is JSON. learn:level holds a bare string and
+      // learn:asked holds '1', and JSON.parse throws on the first of
+      // those — which aborted the whole loop, leaving every key after it
+      // unsynced and every key before it half-written.
+      let local: any = null;
+      if (raw != null) {
+        try { local = JSON.parse(raw); } catch { local = raw; }
+      }
       const merged = mergeOne(key, local, cloud[key] ?? null);
       if (merged != null && JSON.stringify(merged) !== JSON.stringify(local)) {
-        await AsyncStorage.setItem(key, JSON.stringify(merged));
+        await AsyncStorage.setItem(
+          key,
+          typeof merged === 'string' ? merged : JSON.stringify(merged),
+        );
         changed = true;
       }
     }
@@ -240,7 +276,12 @@ async function push() {
     const payload: Record<string, any> = {};
     for (const key of KEYS) {
       const raw = await AsyncStorage.getItem(key);
-      if (raw) payload[key] = JSON.parse(raw);
+      // Same as the pull: not every value is JSON, and a throw here
+      // ended the loop — so nothing after learn:level in KEYS had ever
+      // reached the server.
+      if (raw != null) {
+        try { payload[key] = JSON.parse(raw); } catch { payload[key] = raw; }
+      }
     }
     await supabase
       .from('user_state')

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSyncExternalStore, useCallback, useEffect, useRef, useState } from 'react';
 import { useLevel } from '@/lib/learn-level';
 import { LearnHero } from '@/components/learn-hero';
 import { ZandHeader } from '@/components/zand-header';
@@ -17,6 +17,7 @@ import { STAGES } from '@/constants/journey';
 import { t, useLang, getLang } from '@/lib/i18n';
 import { showDemoData } from '@/lib/demo-mode';
 import { useAuth } from '@/lib/auth';
+import { isSyncing, onSyncChange } from '@/lib/cloud-sync';
 
 import { LEARN } from '@/constants/i18n/learn';
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -182,6 +183,7 @@ export default function LearnScreen() {
   const demo = showDemoData(demoUser?.email);
   // First time in: the level questionnaire is the whole screen.
   const { asked: levelAsked, ready: levelReady } = useLevel();
+  const syncing = useSyncExternalStore(onSyncChange, isSyncing);
   useEffect(() => {
     // Wait for the stored answer. Redirecting on !levelAsked alone fired
     // before the read resolved, which is why the questionnaire came back on
@@ -189,8 +191,12 @@ export default function LearnScreen() {
     // Only for someone signed in. Signing out clears the level, and
     // without this the first thing a signed-out person sees is a
     // questionnaire about where to start learning.
+    // Not while a sync is running. Switching accounts empties local
+    // storage before the incoming account's data arrives, and asking
+    // during that window means asking someone who has already answered.
+    if (syncing) return;
     if (session && levelReady && !levelAsked) router.replace('/learn/level' as any);
-  }, [session, levelReady, levelAsked]);
+  }, [session, syncing, levelReady, levelAsked]);
 
   const [open, setOpen] = useState(false);
   const [known, setKnown] = useState<string[]>([]);

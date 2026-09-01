@@ -123,9 +123,11 @@ export default function TpmScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: tpm.paper }}>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+        {/* Their mark, at the size it deserves and against the left
+            margin. The spacer beside it was centring it in a row that had
+            nothing else in it. */}
         <View style={s.head}>
-          <TpmMark size={84} />
-          <View style={{ width: 20 }} />
+          <TpmMark size={120} />
         </View>
 
         <View style={s.rule} />
@@ -196,7 +198,7 @@ export default function TpmScreen() {
 }
 
 const s = StyleSheet.create({
-  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 2, paddingRight: spacing.lg, paddingVertical: spacing.sm },
+  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: spacing.md, paddingRight: spacing.lg, paddingVertical: 4 },
   rule: { height: 2, backgroundColor: tpm.ink },
 
   intro: { paddingHorizontal: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.lg },

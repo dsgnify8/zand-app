@@ -117,7 +117,9 @@ const styles = StyleSheet.create({
   rowLabel: { flex: 1, fontFamily: fonts.body, fontSize: 15, color: colors.textPrimary },
   rowGlyph: { fontFamily: fonts.persian, fontSize: 14.5, color: colors.accent },
 
-  subList: { backgroundColor: colors.surface, borderRadius: 12, marginTop: spacing.sm, marginBottom: spacing.sm, paddingHorizontal: spacing.md },
+  // No ground of its own. The rows carry their own tint; a panel behind
+  // them showed as a pale band down both sides of the sheet.
+  subList: { marginTop: 2, marginBottom: spacing.sm },
   // The same row as everything else in the menu, indented and a shade
   // darker. Boxing them made them look like a different component
   // dropped into the middle of a list.

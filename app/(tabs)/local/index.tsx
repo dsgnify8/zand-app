@@ -58,22 +58,17 @@ export default function Local() {
   // The list fades rather than swapping. Changing location replaces every
   // card at once, and without this the whole page blinks.
   const swap = useRef(new Animated.Value(1)).current;
-  // Fades only when the place changes, and only once its rows have
-  // landed. Keying on `loading` alone meant every settled search snapped
-  // the list to nothing and faded it back — a flash per search.
-  const faded = useRef<string | null>(null);
+  // One rule: hidden while the rows are coming, faded in when they are
+  // here. The previous version tracked which place it had last faded for
+  // and bailed out three different ways, which meant entering the tab,
+  // switching location and clearing it each behaved differently — and
+  // two of the three flashed.
   useEffect(() => {
-    const here = (place?.lat ?? '') + ',' + (place?.lng ?? '');
-    if (loading) { faded.current = here; return; }
-    if (faded.current === null) { faded.current = here; return; }
-    if (faded.current !== here) return;
-
-    faded.current = null;
-    swap.setValue(0);
+    if (loading) { swap.setValue(0); return; }
     Animated.timing(swap, {
       toValue: 1, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true,
     }).start();
-  }, [loading, place?.lat, place?.lng]);
+  }, [loading]);
   const [infoOpen, setInfoOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
   // One sheet for the whole feed rather than one per card.
@@ -139,11 +134,10 @@ export default function Local() {
   }, [query]);
 
   const load = useCallback(async () => {
-    // Blank when the place changes, since the old city's listings under
-    // a new city's name reads as a glitch. Not when refining a search:
-    // there the results are narrowing, and watching them narrow is the
-    // whole point.
-    setLoading(!settled);
+    // Only a change of place counts as loading. Searching, clearing a
+    // search, and picking everywhere all refine a list that is already
+    // on screen — fading for those is a flash, not a transition.
+    setLoading((was) => (settled ? false : was));
     const rows = await loadBusinesses({
       near: place ? { lat: place.lat, lng: place.lng, km: 60 } : undefined,
       // One category server-side is not enough now that several can be

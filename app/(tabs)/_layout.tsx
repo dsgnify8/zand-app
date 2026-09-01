@@ -1,4 +1,4 @@
-import { Tabs, useSegments } from 'expo-router';
+import { router, Tabs, useSegments } from 'expo-router';
 import { StyleSheet, Text } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -97,7 +97,22 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, size }) => <TpmIcon size={size + 16} color={focused ? tpm.red : colors.textSecondary} />,
         }}
       />
-      <Tabs.Screen name="local" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <LocalIcon size={size} color={color} /> }} />
+      {/* Pressing the tab always lands on the Local feed. Arriving at a
+          listing from the map leaves you outside the Local stack, and
+          without this the tab had nowhere to return to and did nothing. */}
+      <Tabs.Screen
+        name="local"
+        options={{
+          tabBarLabel: ({ focused }) => <TabLabel k={NAV.local} focused={focused} dark={dark} />,
+          tabBarIcon: ({ color, size }) => <LocalIcon size={size} color={color} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.navigate('/local' as any);
+          },
+        }}
+      />
       <Tabs.Screen name="profile" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.profile} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <ProfileIcon size={size} color={color} /> }} />
     </Tabs>
   );

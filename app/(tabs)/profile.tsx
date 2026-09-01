@@ -596,7 +596,7 @@ function FriendsTab() {
   useLang();
   const { user } = useAuth();
   const { accepted, incoming, loading: friendsLoading, refresh } = useFriends(user?.id);
-  const { items: inbox, refresh: refreshInbox } = useInbox(user?.id);
+  const { items: inbox, loading: inboxLoading, refresh: refreshInbox } = useInbox(user?.id);
   const { items: outbox, refresh: refreshOutbox } = useOutbox(user?.id);
 
   // Keep the pending nudges in step with what is actually unlearned.
@@ -637,7 +637,10 @@ function FriendsTab() {
   // Nothing until the friends fetch lands. The sections below each render
   // from their own list, so without this the tab assembles itself in front
   // of you — which is what the flash was when switching from Progress.
-  if (friendsLoading || !foldReady) {
+  // Everything, or nothing. The inbox arrives after the friends do, so
+  // without this the page draws your people and your sends first and then
+  // pushes them down as what someone sent you lands above them.
+  if (friendsLoading || inboxLoading || !foldReady) {
     return <ActivityIndicator style={{ marginTop: spacing.xxl }} color={pr.friendA} />;
   }
 
