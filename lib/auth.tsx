@@ -87,13 +87,18 @@ export function AuthProvider({ children }: { children: any }) {
         if (changed && !cancelled) {
           // reload the stores so the UI shows what we just pulled
           try {
-            const [{ loadLearnProgress }, { loadStrength }, { loadStats }, { loadSaved }] = await Promise.all([
+            // learn-level included. The pull writes learn:asked to
+            // storage, but without re-reading it the level store keeps
+            // whatever boot found — nothing, on a fresh install — and the
+            // app asks someone to pick a level they chose months ago.
+            const [{ loadLearnProgress, loadPartial }, { loadStrength }, { loadStats }, { loadSaved }, { loadLevel }] = await Promise.all([
               import('@/lib/learn-progress'),
               import('@/lib/word-strength'),
               import('@/lib/stats-store'),
               import('@/lib/saved-store'),
+              import('@/lib/learn-level'),
             ]);
-            await Promise.all([loadLearnProgress(), loadStrength(), loadStats(), loadSaved()]);
+            await Promise.all([loadLearnProgress(), loadPartial(), loadStrength(), loadStats(), loadSaved(), loadLevel()]);
           } catch {}
         }
       } else {
