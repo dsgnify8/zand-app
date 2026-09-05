@@ -264,7 +264,6 @@ export default function RootLayout() {
             <Stack.Screen name="menu" options={{ headerShown: false, presentation: 'transparentModal', animation: 'fade', contentStyle: { backgroundColor: 'transparent' } }} />
             <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
           </Stack>
-          <ShareCatch />
           <StatusBar style="auto" />
           {!splashDone ? <AnimatedSplash onDone={() => setSplashDone(true)} /> : null}
           <LangSwitchOverlay />

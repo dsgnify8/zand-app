@@ -367,8 +367,17 @@ const s = StyleSheet.create({
   sheetTitle2: { fontFamily: fonts.body, fontSize: 20, color: colors.textPrimary },
   histRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border },
   clearT: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary },
-  go: { backgroundColor: colors.accent, borderRadius: 22, paddingVertical: 11, paddingHorizontal: spacing.xl, minWidth: 116, alignItems: 'center' },
-  goT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },
+  // Mint and thin rather than a block of maroon. The page is pale green
+  // throughout and a solid accent button read as borrowed from somewhere
+  // else — the one loud thing on a quiet screen.
+  go: {
+    backgroundColor: 'rgba(65,114,112,0.10)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(65,114,112,0.30)',
+    borderRadius: 22, paddingVertical: 11, paddingHorizontal: spacing.xl,
+    minWidth: 116, alignItems: 'center',
+  },
+  goT: { fontFamily: fonts.bodyStrong, fontSize: 11.5, letterSpacing: 1.6, textTransform: 'uppercase', color: lw.green },
 
   error: { fontFamily: fonts.body, fontSize: 13, color: colors.error, marginTop: spacing.lg },
 

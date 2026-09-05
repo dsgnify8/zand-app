@@ -164,8 +164,13 @@ const s = StyleSheet.create({
   title: { fontFamily: fonts.body, fontSize: 34, lineHeight: 41, color: lw.green },
   sub: { fontFamily: fonts.body, fontSize: 13.5, color: lw.inkSoft, marginTop: spacing.sm },
 
-  search: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, backgroundColor: lw.surface, borderWidth: 1, borderColor: lw.hair, borderRadius: 12, paddingHorizontal: spacing.md, paddingVertical: 10, marginTop: spacing.xl },
-  searchIn: { flex: 1, fontFamily: fonts.body, fontSize: 14.5, color: lw.ink },
+  search: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, backgroundColor: lw.surface, borderWidth: 1, borderColor: lw.hair, borderRadius: 12, paddingHorizontal: spacing.md, marginTop: spacing.xl },
+  // Room for the line. Without a height the field takes its parent's,
+  // and the placeholder's descenders were cut off at the bottom.
+  searchIn: {
+    flex: 1, fontFamily: fonts.body, fontSize: 14.5, color: lw.ink,
+    paddingVertical: 10, minHeight: 44,
+  },
   empty: { fontFamily: fonts.body, fontSize: 13, color: lw.muted, marginTop: spacing.xl },
 
   sets: { marginTop: spacing.xl, gap: spacing.sm },

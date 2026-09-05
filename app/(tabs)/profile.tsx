@@ -878,7 +878,10 @@ function FriendsTab() {
         <View style={{ gap: spacing.md, opacity: hasActivity ? 1 : 0.9 }}>
           {(hasActivity && !showDemoData(user?.email)
               ? []
-              : showDemoData(user?.email)
+              // The seeded card whenever the inbox is empty, signed in or
+              // not. Someone with an account and nothing waiting saw a
+              // blank space where the explanation should be.
+              : (inbox ?? []).length === 0
               ? INBOX.filter((x) => x.kind === 'word')
               : (inbox ?? []).filter((x: any) => x.kind === 'word')
             ).slice(0, 1).map((i: any) => (
@@ -913,7 +916,11 @@ function FriendsTab() {
           {/* A preview of what this becomes, shown only when nobody is
               signed in. Real friends render above, from `accepted`. */}
           <View style={{ gap: spacing.sm }}>
-            {(user ? [] : FRIENDS.slice(0, 2)).map((f) => (
+            {/* Shown whenever the section is empty, signed in or not.
+                Keying on `user` meant someone with an account and no
+                friends yet saw a heading over nothing — which explains
+                the section least well of any state. */}
+            {(hasActivity ? [] : FRIENDS.slice(0, 2)).map((f) => (
               <View key={f.key} style={s.friendRow}>
                 <View style={[s.avatar, s.avatarSm]}><Text style={s.avatarT}>{f.persian[0]}</Text></View>
                 <View style={{ flex: 1 }}>
