@@ -54,18 +54,25 @@ export const unstable_settings = {
 
 export let onboardingDone: () => void = () => {};
 
+// Held outside the component. A language change remounts this whole tree,
+// and the state version reset to null, re-read storage, and redirected on
+// the stale answer in between — which is why choosing Persian, or
+// creating an account, sent people back to the first screen.
+let onboardedOnce: boolean | null = null;
+
 function AuthGate() {
   // Onboarding runs before anything else, once, unless demo mode clears it.
-  const [onboarded, setOnboarded] = useState<boolean | null>(null);
+  const [onboarded, setOnboarded] = useState<boolean | null>(onboardedOnce);
   useEffect(() => {
+    if (onboardedOnce !== null) return;   // already known this session
     AsyncStorage.getItem('onboarded')
-      .then((v) => setOnboarded(v === '1'))
-      .catch(() => setOnboarded(true));
+      .then((v) => { onboardedOnce = v === '1'; setOnboarded(onboardedOnce); })
+      .catch(() => { onboardedOnce = true; setOnboarded(true); });
   }, []);
 
   // The onboarding screen calls this when it finishes, so the gate does not
   // keep redirecting back on its stale value.
-  useEffect(() => { onboardingDone = () => setOnboarded(true); }, []);
+  useEffect(() => { onboardingDone = () => { onboardedOnce = true; setOnboarded(true); }; }, []);
   const { session, loading } = useAuth();
   const segments = useSegments();
   useFriendDeepLink(session?.user?.id);

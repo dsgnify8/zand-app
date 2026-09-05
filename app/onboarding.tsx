@@ -122,6 +122,10 @@ export default function Onboarding() {
   // first proof the app speaks it.
   const chooseLang = async (code: 'en' | 'fa') => {
     setLangLocal(code);
+    // The language switch remounts the whole tree — the root layout is
+    // keyed on it — so `step` resets to zero and the sequence starts
+    // again. Putting the step in the route means it survives.
+    router.setParams({ step: String(step) } as any);
     await setAppLang(code);
   };
   const [mode, setMode] = useState<'up' | 'in'>('up');
