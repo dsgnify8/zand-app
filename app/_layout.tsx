@@ -98,6 +98,13 @@ export default function RootLayout() {
   const [milestone, setMilestone] = useState<string | null>(null);
   useEffect(() => onMilestone(setMilestone), []);
   const [splashDone, setSplashDone] = useState(false);
+  // Four seconds is far longer than a bundled font needs. Past that,
+  // something is wrong and the app should open anyway.
+  const [fontsTimedOut, setFontsTimedOut] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setFontsTimedOut(true), 4000);
+    return () => clearTimeout(t);
+  }, []);
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -149,7 +156,11 @@ export default function RootLayout() {
     })();
   }, []);
 
-  if (!fontsLoaded) {
+  // Render regardless. Hiding the native splash meant nothing if this
+  // still returned null — a font that fails in a release build then left
+  // a blank screen with no way out. Falling back to the system face is a
+  // worse-looking app; returning null is no app at all.
+  if (!fontsLoaded && !fontsTimedOut) {
     return null;
   }
 

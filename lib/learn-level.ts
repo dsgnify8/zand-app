@@ -71,9 +71,12 @@ export function useLevel() {
 
 // One object, cached, so useSyncExternalStore does not see a new
 // reference on every call and loop.
-let snap = { level, asked, ready, info: levelInfo(level) };
+// Built lazily. Calling levelInfo() at module scope required it to be
+// defined by the time this line evaluates — which in a release bundle it
+// was not, and the throw took the whole app down before React mounted.
+let snap: any = null;
 function snapshot() {
-  if (snap.level !== level || snap.asked !== asked || snap.ready !== ready) {
+  if (!snap || snap.level !== level || snap.asked !== asked || snap.ready !== ready) {
     snap = { level, asked, ready, info: levelInfo(level) };
   }
   return snap;

@@ -68,7 +68,8 @@
           "locationWhenInUsePermission": "Zand uses your location to show Iranian-owned businesses near you.",
           "isIosBackgroundLocationEnabled": false
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
