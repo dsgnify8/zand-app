@@ -10,7 +10,7 @@ import { nz, NOWRUZ_CHAPTERS, type NzBlock } from '@/constants/nowruz';
 import { eduImage } from '@/constants/education-images';
 import { Tahvil, HaftSeen, Guests, Fire, Knot } from '@/components/nowruz-blocks';
 import { GlossaryText } from '@/components/glossary-text';
-import { t, useLang } from '@/lib/i18n';
+import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 
 function FadeIn({ children, delay = 0 }: { children: any; delay?: number }) {

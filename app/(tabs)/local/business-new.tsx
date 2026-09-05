@@ -174,7 +174,11 @@ export default function BusinessForm() {
   if (!b.category) missing.push('a category');
   if (b.lat == null && !b.city?.trim()) missing.push('a location');
   if (!(b.photos?.length)) missing.push('at least one photo');
-  if ((b.description?.trim().length ?? 0) < 40) missing.push('a description');
+  // Say what is actually wrong. "A description" when one is written
+  // reads as a bug, and the person then has no idea what to change.
+  const dlen = b.description?.trim().length ?? 0;
+  if (dlen === 0) missing.push('a description');
+  else if (dlen < 40) missing.push('a longer description (at least 40 characters)');
   const ready = missing.length === 0;
 
   const submit = async () => {

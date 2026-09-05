@@ -59,6 +59,7 @@ export function LostVerses() {
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
+  const fa = getLang() === 'fa';
   const [faded, setFaded] = useState(false);
   const fade = useRef(new Animated.Value(1)).current;
 
