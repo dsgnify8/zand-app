@@ -114,6 +114,26 @@ export function SavedBusinesses() {
         </View>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.body}>
+          {/* Saved things but nowhere to put them. Folders are the point of
+              this page and there was no way in from here — you had to know
+              to long-press a card somewhere else. */}
+          {collections.length === 0 && saved.length > 0 ? (
+            <Pressable style={s.makeFolder} onPress={() => setFiling(saved[0].id)}>
+              <Ionicons name="folder-open-outline" size={20} color={colors.accent} />
+              <View style={{ flex: 1 }}>
+                <Text style={[s.makeFolderT, fa && s.rtl]}>
+                  {fa ? 'یک پوشه بساز' : 'Make a folder'}
+                </Text>
+                <Text style={[s.makeFolderX, fa && s.rtl]}>
+                  {fa
+                    ? 'جاهایی که ذخیره کرده‌ای را دسته‌بندی کن.'
+                    : 'Group the places you have saved.'}
+                </Text>
+              </View>
+              <Ionicons name="add" size={18} color={colors.accent} />
+            </Pressable>
+          ) : null}
+
           {/* one rail per folder */}
           {collections.map((c) => {
             const ids = contents[c.id] ?? [];
@@ -213,6 +233,17 @@ const s = StyleSheet.create({
   topTRight: { flex: 1, textAlign: 'right' },
 
   body: { paddingBottom: spacing.xxl * 2 },
+
+  // Dashed, so it reads as a space waiting to be filled rather than a
+  // card that already holds something.
+  makeFolder: {
+    flexDirection: 'row', alignItems: 'center', gap: spacing.md,
+    borderWidth: 1, borderStyle: 'dashed', borderColor: 'rgba(140,58,46,0.35)',
+    backgroundColor: 'rgba(140,58,46,0.045)',
+    borderRadius: 14, padding: spacing.lg, marginBottom: spacing.xl,
+  },
+  makeFolderT: { fontFamily: fonts.bodyStrong, fontSize: 14.5, color: colors.textPrimary },
+  makeFolderX: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, marginTop: 2 },
 
   section: { marginTop: spacing.lg },
   sectionHead: {

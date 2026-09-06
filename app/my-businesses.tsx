@@ -371,7 +371,14 @@ const s = StyleSheet.create({
   pitchRowT: { fontFamily: fonts.bodyStrong, fontSize: 13.5, color: colors.textPrimary },
   pitchRowX: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: colors.textSecondary, marginTop: 2 },
 
-  pitchCta: { backgroundColor: colors.accent, borderRadius: radius.lg, paddingVertical: 14, alignItems: 'center', marginTop: spacing.sm },
-  pitchCtaT: { fontFamily: fonts.bodyStrong, fontSize: 14.5, color: '#FFF' },
+  // Pale and lettered, matching the form it leads to. A solid red block
+  // was the loudest thing on an otherwise quiet invitation.
+  pitchCta: {
+    backgroundColor: 'rgba(140,58,46,0.09)',
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(140,58,46,0.24)',
+    borderRadius: radius.lg, paddingVertical: 14, alignItems: 'center',
+    marginTop: spacing.sm,
+  },
+  pitchCtaT: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 1.6, textTransform: 'uppercase', color: colors.accent },
   pitchFoot: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.md, opacity: 0.85 },
 });

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Pressable, Share, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Modal, Pressable, Share, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
@@ -37,6 +37,10 @@ export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => v
   return (
     <Modal transparent visible={open} animationType="slide" onRequestClose={onClose}>
       <Pressable style={s.backdrop} onPress={onClose}>
+        {/* The email field sits at the foot of the sheet, which is exactly
+            where the keyboard arrives. Without this it covers the thing
+            being typed into. */}
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <Pressable style={s.sheet} onPress={() => {}}>
           <View style={s.grab} />
           <View style={s.head}>
@@ -65,6 +69,7 @@ export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => v
 
           {status ? <Text style={s.status}>{status}</Text> : null}
         </Pressable>
+        </KeyboardAvoidingView>
       </Pressable>
     </Modal>
   );

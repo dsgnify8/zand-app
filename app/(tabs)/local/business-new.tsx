@@ -674,9 +674,16 @@ const s = StyleSheet.create({
   missing: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl, backgroundColor: 'rgba(0,0,0,0.035)', borderRadius: radius.md, paddingVertical: spacing.md, paddingHorizontal: spacing.lg },
   err: { fontFamily: fonts.body, fontSize: 12.5, color: '#B3261E', marginTop: spacing.md },
 
-  cta: { backgroundColor: colors.accent, borderRadius: radius.lg, paddingVertical: 14, alignItems: 'center' },
+  // Pale and thin, matching Translate and the invite sheet. A solid
+  // block of accent red was the loudest thing on a form that is mostly
+  // quiet fields.
+  cta: {
+    backgroundColor: 'rgba(140,58,46,0.09)',
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(140,58,46,0.24)',
+    borderRadius: radius.lg, paddingVertical: 14, alignItems: 'center',
+  },
   ctaOff: { opacity: 0.4 },
-  ctaT: { fontFamily: fonts.bodyStrong, fontSize: 14.5, color: '#FFF' },
+  ctaT: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 1.6, textTransform: 'uppercase', color: colors.accent },
 
   foot: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.lg, opacity: 0.85 },
 
