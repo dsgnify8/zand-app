@@ -71,15 +71,15 @@ export const GEO_CHAPTERS: GeoChapter[] = [
     subtitleFa: 'ایران کجا ایستاده است',
     pages: [
       { blocks: [
-        { t: 'lead', x: 'Look at a map of the old world and your eye is drawn, almost against its will, to one place.', fa: 'به نقشهٔ دنیای قدیم که نگاه می‌کنی، چشمت بی‌اختیار جایی را پیدا می‌کند.' },
-        { t: 'p', x: 'Iran sits at the exact hinge of the ancient world. West lies the Mediterranean and the empires of Rome and Byzantium. East lie India and China. North are the steppes of Central Asia. South is the warm water of the Gulf and the sea road to Africa. Everything that moved between these worlds moved through here.', fa: 'ایران درست بر چهارراه دنیای کهن ایستاده است. در غرب، مدیترانه و امپراتوری‌های روم و بیزانس؛ در شرق، هند و چین؛ در شمال، دشت‌های بی‌کران آسیای میانه؛ و در جنوب، آب‌های گرم خلیج فارس و راه دریایی آفریقا. هر چه میان این جهان‌ها رفت و آمد کرد، از اینجا گذشت.' },
+        { t: 'lead', x: 'Look at a map of the old world and your eye is drawn, almost against its will, to one place.', fa: 'به نقشهٔ دنیای قدیم که نگاه می‌کنی، چشمت بی‌اختیار به یک نقطه جذب می‌شود.' },
+        { t: 'p', x: 'Iran sits at the exact hinge of the ancient world. West lies the Mediterranean and the empires of Rome and Byzantium. East lie India and China. North are the steppes of Central Asia. South is the warm water of the Gulf and the sea road to Africa. Everything that moved between these worlds moved through here.', fa: 'ایران درست بر چهارراه دنیای کهن ایستاده است. در غرب، مدیترانه و امپراتوری‌های روم و بیزانس؛ در شرق، هند و چین؛ در شمال، دشت‌های بی‌کران آسیای میانه؛ و در جنوب، آب‌های گرم خلیج فارس و راه دریایی آفریقا. هر چه میان این جهان‌ها رفت و آمد کرده، از ایران گذشته است.' },
         { t: 'map', key: 'iran-crossroads', cap: 'Iran at the hinge of the old world, between the Mediterranean, the steppe, India, and the Gulf.', capFa: 'ایران بر چهارراه دنیای کهن؛ میان مدیترانه، دشت‌های شمال، هند و خلیج فارس.' },
       ] },
       { blocks: [
-        { t: 'h', x: 'A bridge, not a corner', fa: 'پل، نه گوشه' },
-        { t: 'p', x: 'Most nations sit at the edge of something. Iran sits in the middle of everything. The Silk Road did not pass by Iran, it passed through it. The goods of China reached Rome through Persian hands. The mathematics of India reached Europe through Persian scholars. This was not an accident of trade. It was geography.', fa: 'بیشتر کشورها در حاشیهٔ چیزی نشسته‌اند. ایران در میانهٔ همه‌چیز. جادهٔ ابریشم از کنار ایران نگذشت، از دلش گذشت. کالای چین با دست ایرانی به روم رسید و ریاضیات هند با قلم دانشمند ایرانی به اروپا. این اتفاقِ تجارت نبود، جغرافیا بود.' },
-        { t: 'mark', x: 'Iran is not on the way to somewhere. It is the way.', fa: 'ایران سرِ راهِ جایی نیست. خودش راه است.' },
-        { t: 'p', x: 'A land in the middle of everything receives everything, and gives everything back changed. That is why Persian civilization has always been a civilization of synthesis, taking in the world and returning it transformed, in art, in language, in thought.', fa: 'سرزمینی که در میانهٔ همه‌چیز باشد، همه‌چیز را می‌گیرد و دگرگون‌شده پس می‌دهد. برای همین تمدن ایرانی همیشه تمدنِ آمیختن بوده است: جهان را در خود می‌گیرد و در هنر، در زبان و در اندیشه، تغییریافته بازمی‌گرداند.' },
+        { t: 'h', x: 'A bridge, not a corner', fa: 'یک پل، نه یک گوشه' },
+        { t: 'p', x: 'Most nations sit at the edge of something. Iran sits in the middle of everything. The Silk Road did not pass by Iran, it passed through it. The goods of China reached Rome through Persian hands. The mathematics of India reached Europe through Persian scholars. This was not an accident of trade. It was geography.', fa: 'بیشتر کشورها در حاشیهٔ چیزی نشسته‌اند. ایران در میانهٔ همه‌چیز. جادهٔ ابریشم از کنار ایران نگذشت، از دلش عبور کرد. کالای چین با دست ایرانی به روم رسید و ریاضیات هند با قلم دانشمند ایرانی به اروپا. این اتفاقِ تجارت نبود، جغرافیا بود.' },
+        { t: 'mark', x: 'Iran is not on the way to somewhere. It is the way.', fa: 'ایران سرِ راهِ جایی نیست؛ خودش راه است.' },
+        { t: 'p', x: 'A land in the middle of everything receives everything, and gives everything back changed. That is why Persian civilization has always been a civilization of synthesis, taking in the world and returning it transformed, in art, in language, in thought.', fa: 'سرزمینی که در میانهٔ همه‌چیز باشد، همه‌چیز را می‌گیرد و دگرگون‌شده پس می‌دهد. برای همین تمدن ایرانی همیشه تمدنِ آمیختن بوده است: جهان را در خود می‌گیرد و پرمایه‌تر بازمی‌گرداند؛ در هنر، در زبان، در اندیشه.' },
       ] },
       { blocks: [
         { t: 'h', x: 'The shape of the land', fa: 'شکل سرزمین' },
@@ -97,17 +97,17 @@ export const GEO_CHAPTERS: GeoChapter[] = [
   {
     key: 'g2',
     title: 'The Gift and the Burden',
-    titleFa: 'موهبت و بار',
+    titleFa: 'موهبت و مسئولیت',
     nav: 'History',
     navFa: 'تاریخ',
     subtitle: 'GEOGRAPHY THROUGH HISTORY',
     subtitleFa: 'جغرافیا در گذر تاریخ',
     pages: [
       { blocks: [
-        { t: 'p', x: 'To sit at the centre of the world is a gift and a burden, and Iran has known both in full measure. The same position that brought wealth brought armies. The same openness that let ideas in let invaders in.', fa: 'در مرکز جهان نشستن هم موهبت است و هم بار، و ایران هر دو را تمام و کمال چشیده است. همان موقعیتی که ثروت آورد، لشکر هم آورد. همان دری که اندیشه را به درون راه داد، مهاجم را هم راه داد.' },
+        { t: 'p', x: 'To sit at the centre of the world is a gift and a burden, and Iran has known both in full measure. The same position that brought wealth brought armies. The same openness that let ideas in let invaders in.', fa: 'در مرکز جهان نشستن هم موهبت است و هم مسئولیت، و ایران هر دو را تمام و کمال چشیده است. همان موقعیتی که ثروت آورد، لشکرکشی هم آورد. همان دری که اندیشه را به درون راه داد، مهاجم را هم راه داد.' },
       ] },
       { blocks: [
-        { t: 'h', x: 'What the land gave', fa: 'آنچه سرزمین بخشید' },
+        { t: 'h', x: 'What the land gave', fa: 'آنچه این سرزمین بخشید' },
         { t: 'p', x: 'The mountains were a fortress. Time and again the Zagros and the Alborz broke the force of invasion, and gave the people of the plateau a place to gather and return. The Parthians used this country to hold Rome at the Euphrates for three centuries. Rome never crossed the plateau.', fa: 'کوه‌ها دژ بودند. بارها و بارها زاگرس و البرز شتاب حمله را شکستند و به مردم فلات جایی دادند تا گرد هم آیند و بازگردند. اشکانیان با همین سرزمین سه قرن روم را پشت فرات نگه داشتند. روم هرگز از فلات نگذشت.' },
         { t: 'p', x: 'The position was a fortune. Every empire that ruled here grew rich on the trade that had nowhere else to go. Silk, spice, and gold crossed Iranian soil, and Iranian hands took their share.', fa: 'این موقعیت خودش ثروت بود. هر امپراتوری که اینجا حکم راند، از تجارتی که راه دیگری نداشت توانگر شد. ابریشم و ادویه و طلا از خاک ایران گذشتند و دست ایرانی سهم خودش را برداشت.' },
         { t: 'p', x: 'And where water was scarce, Iranians invented their way around it. The qanat, an underground channel tapping mountain groundwater and carrying it for miles beneath the desert, is a Persian invention thousands of years old, and it made cities possible where there was no river at all.', fa: 'و هر جا آب کم بود، ایرانی راهی از دلش بیرون کشید. قنات، کاریزی زیرزمینی که آب کوه را می‌گیرد و فرسنگ‌ها زیر کویر می‌بَرد، اختراعی ایرانی است به قدمت هزاران سال، و شهرهایی را ممکن کرد که هیچ رودی نداشتند.' },
