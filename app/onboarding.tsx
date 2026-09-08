@@ -49,6 +49,10 @@ function Field({
   secure?: boolean; keyboard?: any; autoCap?: any;
 }) {
   const [focused, setFocused] = useState(false);
+  // Shown by default hidden, with a way to look. Typing a password blind
+  // on a phone keyboard is how people end up locked out of an account
+  // they just made.
+  const [shown, setShown] = useState(false);
   return (
     <View style={[s.field, focused && s.fieldOn]}>
       <BlurView intensity={34} tint="light" style={StyleSheet.absoluteFill as any} />
@@ -61,13 +65,22 @@ function Field({
           onChangeText={onChange}
           placeholder={placeholder}
           placeholderTextColor="rgba(34,30,26,0.3)"
-          secureTextEntry={secure}
+          secureTextEntry={secure && !shown}
           keyboardType={keyboard}
           autoCapitalize={autoCap ?? 'none'}
           autoCorrect={false}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
         />
+        {secure ? (
+          <Pressable hitSlop={10} style={s.eye} onPress={() => setShown((v) => !v)}>
+            <Ionicons
+              name={shown ? 'eye-off-outline' : 'eye-outline'}
+              size={18}
+              color="rgba(34,30,26,0.45)"
+            />
+          </Pressable>
+        ) : null}
       </View>
     </View>
   );
@@ -401,6 +414,7 @@ const s = StyleSheet.create({
   field: { borderRadius: 18, overflow: 'hidden', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.6)', backgroundColor: 'rgba(255,255,255,0.14)' },
   fieldOn: { borderColor: colors.accent },
   fieldTint: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(255,255,255,0.42)' },
+  eye: { position: 'absolute', right: 0, bottom: 6, padding: 6 },
   fieldInner: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.md },
   fieldL: { fontFamily: fonts.bodyStrong, fontSize: 8.5, letterSpacing: 2.2, color: colors.textSecondary, marginBottom: 5 },
   input: { fontFamily: fonts.body, fontSize: 16.5, lineHeight: 21, color: colors.textPrimary, padding: 0, margin: 0 },

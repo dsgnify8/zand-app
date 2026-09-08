@@ -80,7 +80,10 @@ function AuthGate() {
     if (loading) return;
     const inAuth = segments[0] === 'auth';
     if (onboarded === null) return;               // still reading storage
-    if (!onboarded) { router.replace('/onboarding' as any); return; }
+    if (!onboarded) {
+      console.log('[gate] redirecting to onboarding | onboardedOnce =', onboardedOnce, '| session =', !!session);
+      router.replace('/onboarding' as any); return;
+    }
     // Signed out is a supported state: the whole app is browsable and
     // progress is kept locally until they sign in, at which point it is
     // merged up. So we do not force anyone to the auth screen.

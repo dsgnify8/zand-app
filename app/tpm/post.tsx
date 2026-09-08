@@ -84,18 +84,19 @@ export default function TpmPostScreen() {
           <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
             <Ionicons name="chevron-back" size={23} color={tpm.ink} />
           </Pressable>
-          <TpmMark size={24} />
-
-          {/* Kept, or not. The same store as everything else in the app,
-              so an article sits in the library beside a word or a poem. */}
-          <Pressable hitSlop={12} onPress={() => toggleSave(savedKey)}>
-            <Ionicons
-              name={isSaved ? 'bookmark' : 'bookmark-outline'}
-              size={20}
-              color={isSaved ? tpm.red : tpm.ink}
-            />
-          </Pressable>
-          <View style={{ width: 23 }} />
+          {/* The mark and the bookmark travel together on the right —
+              back on one side, theirs on the other, with the page's own
+              business between them. */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
+            <TpmMark size={24} />
+            <Pressable hitSlop={12} onPress={() => toggleSave(savedKey)}>
+              <Ionicons
+                name={isSaved ? 'bookmark' : 'bookmark-outline'}
+                size={20}
+                color={isSaved ? tpm.red : tpm.ink}
+              />
+            </Pressable>
+          </View>
         </View>
         <View style={s.rule} />
 

@@ -143,7 +143,10 @@ export default function TranslateScreen() {
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.nav}>
-        <Pressable hitSlop={12} onPress={() => router.replace('/learn/map' as any)}>
+        {/* Back to wherever they came from. `replace` sent everyone to
+            the map regardless — so arriving from the Learn tab and
+            pressing back landed you somewhere you had never been. */}
+        <Pressable hitSlop={12} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn' as any))}>
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </Pressable>
         <Text style={s.navTitle}>{tl(LEARN.translate)}</Text>
@@ -226,7 +229,9 @@ export default function TranslateScreen() {
         ) : null}
 
         {/* talk to someone */}
-        <Pressable style={s.converse} onPress={() => router.replace('/learn/converse' as any)}>
+        {/* navigate, not replace: converse is a step further in, and
+            back from there should return here. */}
+        <Pressable style={s.converse} onPress={() => router.navigate('/learn/converse' as any)}>
           <Ionicons name="swap-vertical-outline" size={16} color={lw.green} />
           <View style={{ flex: 1 }}>
             <Text style={s.converseT}>Talk to someone</Text>

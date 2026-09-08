@@ -49,6 +49,7 @@ export default function Local() {
   const [placeOpen, setPlaceOpen] = useState(false);
   const [placeText, setPlaceText] = useState('');
   const [locating, setLocating] = useState(false);
+  const [locErr, setLocErr] = useState(false);
 
   const [cat, setCat] = useState<string[]>([]);
   const [query, setQuery] = useState('');
@@ -57,7 +58,10 @@ export default function Local() {
 
   // The list fades rather than swapping. Changing location replaces every
   // card at once, and without this the whole page blinks.
-  const swap = useRef(new Animated.Value(1)).current;
+  // Starts hidden. At 1 the list painted once at full opacity before the
+  // effect below could hide it — one frame of the previous state, which
+  // is the white flash entering the tab.
+  const swap = useRef(new Animated.Value(0)).current;
   // One rule: hidden while the rows are coming, faded in when they are
   // here. The previous version tracked which place it had last faded for
   // and bailed out three different ways, which meant entering the tab,
@@ -103,11 +107,21 @@ export default function Local() {
       toValue: 0, duration: 160, easing: Easing.in(Easing.quad), useNativeDriver: true,
     }).start();
 
-    const p = await currentPlace();
+    // Bounded. A device that has just granted permission may take a
+    // long time to get a fix, or never get one indoors — and the list is
+    // faded to nothing while we wait, so an unbounded await left the page
+    // blank with no way back.
+    const p = await Promise.race([
+      currentPlace(),
+      new Promise<null>((r) => setTimeout(() => r(null), 8000)),
+    ]);
     setLocating(false);
     if (p) { setPlace(p); setPlaceOpen(false); }
     else {
-      // Nothing came back, so nothing changes — bring the list back.
+      // Nothing came back. Say so — a list that fades out and back with no
+      // explanation reads as a broken button.
+      setLocErr(true);
+      setTimeout(() => setLocErr(false), 4000);
       Animated.timing(swap, {
         toValue: 1, duration: 200, easing: Easing.out(Easing.quad), useNativeDriver: true,
       }).start();
@@ -279,6 +293,13 @@ export default function Local() {
                 : <Ionicons name="navigate-outline" size={14} color={colors.accent} />}
               <Text style={s.mineT}>{t(LOCAL.useMyLocation)}</Text>
             </Pressable>
+            {locErr ? (
+              <Text style={s.locErrT}>
+                {fa
+                  ? 'موقعیتت پیدا نشد. منطقه را خودت بنویس.'
+                  : 'Could not find you. Type an area instead.'}
+              </Text>
+            ) : null}
             <View style={s.row}>
               <TextInput
                 style={[s.input, { flex: 1 }]}
@@ -502,6 +523,10 @@ const s = StyleSheet.create({
 
   placeBox: { marginTop: spacing.sm, gap: spacing.sm },
   mineBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingVertical: 11, borderRadius: radius.md, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.accent },
+  locErrT: {
+    fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary,
+    marginTop: 6, marginBottom: 2,
+  },
   mineT: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.accent },
   row: { flexDirection: 'row', gap: 7 },
   input: { fontFamily: fonts.body, fontSize: 13.5, color: colors.textPrimary, backgroundColor: 'rgba(0,0,0,0.035)', borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: 10 },

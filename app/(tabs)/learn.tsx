@@ -183,20 +183,14 @@ export default function LearnScreen() {
   const demo = showDemoData(demoUser?.email);
   // First time in: the level questionnaire is the whole screen.
   const { asked: levelAsked, ready: levelReady } = useLevel();
-  const syncing = useSyncExternalStore(onSyncChange, isSyncing);
-  useEffect(() => {
-    // Wait for the stored answer. Redirecting on !levelAsked alone fired
-    // before the read resolved, which is why the questionnaire came back on
-    // every cold start no matter what had been picked.
-    // Only for someone signed in. Signing out clears the level, and
-    // without this the first thing a signed-out person sees is a
-    // questionnaire about where to start learning.
-    // Not while a sync is running. Switching accounts empties local
-    // storage before the incoming account's data arrives, and asking
-    // during that window means asking someone who has already answered.
-    if (syncing) return;
-    if (session && levelReady && !levelAsked) router.replace('/learn/level' as any);
-  }, [session, syncing, levelReady, levelAsked]);
+  // The level question is asked at the door, not on this tab.
+  //
+  // As a redirect it fired on every remount — a cold start, a sign-in, a
+  // language change — and no amount of guarding caught them all, because
+  // each one leaves `asked` momentarily false for a different reason.
+  // Asking when someone actually enters the learning world cannot
+  // misfire: there is only one way in.
+
 
   const [open, setOpen] = useState(false);
   const [known, setKnown] = useState<string[]>([]);
