@@ -62,6 +62,12 @@ export const SEARCH_SYNONYMS: Record<string, string[]> = {
     'گوشت', 'لواشک',
   ],
 
+  culture: [
+    'library', 'books', 'bookshop', 'gallery', 'museum', 'centre', 'center',
+    'community', 'reading', 'exhibition', 'کتابخانه', 'کتاب', 'گالری',
+    'موزه', 'فرهنگی', 'نمایشگاه',
+  ],
+
   winery: [
     'winery', 'wine', 'wines', 'vineyard', 'tasting', 'cellar', 'drinks',
     'shiraz', 'cabernet', 'napa', 'تاکستان', 'شراب', 'نوشیدنی', 'مزه',

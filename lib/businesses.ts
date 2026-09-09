@@ -74,6 +74,9 @@ export const CATEGORIES = [
   { key: 'candy',      en: 'Candy',       fa: 'شیرینی و آبنبات', icon: 'ice-cream-outline' },
   { key: 'dessert',    en: 'Desserts',    fa: 'دسر',       icon: 'ice-cream-outline' },
   { key: 'winery',     en: 'Wineries',    fa: 'تاکستان',   icon: 'wine-outline' },
+  // Libraries, galleries, bookshops, community rooms. Not a shop and not
+  // a restaurant, and the directory is poorer without them.
+  { key: 'culture',    en: 'Culture',     fa: 'فرهنگی',    icon: 'library-outline' },
   { key: 'beauty',     en: 'Beauty',      fa: 'زیبایی',    icon: 'sparkles-outline' },
   { key: 'clothing',   en: 'Clothing',    fa: 'پوشاک',     icon: 'shirt-outline' },
   { key: 'jewellery',  en: 'Jewellery',   fa: 'طلا و جواهر', icon: 'diamond-outline' },
