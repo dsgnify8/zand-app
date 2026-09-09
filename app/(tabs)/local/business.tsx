@@ -48,6 +48,9 @@ const DAY_FA: Record<string, string> = {
 };
 
 const SOCIAL_ICON: Record<string, string> = {
+  // Not a social network, but it belongs in the same row: it is one more
+  // way to reach the person behind the listing.
+  email: 'mail-outline',
   instagram: 'logo-instagram',
   tiktok: 'logo-tiktok',
   facebook: 'logo-facebook',
@@ -62,6 +65,7 @@ function socialUrl(key: string, v: string) {
     case 'instagram': return 'https://instagram.com/' + handle;
     case 'tiktok': return 'https://tiktok.com/@' + handle;
     case 'facebook': return 'https://facebook.com/' + handle;
+    case 'email': return 'mailto:' + handle;
     case 'telegram': return 'https://t.me/' + handle;
     case 'whatsapp': return 'https://wa.me/' + handle.replace(/[^\d]/g, '');
     default: return v;

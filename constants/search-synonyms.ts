@@ -62,6 +62,11 @@ export const SEARCH_SYNONYMS: Record<string, string[]> = {
     'گوشت', 'لواشک',
   ],
 
+  winery: [
+    'winery', 'wine', 'wines', 'vineyard', 'tasting', 'cellar', 'drinks',
+    'shiraz', 'cabernet', 'napa', 'تاکستان', 'شراب', 'نوشیدنی', 'مزه',
+  ],
+
   dessert: [
     'dessert', 'ice cream', 'bastani', 'gelato', 'baklava', 'baghlava',
     'sweets', 'faloodeh', 'falooda', 'sorbet', 'دسر', 'بستنی', 'باقلوا',

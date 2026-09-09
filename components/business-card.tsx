@@ -233,7 +233,9 @@ const s = StyleSheet.create({
   arrowL: { left: 10 },
   arrowR: { right: 10 },
 
-  dots: { position: 'absolute', bottom: 10, alignSelf: 'center', flexDirection: 'row', gap: 4 },
+  // Up off the edge. At 10 they sat against the white card beneath and
+  // the row looked clipped rather than placed.
+  dots: { position: 'absolute', bottom: 16, alignSelf: 'center', flexDirection: 'row', gap: 4 },
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.55)' },
   dotOn: { backgroundColor: '#FFF', width: 6, height: 6, borderRadius: 3 },
 

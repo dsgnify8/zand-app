@@ -87,8 +87,12 @@ function groupCities(items: Business[]) {
     if (prev) prev.list.push(b);
     else by.set(key, { label: raw, list: [b] });
   }
+  // Three or more. A city with one or two listings is a page someone
+  // opens once and does not return to, and a long list of those makes
+  // the cities worth visiting harder to find.
   return [...by.entries()]
     .map(([key, v]) => ({ key, ...v }))
+    .filter((c) => c.list.length >= 3)
     .sort((a, b) => b.list.length - a.list.length);
 }
 

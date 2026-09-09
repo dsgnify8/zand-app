@@ -38,6 +38,7 @@ const DAY_LABEL: Record<string, string> = {
   fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
 };
 const SOCIALS = [
+  { key: 'email', label: 'Email', icon: 'mail-outline' },
   { key: 'instagram', label: 'Instagram', icon: 'logo-instagram' },
   { key: 'tiktok', label: 'TikTok', icon: 'logo-tiktok' },
   { key: 'facebook', label: 'Facebook', icon: 'logo-facebook' },

@@ -20,7 +20,8 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 import { CATEGORIES, categoryLabel, loadBusiness, type Business } from '@/lib/businesses';
-import { bizImage } from '@/lib/business-photos';
+import * as ImagePicker from 'expo-image-picker';
+import { bizImage, removePhoto, uploadPhoto } from '@/lib/business-photos';
 
 type Msg = {
   id: number;
@@ -39,7 +40,7 @@ type Story = {
   photos?: string[];
 };
 
-const SOCIALS = ['instagram', 'tiktok', 'facebook', 'telegram'] as const;
+const SOCIALS = ['email', 'instagram', 'tiktok', 'facebook', 'telegram'] as const;
 
 export default function AdminBusiness() {
   const admin = useIsAdmin();
@@ -52,6 +53,41 @@ export default function AdminBusiness() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
   const [said, setSaid] = useState<string | null>(null);
+  // Uploading a photograph. Straight to the bucket the owner's own page
+  // writes to, so a picture added here is the same object they would see
+  // and can replace.
+  const [uploading, setUploading] = useState(false);
+
+  const addPhoto = async () => {
+    // Up to ten at once. Adding a listing's photographs one at a time
+    // means ten trips through the picker for one business.
+    const picked = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      quality: 0.85,
+      allowsMultipleSelection: true,
+      selectionLimit: 10,
+    });
+    if (picked.canceled || !picked.assets?.length) return;
+
+    setUploading(true);
+    try {
+      // Filed under the business id, which is what the owner's own page
+      // uses. A name slug would put the same listing's photographs in two
+      // folders depending on who added them.
+      // Sequential rather than parallel: ten at once tends to have one
+      // fail quietly, and the order they were chosen in is the order they
+      // should appear.
+      const added: string[] = [];
+      for (const a of picked.assets) {
+        const path = await uploadPhoto(String(b.id), a.uri);
+        if (path) added.push(path);
+      }
+      if (added.length) set({ photos: [...(b.photos ?? []), ...added] } as any);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const [tab, setTab] = useState<'listing' | 'messages' | 'story'>('listing');
 
   const load = useCallback(async () => {
@@ -87,6 +123,22 @@ export default function AdminBusiness() {
 
   const set = (patch: Partial<Business>) => setB((v) => (v ? { ...v, ...patch } as Business : v));
 
+  // Removing a listing. Two taps, and the second says what goes — the
+  // same shape as deleting an account, because this is equally final.
+  const [confirmDel, setConfirmDel] = useState(false);
+  const remove = async () => {
+    if (!id) return;
+    setBusy(true);
+    // The photographs go too. Files left in the bucket with no row
+    // pointing at them are invisible and permanent.
+    for (const p of b?.photos ?? []) {
+      if (!p.startsWith('demo:')) await removePhoto(p);
+    }
+    await supabase.from('businesses').delete().eq('id', id);
+    setBusy(false);
+    router.replace('/admin-listings' as any);
+  };
+
   const save = async () => {
     if (!b || !id) return;
     setBusy(true);
@@ -100,6 +152,10 @@ export default function AdminBusiness() {
       city: b.city,
       country: b.country,
       address: (b as any).address,
+      // The photographs. Uploading put the file in the bucket, but this
+      // column is what the listing reads — without it the picture existed
+      // and nothing pointed at it.
+      photos: b.photos ?? [],
       phone: (b as any).phone,
       website: (b as any).website,
       website_label: (b as any).website_label,
@@ -173,17 +229,33 @@ export default function AdminBusiness() {
           {/* ---------------- the listing ---------------- */}
           {tab === 'listing' ? (
             <>
-              {(b.photos ?? []).length ? (
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.shots}>
-                  {(b.photos ?? []).map((p) => (
-                    <View key={p} style={s.shot}>
-                      <Image source={bizImage(p)} style={StyleSheet.absoluteFill as any} />
-                    </View>
-                  ))}
-                </ScrollView>
-              ) : (
-                <Text style={s.hint}>No photographs. The owner adds these from their own page.</Text>
-              )}
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.shots}>
+                {(b.photos ?? []).map((p) => (
+                  <View key={p} style={s.shot}>
+                    <Image source={bizImage(p)} style={StyleSheet.absoluteFill as any} />
+                    {/* Removing takes it off the listing everywhere at
+                        once — the app and the website read this same row,
+                        so there is no second place to tidy up. */}
+                    <Pressable
+                      style={s.shotX}
+                      onPress={() => set({ photos: (b.photos ?? []).filter((x) => x !== p) } as any)}
+                    >
+                      <Ionicons name="close" size={13} color="#FFF" />
+                    </Pressable>
+                  </View>
+                ))}
+
+                <Pressable style={[s.shot, s.shotAdd]} onPress={addPhoto} disabled={uploading}>
+                  {uploading ? (
+                    <ActivityIndicator size="small" color={colors.accent} />
+                  ) : (
+                    <>
+                      <Ionicons name="add" size={20} color={colors.accent} />
+                      <Text style={s.shotAddT}>Add</Text>
+                    </>
+                  )}
+                </Pressable>
+              </ScrollView>
 
               <Field label="NAME" value={b.name} onChange={(v) => set({ name: v } as any)} />
               <Field label="NAME (FA)" value={(b as any).name_fa ?? ''} fa onChange={(v) => set({ name_fa: v } as any)} />
@@ -244,6 +316,23 @@ export default function AdminBusiness() {
                 <Text style={s.saveT}>{busy ? 'Saving…' : 'Save'}</Text>
               </Pressable>
               {said ? <Text style={s.said}>{said}</Text> : null}
+
+              {/* Quiet, and at the very bottom. Findable when wanted,
+                  never hit on the way past. */}
+              <Pressable
+                style={s.del}
+                onPress={() => (confirmDel ? remove() : setConfirmDel(true))}
+                disabled={busy}
+              >
+                <Text style={s.delT}>
+                  {confirmDel ? 'Delete for good' : 'Delete this listing'}
+                </Text>
+              </Pressable>
+              {confirmDel ? (
+                <Text style={s.delX}>
+                  The listing, its photographs, its messages and its story. This cannot be undone.
+                </Text>
+              ) : null}
             </>
           ) : null}
 
@@ -375,6 +464,20 @@ const s = StyleSheet.create({
   hint: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: colors.textSecondary, marginVertical: spacing.md },
 
   shots: { gap: 8, paddingBottom: spacing.md },
+  shotX: {
+    position: 'absolute', top: 5, right: 5,
+    width: 20, height: 20, borderRadius: 10,
+    backgroundColor: 'rgba(20,16,12,0.55)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  // Dashed, so it reads as a space rather than a picture.
+  shotAdd: {
+    alignItems: 'center', justifyContent: 'center', gap: 3,
+    borderWidth: 1, borderStyle: 'dashed', borderColor: 'rgba(140,58,46,0.35)',
+    backgroundColor: 'rgba(140,58,46,0.05)',
+  },
+  shotAddT: { fontFamily: fonts.body, fontSize: 10.5, color: colors.accent },
+
   shot: { width: 96, height: 96, borderRadius: 8, overflow: 'hidden', backgroundColor: colors.surface },
 
   label: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1.8, color: colors.textSecondary, marginTop: spacing.lg, marginBottom: 6 },
@@ -397,6 +500,14 @@ const s = StyleSheet.create({
 
   socialRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: 6 },
   socialK: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, width: 68 },
+
+  del: { alignItems: 'center', paddingVertical: spacing.lg, marginTop: spacing.xl },
+  delT: { fontFamily: fonts.body, fontSize: 13, color: '#A33A2E' },
+  delX: {
+    fontFamily: fonts.body, fontSize: 11.5, lineHeight: 17,
+    color: colors.textSecondary, textAlign: 'center',
+    paddingHorizontal: spacing.xl, marginBottom: spacing.xl,
+  },
 
   save: { backgroundColor: colors.textPrimary, borderRadius: 999, paddingVertical: 13, alignItems: 'center', marginTop: spacing.xl },
   saveT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: '#FFF' },

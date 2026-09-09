@@ -73,6 +73,7 @@ export const CATEGORIES = [
   { key: 'grocery',    en: 'Grocers',     fa: 'سوپرمارکت', icon: 'basket-outline' },
   { key: 'candy',      en: 'Candy',       fa: 'شیرینی و آبنبات', icon: 'ice-cream-outline' },
   { key: 'dessert',    en: 'Desserts',    fa: 'دسر',       icon: 'ice-cream-outline' },
+  { key: 'winery',     en: 'Wineries',    fa: 'تاکستان',   icon: 'wine-outline' },
   { key: 'beauty',     en: 'Beauty',      fa: 'زیبایی',    icon: 'sparkles-outline' },
   { key: 'clothing',   en: 'Clothing',    fa: 'پوشاک',     icon: 'shirt-outline' },
   { key: 'jewellery',  en: 'Jewellery',   fa: 'طلا و جواهر', icon: 'diamond-outline' },
