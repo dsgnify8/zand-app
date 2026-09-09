@@ -6,6 +6,7 @@
 // is findable without being in the way.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Easing,
   ActivityIndicator, Animated, Dimensions, FlatList, Image, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
@@ -88,11 +89,43 @@ export default function Local() {
   // On first open, use their location only if they have already granted
   // it. A permission prompt the moment a tab opens is the fastest way to
   // get it refused.
+  // Nothing loads until we know where they are. Asking the device takes
+  // a moment, and the list used to fetch everywhere first and then jump
+  // to their city when the answer arrived — three states on the way to
+  // one, which is what the flashing was.
+  const [placeReady, setPlaceReady] = useState(false);
   useEffect(() => {
     (async () => {
-      if (await hasLocation()) {
-        const p = await currentPlace();
-        if (p) setPlace(p);
+      try {
+        // Last time's answer first. Somewhere you were yesterday is a
+        // better opening guess than everywhere, and it arrives instantly
+        // rather than after a GPS fix.
+        try {
+          const raw = await AsyncStorage.getItem('local:place');
+          if (raw) { setPlace(JSON.parse(raw)); setPlaceReady(true); }
+        } catch {}
+
+        if (await hasLocation()) {
+          // Bounded. A cold GPS fix can take five seconds or more, and
+          // the page cannot sit blank that long waiting to be told
+          // something it can manage without.
+          const p = await Promise.race([
+            currentPlace(),
+            // Short. Anything longer reads as broken, and everywhere
+            // is a perfectly good answer to fall back to.
+            new Promise<null>((r) => setTimeout(() => r(null), 700)),
+          ]);
+          // And kept, so the next launch opens here rather than
+          // waiting to be told again.
+          if (p) {
+            setPlace(p);
+            try { await AsyncStorage.setItem('local:place', JSON.stringify(p)); } catch {}
+          }
+        }
+      } finally {
+        // Ready either way: no permission, or no fix, both mean
+        // everywhere — and that is an answer, not a failure.
+        setPlaceReady(true);
       }
     })();
   }, []);
@@ -163,7 +196,10 @@ export default function Local() {
     setLoading(false);
   }, [place?.lat, place?.lng, settled]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    if (!placeReady) return;   // one load, once the place is settled
+    load();
+  }, [load, placeReady]);
 
   const listYours = () => {
     setInfoOpen(false);

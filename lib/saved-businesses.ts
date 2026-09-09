@@ -5,7 +5,7 @@
 // than in a separate place nobody remembers to look. That means the
 // existing sync carries them without any new plumbing.
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore, useEffect, useState } from 'react';
 import { Share } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { syncTouch } from '@/lib/cloud-sync';
@@ -48,13 +48,14 @@ export function savedBusinesses() {
 }
 
 export function useSavedBusinesses() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => tick((n) => n + 1);
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
-  return saved;
+  // Read at render rather than through a tick. The tick's re-render
+  // could run before React had committed the change, handing back the
+  // previous value — so removing something appeared to do nothing until
+  // the screen was left and returned to.
+  return useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => saved,
+  );
 }
 
 /**

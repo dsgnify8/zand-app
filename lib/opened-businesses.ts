@@ -9,7 +9,7 @@
 // something worth a row or a sync. Losing it on a reinstall means seeing a
 // few familiar places again, which is no loss at all.
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const KEY = 'local:opened';
@@ -45,13 +45,14 @@ export async function markOpened(id: string) {
 }
 
 export function useOpened() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => tick((n) => n + 1);
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
-  return opened;
+  // Read at render rather than through a tick. The tick's re-render
+  // could run before React had committed the change, handing back the
+  // previous value — so removing something appeared to do nothing until
+  // the screen was left and returned to.
+  return useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => opened,
+  );
 }
 
 /**

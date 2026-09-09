@@ -8,7 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/supabase';
 import { eduImage } from '@/constants/education-images';
 
-export const MAX_PHOTOS = 6;
+export const MAX_PHOTOS = 10;
 
 /** Pick images, up to whatever slots remain. */
 export async function pickPhotos(remaining: number) {

@@ -251,7 +251,9 @@ const s = StyleSheet.create({
   },
   search: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary, paddingVertical: 11 },
 
-  chips: { gap: spacing.sm, paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
+  // Explicitly a row. A horizontal ScrollView's content container does
+  // not assume one, and without it the chips stacked and clipped.
+  chips: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   chip: {
     borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border,
     borderRadius: 999, paddingHorizontal: spacing.md, paddingVertical: 6,

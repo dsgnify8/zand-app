@@ -66,7 +66,11 @@ function socialUrl(key: string, v: string) {
     case 'tiktok': return 'https://tiktok.com/@' + handle;
     case 'facebook': return 'https://facebook.com/' + handle;
     case 'email': return 'mailto:' + handle;
-    case 'telegram': return 'https://t.me/' + handle;
+    // A username, or a phone number. t.me takes both, but a number
+    // needs its + and nothing else.
+    case 'telegram': return /^\+?\d[\d\s-]+$/.test(handle)
+      ? 'https://t.me/+' + handle.replace(/[^\d]/g, '')
+      : 'https://t.me/' + handle;
     case 'whatsapp': return 'https://wa.me/' + handle.replace(/[^\d]/g, '');
     default: return v;
   }

@@ -83,17 +83,35 @@ export function ContinueReading({ label }: { label?: string }) {
   // In demo mode we always show the seeded three, so the screen looks
   // the same whoever is signed in. Off, it is their real history.
   const demo = showDemoData(session?.user?.email);
-  const items: ContinueItem[] = !demo
-    ? resolveMany(recent).slice(0, 6).map((r) => ({
-        key: r.key,
-        title: r.title,
-        chapter: r.sub,
-        image: r.image ?? '',
-        page: 0,
-        total: 0,
-        route: r.route,
-      }))
-    : continueItems();
+  // What they have opened, newest first, topped up to six with places
+  // to start. One thing read should not leave a row of one — the rail
+  // is an invitation as much as a record, and it thins out at exactly
+  // the moment someone has begun.
+  const mine: ContinueItem[] = resolveMany(recent).map((r) => ({
+    key: r.key,
+    title: r.title,
+    chapter: r.sub,
+    image: r.image ?? '',
+    page: 0,
+    total: 0,
+    route: r.route,
+  }));
+
+  const fill = startPoints(6)
+    .filter((p: any) => !mine.some((m) => m.key === p.key))
+    .map((p: any) => ({
+      key: p.key,
+      title: getLang() === 'fa' ? (p.titleFa ?? p.title) : p.title,
+      chapter: getLang() === 'fa' ? (p.subFa ?? p.sub) : p.sub,
+      image: p.image ?? '',
+      page: 0,
+      total: 0,
+      route: p.route,
+    }));
+
+  const items: ContinueItem[] = demo
+    ? continueItems()
+    : [...mine, ...fill].slice(0, 6);
   // Signed out with nothing yet, the seeded preview stands in so a
   // visitor sees what the section becomes. Signed in, an empty account
   // gets a prompt rather than a silently missing section.

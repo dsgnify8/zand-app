@@ -1,5 +1,5 @@
 // Likes and saved-for-later, per device. Persists across restarts.
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { syncTouch } from '@/lib/cloud-sync';
 
@@ -60,16 +60,19 @@ export function savedState() {
 }
 
 export function useSaved() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const l = () => tick((n) => n + 1);
-    listeners.add(l);
-    return () => { listeners.delete(l); };
-  }, []);
+  // useSyncExternalStore rather than a tick. With the tick, `emit()`
+  // scheduled a re-render that ran before React had committed the state
+  // change — so the first render after a toggle still read the old
+  // arrays, and only the render after that was right. Un-hearting
+  // something appeared to do nothing until you left and came back.
+  const snap = useSyncExternalStore(
+    (cb) => { listeners.add(cb); return () => { listeners.delete(cb); }; },
+    () => state,
+  );
   return {
-    liked: state.liked,
-    saved: state.saved,
-    recent: state.recent,
+    liked: snap.liked,
+    saved: snap.saved,
+    recent: snap.recent,
     isLiked: (k: string) => state.liked.includes(k),
     isSaved: (k: string) => state.saved.includes(k),
     toggleLike,

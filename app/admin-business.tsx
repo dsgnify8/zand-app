@@ -20,8 +20,8 @@ import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 import { CATEGORIES, categoryLabel, loadBusiness, type Business } from '@/lib/businesses';
-import * as ImagePicker from 'expo-image-picker';
-import { bizImage, removePhoto, uploadPhoto } from '@/lib/business-photos';
+import { bizImage, MAX_PHOTOS, pickPhotos, removePhoto, uploadPhoto } from '@/lib/business-photos';
+import { PhotoRail } from '@/components/photo-rail';
 
 type Msg = {
   id: number;
@@ -59,15 +59,11 @@ export default function AdminBusiness() {
   const [uploading, setUploading] = useState(false);
 
   const addPhoto = async () => {
-    // Up to ten at once. Adding a listing's photographs one at a time
-    // means ten trips through the picker for one business.
-    const picked = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      quality: 0.85,
-      allowsMultipleSelection: true,
-      selectionLimit: 10,
-    });
-    if (picked.canceled || !picked.assets?.length) return;
+    // The shared picker, which the owner's own form already uses. It
+    // asks for permission, caps the count, and strips EXIF — so a photo
+    // taken at home does not carry that address into a public listing.
+    const assets = await pickPhotos(MAX_PHOTOS - (b.photos?.length ?? 0));
+    if (!assets.length) return;
 
     setUploading(true);
     try {
@@ -78,7 +74,7 @@ export default function AdminBusiness() {
       // fail quietly, and the order they were chosen in is the order they
       // should appear.
       const added: string[] = [];
-      for (const a of picked.assets) {
+      for (const a of assets) {
         const path = await uploadPhoto(String(b.id), a.uri);
         if (path) added.push(path);
       }
@@ -223,39 +219,27 @@ export default function AdminBusiness() {
         ))}
       </View>
 
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      {/* The offset matters: the composer sits at the foot of a screen
+          with a header above it, and without accounting for that the
+          keyboard still covers the field it is meant to clear. */}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
+      >
         <ScrollView contentContainerStyle={s.body} keyboardShouldPersistTaps="handled">
 
           {/* ---------------- the listing ---------------- */}
           {tab === 'listing' ? (
             <>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.shots}>
-                {(b.photos ?? []).map((p) => (
-                  <View key={p} style={s.shot}>
-                    <Image source={bizImage(p)} style={StyleSheet.absoluteFill as any} />
-                    {/* Removing takes it off the listing everywhere at
-                        once — the app and the website read this same row,
-                        so there is no second place to tidy up. */}
-                    <Pressable
-                      style={s.shotX}
-                      onPress={() => set({ photos: (b.photos ?? []).filter((x) => x !== p) } as any)}
-                    >
-                      <Ionicons name="close" size={13} color="#FFF" />
-                    </Pressable>
-                  </View>
-                ))}
-
-                <Pressable style={[s.shot, s.shotAdd]} onPress={addPhoto} disabled={uploading}>
-                  {uploading ? (
-                    <ActivityIndicator size="small" color={colors.accent} />
-                  ) : (
-                    <>
-                      <Ionicons name="add" size={20} color={colors.accent} />
-                      <Text style={s.shotAddT}>Add</Text>
-                    </>
-                  )}
-                </Pressable>
-              </ScrollView>
+              <PhotoRail
+                photos={b.photos ?? []}
+                resolve={bizImage}
+                onChange={(next) => set({ photos: next } as any)}
+                onAdd={addPhoto}
+                uploading={uploading}
+                max={MAX_PHOTOS}
+              />
 
               <Field label="NAME" value={b.name} onChange={(v) => set({ name: v } as any)} />
               <Field label="NAME (FA)" value={(b as any).name_fa ?? ''} fa onChange={(v) => set({ name_fa: v } as any)} />
@@ -291,7 +275,12 @@ export default function AdminBusiness() {
                     style={[s.input, { flex: 1 }]}
                     value={socials[k] ?? ''}
                     onChangeText={(v) => set({ socials: { ...socials, [k]: v } } as any)}
-                    placeholder="handle"
+                    placeholder={
+                      k === 'email' ? 'email address'
+                      : k === 'facebook' ? 'page URL'
+                      : k === 'telegram' ? 'username or phone'
+                      : 'handle'
+                    }
                     placeholderTextColor={colors.textSecondary}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -489,7 +478,9 @@ const s = StyleSheet.create({
   big: { minHeight: 96, paddingTop: 10 },
   fa: { fontFamily: fonts.persian, textAlign: 'right', writingDirection: 'rtl' },
 
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, paddingVertical: 2 },
+  // No wrapping inside a horizontal scroll: the two disagree about how
+  // wide the row is, and the chips were cut off at the edge.
+  chips: { flexDirection: 'row', gap: 6, paddingVertical: 6, paddingRight: spacing.lg },
   chip: {
     borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border,
     borderRadius: 999, paddingHorizontal: spacing.md, paddingVertical: 6,
