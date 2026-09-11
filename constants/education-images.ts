@@ -1,6 +1,15 @@
 import { imageOverride } from '@/lib/image-overrides';
 // Maps content image keys to bundled assets. Add a line as you add each image.
 export const EDU_IMAGES: Record<string, any> = {
+  // TPM covers. The article declares a key; this is where the key
+  // becomes a file.
+  'tpm-poobon-cover': require('../assets/tpm/tpm-poobon-cover.jpg'),
+  'tpm-poobon-cover-b': require('../assets/tpm/tpm-poobon-cover-b.jpg'),
+  'tpm-phi-cover': require('../assets/tpm/tpm-phi-cover.jpg'),
+  'tpm-jabbar-cover': require('../assets/tpm/tpm-jabbar-cover.jpg'),
+  'tpm-alaei-cover': require('../assets/tpm/tpm-alaei-cover.jpg'),
+  'tpm-soheil-cover': require('../assets/tpm/tpm-soheil-cover.jpg'),
+
   'biz-arianas-1': require('../assets/business/biz-arianas-1.jpg'),
   'biz-taftoon-1': require('../assets/business/biz-taftoon-1.jpg'),
   'biz-eyval-1': require('../assets/business/biz-eyval-1.jpg'),
@@ -234,11 +243,31 @@ export const EDU_IMAGES: Record<string, any> = {
   'geo-the-heart': require('../assets/education/geo-the-heart.jpg'),
 };
 
+/**
+ * Keys that hold more than one photograph, alternating by the calendar.
+ *
+ * Poobon sat for two portraits and both are good. Rather than choosing,
+ * the cover changes every fifth day — the same for everyone, settled by
+ * the date rather than by chance, so it never reshuffles while someone
+ * is looking at it.
+ */
+const ALTERNATES: Record<string, string[]> = {
+  'tpm-poobon-cover': ['tpm-poobon-cover', 'tpm-poobon-cover-b'],
+};
+
+function onRotation(key: string) {
+  const set = ALTERNATES[key];
+  if (!set) return key;
+  const period = Math.floor(Date.now() / 86400000 / 5);
+  return set[period % set.length];
+}
+
 export function eduImage(key?: string) {
   if (!key) return undefined;
+  const k = onRotation(key);
   // An uploaded image wins over the bundled one. Everything in the app
   // draws through here, so one check covers every screen.
-  const url = imageOverride(key);
+  const url = imageOverride(k);
   if (url) return { uri: url };
-  return EDU_IMAGES[key];
+  return EDU_IMAGES[k];
 }
