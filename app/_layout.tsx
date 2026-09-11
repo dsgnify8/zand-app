@@ -18,7 +18,6 @@ import { loadLang, useLang } from '@/lib/i18n';
 import { loadSaved } from '@/lib/saved-store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { loadAllFrames } from '@/lib/image-frames';
-import { ShareCatch } from '@/components/share-catch';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack, useSegments, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';

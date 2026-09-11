@@ -376,7 +376,13 @@ export default function HomeScreen() {
 
           <FadeIn delay={150}><ContinueReading label={t(APP.keepReading)} /></FadeIn>
 
-          <FadeIn delay={180}><Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.explore)}</Text></FadeIn>
+          {/* Room to breathe. The rail above is a row of cards and this
+              is a new section; without the gap they read as one block. */}
+          <FadeIn delay={180}>
+            <Text style={[styles.sectionLabel, styles.exploreLabel, fa && styles.faRight]}>
+              {t(HOME.explore)}
+            </Text>
+          </FadeIn>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabScroll} contentContainerStyle={styles.tabRow}>
             {PILLARS.map((p) => {
@@ -446,6 +452,7 @@ const styles = StyleSheet.create({
   greeting: { fontFamily: fonts.heading, fontSize: 30, color: colors.textPrimary, marginTop: spacing.md },
   faRight: { textAlign: 'right', writingDirection: 'rtl' },
   faRowRev: { flexDirection: 'row-reverse' },
+  exploreLabel: { marginTop: spacing.xxl },
   sectionLabel: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5, marginTop: spacing.lg, marginBottom: spacing.sm },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xl, marginBottom: spacing.sm },
   sectionLabelInline: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textSecondary, letterSpacing: 2.5 },
