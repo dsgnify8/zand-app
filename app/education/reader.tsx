@@ -5,7 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
-import { dark, findTopic, flattenPages, type Block } from '@/constants/education';
+import { TOPICS, dark, findTopic, flattenPages, type Block } from '@/constants/education';
 import { eduImage } from '@/constants/education-images';
 import { eduVideo } from '@/constants/education-media';
 import { IranMap } from '@/components/iran-map';
@@ -310,6 +310,15 @@ export default function ReaderScreen() {
   const params = useLocalSearchParams<{ topic: string; page: string }>();
   const topic = findTopic(params.topic);
 
+  // The one after this, in the order the section lists them. Modern Iran
+  // is last, so it has none — which is right: there is nothing after the
+  // present.
+  const nextTopic = (() => {
+    if (!topic) return null;
+    const i = TOPICS.findIndex((t) => t.key === topic.key);
+    return i >= 0 && i < TOPICS.length - 1 ? TOPICS[i + 1] : null;
+  })();
+
   if (!topic) {
     return <SafeAreaView style={styles.safe} edges={['top']}><View style={styles.center}><Text style={styles.dim}>Not found.</Text></View></SafeAreaView>;
   }
@@ -350,9 +359,30 @@ export default function ReaderScreen() {
             <Text style={styles.endTitle}>{t(APP.readingComplete)}</Text>
             <Text style={styles.endName}>{topic.name}</Text>
             <Text style={styles.endYears}>{topic.years}</Text>
-            <Pressable style={styles.endBtn} onPress={() => router.dismissAll ? router.dismissAll() : (router.canGoBack() ? router.back() : router.replace('/'))}>
+            {/* Back to this topic's own page, not to the root. dismissAll
+                cleared the whole stack, which landed everyone on Explore
+                — further out than they had come from. */}
+            <Pressable
+              style={styles.endBtn}
+              onPress={() => router.replace(('/education/topic?topic=' + topic.key) as any)}
+            >
               <Text style={styles.endBtnText}>{t(APP.backToTopic)}</Text>
             </Pressable>
+
+            {/* And onward. Finishing a chapter is the moment someone is
+                most likely to read another, and the last topic has
+                nowhere further to go. */}
+            {nextTopic ? (
+              <Pressable
+                style={styles.endBtn}
+                onPress={() => router.replace(('/education/topic?topic=' + nextTopic.key) as any)}
+              >
+                <Text style={styles.endBtnText}>
+                  {getLang() === 'fa' ? 'موضوع بعدی' : 'Next topic'}
+                </Text>
+              </Pressable>
+            ) : null}
+
             <Pressable style={styles.endGhost} onPress={() => goto(0)}>
               <Text style={styles.endGhostText}>{t(APP.readAgain)}</Text>
             </Pressable>

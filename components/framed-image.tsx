@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Image, LayoutChangeEvent, Pressable, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -36,19 +36,28 @@ export function FramedImage({
   // Resolve the image aspect ratio so we can cover-fill precisely.
   // This has to happen in an effect: setting state during render leaves the
   // value stale, and a stale ratio with resizeMode stretch distorts the image.
+  // Asked once per source. The failure path used to set imgAR back to
+  // null while imgAR was a dependency, so a URL that could not be
+  // measured re-ran the effect, failed, and re-ran again — a loop that
+  // locked the screen on any card whose photograph was missing.
+  const asked = useRef<string | null>(null);
   useEffect(() => {
-    if (imgAR !== null || !src) return;
+    if (!src) return;
+    const id = frame.uri ?? 'asset';
+    if (asked.current === id) return;
+    asked.current = id;
+
     if (frame.uri) {
       Image.getSize(
         frame.uri,
         (w, h) => setImgAR(w && h ? w / h : null),
-        () => { setUriBad(true); setImgAR(null); },
+        () => setUriBad(true),
       );
     } else if (source) {
       const r = Image.resolveAssetSource(source as any);
       if (r?.width && r?.height) setImgAR(r.width / r.height);
     }
-  }, [src, frame.uri, imgAR]);
+  }, [src, frame.uri]);
 
   let inner = null;
   if (src && box.w > 0 && !imgAR) {
