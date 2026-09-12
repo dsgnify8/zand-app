@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
-import { onboardingDone } from '@/app/_layout';
+import { markOnboarded } from '@/app/_layout';
 import { useAuth } from '@/lib/auth';
 import { useLang, setLang as setAppLang, getLang } from '@/lib/i18n';
 import { TpmIcon } from '@/components/tpm-mark';
@@ -163,7 +163,7 @@ export default function Onboarding() {
       await AsyncStorage.setItem('onboarded', '1');
       await AsyncStorage.setItem('lang', lang);
     } catch {}
-    onboardingDone();
+    markOnboarded();
     router.replace('/(tabs)' as any);
   };
 
@@ -182,14 +182,14 @@ export default function Onboarding() {
     setAuthBusy(false);
     if (error) { setAuthErr(error); return; }
     try { await AsyncStorage.setItem('onboarded', '1'); } catch {}
-    onboardingDone();
+    markOnboarded();
     // Back to whatever sent them here, if anything did.
     router.replace((nextRoute ? String(nextRoute) : '/(tabs)') as any);
   };
 
   const goAuth = async (to: string) => {
     try { await AsyncStorage.setItem('onboarded', '1'); } catch {}
-    onboardingDone();
+    markOnboarded();
     router.replace(to as any);
   };
 

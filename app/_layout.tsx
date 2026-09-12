@@ -59,13 +59,33 @@ export let onboardingDone: () => void = () => {};
 // creating an account, sent people back to the first screen.
 let onboardedOnce: boolean | null = null;
 
+/**
+ * Onboarding is finished. Called by the onboarding screen itself.
+ *
+ * Sets the module flag directly rather than through onboardingDone(),
+ * which is assigned inside a component effect and is therefore a no-op
+ * until that component has mounted — so the flag could be written to
+ * storage and never reach the gate, which then redirected back to
+ * onboarding for the rest of the session.
+ */
+export function markOnboarded() {
+  onboardedOnce = true;
+  onboardingDone();
+}
+
 function AuthGate() {
   // Onboarding runs before anything else, once, unless demo mode clears it.
   const [onboarded, setOnboarded] = useState<boolean | null>(onboardedOnce);
   useEffect(() => {
-    if (onboardedOnce !== null) return;   // already known this session
+    // Only a true is worth caching. Caching a false meant a first launch
+    // remembered "not onboarded" for the whole session, and finishing
+    // onboarding could not change its mind.
+    if (onboardedOnce === true) return;
     AsyncStorage.getItem('onboarded')
-      .then((v) => { onboardedOnce = v === '1'; setOnboarded(onboardedOnce); })
+      .then((v) => {
+        if (v === '1') onboardedOnce = true;
+        setOnboarded(v === '1');
+      })
       .catch(() => { onboardedOnce = true; setOnboarded(true); });
   }, []);
 
