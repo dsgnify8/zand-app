@@ -87,10 +87,11 @@ const mrp: Topic = {
     {
       key: 'ch1',
       title: 'A Prince and a New Dynasty',
+      titleFa: 'یک شاهزاده و سلسله‌ای تازه',
       subtitle: '1919 – 1925',
       pages: [
         { blocks: [
-          { t: 'fact', label: 'Born', labelFa: 'زادروز', value: '26 October 1919, Tehran', valueFa: '۴ آبان ۱۲۹۸، تهران' },
+          { t: 'fact', label: 'Born', labelFa: 'به دنیا آمد', value: '26 October 1919, Tehran', valueFa: '۴ آبان ۱۲۹۸، تهران' },
           { t: 'p', x: "Mohammad Reza was born in Tehran on an autumn morning in 1919, arriving only minutes before his twin sister, Ashraf. Their closeness would last a lifetime, and in the years to come she would be one of the fiercest defenders of his throne.", fa: 'محمدرضا در صبحی پاییزی در سال ۱۲۹۸ در تهران به دنیا آمد، تنها چند دقیقه پیش از خواهر دوقلویش، اشرف. این نزدیکی تا آخر عمر میانشان ماند، و در سال‌های بعد اشرف یکی از سرسخت‌ترین مدافعان تخت او شد.' },
           { t: 'p', x: "The Iran of his birth was weak and often humiliated. Its affairs were shaped in London and in Moscow as much as in Tehran, its treasury was empty, and its roads and schools were few. To grow up in that country was to feel, keenly, how far the nation had fallen from its ancient greatness.", fa: 'ایرانی که در آن زاده شد ناتوان بود و اغلب سرافکنده. کارهایش به همان اندازه که در تهران، در لندن و مسکو تعیین می‌شد؛ خزانه‌اش خالی بود و راه و مدرسه‌اش انگشت‌شمار. بزرگ شدن در چنین کشوری یعنی به‌روشنی حس کردن اینکه این ملت از بزرگی باستانی‌اش چقدر پایین آمده است.' },
           { t: 'p', x: "In his memoirs the Shah returned to this wound again and again. The wish to restore Iran to dignity, to make it modern and respected in the world, was for him never merely a policy. It was a feeling he traced all the way back to childhood.", fa: 'شاه در خاطراتش بارها به همین زخم برگشت. آرزوی بازگرداندن آبروی ایران، مدرن کردنش و محترم شدنش در جهان، برای او هرگز صرفاً یک سیاست نبود. حسی بود که ریشه‌اش را تا کودکی‌اش دنبال می‌کرد.' },
@@ -99,29 +100,30 @@ const mrp: Topic = {
           { t: 'ptext', x: "His father, {{reza-khan|Reza Khan}}, had risen from the mountain village of Alasht to become an officer in the Persian Cossack Brigade. Tall, forceful, and self taught, he was a soldier of real presence and iron will, and he believed that only a strong hand could lift Iran out of its weakness.", fa: 'پدرش، {{reza-khan|رضاخان}}، از روستای کوهستانی الاشت برخاسته و افسر بریگاد قزاق شده بود. بلندبالا و پرصلابت و خودآموخته؛ سربازی با حضوری واقعی و ارادهٔ آهنین، که باور داشت تنها یک دست نیرومند می‌تواند ایران را از ناتوانی بیرون بکشد.' },
           { t: 'p', x: "In February 1921 Reza Khan marched on the capital and took power in a nearly bloodless coup. For a few years he governed from behind the scenes as minister of war and then prime minister, building the army and the machinery of a modern state. Then, in 1925, he set aside the last Qajar ruler and was crowned Reza Shah Pahlavi, founding a new dynasty.", fa: 'در اسفند ۱۲۹۹، رضاخان به سوی پایتخت راه افتاد و در کودتایی که تقریباً بدون خون‌ریزی بود قدرت را گرفت. چند سالی از پشت صحنه حکومت کرد، اول به‌عنوان وزیر جنگ و بعد نخست‌وزیر، و در همان سال‌ها ارتش و دستگاه یک دولت مدرن را ساخت. سپس، در سال ۱۳۰۴، آخرین شاه قاجار را کنار گذاشت و با نام رضاشاه پهلوی تاج‌گذاری کرد و سلسله‌ای تازه بنیان نهاد.' },
           { t: 'timeline', items: [
-            { year: '1878', yearFa: '۱۲۵۷', label: 'Reza Khan born', labelFa: 'تولد رضاخان' },
-            { year: '1919', yearFa: '۱۲۹۸', label: 'Mohammad Reza born', labelFa: 'تولد محمدرضا' },
+            { year: '1878', yearFa: '۱۲۵۷', label: 'Reza Khan born', labelFa: 'رضاخان به دنیا آمد' },
+            { year: '1919', yearFa: '۱۲۹۸', label: 'Mohammad Reza born', labelFa: 'محمدرضا به دنیا آمد' },
             { year: '1921', yearFa: '۱۲۹۹', label: 'The coup', labelFa: 'کودتا' },
-            { year: '1925', yearFa: '۱۳۰۴', label: 'Pahlavi dynasty founded', labelFa: 'بنیان‌گذاری سلسلهٔ پهلوی' },
+            { year: '1925', yearFa: '۱۳۰۴', label: 'Pahlavi dynasty founded', labelFa: 'بنیان‌گذاری سلسله پهلوی' },
           ] },
         ] },
         { blocks: [
-          { t: 'h', x: 'A childhood set apart', fa: 'کودکی‌ای جدا از بقیه' },
+          { t: 'h', x: 'A childhood set apart', fa: 'کودکی متفاوت' },
           { t: 'p', x: "At six years old, Mohammad Reza became crown prince of a kingdom his father meant to remake from the ground up. He was raised apart from other children, handed to tutors and officers, and taught from the start that a throne and a mission were waiting for him. His father was determined that his heir would not be a soft, pampered prince of the old Qajar kind.", fa: 'محمدرضا در شش سالگی ولیعهد کشوری شد که پدرش می‌خواست از پایه از نو بسازد. جدا از بچه‌های دیگر بزرگ شد، به دست معلم‌ها و افسرها سپرده شد، و از همان اول به او آموختند که تخت و رسالتی در انتظارش است. پدرش مصمم بود که ولیعهدش شاهزاده‌ای نازپرورده از جنس قاجارها نباشد.' },
           { t: 'p', x: "Between a stern, towering father and a devoted mother, Tadj ol Molouk, the boy grew up carrying expectations far heavier than his years. He adored his father and feared him in equal measure, and much of his life would be spent trying to prove worthy of him.", fa: 'میان پدری سختگیر و بلندبالا و مادری دلسوز، تاج‌الملوک، پسر با انتظاراتی بزرگ‌تر از سن‌وسالش بار آمد. پدرش را می‌پرستید و به همان اندازه از او می‌ترسید، و بخش بزرگی از عمرش را صرف این کرد که ثابت کند لایق اوست.' },
-          { t: 'imgsm', key: 'mrp-father', cap: 'The young prince with his father, Reza Shah, the founder of the dynasty.', capFa: 'ولیعهد خردسال در کنار پدرش، رضاشاه، بنیان‌گذار سلسله.' },
+          { t: 'imgsm', key: 'mrp-father', cap: 'The young prince with his father, Reza Shah, the founder of the dynasty.', capFa: 'ولیعهد خردسال در کنار پدرش، رضاشاه، بنیان‌گذار سلسله پهلوی.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A brush with death', fa: 'یک قدمی مرگ' },
+          { t: 'h', x: 'A brush with death', fa: 'یک قدم تا مرگ' },
           { t: 'p', x: "As a small boy he fell gravely ill with typhoid fever and very nearly died. In his own account he emerged from the fever changed, believing he had been visited in his delirium by a saint and spared for a reason.", fa: 'در کودکی به تیفوئید مبتلا شد و تا آستانهٔ مرگ رفت. به روایت خودش، از آن تب دگرگون بیرون آمد؛ باور داشت که در هذیان تب، بزرگی بر او ظاهر شده و او را به دلیلی زنده نگه داشته‌اند.' },
           { t: 'p', x: "That conviction, that his life had been set apart for a purpose, never left him. It gave him courage in dark moments and, his critics would later say, a certainty that could shade into stubbornness.", fa: 'این باور، که زندگی‌اش برای هدفی کنار گذاشته شده، هرگز رهایش نکرد. در لحظه‌های تاریک به او جرئت می‌داد، و به گفتهٔ منتقدانش، یقینی به او می‌داد که گاه به لجاجت پهلو می‌زد.' },
-          { t: 'call', title: 'A weight placed early', titleFa: 'باری که زود بر دوشش گذاشتند', x: "He was raised not as a child but as a future king. It gave him a deep sense of duty, and also a lifelong, sometimes anxious wish to earn the approval of the formidable man who had made him crown prince.", fa: 'او را نه مثل یک بچه، که مثل شاه آینده بار آوردند. این به او حس عمیقی از وظیفه داد، و در کنارش آرزویی مادام‌العمر و گاه مضطرب برای به دست آوردن تأیید همان مرد مهیبی که ولیعهدش کرده بود.' },
+          { t: 'call', title: 'A weight placed early', titleFa: 'باری که از همان کودکی بر دوشش گذاشته شد', x: "He was raised not as a child but as a future king. It gave him a deep sense of duty, and also a lifelong, sometimes anxious wish to earn the approval of the formidable man who had made him crown prince.", fa: 'او را نه مثل یک بچه، که مثل شاه آینده بار آوردند. این به او حس عمیقی از وظیفه داد، و در کنارش آرزویی مادام‌العمر و گاه مضطرب برای به دست آوردن تأیید همان مرد مهیبی که ولیعهدش کرده بود.' },
         ] },
       ],
     },
     {
       key: 'ch2',
       title: 'An Education Between Two Worlds',
+      titleFa: 'تحصیل میان دو جهان',
       subtitle: '1925 – 1936',
       pages: [
         { blocks: [
@@ -141,19 +143,20 @@ const mrp: Topic = {
         { blocks: [
           { t: 'stat', items: [
             { value: '1931', valueFa: '۱۳۱۰', label: 'Arrived in Switzerland', labelFa: 'ورود به سوئیس' },
-            { value: '5 yrs', valueFa: '۵ سال', label: 'Abroad at Le Rosey', labelFa: 'دور از وطن، در لوروزه' },
-            { value: 'French', valueFa: 'فرانسه', label: 'A second language', labelFa: 'زبان دوم' },
+            { value: '5 yrs', valueFa: '۵ سال', label: 'Abroad at Le Rosey', labelFa: 'تحصیل دور از وطن، در لوروزه' },
+            { value: 'French', valueFa: 'فرانسه', label: 'A second language', labelFa: 'زبانِ دوم' },
           ] },
           { t: 'p', x: "He returned to Iran in 1936 and entered the military academy in Tehran, stepping into the disciplined, uniformed world his father prized above all. He graduated as a young officer, proud of the army his father had built and eager to serve it.", fa: 'در سال ۱۳۱۵ به ایران بازگشت و وارد دانشکدهٔ افسری تهران شد؛ پا گذاشتن به همان جهان منضبط و یونیفرم‌پوشی که پدرش بیش از هر چیز ارج می‌نهاد. به‌عنوان افسری جوان فارغ‌التحصیل شد، سربلند از ارتشی که پدرش ساخته بود و مشتاق خدمت در آن.' },
           { t: 'pull', x: "Two Irans lived in him already, the modern and the ancient, the European and the Persian.", fa: 'دو ایران از همان موقع در او زندگی می‌کردند؛ مدرن و باستانی، اروپایی و ایرانی.' },
           { t: 'p', x: "Holding those two Irans together would become the work of his life. In these school years the tension was still a promise rather than a problem, and the young prince believed, with the confidence of the young, that he could honor both at once.", fa: 'کنار هم نگه داشتن این دو ایران، کار تمام عمرش شد. در آن سال‌های مدرسه، این کشمکش هنوز یک نوید بود نه یک مشکل، و ولیعهد جوان با اعتمادبه‌نفس جوانی باور داشت که می‌تواند حق هر دو را با هم ادا کند.' },
-          { t: 'imgsm', key: 'mrp-ch2-end', cap: 'The crown prince, shaped by two worlds, returns home to serve Iran.', capFa: 'ولیعهد، که دو جهان شکلش داده بودند، برای خدمت به ایران به وطن بازمی‌گردد.' },
+          { t: 'imgsm', key: 'mrp-ch2-end', cap: 'The crown prince, shaped by two worlds, returns home to serve Iran.', capFa: 'ولیعهد، که میان دو جهان شکل گرفته بود، به وطن بازمی‌گردد تا به ایران خدمت کند.' },
         ] },
       ],
     },
     {
       key: 'ch3',
       title: 'Marriage, War, and a Crown',
+      titleFa: 'ازدواج، جنگ و تاج',
       subtitle: '1939 – 1943',
       pages: [
         { blocks: [
@@ -171,13 +174,13 @@ const mrp: Topic = {
           { t: 'h', x: 'Reza Shah Pahlavi abdicates', fa: 'رضاشاه پهلوی از سلطنت کناره می‌گیرد' },
           { t: 'p', x: "The occupying powers no longer wanted Reza Shah on the throne. Rather than see the dynasty destroyed, he abdicated in favor of his son and left the country. The founder of modern Iran, the strong father who had shaped the prince's entire world, was carried away into exile.", fa: 'قدرت‌های اشغالگر دیگر رضاشاه را بر تخت نمی‌خواستند. به جای آنکه سلسله از میان برود، به سود پسرش کناره گرفت و از کشور رفت. بنیان‌گذار ایران مدرن، همان پدر مقتدری که تمام جهان ولیعهد را شکل داده بود، به تبعید برده شد.' },
           { t: 'p', x: "He was taken first to Mauritius, then to South Africa, and he died in Johannesburg in 1944, never seeing Iran again. For Mohammad Reza the loss was personal as much as political. He remembered his father with awe and love, and the pain of that parting stayed with him for the rest of his life.", fa: 'نخست به موریس بردندش، بعد به آفریقای جنوبی، و در سال ۱۳۲۳ در ژوهانسبورگ درگذشت، بی‌آنکه دیگر ایران را ببیند. برای محمدرضا این فقدان به همان اندازه که سیاسی بود، شخصی هم بود. پدرش را با هیبت و محبت به یاد می‌آورد، و درد آن جدایی تا آخر عمر با او ماند.' },
-          { t: 'imgsm', key: 'mrp-abdicate', cap: 'Reza Shah, who abdicated in 1941 so the dynasty might endure through his son.', capFa: 'رضاشاه، که در سال ۱۳۲۰ کناره گرفت تا سلسله از راه پسرش دوام بیاورد.' },
+          { t: 'imgsm', key: 'mrp-abdicate', cap: 'Reza Shah, who abdicated in 1941 so the dynasty might endure through his son.', capFa: 'رضاشاه، که در سال ۱۳۲۰ از سلطنت کناره گرفت تا سلسله از طریق پسرش ادامه پیدا کند.' },
         ] },
         { blocks: [
           { t: 'h', x: 'Mohammad Reza Pahlavi becomes king', fa: 'محمدرضا پهلوی شاه می‌شود' },
           { t: 'p', x: "On 16 September 1941, at just twenty one, Mohammad Reza Pahlavi took the throne. He became king in a capital full of foreign soldiers, with real power resting, for now, in the parliament and in the Allied armies.", fa: 'در ۲۵ شهریور ۱۳۲۰، در بیست و یک سالگی، محمدرضا پهلوی بر تخت نشست. در پایتختی شاه شد که پر از سرباز خارجی بود، و قدرت واقعی، دست‌کم فعلاً، در مجلس و در دست ارتش‌های متفقین بود.' },
           { t: 'p', x: "Before parliament he swore to uphold the constitution, and he presented himself, at first, as a modest and careful constitutional monarch, a deliberate contrast to his father's absolute rule. He would spend years quietly gathering the authority that his crown, in these early days, did not yet hold.", fa: 'در برابر مجلس سوگند خورد که قانون اساسی را پاس بدارد، و در آغاز خود را پادشاهی مشروطه و محتاط نشان داد؛ تضادی عامدانه با حکومت مطلق پدرش. سال‌ها بی‌سروصدا اختیاراتی را جمع کرد که تاج او در آن روزهای اول هنوز نداشت.' },
-          { t: 'imgsm', key: 'mrp-young-king', cap: 'The young Mohammad Reza Pahlavi, the new king of Iran.', capFa: 'محمدرضا پهلوی جوان، شاه تازهٔ ایران.' },
+          { t: 'imgsm', key: 'mrp-young-king', cap: 'The young Mohammad Reza Pahlavi, the new king of Iran.', capFa: 'محمدرضا پهلوی جوان، شاه تازه ایران.' },
           { t: 'pull', x: "He had inherited a throne, but not yet the power that came with it.", fa: 'تخت را به ارث برده بود، اما قدرتی را که با آن می‌آید هنوز نه.' },
         ] },
         { blocks: [
@@ -185,10 +188,10 @@ const mrp: Topic = {
           { t: 'p', x: "These lean early years taught him patience, and left him with a lasting wariness of the great powers whose armies filled his streets. He resolved that one day he would rule in fact, and not merely reign in name.", fa: 'آن سال‌های اول و کم‌رمق به او صبر آموخت، و بی‌اعتمادی ماندگاری نسبت به قدرت‌های بزرگی که ارتش‌هایشان خیابان‌های او را پر کرده بود در او گذاشت. با خود عهد کرد روزی در عمل حکومت کند، نه فقط به اسم پادشاه باشد.' },
           { t: 'timeline', items: [
             { year: '1939', yearFa: '۱۳۱۸', label: 'Marries Fawzia', labelFa: 'ازدواج با فوزیه' },
-            { year: '1941', yearFa: '۱۳۲۰', label: 'Allied invasion', labelFa: 'حملهٔ متفقین' },
+            { year: '1941', yearFa: '۱۳۲۰', label: 'Allied invasion', labelFa: 'حمله متفقین' },
             { year: '1941', yearFa: '۱۳۲۰', label: 'Mohammad Reza becomes king', labelFa: 'محمدرضا شاه می‌شود' },
             { year: '1943', yearFa: '۱۳۲۲', label: 'Tehran Conference', labelFa: 'کنفرانس تهران' },
-            { year: '1944', yearFa: '۱۳۲۳', label: 'Reza Shah dies in exile', labelFa: 'مرگ رضاشاه در تبعید' },
+            { year: '1944', yearFa: '۱۳۲۳', label: 'Reza Shah dies in exile', labelFa: 'رضاشاه در تبعید درگذشت' },
           ] },
         ] },
       ],
@@ -196,14 +199,15 @@ const mrp: Topic = {
     {
       key: 'ch4',
       title: 'Finding His Feet',
+      titleFa: 'پیدا کردن جای پای خود',
       subtitle: '1946 – 1951',
       pages: [
         { blocks: [
-          { t: 'h', x: 'The Azerbaijan crisis', fa: 'غائلهٔ آذربایجان' },
+          { t: 'h', x: 'The Azerbaijan crisis', fa: 'غائله آذربایجان' },
           { t: 'p', x: "The young Shah's first great test came in 1946. Soviet troops had lingered in the north after the war and backed two breakaway states, one in Azerbaijan and one in Kurdistan. For a moment it seemed Iran might be pulled apart, its northern provinces slipping out of Tehran's hands.", fa: 'نخستین آزمون بزرگ شاه جوان در سال ۱۳۲۵ از راه رسید. نیروهای شوروی پس از جنگ در شمال مانده بودند و از دو حکومت جدایی‌طلب پشتیبانی می‌کردند، یکی در آذربایجان و یکی در کردستان. مدتی چنین می‌نمود که ایران ممکن است از هم بپاشد و استان‌های شمالی‌اش از دست تهران در برود.' },
           { t: 'p', x: "Through patient diplomacy, pressure at the newly formed United Nations, and a promise of oil concessions that was later quietly withdrawn, Iran secured the Soviet withdrawal. In December 1946 the Iranian army marched back into Tabriz, and the country was made whole again.", fa: 'با دیپلماسی صبورانه، فشار در سازمان ملل که تازه تأسیس شده بود، و وعدهٔ امتیاز نفتی که بعدها بی‌سروصدا پس گرفته شد، ایران خروج نیروهای شوروی را به دست آورد. در آذر ۱۳۲۵ ارتش ایران به تبریز بازگشت و کشور دوباره یکپارچه شد.' },
           { t: 'p', x: "For a king still unsure of himself, it was a formative victory. He rode north to the reclaimed provinces to cheering crowds, and for the first time felt the throne truly his.", fa: 'برای شاهی که هنوز به خودش مطمئن نبود، این پیروزی شکل‌دهنده بود. به شمال و به استان‌های بازپس‌گرفته‌شده رفت و مردم به شادی به استقبالش آمدند، و برای نخستین بار حس کرد این تخت واقعاً مال اوست.' },
-          { t: 'imgrow', keys: ['mrp-ch4-a', 'mrp-ch4-b'], cap: 'The young Shah in the early years of his reign, finding his footing as king.', capFa: 'شاه جوان در سال‌های نخست سلطنتش، در حال یافتن جای پای خود.' },
+          { t: 'imgrow', keys: ['mrp-ch4-a', 'mrp-ch4-b'], cap: 'The young Shah in the early years of his reign, finding his footing as king.', capFa: 'شاه جوان در سال‌های نخست سلطنتش، در تلاش برای پیدا کردن جای پای خود به‌عنوان پادشاه.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The Shot at the University', fa: 'تیراندازی در دانشگاه' },
@@ -215,11 +219,11 @@ const mrp: Topic = {
           { t: 'h', x: 'A new love', fa: 'عشقی تازه' },
           { t: 'p', x: "His personal life was shifting too. His marriage to Fawzia had grown cold, and in 1948 it ended in divorce. She returned to Egypt, and their daughter Shahnaz remained a bond between the two royal families.", fa: 'زندگی شخصی‌اش هم داشت تغییر می‌کرد. ازدواجش با فوزیه سرد شده بود و در سال ۱۳۲۷ به طلاق انجامید. فوزیه به مصر بازگشت، و دخترشان شهناز پیوندی میان دو خاندان سلطنتی باقی ماند.' },
           { t: 'p', x: "In 1951 he married Soraya Esfandiary, a young woman of Iranian and German parentage, barely eighteen. By every account it was a genuine love match.", fa: 'در سال ۱۳۲۹ با ثریا اسفندیاری ازدواج کرد؛ دختری از پدری ایرانی و مادری آلمانی، که به‌زحمت هجده سال داشت. به گواه همهٔ روایت‌ها، این ازدواج از سر عشق بود.' },
-          { t: 'collage', keys: ['mrp-soraya-1', 'mrp-soraya-2'], cap: 'The Shah and Soraya, whose marriage was, by every account, a true love match.', capFa: 'شاه و ثریا، که ازدواجشان به گواه همه از سر عشق واقعی بود.' },
+          { t: 'collage', keys: ['mrp-soraya-1', 'mrp-soraya-2'], cap: 'The Shah and Soraya, whose marriage was, by every account, a true love match.', capFa: 'شاه و ثریا؛ ازدواجی که، به روایت همه، از عشق واقعی شکل گرفته بود.' },
           { t: 'p', x: "The photographs of these years show a couple plainly devoted to each other. For a time, amid the gathering storms of politics, he had found real happiness at home.", fa: 'عکس‌های آن سال‌ها زوجی را نشان می‌دهد که آشکارا به هم دل‌بسته‌اند. مدتی، در میان توفان‌هایی که در سیاست جمع می‌شد، در خانه خوشبختی واقعی یافته بود.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A restless nation', fa: 'کشوری بی‌قرار' },
+          { t: 'h', x: 'A restless nation', fa: 'ملتی بی‌قرار' },
           { t: 'p', x: "The country around him, however, was anything but calm. Parliament was strong and combative, the press was loud, and a single question was rising above all others. Why did Iran's greatest treasure, its oil, remain in the hands of a foreign company that kept the lion's share of the profit?", fa: 'اما کشوری که دور و برش بود هر چیزی بود جز آرام. مجلس نیرومند و ستیزه‌جو بود، مطبوعات پرصدا، و یک پرسش بالاتر از همه سر برمی‌آورد: چرا بزرگ‌ترین ثروت ایران، یعنی نفتش، در دست شرکتی خارجی بماند که سهم شیر از سود را برای خود برمی‌دارد؟' },
           { t: 'p', x: "In March 1951 the prime minister, General Razmara, who had cautioned against seizing the oil, was assassinated. Within days parliament voted to nationalize the industry, and a fervent nationalist named Mohammad Mossadegh rode the wave of popular feeling to power. The stage was set for the greatest crisis of the Shah's early reign.", fa: 'در اسفند ۱۳۲۹، نخست‌وزیر، سپهبد رزم‌آرا، که دربارهٔ ملی کردن نفت هشدار داده بود، ترور شد. ظرف چند روز مجلس به ملی شدن صنعت نفت رأی داد، و ملی‌گرایی پرشور به نام محمد مصدق بر موج احساسات مردم به قدرت رسید. صحنه برای بزرگ‌ترین بحران سال‌های نخست سلطنت شاه آماده شده بود.' },
         ] },
@@ -228,13 +232,14 @@ const mrp: Topic = {
     {
       key: 'ch5',
       title: 'The Oil Crisis and 1953',
+      titleFa: 'بحران نفت و سال ۱۳۳۲',
       subtitle: '1951 – 1953',
       pages: [
         { blocks: [
           { t: 'h', x: "Oil and a nation's pride", fa: 'نفت و غرور یک ملت' },
           { t: 'p', x: "Since the first concession of 1901, Iran's oil had been controlled by the British owned Anglo Iranian Oil Company. Britain took the greater share of the wealth, while Iran received only modest royalties, and the vast refinery at Abadan, the largest in the world, stood as a daily reminder of who truly profited from Iranian soil.", fa: 'از نخستین امتیازنامه در سال ۱۲۸۰، نفت ایران در اختیار شرکت نفت ایران و انگلیس بود که مالکیتش بریتانیایی بود. بریتانیا سهم بزرگ‌تر ثروت را می‌برد و ایران تنها حق‌الامتیازی ناچیز می‌گرفت، و پالایشگاه عظیم آبادان، بزرگ‌ترین پالایشگاه جهان، هر روز یادآوری می‌کرد که سود واقعی خاک ایران به جیب چه کسی می‌رود.' },
           { t: 'p', x: "To many Iranians this was not just an unfair contract but a wound to national pride, a symbol of the foreign hands that had shaped their country for too long. The demand to reclaim the oil united nationalists, the left, and much of the clergy in a single, powerful cause.", fa: 'برای بسیاری از ایرانی‌ها این فقط یک قرارداد ناعادلانه نبود، زخمی بر غرور ملی بود؛ نماد دست‌های بیگانه‌ای که مدت‌ها بیش از حد کشورشان را شکل داده بودند. خواستِ بازپس‌گیری نفت، ملی‌گرایان و چپ و بخش بزرگی از روحانیت را زیر یک پرچم نیرومند گرد آورد.' },
-          { t: 'imgsm', key: 'mrp-oil', cap: 'The Abadan refinery, once the largest in the world, at the heart of the oil dispute.', capFa: 'پالایشگاه آبادان، که روزگاری بزرگ‌ترین پالایشگاه جهان بود، در کانون اختلاف نفت.' },
+          { t: 'imgsm', key: 'mrp-oil', cap: 'The Abadan refinery, once the largest in the world, at the heart of the oil dispute.', capFa: 'پالایشگاه آبادان، که زمانی بزرگ‌ترین پالایشگاه جهان بود، در قلب مناقشه نفتی قرار داشت.' },
         ] },
         { blocks: [
           { t: 'h', x: 'Mossadegh rises', fa: 'برآمدن مصدق' },
@@ -243,13 +248,13 @@ const mrp: Topic = {
           { t: 'p', x: "He led the National Front, drove through the nationalization of oil, and became prime minister in 1951 to enormous acclaim, named Time's Man of the Year. Between the cautious young king who longed for authority and the popular premier who embodied the will of the street, a deep and uneasy rivalry began to grow.", fa: 'رهبری جبههٔ ملی را بر عهده داشت، ملی شدن نفت را به سرانجام رساند، و در سال ۱۳۳۰ با استقبالی گسترده نخست‌وزیر شد؛ مجلهٔ تایم مرد سال خواندش. میان شاه جوان و محتاطی که تشنهٔ اختیار بود و نخست‌وزیر محبوبی که ارادهٔ خیابان را نمایندگی می‌کرد، رقابتی عمیق و پرتنش شکل گرفت.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The boycott and the standoff', fa: 'تحریم و رویارویی' },
+          { t: 'h', x: 'The boycott and the standoff', fa: 'تحریم و بن‌بست' },
           { t: 'p', x: "Britain struck back hard. It organized a worldwide boycott of Iranian oil, blockaded Abadan with its navy, and took the dispute to the World Court and the United Nations. Iran's oil sales collapsed, the economy was strangled, and ordinary people began to feel the pain of empty treasuries and rising hardship.", fa: 'بریتانیا سخت پاسخ داد. تحریم جهانی نفت ایران را سازمان داد، آبادان را با ناوگانش محاصره کرد، و اختلاف را به دیوان لاهه و سازمان ملل برد. فروش نفت ایران فرو ریخت، اقتصاد در تنگنا افتاد، و مردم عادی درد خزانهٔ خالی و سختی روزافزون را حس کردند.' },
           { t: 'p', x: "Rather than break Mossadegh, the pressure made him stronger. He demanded emergency powers and control of the war ministry, clashing directly with the Shah over command of the army. When he briefly resigned in July 1952, a popular uprising swept him back into office. But the country was splitting apart, and the communist Tudeh was gaining in the streets.", fa: 'این فشار به جای شکستن مصدق، او را نیرومندتر کرد. اختیارات ویژه و کنترل وزارت جنگ را خواست، و بر سر فرماندهی ارتش مستقیماً با شاه درگیر شد. وقتی در تیر ۱۳۳۱ برای مدت کوتاهی استعفا داد، قیام مردمی سی تیر او را دوباره به قدرت بازگرداند. اما کشور داشت از هم می‌پاشید، و حزب تودهٔ کمونیست در خیابان‌ها قوی‌تر می‌شد.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'Foreign hands', fa: 'دست‌های بیگانه' },
-          { t: 'call', title: 'The truth, plainly', titleFa: 'حقیقت، ساده و روشن', x: "Unable to break Mossadegh alone, Britain turned to the United States. Fearing that a weakened Iran might fall to communism, President Eisenhower approved a covert operation, known to the Americans as Ajax and to the British as Boot. Run by the CIA's Kermit Roosevelt with British intelligence, it funded street gangs, bribed officers and newspapers, and prepared to remove the prime minister.", fa: 'بریتانیا که به‌تنهایی از پس مصدق برنمی‌آمد، به آمریکا رو آورد. رئیس‌جمهور آیزنهاور که نگران بود ایرانِ ناتوان به دامان کمونیسم بیفتد، عملیاتی پنهانی را تأیید کرد؛ آمریکایی‌ها آن را آژاکس می‌خواندند و بریتانیایی‌ها بوت. این عملیات را کرمیت روزولت از سیا با همکاری سرویس اطلاعاتی بریتانیا اداره می‌کرد؛ به اراذل خیابانی پول رساند، به افسران و روزنامه‌ها رشوه داد، و زمینهٔ برکناری نخست‌وزیر را فراهم کرد.' },
+          { t: 'h', x: 'Foreign hands', fa: 'دخالت بیگانگان' },
+          { t: 'call', title: 'The truth, plainly', titleFa: 'حقیقت، بی‌پرده', x: "Unable to break Mossadegh alone, Britain turned to the United States. Fearing that a weakened Iran might fall to communism, President Eisenhower approved a covert operation, known to the Americans as Ajax and to the British as Boot. Run by the CIA's Kermit Roosevelt with British intelligence, it funded street gangs, bribed officers and newspapers, and prepared to remove the prime minister.", fa: 'بریتانیا که به‌تنهایی از پس مصدق برنمی‌آمد، به آمریکا رو آورد. رئیس‌جمهور آیزنهاور که نگران بود ایرانِ ناتوان به دامان کمونیسم بیفتد، عملیاتی پنهانی را تأیید کرد؛ آمریکایی‌ها آن را آژاکس می‌خواندند و بریتانیایی‌ها بوت. این عملیات را کرمیت روزولت از سیا با همکاری سرویس اطلاعاتی بریتانیا اداره می‌کرد؛ به اراذل خیابانی پول رساند، به افسران و روزنامه‌ها رشوه داد، و زمینهٔ برکناری نخست‌وزیر را فراهم کرد.' },
           { t: 'p', x: "Documents released in the decades since have made the foreign role clear. In his own books the Shah described the events as the will of his people and a lawful act of the crown. Both accounts are part of the record, and the distance between them would shape how a generation of Iranians came to see him.", fa: 'اسنادی که در دهه‌های بعد منتشر شد، نقش بیگانه را روشن کرد. شاه در کتاب‌های خودش این رویدادها را خواست مردمش و اقدامی قانونی از سوی سلطنت توصیف کرد. هر دو روایت بخشی از سند تاریخ‌اند، و فاصلهٔ میانشان بود که شکل داد به اینکه یک نسل از ایرانی‌ها او را چگونه ببینند.' },
         ] },
         { blocks: [
@@ -264,6 +269,7 @@ const mrp: Topic = {
     {
       key: 'ch6',
       title: 'Soraya, and the Search for an Heir',
+      titleFa: 'ثریا و جست‌وجو برای وارث',
       subtitle: '1954 – 1958',
       pages: [
         { blocks: [
@@ -274,10 +280,10 @@ const mrp: Topic = {
           { t: 'h', x: 'An impossible choice', fa: 'انتخابی ناممکن' },
           { t: 'p', x: "Doctors were consulted across Europe, and the pressure grew heavier each year, from the court, from the clergy, and from the cold logic of the crown itself. The Shah, by his own account, loved Soraya deeply and searched for any way to keep her.", fa: 'در سراسر اروپا با پزشکان مشورت شد، و فشار هر سال سنگین‌تر شد؛ از سوی دربار، از سوی روحانیت، و از سوی همان منطق سرد خودِ سلطنت. شاه، به روایت خودش، ثریا را عمیقاً دوست داشت و دنبال هر راهی می‌گشت که نگهش دارد.' },
           { t: 'boxes', items: [
-            { title: 'The crown', titleFa: 'تاج', x: 'A dynasty required a male heir to secure the succession.', fa: 'یک سلسله برای تضمین جانشینی به ولیعهد پسر نیاز داشت.' },
-            { title: 'His heart', titleFa: 'دلش', x: 'By every account he was truly in love with Soraya.', fa: 'به گواه همه، واقعاً عاشق ثریا بود.' },
-            { title: 'The clergy', titleFa: 'روحانیت', x: 'A second wife or a change of succession met resistance.', fa: 'گرفتن همسر دوم یا تغییر خط جانشینی با مقاومت روبه‌رو شد.' },
-            { title: 'The choice', titleFa: 'انتخاب', x: 'In the end, duty was made to outweigh love.', fa: 'در پایان، کاری کردند که وظیفه بر عشق بچربد.' },
+            { title: 'The crown', titleFa: 'تاج سلطنت', x: 'A dynasty required a male heir to secure the succession.', fa: 'برای اینکه جانشینی در خاندان سلطنتی تضمین شود، سلسله به یک ولیعهد پسر نیاز داشت.' },
+            { title: 'His heart', titleFa: 'دلش', x: 'By every account he was truly in love with Soraya.', fa: 'به روایت همه، او واقعاً عاشق ثریا بود.' },
+            { title: 'The clergy', titleFa: 'روحانیت', x: 'A second wife or a change of succession met resistance.', fa: 'پیشنهاد ازدواج با همسر دوم یا تغییر ترتیب جانشینی با مقاومت روبه‌رو شد.' },
+            { title: 'The choice', titleFa: 'انتخاب', x: 'In the end, duty was made to outweigh love.', fa: 'در نهایت، وظیفه بر عشق چربید.' },
           ] },
           { t: 'p', x: "He is said to have offered to change the line of succession so that the throne might pass to a brother's son rather than lose her. It was not allowed.", fa: 'گفته‌اند پیشنهاد داد خط جانشینی را تغییر دهند تا تخت به پسر برادرش برسد و او مجبور به از دست دادن ثریا نشود. اجازه ندادند.' },
         ] },
@@ -291,6 +297,7 @@ const mrp: Topic = {
     {
       key: 'ch7',
       title: 'Farah, and the White Revolution',
+      titleFa: 'فرح و انقلاب سفید',
       subtitle: '1959 – 1963',
       pages: [
         { blocks: [
@@ -299,8 +306,8 @@ const mrp: Topic = {
           { t: 'p', x: "Farah would become far more than a consort. She threw herself into the arts, education, and welfare, founded museums and cultural festivals, and in time was crowned Shahbanou, or empress, the first woman so honored in modern Iranian history.", fa: 'فرح بسی بیش از یک همسرِ شاه شد. خود را وقف هنر و آموزش و رفاه کرد، موزه‌ها و جشنواره‌های فرهنگی بنیان گذاشت، و به‌مرور تاج شهبانویی بر سرش گذاشته شد؛ نخستین زنی در تاریخ ایرانِ نو که چنین جایگاهی یافت.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'An heir at last', fa: 'سرانجام یک ولیعهد' },
-          { t: 'fact', label: 'The dynasty secured', labelFa: 'سلسله تضمین شد', value: 'Crown Prince Reza born, 31 Oct 1960', valueFa: 'تولد ولیعهد رضا، ۹ آبان ۱۳۳۹' },
+          { t: 'h', x: 'An heir at last', fa: 'سرانجام، یک ولیعهد' },
+          { t: 'fact', label: 'The dynasty secured', labelFa: 'تداوم سلسله تضمین شد', value: 'Crown Prince Reza born, 31 Oct 1960', valueFa: 'تولد ولیعهد رضا، ۹ آبان ۱۳۳۹' },
           { t: 'imgsm', key: 'mrp-heir', cap: 'The Shah with his son, Crown Prince Reza Pahlavi.', capFa: 'شاه در کنار پسرش، ولیعهد رضا پهلوی.' },
           { t: 'p', x: "On the last day of October 1960, Farah gave birth to a son, Reza. Church bells and gun salutes rang across the country, and the Shah, after decades of waiting, at last had the male heir his throne demanded. More children followed, and the royal family became a symbol of the modern Iran he hoped to build.", fa: 'در آخرین روز آبان ۱۳۳۹، فرح پسری به دنیا آورد، رضا. صدای ناقوس و شلیک توپ در سراسر کشور پیچید، و شاه پس از دهه‌ها انتظار، سرانجام ولیعهدی داشت که تختش می‌طلبید. فرزندان دیگری هم آمدند، و خانوادهٔ سلطنتی به نمادی از همان ایران مدرنی بدل شد که او امید ساختنش را داشت.' },
           { t: 'p', x: "With his personal foundation finally settled, and his authority firm, the Shah turned to the great project of his reign, the remaking of Iran itself.", fa: 'حالا که زندگی شخصی‌اش سرانجام سر و سامان گرفته بود و اقتدارش تثبیت شده بود، شاه به پروژهٔ بزرگ دوران سلطنتش رو آورد: از نو ساختن خودِ ایران.' },
@@ -309,10 +316,10 @@ const mrp: Topic = {
           { t: 'h', x: 'The White Revolution', fa: 'انقلاب سفید' },
           { t: 'p', x: "In January 1963 he launched what he called the White Revolution, a sweeping program of reform from above, meant, in his words, to carry out a revolution by the throne so that none need be made against it. He put it to a national vote, and it passed overwhelmingly.", fa: 'در بهمن ۱۳۴۱ برنامه‌ای را آغاز کرد که نامش را «انقلاب سفید» گذاشت؛ مجموعه‌ای گسترده از اصلاحات از بالا، که به گفتهٔ خودش قرار بود انقلابی به دست سلطنت باشد تا نیازی به انقلابی علیه آن نماند. آن را به همه‌پرسی گذاشت و با اکثریتی قاطع تصویب شد.' },
           { t: 'circles', items: [
-            { value: 'Land', valueFa: 'زمین', label: 'Land reform for peasants', labelFa: 'اصلاحات ارضی برای روستاییان' },
+            { value: 'Land', valueFa: 'زمین', label: 'Land reform for peasants', labelFa: 'اصلاحات ارضی برای کشاورزان' },
             { value: 'Vote', valueFa: 'رأی', label: "Women's suffrage", labelFa: 'حق رأی زنان' },
             { value: 'Read', valueFa: 'سواد', label: 'Literacy Corps', labelFa: 'سپاه دانش' },
-            { value: 'Share', valueFa: 'سهم', label: 'Profit sharing', labelFa: 'سهیم شدن در سود' },
+            { value: 'Share', valueFa: 'سهم', label: 'Profit sharing', labelFa: 'سهیم شدن کارگران در سود' },
           ] },
           { t: 'p', x: "Great estates were broken up and their land given to peasants who had never owned the soil they worked. Women won the right to vote and to stand for office. A Literacy Corps of young conscripts went out to teach reading in the villages, and health and development programs followed.", fa: 'با اصلاحات ارضی، املاک بزرگ تقسیم شد و زمینشان به روستاییانی رسید که هرگز مالک خاکی که رویش کار می‌کردند نبودند. زنان حق رأی و حق نامزد شدن گرفتند. سپاه دانش، متشکل از سربازان جوان، برای سوادآموزی به روستاها رفت، و برنامه‌های بهداشت و عمران هم پس از آن آمد.' },
         ] },
@@ -326,38 +333,40 @@ const mrp: Topic = {
     {
       key: 'ch8',
       title: 'Toward the Great Civilization',
+      titleFa: 'به سوی تمدن بزرگ',
       subtitle: '1965 – 1971',
       pages: [
         { blocks: [
           { t: 'p', x: "These were the years of the throne at its height. Oil revenue climbed, factories rose, universities filled, and the Shah's confidence grew with his country's. In 1965, after his prime minister was assassinated by a young radical, Amir Abbas Hoveyda took office and would serve for nearly thirteen years, the steady hand of the boom.", fa: 'این‌ها سال‌های اوج سلطنت بود. درآمد نفت بالا رفت، کارخانه‌ها ساخته شد، دانشگاه‌ها پر شد، و اعتمادبه‌نفس شاه همراه با کشورش بالا رفت. در سال ۱۳۴۴، پس از ترور نخست‌وزیرش به دست جوانی تندرو، امیرعباس هویدا به این مقام رسید و نزدیک سیزده سال ماند؛ دست باثبات دوران رونق.' },
           { t: 'p', x: "The Shah now ruled with a firm grip. He guided the great decisions himself, from oil to industry to the army, and Iran began to carry real weight in the world, courted by East and West alike for its stability and its oil.", fa: 'شاه حالا با دستی محکم حکومت می‌کرد. تصمیم‌های بزرگ را خودش می‌گرفت، از نفت تا صنعت تا ارتش، و ایران در جهان وزنی واقعی پیدا کرد؛ شرق و غرب هر دو به خاطر ثبات و نفتش به سراغش می‌آمدند.' },
-          { t: 'imgrow', keys: ['mrp-civ-1', 'mrp-civ-2'], cap: 'A thriving, modernizing Iran during the years of the Great Civilization.', capFa: 'ایرانی شکوفا و رو به مدرن شدن، در سال‌های «تمدن بزرگ».' },
+          { t: 'imgrow', keys: ['mrp-civ-1', 'mrp-civ-2'], cap: 'A thriving, modernizing Iran during the years of the Great Civilization.', capFa: 'ایرانی شکوفا و رو به مدرن‌شدن، در سال‌های «تمدن بزرگ».' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A crown earned and worn with pride', fa: 'تاجی که به دست آمد و با سربلندی بر سر ماند' },
+          { t: 'h', x: 'A crown earned and worn with pride', fa: 'تاجی که به دست آمد و با افتخار بر سر گذاشته شد' },
           { t: 'p', x: "He had waited twenty six years to crown himself, refusing, he said, to be crowned king of a poor and backward nation. Only when he judged that Iran had risen did he consent. In October 1967 the ceremony was held in the Golestan Palace.", fa: 'بیست و شش سال صبر کرده بود تا تاج بر سر بگذارد؛ می‌گفت نمی‌خواهد شاهِ ملتی فقیر و عقب‌مانده تاج‌گذاری کند. تنها وقتی که به این نتیجه رسید ایران بالا آمده است، رضایت داد. در آبان ۱۳۴۶ مراسم در کاخ گلستان برگزار شد.' },
           { t: 'p', x: "In a gesture rich with meaning, he placed the crown upon his own head, as Napoleon once had, and then crowned Farah as Shahbanou, the first empress crowned in Iran in centuries. Their young son Reza was named heir before the assembled world.", fa: 'در حرکتی پرمعنا، تاج را خودش بر سر خود گذاشت، همان‌گونه که روزی ناپلئون کرده بود، و سپس تاج شهبانویی را بر سر فرح نهاد؛ نخستین ملکه‌ای که پس از قرن‌ها در ایران تاج‌گذاری می‌کرد. پسر خردسالشان رضا در برابر چشم جهانیان ولیعهد خوانده شد.' },
-          { t: 'imgrow', keys: ['mrp-coronation-1', 'mrp-coronation-2', 'mrp-coronation-3'], cap: 'The coronation of 1967. The Shah crowned himself, then Farah as Shahbanou.', capFa: 'تاج‌گذاری سال ۱۳۴۶. شاه ابتدا تاج را بر سر خود گذاشت، سپس فرح را شهبانو کرد.' },
+          { t: 'imgrow', keys: ['mrp-coronation-1', 'mrp-coronation-2', 'mrp-coronation-3'], cap: 'The coronation of 1967. The Shah crowned himself, then Farah as Shahbanou.', capFa: 'تاج‌گذاری سال ۱۳۴۶. شاه ابتدا تاج را بر سر خود گذاشت و سپس فرح را به عنوان شهبانو تاج‌گذاری کرد.' },
         ] },
         { blocks: [
           { t: 'h', x: 'The Persepolis celebration', fa: 'جشن‌های تخت جمشید' },
           { t: 'p', x: "In 1971 he staged one of the most lavish events of the century, a grand celebration at the ruins of Persepolis marking two thousand five hundred years of Persian monarchy. Kings, queens, and presidents from around the world dined in silk tents amid the desert, served by the finest houses of Paris, in a display meant to place modern Iran within an unbroken line stretching back to antiquity.", fa: 'در سال ۱۳۵۰ یکی از پرخرج‌ترین مراسم آن قرن را برگزار کرد؛ جشنی بزرگ در ویرانه‌های تخت جمشید به مناسبت دو هزار و پانصد سال شاهنشاهی ایران. شاهان و ملکه‌ها و رؤسای جمهور از سراسر جهان در چادرهای ابریشمی میان دشت غذا خوردند، با پذیرایی بهترین خانه‌های پاریس؛ نمایشی که قرار بود ایرانِ نو را در زنجیره‌ای ناگسسته تا روزگار باستان بنشاند.' },
-          { t: 'imgrow', keys: ['mrp-persepolis-1', 'mrp-persepolis-2'], cap: 'The 2,500 year celebration at Persepolis, 1971. Tents, banquets, and a parade of Iran through the ages.', capFa: 'جشن‌های دو هزار و پانصد ساله در تخت جمشید، ۱۳۵۰. چادرها، ضیافت‌ها، و رژهٔ ایران در گذر روزگاران.' },
+          { t: 'imgrow', keys: ['mrp-persepolis-1', 'mrp-persepolis-2'], cap: 'The 2,500 year celebration at Persepolis, 1971. Tents, banquets, and a parade of Iran through the ages.', capFa: 'جشن‌های دو هزار و پانصد ساله در تخت جمشید، ۱۳۵۰. چادرها، ضیافت‌ها و نمایشی از تاریخ ایران در گذر روزگاران.' },
           { t: 'p', x: "The heart of the ceremony was a tribute to Cyrus the Great, founder of the first Persian empire. Standing before the tomb of Cyrus at Pasargadae, the Shah addressed the ancient king directly, in words that became famous, promising that Iran kept watch over the legacy he had left.", fa: 'قلب این مراسم ادای احترام به کوروش بزرگ بود، بنیان‌گذار نخستین امپراتوری ایران. شاه در برابر آرامگاه کوروش در پاسارگاد ایستاد و مستقیم با آن شهریار باستانی سخن گفت، با کلماتی که نامدار شد، و وعده داد که ایران بر میراث او پاسبانی می‌کند.' },
           { t: 'q', x: "Cyrus, rest in peace, for we are awake.", fa: 'کوروش، آسوده بخواب، که ما بیداریم.', by: 'the Shah, at the tomb of Cyrus, 1971', byFa: 'شاه، بر آرامگاه کوروش، ۱۳۵۰' },
-          { t: 'imgsm', key: 'mrp-cyrus', cap: 'The tomb of Cyrus the Great at Pasargadae, honored at the heart of the celebration.', capFa: 'آرامگاه کوروش بزرگ در پاسارگاد، که در قلب این جشن‌ها گرامی داشته شد.' },
+          { t: 'imgsm', key: 'mrp-cyrus', cap: 'The tomb of Cyrus the Great at Pasargadae, honored at the heart of the celebration.', capFa: 'آرامگاه کوروش بزرگ در پاسارگاد، که در مرکز این جشن‌ها جای داشت و مورد احترام قرار گرفت.' },
           { t: 'p', x: "Abroad it was admired as spectacle. At home, many asked why such fortunes were spent on foreign guests while villages still went without. The celebration meant to display Iran's greatness became, for his critics, a symbol of a throne grown distant from its people.", fa: 'در بیرون از ایران آن را چون یک نمایش باشکوه ستودند. در داخل، بسیاری پرسیدند چرا چنین هزینه‌ای صرف مهمانان خارجی می‌شود در حالی که روستاها هنوز از ابتدایی‌ترین چیزها بی‌بهره‌اند. جشنی که قرار بود بزرگی ایران را نشان دهد، برای منتقدانش به نماد تختی بدل شد که از مردمش دور افتاده بود.' },
           { t: 'pull', x: "He dreamed of a Great Civilization, Iran restored to the front rank of nations.", fa: 'رؤیای «تمدن بزرگ» را در سر داشت؛ ایرانی که به صف نخست ملت‌ها بازگردد.' },
         ] },
         { blocks: [
           { t: 'p', x: "That dream had a name and a plan. In his writings the Shah set out his vision of a Great Civilization, a modern, industrial, self reliant Iran that would take its place among the leading powers of the world within a single generation. He believed he could see the destination clearly, and that history had chosen him to lead his people there.", fa: 'این رؤیا نام داشت و نقشه داشت. شاه در نوشته‌هایش چشم‌انداز «تمدن بزرگ» را شرح داد: ایرانی مدرن و صنعتی و متکی به خود، که ظرف یک نسل جایش را میان قدرت‌های پیشروی جهان بگیرد. باور داشت مقصد را به‌روشنی می‌بیند، و که تاریخ او را برگزیده تا مردمش را به آنجا برساند.' },
-          { t: 'call', title: 'The other side', titleFa: 'روی دیگر', x: "But the same drive that built roads, dams, and universities also left little room for dissent. Organized opposition was not permitted, the press was closely controlled, and the intelligence service, SAVAK, watched critics with a heavy hand. The nation was being modernized swiftly, but from above, and the space for those who disagreed grew narrow. It was a tension that would matter greatly in the end.", fa: 'اما همان نیرویی که جاده و سد و دانشگاه ساخت، جای چندانی برای مخالفت باقی نگذاشت. مخالفت سازمان‌یافته اجازه نداشت، مطبوعات به‌دقت کنترل می‌شد، و ساواک، سازمان اطلاعات، منتقدان را با دستی سنگین زیر نظر داشت. کشور سریع مدرن می‌شد، اما از بالا، و فضا برای کسانی که موافق نبودند تنگ‌تر شد. این تنشی بود که در پایان بسیار مهم از آب درآمد.' },
+          { t: 'call', title: 'The other side', titleFa: 'روی دیگر ماجرا', x: "But the same drive that built roads, dams, and universities also left little room for dissent. Organized opposition was not permitted, the press was closely controlled, and the intelligence service, SAVAK, watched critics with a heavy hand. The nation was being modernized swiftly, but from above, and the space for those who disagreed grew narrow. It was a tension that would matter greatly in the end.", fa: 'اما همان نیرویی که جاده و سد و دانشگاه ساخت، جای چندانی برای مخالفت باقی نگذاشت. مخالفت سازمان‌یافته اجازه نداشت، مطبوعات به‌دقت کنترل می‌شد، و ساواک، سازمان اطلاعات، منتقدان را با دستی سنگین زیر نظر داشت. کشور سریع مدرن می‌شد، اما از بالا، و فضا برای کسانی که موافق نبودند تنگ‌تر شد. این تنشی بود که در پایان بسیار مهم از آب درآمد.' },
         ] },
       ],
     },
     {
       key: 'ch9',
       title: 'The Boom and the Cracks',
+      titleFa: 'رونق و شکاف‌ها',
       subtitle: '1973 – 1977',
       pages: [
         { blocks: [
@@ -365,22 +374,22 @@ const mrp: Topic = {
           { t: 'p', x: "In 1973 the price of oil roughly quadrupled almost overnight, and Iran was suddenly awash in wealth beyond imagining. The Shah, long an advocate of higher prices, saw his moment and seized it. He would reach his Great Civilization not in a generation, he declared, but in years.", fa: 'در سال ۱۳۵۲ قیمت نفت تقریباً یک‌شبه چهار برابر شد، و ایران ناگهان در ثروتی فراتر از تصور غرق شد. شاه که مدت‌ها طرفدار بالا بردن قیمت بود، لحظه‌اش را دید و از دستش نداد. اعلام کرد که به «تمدن بزرگ» نه در یک نسل، که در چند سال خواهد رسید.' },
           { t: 'circles', items: [
             { value: '×4', label: 'Oil price, 1973', labelFa: 'قیمت نفت، ۱۳۵۲' },
-            { value: 'Arms', valueFa: 'سلاح', label: 'A vast new military', labelFa: 'ارتشی تازه و عظیم' },
-            { value: 'Build', valueFa: 'ساخت', label: 'Industry and dams', labelFa: 'صنعت و سد' },
+            { value: 'Arms', valueFa: 'سلاح', label: 'A vast new military', labelFa: 'نیروی نظامی تازه و عظیم' },
+            { value: 'Build', valueFa: 'ساخت', label: 'Industry and dams', labelFa: 'صنعت و سدسازی' },
             { value: 'Fast', valueFa: 'شتاب', label: 'Change accelerated', labelFa: 'تغییر شتاب گرفت' },
           ] },
           { t: 'p', x: "He spent boldly, on heavy industry, a modern army, nuclear plants, and grand projects, determined to vault Iran into the front rank of nations in a single leap.", fa: 'جسورانه خرج کرد؛ صنایع سنگین، ارتشی مدرن، نیروگاه هسته‌ای، و پروژه‌های بزرگ، با این عزم که ایران را با یک جهش به صف نخست ملت‌ها برساند.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'More money than the country could absorb', fa: 'پولی بیشتر از آنکه کشور جذبش کند' },
+          { t: 'h', x: 'More money than the country could absorb', fa: 'پولی بیشتر از آنچه کشور می‌توانست جذب کند' },
           { t: 'p', x: "But money moved faster than the nation could take it in. The ports choked with goods that rotted before they could be unloaded, inflation surged, and rents soared. The gap between rich and poor widened, and villagers pouring into the cities for work found crowding and disappointment instead.", fa: 'اما پول سریع‌تر از آن حرکت می‌کرد که کشور بتواند جذبش کند. بندرها از کالاهایی پر شد که پیش از تخلیه فاسد می‌شدند، تورم بالا گرفت، و اجاره‌بها سر به فلک کشید. فاصلهٔ فقیر و غنی بیشتر شد، و روستاییانی که برای کار به شهرها سرازیر می‌شدند، به جای کار با ازدحام و سرخوردگی روبه‌رو شدند.' },
           { t: 'p', x: "The rapid change unsettled traditional life, and a quiet resentment gathered beneath the glittering surface of progress. Many who had once felt loyalty to the crown began, without quite saying so, to feel left behind by it.", fa: 'این تغییر شتابان، زندگی سنتی را به هم ریخت، و کینه‌ای خاموش زیر سطح درخشان پیشرفت جمع شد. بسیاری که روزگاری به سلطنت وفادار بودند، بی‌آنکه صریح بگویندش، کم‌کم حس کردند از قافله جا مانده‌اند.' },
-          { t: 'collage', keys: ['mrp-boom-1', 'mrp-boom-2'], cap: 'The boom years transformed Iran\'s cities at a breathless pace.', capFa: 'سال‌های رونق، شهرهای ایران را با شتابی نفس‌گیر دگرگون کرد.' },
+          { t: 'collage', keys: ['mrp-boom-1', 'mrp-boom-2'], cap: 'The boom years transformed Iran\'s cities at a breathless pace.', capFa: 'سال‌های رونق، شهرهای ایران را با شتابی نفس‌گیر دگرگون کردند.' },
         ] },
         { blocks: [
           { t: 'h', x: 'One party, and a hidden illness', fa: 'یک حزب، و بیماری‌ای پنهان' },
           { t: 'p', x: "In 1975 the Shah made a fateful error of judgment. He abolished the existing parties and folded the nation's politics into a single party, the Rastakhiz, and declared that any Iranian who would not join it should take a passport and leave. Meant to unify, it instead alienated many who had felt, until then, a quiet loyalty to their king.", fa: 'در سال ۱۳۵۳ شاه اشتباه سرنوشت‌سازی در قضاوت کرد. احزاب موجود را منحل کرد و تمام سیاست کشور را در یک حزب واحد جمع کرد، حزب رستاخیز، و اعلام کرد هر ایرانی که نخواهد به آن بپیوندد، پاسپورتش را بگیرد و برود. قرار بود یکپارچگی بیاورد؛ به جایش بسیاری را از خود راند که تا آن روز وفاداری‌ای خاموش به شاهشان داشتند.' },
-          { t: 'call', title: 'A secret carried alone', titleFa: 'رازی که تنها حملش می‌کرد', x: "Privately, the Shah was gravely ill. In 1974 French doctors had diagnosed a form of cancer, and he kept it secret for years, even from Farah. The illness, and the treatments that dulled and tired him, quietly drained the decisiveness that his hardest hour, now approaching, would demand of him.", fa: 'در خلوت، شاه به‌سختی بیمار بود. در سال ۱۳۵۳ پزشکان فرانسوی نوعی سرطان را در او تشخیص داده بودند، و او سال‌ها این را پنهان نگه داشت، حتی از فرح. این بیماری، و درمان‌هایی که کرختش می‌کرد و از پا می‌انداختش، بی‌سروصدا همان قاطعیتی را از او گرفت که سخت‌ترین ساعت زندگی‌اش، که داشت نزدیک می‌شد، از او می‌طلبید.' },
+          { t: 'call', title: 'A secret carried alone', titleFa: 'رازی که تنهایی به دوش می‌کشید', x: "Privately, the Shah was gravely ill. In 1974 French doctors had diagnosed a form of cancer, and he kept it secret for years, even from Farah. The illness, and the treatments that dulled and tired him, quietly drained the decisiveness that his hardest hour, now approaching, would demand of him.", fa: 'در خلوت، شاه به‌سختی بیمار بود. در سال ۱۳۵۳ پزشکان فرانسوی نوعی سرطان را در او تشخیص داده بودند، و او سال‌ها این را پنهان نگه داشت، حتی از فرح. این بیماری، و درمان‌هایی که کرختش می‌کرد و از پا می‌انداختش، بی‌سروصدا همان قاطعیتی را از او گرفت که سخت‌ترین ساعت زندگی‌اش، که داشت نزدیک می‌شد، از او می‌طلبید.' },
           { t: 'p', x: "To the world he still stood at the peak of his power. Beneath it, the ground was beginning to shift.", fa: 'در چشم جهان هنوز در اوج قدرتش ایستاده بود. زیر پایش اما، زمین داشت می‌لرزید.' },
         ] },
       ],
@@ -388,10 +397,11 @@ const mrp: Topic = {
     {
       key: 'ch10',
       title: 'The Storm and the Departure',
+      titleFa: 'توفان و رفتن',
       subtitle: '1977 – 1979',
       pages: [
         { blocks: [
-          { t: 'h', x: 'The gathering storm', fa: 'توفانی که جمع می‌شد' },
+          { t: 'h', x: 'The gathering storm', fa: 'توفانی که در راه بود' },
           { t: 'p', x: "By the late 1970s pressure was building on every side. Abroad, a new American president, Jimmy Carter, pressed him on human rights, and the Shah, hoping to please his ally and soften his image, loosened some of the controls that had held the country tight. Into that small opening rushed years of pent up grievance.", fa: 'تا اواخر دههٔ ۵۰، فشار از هر سو بالا می‌رفت. در بیرون، رئیس‌جمهور تازهٔ آمریکا، جیمی کارتر، در زمینهٔ حقوق بشر بر او فشار می‌آورد، و شاه به امید راضی کردن متحدش و نرم کردن چهره‌اش، بخشی از کنترل‌هایی را که کشور را سفت نگه داشته بود شل کرد. از همان روزنهٔ کوچک، سال‌ها نارضایتی انباشته بیرون زد.' },
           { t: 'p', x: "Through 1978 the discontent gathered into a vast movement that crossed every line. Religious and secular, left and right, bazaar merchant and university student, they agreed on little except that the throne must go. Protests grew, met by crackdowns, and each death fed the next in a rising cycle the government could not break.", fa: 'در طول سال ۱۳۵۷، این نارضایتی به جنبشی گسترده بدل شد که از هر مرزی گذشت. مذهبی و غیرمذهبی، چپ و راست، بازاری و دانشجو، بر سر چیزی توافق نداشتند جز اینکه این تخت باید برود. اعتراض‌ها بزرگ شد و با سرکوب پاسخ گرفت، و هر کشته، کشتهٔ بعدی را در چرخه‌ای فزاینده تغذیه کرد که دولت نتوانست بشکندش.' },
         ] },
@@ -401,7 +411,7 @@ const mrp: Topic = {
           { t: 'p', x: "Uncompromising where others wavered, he offered not reform but the end of the monarchy itself, and to a nation weary of one man's rule, that clarity proved magnetic. The more the Shah offered, the more the streets demanded, until nothing short of his departure would satisfy them.", fa: 'آنجا که دیگران تردید داشتند او کوتاه نمی‌آمد؛ نه اصلاحات، که پایان خودِ پادشاهی را پیشنهاد می‌کرد، و برای ملتی که از حکومت یک نفر خسته بود، این صراحت جذاب از آب درآمد. هرچه شاه بیشتر پیشنهاد می‌داد، خیابان بیشتر می‌خواست، تا جایی که چیزی جز رفتن او راضی‌شان نمی‌کرد.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'A wavering king', fa: 'شاهی که مردد بود' },
+          { t: 'h', x: 'A wavering king', fa: 'شاهی مردد' },
           { t: 'p', x: "Weakened by his hidden illness and torn between force and concession, the Shah wavered at the decisive hour. He installed a military government, then a reformist one; he freed prisoners, apologized to the nation, and went on television to say he had heard the voice of their revolution. The next day the streets filled again.", fa: 'شاه که بیماری پنهانش ناتوانش کرده بود و میان زور و امتیاز دادن دودل مانده بود، در ساعت سرنوشت‌ساز تردید کرد. دولتی نظامی سر کار آورد، بعد دولتی اصلاح‌طلب؛ زندانیان را آزاد کرد، از ملت عذرخواهی کرد، و از تلویزیون گفت که پیام انقلاب مردم را شنیده است. فردای آن روز، خیابان‌ها دوباره پر شد.' },
           { t: 'p', x: "In his memoirs he wrote that he could not bring himself to save his throne by drowning his own people in blood, that a king who rules by massacre is no longer worthy of the name. His critics called it fatal indecision; he called it a refusal to become a tyrant in his final hour. Both may be true.", fa: 'در خاطراتش نوشت که نتوانست تختش را با غرق کردن مردم خودش در خون نجات دهد، و شاهی که با کشتار حکومت کند دیگر لایق این نام نیست. منتقدانش نامش را تردیدی مرگبار گذاشتند؛ خودش آن را سر باز زدن از خودکامه شدن در واپسین ساعت خواند. شاید هر دو درست باشد.' },
           { t: 'call', title: 'The hands of others', titleFa: 'دست دیگران', x: "He came to believe, and wrote at length, that foreign powers had turned against him, that the same Western allies he had served now abandoned him or worked for his fall. Historians debate how far this is so. What is clear is that by early 1979 he stood almost alone, ill, exhausted, and out of choices.", fa: 'به این باور رسید، و مفصل هم نوشتش، که قدرت‌های خارجی علیه او برگشته‌اند؛ که همان متحدان غربی‌ای که به آنها خدمت کرده بود حالا یا رهایش کرده‌اند یا برای سقوطش کار می‌کنند. تاریخ‌نگاران بر سر اینکه این تا چه اندازه درست است اختلاف دارند. آنچه روشن است این است که تا اوایل سال ۱۳۵۷، او تقریباً تنها ایستاده بود؛ بیمار، فرسوده، و بی‌هیچ انتخابی.' },
@@ -410,7 +420,7 @@ const mrp: Topic = {
           { t: 'h', x: 'The departure', fa: 'رفتن' },
           { t: 'p', x: "On 16 January 1979, the Shah left Iran. The trip was called a temporary rest abroad, but everyone understood. At Mehrabad Airport, an officer knelt to kiss his feet, and the Shah, visibly moved, raised the man up. He took a small box of Iranian soil with him.", fa: 'در ۲۶ دی ۱۳۵۷، شاه از ایران رفت. سفر را استراحتی موقت در خارج نامیدند، اما همه می‌فهمیدند. در فرودگاه مهرآباد، افسری زانو زد تا پایش را ببوسد، و شاه که آشکارا منقلب شده بود او را از زمین بلند کرد. جعبهٔ کوچکی از خاک ایران را با خود برد.' },
           { t: 'p', x: "He wept as the plane lifted off. In his own words, he left with an empty heart, carrying the weight of a thousand years of monarchy that ended with him, and a love for a country he knew, even then, he might never see again. Within weeks Khomeini returned to Tehran to enormous crowds, and the monarchy his father had founded came to an end.", fa: 'وقتی هواپیما از زمین بلند شد گریست. به گفتهٔ خودش، با دلی خالی رفت؛ با بار هزار سال پادشاهی که با او تمام می‌شد، و با عشق به کشوری که همان موقع هم می‌دانست شاید دیگر هرگز نبیندش. چند هفته بعد خمینی با استقبال جمعیتی عظیم به تهران بازگشت، و پادشاهی‌ای که پدرش بنیان گذاشته بود به پایان رسید.' },
-          { t: 'video', key: 'mrp-exile-interview', cap: 'In exile, the Shah reflects on his reign and his departure. Tap to watch.', capFa: 'شاه در تبعید، دربارهٔ سلطنت و رفتنش سخن می‌گوید. برای تماشا بزن.' },
+          { t: 'video', key: 'mrp-exile-interview', cap: 'In exile, the Shah reflects on his reign and his departure. Tap to watch.', capFa: 'شاه در تبعید، از دوران سلطنت و رفتنش می‌گوید. برای تماشا بزن.' },
           { t: 'pull', x: "He left the country he had ruled for thirty seven years, and never returned.", fa: 'از کشوری رفت که سی و هفت سال بر آن حکومت کرده بود، و دیگر بازنگشت.' },
         ] },
       ],
@@ -418,6 +428,7 @@ const mrp: Topic = {
     {
       key: 'ch11',
       title: 'Answer to History',
+      titleFa: 'پاسخ به تاریخ',
       subtitle: '1979 – 1980',
       pages: [
         { blocks: [
