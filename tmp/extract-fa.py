@@ -23,8 +23,12 @@ for m in re.finditer(r"(?:x|title|sub|h|lead|en|subtitle|name|label|q|a|cap): \'
     en = m.group(1)
     if not ascii_only.match(en):
         continue          # a Persian value, not an English key
-    tail = seg[m.end(): m.end() + 600]
-    fm = re.search(r"(?:[a-zA-Z]*[Ff]a): \'((?:[^\'\\]|\\.)*)\'", tail)
+    # Only a Persian field that immediately follows, within the same
+    # object. Searching ahead 600 characters paired a heading that has no
+    # translation with the next paragraph's — which reads as a wrong
+    # translation when the file is actually fine.
+    tail = seg[m.end(): m.end() + 260]
+    fm = re.match(r",\s*(?:[a-zA-Z]*[Ff]a|persian): \'((?:[^\'\\]|\\.)*)\'", tail)
     if not fm:
         continue
     n += 1

@@ -5,6 +5,8 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
+import { reachedPage } from '@/lib/read-progress';
+import { markRead as markRecent } from '@/lib/saved-store';
 import { tpm } from '@/constants/tpm-theme';
 import { tpmPost, TPM_POSTS } from '@/constants/tpm-content';
 import { FramedImage } from '@/components/framed-image';
@@ -47,6 +49,17 @@ export default function TpmPostScreen() {
   useLang();
   const { post } = useLocalSearchParams<{ post?: string }>();
   const p = tpmPost(post);
+
+  // An article is one thing, so reading it is all of it. This is what
+  // puts TPM pieces into the rails alongside topics and poets.
+  useEffect(() => {
+    if (!p) return;
+    // `tpm:` with a colon — the convention the save system already uses,
+    // and what resolve-saved matches on. A hyphen here would record
+    // something nothing could ever look up.
+    reachedPage('tpm:' + p.key, 0, 1);
+    markRecent('tpm:' + p.key);
+  }, [p?.key]);
   useTpmAccess();
 
   // Saving an article uses the same store as everything else kept in the

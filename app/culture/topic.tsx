@@ -8,6 +8,8 @@ import { logEvent } from '@/lib/admin';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { fonts, fontSize, spacing } from '@/constants/zand-theme';
+import { markRead } from '@/lib/saved-store';
+import { reachedPage } from '@/lib/read-progress';
 import { cu, CULTURE_TOPICS, CULTURE_PAGES, type CuBlock } from '@/constants/culture';
 import { CultureGround } from '@/app/culture/index';
 import { TaarofSim, DelMap, TypicalCards, Zurkhaneh, RicePot, Dishes, Sweets } from '@/components/culture-blocks';
@@ -125,6 +127,15 @@ export default function CultureTopic() {
   const scroller = useRef<ScrollView>(null);
   const sectionY = useRef<Record<string, number>>({});
   const [active, setActive] = useState(pages[0]?.key ?? '');
+
+  // Which page they reached, and into the rails. Culture was tracked by
+  // nothing at all, so a topic read to the end still showed as untouched.
+  useEffect(() => {
+    if (!topic || !pages.length) return;
+    const i = Math.max(0, pages.findIndex((x: any) => x.key === active));
+    reachedPage('culture-' + topic, i, pages.length);
+    markRead('culture-' + topic);
+  }, [topic, active, pages.length]);
 
   const jump = (key: string) => {
     const y = sectionY.current[key];

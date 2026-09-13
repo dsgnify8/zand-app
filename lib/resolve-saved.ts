@@ -36,6 +36,19 @@ export function resolveSavedKey(key: string): Resolved | null {
     if (!c) return null;
     return { key, kind: 'culture', title: (c as any).title, sub: 'Culture', image: 'culture-' + (c as any).key, route: '/culture/topic?topic=' + (c as any).key, accent: (c as any).accent, glyph: (c as any).glyph, persian: (c as any).persian };
   }
+  // Geography is a single page rather than a set, so it has no id to
+  // carry — the key is just `geo`. It still belongs in the rails: it is
+  // long enough to come back to.
+  if (key === 'geo') {
+    return {
+      key,
+      kind: 'topic',
+      title: 'The land',
+      sub: 'Geography',
+      image: 'geo-cover',
+      route: '/geography',
+    };
+  }
   if (key.startsWith('tpm:')) {
     const t = TPM_POSTS.find((x) => x.key === key.slice(4));
     if (!t) return null;

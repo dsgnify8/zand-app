@@ -10,6 +10,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { dark } from '@/constants/education';
 import { GEO_CHAPTERS, CITIES, PLACES, type GeoBlock } from '@/constants/geography';
+import { reachedPage } from '@/lib/read-progress';
+import { markRead } from '@/lib/saved-store';
 import { eduImage } from '@/constants/education-images';
 import { IranProvinceMap } from '@/components/iran-province-map';
 import { CityCard } from '@/components/city-card';
@@ -133,6 +135,15 @@ export default function GeographyScreen() {
   const sectionY = useRef<Record<string, number>>({});
   const { jump: wantJump } = useLocalSearchParams<{ jump?: string }>();
   const [active, setActive] = useState(GEO_CHAPTERS[0].key);
+
+  // Geography is one long page with anchors rather than pages, so the
+  // chapter they have scrolled into is the honest measure of how far
+  // through it they are.
+  useEffect(() => {
+    const i = Math.max(0, GEO_CHAPTERS.findIndex((c: any) => c.key === active));
+    reachedPage('geo', i, GEO_CHAPTERS.length);
+    markRead('geo');
+  }, [active]);
 
   const jump = (key: string) => {
     const y = sectionY.current[key];

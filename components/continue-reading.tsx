@@ -189,9 +189,15 @@ export function ContinueReading({ label }: { label?: string }) {
                 style={StyleSheet.absoluteFill as any}
               />
               <View style={s.body}>
-                <Text style={[s.title, fa && (r as any).titleFa && s.faTitle]} numberOfLines={2}>{fa && (r as any).titleFa ? (r as any).titleFa : r.title}</Text>
+                <Text style={[s.title, fa && (r as any).titleFa && s.faTitle]} numberOfLines={1}>{fa && (r as any).titleFa ? (r as any).titleFa : r.title}</Text>
                 <Text style={[s.sub, fa && (r as any).chapterFa && s.faSub]}>{fa && (r as any).chapterFa ? (r as any).chapterFa : r.chapter}</Text>
-                <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
+                {/* Only where there is distance to measure. An article
+                    is one thing — read or not — and an empty track under
+                    it reads as unfinished, which is the wrong thing to
+                    tell someone who just finished it. */}
+                {r.total > 1 ? (
+                  <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
+                ) : null}
                 {r.total > 0 ? (
                   <Text style={s.pct}>{fa ? 'صفحهٔ ' + r.page + ' از ' + r.total : 'page ' + r.page + ' of ' + r.total}</Text>
                 ) : (

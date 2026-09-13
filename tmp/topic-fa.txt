@@ -1,379 +1,339 @@
 1.
 EN: Mohammad Reza Shah Pahlavi
-FA: آخرین شاه ایران. نوگرایی که آرزوها و اصلاحات و بارهای شخصی‌اش، کشوری را که نزدیک چهار دهه بر آن حکومت کرد شکل داد.
+FA: محمدرضا پهلوی
 
 2.
-EN: A Prince and a New Dynasty
-FA: زادروز
-
-3.
 EN: Born
 FA: زادروز
 
-4.
+3.
 EN: Reza Khan born
 FA: تولد رضاخان
 
-5.
+4.
 EN: Mohammad Reza born
 FA: تولد محمدرضا
 
-6.
+5.
 EN: The coup
 FA: کودتا
 
-7.
+6.
 EN: Pahlavi dynasty founded
 FA: بنیان‌گذاری سلسلهٔ پهلوی
 
-8.
+7.
 EN: A childhood set apart
 FA: کودکی‌ای جدا از بقیه
 
-9.
+8.
 EN: The young prince with his father, Reza Shah, the founder of the dynasty.
 FA: ولیعهد خردسال در کنار پدرش، رضاشاه، بنیان‌گذار سلسله.
 
-10.
+9.
 EN: A brush with death
 FA: یک قدمی مرگ
 
-11.
+10.
 EN: A weight placed early
 FA: باری که زود بر دوشش گذاشتند
 
-12.
-EN: An Education Between Two Worlds
-FA: رضاشاه می‌خواست ولیعهدش برای جهانی آماده باشد که نسل خودش هرگز ندیده بود. پسر را زود از اندرونی کاخ بیرون آوردند و به معلم‌ها و افسرها سپردند، و با انضباطی حساب‌شده برای تخت آماده‌اش کردند.
-
-13.
+11.
 EN: A bridge between two worlds
 FA: پلی میان دو جهان
 
-14.
+12.
 EN: Arrived in Switzerland
 FA: ورود به سوئیس
 
-15.
+13.
 EN: Abroad at Le Rosey
 FA: دور از وطن، در لوروزه
 
-16.
+14.
 EN: A second language
 FA: زبان دوم
 
-17.
+15.
 EN: The crown prince, shaped by two worlds, returns home to serve Iran.
 FA: ولیعهد، که دو جهان شکلش داده بودند، برای خدمت به ایران به وطن بازمی‌گردد.
 
-18.
-EN: Marriage, War, and a Crown
-FA: در سال ۱۳۱۸، ولیعهد با شاهزاده فوزیه، خواهر فاروق پادشاه مصر، ازدواج کرد. این پیوند دو خاندان سلطنتی را به هم رساند و خبرهای تصویری را از شکوه پر کرد، و سال بعد دختری به نام شهناز به دنیا آمد.
-
-19.
+16.
 EN: First marriage
 FA: نخستین ازدواج
 
-20.
+17.
 EN: The war reaches Iran
 FA: جنگ به ایران می‌رسد
 
-21.
+18.
 EN: Reza Shah Pahlavi abdicates
 FA: رضاشاه پهلوی از سلطنت کناره می‌گیرد
 
-22.
+19.
 EN: Reza Shah, who abdicated in 1941 so the dynasty might endure through his son.
 FA: رضاشاه، که در سال ۱۳۲۰ کناره گرفت تا سلسله از راه پسرش دوام بیاورد.
 
-23.
+20.
 EN: Mohammad Reza Pahlavi becomes king
 FA: محمدرضا پهلوی شاه می‌شود
 
-24.
+21.
 EN: The young Mohammad Reza Pahlavi, the new king of Iran.
 FA: محمدرضا پهلوی جوان، شاه تازهٔ ایران.
 
-25.
+22.
 EN: Marries Fawzia
 FA: ازدواج با فوزیه
 
-26.
+23.
 EN: Allied invasion
 FA: حملهٔ متفقین
 
-27.
+24.
 EN: Mohammad Reza becomes king
 FA: محمدرضا شاه می‌شود
 
-28.
+25.
 EN: Tehran Conference
 FA: کنفرانس تهران
 
-29.
+26.
 EN: Reza Shah dies in exile
 FA: مرگ رضاشاه در تبعید
 
-30.
-EN: Finding His Feet
-FA: غائلهٔ آذربایجان
-
-31.
+27.
 EN: The Azerbaijan crisis
 FA: غائلهٔ آذربایجان
 
-32.
+28.
 EN: The young Shah in the early years of his reign, finding his footing as king.
 FA: شاه جوان در سال‌های نخست سلطنتش، در حال یافتن جای پای خود.
 
-33.
+29.
 EN: The Shot at the University
 FA: تیراندازی در دانشگاه
 
-34.
+30.
 EN: A belief in destiny
 FA: باور به تقدیر
 
-35.
+31.
 EN: A new love
 FA: عشقی تازه
 
-36.
+32.
 EN: The Shah and Soraya, whose marriage was, by every account, a true love match.
 FA: شاه و ثریا، که ازدواجشان به گواه همه از سر عشق واقعی بود.
 
-37.
+33.
 EN: A restless nation
 FA: کشوری بی‌قرار
 
-38.
-EN: The Oil Crisis and 1953
-FA: نفت و غرور یک ملت
-
-39.
+34.
 EN: The Abadan refinery, once the largest in the world, at the heart of the oil dispute.
 FA: پالایشگاه آبادان، که روزگاری بزرگ‌ترین پالایشگاه جهان بود، در کانون اختلاف نفت.
 
-40.
+35.
 EN: Mossadegh rises
 FA: برآمدن مصدق
 
-41.
+36.
 EN: Mohammad Mossadegh, the nationalist prime minister who nationalized Iran\'s oil.
 FA: محمد مصدق، نخست‌وزیر ملی‌گرا که صنعت نفت ایران را ملی کرد.
 
-42.
+37.
 EN: The boycott and the standoff
 FA: تحریم و رویارویی
 
-43.
+38.
 EN: Foreign hands
 FA: دست‌های بیگانه
 
-44.
+39.
 EN: The truth, plainly
 FA: حقیقت، ساده و روشن
 
-45.
+40.
 EN: August 1953
 FA: مرداد ۱۳۳۲
 
-46.
-EN: Soraya, and the Search for an Heir
-FA: با تثبیت تخت، شاه به بازسازی رو آورد. قرارداد نفتی تازه‌ای در سال ۱۳۳۳ درآمد کشور را بازگرداند، کمک آمریکا سرازیر شد، و اقتصاد به‌آرامی سر و سامان گرفت. چند سالی چنین می‌نمود که شاه و ملکهٔ جوانش همه‌چیز را پیش رو دارند.
-
-47.
+41.
 EN: An impossible choice
 FA: انتخابی ناممکن
 
-48.
+42.
 EN: The crown
 FA: تاج
 
-49.
+43.
 EN: A dynasty required a male heir to secure the succession.
 FA: یک سلسله برای تضمین جانشینی به ولیعهد پسر نیاز داشت.
 
-50.
+44.
 EN: His heart
 FA: دلش
 
-51.
+45.
 EN: By every account he was truly in love with Soraya.
 FA: به گواه همه، واقعاً عاشق ثریا بود.
 
-52.
+46.
 EN: The clergy
 FA: روحانیت
 
-53.
+47.
 EN: A second wife or a change of succession met resistance.
 FA: گرفتن همسر دوم یا تغییر خط جانشینی با مقاومت روبه‌رو شد.
 
-54.
+48.
 EN: The choice
 FA: انتخاب
 
-55.
+49.
 EN: In the end, duty was made to outweigh love.
 FA: در پایان، کاری کردند که وظیفه بر عشق بچربد.
 
-56.
-EN: Farah, and the White Revolution
-FA: در سال ۱۳۳۸، شاه با فرح دیبا آشنا شد؛ دختری ایرانی که در پاریس معماری می‌خواند. گرم بود و فرهیخته و دلبستهٔ هنر و کشورش، و شبیه شاهزاده‌خانم‌های پرورده در حصار گذشته نبود. در آذر همان سال، در مراسمی پرآوازه در تهران ازدواج کردند.
-
-57.
+50.
 EN: The wedding of Mohammad Reza and Farah, 1959. Tap to watch.
 FA: مراسم ازدواج محمدرضا و فرح، ۱۳۳۸. برای تماشا بزن.
 
-58.
+51.
 EN: An heir at last
 FA: سرانجام یک ولیعهد
 
-59.
+52.
 EN: The dynasty secured
 FA: سلسله تضمین شد
 
-60.
+53.
 EN: The Shah with his son, Crown Prince Reza Pahlavi.
 FA: شاه در کنار پسرش، ولیعهد رضا پهلوی.
 
-61.
+54.
 EN: The White Revolution
 FA: انقلاب سفید
 
-62.
+55.
 EN: Land reform for peasants
 FA: اصلاحات ارضی برای روستاییان
 
-63.
+56.
 EN: Literacy Corps
 FA: سپاه دانش
 
-64.
+57.
 EN: Profit sharing
 FA: سهیم شدن در سود
 
-65.
+58.
 EN: The seeds of opposition
 FA: بذرهای مخالفت
 
-66.
+59.
 EN: A thriving, modernizing Iran during the years of the Great Civilization.
 FA: ایرانی شکوفا و رو به مدرن شدن، در سال‌های «تمدن بزرگ».
 
-67.
+60.
 EN: A crown earned and worn with pride
 FA: تاجی که به دست آمد و با سربلندی بر سر ماند
 
-68.
+61.
 EN: The coronation of 1967. The Shah crowned himself, then Farah as Shahbanou.
 FA: تاج‌گذاری سال ۱۳۴۶. شاه ابتدا تاج را بر سر خود گذاشت، سپس فرح را شهبانو کرد.
 
-69.
+62.
 EN: The Persepolis celebration
 FA: جشن‌های تخت جمشید
 
-70.
+63.
 EN: The 2,500 year celebration at Persepolis, 1971. Tents, banquets, and a parade of Iran through the ages.
 FA: جشن‌های دو هزار و پانصد ساله در تخت جمشید، ۱۳۵۰. چادرها، ضیافت‌ها، و رژهٔ ایران در گذر روزگاران.
 
-71.
+64.
 EN: The tomb of Cyrus the Great at Pasargadae, honored at the heart of the celebration.
 FA: آرامگاه کوروش بزرگ در پاسارگاد، که در قلب این جشن‌ها گرامی داشته شد.
 
-72.
+65.
 EN: The other side
 FA: روی دیگر
 
-73.
-EN: The Boom and the Cracks
-FA: سیل ثروت نفتی
-
-74.
+66.
 EN: A flood of oil wealth
 FA: سیل ثروت نفتی
 
-75.
+67.
 EN: Oil price, 1973
 FA: قیمت نفت، ۱۳۵۲
 
-76.
+68.
 EN: A vast new military
 FA: ارتشی تازه و عظیم
 
-77.
+69.
 EN: Industry and dams
 FA: صنعت و سد
 
-78.
+70.
 EN: Change accelerated
 FA: تغییر شتاب گرفت
 
-79.
+71.
 EN: More money than the country could absorb
 FA: پولی بیشتر از آنکه کشور جذبش کند
 
-80.
+72.
 EN: The boom years transformed Iran\'s cities at a breathless pace.
 FA: سال‌های رونق، شهرهای ایران را با شتابی نفس‌گیر دگرگون کرد.
 
-81.
+73.
 EN: One party, and a hidden illness
 FA: یک حزب، و بیماری‌ای پنهان
 
-82.
+74.
 EN: A secret carried alone
 FA: رازی که تنها حملش می‌کرد
 
-83.
-EN: The Storm and the Departure
-FA: توفانی که جمع می‌شد
-
-84.
+75.
 EN: The gathering storm
 FA: توفانی که جمع می‌شد
 
-85.
+76.
 EN: A wavering king
 FA: شاهی که مردد بود
 
-86.
+77.
 EN: The hands of others
 FA: دست دیگران
 
-87.
+78.
 EN: The departure
 FA: رفتن
 
-88.
+79.
 EN: In exile, the Shah reflects on his reign and his departure. Tap to watch.
 FA: شاه در تبعید، دربارهٔ سلطنت و رفتنش سخن می‌گوید. برای تماشا بزن.
 
-89.
-EN: Answer to History
-FA: شاهی بی‌کشور
-
-90.
+80.
 EN: A king without a country
 FA: شاهی بی‌کشور
 
-91.
+81.
 EN: The hostage crisis
 FA: بحران گروگان‌گیری
 
-92.
+82.
 EN: The seizure of the American embassy in Tehran, November 1979.
 FA: تسخیر سفارت آمریکا در تهران، آبان ۱۳۵۸.
 
-93.
+83.
 EN: The last book
 FA: آخرین کتاب
 
-94.
+84.
 EN: The end
 FA: پایان
 
-95.
+85.
 EN: Died
 FA: درگذشت
