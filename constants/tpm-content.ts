@@ -181,7 +181,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'feature',
     title: 'Soheil Alavi built a podcast with no music and no editing',
     subject: 'Soheil Alavi',
-    discipline: 'Podcasting',
+    discipline: 'Word',
     standfirst:
       'Tabaghe 16 began on a sixteenth floor as founder-to-founder therapy. He has since left his startup for it.',
     cover: 'tpm-soheil-cover',
@@ -301,7 +301,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'portrait',
     title: 'Keayaun climbs the parts of the city you never see',
     subject: 'Keayaun',
-    discipline: 'Photography',
+    discipline: 'Image',
     standfirst:
       'Rooftops, tunnels, and a jump from a moving train on his 22nd '
       + 'birthday that changed how he thinks about time.',
@@ -342,7 +342,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'feature',
     title: 'The Beginner\'s Guide to Persian Slang, Volume #2',
     subject: 'Persian slang',
-    discipline: 'Language',
+    discipline: 'Word',
     standfirst:
       'The words and phrases you will not learn in class or read in classical literature.',
     cover: 'tpm-slang2-cover',
@@ -516,7 +516,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'feature',
     title: 'Niousha Noor on The Persian Version and the cycle it might break',
     subject: 'Niousha Noor',
-    discipline: 'Film',
+    discipline: 'Image',
     standfirst:
       'The actor on stereotyped auditions, a standing ovation at Sundance, and asking her own mother questions she had never thought to ask.',
     cover: 'tpm-niousha-cover',
@@ -724,7 +724,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'feature',
     title: 'Shahrzad Shokouhivand is reviving Iran\'s lost flavours',
     subject: 'Shahrzad Shokouhivand',
-    discipline: 'Pastry',
+    discipline: 'Craft',
     standfirst:
       'The first Iranian to receive the Ordre du Mérite Agricole, on French technique, a Tabrizi childhood, and selling pastries one at a time.',
     cover: 'tpm-shahrzad-cover',
@@ -836,7 +836,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'portrait',
     title: 'Forough Alaei photographed the women sneaking into stadiums',
     subject: 'Forough Alaei',
-    discipline: 'Photography',
+    discipline: 'Image',
     standfirst:
       'She disguised herself as a man to document them. The series won a World Press Photo prize.',
     cover: 'tpm-alaei-cover',
@@ -860,7 +860,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'portrait',
     title: 'Ella Lotfi is redefining what a body can do',
     subject: 'Ella Lotfi',
-    discipline: 'Movement',
+    discipline: 'Craft',
     standfirst:
       'A gymnast, dancer and choreographer whose videos went viral as memes — and what competitive gymnastics cost her to get there.',
     cover: 'tpm-lotfi-cover',
@@ -1166,7 +1166,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'feature',
     title: 'BY BANOO: the sisters who built the bag they could not find',
     subject: 'Persheng & Perdica Babaheidari',
-    discipline: 'Fashion',
+    discipline: 'Craft',
     standfirst:
       'Persheng and Perdica Babaheidari left a consultancy and a medical degree. They now sell to forty countries.',
     cover: 'tpm-bybanoo-cover',
@@ -1236,7 +1236,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'feature',
     title: 'Ali Phi builds machines and false mirrors',
     subject: 'Ali Phi',
-    discipline: 'Transmedia art',
+    discipline: 'Image',
     standfirst:
       'The Iranian-Canadian transmedia artist on digital waste, Achaemenid theory, and installations that hand people back to themselves.',
     cover: 'tpm-phi-cover',
@@ -1298,7 +1298,7 @@ export const TPM_POSTS: TpmPost[] = [
     kind: 'portrait',
     title: 'Ali Mahini photographs the people nobody looks at',
     subject: 'Ali Mahini',
-    discipline: 'Photography',
+    discipline: 'Image',
     standfirst:
       'A Gen Z photographer digging under Iranian identity, and the intellectual space he is trying to destroy.',
     cover: 'tpm-mahini-cover',

@@ -1,5 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { bump, recordFinished } from '@/lib/stats-store';
+import { reachedPage } from '@/lib/read-progress';
+import { markRead } from '@/lib/saved-store';
 import { SaveHeart } from '@/components/save-heart';
 import { Image, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -229,6 +231,10 @@ export default function LitReader() {
     if (counted.current.has(k)) return;
     counted.current.add(k);
     bump('pagesRead');
+    // Into the rails, and the bar. A poet read halfway through should
+    // show as read halfway through.
+    reachedPage('poet-' + params.author, p, total);
+    markRead('poet-' + params.author);
   }, [params.author, p]);
   const isEnd = p >= total;
 

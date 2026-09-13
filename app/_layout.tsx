@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { resetForDemo } from '@/lib/demo-mode';
+import { onboardedNow, onOnboarded, readOnboarded } from '@/lib/onboarded';
+import { loadReadProgress } from '@/lib/read-progress';
 import { MilestoneToast } from '@/components/milestone-toast';
 import { onMilestone } from '@/lib/stats-store';
 import { loadTpmAccess } from '@/lib/tpm-access';
@@ -51,47 +53,17 @@ export const unstable_settings = {
   anchor: '(tabs)',
 };
 
-export let onboardingDone: () => void = () => {};
-
-// Held outside the component. A language change remounts this whole tree,
-// and the state version reset to null, re-read storage, and redirected on
-// the stale answer in between — which is why choosing Persian, or
-// creating an account, sent people back to the first screen.
-let onboardedOnce: boolean | null = null;
-
-/**
- * Onboarding is finished. Called by the onboarding screen itself.
- *
- * Sets the module flag directly rather than through onboardingDone(),
- * which is assigned inside a component effect and is therefore a no-op
- * until that component has mounted — so the flag could be written to
- * storage and never reach the gate, which then redirected back to
- * onboarding for the rest of the session.
- */
-export function markOnboarded() {
-  onboardedOnce = true;
-  onboardingDone();
-}
-
 function AuthGate() {
   // Onboarding runs before anything else, once, unless demo mode clears it.
-  const [onboarded, setOnboarded] = useState<boolean | null>(onboardedOnce);
+  //
+  // The answer lives in lib/onboarded, which survives the remount a
+  // language change causes and cannot be told the wrong thing by a
+  // callback that has not been assigned yet.
+  const [onboarded, setOnboarded] = useState<boolean | null>(onboardedNow());
   useEffect(() => {
-    // Only a true is worth caching. Caching a false meant a first launch
-    // remembered "not onboarded" for the whole session, and finishing
-    // onboarding could not change its mind.
-    if (onboardedOnce === true) return;
-    AsyncStorage.getItem('onboarded')
-      .then((v) => {
-        if (v === '1') onboardedOnce = true;
-        setOnboarded(v === '1');
-      })
-      .catch(() => { onboardedOnce = true; setOnboarded(true); });
+    readOnboarded().then(setOnboarded);
+    return onOnboarded(() => setOnboarded(true));
   }, []);
-
-  // The onboarding screen calls this when it finishes, so the gate does not
-  // keep redirecting back on its stale value.
-  useEffect(() => { onboardingDone = () => { onboardedOnce = true; setOnboarded(true); }; }, []);
   const { session, loading } = useAuth();
   const segments = useSegments();
   useFriendDeepLink(session?.user?.id);
@@ -100,7 +72,6 @@ function AuthGate() {
     const inAuth = segments[0] === 'auth';
     if (onboarded === null) return;               // still reading storage
     if (!onboarded) {
-      console.log('[gate] redirecting to onboarding | onboardedOnce =', onboardedOnce, '| session =', !!session);
       router.replace('/onboarding' as any); return;
     }
     // Signed out is a supported state: the whole app is browsable and
@@ -170,7 +141,7 @@ export default function RootLayout() {
         loadLevel(), loadLearnProgress(), loadPartial(), loadStrength(),
         loadReminders(), loadTpmAccess(), loadRemoteFrames(), loadOverrides(),
         loadUsage(), loadNotifPrefs(), loadImageOverrides(), loadSavedBusinesses(),
-        loadMend(),
+        loadMend(), loadReadProgress(),
       ].map((p) => Promise.resolve(p).catch(() => {})));
 
       // Awaited, unlike the rest. markVisitDay writes the streak through the

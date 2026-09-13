@@ -10,6 +10,7 @@ import { useAuth } from '@/lib/auth';
 import { EmptyState } from '@/components/empty-state';
 import { useSaved } from '@/lib/saved-store';
 import { resolveMany } from '@/lib/resolve-saved';
+import { readReached, useReadProgress } from '@/lib/read-progress';
 import { DEMO, showDemoData } from '@/lib/demo-mode';
 
 export type ContinueItem = {
@@ -87,18 +88,32 @@ export function ContinueReading({ label }: { label?: string }) {
   // to start. One thing read should not leave a row of one — the rail
   // is an invitation as much as a record, and it thins out at exactly
   // the moment someone has begun.
-  const mine: ContinueItem[] = resolveMany(recent).map((r) => ({
-    key: r.key,
-    title: r.title,
-    chapter: r.sub,
-    image: r.image ?? '',
-    page: 0,
-    total: 0,
-    route: r.route,
-  }));
+  // The bar reads real progress now. page and total were hardcoded to
+  // zero, so every card showed an empty track however much had been
+  // read — which made the rail look like it was not working.
+  useReadProgress();
+  const mine: ContinueItem[] = resolveMany(recent).map((r) => {
+    const at = readReached(r.key);
+    return {
+      key: r.key,
+      title: r.title,
+      chapter: r.sub,
+      image: r.image ?? '',
+      page: at ? at.page + 1 : 0,
+      total: at ? at.total : 0,
+      route: at ? r.route + (r.route.includes('?') ? '&' : '?') + 'page=' + at.page : r.route,
+    };
+  });
 
   const fill = startPoints(6)
-    .filter((p: any) => !mine.some((m) => m.key === p.key))
+    // Compared by where they lead, not by key. A poet already being
+    // read has key `poet-rumi` and the suggestion has key `j5`, and both
+    // open the same reader — so keys alone showed Rumi twice, once with
+    // progress and once without.
+    .filter((p: any) => {
+      const dest = (r: string) => r.split('?')[0] + '|' + (r.match(/author=([^&]+)|topic=([^&]+)/)?.[0] ?? '');
+      return !mine.some((m) => dest(m.route) === dest(p.route));
+    })
     .map((p: any) => ({
       key: p.key,
       title: getLang() === 'fa' ? (p.titleFa ?? p.title) : p.title,

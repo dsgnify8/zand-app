@@ -47,6 +47,9 @@ const KEYS = [
   // reader back into English.
   'app:lang',
   'local:opened',
+  // How far through each topic someone has read. The bars on the rails
+  // read this, and a new phone should not reset them all to zero.
+  'read:progress',
   'learn:strength',
   'stats:v1',
   'liked:articles',

@@ -3,6 +3,18 @@ import { imageOverride } from '@/lib/image-overrides';
 export const EDU_IMAGES: Record<string, any> = {
   // TPM covers. The article declares a key; this is where the key
   // becomes a file.
+  'tpm-neena-cover': require('../assets/tpm/tpm-neena-cover.jpg'),
+  'tpm-niousha-cover': require('../assets/tpm/tpm-niousha-cover.jpg'),
+  'tpm-owdez-cover': require('../assets/tpm/tpm-owdez-cover.jpg'),
+  'tpm-shahrzad-cover': require('../assets/tpm/tpm-shahrzad-cover.jpg'),
+  'tpm-bybanoo-cover': require('../assets/tpm/tpm-bybanoo-cover.jpg'),
+  'tpm-churooks-cover': require('../assets/tpm/tpm-churooks-cover.jpg'),
+  'tpm-golsa-cover': require('../assets/tpm/tpm-golsa-cover.jpg'),
+  'tpm-lotfi-cover': require('../assets/tpm/tpm-lotfi-cover.jpg'),
+  'tpm-isam-cover': require('../assets/tpm/tpm-isam-cover.jpg'),
+  'tpm-pozx-cover': require('../assets/tpm/tpm-pozx-cover.jpg'),
+  'tpm-keayaun-cover': require('../assets/tpm/tpm-keayaun-cover.jpg'),
+  'tpm-slang2-cover': require('../assets/tpm/tpm-slang2-cover.jpg'),
   'tpm-poobon-cover': require('../assets/tpm/tpm-poobon-cover.jpg'),
   'tpm-poobon-cover-b': require('../assets/tpm/tpm-poobon-cover-b.jpg'),
   'tpm-phi-cover': require('../assets/tpm/tpm-phi-cover.jpg'),

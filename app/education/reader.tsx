@@ -1,5 +1,7 @@
 import { Image, Linking, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
 import { bump, recordFinished } from '@/lib/stats-store';
+import { reachedPage } from '@/lib/read-progress';
+import { markRead } from '@/lib/saved-store';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -345,6 +347,17 @@ export default function ReaderScreen() {
       recordFinished({ key: 'topic-' + topic.key, title: topic.name, sub: 'History  ·  finished', route: '/education/topic?topic=' + topic.key });
     }
   }, [topic && topic.key, p, isEnd]);
+  // Record where they got to. Never backwards, so re-reading an earlier
+  // chapter does not undo having reached a later one.
+  useEffect(() => {
+    if (!topic || total <= 0) return;
+    reachedPage('topic-' + topic.key, p, total);
+    // And into the recent list, which is what the rails draw from.
+    // Nothing called this, so however much anyone read, "keep reading"
+    // only ever had the seeded suggestions in it.
+    markRead('topic-' + topic.key);
+  }, [topic?.key, p, total]);
+
   const goto = (n: number) => router.replace('/education/reader?topic=' + topic.key + '&page=' + n as any);
 
   if (isEnd) {

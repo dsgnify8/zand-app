@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
-import { markOnboarded } from '@/app/_layout';
+import { markOnboarded } from '@/lib/onboarded';
 import { useAuth } from '@/lib/auth';
 import { useLang, setLang as setAppLang, getLang } from '@/lib/i18n';
 import { TpmIcon } from '@/components/tpm-mark';
