@@ -198,9 +198,11 @@ export function ContinueReading({ label }: { label?: string }) {
                 {r.total > 1 ? (
                   <View style={s.track}><View style={[s.fill, { width: (pct + '%') as any }]} /></View>
                 ) : null}
-                {r.total > 0 ? (
+                {/* "page 1 of 1" says nothing. An article carries its
+                    section instead, which is the useful fact about it. */}
+                {r.total > 1 ? (
                   <Text style={s.pct}>{fa ? 'صفحهٔ ' + r.page + ' از ' + r.total : 'page ' + r.page + ' of ' + r.total}</Text>
-                ) : (
+                ) : r.total === 1 ? null : (
                   <Text style={s.pct}>{fa ? 'ادامه بده' : 'Continue'}</Text>
                 )}
               </View>

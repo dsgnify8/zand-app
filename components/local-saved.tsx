@@ -12,6 +12,7 @@ import {
   ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -101,6 +102,9 @@ export function SavedBusinesses() {
         <Text style={[s.topT, s.topTRight]}>{t(LOCAL.savedTitle)}</Text>
       </View>
 
+      {/* A gentle arrival. The page has nothing to show until the
+          folders and their contents are both in, and appearing all at
+          once at full strength reads as a snap. */}
       {busy ? (
         <ActivityIndicator style={{ marginTop: spacing.xxl }} color={colors.accent} />
       ) : nothing ? (
@@ -113,6 +117,7 @@ export function SavedBusinesses() {
           </Pressable>
         </View>
       ) : (
+        <Animated.View style={{ flex: 1 }} entering={FadeIn.duration(240)}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.body}>
           {/* Saved things but nowhere to put them. Folders are the point of
               this page and there was no way in from here — you had to know
@@ -208,6 +213,7 @@ export function SavedBusinesses() {
             ))}
           </View>
         </ScrollView>
+        </Animated.View>
       )}
 
       <ShareFolderSheet
