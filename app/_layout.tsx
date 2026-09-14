@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { resetForDemo } from '@/lib/demo-mode';
 import { onboardedNow, onOnboarded, readOnboarded } from '@/lib/onboarded';
 import { loadReadProgress } from '@/lib/read-progress';
+import { considerNotification, loadNotifLog } from '@/lib/notif-schedule';
 import { MilestoneToast } from '@/components/milestone-toast';
 import { onMilestone } from '@/lib/stats-store';
 import { loadTpmAccess } from '@/lib/tpm-access';
@@ -88,7 +89,12 @@ export default function RootLayout() {
   // force quit inside the debounce window does not lose progress
   useEffect(() => {
     const sub = AppState.addEventListener('change', (st) => {
-      if (st !== 'active') syncFlush();
+      if (st === 'active') return;
+      syncFlush();
+      // And consider whether anything is worth saying later. The moment
+      // someone puts the app down is when it knows most about them, and
+      // the scheduler decides for itself whether the answer is nothing.
+      considerNotification();
     });
     return () => sub.remove();
   }, []);
@@ -141,7 +147,7 @@ export default function RootLayout() {
         loadLevel(), loadLearnProgress(), loadPartial(), loadStrength(),
         loadReminders(), loadTpmAccess(), loadRemoteFrames(), loadOverrides(),
         loadUsage(), loadNotifPrefs(), loadImageOverrides(), loadSavedBusinesses(),
-        loadMend(), loadReadProgress(),
+        loadMend(), loadReadProgress(), loadNotifLog(),
       ].map((p) => Promise.resolve(p).catch(() => {})));
 
       // Awaited, unlike the rest. markVisitDay writes the streak through the

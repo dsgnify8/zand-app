@@ -9,6 +9,9 @@ import { useIsAdmin, useHidden, hideArticle, unhideArticle, isHidden } from '@/l
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import { forgetMend } from '@/lib/streak-mend';
+import * as Notifications from 'expo-notifications';
+import { notifDebug } from '@/lib/notif-schedule';
+import { notifCopy } from '@/lib/notif-copy';
 import { refreshStreakFromDays } from '@/lib/stats-store';
 import { AnalyticsBoard } from '@/components/analytics-board';
 import { supabase } from '@/lib/supabase';
@@ -61,6 +64,25 @@ export default function AdminScreen() {
             }}>
               <Ionicons name="refresh-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Trim streak to current run</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
+            {/* What the scheduler would send next, sent now. The real
+                thing waits for evening and for the daily limit, neither
+                of which is useful when you are trying to see it. */}
+            <Pressable style={s.editRow} onPress={async () => {
+              const d = notifDebug();
+              const next = d.next;
+              if (!next) { alert('Nothing to send: ' + JSON.stringify(d, null, 1)); return; }
+              const { title, body } = notifCopy(next.kind, next.fill, 0);
+              await Notifications.scheduleNotificationAsync({
+                content: { title, body },
+                trigger: { seconds: 3 } as any,
+              });
+              alert('Sending in 3s: ' + next.kind + '\n\n' + title + '\n' + body);
+            }}>
+              <Ionicons name="notifications-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Test the next notification</Text>
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 

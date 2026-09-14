@@ -50,7 +50,9 @@ function makePieces(n: number): Piece[] {
   return out;
 }
 
-function Confetti({ run }: { run: Animated.Value }) {
+// Exported so the streak card can use the same paper. Two confetti
+// implementations in one app is two things to keep looking alike.
+export function Confetti({ run }: { run: Animated.Value }) {
   const pieces = useMemo(() => makePieces(40), []);
 
   return (

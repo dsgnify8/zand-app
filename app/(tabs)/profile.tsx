@@ -3,7 +3,7 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 // Aliased: react-native exports an Animated of its own and this file
 // uses both. Reanimated's is only here for the library fade.
 import Reanimated, { FadeIn } from 'react-native-reanimated';
-import { Modal, ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Easing, Modal, ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -40,6 +40,7 @@ const libImage = (img?: string | null) => {
   return eduImage(img);
 };
 import { StreakPlant } from '@/components/streak-plant';
+import { Confetti } from '@/components/stage-complete';
 import { SettingsSheet, AddFriendSheet, SendSheet, RenameSheet } from '@/components/profile-modals';
 import { LearnProgressBlock } from '@/components/learn-progress-block';
 import { StatItemsSheet, type StatItem } from '@/components/stat-items-sheet';
@@ -155,6 +156,21 @@ function StreakCard() {
     setMendable(mendableDay(visitedDays()));
   }, [demo, streakDays]);
 
+  // A week. Fired once, when the count crosses seven — not every time
+  // the card renders at seven, which would be confetti every morning.
+  const run = useRef(new Animated.Value(0)).current;
+  const [firstWeek, setFirstWeek] = useState(false);
+  const sawStreak = useRef<number | null>(null);
+  useEffect(() => {
+    const was = sawStreak.current;
+    sawStreak.current = streakDays;
+    if (was === null || streakDays < 7 || was >= 7) return;
+    setFirstWeek(true);
+    run.setValue(0);
+    Animated.timing(run, { toValue: 1, duration: 2600, easing: Easing.linear, useNativeDriver: true })
+      .start(() => setFirstWeek(false));
+  }, [streakDays]);
+
   const claim = async () => {
     if (!mendable) return;
     setMending(true);
@@ -165,6 +181,12 @@ function StreakCard() {
   };
   return (
     <View style={s.streak}>
+      {firstWeek ? (
+        <>
+          <Confetti run={run} />
+          <Text style={s.firstWeek}>{getLang() === 'fa' ? 'اولین هفته‌ات در زند' : 'First week at ZAND'}</Text>
+        </>
+      ) : null}
       <LinearGradient colors={[pr.streakA, pr.streakB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
       <View style={s.streakRow}>
         <View style={s.streakLeft}>
@@ -1271,6 +1293,11 @@ const s = StyleSheet.create({
   streak: { borderRadius: 15, overflow: 'hidden', padding: spacing.lg },
   streakRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   streakLeft: { flex: 1 },
+  firstWeek: {
+    position: 'absolute', top: spacing.md, alignSelf: 'center', zIndex: 3,
+    fontFamily: fonts.bodyStrong, fontSize: 10.5, letterSpacing: 1.8,
+    textTransform: 'uppercase', color: '#FFF',
+  },
   streakN: { fontFamily: fonts.heading, fontSize: 46, color: '#FFF', lineHeight: 50 },
   streakL: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 2, color: 'rgba(255,255,255,0.8)' },
   streakDays: { flexDirection: 'row', gap: 4, marginTop: spacing.md },

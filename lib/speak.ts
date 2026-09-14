@@ -20,7 +20,10 @@ async function urlFor(text: string, slow: boolean, lang: string) {
   const { data, error } = await supabase.functions.invoke('speak', {
     body: { text, lang, slow },
   });
-  if (error || !data?.url) return null;
+  if (error || !data?.url) {
+    console.log('[speak] edge function said', error?.message ?? 'no url', JSON.stringify(data ?? {}).slice(0, 200));
+    return null;
+  }
   urls.set(cacheKey, data.url);
   return data.url as string;
 }
@@ -34,7 +37,7 @@ export async function speak(text: string, lang = 'fa', opts?: { slow?: boolean }
   // fetched this session does not count against the allowance.
   const cached = urls.has(lang + '|' + (slow ? 's' : 'n') + '|' + text);
   if (!cached) {
-    if (!canUse('speak')) return 'limit';
+    if (!canUse('speak')) { console.log('[speak] allowance spent'); return 'limit'; }
     await useOne('speak');
   }
 
