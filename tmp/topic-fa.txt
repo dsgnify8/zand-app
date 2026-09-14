@@ -1,339 +1,143 @@
 1.
-EN: Mohammad Reza Shah Pahlavi
-FA: محمدرضا پهلوی
+EN: The Qajar Dynasty
+FA: قاجاریان
 
 2.
-EN: Born
-FA: زادروز
+EN: A New Dynasty from the North
+FA: سلسله‌ای تازه از شمال
 
 3.
-EN: Reza Khan born
-FA: تولد رضاخان
+EN: After the gentle Zand dynasty fell, a harder power rose to take its place. Agha Mohammad Khan, chief of the Qajar tribe of the north, fought his way to mastery over Iran and had himself crowned Shah in the last years of the eighteenth century.
+FA: پس از فروپاشی سلسلهٔ مهربان زند، قدرتی سخت‌تر جایش را گرفت. آقامحمدخان، سرکردهٔ ایل قاجار در شمال، با جنگ راه خود را تا فرمانروایی بر ایران باز کرد و در واپسین سال‌های سدهٔ هجدهم تاج بر سر گذاشت.
 
 4.
-EN: Mohammad Reza born
-FA: تولد محمدرضا
+EN: He was a ruler of iron will and, by all accounts, fearsome cruelty, forged in a lifetime of struggle and captivity. But he reunited a country that had again fallen into division, and he founded a dynasty that would rule Iran for well over a century.
+FA: فرمانروایی بود با ارادهٔ آهنین و، به گواه همهٔ روایت‌ها، بی‌رحمی‌ای هولناک؛ کسی که عمری کشمکش و اسارت او را چنین ساخته بود. اما کشوری را که دوباره به تفرقه افتاده بود یکپارچه کرد، و سلسله‌ای بنیان نهاد که بیش از یک قرن بر ایران فرمان راند.
 
 5.
-EN: The coup
-FA: کودتا
+EN: The founder
+FA: بنیان‌گذار
 
 6.
-EN: Pahlavi dynasty founded
-FA: بنیان‌گذاری سلسلهٔ پهلوی
+EN: A capital named Tehran
+FA: پایتختی به نام تهران
 
 7.
-EN: A childhood set apart
-FA: کودکی‌ای جدا از بقیه
+EN: It was the Qajars who chose as their capital a modest town in the north of Iran, one that would grow, over their long rule and the ages after, into the great metropolis of the nation. That town was Tehran, and it has been the heart of Iran ever since.
+FA: این قاجارها بودند که شهرکی ساده در شمال ایران را پایتخت خود کردند؛ شهرکی که در طول فرمانروایی بلندشان و روزگاران پس از آن، به کلان‌شهر بزرگ این کشور بدل شد. آن شهرک تهران بود، و از آن روز تا امروز قلب ایران مانده است.
 
 8.
-EN: The young prince with his father, Reza Shah, the founder of the dynasty.
-FA: ولیعهد خردسال در کنار پدرش، رضاشاه، بنیان‌گذار سلسله.
+EN: Under the Qajars, Tehran became the capital it remains to this day.
+FA: در روزگار قاجار، تهران پایتخت شد و تا امروز مانده است.
 
 9.
-EN: A brush with death
-FA: یک قدمی مرگ
+EN: The crown passed to Fath Ali Shah, whose long reign was famous for its splendour and ceremony, its jewelled court and its portraits of a bearded king in golden robes. But beyond the glitter of the court, storm clouds were gathering on the horizon.
+FA: تاج به فتحعلی‌شاه رسید، که سلطنت بلندش به شکوه و تشریفات نامدار بود؛ به درباری پر از جواهر و به آن نگاره‌های شاهی ریش‌بلند در جامهٔ زرین. اما آن‌سوی درخشش دربار، ابرهای توفان بر افق گرد می‌آمدند.
 
 10.
-EN: A weight placed early
-FA: باری که زود بر دوشش گذاشتند
+EN: Caught Between Empires
+FA: گرفتار میان دو امپراتوری
 
 11.
-EN: A bridge between two worlds
-FA: پلی میان دو جهان
+EN: The nineteenth century was the age of the great European empires, and Iran found itself caught between two of the hungriest. To the north loomed the vast and expanding empire of Russia. To the east and south stretched the power of the British, masters of India.
+FA: سدهٔ نوزدهم روزگار امپراتوری‌های بزرگ اروپایی بود، و ایران خود را گرفتار میان دو تا از گرسنه‌ترینشان یافت. در شمال، امپراتوری پهناور و روبه‌گسترش روسیه سایه انداخته بود. در شرق و جنوب، قدرت بریتانیا کشیده شده بود؛ اربابان هند.
 
 12.
-EN: Arrived in Switzerland
-FA: ورود به سوئیس
+EN: Between these two giants, Iran was squeezed, courted, and pressured, its fate bound up in a great game of empires that it had not the strength to control. It was a hard and humbling position for a proud and ancient nation.
+FA: ایران میان این دو غول فشرده شد، وعده شنید و زیر فشار رفت؛ سرنوشتش گره خورده بود به بازی بزرگ امپراتوری‌ها، بازی‌ای که توان مهارش را نداشت. برای ملتی سربلند و کهن، جایگاهی بود سخت و خفت‌بار.
 
 13.
-EN: Abroad at Le Rosey
-FA: دور از وطن، در لوروزه
+EN: The wars with Russia
+FA: جنگ‌های ایران و روس
 
 14.
-EN: A second language
-FA: زبان دوم
+EN: Twice in the early century Iran went to war with Russia over the lands of the Caucasus, and twice it was defeated by the superior arms and organization of the Russian armies. The cost of those defeats was severe, and it was paid in Iranian soil.
+FA: دو بار در آغاز آن قرن، ایران بر سر سرزمین‌های قفقاز با روسیه جنگید، و هر دو بار در برابر سلاح و سازمان برتر سپاه روس شکست خورد. بهای این شکست‌ها سنگین بود، و با خاک ایران پرداخت شد.
 
 15.
-EN: The crown prince, shaped by two worlds, returns home to serve Iran.
-FA: ولیعهد، که دو جهان شکلش داده بودند، برای خدمت به ایران به وطن بازمی‌گردد.
+EN: A proud nation learned, painfully, that valour alone could not stand against modern empires.
+FA: ملتی سربلند، به تلخی آموخت که دلاوری به‌تنهایی در برابر امپراتوری‌های مدرن دوام نمی‌آورد.
 
 16.
-EN: First marriage
-FA: نخستین ازدواج
+EN: The Reformer Who Was Lost
+FA: اصلاحگری که از دست رفت
 
 17.
-EN: The war reaches Iran
-FA: جنگ به ایران می‌رسد
+EN: Not everyone accepted Iran\'s decline. In the middle of the century there rose a man who saw clearly what his country needed, and who tried, in a few short years, to drag it into the modern world. His name was Amir Kabir, and he was the chief minister of the young Shah, Naser al-Din.
+FA: همه به افول ایران تن ندادند. در میانهٔ آن قرن مردی برخاست که به‌روشنی می‌دید کشورش به چه نیاز دارد، و کوشید در چند سال کوتاه آن را به جهان مدرن بکشاند. نامش امیرکبیر بود، صدراعظم شاه جوان، ناصرالدین‌شاه.
 
 18.
-EN: Reza Shah Pahlavi abdicates
-FA: رضاشاه پهلوی از سلطنت کناره می‌گیرد
+EN: Amir Kabir
+FA: امیرکبیر
 
 19.
-EN: Reza Shah, who abdicated in 1941 so the dynasty might endure through his son.
-FA: رضاشاه، که در سال ۱۳۲۰ کناره گرفت تا سلسله از راه پسرش دوام بیاورد.
+EN: A vision of a modern Iran
+FA: چشم‌اندازی از ایرانی مدرن
 
 20.
-EN: Mohammad Reza Pahlavi becomes king
-FA: محمدرضا پهلوی شاه می‌شود
+EN: His vision
+FA: آنچه در سر داشت
 
 21.
-EN: The young Mohammad Reza Pahlavi, the new king of Iran.
-FA: محمدرضا پهلوی جوان، شاه تازهٔ ایران.
+EN: His enemies
+FA: دشمنانش
 
 22.
-EN: Marries Fawzia
-FA: ازدواج با فوزیه
+EN: But his very success made him enemies. The courtiers whose corruption he threatened, and who feared his influence over the young Shah, turned the king against him. In 1851 he was dismissed, exiled, and soon after put to death on the Shah\'s order, in a bath house in Kashan.
+FA: اما همین کامیابی برایش دشمن تراشید. درباریانی که فسادشان را در خطر می‌دیدند و از نفوذ او بر شاه جوان می‌ترسیدند، شاه را در برابرش برانگیختند. در سال ۱۲۳۰ خورشیدی از کار برکنار شد، به تبعید رفت، و اندکی بعد به فرمان شاه در حمام فین کاشان کشته شد.
 
 23.
-EN: Allied invasion
-FA: حملهٔ متفقین
+EN: Iran lost, in one stroke, the greatest reformer of its age. It is one of history\'s saddest what-ifs.
+FA: ایران در یک ضربه بزرگ‌ترین اصلاحگر روزگارش را از دست داد. این یکی از اندوهبارترین «اگر»های تاریخ است.
 
 24.
-EN: Mohammad Reza becomes king
-FA: محمدرضا شاه می‌شود
+EN: What Iran might have become, had Amir Kabir been allowed to finish his work, is one of the great questions of the nation\'s history. His death was a tragedy, and the reforms he began were largely undone.
+FA: اینکه اگر می‌گذاشتند امیرکبیر کارش را به پایان برساند ایران چه می‌شد، از پرسش‌های بزرگ تاریخ این ملت است. مرگش فاجعه بود، و اصلاحاتی که آغاز کرده بود بیشترش بر باد رفت.
 
 25.
-EN: Tehran Conference
-FA: کنفرانس تهران
+EN: The Awakening of a Nation
+FA: بیداری یک ملت
 
 26.
-EN: Reza Shah dies in exile
-FA: مرگ رضاشاه در تبعید
+EN: As the century wore on, the kings sold ever more of the nation\'s wealth and rights to foreign powers and companies, granting concessions over tobacco, banking, oil, and more, to fill an empty treasury. But the people of Iran were beginning to stir.
+FA: هرچه قرن پیش‌تر می‌رفت، شاهان بیشتر و بیشتر از ثروت و حقوق این ملت را به قدرت‌ها و شرکت‌های بیگانه فروختند؛ امتیاز تنباکو، بانک، نفت و بسیاری دیگر را واگذار کردند تا خزانهٔ تهی را پر کنند. اما مردم ایران داشتند بیدار می‌شدند.
 
 27.
-EN: The Azerbaijan crisis
-FA: غائلهٔ آذربایجان
+EN: The Tobacco Protest
+FA: تحریم تنباکو
 
 28.
-EN: The young Shah in the early years of his reign, finding his footing as king.
-FA: شاه جوان در سال‌های نخست سلطنتش، در حال یافتن جای پای خود.
+EN: For the first time, the people had spoken with one voice, and the throne had been made to listen.
+FA: برای نخستین بار، مردم یکصدا سخن گفتند، و تخت ناچار شد بشنود.
 
 29.
-EN: The Shot at the University
-FA: تیراندازی در دانشگاه
+EN: The Constitutional Revolution
+FA: انقلاب مشروطه
 
 30.
-EN: A belief in destiny
-FA: باور به تقدیر
+EN: The Tobacco Protest was only the beginning. The demand grew for a government of laws rather than the whim of kings, and in 1906 the movement triumphed. The Shah was compelled to grant a constitution and to establish the Majles, the national parliament, the first in Iranian history.
+FA: تحریم تنباکو تنها آغاز بود. خواستِ حکومتِ قانون به جای هوس شاهان بالا گرفت، و در سال ۱۲۸۵ خورشیدی این جنبش به پیروزی رسید. شاه ناگزیر شد فرمان مشروطیت را امضا کند و مجلس شورای ملی را برپا دارد؛ نخستین مجلس تاریخ ایران.
 
 31.
-EN: A new love
-FA: عشقی تازه
+EN: A nation had awoken to the idea that it belonged to its people.
+FA: ملتی بیدار شد به این اندیشه که این سرزمین از آنِ مردمش است.
 
 32.
-EN: The Shah and Soraya, whose marriage was, by every account, a true love match.
-FA: شاه و ثریا، که ازدواجشان به گواه همه از سر عشق واقعی بود.
+EN: The End of an Age
+FA: پایان یک دوران
 
 33.
-EN: A restless nation
-FA: کشوری بی‌قرار
+EN: A soldier steps forward
+FA: سربازی پا پیش می‌گذارد
 
 34.
-EN: The Abadan refinery, once the largest in the world, at the heart of the oil dispute.
-FA: پالایشگاه آبادان، که روزگاری بزرگ‌ترین پالایشگاه جهان بود، در کانون اختلاف نفت.
+EN: The Qajar century closed, and the Pahlavi age of modern Iran began.
+FA: قرن قاجار بسته شد، و روزگار پهلوی و ایران مدرن آغاز گرفت.
 
 35.
-EN: Mossadegh rises
-FA: برآمدن مصدق
+EN: From the trials of the Qajar century, a new and modern Iran was struggling to be born. And when at last it emerged, it would carry forward both the wounds and the awakenings of these long and difficult years.
+FA: از دل سختی‌های قرن قاجار، ایرانی تازه و مدرن برای زاده شدن دست‌وپا می‌زد. و آنگاه که سرانجام سر برآورد، هم زخم‌های این سال‌های دراز و دشوار را با خود برد و هم بیداری‌هایش را.
 
 36.
-EN: Mohammad Mossadegh, the nationalist prime minister who nationalized Iran\'s oil.
-FA: محمد مصدق، نخست‌وزیر ملی‌گرا که صنعت نفت ایران را ملی کرد.
-
-37.
-EN: The boycott and the standoff
-FA: تحریم و رویارویی
-
-38.
-EN: Foreign hands
-FA: دست‌های بیگانه
-
-39.
-EN: The truth, plainly
-FA: حقیقت، ساده و روشن
-
-40.
-EN: August 1953
-FA: مرداد ۱۳۳۲
-
-41.
-EN: An impossible choice
-FA: انتخابی ناممکن
-
-42.
-EN: The crown
-FA: تاج
-
-43.
-EN: A dynasty required a male heir to secure the succession.
-FA: یک سلسله برای تضمین جانشینی به ولیعهد پسر نیاز داشت.
-
-44.
-EN: His heart
-FA: دلش
-
-45.
-EN: By every account he was truly in love with Soraya.
-FA: به گواه همه، واقعاً عاشق ثریا بود.
-
-46.
-EN: The clergy
-FA: روحانیت
-
-47.
-EN: A second wife or a change of succession met resistance.
-FA: گرفتن همسر دوم یا تغییر خط جانشینی با مقاومت روبه‌رو شد.
-
-48.
-EN: The choice
-FA: انتخاب
-
-49.
-EN: In the end, duty was made to outweigh love.
-FA: در پایان، کاری کردند که وظیفه بر عشق بچربد.
-
-50.
-EN: The wedding of Mohammad Reza and Farah, 1959. Tap to watch.
-FA: مراسم ازدواج محمدرضا و فرح، ۱۳۳۸. برای تماشا بزن.
-
-51.
-EN: An heir at last
-FA: سرانجام یک ولیعهد
-
-52.
-EN: The dynasty secured
-FA: سلسله تضمین شد
-
-53.
-EN: The Shah with his son, Crown Prince Reza Pahlavi.
-FA: شاه در کنار پسرش، ولیعهد رضا پهلوی.
-
-54.
-EN: The White Revolution
-FA: انقلاب سفید
-
-55.
-EN: Land reform for peasants
-FA: اصلاحات ارضی برای روستاییان
-
-56.
-EN: Literacy Corps
-FA: سپاه دانش
-
-57.
-EN: Profit sharing
-FA: سهیم شدن در سود
-
-58.
-EN: The seeds of opposition
-FA: بذرهای مخالفت
-
-59.
-EN: A thriving, modernizing Iran during the years of the Great Civilization.
-FA: ایرانی شکوفا و رو به مدرن شدن، در سال‌های «تمدن بزرگ».
-
-60.
-EN: A crown earned and worn with pride
-FA: تاجی که به دست آمد و با سربلندی بر سر ماند
-
-61.
-EN: The coronation of 1967. The Shah crowned himself, then Farah as Shahbanou.
-FA: تاج‌گذاری سال ۱۳۴۶. شاه ابتدا تاج را بر سر خود گذاشت، سپس فرح را شهبانو کرد.
-
-62.
-EN: The Persepolis celebration
-FA: جشن‌های تخت جمشید
-
-63.
-EN: The 2,500 year celebration at Persepolis, 1971. Tents, banquets, and a parade of Iran through the ages.
-FA: جشن‌های دو هزار و پانصد ساله در تخت جمشید، ۱۳۵۰. چادرها، ضیافت‌ها، و رژهٔ ایران در گذر روزگاران.
-
-64.
-EN: The tomb of Cyrus the Great at Pasargadae, honored at the heart of the celebration.
-FA: آرامگاه کوروش بزرگ در پاسارگاد، که در قلب این جشن‌ها گرامی داشته شد.
-
-65.
-EN: The other side
-FA: روی دیگر
-
-66.
-EN: A flood of oil wealth
-FA: سیل ثروت نفتی
-
-67.
-EN: Oil price, 1973
-FA: قیمت نفت، ۱۳۵۲
-
-68.
-EN: A vast new military
-FA: ارتشی تازه و عظیم
-
-69.
-EN: Industry and dams
-FA: صنعت و سد
-
-70.
-EN: Change accelerated
-FA: تغییر شتاب گرفت
-
-71.
-EN: More money than the country could absorb
-FA: پولی بیشتر از آنکه کشور جذبش کند
-
-72.
-EN: The boom years transformed Iran\'s cities at a breathless pace.
-FA: سال‌های رونق، شهرهای ایران را با شتابی نفس‌گیر دگرگون کرد.
-
-73.
-EN: One party, and a hidden illness
-FA: یک حزب، و بیماری‌ای پنهان
-
-74.
-EN: A secret carried alone
-FA: رازی که تنها حملش می‌کرد
-
-75.
-EN: The gathering storm
-FA: توفانی که جمع می‌شد
-
-76.
-EN: A wavering king
-FA: شاهی که مردد بود
-
-77.
-EN: The hands of others
-FA: دست دیگران
-
-78.
-EN: The departure
-FA: رفتن
-
-79.
-EN: In exile, the Shah reflects on his reign and his departure. Tap to watch.
-FA: شاه در تبعید، دربارهٔ سلطنت و رفتنش سخن می‌گوید. برای تماشا بزن.
-
-80.
-EN: A king without a country
-FA: شاهی بی‌کشور
-
-81.
-EN: The hostage crisis
-FA: بحران گروگان‌گیری
-
-82.
-EN: The seizure of the American embassy in Tehran, November 1979.
-FA: تسخیر سفارت آمریکا در تهران، آبان ۱۳۵۸.
-
-83.
-EN: The last book
-FA: آخرین کتاب
-
-84.
-EN: The end
-FA: پایان
-
-85.
-EN: Died
-FA: درگذشت
+EN: In its century of hardship, the nation found its own voice.
+FA: ملت در قرنِ سختی‌اش، صدای خودش را پیدا کرد.
