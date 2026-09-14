@@ -30,7 +30,9 @@ const bizImage = (path: string) =>
   isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 
 const TOP_N = 8;
-const NEW_N = 10;
+// Five. Ten was ambitious for a directory this size, and a rail that
+// runs out halfway looks worse than a short one that does not.
+const NEW_N = 5;
 
 // What counts as newly opened. Not a rolling window: "opened this year" is
 // a thing someone can say out loud, and a rolling twelve months would drop
@@ -64,7 +66,13 @@ function shuffleForToday<T>(items: T[]): T[] {
  * `fresh` is what has just arrived. `all` stays whole: the last section is
  * "see all", so it should mean it.
  */
-export function feedSections(items: Business[], place: { lat: number; lng: number } | null) {
+export function feedSections(
+  items: Business[],
+  place: { lat: number; lng: number } | null,
+  // Everything, not just what matched this place — the nearest listing
+  // elsewhere cannot be found in a list that has already excluded it.
+  allItems: Business[] = items,
+) {
   const byNew = [...items].sort((a, b) =>
     String(b.created_at ?? '').localeCompare(String(a.created_at ?? '')));
 
@@ -88,9 +96,33 @@ export function feedSections(items: Business[], place: { lat: number; lng: numbe
   const picked = items
     .filter((b: any) => b.featured)
     .sort((a: any, b: any) => (a.featured_rank ?? 999) - (b.featured_rank ?? 999));
-  const fresh = shuffleForToday(picked.length ? picked : byNew.slice(0, NEW_N));
 
-  return { top, fresh, all: items };
+  // Featured first, then topped up from everything else until there are
+  // five. A city with one featured listing showed one card, which reads
+  // as an empty directory rather than a small one — and the row is the
+  // first thing anyone sees on the page.
+  const rest = byNew.filter((b) => !picked.some((p) => p.id === b.id));
+  const local = shuffleForToday([...picked, ...rest].slice(0, NEW_N));
+
+  // Somewhere with almost nothing in it.
+  //
+  // Three listings is not a directory, and a rail of one or two reads as
+  // a broken page rather than an honest one. So the rail becomes the
+  // nearest places anywhere — which is a real answer to "is there
+  // anything for me here", even when the answer is "not yet, but there
+  // is something an hour away".
+  const thin = items.length < 3;
+  const elsewhere = place
+    ? [...allItems]
+        .filter((b) => b.lat != null && !items.some((x) => x.id === b.id))
+        .sort((a, b) =>
+          dist(place.lat, place.lng, a.lat!, a.lng ?? 0) - dist(place.lat, place.lng, b.lat!, b.lng ?? 0))
+        .slice(0, 12)
+    : [];
+
+  const fresh = thin && elsewhere.length ? shuffleForToday(elsewhere).slice(0, 6) : local;
+
+  return { top, fresh, all: items, freshElsewhere: thin && elsewhere.length > 0 };
 }
 
 /* ================================================================== *
@@ -168,17 +200,20 @@ export function BigRail({
  * ================================================================== */
 
 export function NewRail({
-  items, onOpen,
+  items, onOpen, elsewhere,
 }: {
   items: Business[];
   onOpen: (b: Business) => void;
+  /** Showing the nearest places anywhere, because there is almost
+   *  nothing where they are. The heading says so when this is set. */
+  elsewhere?: boolean;
 }) {
   const fa = getLang() === 'fa';
   if (items.length === 0) return null;
 
   return (
     <View style={st.section}>
-      <Text style={[st.head, fa && st.rtl]}>{t(LOCAL.popular)}</Text>
+      <Text style={[st.head, fa && st.rtl]}>{t(elsewhere ? LOCAL.popularElsewhere : LOCAL.popular)}</Text>
 
       <ScrollView
         horizontal

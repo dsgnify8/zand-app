@@ -55,6 +55,9 @@ export default function Local() {
   const [cat, setCat] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [items, setItems] = useState<Business[]>([]);
+  // Everything, fetched only when the local list is too thin to fill a
+  // rail. Empty the rest of the time, which is most of the time.
+  const [wider, setWider] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
 
   // The list fades rather than swapping. Changing location replaces every
@@ -192,6 +195,17 @@ export default function Local() {
 
       query: settled || undefined,
     });
+    // Somewhere with almost nothing in it. The 60km query is right for
+    // a city with a directory; for one with two listings it returns two
+    // and the page looks broken. So ask again, without the bound, and
+    // let the rail offer the nearest places anywhere.
+    if (place && rows.length < 3 && !settled) {
+      const wide = await loadBusinesses({});
+      setWider(wide);
+    } else {
+      setWider([]);
+    }
+
     setItems(rows);
     setLoading(false);
   }, [place?.lat, place?.lng, settled]);
@@ -220,7 +234,7 @@ export default function Local() {
   const shown = cats.length
     ? items.filter((x) => x.category && cats.includes(x.category))
     : items;
-  const { top, fresh, all } = feedSections(shown, place ? { lat: place.lat, lng: place.lng } : null);
+  const { top, fresh, all, freshElsewhere } = feedSections(shown, place ? { lat: place.lat, lng: place.lng } : null, wider.length ? wider : shown);
   // Single cards only here; the filter took the grid's place.
   const [catOpen, setCatOpen] = useState(false);
   // A search is a request for results, not for browsing: the grid shows
@@ -425,6 +439,7 @@ export default function Local() {
             with whatever is newest when nothing is featured, so on a slow
             load you see ten cards and then one. */}
         {searching || loading ? null : <NewRail
+          elsewhere={freshElsewhere}
           items={fresh}
           onOpen={(b) => router.navigate(('/local/business?id=' + b.id) as any)}
         />}

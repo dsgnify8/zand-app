@@ -395,7 +395,10 @@ const s = StyleSheet.create({
 
   foot: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl, opacity: 0.8 },
   shotCount: {
-    position: 'absolute', bottom: 14, right: spacing.lg,
+    // Clear of the card below. The panel overlaps the photograph by
+    // its own corner radius, so anything at the foot of the image is
+    // half-hidden behind it.
+    position: 'absolute', bottom: 46, right: spacing.lg,
     backgroundColor: 'rgba(20,17,16,0.5)',
     borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4,
   },

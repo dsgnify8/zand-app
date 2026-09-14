@@ -12,6 +12,10 @@ import type { T } from '@/lib/i18n';
 
 export const LOCAL: Record<string, T> = {
   popular: { en: 'POPULAR', fa: 'محبوب‌ها' },
+  // When there is almost nothing where they are, the rail shows the
+  // nearest places anywhere instead — and has to say so, or it looks
+  // like the app does not know where they are.
+  popularElsewhere: { en: 'POPULAR ELSEWHERE', fa: 'محبوب‌ها در جاهای دیگر' },
   newlyOpened: { en: 'NEWLY OPENED', fa: 'تازه‌بازشده‌ها' },
   justAdded: { en: 'JUST ADDED', fa: 'تازه‌ها' },
   seeAll: { en: 'SEE ALL', fa: 'همه' },

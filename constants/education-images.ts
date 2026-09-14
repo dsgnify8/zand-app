@@ -168,7 +168,7 @@ export const EDU_IMAGES: Record<string, any> = {
   'parthian-silkroad': require('../assets/education/parthian-silkroad.webp'),
   'timurid-miniature': require('../assets/education/timurid-miniature.webp'),
   'iran-provinces': require('../assets/education/iran-provinces.png'),
-  'iran-crossroads': require('../assets/education/iran-crossroads.png'),
+  'iran-crossroads': require('../assets/education/iran-crossroads.jpg'),
   'iran-neighbours': require('../assets/education/iran-neighbours.png'),
   'iran-silhouette': require('../assets/education/iran-silhouette.png'),
   'geo-alborz': require('../assets/education/geo-alborz.jpg'),
