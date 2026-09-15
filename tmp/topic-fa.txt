@@ -1,95 +1,55 @@
 1.
-EN: The Seljuk Empire
-FA: سلجوقیان
+EN: The Ilkhanate
+FA: ایلخانان
 
 2.
-EN: Horsemen from the Steppe
-FA: سوارکارانی از دشت
+EN: The Storm from the East
+FA: توفانی از شرق
 
 3.
-EN: In 1040 they shattered the armies of the reigning power at the battle of Dandanaqan, and the road into Iran lay open. Under their leader Tughril, they took city after city, until at last Tughril entered Baghdad itself and was named Sultan, protector of the Islamic world.
-FA: در سال ۱۰۴۰ در نبرد دندانقان سپاه قدرت حاکم را در هم شکستند و راه ایران باز شد. به رهبری طغرل، شهر پس از شهر را گرفتند، تا آنکه سرانجام طغرل خود وارد بغداد شد و او را سلطان خواندند؛ نگاهبان جهان اسلام.
+EN: In the early thirteenth century, out of the steppes of Mongolia, came the most terrible conquerors the world had ever known. Under Genghis Khan, the Mongols built a war machine of unmatched speed and ferocity, and when their fury turned toward Iran, it fell upon the land like the end of the world.
+FA: در آغاز سدهٔ سیزدهم، از دشت‌های مغولستان، هولناک‌ترین فاتحانی که جهان به خود دیده بود سر رسیدند. مغولان به فرمان چنگیزخان ماشین جنگی‌ای ساخته بودند بی‌همتا در شتاب و درندگی، و چون خشمشان رو به ایران گرداند، بر این سرزمین فرود آمد چون پایان جهان.
 
 4.
-EN: Tughril Beg
-FA: طغرل بیک
+EN: The Mongol storm was one of the greatest catastrophes Iran ever endured.
+FA: توفان مغول از بزرگ‌ترین فاجعه‌هایی بود که بر ایران گذشت.
 
 5.
-EN: Tughril led the Seljuks from the steppe into Iran and beyond, founding an empire that stretched from Central Asia to the Mediterranean.
-FA: طغرل سلجوقیان را از دشت به ایران و فراتر از آن رساند، و امپراتوری‌ای بنیان نهاد که از آسیای میانه تا مدیترانه کشیده شد.
+EN: A wound to a civilization
+FA: زخمی بر پیکر یک تمدن
 
 6.
-EN: Conquerors who became Persians
-FA: فاتحانی که ایرانی شدند
+EN: In 1258 the Mongols under Hulagu, grandson of Genghis, took Baghdad, the great seat of the Islamic world, and destroyed it in an orgy of violence that shocked the age. The old order of the Islamic east was swept away, and Iran lay prostrate beneath the conquerors.
+FA: در سال ۱۲۵۸ مغولان به فرماندهی هولاکو، نوهٔ چنگیز، بغداد را گرفتند، مرکز بزرگ جهان اسلام، و آن را در خشونتی چنان افسارگسیخته ویران کردند که آن روزگار را تکان داد. نظم کهن شرق اسلامی از میان رفت، و ایران زیر پای فاتحان بر خاک افتاد.
 
 7.
-EN: They conquered Iran with the sword, and Iran conquered them with its culture.
-FA: ایران را با شمشیر گرفتند، و ایران آنان را با فرهنگش گرفت.
+EN: The Taming of the Conquerors
+FA: رام شدن فاتحان
 
 8.
-EN: The conquerors became patrons of Persian civilization, and under their rule, though the sultans were Turks, the soul of the state was Persian. It was a marriage of the vigour of the steppe and the refinement of Iran, and it produced a golden age.
-FA: فاتحان به حامیان تمدن ایرانی بدل شدند، و در روزگار آنان، هرچند سلطان‌ها ترک بودند، جان دولت ایرانی بود. این پیوند نیروی دشت بود با ظرافت ایران، و عصری طلایی از آن زاده شد.
+EN: The civilization they had nearly destroyed rose up and remade them in its image.
+FA: تمدنی که نزدیک بود نابودش کنند، برخاست و آنان را به شکل خود از نو ساخت.
 
 9.
-EN: The Great Vizier and the Golden Age
-FA: وزیر بزرگ و عصر طلایی
+EN: A flowering from the ashes
+FA: شکوفه‌ای از دل خاکستر
 
 10.
-EN: The true architect of the Seljuk golden age was not a sultan but a Persian statesman, one of the greatest administrators in the history of Iran: Nizam al-Mulk, the great vizier who guided the empire at its height for thirty years.
-FA: معمار راستین عصر طلایی سلجوقی سلطان نبود، بلکه سیاستمداری ایرانی بود؛ یکی از بزرگ‌ترین دیوانسالاران تاریخ ایران: خواجه نظام‌الملک، وزیر بزرگی که سی سال امپراتوری را در اوجش راه برد.
+EN: Persian painting, enriched now by contact with the art of China, entered one of its most beautiful periods. Architecture, history, and science flourished under Mongol patronage. From the ashes of the greatest catastrophe, Iran had conjured a new flowering of its genius.
+FA: نگارگری ایرانی که اکنون از برخورد با هنر چین توانگر شده بود، به یکی از زیباترین دوره‌های خود پا گذاشت. معماری و تاریخ‌نگاری و دانش زیر حمایت مغولان بالیدند. ایران از خاکستر بزرگ‌ترین فاجعه‌اش، شکوفایی تازه‌ای از نبوغ خود بیرون کشید.
 
 11.
-EN: Nizam al-Mulk
-FA: خواجه نظام‌الملک
+EN: Rashid al-Din
+FA: رشیدالدین فضل‌الله
 
 12.
-EN: The brilliant Persian vizier who ran the Seljuk Empire for three decades and wrote a famous book on the art of governing.
-FA: وزیر درخشان ایرانی که سه دهه امپراتوری سلجوقی را اداره کرد و سیاست‌نامه را نوشت، کتابی نامدار در آیین حکومت.
+EN: The Persian vizier and scholar who wrote a history of the world, and helped transform the Mongol conquerors into patrons of Persian civilization.
+FA: وزیر و دانشمند ایرانی که جامع‌التواریخ را نوشت و در بدل کردن فاتحان مغول به حامیان تمدن ایرانی سهم داشت.
 
 13.
-EN: The age of Khayyam
-FA: روزگار خیام
+EN: This has been a glimpse of the Ilkhanate, the age of the Mongols in Iran, a story of catastrophe and, against all odds, of renewal. The Mongol invasion was among the most destructive events the nation ever suffered, and its wounds were deep and lasting.
+FA: این نگاهی بود کوتاه به ایلخانان، روزگار مغول در ایران؛ روایتی از فاجعه و، برخلاف همهٔ انتظارها، از نوزایی. هجوم مغول از ویرانگرترین رویدادهایی بود که بر این ملت گذشت، و زخم‌هایش ژرف و ماندگار بود.
 
 14.
-EN: This was an age of extraordinary Persian genius. At the Seljuk court worked Omar Khayyam, one of the most remarkable minds of any age: a brilliant mathematician who advanced algebra, and an astronomer who reformed the calendar into one more accurate than any then known in the world.
-FA: این روزگار، روزگار نبوغ چشمگیر ایرانی بود. در دربار سلجوقی عمر خیام کار می‌کرد، از شگفت‌ترین ذهن‌های هر عصری: ریاضی‌دانی درخشان که جبر را پیش برد، و ستاره‌شناسی که تقویم را چنان اصلاح کرد که دقیق‌تر از هر تقویم شناخته‌شدهٔ آن روز جهان شد.
-
-15.
-EN: And Khayyam was also a poet, whose quatrains, the Rubaiyat, meditating on life, time, and the fleeting beauty of the world, would one day be loved across the entire earth. That one man could be at once a great scientist and a great poet is a wonder that captures the spirit of this golden age.
-FA: و خیام شاعر هم بود؛ رباعیاتش، در تأمل بر زندگی و زمان و زیبایی گذرای جهان، روزی در سراسر زمین دوست داشته شد. اینکه یک تن بتواند هم دانشمندی بزرگ باشد و هم شاعری بزرگ، شگفتی‌ای است که روح این عصر طلایی را در خود دارد.
-
-16.
-EN: Khayyam advanced its foundations
-FA: خیام بنیادهایش را پیش برد
-
-17.
-EN: A reform of astonishing accuracy
-FA: اصلاحی با دقتی شگفت‌آور
-
-18.
-EN: Poetry beloved around the world
-FA: شعری که در سراسر جهان دوست داشته شد
-
-19.
-EN: Scientist and poet at once
-FA: دانشمند و شاعر، هر دو با هم
-
-20.
-EN: A golden age of Persian art and science bloomed under the Turkish sultans.
-FA: عصری طلایی از هنر و دانش ایرانی، زیر فرمان سلطان‌های ترک شکفت.
-
-21.
-EN: The Empire Divides
-FA: امپراتوری چندپاره می‌شود
-
-22.
-EN: These successor states carried on the Seljuk legacy for another century, and in places like Anatolia the Seljuk name endured even longer, laying foundations for the Turkish presence there that continues to this day. But the unity of the great empire was gone.
-FA: این دولت‌های جانشین یک قرن دیگر میراث سلجوقی را پیش بردند، و در جاهایی چون آناتولی نام سلجوقی حتی دیرتر ماند و بنیاد حضور ترکان را در آنجا گذاشت که تا امروز ادامه دارد. اما یکپارچگی آن امپراتوری بزرگ رفته بود.
-
-23.
-EN: This has been a glimpse of the Seljuks, Turkic conquerors who became the great patrons of Persian civilization. Under their rule, Iran\'s culture, art, architecture, and science flourished brilliantly, and its influence spread across a vast empire from Central Asia to the Mediterranean.
-FA: این نگاهی بود کوتاه به سلجوقیان؛ فاتحانی ترک که به حامیان بزرگ تمدن ایرانی بدل شدند. در روزگار آنان فرهنگ و هنر و معماری و دانش ایران به‌درخشندگی شکفت، و نفوذش در امپراتوری‌ای پهناور از آسیای میانه تا مدیترانه گسترد.
-
-24.
-EN: The conquerors came as masters, and stayed as students of Iran.
-FA: فاتحان چون ارباب آمدند، و چون شاگرد ایران ماندند.
+EN: Even the Mongols, in the end, were conquered by the soul of Iran.
+FA: سرانجام حتی مغولان هم مغلوب جان ایران شدند.
