@@ -1,151 +1,151 @@
 1.
-EN: The Parthian Empire
-FA: اشکانیان
+EN: The Afsharid Dynasty
+FA: افشاریان
 
 2.
-EN: Iran Under Foreign Kings
-FA: ایران زیر فرمان شاهان بیگانه
+EN: From Shepherd to Warlord
+FA: از چوپانی تا سرداری
 
 3.
-EN: After Alexander
-FA: پس از اسکندر
+EN: Nader of the Afshar
+FA: نادرِ افشار
 
 4.
-EN: For a time, Greek kings sat where the Persian kings of kings had ruled. Greek became the language of the court, Greek cities rose across the plateau, and the proud heartland of Cyrus and Darius answered to masters from a distant western land.
-FA: چندی، شاهان یونانی بر جایی نشستند که پیش‌تر شاهنشاهان ایران فرمان رانده بودند. یونانی زبان دربار شد، شهرهای یونانی بر فلات سر برآوردند، و دل سربلند سرزمین کوروش و داریوش به اربابانی از دیاری دور در غرب پاسخ می‌داد.
+EN: Born in poverty and once a captive, Nader rose by his genius for war to command armies and, in time, an empire.
+FA: در تنگدستی زاده شد و روزگاری به اسارت رفت؛ نادر با نبوغش در جنگ بالا آمد تا فرماندهٔ سپاه‌ها و سرانجام یک امپراتوری شود.
 
 5.
-EN: The land of Cyrus, for the first time, obeyed foreign kings.
-FA: سرزمین کوروش، برای نخستین بار، از شاهان بیگانه فرمان برد.
+EN: The savior of Iran
+FA: ناجی ایران
 
 6.
-EN: A people from the steppe
-FA: مردمی از دشت‌های شمال
+EN: A shepherd boy had become the sword that saved a nation.
+FA: پسرکِ چوپان، شمشیری شد که ملتی را نجات داد.
 
 7.
-EN: But Iran would not stay in foreign hands. From the northeast, from the wide grasslands beyond the Caspian, came a people of hardy nomadic horsemen: the Parni, led by a chief named Arsaces. Around the middle of the third century BCE, they swept into the region of Parthia and threw off Greek rule.
-FA: اما ایران در دست بیگانه نماند. از شمال شرق، از علفزارهای پهناور آن سوی خزر، مردمی آمدند از سوارکاران کوچ‌نشین و سرسخت: پَرنی‌ها، به سرکردگی مردی به نام اشک. حدود میانهٔ سدهٔ سوم پیش از میلاد به سرزمین پارت تاختند و یوغ یونانی را به کناری افکندند.
+EN: The Crown and the Conqueror
+FA: تاج و فاتح
 
 8.
-EN: From that homeland the dynasty took its name, and Arsaces gave his to the line of kings who followed, the Arsacids. From these beginnings, a small rebellion on the edge of a Greek empire, would grow one of the great powers of the ancient world.
-FA: سلسله نام خود را از همان سرزمین گرفت، و اشک نامش را به تبار شاهانی داد که پس از او آمدند: اشکانیان. از این آغاز کوچک، شورشی در حاشیهٔ یک امپراتوری یونانی، یکی از قدرت‌های بزرگ جهان باستان برخاست.
+EN: The Napoleon of Persia
+FA: شمشیری که شرق را لرزاند
 
 9.
-EN: Arsaces I, chief of the Parni, founded the dynasty that would drive the Greeks from Iran and rule for nearly five centuries.
-FA: ارشک یکم، سردار پارنی‌ها، سلسله‌ای را بنیان گذاشت که یونانیان را از ایران بیرون راند و نزدیک پنج قرن فرمان راند.
+EN: He remade the army of Iran into the terror of the East.
+FA: ارتش ایران را از نو ساخت و آن را به وحشت شرق بدل کرد.
 
 10.
-EN: The Reconquest of a Homeland
-FA: بازپس‌گیری یک سرزمین
+EN: The March on India
+FA: لشکرکشی به هند
 
 11.
-EN: What began as a frontier revolt became, over the generations, the reconquest of an entire empire. The Parthian kings pushed steadily westward and southward, city by city and province by province, driving back the weakening Greek Seleucids and restoring Iranian rule over the ancient Persian lands.
-FA: آنچه شورشی مرزی آغاز شد، در گذر نسل‌ها به بازپس‌گیری یک امپراتوری تمام بدل شد. شاهان اشکانی پیوسته به غرب و جنوب پیش رفتند، شهر به شهر و ولایت به ولایت، سلوکیانِ رو به ناتوانی را عقب راندند و فرمانروایی ایرانی را بر سرزمین‌های کهن پارس بازگرداندند.
+EN: Nader\'s most famous campaign was his boldest. In 1738 he led his army eastward, through Afghanistan and over the mountains, and descended upon the vast and fabulously wealthy Mughal Empire of India, the richest realm on earth.
+FA: نامدارترین لشکرکشی نادر، جسورانه‌ترینش هم بود. در سال ۱۷۳۸ سپاهش را رو به شرق برد، از افغانستان و از فراز کوه‌ها گذشت، و بر امپراتوری پهناور و افسانه‌وار ثروتمند گورکانیان هند فرود آمد؛ توانگرترین قلمرو روی زمین.
 
 12.
-EN: The greatest of these early kings was Mithridates the First, who in the second century BCE transformed the Parthian realm from a kingdom into an empire, taking the rich lands of Mesopotamia and the title, once more, of a great Iranian king.
-FA: بزرگ‌ترینِ این شاهان نخستین، مهرداد یکم بود که در سدهٔ دوم پیش از میلاد قلمرو اشکانی را از یک پادشاهی به یک امپراتوری بدل کرد؛ سرزمین‌های حاصلخیز میان‌رودان را گرفت و بار دیگر لقب شاه بزرگ ایران را از آن خود ساخت.
+EN: At the battle of Karnal, his smaller, hardened army shattered the enormous but unwieldy Mughal host in a single day. The road to Delhi, the jewel of the East, lay open before him.
+FA: در نبرد کرنال، سپاه کوچک‌تر اما آبدیده‌اش لشکر عظیم و بی‌قوارهٔ گورکانی را در یک روز در هم شکست. راه دهلی، نگین شرق، پیش رویش باز شد.
 
 13.
-EN: Arsaces founds the Parthian state
-FA: اشک دولت اشکانی را بنیان می‌نهد
+EN: The treasure of the world
+FA: گنج جهان
 
 14.
-EN: Mithridates I begins the great expansion
-FA: مهرداد یکم گسترش بزرگ را آغاز می‌کند
+EN: Nader entered Delhi in triumph, and the wealth he carried away from it was almost beyond counting, the accumulated treasure of the Mughal emperors gathered over two centuries. The plunder was so immense that, upon his return, he is said to have exempted the people of Iran from taxes for years.
+FA: نادر پیروزمندانه وارد دهلی شد، و ثروتی که از آنجا با خود برد تقریباً به شمار درنمی‌آمد؛ گنجینه‌ای که پادشاهان گورکانی در دو قرن انباشته بودند. غنیمت چندان کلان بود که گفته‌اند پس از بازگشت، مردم ایران را سال‌ها از مالیات معاف کرد.
 
 15.
-EN: The Parthians take Mesopotamia and Babylon
-FA: اشکانیان میان‌رودان و بابل را می‌گیرند
+EN: Nader captures Delhi
+FA: نادر دهلی را می‌گیرد
 
 16.
-EN: Parthia stands as a great world power
-FA: اشکانیان در جایگاه یک قدرت بزرگ جهانی می‌ایستند
+EN: The Mughal army destroyed in a day
+FA: سپاه گورکانی در یک روز نابود شد
 
 17.
-EN: From horsemen of the steppe rose the empire that made Iran Iranian again.
-FA: از سوارکاران دشت، امپراتوری‌ای برخاست که ایران را دوباره ایرانی کرد.
+EN: Taxes he waived in Iran from the plunder
+FA: مالیاتی که از محل غنیمت در ایران بخشید
 
 18.
-EN: The Wall Against Rome
-FA: دیوار در برابر روم
+EN: Riches carried home from India
+FA: ثروتی که از هند به خانه آورده شد
 
 19.
-EN: Rome, used to conquering all before it, found in Parthia an equal it could not overcome. Again and again the legions marched east, and again and again the Parthians turned them back. The Euphrates became the wall against which Roman ambition broke.
-FA: روم که به فتح هر چه پیش رویش بود عادت داشت، در اشکانیان هماوردی یافت که از پسش برنیامد. بارها لژیون‌ها به سوی شرق لشکر کشیدند و بارها اشکانیان بازشان گرداندند. فرات دیواری شد که جاه‌طلبی روم بر آن شکست.
+EN: The Peacock Throne and a mountain of light
+FA: تخت طاووس و کوه نور
 
 20.
-EN: The disaster at Carrhae
-FA: فاجعهٔ حرّان
+EN: Among the treasures he took were the most legendary jewels in the world. He carried away the fabled Peacock Throne of the Mughal emperors, glittering with gems, which became the very symbol of the Persian monarchy for centuries after.
+FA: در میان گنج‌هایی که برد، افسانه‌ای‌ترین جواهرات جهان بود. تخت طاووس پادشاهان گورکانی را با خود آورد، آن تختِ پر از نگین درخشان، که قرن‌ها پس از آن به نماد خودِ پادشاهی ایران بدل شد.
 
 21.
-EN: The battle of Carrhae
-FA: نبرد حرّان
+EN: And among the jewels were two of the most famous diamonds ever known: the Darya-ye Noor, the Sea of Light, which remains in Iran to this day, and the Koh-i-Noor, the Mountain of Light, whose later journey would carry it, in time, to the crown jewels of England. The treasures of Nader\'s Indian campaign became legends in their own right.
+FA: و در میان جواهرات، دو تن از نامدارترین الماس‌های تاریخ بودند: دریای نور، که تا امروز در ایران مانده است، و کوه نور، که سفر بعدی‌اش سرانجام آن را به جواهرات سلطنتی انگلستان رساند. گنج‌های لشکرکشی هند نادر، خود افسانه شدند.
 
 22.
-EN: The Roman commander slain
-FA: سردار رومی که کشته شد
+EN: The Peacock Throne
+FA: تخت طاووس
 
 23.
-EN: Years Parthia held Rome at bay
-FA: سال که اشکانیان روم را پشت مرز نگاه داشتند
+EN: From Delhi, Nader carried home the jewelled Peacock Throne and the legendary diamonds of the Mughals, treasures still spoken of today.
+FA: نادر از دهلی تخت طاووسِ نگین‌نشان و الماس‌های افسانه‌ای گورکانیان را با خود آورد؛ گنج‌هایی که هنوز از آنها سخن می‌رود.
 
 24.
-EN: The frontier Rome could not cross
-FA: مرزی که روم نتوانست از آن بگذرد
+EN: The Genius and the Shadow
+FA: نبوغ و سایه
 
 25.
-EN: The Parthian shot
-FA: تیر پارتی
+EN: The two faces of Nader
+FA: دو چهرهٔ نادر
 
 26.
-EN: They mastered the art of striking hardest at the moment they seemed to flee.
-FA: هنر آنان این بود که سخت‌ترین ضربه را درست هنگامی بزنند که به گریز می‌مانستند.
+EN: Nader was a man of dazzling gifts, and his mind ranged far beyond the battlefield. He was a military innovator who understood artillery and the modern arts of war better than almost anyone in the East, and he even sought to build a navy for Iran on the Persian Gulf, a rare and forward-looking ambition.
+FA: نادر مردی بود با توانایی‌های خیره‌کننده، و ذهنش بسی فراتر از میدان جنگ می‌رفت. نوآوری نظامی بود که توپخانه و فنون نوین جنگ را بهتر از تقریباً هر کس دیگری در شرق می‌فهمید، و حتی کوشید برای ایران در خلیج فارس نیروی دریایی بسازد؛ آرزویی کمیاب و آینده‌نگر.
 
 27.
-EN: Crossroads of the World
-FA: چهارراه جهان
+EN: He was also, in matters of faith, a pragmatist who tried to heal the ancient rift between the Sunni and Shia branches of Islam, hoping to unite them and end centuries of division, a strikingly bold idea for his age.
+FA: در کار دین نیز مردی عمل‌گرا بود؛ کوشید شکاف کهن میان شیعه و سنی را التیام بخشد، به امید آنکه آن دو را یکی کند و به قرن‌ها جدایی پایان دهد. اندیشه‌ای بود به‌شدت جسورانه برای روزگار خودش.
 
 28.
-EN: The Parthian peace
-FA: آرامش اشکانی
+EN: The genius
+FA: نبوغ
 
 29.
-EN: The Parthian Empire sat astride the greatest trade route in the world: the Silk Road, the long ribbon of commerce that linked the empires of Rome and China. Through Parthian lands passed the silk of the east and the gold of the west, and the empire grew rich as the great middleman of the world.
-FA: امپراتوری اشکانی بر بزرگ‌ترین راه بازرگانی جهان نشسته بود: جادهٔ ابریشم، آن نوار دراز داد و ستد که امپراتوری روم و چین را به هم می‌بست. ابریشم شرق و زر غرب از خاک اشکانی می‌گذشت، و امپراتوری در مقام واسطهٔ بزرگ جهان توانگر شد.
+EN: A brilliant general and innovator who saved Iran, conquered India, and dreamed of a navy and religious peace.
+FA: سرداری درخشان و نوآور که ایران را نجات داد، هند را گشود، و رؤیای نیروی دریایی و آشتی مذهبی در سر داشت.
 
 30.
-EN: The Silk Road
-FA: جادهٔ ابریشم
+EN: The shadow
+FA: سایه
 
 31.
-EN: A looser kind of empire
-FA: امپراتوری‌ای با بندهای سست‌تر
+EN: The darkening of a great mind
+FA: تیره شدن یک ذهن بزرگ
 
 32.
-EN: For all its strength against Rome, the empire was often divided within, and its long centuries were marked by civil wars and contested successions that slowly wore at its foundations.
-FA: با همهٔ توانی که در برابر روم داشت، امپراتوری اغلب در درون خود دوپاره بود، و قرن‌های بلندش را جنگ‌های داخلی و جانشینی‌های مورد نزاع نشان‌دار کرد؛ چیزی که به‌آرامی بنیادش را سایید.
+EN: The sword that saved Iran turned, in the end, against its own people.
+FA: شمشیری که ایران را نجات داد، سرانجام رو به مردم خودش گرداند.
 
 33.
-EN: The Passing of the Torch
-FA: سپردن مشعل
+EN: The Fall of the Sword
+FA: فرود آمدن شمشیر
 
 34.
-EN: After nearly five hundred years, the Parthian Empire grew weary. Weakened by endless wars with Rome and by its own internal divisions, the once mighty realm was ripe for change. And change came, as it so often did in Iran, from the ancient heartland of Persia in the south.
-FA: پس از نزدیک پانصد سال، امپراتوری اشکانی خسته شد. جنگ‌های بی‌پایان با روم و تفرقهٔ درونی ناتوانش کرده بود، و آن قلمروِ روزگاری نیرومند آمادهٔ دگرگونی بود. و دگرگونی، چنان‌که در ایران بارها روی داده، از دل سرزمین کهن پارس در جنوب آمد.
+EN: In the night, a band of his own commanders crept into his tent and killed him as he slept. The greatest warrior of the age, who had conquered from the Caucasus to Delhi and whom no enemy could defeat in the field, fell at last to the daggers of his own men.
+FA: شبانه، گروهی از فرماندهان خودش به خیمه‌اش خزیدند و او را در خواب کشتند. بزرگ‌ترین جنگاور آن روزگار، که از قفقاز تا دهلی را گشوده بود و هیچ دشمنی در میدان از پسش برنیامده بود، سرانجام به خنجر مردان خودش از پا درآمد.
 
 35.
-EN: There, a prince named Ardashir rose in rebellion. In 224 CE he defeated the last Parthian king in battle, and upon the ruins of the Arsacid realm he raised a new empire, the Sasanian, which would carry Persia to fresh heights of glory.
-FA: آنجا شاهزاده‌ای به نام اردشیر سر به شورش برداشت. در سال ۲۲۴ میلادی واپسین شاه اشکانی را در نبرد شکست داد، و بر ویرانه‌های قلمرو اشکانی امپراتوری تازه‌ای برافراشت: ساسانیان، که پارس را به بلندی‌های تازه‌ای از شکوه می‌رساند.
+EN: No enemy could defeat him. Only his own could bring him down.
+FA: هیچ دشمنی نتوانست شکستش دهد. تنها خودی‌ها توانستند از پا درش آورند.
 
 36.
-EN: One Iranian empire gave way to another, and the flame passed on.
-FA: امپراتوری‌ای ایرانی جای خود را به دیگری داد، و شعله دست به دست شد.
+EN: From the chaos that followed his death, in time, would rise the gentle Karim Khan of the Zand, who gave Iran the peace that Nader, for all his conquests, never could.
+FA: از آشوبی که پس از مرگش برخاست، به وقت خود کریم‌خان زندِ مهربان سر برآورد؛ کسی که آرامشی به ایران داد که نادر، با همهٔ فتوحاتش، هرگز نتوانست بدهد.
 
 37.
-EN: They kept the flame of Iran burning through the long centuries between two golden ages, and they handed it on, undimmed, to those who followed. Without the horsemen of Parthia, the story of Iran might have ended long ago.
-FA: آنان شعلهٔ ایران را در قرن‌های دراز میان دو عصر طلایی فروزان نگاه داشتند و بی‌آنکه از تابش آن کاسته شود به آیندگان سپردند. اگر سوارکاران پارت نبودند، شاید داستان ایران دیرزمانی پیش به پایان رسیده بود.
+EN: This has been a glimpse of Nader Shah and the Afsharids, one of the most extraordinary and complex stories in all of Iranian history. Nader was a shepherd boy who became a conqueror to rival the greatest of the ancient world, a military genius who saved his nation from ruin and carried its banners to the gates of the East.
+FA: این نگاهی بود کوتاه به نادرشاه و افشاریان؛ یکی از شگفت‌ترین و پیچیده‌ترین روایت‌های تمام تاریخ ایران. نادر پسرکِ چوپانی بود که فاتحی شد هم‌سنگ بزرگ‌ترین فاتحان جهان باستان؛ نابغه‌ای نظامی که ملتش را از ویرانی نجات داد و درفشش را تا دروازه‌های شرق برد.
 
 38.
-EN: They kept the flame of Iran alive, and passed it on undimmed.
-FA: شعلهٔ ایران را زنده نگاه داشتند، و بی‌آنکه کم‌فروغ شود به دست بعدی‌ها سپردند.
+EN: A shepherd who conquered an empire, and a genius undone by his own shadow.
+FA: چوپانی که امپراتوری گشود، و نابغه‌ای که سایهٔ خودش از پا درش آورد.
