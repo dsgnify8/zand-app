@@ -862,7 +862,7 @@ const zand: Topic = {
   key: 'zand-dynasty',
   category: 'history',
   name: 'The Zand Dynasty',
-  nameFa: 'زندیان',
+  nameFa: 'سلسله زند',
   persian: 'زندیان',
   years: '1751 – 1794',
   essence: "The dynasty of Karim Khan, the ruler who refused the title of king and chose instead to be the advocate of his people.",
@@ -914,7 +914,7 @@ const zand: Topic = {
         { blocks: [
           { t: 'p', x: "What set Karim Khan apart was not conquest but character. In an age of tyrants, he was known for his plainness, his humor, and his genuine care for ordinary people. He never forgot that he had risen from among them, and he never pretended to be more than he was.", fa: 'آنچه کریم‌خان را متمایز می‌کرد فتح نبود، بلکه شخصیت بود. در روزگار خودکامگان، او را به سادگی، به شوخ‌طبعی، و به دلسوزی راستینش برای مردم عادی می‌شناختند. هرگز از یاد نبرد که خود از میان همان مردم برخاسته است، و هرگز وانمود نکرد بیش از آنچه هست.' },
           { t: 'imgsm', key: 'zand-portrait', cap: 'Karim Khan Zand, the Advocate of the People.', capFa: 'کریم‌خان زند، وکیل‌الرعایا.' },
-          { t: 'imgsm', key: 'zand-rulers', cap: 'The Zand court, a rare season of gentle rule in a violent age.', capFa: 'دربار زند؛ فصلی کمیاب از فرمانروایی مهربان در روزگاری خشونت‌بار.' },
+          { t: 'imgsm', key: 'zand-rulers', cap: 'The Zand court, a rare season of gentle rule in a violent age.', capFa: 'دربار زند؛ دوره‌ای کمیاب از فرمانروایی آرام و مداراگر در روزگاری خشونت‌بار.' },
           { t: 'p', x: "He lived simply for a ruler of his power, dressed without extravagance, and kept an open and approachable court. The stories told of him, many still remembered in Iran, paint a picture of a warm, shrewd, and deeply humane man.", fa: 'برای فرمانروایی با آن اندازه قدرت، ساده زندگی می‌کرد؛ بی‌تجمل می‌پوشید و درباری باز و دردسترس داشت. حکایت‌هایی که از او نقل کرده‌اند، و بسیاری‌شان هنوز در ایران بر سر زبان‌هاست، تصویر مردی را می‌سازند گرم، زیرک و عمیقاً انسان.' },
         ] },
         { blocks: [
@@ -925,7 +925,7 @@ const zand: Topic = {
         ] },
         { blocks: [
           { t: 'p', x: "He could be firm when he had to be, and he was a capable soldier and shrewd statesman who held a fractured country together. But he ruled with a restraint and a decency almost unknown in his violent age, and Iran, worn down by decades of war, breathed again under his hand.", fa: 'آنجا که لازم بود می‌توانست سختگیر باشد؛ سربازی کاردان و سیاستمداری زیرک بود که کشوری چندپاره را کنار هم نگاه داشت. اما با خویشتن‌داری و شرافتی حکومت کرد که در روزگار خشونت‌بار او تقریباً ناشناخته بود، و ایران، فرسوده از دهه‌ها جنگ، زیر دست او دوباره نفس کشید.' },
-          { t: 'call', title: 'A rare kind of power', titleFa: 'گونه‌ای کمیاب از قدرت', x: "Power rarely makes men gentler. In Karim Khan it did. He understood his authority as a duty owed to his people, and that understanding is the quiet heart of the whole Zand story.", fa: 'قدرت به‌ندرت آدمیان را مهربان‌تر می‌کند. در کریم‌خان چنین کرد. او اقتدار خود را وظیفه‌ای می‌دانست که به مردمش بدهکار است، و همین درک، قلب آرام تمام داستان زند است.' },
+          { t: 'call', title: 'A rare kind of power', titleFa: 'قدرتی از جنس دیگر', x: "Power rarely makes men gentler. In Karim Khan it did. He understood his authority as a duty owed to his people, and that understanding is the quiet heart of the whole Zand story.", fa: 'قدرت به‌ندرت آدمیان را مهربان‌تر می‌کند. در کریم‌خان چنین کرد. او اقتدار خود را وظیفه‌ای می‌دانست که به مردمش بدهکار است، و همین درک، قلب آرام تمام داستان زند است.' },
         ] },
       ],
     },
@@ -936,17 +936,17 @@ const zand: Topic = {
       pages: [
         { blocks: [
           { t: 'p', x: "Karim Khan made his capital not at Tehran or Isfahan, but at Shiraz, the fabled city of roses, wine, nightingales, and poetry in the south of Iran. It was the city of the great poets Hafez and Saadi, and under Karim Khan it entered a golden age.", fa: 'کریم‌خان پایتختش را نه در تهران گذاشت و نه در اصفهان، بلکه در شیراز؛ شهر افسانه‌ای گل و می و بلبل و شعر، در جنوب ایران. شهر حافظ و سعدی بود، و زیر دست کریم‌خان به عصر طلایی خود رسید.' },
-          { t: 'imgsm', key: 'zand-shiraz-city', cap: 'Shiraz, the city of poets, which Karim Khan made his capital and adorned.', capFa: 'شیراز، شهر شاعران، که کریم‌خان پایتختش کرد و آراستش.' },
+          { t: 'imgsm', key: 'zand-shiraz-city', cap: 'Shiraz, the city of poets, which Karim Khan made his capital and adorned.', capFa: 'شیراز، شهر شاعران، که کریم‌خان آن را پایتخت خود کرد و آراست.' },
           { t: 'p', x: "He loved Shiraz and lavished care upon it, determined to make it a capital worthy of a peaceful and prosperous Iran. He built and beautified, and much of what he raised still stands today, among the loveliest monuments in the country.", fa: 'شیراز را دوست می‌داشت و بر آن دل سپرد، مصمم که پایتختی درخور ایرانی آرام و آباد بسازد. ساخت و آراست، و بسیاری از آنچه برافراشت امروز هنوز پابرجاست؛ از زیباترین بناهای این سرزمین.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The gifts he left in stone', fa: 'یادگارهایی که در سنگ گذاشت' },
+          { t: 'h', x: 'The gifts he left in stone', fa: 'یادگارهایی که در سنگ به جا گذاشت' },
           { t: 'p', x: "At the heart of the city he built the Arg, his great citadel, and beside it a complex of buildings for the people: a mosque, a bazaar, a bathhouse, all bearing the name Vakil, the Advocate, the title he had chosen for himself. Even the monuments he raised carried his humble idea of his own role.", fa: 'در قلب شهر ارگ را ساخت، دژ بزرگش، و در کنارش مجموعه‌ای از بناها برای مردم: مسجدی، بازاری، حمامی، که همه نام وکیل بر خود داشتند؛ همان لقبی که برای خویش برگزیده بود. حتی بناهایی که برافراشت، برداشت فروتنانهٔ او را از جایگاه خودش با خود داشتند.' },
           { t: 'imgsm', key: 'zand-arg', cap: 'The Arg of Karim Khan, his citadel at the heart of Shiraz.', capFa: 'ارگ کریم‌خان، دژ او در قلب شیراز.' },
           { t: 'p', x: "The Vakil Mosque, with its forest of carved stone columns and its exquisite tilework, and the Vakil Bazaar, whose vaulted brick halls still shelter the merchants of Shiraz to this day, are among the treasures of Iranian architecture.", fa: 'مسجد وکیل، با جنگلی از ستون‌های سنگی تراشیده و کاشی‌کاری ظریفش، و بازار وکیل، که راسته‌های آجری و طاق‌دارش تا امروز بازرگانان شیراز را در خود جای داده‌اند، از گنجینه‌های معماری ایران‌اند.' },
         ] },
         { blocks: [
-          { t: 'imgrow', keys: ['zand-vakil-mosque', 'zand-vakil-bazaar'], cap: 'The Vakil Mosque and the Vakil Bazaar in Shiraz, built by Karim Khan and still in use today.', capFa: 'مسجد وکیل و بازار وکیل در شیراز، ساختهٔ کریم‌خان، که امروز هم در استفاده‌اند.' },
+          { t: 'imgrow', keys: ['zand-vakil-mosque', 'zand-vakil-bazaar'], cap: 'The Vakil Mosque and the Vakil Bazaar in Shiraz, built by Karim Khan and still in use today.', capFa: 'مسجد وکیل و بازار وکیل در شیراز، ساخته کریم‌خان، که هنوز هم مورد استفاده‌اند.' },
           { t: 'p', x: "He also laid out gardens and repaired the shrines and tombs of the poets, honoring the cultural soul of the city. Under his care, Shiraz became again what it had long been in the Persian imagination: a place of beauty, learning, and peace.", fa: 'باغ‌ها نیز طرح ریخت و زیارتگاه‌ها و آرامگاه شاعران را تعمیر کرد، و بدین‌سان جان فرهنگی شهر را گرامی داشت. زیر مراقبت او، شیراز دوباره همان شد که دیرزمانی در خیال ایرانی بود: جایگاه زیبایی، دانش و آرامش.' },
           { t: 'pull', x: "He gave his beloved city monuments that still bear his people\'s name, not his own.", fa: 'به شهر محبوبش بناهایی بخشید که هنوز نام مردمش را بر خود دارند، نه نام خودش را.' },
         ] },
@@ -960,10 +960,10 @@ const zand: Topic = {
         { blocks: [
           { t: 'p', x: "The years of Karim Khan\'s rule were, for most Iranians, a rare and precious season of calm. After decades of war, famine, and cruelty, the country knew peace, and under peace it began to heal and to prosper.", fa: 'سال‌های فرمانروایی کریم‌خان، برای بیشتر ایرانیان، فصلی بود کمیاب و گران‌بها از آرامش. پس از دهه‌ها جنگ و قحطی و بی‌رحمی، کشور آرامش را چشید، و در سایهٔ آرامش رو به بهبود و آبادانی گذاشت.' },
           { t: 'steps', items: [
-            { title: 'Light taxes', titleFa: 'مالیات سبک', x: 'He kept the burden on farmers and merchants low, and the people prospered.', fa: 'بار مالیات را بر دوش کشاورزان و بازرگانان سبک نگاه داشت، و مردم بالیدند.' },
-            { title: 'Justice for all', titleFa: 'داد برای همه', x: 'Rich and poor alike could seek his judgment, and he was known for fairness.', fa: 'توانگر و تهی‌دست هر دو می‌توانستند داوری او را بخواهند، و به انصاف شناخته می‌شد.' },
-            { title: 'Trade revived', titleFa: 'رونق بازرگانی', x: 'He reopened commerce, including trade through the Persian Gulf with distant lands.', fa: 'داد و ستد را از نو گشود، از جمله بازرگانی از راه خلیج فارس با سرزمین‌های دور.' },
-            { title: 'Peace at home', titleFa: 'آرامش در خانه', x: 'The wars that had torn Iran apart were stilled, and the country breathed again.', fa: 'جنگ‌هایی که ایران را از هم دریده بودند فرو نشستند، و کشور دوباره نفس کشید.' },
+            { title: 'Light taxes', titleFa: 'مالیات‌های سبک', x: 'He kept the burden on farmers and merchants low, and the people prospered.', fa: 'بار مالیاتی بر دوش کشاورزان و بازرگانان را سبک نگه داشت و مردم رونق گرفتند.' },
+            { title: 'Justice for all', titleFa: 'عدالت برای همه', x: 'Rich and poor alike could seek his judgment, and he was known for fairness.', fa: 'توانگر و تهی‌دست، هر دو می‌توانستند برای دادخواهی نزد او بروند و او به انصاف و عدالت شناخته می‌شد.' },
+            { title: 'Trade revived', titleFa: 'رونق دوباره بازرگانی', x: 'He reopened commerce, including trade through the Persian Gulf with distant lands.', fa: 'بازرگانی را دوباره رونق داد، از جمله تجارت از راه خلیج فارس با سرزمین‌های دوردست.' },
+            { title: 'Peace at home', titleFa: 'آرامش در داخل کشور', x: 'The wars that had torn Iran apart were stilled, and the country breathed again.', fa: 'جنگ‌هایی که ایران را از هم دریده بودند فروکش کردند و کشور دوباره نفس کشید.' },
           ] },
         ] },
         { blocks: [
@@ -971,7 +971,7 @@ const zand: Topic = {
           { t: 'p', x: "He was no builder of a vast empire, and he did not seek to be. His ambition was smaller and, in its way, greater: to give his people a good and peaceful life. By the measure that mattered most to him, the wellbeing of ordinary Iranians, his reign was a quiet triumph.", fa: 'سازندهٔ امپراتوری‌ای پهناور نبود و در پی آن هم نبود. آرزویش کوچک‌تر بود و، به شیوهٔ خود، بزرگ‌تر: اینکه به مردمش زندگی‌ای خوب و آرام بدهد. با معیاری که برای خود او از همه مهم‌تر بود، یعنی آسایش مردم عادی ایران، سلطنتش پیروزی‌ای بی‌سر و صدا بود.' },
         ] },
         { blocks: [
-          { t: 'call', title: 'Remembered with love', titleFa: 'با محبت به یاد مانده', x: "History is full of conquerors who won great empires and are remembered with fear. Karim Khan won something rarer. He is remembered with affection, as a good man who used his power to shelter his people rather than to glorify himself.", fa: 'تاریخ پر است از فاتحانی که امپراتوری‌های بزرگ به دست آوردند و با ترس به یاد آورده می‌شوند. کریم‌خان چیز کمیاب‌تری به دست آورد: با محبت به یاد آورده می‌شود، چون مرد نیکی که قدرتش را برای پناه دادن به مردمش به کار برد، نه برای بزرگ کردن خویش.' },
+          { t: 'call', title: 'Remembered with love', titleFa: 'با مهر به یاد مانده', x: "History is full of conquerors who won great empires and are remembered with fear. Karim Khan won something rarer. He is remembered with affection, as a good man who used his power to shelter his people rather than to glorify himself.", fa: 'تاریخ پر است از فاتحانی که امپراتوری‌های بزرگ به دست آوردند و با ترس به یاد آورده می‌شوند. کریم‌خان چیز کمیاب‌تری به دست آورد: با محبت به یاد آورده می‌شود، چون مرد نیکی که قدرتش را برای پناه دادن به مردمش به کار برد، نه برای بزرگ کردن خویش.' },
           { t: 'p', x: "For a few decades, in a corner of a turbulent world, a ruler governed by decency, and his people flourished. It is one of the gentlest chapters in the long history of Iran.", fa: 'چند دهه، در گوشه‌ای از جهانی پرآشوب، فرمانروایی با شرافت حکومت کرد و مردمش بالیدند. این یکی از مهربان‌ترین فصل‌های تاریخ بلند ایران است.' },
         ] },
       ],
@@ -987,7 +987,7 @@ const zand: Topic = {
           { t: 'p', x: "He left no successor of his own strength, and the old pattern reasserted itself. His relatives and rivals fell to fighting over the succession, and the peace of the Zand years gave way once more to struggle.", fa: 'جانشینی هم‌اندازهٔ خود بر جای نگذاشت، و الگوی کهنه دوباره سر برآورد. خویشان و رقیبانش بر سر جانشینی به جان هم افتادند، و آرامش سال‌های زند بار دیگر جای خود را به کشمکش داد.' },
         ] },
         { blocks: [
-          { t: 'h', x: 'The last of the Zand', fa: 'آخرین زند' },
+          { t: 'h', x: 'The last of the Zand', fa: 'واپسین فرمانروای زند' },
           { t: 'p', x: "As the dynasty weakened, a new and ruthless power rose in the north under Agha Mohammad Khan, founder of the Qajar dynasty. One by one the Zand were overcome, until only a single young prince remained to carry their standard: Lotf Ali Khan, the last of the Zand.", fa: 'همچنان که سلسله ناتوان می‌شد، در شمال قدرتی تازه و بی‌رحم به رهبری آقامحمدخان، بنیان‌گذار سلسلهٔ قاجار، سر برآورد. زندیان یکی پس از دیگری از پای درآمدند، تا آنکه تنها یک شاهزادهٔ جوان ماند که درفش آنان را برافراشته نگاه دارد: لطفعلی‌خان، آخرین زند.' },
           { t: 'p', x: "Brave, handsome, and gallant, Lotf Ali Khan fought on against overwhelming odds in a struggle that has passed into legend. For years he resisted, winning the devotion of those who followed him, a young hero defending a lost cause with a courage that Iranians still remember.", fa: 'دلیر و خوش‌سیما و جوانمرد، لطفعلی‌خان در برابر نیرویی به‌مراتب بزرگ‌تر جنگید؛ نبردی که به افسانه پیوسته است. سال‌ها ایستادگی کرد و دل کسانی را که به دنبالش رفتند به دست آورد؛ قهرمانی جوان که از آرمانی شکست‌خورده دفاع می‌کرد، با شجاعتی که ایرانیان هنوز به یاد دارند.' },
         ] },
@@ -995,7 +995,7 @@ const zand: Topic = {
           { t: 'p', x: "In 1794 he was at last betrayed and captured, and with his death the Zand dynasty came to its end. The gentle house that had given Iran a season of peace passed into history, and a harder age began under the Qajars.", fa: 'در سال ۱۷۹۴ سرانجام به او خیانت شد و به اسارت درآمد، و با مرگش سلسلهٔ زند به پایان رسید. آن خاندان مهربان که به ایران فصلی از آرامش بخشیده بود به تاریخ پیوست، و روزگاری سخت‌تر زیر فرمان قاجار آغاز شد.' },
           { t: 'div' },
           { t: 'p', x: "This has been a glimpse of the Zand, and of Karim Khan, the soldier who would not be called king. In a cruel and violent age he chose mercy over conquest and his people over his own glory, and he gave Iran a rare and gentle peace.", fa: 'این نگاهی بود کوتاه به زندیان، و به کریم‌خان؛ سربازی که نپذیرفت او را شاه بخوانند. در روزگاری بی‌رحم و خشونت‌بار، بخشش را بر فتح برگزید و مردمش را بر شکوه خویش، و به ایران آرامشی نادر و مهربان بخشید.' },
-          { t: 'era', value: '28', label: 'Years of peace he gave Iran', labelFa: 'سالی که به ایران آرامش داد' },
+          { t: 'era', value: '28', label: 'Years of peace he gave Iran', labelFa: 'سال‌های آرامشی که به ایران بخشید' },
           { t: 'pull', x: "He called himself not king, but the Advocate of the People. His people never forgot it.", fa: 'خود را شاه نخواند، وکیل‌الرعایا خواند. مردمش هرگز آن را از یاد نبردند.' },
         ] },
       ],
