@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useRef, useState, useEffect } from 'react';
 // Aliased: react-native exports an Animated of its own and this file
 // uses both. Reanimated's is only here for the library fade.
-import Reanimated, { FadeIn } from 'react-native-reanimated';
+import Reanimated, { FadeIn, FadeOut, runOnJS } from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Easing, Modal, ActivityIndicator, Animated, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
@@ -277,10 +278,13 @@ function DiscoverRow() {
   );
 }
 
-function YouTab({ onGoFriends }: { onGoFriends: () => void }) {
+function YouTab({ onGoFriends, libView, setLibView }: {
+  onGoFriends: () => void;
+  libView: null | 'favourites' | 'saved';
+  setLibView: (v: null | 'favourites' | 'saved') => void;
+}) {
   // The library opens here now rather than on a tab of its own. Two cards
   // pointing at two pages did not need a third place to live.
-  const [libView, setLibView] = useState<null | 'favourites' | 'saved'>(null);
   // Real things waiting: a friend request, or something sent that has
   // not been opened. Seeded items only stand in for a visitor.
   const { user: youUser } = useAuth();
@@ -308,6 +312,7 @@ function YouTab({ onGoFriends }: { onGoFriends: () => void }) {
 
   return (
     <>
+
       {pending.length > 0 ? (
         <Pressable style={s.alert} onPress={onGoFriends}>
           <LinearGradient colors={[pr.friendPaleA, pr.friendPaleB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
@@ -1142,6 +1147,10 @@ export default function Profile() {
   const { displayName, session } = useAuth();
   const { tab: wantTab } = useLocalSearchParams<{ tab?: string }>();
   const [tab, setTab] = useState<Tab>((wantTab as Tab) || 'you');
+  // Held here rather than inside YouTab, so the greeting and the tab
+  // switcher can stand down while the library is open — they belong to
+  // the profile, not to a page opened from it.
+  const [libView, setLibView] = useState<null | 'favourites' | 'saved'>(null);
   // As initial state this only worked on a cold mount. Arriving from the
   // home card while Profile was already mounted left you on You.
   useEffect(() => { if (wantTab) setTab(wantTab as Tab); }, [wantTab]);
@@ -1160,6 +1169,22 @@ export default function Profile() {
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
+      {/* A swipe from the left edge closes the library, since there is
+          no route behind it to swipe back to — it is a state, and the
+          gesture has to be made rather than enabled. */}
+      {libView ? (
+        <GestureDetector
+          gesture={Gesture.Pan()
+            .activeOffsetX(20)
+            .onEnd((e) => {
+              if (e.translationX > 60) runOnJS(setLibView)(null);
+            })}
+        >
+          <Reanimated.View style={s.swipeCatch} />
+        </GestureDetector>
+      ) : null}
+
+      {libView ? null : (
       <View style={s.header}>
         <View>
           <Text style={s.hello}>{t(PROFILE.welcome)}</Text>
@@ -1169,7 +1194,9 @@ export default function Profile() {
           <Ionicons name="settings-outline" size={21} color={colors.textPrimary} />
         </Pressable>
       </View>
+      )}
 
+      {libView ? null : (
       <View style={s.tabs}>
         {tabsFor().map((tb) => {
           const on = tb.k === tab;
@@ -1182,9 +1209,10 @@ export default function Profile() {
           );
         })}
       </View>
+      )}
 
       <ScrollView contentContainerStyle={s.container} showsVerticalScrollIndicator={false}>
-        {tab === 'you' ? <YouTab onGoFriends={() => setTab('friends')} /> : null}
+        {tab === 'you' ? <YouTab onGoFriends={() => setTab('friends')} libView={libView} setLibView={setLibView} /> : null}
         {tab === 'friends' ? <FriendsTab /> : null}
         {tab === 'progress' ? <ProgressTab /> : null}
       </ScrollView>
@@ -1243,6 +1271,10 @@ const s = StyleSheet.create({
   pinMeta: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.2, color: pr.dim, marginTop: 3 },
   saveThumb: { width: 54, height: 54, borderRadius: 10, overflow: 'hidden', backgroundColor: pr.hair },
   safe: { flex: 1, backgroundColor: colors.background },
+  // A strip down the left edge, over everything, that only exists while
+  // the library is open. Narrow enough not to interfere with tapping a
+  // card at the left of the grid.
+  swipeCatch: { position: 'absolute', left: 0, top: 0, bottom: 0, width: 28, zIndex: 30 },
   header: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.md },
   hello: { fontFamily: fonts.body, fontSize: 12, color: pr.dim },
   name: { fontFamily: fonts.heading, fontSize: 30, color: colors.textPrimary },

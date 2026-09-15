@@ -347,7 +347,10 @@ const s = StyleSheet.create({
     color: tpm.ink, marginBottom: spacing.lg,
   },
   dropCap: {
-    fontFamily: fonts.bodyStrong, fontSize: 34, lineHeight: 34,
+    // lineHeight equal to fontSize gives the glyph no room above its
+    // baseline, so the top of the letter was being cut off by the line
+    // box. A little over is enough.
+    fontFamily: fonts.bodyStrong, fontSize: 34, lineHeight: 40,
     color: tpm.red,
   },
 

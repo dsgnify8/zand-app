@@ -152,7 +152,16 @@ export default function Local() {
       new Promise<null>((r) => setTimeout(() => r(null), 8000)),
     ]);
     setLocating(false);
-    if (p) { setPlace(p); setPlaceOpen(false); }
+    if (p) {
+      setPlace(p);
+      setPlaceOpen(false);
+      // And fade back in. Only the failure path did this, so a
+      // successful fix left the list at zero opacity until some other
+      // effect happened to restore it — which is the flicker.
+      Animated.timing(swap, {
+        toValue: 1, duration: 200, easing: Easing.out(Easing.quad), useNativeDriver: true,
+      }).start();
+    }
     else {
       // Nothing came back. Say so — a list that fades out and back with no
       // explanation reads as a broken button.
