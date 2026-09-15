@@ -1,55 +1,147 @@
 1.
+EN: The Timurid Empire
+FA: تیموریان
+
+2.
+EN: The Last Great Conqueror
+FA: واپسین فاتح بزرگ
+
+3.
+EN: Timur (Tamerlane)
+FA: تیمور لنگ
+
+4.
+EN: A conqueror never defeated in battle, and one of the most feared men in history, Timur built a vast empire across the Persian world.
+FA: فاتحی که هرگز در میدان شکست نخورد و از هراس‌انگیزترین مردان تاریخ؛ تیمور امپراتوری‌ای پهناور در سراسر جهان ایرانی برپا کرد.
+
+5.
+EN: The jewel of Samarkand
+FA: نگین سمرقند
+
+6.
+EN: Yet this terrible conqueror was also a great patron of beauty. He gathered to his capital of Samarkand the finest artists, architects, and craftsmen from across all the lands he conquered, and adorned the city with monuments of breathtaking splendour, blue-domed and shimmering, among the wonders of the world.
+FA: با این همه، این فاتح هولناک حامی بزرگ زیبایی نیز بود. بهترین هنرمندان و معماران و صنعتگران را از سراسر سرزمین‌هایی که گشوده بود به پایتختش سمرقند آورد و شهر را با بناهایی آراست که نفس را می‌بریدند؛ گنبدهای لاجوردی و درخشان، از شگفتی‌های جهان.
+
+7.
+EN: The hand that raised towers of skulls also raised the shimmering domes of Samarkand.
+FA: همان دستی که کله‌مناره برافراشت، گنبدهای درخشان سمرقند را نیز برافراشت.
+
+8.
+EN: It is one of history\'s great contradictions, that a man of such cruelty should also be the founder of one of the most beautiful cultural ages the East ever knew. But so it was, and the splendour he began would blossom fully under his descendants.
+FA: این یکی از تناقض‌های بزرگ تاریخ است: مردی با چنان بی‌رحمی، بنیان‌گذار یکی از زیباترین دوران‌های فرهنگی‌ای شود که شرق به خود دیده است. اما چنین شد، و شکوهی که او آغاز کرد در روزگار بازماندگانش به تمامی شکفت.
+
+9.
+EN: The Timurid Renaissance
+FA: رستاخیز تیموری
+
+10.
+EN: After Timur\'s death, his descendants gave up the endless conquering and turned instead to the cultivation of beauty, and under them the Persian world entered one of the most brilliant cultural renaissances in its entire history, a flowering compared by many to the Italian Renaissance of the same age.
+FA: پس از مرگ تیمور، بازماندگانش فتحِ بی‌پایان را رها کردند و رو به پروردن زیبایی آوردند. در روزگار آنان، جهان ایرانی به یکی از درخشان‌ترین رستاخیزهای فرهنگی تمام تاریخش پا گذاشت؛ شکوفایی‌ای که بسیاری آن را با رنسانس ایتالیا در همان روزگار سنجیده‌اند.
+
+11.
+EN: His son Shahrukh and grandson Ulugh Beg, and later the court at Herat, made their cities into dazzling centers of art, learning, and refinement, where the Persian genius reached new summits in almost every field.
+FA: پسرش شاهرخ و نوه‌اش الغ‌بیگ، و پس از آنان دربار هرات، شهرهایشان را به کانون‌های خیره‌کنندهٔ هنر و دانش و ظرافت بدل کردند؛ جایی که نبوغ ایرانی تقریباً در هر زمینه‌ای به قله‌های تازه‌ای رسید.
+
+12.
+EN: A king who mapped the stars
+FA: شاهی که آسمان را نقشه کرد
+
+13.
+EN: A capital of dazzling art and poetry
+FA: پایتختی از هنر و شعر خیره‌کننده
+
+14.
+EN: An observatory that mapped the stars
+FA: رصدخانه‌ای که آسمان را نقشه کرد
+
+15.
+EN: The golden age of the Persian miniature
+FA: عصر طلایی نگارگری ایرانی
+
+16.
+EN: A flowering to rival Italy\'s
+FA: شکوفایی‌ای هم‌سنگ ایتالیا
+
+17.
+EN: The summit of Persian art
+FA: قلهٔ هنر ایرانی
+
+18.
+EN: The Persian miniature
+FA: نگارگری ایرانی
+
+19.
+EN: Under the Timurids, the art of the miniature reached a delicacy and beauty that has never been surpassed.
+FA: زیر دست تیموریان، هنر نگارگری به لطافت و زیبایی‌ای رسید که هرگز از آن پیشی گرفته نشد.
+
+20.
+EN: The legacy reached even further. A prince of this house, Babur, would journey to India and found the great Mughal Empire, carrying the refined Persian culture of the Timurids to the subcontinent, where it would shape a whole civilization and raise wonders like the Taj Mahal.
+FA: این میراث حتی دورتر رفت. شاهزاده‌ای از همین خاندان، بابر، راهی هند شد و امپراتوری بزرگ گورکانی را بنیان نهاد؛ فرهنگ ظریف ایرانیِ تیموریان را با خود به شبه‌قاره برد، جایی که تمدنی تمام را شکل داد و شگفتی‌هایی چون تاج‌محل را برافراشت.
+
+21.
+EN: This has been a glimpse of the Timurids, whose story holds the strange and beautiful contradiction that runs through so much of this age, the terror of the conqueror and the glory of the culture he made possible. From the cruelty of Timur grew one of the most luminous cultural ages the Persian world ever knew.
+FA: این نگاهی بود کوتاه به تیموریان؛ روایتی که آن تناقض غریب و زیبای این روزگار را در خود دارد: وحشتِ فاتح و شکوهِ فرهنگی که خود ممکنش کرد. از دل بی‌رحمی تیمور، یکی از تابناک‌ترین دوران‌های فرهنگی جهان ایرانی رویید.
+
+22.
+EN: In the shimmering domes of Samarkand, the exquisite paintings of Herat, and the poetry and science of their courts, the Timurids left a legacy of beauty that still shines across the centuries, and carried the light of Persian civilization to the ends of the earth.
+FA: در گنبدهای درخشان سمرقند، در نگاره‌های ظریف هرات، و در شعر و دانش دربارهایشان، تیموریان میراثی از زیبایی بر جای گذاشتند که هنوز از پس قرن‌ها می‌درخشد، و روشنایی تمدن ایرانی را تا دورترین کرانه‌های زمین بردند.
+
+23.
+EN: From the harshest of ages, the Persian world raised a renaissance of pure beauty.
+FA: از سخت‌ترین روزگاران، جهان ایرانی رستاخیزی از زیبایی محض برآورد.
+
+24.
+EN: Cyrus the Great & the Achaemenids
+FA: کوروش بزرگ
+
+25.
+EN: The Parthian Empire
+FA: اشکانیان
+
+26.
+EN: The Sasanian Empire
+FA: ساسانیان
+
+27.
+EN: Two Centuries of Silence
+FA: دو قرن سکوت
+
+28.
+EN: The Seljuk Empire
+FA: سلجوقیان
+
+29.
 EN: The Ilkhanate
 FA: ایلخانان
 
-2.
-EN: The Storm from the East
-FA: توفانی از شرق
+30.
+EN: The Timurid Empire
+FA: تیموریان
 
-3.
-EN: In the early thirteenth century, out of the steppes of Mongolia, came the most terrible conquerors the world had ever known. Under Genghis Khan, the Mongols built a war machine of unmatched speed and ferocity, and when their fury turned toward Iran, it fell upon the land like the end of the world.
-FA: در آغاز سدهٔ سیزدهم، از دشت‌های مغولستان، هولناک‌ترین فاتحانی که جهان به خود دیده بود سر رسیدند. مغولان به فرمان چنگیزخان ماشین جنگی‌ای ساخته بودند بی‌همتا در شتاب و درندگی، و چون خشمشان رو به ایران گرداند، بر این سرزمین فرود آمد چون پایان جهان.
+31.
+EN: The Safavid Empire
+FA: صفویان
 
-4.
-EN: The Mongol storm was one of the greatest catastrophes Iran ever endured.
-FA: توفان مغول از بزرگ‌ترین فاجعه‌هایی بود که بر ایران گذشت.
+32.
+EN: The Afsharid Dynasty
+FA: افشاریان
 
-5.
-EN: A wound to a civilization
-FA: زخمی بر پیکر یک تمدن
+33.
+EN: The Zand Dynasty
+FA: زندیان
 
-6.
-EN: In 1258 the Mongols under Hulagu, grandson of Genghis, took Baghdad, the great seat of the Islamic world, and destroyed it in an orgy of violence that shocked the age. The old order of the Islamic east was swept away, and Iran lay prostrate beneath the conquerors.
-FA: در سال ۱۲۵۸ مغولان به فرماندهی هولاکو، نوهٔ چنگیز، بغداد را گرفتند، مرکز بزرگ جهان اسلام، و آن را در خشونتی چنان افسارگسیخته ویران کردند که آن روزگار را تکان داد. نظم کهن شرق اسلامی از میان رفت، و ایران زیر پای فاتحان بر خاک افتاد.
+34.
+EN: The Qajar Dynasty
+FA: قاجاریان
 
-7.
-EN: The Taming of the Conquerors
-FA: رام شدن فاتحان
+35.
+EN: Reza Shah Pahlavi
+FA: رضا شاه
 
-8.
-EN: The civilization they had nearly destroyed rose up and remade them in its image.
-FA: تمدنی که نزدیک بود نابودش کنند، برخاست و آنان را به شکل خود از نو ساخت.
+36.
+EN: Mohammad Reza Shah Pahlavi
+FA: محمدرضا پهلوی
 
-9.
-EN: A flowering from the ashes
-FA: شکوفه‌ای از دل خاکستر
-
-10.
-EN: Persian painting, enriched now by contact with the art of China, entered one of its most beautiful periods. Architecture, history, and science flourished under Mongol patronage. From the ashes of the greatest catastrophe, Iran had conjured a new flowering of its genius.
-FA: نگارگری ایرانی که اکنون از برخورد با هنر چین توانگر شده بود، به یکی از زیباترین دوره‌های خود پا گذاشت. معماری و تاریخ‌نگاری و دانش زیر حمایت مغولان بالیدند. ایران از خاکستر بزرگ‌ترین فاجعه‌اش، شکوفایی تازه‌ای از نبوغ خود بیرون کشید.
-
-11.
-EN: Rashid al-Din
-FA: رشیدالدین فضل‌الله
-
-12.
-EN: The Persian vizier and scholar who wrote a history of the world, and helped transform the Mongol conquerors into patrons of Persian civilization.
-FA: وزیر و دانشمند ایرانی که جامع‌التواریخ را نوشت و در بدل کردن فاتحان مغول به حامیان تمدن ایرانی سهم داشت.
-
-13.
-EN: This has been a glimpse of the Ilkhanate, the age of the Mongols in Iran, a story of catastrophe and, against all odds, of renewal. The Mongol invasion was among the most destructive events the nation ever suffered, and its wounds were deep and lasting.
-FA: این نگاهی بود کوتاه به ایلخانان، روزگار مغول در ایران؛ روایتی از فاجعه و، برخلاف همهٔ انتظارها، از نوزایی. هجوم مغول از ویرانگرترین رویدادهایی بود که بر این ملت گذشت، و زخم‌هایش ژرف و ماندگار بود.
-
-14.
-EN: Even the Mongols, in the end, were conquered by the soul of Iran.
-FA: سرانجام حتی مغولان هم مغلوب جان ایران شدند.
+37.
+EN: Iran Since the Revolution
+FA: ایران پس از انقلاب
