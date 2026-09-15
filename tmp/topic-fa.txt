@@ -1,219 +1,123 @@
 1.
-EN: The Sasanian Empire
-FA: ساسانیان
+EN: Two Centuries of Silence
+FA: دو قرن سکوت
 
 2.
-EN: The Rebirth of Persia
-FA: زایش دوبارهٔ ایران
+EN: The Silence Falls
+FA: سکوت فرود می‌آید
 
 3.
-EN: For nearly five centuries after Alexander, the glory of Cyrus and Darius had faded. Iran was ruled first by Greek kings and then by the Parthians, a capable but loosely bound dynasty. The memory of the great Persian Empire lived on, but its full splendour had dimmed.
-FA: نزدیک پنج قرن پس از اسکندر، شکوه کوروش و داریوش رنگ باخته بود. بر ایران نخست شاهان یونانی فرمان راندند و سپس اشکانیان، سلسله‌ای کاردان اما با بندهایی سست. یاد امپراتوری بزرگ ایران زنده مانده بود، اما درخشش کاملش کم‌فروغ شده بود.
+EN: After the fall
+FA: پس از فروپاشی
 
 4.
-EN: Then, in 224 CE, a prince from the south, from the very heartland of Persia where Cyrus had once ruled, rose up and restored the ancient glory. His name was Ardashir, and he founded the Sasanian dynasty, the last and one of the greatest of the pre-Islamic Persian empires.
-FA: سپس، در سال ۲۲۴ میلادی، شاهزاده‌ای از جنوب، از همان دل سرزمین پارس که روزی کوروش بر آن فرمان می‌راند، برخاست و شکوه باستانی را بازگرداند. نامش اردشیر بود، و سلسلهٔ ساسانی را بنیان نهاد؛ واپسین و یکی از بزرگ‌ترین امپراتوری‌های ایران پیش از اسلام.
+EN: A nation that had spoken to the world for a thousand years fell suddenly quiet.
+FA: ملتی که هزار سال با جهان سخن گفته بود، ناگهان خاموش شد.
 
 5.
-EN: Ardashir I
-FA: اردشیر بابکان
+EN: A world turned over
+FA: جهانی که زیر و رو شد
 
 6.
-EN: Ardashir overthrew the Parthians and founded a new empire that consciously looked back to the Achaemenids of Cyrus and Darius, seeking to restore the true glory of Persia.
-FA: اردشیر اشکانیان را برانداخت و امپراتوری تازه‌ای بنیان نهاد که آگاهانه رو به هخامنشیانِ کوروش و داریوش داشت، و می‌خواست شکوه راستین ایران را بازگرداند.
+EN: The change reached into every corner of life. Arabic became the language of government, of learning, and of the new faith. For a Persian of noble memory, it was a hard and disorienting age, to see the ways of a thousand years set aside, and the language of the conquerors rise in their place.
+FA: دگرگونی به هر گوشه‌ای از زندگی رسید. عربی زبان دیوان شد، زبان دانش، و زبان آیین تازه. برای ایرانی‌ای که یاد گذشته را در سینه داشت، روزگاری بود سخت و گیج‌کننده: می‌دید که راه و رسم هزار ساله را کنار می‌نهند و زبان فاتحان به جای آن بالا می‌آید.
 
 7.
-EN: A conscious return to greatness
-FA: بازگشتی آگاهانه به بزرگی
+EN: The Soul That Would Not Die
+FA: جانی که نمرد
 
 8.
-EN: The Sasanians saw themselves as the true heirs of the ancient Persian kings. They revived the old titles, the old glory, and the old faith, and set out to build an empire worthy of the Achaemenid name. Under them, Persia was reborn as a great power of the world.
-FA: ساسانیان خود را وارثان راستین شاهان باستانی ایران می‌دانستند. لقب‌های کهن، شکوه کهن و آیین کهن را زنده کردند و بر آن شدند امپراتوری‌ای بسازند که درخور نام هخامنشی باشد. زیر فرمان آنان، ایران دوباره چون قدرتی بزرگ در جهان زاده شد.
+EN: The quiet endurance
+FA: پایداری خاموش
 
 9.
-EN: After five centuries, the true glory of Persia rose again.
-FA: پس از پنج قرن، شکوه راستین ایران دوباره برخاست.
+EN: They took our throne, but they could not take our language, nor our memory.
+FA: تخت ما را گرفتند، اما زبان ما را نتوانستند بگیرند، و خاطرهٔ ما را نیز.
 
 10.
-EN: For more than four hundred years the Sasanians would rule a vast and brilliant empire, stretching across the Iranian plateau and beyond, a civilization of magnificent cities, learning, and art that shaped the world far beyond its borders.
-FA: ساسانیان بیش از چهارصد سال بر امپراتوری‌ای پهناور و درخشان فرمان راندند که سراسر فلات ایران و فراتر از آن را در بر می‌گرفت؛ تمدنی از شهرهای باشکوه و دانش و هنر، که جهان را بسی فراتر از مرزهای خود شکل داد.
+EN: The stirrings of revival
+FA: نخستین جنبش‌های بیداری
 
 11.
-EN: The Faith of the Sacred Fire
-FA: آیین آتش مقدس
+EN: The fall of the Sasanians; the silence begins
+FA: فروپاشی ساسانیان؛ سکوت آغاز می‌شود
 
 12.
-EN: The soul of Sasanian Iran
-FA: جان ایران ساسانی
+EN: A new age dawns; Persian influence rises again
+FA: روزگاری تازه سر می‌رسد؛ نفوذ ایرانی دوباره بالا می‌گیرد
 
 13.
-EN: At the very heart of the Sasanian world lay a faith of great antiquity and beauty: Zoroastrianism, the religion of the prophet Zarathustra, which the Persians had followed for more than a thousand years. Under the Sasanians it became the official faith of the empire, woven into the state itself.
-FA: در دل جهان ساسانی آیینی نشسته بود کهن و زیبا: دین زرتشتی، آیین زرتشت پیامبر، که ایرانیان بیش از هزار سال آن را پیروی کرده بودند. زیر فرمان ساسانیان به آیین رسمی امپراتوری بدل شد و در تار و پود خود دولت بافته شد.
+EN: Persian dynasties rule once more in the east
+FA: سلسله‌های ایرانی دوباره در شرق فرمان می‌رانند
 
 14.
-EN: It is one of the oldest revealed religions in the world, and among the most influential. It taught of a single supreme God, Ahura Mazda, the Wise Lord, and of the eternal struggle between truth and light on one side, and falsehood and darkness on the other, a struggle in which every person must choose their part.
-FA: این آیین از کهن‌ترین دین‌های وحیانی جهان است و از اثرگذارترین‌ها. از خدایی یگانه و برتر سخن می‌گفت، اهورامزدا، خداوند دانا، و از نبردی جاودانه میان راستی و روشنایی از یک سو، و دروغ و تاریکی از سوی دیگر؛ نبردی که هر کس باید در آن سهم خود را برگزیند.
+EN: The Persian language and spirit begin to bloom anew
+FA: زبان و روح ایرانی از نو شکفتن می‌گیرد
 
 15.
-EN: Good thoughts, good words, good deeds
-FA: پندار نیک، گفتار نیک، کردار نیک
+EN: The Poet Who Saved a Language
+FA: شاعری که زبانی را نجات داد
 
 16.
-EN: Good thoughts, good words, good deeds.
-FA: پندار نیک، گفتار نیک، کردار نیک.
+EN: Ferdowsi, c. 977 - 1010
+FA: فردوسی، حدود ۹۷۷ تا ۱۰۱۰
 
 17.
-EN: The sacred fire
-FA: آتش مقدس
+EN: Every people needs a voice to speak its soul, and Iran found hers in one of the greatest poets who ever lived. In the eastern city of Tus, a nobleman set himself a task that would consume more than thirty years of his life, and that would give Iran back its very self.
+FA: هر ملتی صدایی می‌خواهد تا جانش را بر زبان آورد، و ایران صدای خود را در یکی از بزرگ‌ترین شاعران تاریخ یافت. در شهر توس، در شرق ایران، مردی از خاندان دهقانان کاری را بر دوش گرفت که بیش از سی سال از عمرش را برد، و ایران را به خودش بازگرداند.
 
 18.
-EN: Great fire temples burned across the empire, their flames a symbol of the divine light. Some, it was said, had burned without pause for centuries.
-FA: آتشکده‌های بزرگ سراسر امپراتوری فروزان بودند و شعله‌هایشان نماد روشنایی ایزدی بود. می‌گفتند برخی از آنها قرن‌ها بی‌آنکه لحظه‌ای خاموش شوند سوخته‌اند.
+EN: Ferdowsi of Tus
+FA: فردوسیِ توس
 
 19.
-EN: A faith worthy of its own telling
-FA: آیینی که روایت خودش را می‌طلبد
+EN: For over thirty years Ferdowsi labored on the Shahnameh, giving his life to preserve the stories, and the language, of his people.
+FA: فردوسی بیش از سی سال بر شاهنامه رنج برد و عمر خود را داد تا داستان‌ها، و زبان، مردمش را نگاه دارد.
 
 20.
-EN: Zoroastrianism is one of the great treasures of Iranian heritage, and its full story, its prophet, its scripture, and its enduring influence, deserves a telling all its own, which it will one day have.
-FA: آیین زرتشتی از گنجینه‌های بزرگ میراث ایرانی است، و روایت کامل آن، پیامبرش، کتابش و اثر ماندگارش، شایستهٔ حکایتی است از آنِ خود؛ حکایتی که روزی خواهد داشت.
+EN: A book to hold a nation
+FA: کتابی که ملتی را در خود نگاه داشت
 
 21.
-EN: The Rival of Rome
-FA: هماورد روم
+EN: The Shahnameh is one of the longest and greatest epic poems ever composed by a single hand, nearly sixty thousand verses, a whole world of kings and warriors, love and war, tragedy and glory. But it was far more than a collection of stories. It was an act of preservation, and of defiance.
+FA: شاهنامه از بلندترین و بزرگ‌ترین حماسه‌هایی است که به دست یک تن سروده شده؛ نزدیک شصت هزار بیت، جهانی تمام از شاهان و پهلوانان، از عشق و جنگ، از سوگ و شکوه. اما این کتاب بسی بیش از مجموعه‌ای از داستان‌ها بود. کاری بود از جنس نگاهبانی، و از جنس ایستادگی.
 
 22.
-EN: For over four hundred years, the Sasanian Empire stood as the great rival of Rome, and later of its successor, the Byzantine Empire. These were the two superpowers of the ancient world, and between them stretched a frontier contested in war after war across the centuries.
-FA: بیش از چهارصد سال، امپراتوری ساسانی هماورد بزرگ روم بود و سپس هماورد جانشینش، امپراتوری بیزانس. این دو ابرقدرت جهان باستان بودند، و میانشان مرزی کشیده شده بود که قرن‌ها جنگ پس از جنگ بر سرش درگرفت.
+EN: Years of his life given to the work
+FA: سال از عمرش که پای این کار گذاشت
 
 23.
-EN: Shapur I
-FA: شاپور یکم
+EN: Verses in the Shahnameh
+FA: بیت در شاهنامه
 
 24.
-EN: Shapur the Great defeated three Roman emperors and captured one, Valerian, in battle. His victories are carved into the rock reliefs of Persia, where they endure to this day.
-FA: شاپور بزرگ سه امپراتور روم را شکست داد و یکی از آنان، والرین، را در نبرد به اسارت گرفت. پیروزی‌هایش بر نقش‌برجسته‌های سنگی ایران کنده شده و تا امروز بر جا مانده است.
+EN: Years it has been loved, unbroken
+FA: سال که بی‌وقفه دوستش داشته‌اند
 
 25.
-EN: Roman emperors defeated by Shapur I
-FA: امپراتور رومی که شاپور یکم شکست داد
+EN: Book that saved a language
+FA: کتابی که زبانی را نجات داد
 
 26.
-EN: The Roman emperor Valerian captured
-FA: اسارت والرین، امپراتور روم
+EN: There is a line, long attributed to him, that captures all he did and all he hoped. Having labored so long, he looked upon his finished work and understood what he had built, a monument no conqueror could throw down.
+FA: بیتی هست که دیرزمانی به او نسبت داده‌اند و همهٔ آنچه کرد و همهٔ آنچه امید داشت در آن گرد آمده است. پس از آن‌همه رنج، به کار به‌پایان‌رسیدهٔ خویش نگریست و دریافت چه برافراشته است: بنایی که هیچ فاتحی توان فرو ریختنش را ندارد.
 
 27.
-EN: Years as a great world power
-FA: سال در جایگاه یک قدرت بزرگ جهانی
+EN: I have suffered greatly these thirty years, but I have revived the Persians with this Persian tongue.
+FA: بسی رنج بردم در این سال سی\u200Cعجم زنده کردم بدین پارسی
 
 28.
-EN: Its equal and rival for centuries
-FA: هماورد و رقیبش در طول قرن‌ها
+EN: The Voice Returns
+FA: صدا بازمی‌گردد
 
 29.
-EN: A golden age of civilization
-FA: عصر طلایی یک تمدن
+EN: The legacy
+FA: میراث
 
 30.
-EN: The Sasanian centuries were a golden age of Persian civilization. Their capital, Ctesiphon, was one of the greatest cities in the world, home to the mighty arch of Taq Kasra, the largest brick vault ever built, which still stands after seventeen hundred years.
-FA: قرن‌های ساسانی عصر طلایی تمدن ایرانی بودند. پایتختشان تیسفون یکی از بزرگ‌ترین شهرهای جهان بود، خانهٔ طاق کسری، آن طاق سترگ که بزرگ‌ترین طاق آجری ساخته‌شدهٔ تاریخ است و پس از هزار و هفتصد سال هنوز ایستاده.
+EN: The two centuries of silence ended, and Iran has never stopped speaking since.
+FA: دو قرن سکوت به پایان رسید، و ایران از آن پس هرگز از سخن گفتن باز نایستاد.
 
 31.
-EN: From Rome to China, the world knew the splendour of Sasanian Persia.
-FA: از روم تا چین، جهان شکوه ایران ساسانی را می‌شناخت.
-
-32.
-EN: The Last Glory and the Long War
-FA: واپسین شکوه و جنگ دراز
-
-33.
-EN: The empire reached its final height under the great king Khosrow the First, remembered as Anushirvan, the Immortal Soul, a byword for justice and wisdom for centuries after. Under him the empire was reformed, learning flourished, and Persia stood at the very peak of its power and prestige.
-FA: امپراتوری در روزگار خسرو یکم به واپسین اوج خود رسید؛ همان که او را انوشیروان خواندند، یعنی دارای روان جاودان، و قرن‌ها پس از آن نامش مترادف داد و خرد ماند. زیر فرمان او امپراتوری اصلاح شد، دانش بالید، و ایران در بلندترین نقطهٔ قدرت و اعتبار خود ایستاد.
-
-34.
-EN: Khosrow Anushirvan
-FA: خسرو انوشیروان
-
-35.
-EN: Khosrow the First was remembered across the East as the model of the just and wise king. Under him, Sasanian Persia reached its golden height.
-FA: خسرو یکم را در سراسر شرق نمونهٔ شاه دادگر و خردمند می‌دانستند. در روزگار او، ایران ساسانی به اوج طلایی خود رسید.
-
-36.
-EN: The war that exhausted two empires
-FA: جنگی که دو امپراتوری را از پا انداخت
-
-37.
-EN: The last great war with Byzantium begins
-FA: واپسین جنگ بزرگ با بیزانس آغاز می‌شود
-
-38.
-EN: Persia conquers Jerusalem and the Holy Land
-FA: ایران اورشلیم و سرزمین مقدس را می‌گیرد
-
-39.
-EN: The Sasanian army reaches Constantinople
-FA: سپاه ساسانی به قسطنطنیه می‌رسد
-
-40.
-EN: The war collapses; both empires lie exhausted
-FA: جنگ فرو می‌پاشد؛ هر دو امپراتوری از پا افتاده‌اند
-
-41.
-EN: Then the tide turned. The Byzantine emperor struck back and carried the war deep into the heart of Persia. When at last the fighting ended, after twenty six years, both great empires were utterly exhausted, their treasuries empty, their armies bled white, their people weary of endless war.
-FA: سپس ورق برگشت. امپراتور بیزانس پاسخ داد و جنگ را تا دل ایران پیش برد. وقتی سرانجام پس از بیست و شش سال نبرد به پایان رسید، هر دو امپراتوری بزرگ یکسره از پا افتاده بودند: خزانه‌ها تهی، سپاه‌ها خون‌باخته، و مردم از جنگ بی‌پایان خسته.
-
-42.
-EN: The two great powers of the world had fought each other to the point of ruin.
-FA: دو قدرت بزرگ جهان چندان با هم جنگیدند تا هر دو به ویرانی رسیدند.
-
-43.
-EN: Neither empire knew it, but a new power was rising in the deserts of Arabia to the south, one that would sweep away the exhausted old order and change the world forever.
-FA: هیچ‌یک از دو امپراتوری نمی‌دانست، اما در بیابان‌های عربستان در جنوب، قدرتی تازه سر برمی‌آورد؛ قدرتی که نظم کهنه و فرسوده را از میان برمی‌داشت و جهان را برای همیشه دگرگون می‌کرد.
-
-44.
-EN: The Coming of Islam
-FA: آمدن اسلام
-
-45.
-EN: In the deserts of Arabia, a new faith had been born. Islam had united the Arab tribes as never before, and filled them with a burning purpose. In the 630s, the armies of the young Muslim state burst out of Arabia, and they turned toward the two exhausted empires to the north.
-FA: در بیابان‌های عربستان آیینی تازه زاده شده بود. اسلام قبایل عرب را چنان یکپارچه کرد که پیش‌تر هرگز نشده بودند، و آنان را از هدفی سوزان آکند. در دههٔ ۶۳۰ میلادی، سپاهیان دولت جوان مسلمان از عربستان بیرون زدند و رو به دو امپراتوری خسته در شمال آوردند.
-
-46.
-EN: The Sasanian Empire, drained by its long war with Byzantium and weakened by years of turmoil at its court, was not the power it had been. Yet few could have imagined how swiftly the ancient empire would fall.
-FA: امپراتوری ساسانی که جنگ دراز با بیزانس تهی‌اش کرده بود و سال‌ها آشوب در دربار ناتوانش، دیگر آن قدرت پیشین نبود. با این همه، کمتر کسی می‌توانست تصور کند این امپراتوری کهن با چه شتابی فرو خواهد ریخت.
-
-47.
-EN: The battle that decided an empire
-FA: نبردی که سرنوشت یک امپراتوری را رقم زد
-
-48.
-EN: The decisive blow came at the battle of Qadisiyyah, around the year 636, where the main Sasanian army met the Arab forces. After days of hard fighting, the Persian army was broken. The road to the capital lay open, and the great city of Ctesiphon fell to the conquerors.
-FA: ضربهٔ سرنوشت‌ساز در نبرد قادسیه فرود آمد، حدود سال ۶۳۶ میلادی، آنجا که سپاه اصلی ساسانی با نیروهای عرب روبه‌رو شد. پس از روزها نبرد سخت، سپاه ایران شکست. راه پایتخت باز شد، و شهر بزرگ تیسفون به دست فاتحان افتاد.
-
-49.
-EN: The battle of Qadisiyyah breaks the Persian army
-FA: نبرد قادسیه سپاه ایران را در هم می‌شکند
-
-50.
-EN: The capital, Ctesiphon, falls
-FA: پایتخت، تیسفون، فرو می‌افتد
-
-51.
-EN: The battle of Nahavand, the final defeat
-FA: نبرد نهاوند، شکست نهایی
-
-52.
-EN: The last Sasanian king dies; the empire ends
-FA: واپسین شهریار ساسانی می‌میرد؛ امپراتوری به پایان می‌رسد
-
-53.
-EN: The end of an age
-FA: پایان یک دوران
-
-54.
-EN: An empire that had rivalled Rome for four hundred years had fallen in a single generation.
-FA: امپراتوری‌ای که چهارصد سال هماورد روم بود، در فاصلهٔ یک نسل فرو ریخت.
-
-55.
-EN: The empire fell, but the soul of Iran endured, and would one day speak again.
-FA: امپراتوری فرو ریخت، اما جان ایران ماند، و روزی دوباره به سخن آمد.
+EN: A people held their soul through the long silence, and a poet gave them back their voice.
+FA: مردمی جان خود را در سکوتی دراز نگاه داشتند، و شاعری صدایشان را به آنان بازگرداند.
