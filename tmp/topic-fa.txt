@@ -1,123 +1,151 @@
 1.
-EN: Two Centuries of Silence
-FA: دو قرن سکوت
+EN: The Parthian Empire
+FA: اشکانیان
 
 2.
-EN: The Silence Falls
-FA: سکوت فرود می‌آید
+EN: Iran Under Foreign Kings
+FA: ایران زیر فرمان شاهان بیگانه
 
 3.
-EN: After the fall
-FA: پس از فروپاشی
+EN: After Alexander
+FA: پس از اسکندر
 
 4.
-EN: A nation that had spoken to the world for a thousand years fell suddenly quiet.
-FA: ملتی که هزار سال با جهان سخن گفته بود، ناگهان خاموش شد.
+EN: For a time, Greek kings sat where the Persian kings of kings had ruled. Greek became the language of the court, Greek cities rose across the plateau, and the proud heartland of Cyrus and Darius answered to masters from a distant western land.
+FA: چندی، شاهان یونانی بر جایی نشستند که پیش‌تر شاهنشاهان ایران فرمان رانده بودند. یونانی زبان دربار شد، شهرهای یونانی بر فلات سر برآوردند، و دل سربلند سرزمین کوروش و داریوش به اربابانی از دیاری دور در غرب پاسخ می‌داد.
 
 5.
-EN: A world turned over
-FA: جهانی که زیر و رو شد
+EN: The land of Cyrus, for the first time, obeyed foreign kings.
+FA: سرزمین کوروش، برای نخستین بار، از شاهان بیگانه فرمان برد.
 
 6.
-EN: The change reached into every corner of life. Arabic became the language of government, of learning, and of the new faith. For a Persian of noble memory, it was a hard and disorienting age, to see the ways of a thousand years set aside, and the language of the conquerors rise in their place.
-FA: دگرگونی به هر گوشه‌ای از زندگی رسید. عربی زبان دیوان شد، زبان دانش، و زبان آیین تازه. برای ایرانی‌ای که یاد گذشته را در سینه داشت، روزگاری بود سخت و گیج‌کننده: می‌دید که راه و رسم هزار ساله را کنار می‌نهند و زبان فاتحان به جای آن بالا می‌آید.
+EN: A people from the steppe
+FA: مردمی از دشت‌های شمال
 
 7.
-EN: The Soul That Would Not Die
-FA: جانی که نمرد
+EN: But Iran would not stay in foreign hands. From the northeast, from the wide grasslands beyond the Caspian, came a people of hardy nomadic horsemen: the Parni, led by a chief named Arsaces. Around the middle of the third century BCE, they swept into the region of Parthia and threw off Greek rule.
+FA: اما ایران در دست بیگانه نماند. از شمال شرق، از علفزارهای پهناور آن سوی خزر، مردمی آمدند از سوارکاران کوچ‌نشین و سرسخت: پَرنی‌ها، به سرکردگی مردی به نام اشک. حدود میانهٔ سدهٔ سوم پیش از میلاد به سرزمین پارت تاختند و یوغ یونانی را به کناری افکندند.
 
 8.
-EN: The quiet endurance
-FA: پایداری خاموش
+EN: From that homeland the dynasty took its name, and Arsaces gave his to the line of kings who followed, the Arsacids. From these beginnings, a small rebellion on the edge of a Greek empire, would grow one of the great powers of the ancient world.
+FA: سلسله نام خود را از همان سرزمین گرفت، و اشک نامش را به تبار شاهانی داد که پس از او آمدند: اشکانیان. از این آغاز کوچک، شورشی در حاشیهٔ یک امپراتوری یونانی، یکی از قدرت‌های بزرگ جهان باستان برخاست.
 
 9.
-EN: They took our throne, but they could not take our language, nor our memory.
-FA: تخت ما را گرفتند، اما زبان ما را نتوانستند بگیرند، و خاطرهٔ ما را نیز.
+EN: Arsaces I, chief of the Parni, founded the dynasty that would drive the Greeks from Iran and rule for nearly five centuries.
+FA: ارشک یکم، سردار پارنی‌ها، سلسله‌ای را بنیان گذاشت که یونانیان را از ایران بیرون راند و نزدیک پنج قرن فرمان راند.
 
 10.
-EN: The stirrings of revival
-FA: نخستین جنبش‌های بیداری
+EN: The Reconquest of a Homeland
+FA: بازپس‌گیری یک سرزمین
 
 11.
-EN: The fall of the Sasanians; the silence begins
-FA: فروپاشی ساسانیان؛ سکوت آغاز می‌شود
+EN: What began as a frontier revolt became, over the generations, the reconquest of an entire empire. The Parthian kings pushed steadily westward and southward, city by city and province by province, driving back the weakening Greek Seleucids and restoring Iranian rule over the ancient Persian lands.
+FA: آنچه شورشی مرزی آغاز شد، در گذر نسل‌ها به بازپس‌گیری یک امپراتوری تمام بدل شد. شاهان اشکانی پیوسته به غرب و جنوب پیش رفتند، شهر به شهر و ولایت به ولایت، سلوکیانِ رو به ناتوانی را عقب راندند و فرمانروایی ایرانی را بر سرزمین‌های کهن پارس بازگرداندند.
 
 12.
-EN: A new age dawns; Persian influence rises again
-FA: روزگاری تازه سر می‌رسد؛ نفوذ ایرانی دوباره بالا می‌گیرد
+EN: The greatest of these early kings was Mithridates the First, who in the second century BCE transformed the Parthian realm from a kingdom into an empire, taking the rich lands of Mesopotamia and the title, once more, of a great Iranian king.
+FA: بزرگ‌ترینِ این شاهان نخستین، مهرداد یکم بود که در سدهٔ دوم پیش از میلاد قلمرو اشکانی را از یک پادشاهی به یک امپراتوری بدل کرد؛ سرزمین‌های حاصلخیز میان‌رودان را گرفت و بار دیگر لقب شاه بزرگ ایران را از آن خود ساخت.
 
 13.
-EN: Persian dynasties rule once more in the east
-FA: سلسله‌های ایرانی دوباره در شرق فرمان می‌رانند
+EN: Arsaces founds the Parthian state
+FA: اشک دولت اشکانی را بنیان می‌نهد
 
 14.
-EN: The Persian language and spirit begin to bloom anew
-FA: زبان و روح ایرانی از نو شکفتن می‌گیرد
+EN: Mithridates I begins the great expansion
+FA: مهرداد یکم گسترش بزرگ را آغاز می‌کند
 
 15.
-EN: The Poet Who Saved a Language
-FA: شاعری که زبانی را نجات داد
+EN: The Parthians take Mesopotamia and Babylon
+FA: اشکانیان میان‌رودان و بابل را می‌گیرند
 
 16.
-EN: Ferdowsi, c. 977 - 1010
-FA: فردوسی، حدود ۹۷۷ تا ۱۰۱۰
+EN: Parthia stands as a great world power
+FA: اشکانیان در جایگاه یک قدرت بزرگ جهانی می‌ایستند
 
 17.
-EN: Every people needs a voice to speak its soul, and Iran found hers in one of the greatest poets who ever lived. In the eastern city of Tus, a nobleman set himself a task that would consume more than thirty years of his life, and that would give Iran back its very self.
-FA: هر ملتی صدایی می‌خواهد تا جانش را بر زبان آورد، و ایران صدای خود را در یکی از بزرگ‌ترین شاعران تاریخ یافت. در شهر توس، در شرق ایران، مردی از خاندان دهقانان کاری را بر دوش گرفت که بیش از سی سال از عمرش را برد، و ایران را به خودش بازگرداند.
+EN: From horsemen of the steppe rose the empire that made Iran Iranian again.
+FA: از سوارکاران دشت، امپراتوری‌ای برخاست که ایران را دوباره ایرانی کرد.
 
 18.
-EN: Ferdowsi of Tus
-FA: فردوسیِ توس
+EN: The Wall Against Rome
+FA: دیوار در برابر روم
 
 19.
-EN: For over thirty years Ferdowsi labored on the Shahnameh, giving his life to preserve the stories, and the language, of his people.
-FA: فردوسی بیش از سی سال بر شاهنامه رنج برد و عمر خود را داد تا داستان‌ها، و زبان، مردمش را نگاه دارد.
+EN: Rome, used to conquering all before it, found in Parthia an equal it could not overcome. Again and again the legions marched east, and again and again the Parthians turned them back. The Euphrates became the wall against which Roman ambition broke.
+FA: روم که به فتح هر چه پیش رویش بود عادت داشت، در اشکانیان هماوردی یافت که از پسش برنیامد. بارها لژیون‌ها به سوی شرق لشکر کشیدند و بارها اشکانیان بازشان گرداندند. فرات دیواری شد که جاه‌طلبی روم بر آن شکست.
 
 20.
-EN: A book to hold a nation
-FA: کتابی که ملتی را در خود نگاه داشت
+EN: The disaster at Carrhae
+FA: فاجعهٔ حرّان
 
 21.
-EN: The Shahnameh is one of the longest and greatest epic poems ever composed by a single hand, nearly sixty thousand verses, a whole world of kings and warriors, love and war, tragedy and glory. But it was far more than a collection of stories. It was an act of preservation, and of defiance.
-FA: شاهنامه از بلندترین و بزرگ‌ترین حماسه‌هایی است که به دست یک تن سروده شده؛ نزدیک شصت هزار بیت، جهانی تمام از شاهان و پهلوانان، از عشق و جنگ، از سوگ و شکوه. اما این کتاب بسی بیش از مجموعه‌ای از داستان‌ها بود. کاری بود از جنس نگاهبانی، و از جنس ایستادگی.
+EN: The battle of Carrhae
+FA: نبرد حرّان
 
 22.
-EN: Years of his life given to the work
-FA: سال از عمرش که پای این کار گذاشت
+EN: The Roman commander slain
+FA: سردار رومی که کشته شد
 
 23.
-EN: Verses in the Shahnameh
-FA: بیت در شاهنامه
+EN: Years Parthia held Rome at bay
+FA: سال که اشکانیان روم را پشت مرز نگاه داشتند
 
 24.
-EN: Years it has been loved, unbroken
-FA: سال که بی‌وقفه دوستش داشته‌اند
+EN: The frontier Rome could not cross
+FA: مرزی که روم نتوانست از آن بگذرد
 
 25.
-EN: Book that saved a language
-FA: کتابی که زبانی را نجات داد
+EN: The Parthian shot
+FA: تیر پارتی
 
 26.
-EN: There is a line, long attributed to him, that captures all he did and all he hoped. Having labored so long, he looked upon his finished work and understood what he had built, a monument no conqueror could throw down.
-FA: بیتی هست که دیرزمانی به او نسبت داده‌اند و همهٔ آنچه کرد و همهٔ آنچه امید داشت در آن گرد آمده است. پس از آن‌همه رنج، به کار به‌پایان‌رسیدهٔ خویش نگریست و دریافت چه برافراشته است: بنایی که هیچ فاتحی توان فرو ریختنش را ندارد.
+EN: They mastered the art of striking hardest at the moment they seemed to flee.
+FA: هنر آنان این بود که سخت‌ترین ضربه را درست هنگامی بزنند که به گریز می‌مانستند.
 
 27.
-EN: I have suffered greatly these thirty years, but I have revived the Persians with this Persian tongue.
-FA: بسی رنج بردم در این سال سی\u200Cعجم زنده کردم بدین پارسی
+EN: Crossroads of the World
+FA: چهارراه جهان
 
 28.
-EN: The Voice Returns
-FA: صدا بازمی‌گردد
+EN: The Parthian peace
+FA: آرامش اشکانی
 
 29.
-EN: The legacy
-FA: میراث
+EN: The Parthian Empire sat astride the greatest trade route in the world: the Silk Road, the long ribbon of commerce that linked the empires of Rome and China. Through Parthian lands passed the silk of the east and the gold of the west, and the empire grew rich as the great middleman of the world.
+FA: امپراتوری اشکانی بر بزرگ‌ترین راه بازرگانی جهان نشسته بود: جادهٔ ابریشم، آن نوار دراز داد و ستد که امپراتوری روم و چین را به هم می‌بست. ابریشم شرق و زر غرب از خاک اشکانی می‌گذشت، و امپراتوری در مقام واسطهٔ بزرگ جهان توانگر شد.
 
 30.
-EN: The two centuries of silence ended, and Iran has never stopped speaking since.
-FA: دو قرن سکوت به پایان رسید، و ایران از آن پس هرگز از سخن گفتن باز نایستاد.
+EN: The Silk Road
+FA: جادهٔ ابریشم
 
 31.
-EN: A people held their soul through the long silence, and a poet gave them back their voice.
-FA: مردمی جان خود را در سکوتی دراز نگاه داشتند، و شاعری صدایشان را به آنان بازگرداند.
+EN: A looser kind of empire
+FA: امپراتوری‌ای با بندهای سست‌تر
+
+32.
+EN: For all its strength against Rome, the empire was often divided within, and its long centuries were marked by civil wars and contested successions that slowly wore at its foundations.
+FA: با همهٔ توانی که در برابر روم داشت، امپراتوری اغلب در درون خود دوپاره بود، و قرن‌های بلندش را جنگ‌های داخلی و جانشینی‌های مورد نزاع نشان‌دار کرد؛ چیزی که به‌آرامی بنیادش را سایید.
+
+33.
+EN: The Passing of the Torch
+FA: سپردن مشعل
+
+34.
+EN: After nearly five hundred years, the Parthian Empire grew weary. Weakened by endless wars with Rome and by its own internal divisions, the once mighty realm was ripe for change. And change came, as it so often did in Iran, from the ancient heartland of Persia in the south.
+FA: پس از نزدیک پانصد سال، امپراتوری اشکانی خسته شد. جنگ‌های بی‌پایان با روم و تفرقهٔ درونی ناتوانش کرده بود، و آن قلمروِ روزگاری نیرومند آمادهٔ دگرگونی بود. و دگرگونی، چنان‌که در ایران بارها روی داده، از دل سرزمین کهن پارس در جنوب آمد.
+
+35.
+EN: There, a prince named Ardashir rose in rebellion. In 224 CE he defeated the last Parthian king in battle, and upon the ruins of the Arsacid realm he raised a new empire, the Sasanian, which would carry Persia to fresh heights of glory.
+FA: آنجا شاهزاده‌ای به نام اردشیر سر به شورش برداشت. در سال ۲۲۴ میلادی واپسین شاه اشکانی را در نبرد شکست داد، و بر ویرانه‌های قلمرو اشکانی امپراتوری تازه‌ای برافراشت: ساسانیان، که پارس را به بلندی‌های تازه‌ای از شکوه می‌رساند.
+
+36.
+EN: One Iranian empire gave way to another, and the flame passed on.
+FA: امپراتوری‌ای ایرانی جای خود را به دیگری داد، و شعله دست به دست شد.
+
+37.
+EN: They kept the flame of Iran burning through the long centuries between two golden ages, and they handed it on, undimmed, to those who followed. Without the horsemen of Parthia, the story of Iran might have ended long ago.
+FA: آنان شعلهٔ ایران را در قرن‌های دراز میان دو عصر طلایی فروزان نگاه داشتند و بی‌آنکه از تابش آن کاسته شود به آیندگان سپردند. اگر سوارکاران پارت نبودند، شاید داستان ایران دیرزمانی پیش به پایان رسیده بود.
+
+38.
+EN: They kept the flame of Iran alive, and passed it on undimmed.
+FA: شعلهٔ ایران را زنده نگاه داشتند، و بی‌آنکه کم‌فروغ شود به دست بعدی‌ها سپردند.
