@@ -1,143 +1,199 @@
 1.
-EN: The Qajar Dynasty
-FA: قاجاریان
+EN: Cyrus the Great
+FA: کوروش بزرگ
 
 2.
-EN: A New Dynasty from the North
-FA: سلسله‌ای تازه از شمال
+EN: A King Is Born
+FA: شاهی زاده می‌شود
 
 3.
-EN: After the gentle Zand dynasty fell, a harder power rose to take its place. Agha Mohammad Khan, chief of the Qajar tribe of the north, fought his way to mastery over Iran and had himself crowned Shah in the last years of the eighteenth century.
-FA: پس از فروپاشی سلسلهٔ مهربان زند، قدرتی سخت‌تر جایش را گرفت. آقامحمدخان، سرکردهٔ ایل قاجار در شمال، با جنگ راه خود را تا فرمانروایی بر ایران باز کرد و در واپسین سال‌های سدهٔ هجدهم تاج بر سر گذاشت.
+EN: c. 600 BCE
+FA: حدود ۶۰۰ پیش از میلاد
 
 4.
-EN: He was a ruler of iron will and, by all accounts, fearsome cruelty, forged in a lifetime of struggle and captivity. But he reunited a country that had again fallen into division, and he founded a dynasty that would rule Iran for well over a century.
-FA: فرمانروایی بود با ارادهٔ آهنین و، به گواه همهٔ روایت‌ها، بی‌رحمی‌ای هولناک؛ کسی که عمری کشمکش و اسارت او را چنین ساخته بود. اما کشوری را که دوباره به تفرقه افتاده بود یکپارچه کرد، و سلسله‌ای بنیان نهاد که بیش از یک قرن بر ایران فرمان راند.
+EN: Cyrus the Great, founder of the Persian Empire, as imagined in later ages.
+FA: کوروش بزرگ، بنیان‌گذار شاهنشاهی ایران، آن‌گونه که در روزگاران بعد تصویرش کرده‌اند.
 
 5.
-EN: The founder
-FA: بنیان‌گذار
+EN: The legend of the infant king
+FA: افسانهٔ شاهِ نوزاد
 
 6.
-EN: A capital named Tehran
-FA: پایتختی به نام تهران
+EN: This boy, the son of a herdsman as we supposed, is in truth the grandson of the king.
+FA: این پسر، که گمان می‌کردیم فرزند یک چوپان است، در حقیقت نوهٔ شاه است.
 
 7.
-EN: It was the Qajars who chose as their capital a modest town in the north of Iran, one that would grow, over their long rule and the ages after, into the great metropolis of the nation. That town was Tehran, and it has been the heart of Iran ever since.
-FA: این قاجارها بودند که شهرکی ساده در شمال ایران را پایتخت خود کردند؛ شهرکی که در طول فرمانروایی بلندشان و روزگاران پس از آن، به کلان‌شهر بزرگ این کشور بدل شد. آن شهرک تهران بود، و از آن روز تا امروز قلب ایران مانده است.
+EN: Behind the legend lies the record. Cyrus was born of the royal house of Persia, the Achaemenid line, son of Cambyses, king of Anshan, and, by his mother Mandane, grandson of the Median king himself. He was heir to a small throne, but through his veins ran the blood of kings.
+FA: پشت این افسانه، روایت تاریخی نیز قرار دارد. کوروش از خاندان شاهی پارس و از دودمان هخامنشی بود؛ پسر کمبوجیه، شاه انشان، و از سوی مادرش ماندانا، نوهٔ آستیاگ، شاه ماد. او وارث تختی کوچک بود، اما خون شاهان در رگ‌هایش جاری بود.
 
 8.
-EN: Under the Qajars, Tehran became the capital it remains to this day.
-FA: در روزگار قاجار، تهران پایتخت شد و تا امروز مانده است.
+EN: A world waiting to be remade
+FA: جهانی در انتظار دگرگونی
 
 9.
-EN: The crown passed to Fath Ali Shah, whose long reign was famous for its splendour and ceremony, its jewelled court and its portraits of a bearded king in golden robes. But beyond the glitter of the court, storm clouds were gathering on the horizon.
-FA: تاج به فتحعلی‌شاه رسید، که سلطنت بلندش به شکوه و تشریفات نامدار بود؛ به درباری پر از جواهر و به آن نگاره‌های شاهی ریش‌بلند در جامهٔ زرین. اما آن‌سوی درخشش دربار، ابرهای توفان بر افق گرد می‌آمدند.
+EN: The Achaemenid Empire at its height, from the Aegean and Egypt to the Indus. Its capital, Pasargadae, is marked in gold.
+FA: شاهنشاهی هخامنشی در اوج خود، از دریای اژه و مصر تا رود سند. پایتختش، پاسارگاد، با رنگ طلایی نشان داده شده.
 
 10.
-EN: Caught Between Empires
-FA: گرفتار میان دو امپراتوری
+EN: From a small kingdom of herders, he would build the greatest empire the world had known.
+FA: او از پادشاهی کوچکِ چوپانان، بزرگ‌ترین امپراتوری جهانِ آن روز را بنا کرد.
 
 11.
-EN: The nineteenth century was the age of the great European empires, and Iran found itself caught between two of the hungriest. To the north loomed the vast and expanding empire of Russia. To the east and south stretched the power of the British, masters of India.
-FA: سدهٔ نوزدهم روزگار امپراتوری‌های بزرگ اروپایی بود، و ایران خود را گرفتار میان دو تا از گرسنه‌ترینشان یافت. در شمال، امپراتوری پهناور و روبه‌گسترش روسیه سایه انداخته بود. در شرق و جنوب، قدرت بریتانیا کشیده شده بود؛ اربابان هند.
+EN: The Rise Against the Medes
+FA: خیزش در برابر مادها
 
 12.
-EN: Between these two giants, Iran was squeezed, courted, and pressured, its fate bound up in a great game of empires that it had not the strength to control. It was a hard and humbling position for a proud and ancient nation.
-FA: ایران میان این دو غول فشرده شد، وعده شنید و زیر فشار رفت؛ سرنوشتش گره خورده بود به بازی بزرگ امپراتوری‌ها، بازی‌ای که توان مهارش را نداشت. برای ملتی سربلند و کهن، جایگاهی بود سخت و خفت‌بار.
+EN: That moment came around 553 BCE, when Cyrus raised the standard of revolt. The Persians were fewer and poorer than their Median overlords, but they were hardy mountain people, and they had a leader unlike any they had known.
+FA: آن فرصت سرانجام حدود ۵۵۳ پیش از میلاد فرا رسید؛ زمانی که کوروش پرچم شورش را برافراشت. پارسیان از فرمانروایان مادی خود کم‌شمارتر و فقیرتر بودند، اما مردمانی سخت‌جان و پرتوان از سرزمین‌های کوهستانی بودند و رهبری داشتند که مانندش را پیش از آن ندیده بودند.
 
 13.
-EN: The wars with Russia
-FA: جنگ‌های ایران و روس
+EN: The battle that changed everything
+FA: نبردی که همه‌چیز را دگرگون کرد
 
 14.
-EN: Twice in the early century Iran went to war with Russia over the lands of the Caucasus, and twice it was defeated by the superior arms and organization of the Russian armies. The cost of those defeats was severe, and it was paid in Iranian soil.
-FA: دو بار در آغاز آن قرن، ایران بر سر سرزمین‌های قفقاز با روسیه جنگید، و هر دو بار در برابر سلاح و سازمان برتر سپاه روس شکست خورد. بهای این شکست‌ها سنگین بود، و با خاک ایران پرداخت شد.
+EN: A new kind of conqueror
+FA: فاتحی از جنس دیگر
 
 15.
-EN: A proud nation learned, painfully, that valour alone could not stand against modern empires.
-FA: ملتی سربلند، به تلخی آموخت که دلاوری به‌تنهایی در برابر امپراتوری‌های مدرن دوام نمی‌آورد.
+EN: Croesus and the Fall of Lydia
+FA: کرزوس و سقوط لیدیه
 
 16.
-EN: The Reformer Who Was Lost
-FA: اصلاحگری که از دست رفت
+EN: c. 547 BCE
+FA: حدود ۵۴۷ پیش از میلاد
 
 17.
-EN: Not everyone accepted Iran\'s decline. In the middle of the century there rose a man who saw clearly what his country needed, and who tried, in a few short years, to drag it into the modern world. His name was Amir Kabir, and he was the chief minister of the young Shah, Naser al-Din.
-FA: همه به افول ایران تن ندادند. در میانهٔ آن قرن مردی برخاست که به‌روشنی می‌دید کشورش به چه نیاز دارد، و کوشید در چند سال کوتاه آن را به جهان مدرن بکشاند. نامش امیرکبیر بود، صدراعظم شاه جوان، ناصرالدین‌شاه.
+EN: The oracle gave its famous reply, that if Croesus went to war he would destroy a great empire. Delighted, he took it as a promise of victory. He did not consider that the great empire he would destroy might be his own.
+FA: پیشگو پاسخ مشهور خود را داد: اگر کرزوس به جنگ برود، امپراتوری بزرگی را نابود خواهد کرد. کرزوس از شنیدن این پاسخ شادمان شد و آن را نوید پیروزی دانست. اما به این احتمال فکر نکرد که آن امپراتوری بزرگ شاید امپراتوری خودش باشد.
 
 18.
-EN: Amir Kabir
-FA: امیرکبیر
+EN: If Croesus makes war on the Persians, he will destroy a mighty empire.
+FA: اگر کرزوس با پارسیان وارد جنگ شود، امپراتوری بزرگی را نابود خواهد کرد.
 
 19.
-EN: A vision of a modern Iran
-FA: چشم‌اندازی از ایرانی مدرن
+EN: A trick of camels
+FA: ترفند شترها
 
 20.
-EN: His vision
-FA: آنچه در سر داشت
+EN: The conquests of Cyrus, in sequence: Media, then Lydia, then Babylon.
+FA: فتوحات کوروش، به ترتیب: ماد، سپس لیدی، سپس بابل.
 
 21.
-EN: His enemies
-FA: دشمنانش
+EN: The mercy of the victor
+FA: بخششِ فاتح
 
 22.
-EN: But his very success made him enemies. The courtiers whose corruption he threatened, and who feared his influence over the young Shah, turned the king against him. In 1851 he was dismissed, exiled, and soon after put to death on the Shah\'s order, in a bath house in Kashan.
-FA: اما همین کامیابی برایش دشمن تراشید. درباریانی که فسادشان را در خطر می‌دیدند و از نفوذ او بر شاه جوان می‌ترسیدند، شاه را در برابرش برانگیختند. در سال ۱۲۳۰ خورشیدی از کار برکنار شد، به تبعید رفت، و اندکی بعد به فرمان شاه در حمام فین کاشان کشته شد.
+EN: No man should be counted happy until the end of his life is known.
+FA: هیچ‌کس را خوشبخت مشمار، مگر آنکه پایان زندگی‌اش را دیده باشی.
 
 23.
-EN: Iran lost, in one stroke, the greatest reformer of its age. It is one of history\'s saddest what-ifs.
-FA: ایران در یک ضربه بزرگ‌ترین اصلاحگر روزگارش را از دست داد. این یکی از اندوهبارترین «اگر»های تاریخ است.
+EN: Babylon and the Freeing of the Captives
+FA: بابل و رهایی اسیران
 
 24.
-EN: What Iran might have become, had Amir Kabir been allowed to finish his work, is one of the great questions of the nation\'s history. His death was a tragedy, and the reforms he began were largely undone.
-FA: اینکه اگر می‌گذاشتند امیرکبیر کارش را به پایان برساند ایران چه می‌شد، از پرسش‌های بزرگ تاریخ این ملت است. مرگش فاجعه بود، و اصلاحاتی که آغاز کرده بود بیشترش بر باد رفت.
+EN: 539 BCE
+FA: ۵۳۹ پیش از میلاد
 
 25.
-EN: The Awakening of a Nation
-FA: بیداری یک ملت
+EN: Now only one of the great powers stood between Cyrus and mastery of the known world: Babylon, the ancient and magnificent city on the Euphrates, its walls counted among the wonders of the earth. In 539 BCE, Cyrus turned toward it.
+FA: اکنون تنها یکی از قدرت‌های بزرگ میان کوروش و فرمانروایی بر جهان شناخته‌شده قرار داشت: بابل، شهر باستانی و باشکوه بر کرانهٔ فرات، با دیوارهایی که از شگفتی‌های جهان به شمار می‌آمدند. در سال ۵۳۹ پیش از میلاد، کوروش روی به سوی آن نهاد.
 
 26.
-EN: As the century wore on, the kings sold ever more of the nation\'s wealth and rights to foreign powers and companies, granting concessions over tobacco, banking, oil, and more, to fill an empty treasury. But the people of Iran were beginning to stir.
-FA: هرچه قرن پیش‌تر می‌رفت، شاهان بیشتر و بیشتر از ثروت و حقوق این ملت را به قدرت‌ها و شرکت‌های بیگانه فروختند؛ امتیاز تنباکو، بانک، نفت و بسیاری دیگر را واگذار کردند تا خزانهٔ تهی را پر کنند. اما مردم ایران داشتند بیدار می‌شدند.
+EN: The Cyrus Cylinder
+FA: استوانهٔ کوروش
 
 27.
-EN: The Tobacco Protest
-FA: تحریم تنباکو
+EN: The Cyrus Cylinder, on which the king recorded his acts. It survives in the British Museum.
+FA: منشور کوروش، که شاه کارهایش را بر آن ثبت کرد. امروز در موزهٔ بریتانیا نگهداری می‌شود.
 
 28.
-EN: For the first time, the people had spoken with one voice, and the throne had been made to listen.
-FA: برای نخستین بار، مردم یکصدا سخن گفتند، و تخت ناچار شد بشنود.
+EN: I returned to their places the gods who had dwelt there, and let them dwell in eternal abodes. I gathered all their peoples and restored to them their homes.
+FA: خدایانی را که در آنجا می‌زیستند، به جایگاه‌هایشان بازگرداندم و گذاشتم در خانه‌های جاودان خویش سکونت کنند. مردمانشان را گرد آوردم و خانه‌هایشان را به آنان بازگرداندم.
 
 29.
-EN: The Constitutional Revolution
-FA: انقلاب مشروطه
+EN: The return of the exiles
+FA: بازگشت تبعیدیان
 
 30.
-EN: The Tobacco Protest was only the beginning. The demand grew for a government of laws rather than the whim of kings, and in 1906 the movement triumphed. The Shah was compelled to grant a constitution and to establish the Majles, the national parliament, the first in Iranian history.
-FA: تحریم تنباکو تنها آغاز بود. خواستِ حکومتِ قانون به جای هوس شاهان بالا گرفت، و در سال ۱۲۸۵ خورشیدی این جنبش به پیروزی رسید. شاه ناگزیر شد فرمان مشروطیت را امضا کند و مجلس شورای ملی را برپا دارد؛ نخستین مجلس تاریخ ایران.
+EN: Thus says Cyrus king of Persia: The Lord has charged me to build him a house at Jerusalem. Whoever is among you of all his people, let him go up.
+FA: کوروش، شاه پارس، چنین می‌گوید: خداوند مرا فرمان داده است تا برای او در اورشلیم خانه‌ای بنا کنم. هر کس از قوم او در میان شماست، برخیزد و به آنجا برود.
 
 31.
-EN: A nation had awoken to the idea that it belonged to its people.
-FA: ملتی بیدار شد به این اندیشه که این سرزمین از آنِ مردمش است.
+EN: The Empire and Its Ideals
+FA: امپراتوری و آرمان‌های آن
 
 32.
-EN: The End of an Age
-FA: پایان یک دوران
+EN: By now the empire of Cyrus stretched from the Aegean Sea in the west to the borders of India in the east, the largest the world had yet seen. But its true greatness lay not in its size. It lay in how he chose to rule it.
+FA: اکنون امپراتوری کوروش از دریای اژه در غرب تا مرزهای هند در شرق گسترده شده بود؛ بزرگ‌ترین امپراتوری‌ای که جهان تا آن روز به خود دیده بود. اما عظمت واقعی آن در وسعتش نبود؛ در شیوه‌ای بود که کوروش برای فرمانروایی بر آن برگزیده بود.
 
 33.
-EN: A soldier steps forward
-FA: سربازی پا پیش می‌گذارد
+EN: The empire of Cyrus at its height, from the Aegean and Egypt to the Indus.
+FA: شاهنشاهی کوروش در اوج خود، از دریای اژه و مصر تا رود سند.
 
 34.
-EN: The Qajar century closed, and the Pahlavi age of modern Iran began.
-FA: قرن قاجار بسته شد، و روزگار پهلوی و ایران مدرن آغاز گرفت.
+EN: A new idea of empire
+FA: نگاهی نو به مفهوم امپراتوری
 
 35.
-EN: From the trials of the Qajar century, a new and modern Iran was struggling to be born. And when at last it emerged, it would carry forward both the wounds and the awakenings of these long and difficult years.
-FA: از دل سختی‌های قرن قاجار، ایرانی تازه و مدرن برای زاده شدن دست‌وپا می‌زد. و آنگاه که سرانجام سر برآورد، هم زخم‌های این سال‌های دراز و دشوار را با خود برد و هم بیداری‌هایش را.
+EN: Tolerance of faith
+FA: بردباری دینی
 
 36.
-EN: In its century of hardship, the nation found its own voice.
-FA: ملت در قرنِ سختی‌اش، صدای خودش را پیدا کرد.
+EN: Every people was free to worship its own gods. Cyrus honored the temples of the lands he ruled.
+FA: هر قوم آزاد بود خدایان خود را بپرستد. کوروش نیز به نیایشگاه‌های سرزمین‌هایی که بر آنها فرمان می‌راند، احترام می‌گذاشت.
+
+37.
+EN: An idea that endures
+FA: اندیشه‌ای ماندگار
+
+38.
+EN: The vision of Cyrus, that different peoples could live together under one just rule, each keeping its own identity, is one of the oldest and most enduring ideals in the human story. More than two thousand five hundred years later, it still speaks to us.
+FA: آرمان کوروش، اینکه مردمان گوناگون بتوانند زیر فرمانروایی دادگرانه در کنار یکدیگر زندگی کنند و هر یک هویت خود را حفظ کنند، یکی از کهن‌ترین و ماندگارترین آرمان‌های تاریخ بشر است. بیش از دو هزار و پانصد سال بعد، این اندیشه هنوز با ما سخن می‌گوید.
+
+39.
+EN: A relief from the age of the empire he founded.
+FA: نقش‌برجسته‌ای از روزگار شاهنشاهی‌ای که او بنیان گذاشت.
+
+40.
+EN: The Death of a King
+FA: مرگ یک شاه
+
+41.
+EN: c. 530 BCE
+FA: حدود ۵۳۰ پیش از میلاد
+
+42.
+EN: His body was brought back across the length of the empire he had built, to rest in the land of his birth, at his capital of Pasargadae.
+FA: پیکر او را از سراسر امپراتوری‌ای که خود بنا کرده بود بازگرداندند تا در سرزمین زادگاهش، در پایتخت او، پاسارگاد، آرام گیرد.
+
+43.
+EN: The tomb at Pasargadae
+FA: آرامگاه پاسارگاد
+
+44.
+EN: The tomb of Cyrus the Great at Pasargadae, which has stood for over 2,500 years.
+FA: آرامگاه کوروش بزرگ در پاسارگاد، که بیش از دو هزار و پانصد سال سرِ پا مانده است.
+
+45.
+EN: An inscription said to have once stood there carried words of quiet dignity, a king asking not for glory but for peace, reminding the passer by that he too was mortal.
+FA: گفته‌اند زمانی سنگ‌نوشته‌ای در آنجا قرار داشته که کلماتی ساده و باوقار بر آن نقش بسته بود؛ سخنان شاهی که نه شکوه، بلکه آرامش می‌خواست و به هر رهگذری یادآوری می‌کرد که او نیز فانی است.
+
+46.
+EN: O man, whoever you are, I am Cyrus, who won the Persians their empire. Do not grudge me this little earth that covers my body.
+FA: ای انسان، هر که هستی، من کوروشم؛ آن‌که برای پارسیان امپراتوری‌ای به دست آورد. بر این اندک خاکی که پیکرم را پوشانده است، دریغ مدار.
+
+47.
+EN: The Legacy That Endures
+FA: میراثی که ماندگار است
+
+48.
+EN: The king the world remembered
+FA: شاهی که جهان به یاد سپرد
+
+49.
+EN: The remains of Pasargadae, the capital Cyrus built, still standing on the Iranian plain.
+FA: بازماندهٔ پاسارگاد، پایتختی که کوروش ساخت، هنوز بر دشت ایران ایستاده.
+
+50.
+EN: He won an empire by the sword, and kept it by justice. The world has not forgotten him.
+FA: او امپراتوری را با شمشیر به دست آورد، اما آن را با عدالت حفظ کرد. جهان هنوز او را از یاد نبرده است.
