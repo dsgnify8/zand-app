@@ -1,155 +1,243 @@
 1.
-EN: The Zand Dynasty
-FA: زندیان
+EN: The Safavid Empire
+FA: صفویان
 
 2.
-EN: After the Storm
-FA: پس از توفان
+EN: A Boy King and a New Faith
+FA: شاهی نوجوان و آیینی تازه
 
 3.
-EN: 1747 - 1751
-FA: ۱۷۴۷ تا ۱۷۵۱
+EN: 1501
+FA: ۱۵۰۱ میلادی
 
 4.
-EN: The dynasty begins
-FA: آغاز سلسله
+EN: For centuries after the Mongol storm, Iran had been a patchwork of rival lords and warring tribes, with no single ruler and no single soul. Then, at the very dawn of the sixteenth century, a boy of fourteen changed the course of the nation forever.
+FA: قرن‌ها پس از توفان مغول، ایران به تکه‌هایی پراکنده از خان‌های رقیب و ایل‌های در جنگ بدل شده بود؛ نه فرمانروایی واحد داشت و نه روحی یگانه. سپس، درست در سپیده‌دم سدهٔ شانزدهم، نوجوانی چهارده ساله مسیر این ملت را برای همیشه دگرگون کرد.
 
 5.
-EN: A soldier of the Zagros
-FA: سربازی از زاگرس
+EN: His name was Ismail, and he was the young leader of the Safavid order, a devoted religious brotherhood from the northwest of Iran. Around him gathered fierce and loyal warriors, and at their head he swept across the land, defeating all who stood against him.
+FA: نامش اسماعیل بود، پیشوای جوان طریقت صفوی؛ برادری‌ای دینی و سرسپرده از شمال غرب ایران. جنگاورانی دلیر و وفادار گرد او جمع شدند، و او در رأس آنان سرتاسر سرزمین را درنوردید و هر که را در برابرش ایستاد از پای درآورد.
 
 6.
-EN: Nader Shah assassinated
-FA: ترور نادرشاه
+EN: Shah Ismail I, founder of the Safavid dynasty, who took the throne at fourteen.
+FA: شاه اسماعیل یکم، بنیان‌گذار سلسلهٔ صفوی، که در چهارده سالگی بر تخت نشست.
 
 7.
-EN: Karim Khan rises to power
-FA: کریم‌خان به قدرت می‌رسد
+EN: The crown at fourteen
+FA: تاج در چهارده سالگی
 
 8.
-EN: Shiraz made the capital
-FA: شیراز پایتخت می‌شود
+EN: In 1501 Ismail entered the city of Tabriz in triumph and had himself proclaimed Shah, the king of kings, taking the ancient title of the Persian monarchs. A boy still, he had founded a dynasty that would rule Iran for more than two centuries and restore it to greatness.
+FA: در سال ۱۵۰۱ اسماعیل پیروزمندانه وارد تبریز شد و خود را شاه خواند؛ شاهنشاه، با همان لقب کهن پادشاهان ایران. هنوز نوجوان بود که سلسله‌ای بنیان گذاشت که بیش از دو قرن بر ایران فرمان راند و آن را به بزرگی بازگرداند.
 
 9.
-EN: Death of Karim Khan
-FA: درگذشت کریم‌خان
+EN: A faith that shaped a nation
+FA: آیینی که ملتی را شکل داد
 
 10.
-EN: The crown he refused
-FA: تاجی که نپذیرفت
+EN: Ismail did something that would define Iran to this very day. He made Shia Islam the faith of his realm, setting Iran apart from its powerful Sunni neighbours and giving the nation a distinct religious identity that has endured for five hundred years.
+FA: اسماعیل کاری کرد که تا همین امروز ایران را تعریف می‌کند. تشیع را آیین رسمی قلمرو خود قرار داد و بدین‌سان ایران را از همسایگان نیرومند سنی‌مذهبش جدا ساخت؛ هویتی دینی و متمایز به این ملت بخشید که پانصد سال دوام آورده است.
 
 11.
-EN: The meaning of a name
-FA: معنای یک نام
+EN: It was a decision of enormous consequence. It unified the many peoples of Iran under one faith and one crown, forged a strong sense of a single nation, and shaped the character of the country for all the centuries that followed. Modern Iran, in its faith and its borders, was born in these years.
+FA: این تصمیمی بود با پیامدهایی عظیم. مردمان گوناگون ایران را زیر یک آیین و یک تاج گرد آورد، حس نیرومندی از ملتی واحد پدید آورد، و خصلت این کشور را برای همهٔ قرن‌های پس از آن تعیین کرد. ایران امروز، در آیین و در مرزهایش، در همین سال‌ها زاده شد.
 
 12.
-EN: The Advocate of the People
-FA: وکیل‌الرعایا
+EN: From a fractured land, a single nation was reborn.
+FA: از سرزمینی چندپاره، ملتی یگانه دوباره زاده شد.
 
 13.
-EN: The character of Karim Khan
-FA: خوی و منش کریم‌خان
+EN: The Struggle for the Realm
+FA: کشمکش بر سر قلمرو
 
 14.
-EN: Karim Khan Zand, the Advocate of the People.
-FA: کریم‌خان زند، وکیل‌الرعایا.
+EN: 1514 - 1587
+FA: ۱۵۱۴ تا ۱۵۸۷
 
 15.
-EN: The Zand court, a rare season of gentle rule in a violent age.
-FA: دربار زند؛ فصلی کمیاب از فرمانروایی مهربان در روزگاری خشونت‌بار.
+EN: A reborn Iran did not go unchallenged. To the west lay the mighty Ottoman Empire, the greatest power of the age, and between the two great empires there began a long and bitter rivalry that would last for generations.
+FA: ایرانِ دوباره‌زاده بی‌رقیب نماند. در غرب امپراتوری نیرومند عثمانی قرار داشت، بزرگ‌ترین قدرت آن روزگار، و میان این دو امپراتوری بزرگ رقابتی دیرپا و تلخ آغاز شد که نسل‌ها ادامه یافت.
 
 16.
-EN: The ruler who listened
-FA: فرمانروایی که گوش می‌داد
+EN: In 1514, at the battle of Chaldiran, the young Safavid state met the Ottomans in the field. The Ottomans had cannon and firearms, weapons the Safavid cavalry lacked, and the day went against Iran. It was a hard and early lesson that valour alone could not win a modern war.
+FA: در سال ۱۵۱۴، در نبرد چالدران، دولت جوان صفوی در میدان با عثمانی روبه‌رو شد. عثمانیان توپ و سلاح آتشین داشتند، چیزی که سوارهٔ صفوی از آن بی‌بهره بود، و روز به زیان ایران تمام شد. این درسی سخت و زودهنگام بود: دلاوری به‌تنهایی جنگی مدرن را نمی‌برد.
 
 17.
-EN: A rare kind of power
-FA: گونه‌ای کمیاب از قدرت
+EN: A kingdom tested
+FA: پادشاهی‌ای در بوتهٔ آزمایش
 
 18.
-EN: Shiraz, the Beloved City
-FA: شیراز، شهر محبوب
+EN: The decades that followed were difficult ones. The dynasty was pressed on its frontiers by the Ottomans in the west and the Uzbeks in the east, and troubled at home by the rivalries of the powerful tribal chiefs on whom the throne depended.
+FA: دهه‌های پس از آن دشوار بودند. سلسله در مرزهایش از غرب زیر فشار عثمانی و از شرق زیر فشار ازبکان بود، و در درون نیز رقابت خان‌های نیرومند ایلی گرفتارش کرده بود؛ همان‌ها که تخت به آنان تکیه داشت.
 
 19.
-EN: The Zand capital
-FA: پایتخت زند
+EN: The Safavids faced the great powers of their age on every frontier.
+FA: صفویان در هر مرزی با قدرت‌های بزرگ روزگار خود روبه‌رو بودند.
 
 20.
-EN: Shiraz, the city of poets, which Karim Khan made his capital and adorned.
-FA: شیراز، شهر شاعران، که کریم‌خان پایتختش کرد و آراستش.
+EN: Yet the young state endured. Through hard years and capable rulers it held together, waiting, though it did not yet know it, for the king who would raise it to its height.
+FA: با این همه، دولت جوان دوام آورد. در سال‌های سخت و به دست فرمانروایانی کاردان یکپارچه ماند و در انتظار نشست؛ هرچند خود هنوز نمی‌دانست در انتظار چه کسی است: شاهی که آن را به اوج خواهد رساند.
 
 21.
-EN: The gifts he left in stone
-FA: یادگارهایی که در سنگ گذاشت
+EN: In 1587 the throne passed to a prince who would become the greatest of all the Safavid kings, and one of the greatest rulers in the whole history of Iran. His name was Abbas.
+FA: در سال ۱۵۸۷ تخت به شاهزاده‌ای رسید که بزرگ‌ترین پادشاه صفوی و یکی از بزرگ‌ترین فرمانروایان سراسر تاریخ ایران شد. نامش عباس بود.
 
 22.
-EN: The Arg of Karim Khan, his citadel at the heart of Shiraz.
-FA: ارگ کریم‌خان، دژ او در قلب شیراز.
+EN: Shah Abbas the Great
+FA: شاه عباس بزرگ
 
 23.
-EN: The Vakil Mosque and the Vakil Bazaar in Shiraz, built by Karim Khan and still in use today.
-FA: مسجد وکیل و بازار وکیل در شیراز، ساختهٔ کریم‌خان، که امروز هم در استفاده‌اند.
+EN: 1587 - 1629
+FA: ۱۵۸۷ تا ۱۶۲۹
 
 24.
-EN: A Reign of Peace and Plenty
-FA: روزگار آرامش و فراوانی
+EN: Shah Abbas came to the throne of a troubled kingdom, hemmed in by enemies and weakened by division within. Over the course of his long reign he transformed it utterly, and left Iran stronger, richer, and more glorious than it had been in a thousand years.
+FA: شاه عباس بر تخت پادشاهی‌ای نشست که گرفتار بود؛ از بیرون در محاصرهٔ دشمنان و از درون فرسودهٔ تفرقه. در طول سلطنت بلندش آن را یکسره دگرگون کرد و ایران را نیرومندتر، ثروتمندتر و باشکوه‌تر از هزار سال گذشته‌اش بر جای گذاشت.
 
 25.
-EN: c. 1751 - 1779
-FA: حدود ۱۷۵۱ تا ۱۷۷۹
+EN: Shah Abbas the Great, under whom the Safavid Empire reached its height.
+FA: شاه عباس بزرگ، که امپراتوری صفوی در روزگار او به اوج رسید.
 
 26.
-EN: Light taxes
-FA: مالیات سبک
+EN: He was a ruler of rare gifts: a brilliant soldier, a shrewd statesman, and a great patron of art and architecture. He was also, at times, a hard and suspicious man, as the great kings of that age often were. But his vision for Iran was without equal.
+FA: فرمانروایی بود با توانایی‌هایی کم‌نظیر: سربازی درخشان، سیاستمداری زیرک، و حامی بزرگ هنر و معماری. گاه نیز مردی سختگیر و بدگمان بود، چنان‌که پادشاهان بزرگ آن روزگار اغلب بودند. اما چشم‌اندازی که برای ایران داشت بی‌همتا بود.
 
 27.
-EN: He kept the burden on farmers and merchants low, and the people prospered.
-FA: بار مالیات را بر دوش کشاورزان و بازرگانان سبک نگاه داشت، و مردم بالیدند.
+EN: The remaking of an army
+FA: بازساختن یک ارتش
 
 28.
-EN: Justice for all
-FA: داد برای همه
+EN: Abbas understood the lesson of Chaldiran. He built a new standing army, no longer dependent on the fickle tribal cavalry, equipped with muskets and cannon in the modern way. With it he became master in his own house and a match for his enemies abroad.
+FA: عباس درس چالدران را دریافته بود. ارتشی تازه و دائمی بنیان گذاشت که دیگر به سوارهٔ بی‌ثبات ایلی وابسته نبود و به شیوهٔ مدرن به تفنگ و توپ مجهز شده بود. با همین ارتش، هم در خانهٔ خود صاحب‌اختیار شد و هم در برابر دشمنان بیرونی هماورد.
 
 29.
-EN: Rich and poor alike could seek his judgment, and he was known for fairness.
-FA: توانگر و تهی‌دست هر دو می‌توانستند داوری او را بخواهند، و به انصاف شناخته می‌شد.
+EN: Then he turned that army against the empires that had pressed Iran for so long. He drove back the Uzbeks in the east, and he won back from the Ottomans the great western lands they had taken, restoring Iran to its full strength and its rightful borders.
+FA: سپس همین ارتش را به سوی امپراتوری‌هایی گرداند که مدت‌ها بر ایران فشار آورده بودند. ازبکان را در شرق عقب راند و سرزمین‌های بزرگ غربی را که عثمانیان گرفته بودند بازپس گرفت، و ایران را به توان کامل و مرزهای شایستهٔ خود بازگرداند.
 
 30.
-EN: Trade revived
-FA: رونق بازرگانی
+EN: A modern army
+FA: ارتشی مدرن
 
 31.
-EN: He reopened commerce, including trade through the Persian Gulf with distant lands.
-FA: داد و ستد را از نو گشود، از جمله بازرگانی از راه خلیج فارس با سرزمین‌های دور.
+EN: A standing force with muskets and cannon, loyal to the crown alone.
+FA: نیرویی دائمی، مجهز به تفنگ و توپ، که تنها به تاج وفادار بود.
 
 32.
-EN: Peace at home
-FA: آرامش در خانه
+EN: Enemies driven back
+FA: دشمنان عقب رانده شدند
 
 33.
-EN: The wars that had torn Iran apart were stilled, and the country breathed again.
-FA: جنگ‌هایی که ایران را از هم دریده بودند فرو نشستند، و کشور دوباره نفس کشید.
+EN: The Uzbeks in the east and the Ottomans in the west were defeated.
+FA: ازبکان در شرق و عثمانیان در غرب شکست خوردند.
 
 34.
-EN: Remembered with love
-FA: با محبت به یاد مانده
+EN: Trade and wealth
+FA: تجارت و ثروت
 
 35.
-EN: The End of a Gentle King
-FA: پایان یک پادشاه مهربان
+EN: He welcomed merchants from across the world and made Iran rich.
+FA: بازرگانان را از سراسر جهان پذیرا شد و ایران را ثروتمند کرد.
 
 36.
-EN: 1779 - 1794
-FA: ۱۷۷۹ تا ۱۷۹۴
+EN: A new capital
+FA: پایتختی تازه
 
 37.
-EN: Died
-FA: درگذشت
+EN: He made Isfahan his capital and adorned it beyond compare.
+FA: اصفهان را پایتخت خود کرد و آن را چنان آراست که همتا نداشت.
 
 38.
-EN: The last of the Zand
-FA: آخرین زند
+EN: A door opened to the world
+FA: دری که به جهان گشوده شد
 
 39.
-EN: Years of peace he gave Iran
-FA: سالی که به ایران آرامش داد
+EN: Abbas welcomed the world to Iran. He invited European merchants and ambassadors, encouraged the silk trade that was the treasure of his realm, and made his country a crossroads of commerce between East and West. Iranian silk and carpets travelled to the courts of Europe, and the wealth of the world flowed into Iran.
+FA: عباس جهان را به ایران فراخواند. بازرگانان و سفیران اروپایی را دعوت کرد، تجارت ابریشم را که گنج قلمروش بود رونق بخشید، و کشورش را به چهارراه بازرگانی میان شرق و غرب بدل ساخت. ابریشم و فرش ایرانی به دربارهای اروپا راه یافت و ثروت جهان به ایران سرازیر شد.
+
+40.
+EN: Under his hand, Iran was not only strong but prosperous, respected among the great powers of the earth, and open to the world in a way it had not been for centuries.
+FA: زیر دست او ایران نه تنها نیرومند که آباد بود؛ در میان قدرت‌های بزرگ زمین محترم شمرده می‌شد، و به روی جهان گشوده بود، آن‌گونه که قرن‌ها نبوده بود.
+
+41.
+EN: Isfahan, Half the World
+FA: اصفهان، نصف جهان
+
+42.
+EN: Of all that Shah Abbas achieved, none endures more beautifully than his capital. He made Isfahan the seat of his empire and set out to make it the most beautiful city on earth, and by the judgment of many who saw it, he succeeded.
+FA: از میان همهٔ دستاوردهای شاه عباس، هیچ‌کدام به زیبایی پایتختش بر جای نمانده است. اصفهان را مقر امپراتوری خود کرد و بر آن شد که زیباترین شهر روی زمین را بسازد؛ و به داوری بسیاری از کسانی که آن را دیدند، کامیاب شد.
+
+43.
+EN: Isfahan, the capital of Shah Abbas, one of the most beautiful cities ever built.
+FA: اصفهان، پایتخت شاه عباس، یکی از زیباترین شهرهایی که تاکنون ساخته شده.
+
+44.
+EN: So great was its splendour that a saying arose, repeated by travellers across the world, that captured the wonder of all who beheld it.
+FA: شکوهش چندان بود که ضرب‌المثلی از آن برخاست؛ سخنی که مسافران در سراسر جهان تکرارش کردند و شگفتی همهٔ کسانی را که آن را دیده بودند در خود داشت.
+
+45.
+EN: Isfahan is half the world.
+FA: اصفهان نصف جهان است.
+
+46.
+EN: At the heart of the city he laid out a vast royal square, the Naqsh-e Jahan, the Image of the World, one of the largest and most magnificent public squares ever built. Around it he raised buildings of such beauty that they remain, to this day, among the treasures of all humanity.
+FA: در قلب شهر میدانی شاهی و پهناور طرح ریخت: نقش جهان، از بزرگ‌ترین و باشکوه‌ترین میدان‌های عمومی که تا آن روز ساخته شده بود. پیرامون آن بناهایی برافراشت چنان زیبا که تا امروز در شمار گنجینه‌های همهٔ بشریت مانده‌اند.
+
+47.
+EN: Wonders in tile and stone
+FA: شگفتی‌هایی از کاشی و سنگ
+
+48.
+EN: On the square rose the great Shah Mosque, its dome and portals covered in dazzling blue tilework, a masterpiece of Persian architecture. Nearby stood the exquisite Sheikh Lotfollah Mosque, the graceful Ali Qapu palace, and the entrance to the endless royal bazaar.
+FA: بر این میدان مسجد بزرگ شاه سر برآورد، با گنبد و سردری پوشیده از کاشی‌کاری خیره‌کنندهٔ لاجوردی؛ شاهکاری از معماری ایرانی. در همان نزدیکی مسجد ظریف شیخ لطف‌الله ایستاده بود، کاخ موزون عالی‌قاپو، و سردر بازار بی‌انتهای شاهی.
+
+49.
+EN: The great mosques of Isfahan, masterpieces of blue tilework raised under Shah Abbas.
+FA: مسجدهای بزرگ اصفهان، شاهکارهای کاشی‌کاری آبی که در روزگار شاه عباس برپا شد.
+
+50.
+EN: He built bridges across the river that were themselves works of art, and gardens and avenues that made the city a paradise. The mastery of the Persian artist reached its very summit here, in colour, in geometry, and in grace.
+FA: بر رودخانه پل‌هایی ساخت که خود اثر هنری بودند، و باغ‌ها و خیابان‌هایی که شهر را به بهشت بدل کردند. چیره‌دستی هنرمند ایرانی همین‌جا به اوج خود رسید: در رنگ، در هندسه، و در لطافت.
+
+51.
+EN: The Isfahan of Shah Abbas still stands, and still takes the breath away. To walk its great square is to step into the golden age of Iran, and to see what the Persian genius could raise when it reached its height.
+FA: اصفهانِ شاه عباس هنوز پابرجاست و هنوز نفس را در سینه حبس می‌کند. قدم زدن در میدان بزرگش، پا گذاشتن به عصر طلایی ایران است؛ و دیدن آنچه نبوغ ایرانی، آنگاه که به اوج خود می‌رسد، می‌تواند برافرازد.
+
+52.
+EN: The Long Twilight
+FA: غروبی طولانی
+
+53.
+EN: 1629 - 1736
+FA: ۱۶۲۹ تا ۱۷۳۶
+
+54.
+EN: No golden age lasts forever. After the death of Shah Abbas the Great in 1629, the empire he had built lived on for another century, still rich, still cultured, still magnificent to behold. But its strength slowly ebbed away.
+FA: هیچ عصر طلایی جاودانه نیست. پس از مرگ شاه عباس بزرگ در سال ۱۶۲۹، امپراتوری‌ای که ساخته بود یک قرن دیگر دوام آورد؛ همچنان ثروتمند، همچنان فرهیخته، همچنان در چشم بیننده باشکوه. اما توانش به‌آرامی رو به کاستی گذاشت.
+
+55.
+EN: The later kings were, too often, men raised in the ease of the palace rather than the hardship of the field. Some were gifted, but few had the iron of Abbas, and the vigour that had carried the dynasty to greatness gradually faded.
+FA: پادشاهان بعدی، بیش از آنکه در سختی میدان بار آمده باشند، اغلب در آسایش کاخ پرورش یافته بودند. برخی توانمند بودند، اما کمتر کسی صلابت عباس را داشت، و آن نیرویی که سلسله را به بزرگی رسانده بود رفته‌رفته فروکش کرد.
+
+56.
+EN: The fall of Isfahan
+FA: سقوط اصفهان
+
+57.
+EN: The end, when it came, was sudden and sorrowful. In 1722 an army of Afghan rebels marched on the heart of the empire and laid siege to Isfahan itself. After months of terrible hunger, the jewel of Iran, the city that was half the world, fell.
+FA: پایان، آنگاه که رسید، ناگهانی و اندوهبار بود. در سال ۱۷۲۲ سپاهی از شورشیان افغان به قلب امپراتوری تاختند و خودِ اصفهان را به محاصره درآوردند. پس از ماه‌ها گرسنگی هولناک، نگین ایران، شهری که نصف جهان بود، فرو افتاد.
+
+58.
+EN: It was a bitter blow to a proud nation, and it marked the effective end of Safavid power. The dynasty lingered a few years more in name, but its greatness was gone.
+FA: این ضربه‌ای تلخ بر ملتی سربلند بود و در عمل پایان قدرت صفوی را رقم زد. سلسله چند سالی دیگر تنها به نام باقی ماند، اما بزرگی‌اش رفته بود.
+
+59.
+EN: This has been a glimpse of the Safavids, the dynasty that raised Iran from division into unity, and from weakness into one of the golden ages of its long history. They gave the nation its faith, its renewed strength, and in Isfahan a beauty that has never been surpassed.
+FA: این نگاهی بود کوتاه به صفویان؛ سلسله‌ای که ایران را از تفرقه به یکپارچگی رساند و از ناتوانی به یکی از عصرهای طلایی تاریخ بلندش. آنان به این ملت آیینش را دادند، توان دوباره‌اش را، و در اصفهان زیبایی‌ای که هرگز از آن پیشی گرفته نشد.
+
+60.
+EN: For two centuries they made Iran a great power and a wonder of the world, and though their empire fell, what they built endures. In the blue domes of Isfahan, the golden age of the Safavids still shines.
+FA: دو قرن ایران را قدرتی بزرگ و شگفتی جهان کردند، و هرچند امپراتوری‌شان فرو ریخت، آنچه ساختند بر جای مانده است. در گنبدهای لاجوردی اصفهان، عصر طلایی صفویان هنوز می‌درخشد.
+
+61.
+EN: They made Iran whole again, and left it a beauty that still shines.
+FA: ایران را دوباره یکپارچه کردند، و زیبایی‌ای برایش به جا گذاشتند که هنوز می‌درخشد.
