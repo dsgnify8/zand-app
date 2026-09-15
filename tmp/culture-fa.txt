@@ -1,91 +1,47 @@
 1.
-EN: The Table
-FA: سفره
+EN: Chai
+FA: چای
 
 2.
-EN: FOOD, AND WHAT IT MEANS
-FA: غذا، و آنچه معنا می‌دهد
+EN: THE SHAPE OF AN EVENING
+FA: شکلِ یک عصر
 
 3.
-EN: Rice is not a side dish. The crust at the bottom of the pot is fought over. Nobody eats alone if it can be helped.
-FA: برنج غذای کناری نیست. سر ته دیگ دعوا می‌شود. و تا جایی که بشود، هیچ‌کس تنها غذا نمی‌خورد.
+EN: The samovar, the small glass, the sugar cube held in the teeth. Never a drink. Always an occasion.
+FA: سماور، استکان کمرباریک، و حبه قندی که لای دندان است. هیچ‌وقت فقط یک نوشیدنی نیست. همیشه یک موقعیت است.
 
 4.
-EN: Everything, All at Once
-FA: همه‌چیز، یکجا
+EN: Never Just a Drink
+FA: هیچ‌وقت فقط یک نوشیدنی
 
 5.
-EN: A Persian table is not laid with a meal. It is laid with everything you could possibly need, and then more, in case you need that too.
-FA: سفرهٔ ایرانی را با یک وعده غذا نمی‌چینند. با هر چیزی می‌چینند که ممکن است لازمت شود، و بعد بیشتر از آن، محض احتیاط که شاید آن را هم بخواهی.
+EN: Nobody in Iran has ever had a cup of tea. They have had an occasion, and there was tea in it.
+FA: هیچ‌کس در ایران تا حالا فقط «یک استکان چای» نخورده است. یک موقعیت بوده، که چای هم در آن بوده.
 
 6.
-EN: The sofreh is the spread. And the rule of it is abundance: the rice, the stew, the kabab, the bread, the yoghurt, the pickles, the raw herbs, the salad, the butter, the extra plate of rice nobody asked for. It is all there before you sit, and it stays there until you leave.
-FA: سفره یعنی همان چیدمانِ کامل. و قاعده‌اش فراوانی است: برنج، خورش، کباب، نان، ماست، ترشی، سبزی خوردن، سالاد، کره، و آن بشقاب اضافهٔ برنج که هیچ‌کس نخواسته بود. همه‌اش پیش از آنکه بنشینی سر جایش است، و تا وقتی که بروی هم همان‌جا می‌ماند.
+EN: It arrives when you arrive, before anything is said. It arrives when a deal is being discussed, and again when it is done. It arrives at the end of every meal. Refusing it is not really available to you.
+FA: همان لحظه که می‌رسی می‌آید، پیش از آنکه حرفی زده شود. وقتی دارند سر معامله‌ای صحبت می‌کنند می‌آید، و وقتی معامله جوش خورد باز هم می‌آید. آخر هر غذایی می‌آید. و رد کردنش اصلاً جزو گزینه‌های تو نیست.
 
 7.
-EN: Nothing arrives in courses. Nothing is portioned out for you. Everything is in the middle, within reach, and you take what you want and go back for more, and the bowls are refilled while you are still eating out of them.
-FA: هیچ‌چیز مرحله به مرحله نمی‌آید. هیچ‌چیز هم برایت جیره‌بندی نمی‌شود. همه‌چیز وسط سفره است، در دسترس، و هر چه بخواهی برمی‌داری و باز هم برمی‌گردی سراغش؛ و ظرف‌ها را در حالی پر می‌کنند که هنوز داری از همان‌ها می‌خوری.
+EN: The Sugar Goes in Your Mouth
+FA: قند در دهان می‌رود
 
 8.
-EN: A guest should never have to ask for anything. That is the whole design of the table.
-FA: مهمان نباید هیچ‌وقت مجبور شود چیزی بخواهد. تمام طراحی این سفره بر همین اصل است.
+EN: The thing visitors never forget. The sugar does not go in the glass. You take a hard cube of sugar, ghand, put it between your front teeth, and drink the hot tea through it.
+FA: آن چیزی که هیچ مهمان خارجی فراموشش نمی‌کند: قند در استکان نمی‌رود. یک حبه قند برمی‌داری، می‌گذاری‌اش لای دندان‌های جلو، و چای داغ را از رویش می‌نوشی.
 
 9.
-EN: That is why it looks like too much. It is supposed to. A table with exactly enough on it is a table that was calculated, and calculating what a guest needs is the one thing a host must never be caught doing.
-FA: برای همین است که به نظر زیادی می‌آید. قرار هم هست که زیادی به نظر بیاید. سفره‌ای که رویش دقیقاً به اندازه باشد، یعنی حساب‌وکتاب شده؛ و حساب کردنِ اینکه مهمان چقدر لازم دارد، تنها کاری است که میزبان نباید هرگز موقع انجامش مچش گرفته شود.
+EN: The cube dissolves slowly as the tea passes over it, so the sweetness is at the front and the tea stays clean behind it. One cube can last most of a glass. Watch an old man do it and you will see it is a technique.
+FA: قند همان‌طور که چای از رویش می‌گذرد آرام‌آرام آب می‌شود، پس شیرینی جلوی دهان است و چای پشت سرش دست‌نخورده می‌ماند. یک حبه می‌تواند تا آخرِ استکان دوام بیاورد. یک بار به یک پیرمرد نگاه کن که این کار را می‌کند؛ می‌بینی که خودش یک فن است.
 
 10.
-EN: Rice Is Not a Side Dish
-FA: برنج غذای کناری نیست
+EN: The samovar
+FA: سماور
 
 11.
-EN: Understand this and you understand the kitchen. In Iran, rice is not something served alongside the meal. Rice is the meal. Everything else is an accompaniment to it, including the meat.
-FA: این یکی را که بفهمی، کل آشپزخانه را فهمیده‌ای. در ایران، برنج چیزی نیست که کنار غذا بیاید. برنج، خودِ غذاست. هر چیز دیگری همراهِ آن است، حتی گوشت.
+EN: And it means the tea is always ready. There is no putting the kettle on in an Iranian house. There is no delay between someone arriving and being handed something. That is the entire point of the object.
+FA: و یعنی چای همیشه آماده است. در خانهٔ ایرانی چیزی به اسم «بگذار کتری را بار بگذارم» وجود ندارد. میان رسیدن یک نفر و چیزی که به دستش می‌دهند، هیچ فاصله‌ای نیست. تمام فلسفهٔ وجودی این وسیله همین است.
 
 12.
-EN: And the crust
-FA: و آن پوستهٔ ته دیگ
-
-13.
-EN: At the bottom of the pot, where the rice meets the oil, a golden crust forms. Tahdig, the bottom of the pot. It is crunchy, it is the best thing on the table, and there is never enough of it.
-FA: ته قابلمه، همان‌جا که برنج به روغن می‌رسد، پوسته‌ای طلایی می‌بندد. ته دیگ. برشته است، بهترین چیز روی سفره است، و هیچ‌وقت هم به اندازهٔ کافی نیست.
-
-14.
-EN: The greatest thing in Persian cooking is the accident at the bottom of the pot.
-FA: بهترین چیز آشپزی ایرانی، همان اتفاقی است که ته قابلمه می‌افتد.
-
-15.
-EN: What Is On It
-FA: روی سفره چه هست
-
-16.
-EN: Touch a dish to see it.
-FA: روی هر غذایی بزن تا ببینی‌اش.
-
-17.
-EN: Sour, Slow, and Never Hot
-FA: ترش، آرام، و هیچ‌وقت تند
-
-18.
-EN: It is almost never hot. Iranians do not do chilli. The complexity comes from time and from sour, not from heat, and a stew that has not cooked for four hours is not finished. Ask an Iranian how long ghormeh sabzi takes and the honest answer is most of a day.
-FA: تقریباً هیچ‌وقت تند نیست. ایرانی‌ها اهل فلفل تند نیستند. آن پیچیدگی از زمان می‌آید و از ترشی، نه از تندی؛ و خورشی که چهار ساعت نپخته باشد، هنوز تمام نشده. از یک ایرانی بپرس قرمه‌سبزی چقدر طول می‌کشد، و پاسخ صادقانه‌اش این است: بیشترِ یک روز.
-
-19.
-EN: No heat, no rush, and no shortcuts. Persian food is slow on purpose.
-FA: نه تندی، نه عجله، و نه هیچ میان‌بری. غذای ایرانی عمداً کند است.
-
-20.
-EN: A cuisine of long slow sourness, built around a grain, whose greatest achievement is the crust at the bottom of the pot, laid out all at once so that nobody has to ask for anything.
-FA: آشپزی‌ای بر پایهٔ ترشیِ آرام و طولانی، ساخته‌شده گرد یک دانه، که بزرگ‌ترین دستاوردش پوستهٔ ته قابلمه است؛ و همه‌اش یکجا چیده می‌شود تا هیچ‌کس مجبور نشود چیزی بخواهد.
-
-21.
-EN: After, and In Between
-FA: بعدش، و لای کارها
-
-22.
-EN: Persian sweetness is not the sugar of a European dessert. It runs on saffron, rosewater, pistachio, and sour, and quite a lot of it is not really a dessert at all. It is the thing that is out on the table permanently, for anyone who walks in.
-FA: شیرینیِ ایرانی، آن شکرِ دسرهای اروپایی نیست. با زعفران و گلاب و پسته و ترشی کار می‌کند، و خیلی از آنچه در این دسته می‌گنجد اصلاً دسر نیست. آن چیزی است که همیشه روی میز است، برای هر کسی که از در وارد شود.
-
-23.
-EN: The ice cream stretches, the fruit leather is sour enough to hurt, and there is always a bowl of nuts already out.
-FA: بستنی‌اش کش می‌آید، لواشکش آن‌قدر ترش است که دهانت را جمع کند، و همیشه یک ظرف آجیل از قبل بیرون است.
+EN: A samovar kept hot all day so that no one who walks in ever has to wait. That is not a tea habit. That is a statement about how a house should treat whoever comes through the door.
+FA: سماوری که تمام روز داغ نگه داشته می‌شود تا هیچ‌کس که وارد می‌شود مجبور به انتظار نباشد. این یک عادتِ چای‌خوری نیست. یک اعلام موضع است دربارهٔ اینکه یک خانه باید با هر کسی که از در وارد می‌شود چطور رفتار کند.
