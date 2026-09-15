@@ -1,71 +1,91 @@
 1.
-EN: The Guest
-FA: مهمان
+EN: Javanmardi
+FA: جوانمردی
 
 2.
-EN: HOSPITALITY AS COMBAT
-FA: مهمان‌نوازی در قامت یک نبرد
+EN: THE HOUSE OF STRENGTH
+FA: خانهٔ زور
 
 3.
-EN: The guest is beloved of God, and you will be fed until you suffer, and you are not permitted to leave.
-FA: مهمان حبیب خداست؛ آن‌قدر به تو غذا می‌دهند تا به زحمت بیفتی، و اجازهٔ رفتن هم نداری.
+EN: A thousand year old code of chivalry, and a pit where men swing clubs while a drummer chants Ferdowsi at them.
+FA: مرامی هزارساله، و گودی که در آن مردها میل می‌چرخانند و مرشد برایشان شاهنامه می‌خواند.
 
 4.
-EN: Beloved of God
-FA: حبیب خدا
+EN: The Young Man Way
+FA: راه و رسم جوانمردی
 
 5.
-EN: The guest is beloved of God. This is not a saying. It is an instruction, and it will be carried out.
-FA: مهمان حبیب خداست. این یک ضرب‌المثل نیست. یک دستور است، و اجرا هم خواهد شد.
+EN: Persian chivalry. A thousand years old, still the highest compliment you can pay a man in Iran, and almost unknown outside it.
+FA: مرام و مردانگیِ ایرانی. هزار سال قدمت دارد، هنوز بالاترین تعریفی است که می‌شود در ایران از یک مرد کرد، و بیرون از ایران تقریباً هیچ‌کس نمی‌شناسدش.
 
 6.
-EN: You Are Not Leaving
-FA: اجازهٔ رفتن نداری
+EN: The House of Strength
+FA: خانهٔ زور
 
 7.
-EN: Shoes off at the door, always, without discussion. Tea appears before you have sat down. Fruit is cut, whether or not anyone wants fruit.
-FA: کفش‌ها دم در در می‌آید، همیشه، بی‌هیچ بحثی. هنوز ننشسته‌ای که چای می‌رسد. میوه پوست کنده می‌شود، حالا هر کسی میوه بخواهد یا نخواهد.
+EN: And then there is the building. The zurkhaneh, the house of strength, is one of the strangest and best institutions Iran has produced, and it is roughly a thousand years old.
+FA: و بعد، خودِ آن ساختمان. زورخانه، یعنی خانهٔ زور، یکی از غریب‌ترین و بهترین نهادهایی است که ایران ساخته، و حدود هزار سال قدمت دارد.
 
 8.
-EN: More than anyone could eat. If you clear your plate it means you were not given enough, and it is refilled. If you leave food, you are asked what is wrong with it. There is no correct move.
-FA: بیشتر از آن چیزی که هر آدمی بتواند بخورد. اگر بشقابت را تمام کنی، یعنی به تو کم داده‌اند و دوباره پرش می‌کنند. اگر غذا را نیمه بگذاری، می‌پرسند مگر چه ایرادی داشت. هیچ حرکت درستی در کار نیست.
+EN: It is a low domed room with a pit in the middle, sunk below the floor, so that everyone who enters must step down. Men train in that pit. They swing enormous wooden clubs, they lift a wooden shield, they turn in place, they wrestle.
+FA: اتاقی است گنبدی و کوتاه، با گودی در وسط که پایین‌تر از کف زمین است، طوری که هر کس وارد می‌شود باید پایین برود. مردها در همان گود تمرین می‌کنند. میل‌های چوبی سنگین می‌چرخانند، سنگ برمی‌دارند، در جای خود می‌چرخند، و کشتی می‌گیرند.
 
 9.
-EN: This is heard as taarof and dismissed. You will be served again. Say it three times and possibly, possibly, you will be believed.
-FA: این را حمل بر تعارف می‌کنند و نادیده می‌گیرند. باز هم برایت می‌کشند. سه بار که بگویی، شاید، فقط شاید، باورت کنند.
+EN: The drum and the poem
+FA: ضرب و شعر
 
 10.
-EN: This takes forty minutes. You stand. You are told to sit. You reach the hallway. A conversation begins in the hallway. You reach the door. A new conversation begins at the door.
-FA: این مرحله چهل دقیقه طول می‌کشد. بلند می‌شوی. می‌گویند بنشین. به راهرو می‌رسی. در راهرو یک گفت‌وگوی تازه شروع می‌شود. به در می‌رسی. دم در یک گفت‌وگوی تازهٔ دیگر شروع می‌شود.
+EN: And here is the part nobody expects. In a raised seat at the edge sits the morshed, the master, with a goblet drum and a bell. He drums the rhythm the men move to, and while he drums, he chants. He chants Ferdowsi. He chants Hafez and Rumi and Saadi.
+FA: و حالا آن بخشی که هیچ‌کس انتظارش را ندارد. در سکویی بلند کنار گود، مرشد نشسته است، با یک ضرب و یک زنگ. ضربی می‌زند که مردها با ریتمش حرکت می‌کنند، و همان‌طور که می‌زند، می‌خواند. شاهنامه می‌خواند. حافظ و مولانا و سعدی می‌خواند.
 
 11.
-EN: Someone comes out with food for you to take home. This is not optional either.
-FA: یکی با ظرف غذا می‌آید بیرون که با خودت ببری. این یکی هم اختیاری نیست.
+EN: It is a gym where the poetry is played over the sound system, live, by a man with a drum, and the poetry is eight hundred years old.
+FA: باشگاهی است که در آن شعر از بلندگو پخش می‌شود؛ زنده، به دست مردی با یک ضرب، و آن شعر هشتصد سال قدمت دارد.
 
 12.
-EN: The Persian goodbye is not the end of the visit. It is a distinct event, and it is longer than most meetings.
-FA: خداحافظی ایرانی، پایان مهمانی نیست. خودش یک برنامهٔ جداگانه است، و از خیلی از جلسه‌ها هم طولانی‌تر.
+EN: So the men in the pit are not only training. They are being told, in rhythm, in verse, what a man is for. The physical culture and the ethical culture and the literature are the same activity, in the same room, at the same time. Nothing else in the world quite works like this.
+FA: پس مردهایی که در گودند فقط تمرین نمی‌کنند. دارند به آنها، با ریتم و با شعر، گفته می‌شود که مرد بودن به چه کار می‌آید. پرورش تن و پرورش اخلاق و ادبیات، همه یک کارند؛ در یک اتاق، در یک زمان. هیچ چیز دیگری در دنیا دقیقاً این‌طور کار نمی‌کند.
 
 13.
-EN: What Is Actually Happening
-FA: در واقع چه خبر است
+EN: The pit is sunk below floor level for a reason. You step down to enter. Nobody stands above anybody.
+FA: اینکه گود پایین‌تر از کف زمین است بی‌دلیل نیست. برای وارد شدن باید پایین بروی. هیچ‌کس بالای سر کسی نمی‌ایستد.
 
 14.
-EN: And some of it is simpler. Feeding people is how affection is expressed in a culture where saying it outright is difficult. The plate that keeps being refilled is a sentence that nobody in the room is able to say.
-FA: و بخشی از آن ساده‌تر است. در فرهنگی که گفتنِ مستقیمِ محبت سخت است، غذا دادن همان راهِ ابراز محبت است. آن بشقابی که مدام دوباره پر می‌شود، جمله‌ای است که هیچ‌کس در آن اتاق نمی‌تواند به زبان بیاورد.
+EN: The Man They Loved
+FA: مردی که دوستش داشتند
 
 15.
-EN: This is why Persian mothers send you home with food. It is not about the food.
-FA: برای همین است که مادرهای ایرانی موقع رفتن ظرف غذا دستت می‌دهند. ماجرا اصلاً سرِ غذا نیست.
+EN: If you want to know what Iranians mean by javanmard, they will not explain. They will tell you about Takhti.
+FA: اگر بخواهی بدانی ایرانی‌ها از جوانمرد چه منظوری دارند، برایت توضیح نمی‌دهند. از تختی برایت می‌گویند.
 
 16.
-EN: And look at what all of it is actually doing. Eat more. Take this. Sit down. Stay a little longer. It is called friendliness, and it is not friendliness. It is a refusal to let anyone be alone in our presence, carried out by force if necessary.
-FA: و ببین همهٔ این کارها در واقع دارند چه می‌کنند. بیشتر بخور. این را بردار. بنشین. کمی دیگر بمان. اسمش را می‌گذارند خوش‌برخوردی، و خوش‌برخوردی نیست. این است که ما حاضر نیستیم بگذاریم کسی در حضور ما تنها باشد؛ و اگر لازم باشد، به زور هم که شده.
+EN: Gholamreza Takhti was a wrestler, an Olympic champion, and the most beloved athlete in Iranian history. But that is not why he is beloved. The stories are all about the same thing.
+FA: غلامرضا تختی کشتی‌گیر بود، قهرمان المپیک، و محبوب‌ترین ورزشکار تاریخ ایران. اما محبوبیتش به این دلیل نیست. حکایت‌هایی که از او مانده، همه دربارهٔ یک چیزند.
 
 17.
-EN: It is not that Iranians are welcoming. It is that we will not permit you to be lonely in front of us.
-FA: قضیه این نیست که ایرانی‌ها مهمان‌نوازند. قضیه این است که ما اجازه نمی‌دهیم تو جلوی چشم ما تنها باشی.
+EN: The Injured Leg
+FA: آن پای آسیب‌دیده
 
 18.
-EN: You will be fed until you suffer, kept at the door for forty minutes, and sent home with a bag you did not ask for. All of it is one message, delivered in the only vocabulary available.
-FA: آن‌قدر به تو غذا می‌دهند تا به زحمت بیفتی، چهل دقیقه دم در نگهت می‌دارند، و با کیسه‌ای که اصلاً نخواسته بودی راهی خانه‌ات می‌کنند. تمام اینها یک پیام است، که با تنها واژگانِ در دسترس گفته می‌شود.
+EN: Wrestling a Russian opponent who had an injured right leg, Takhti did not touch it once. He wrestled the man honestly, on his strength, and won without exploiting the injury. The opponent mother is said to have kissed him afterward.
+FA: در کشتی با حریفی روس که پای راستش آسیب دیده بود، تختی حتی یک بار هم به آن پا دست نزد. صادقانه و با تکیه بر توان خودش کشتی گرفت و بی‌آنکه از آن آسیب سوءاستفاده کند برد. می‌گویند مادرِ آن حریف بعد از مسابقه او را بوسید.
+
+19.
+EN: And when an earthquake destroyed a town, Takhti went into the streets of Tehran with a collection tin himself, in person, and people gave him everything they had because it was him. He died in 1968, and the circumstances are still argued about, and his funeral filled the city.
+FA: و وقتی زلزله شهری را با خاک یکسان کرد، تختی خودش، شخصاً، با یک صندوق کمک به خیابان‌های تهران رفت؛ و مردم هر چه داشتند به او دادند، فقط چون او بود. در سال ۱۳۴۶ درگذشت، و هنوز بر سر چگونگی مرگش بحث است، و تشییع جنازه‌اش شهر را پر کرد.
+
+20.
+EN: And it is still in the room
+FA: و هنوز هم هست
+
+21.
+EN: This is not history. Ask around any Iranian family and you will hear the same thing said with total confidence: give it to a Persian man and it will get done. Whatever it is. The car, the paperwork, the impossible favour, the thing that officially cannot be arranged.
+FA: این تاریخ نیست. در هر خانوادهٔ ایرانی که بگردی، همین یک جمله را با اطمینان کامل می‌شنوی: بسپارش به یک مرد ایرانی، انجام می‌شود. حالا هر چه که باشد. ماشین، کارهای اداری، آن لطفِ ناممکن، و همان چیزی که رسماً هیچ راهی برایش نیست.
+
+22.
+EN: You do not have to ask a second time. That is the entire compliment, and it is the highest one available.
+FA: لازم نیست دو بار بخواهی. تمام آن تعریف همین است، و بالاترین تعریفی است که وجود دارد.
+
+23.
+EN: A country that has produced conquerors and kings and poets chose, as the man it loves most, a wrestler who would not touch an injured leg.
+FA: کشوری که فاتح و شاه و شاعر تحویل جهان داده، محبوب‌ترین مردش را کسی انتخاب کرد که کشتی‌گیری بود و حاضر نشد به یک پای آسیب‌دیده دست بزند.
