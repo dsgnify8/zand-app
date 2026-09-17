@@ -24,7 +24,7 @@ export type Remembered = {
 export const REMEMBERED: Remembered[] = [
   {
     key: 'diana',
-    name: 'Diana Nasseri',
+    name: 'Diana Bahadori',
     persian: 'دیانا ناصری',
     age: '19',
     ageFa: '۱۹',

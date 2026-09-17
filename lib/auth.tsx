@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setAdminEmail } from '@/lib/admin';
 import { pullAndMerge, syncStop, syncFlush, clearOnSignOut } from '@/lib/cloud-sync';
 
@@ -45,7 +46,24 @@ export function AuthProvider({ children }: { children: any }) {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error: error?.message };
   };
-  const signOut = async () => { await supabase.auth.signOut(); };
+  const signOut = async () => {
+    // Unregister the device first. The token row is keyed by user, and
+    // leaving it behind meant this phone kept receiving notifications
+    // meant for whoever was signed in last — including after somebody
+    // else signed in on it.
+    try {
+      const uid = session?.user?.id;
+      if (uid) {
+        const token = await AsyncStorage.getItem('push:token');
+        if (token) {
+          await supabase.from('push_tokens').delete().eq('user_id', uid).eq('token', token);
+        } else {
+          await supabase.from('push_tokens').delete().eq('user_id', uid);
+        }
+      }
+    } catch {}
+    await supabase.auth.signOut();
+  };
   const updateName = async (name: string) => {
     const { error } = await supabase.auth.updateUser({ data: { name } });
     if (!error && session?.user) { await supabase.from('profiles').update({ name }).eq('id', session.user.id); }

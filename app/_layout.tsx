@@ -79,7 +79,11 @@ function AuthGate() {
     // progress is kept locally until they sign in, at which point it is
     // merged up. So we do not force anyone to the auth screen.
     if (session && inAuth) router.replace('/');
-  }, [session, loading, segments]);
+    // onboarded belongs here. Without it the effect kept the value from
+    // the render before someone finished onboarding, and re-ran on the
+    // navigation that followed — reading false, and sending them back to
+    // the first screen they had just left.
+  }, [session, loading, segments, onboarded]);
   return null;
 }
 

@@ -183,14 +183,19 @@ export default function Onboarding() {
     if (error) { setAuthErr(error); return; }
     try { await AsyncStorage.setItem('onboarded', '1'); } catch {}
     markOnboarded();
-    // Back to whatever sent them here, if anything did.
-    router.replace((nextRoute ? String(nextRoute) : '/(tabs)') as any);
+    // After the gate has seen it. markOnboarded sets state in AuthGate,
+    // which re-renders the tree, and a replace issued in the same tick
+    // is lost in that re-render — which left someone on the screen they
+    // had just completed.
+    setTimeout(() => {
+      router.replace((nextRoute ? String(nextRoute) : '/(tabs)') as any);
+    }, 0);
   };
 
   const goAuth = async (to: string) => {
     try { await AsyncStorage.setItem('onboarded', '1'); } catch {}
     markOnboarded();
-    router.replace(to as any);
+    setTimeout(() => router.replace(to as any), 0);
   };
 
   return (

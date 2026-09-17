@@ -111,6 +111,10 @@ export async function registerForPush(userId: string | undefined) {
     if (!token?.data) return null;
 
     const { supabase } = await import('@/lib/supabase');
+    // Kept, so signing out can remove this device's row rather than
+    // every device the person has ever used.
+    try { await AsyncStorage.setItem('push:token', token.data); } catch {}
+
     await supabase.from('push_tokens').upsert(
       { user_id: userId, token: token.data, platform: Platform.OS, updated_at: new Date().toISOString() },
       { onConflict: 'token' },
