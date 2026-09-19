@@ -98,6 +98,12 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-popularity' as any)}>
+              <Ionicons name="heart-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>What people keep</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-listings' as any)}>
               <Ionicons name="storefront-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Business listings</Text>
