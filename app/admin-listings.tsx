@@ -94,7 +94,10 @@ export default function AdminBusinesses() {
 
   // The ones that want doing something about, first.
   const needsAttention = rows.filter(
-    (b) => b.story_state === 'submitted' || (b.unread ?? 0) > 0 || b.status === 'pending',
+    // 'submitted' is the status a listing has while it waits. 'pending'
+    // was never one of the six, so this clause never matched and a
+    // listing with no story and no messages sat here unseen.
+    (b) => b.story_state === 'submitted' || (b.unread ?? 0) > 0 || b.status === 'submitted',
   ).length;
 
   if (!admin) {
@@ -171,7 +174,7 @@ export default function AdminBusinesses() {
           ) : shown.map((b) => {
             const shot = (b.photos ?? [])[0];
             const flags: string[] = [];
-            if (b.status === 'pending') flags.push('pending');
+            if (b.status === 'submitted') flags.push('submitted');
             if (b.story_state === 'submitted') flags.push('story waiting');
             if (b.story_state === 'held') flags.push('story held');
             if ((b.unread ?? 0) > 0) flags.push(b.unread + ' unread');
@@ -205,14 +208,14 @@ export default function AdminBusinesses() {
                           key={f}
                           style={[
                             s.flag,
-                            (f === 'pending' || f.includes('unread') || f === 'story waiting')
+                            (f === 'submitted' || f.includes('unread') || f === 'story waiting')
                               && s.flagWarm,
                           ]}
                         >
                           <Text
                             style={[
                               s.flagT,
-                              (f === 'pending' || f.includes('unread') || f === 'story waiting')
+                              (f === 'submitted' || f.includes('unread') || f === 'story waiting')
                                 && s.flagTWarm,
                             ]}
                           >

@@ -485,7 +485,10 @@ export default function Local() {
         }
         renderItem={({ item: biz }) => {
           const km = place && !showGrid && (biz as any).lat != null
-            ? dist(place.lat, place.lng, biz.lat, biz.lng ?? 0)
+            // Both coordinates, or neither. lng was already guarded and
+            // lat was not, so a listing with one and not the other threw
+            // rather than sorting last.
+            ? dist(place.lat, place.lng, biz.lat ?? 0, biz.lng ?? 0)
             : null;
           if (showGrid) {
             const row: any[] = biz as any;
