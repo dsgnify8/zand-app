@@ -43,7 +43,7 @@ function NzBlockView({ b }: { b: NzBlock }) {
   const rtl = fa ? s.rtl : undefined;
   switch (b.t) {
     case 'p': return <Text style={[s.p, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
-    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={tx(b)} /></View>;
+    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={tx(b)} color={nz.text} /></View>;
     case 'h': return <Text style={[s.h, rtl, fa && (b as any).fa && s.faHead]}>{tx(b)}</Text>;
     case 'aside': return <Text style={[s.aside, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
     case 'lead': return (
@@ -110,7 +110,7 @@ function YlBlockView({ b }: { b: YlBlock }) {
   const rtl = fa ? s.rtl : undefined;
   switch (b.t) {
     case 'p': return <Text style={[s.p, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
-    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={tx(b)} /></View>;
+    case 'ptext': return <View style={{ marginTop: spacing.md }}><GlossaryText text={tx(b)} color={nz.text} /></View>;
     case 'h': return <Text style={[s.h, rtl, fa && (b as any).fa && s.faHead]}>{tx(b)}</Text>;
     case 'aside': return <Text style={[s.aside, rtl, fa && (b as any).fa && s.faBody]}>{tx(b)}</Text>;
     case 'lead': return (

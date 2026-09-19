@@ -11,10 +11,15 @@ import { APP } from '@/constants/i18n/app';
 // Fills the box with the image (cover, no distortion), then nudges it so the
 // chosen focal point sits in view, optionally zoomed in.
 export function FramedImage({
-  name, source, style, children, editable = true, onPress,
+  name, source, style, children, editable = true, onPress, fit = 'cover',
 }: {
   name: string;
   source?: ImageSourcePropType;
+  /** How the image meets its box. Cover fills it and crops the overflow,
+   *  which is right for a photograph. Contain fits the whole image in,
+   *  which is the only correct choice for a map — a cropped map has lost
+   *  the part that was being pointed at. */
+  fit?: 'cover' | 'contain';
   style?: any;
   children?: any;
   editable?: boolean;
@@ -62,12 +67,15 @@ export function FramedImage({
   let inner = null;
   if (src && box.w > 0 && !imgAR) {
     // ratio not known yet: fill the box properly rather than distorting
-    inner = <Image source={src} style={StyleSheet.absoluteFill as any} resizeMode="cover" />;
+    inner = <Image source={src} style={StyleSheet.absoluteFill as any} resizeMode={fit} />;
   } else if (src && box.w > 0 && imgAR) {
     const boxAR = box.w / box.h;
-    // cover-fill: scale so the image covers the box on its tighter axis
+    // Cover scales to the tighter axis so the box is filled and the
+    // rest overflows; contain scales to the looser one so all of it
+    // fits. Same calculation, opposite comparison.
     let dispW: number, dispH: number;
-    if (imgAR > boxAR) { dispH = box.h; dispW = box.h * imgAR; }
+    const wide = fit === 'contain' ? imgAR < boxAR : imgAR > boxAR;
+    if (wide) { dispH = box.h; dispW = box.h * imgAR; }
     else { dispW = box.w; dispH = box.w / imgAR; }
     dispW *= frame.zoom; dispH *= frame.zoom;
 

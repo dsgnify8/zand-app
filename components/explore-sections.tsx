@@ -27,7 +27,10 @@ export function TraditionsPanels() {
 
   return (
     <View style={s.year}>
-      <Pressable style={s.half} onPress={() => router.navigate('/nowruz' as any)}>
+      {/* Traditions, like its Yalda twin below. The standalone Nowruz
+          page was left behind when the two were brought together, and
+          kept a copy of the content with its own faults. */}
+      <Pressable style={s.half} onPress={() => router.navigate('/traditions?t=nowruz' as any)}>
         <LinearGradient
           colors={['#E8C97A', '#D9A15B', '#C97F4A']}
           start={{ x: 0, y: 0 }}

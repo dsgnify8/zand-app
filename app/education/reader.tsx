@@ -103,7 +103,11 @@ function BlockView({ b }: { b: Block }) {
       const src = eduImage(b.key);
       return (
         <View style={styles.imgWideWrap}>
-          {src ? <Image source={src} style={styles.imgWide} resizeMode="cover" /> : <View style={[styles.imgWide, styles.ph]}><Ionicons name="image-outline" size={22} color={dark.textDim} /></View>}
+          {/* FramedImage, like the square blocks, so an admin can upload
+              here too — a plain Image left these slots unfillable. */}
+          <View style={styles.imgWide}>
+            <FramedImage name={b.key} source={src} style={StyleSheet.absoluteFill as any} fit="contain" />
+          </View>
           {b.cap ? <Text style={styles.cap}>{fa && (b as any).capFa ? (b as any).capFa : b.cap}</Text> : null}
         </View>
       );
@@ -502,6 +506,17 @@ const styles = StyleSheet.create({
   tlLabel: { fontFamily: fonts.body, fontSize: fontSize.xs, lineHeight: 16, color: dark.text, textAlign: 'center', marginTop: spacing.sm, paddingHorizontal: 4 },
   imgWrap: { marginVertical: spacing.lg },
   imgReal: { width: '100%', height: 400, borderRadius: radius.lg, backgroundColor: dark.surface },
+  // Landscape, for maps and anything else that loses its meaning when
+  // cropped square. These three were referenced by the imgwide case and
+  // never existed, so the block was unusable — nothing in the app was
+  // using it, which is why nobody noticed.
+  imgWideWrap: { marginVertical: spacing.lg },
+  imgWide: { width: '100%', height: 220, borderRadius: radius.lg, backgroundColor: dark.surface },
+  cap: {
+    fontFamily: fonts.body, fontSize: 12, lineHeight: 19,
+    color: dark.textDim, marginTop: spacing.sm, fontStyle: 'italic',
+  },
+
   imgSmWrap: { marginVertical: spacing.lg, alignItems: 'center' },
   imgSm: { width: '80%', height: 240, borderRadius: radius.lg, backgroundColor: dark.surface, alignSelf: 'center' },
   rowWrap: { marginVertical: spacing.lg },

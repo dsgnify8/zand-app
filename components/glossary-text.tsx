@@ -10,7 +10,14 @@ import { useLang, getLang } from '@/lib/i18n';
 import { router } from 'expo-router';
 
 // Renders a paragraph where {{term-id|visible text}} becomes a tappable link.
-export function GlossaryText({ text }: { text: string }) {
+export function GlossaryText({ text, color }: {
+  text: string;
+  /** For pages that are not dark. The default suits the education
+   *  reader; the Nowruz page is cream, and light-on-cream is invisible
+   *  — the paragraph was rendering the whole time and could not be
+   *  read, leaving only the gold link showing. */
+  color?: string;
+}) {
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
@@ -35,7 +42,7 @@ export function GlossaryText({ text }: { text: string }) {
 
   return (
     <>
-      <Text style={styles.p}>
+      <Text style={[styles.p, color ? { color } : null]}>
         {segments.map((seg, i) =>
           seg.t === 'text'
             ? <Text key={i}>{seg.s}</Text>

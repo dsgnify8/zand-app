@@ -34,22 +34,31 @@ function Block({ b }: { b: NzBlock }) {
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
+  // Every block read b.x, so a Persian reader got the English page even
+  // though every fa value in the data was written. One helper, used
+  // everywhere, rather than a language check per block.
+  const fa = getLang() === 'fa';
+  const tx = (o: any) => (fa && o?.fa ? o.fa : o?.x);
   switch (b.t) {
-    case 'p': return <Text style={styles.p}>{b.x}</Text>;
-    case 'ptext': return <View style={styles.ptext}><GlossaryText text={b.x} /></View>;
-    case 'h': return <Text style={styles.h}>{b.x}</Text>;
-    case 'aside': return <Text style={styles.aside}>{b.x}</Text>;
+    case 'p': return <Text style={styles.p}>{tx(b)}</Text>;
+    case 'ptext': return (
+      <View style={styles.ptext}>
+        <GlossaryText text={tx(b)} color={nz.text} />
+      </View>
+    );
+    case 'h': return <Text style={styles.h}>{tx(b)}</Text>;
+    case 'aside': return <Text style={styles.aside}>{tx(b)}</Text>;
     case 'lead': return (
       <View style={styles.leadWrap}>
         <View style={styles.leadRule} />
-        <Text style={styles.lead}>{b.x}</Text>
+        <Text style={styles.lead}>{tx(b)}</Text>
         <View style={styles.leadRule} />
       </View>
     );
     case 'mark': return (
       <View style={styles.mark}>
         <View style={styles.markBar} />
-        <Text style={styles.markText}>{b.x}</Text>
+        <Text style={styles.markText}>{tx(b)}</Text>
       </View>
     );
     case 'tahvil': return <Tahvil />;
@@ -88,7 +97,7 @@ function Block({ b }: { b: NzBlock }) {
       <View style={styles.close}>
         <View style={styles.closeRule} />
         <Text style={styles.closeGlyph}>{b.glyph}</Text>
-        <Text style={styles.closeText}>{b.x}</Text>
+        <Text style={styles.closeText}>{tx(b)}</Text>
         <View style={styles.closeDiamond} />
       </View>
     );
