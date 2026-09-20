@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -17,7 +18,10 @@ export default function ReadScreen() {
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
-  const { text } = useLocalSearchParams<{ text?: string }>();
+  const { text, step } = useLocalSearchParams<{ text?: string; step?: string }>();
+  // A reading is done once it has been opened: there is nothing to score
+  // and nothing to fail, so arriving is finishing.
+  useEffect(() => { if (step) markStepDone(String(step)); }, [step]);
   const r = readingByKey(text);
   const [word, setWord] = useState<Gloss | null>(null);
   const [showEn, setShowEn] = useState(false);

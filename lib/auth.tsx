@@ -38,8 +38,17 @@ export function AuthProvider({ children }: { children: any }) {
   const user = session?.user ?? null;
   const displayName = (user?.user_metadata?.name as string) || (user?.email?.split('@')[0]) || 'there';
 
+  // Our own emails, sent alongside whatever Supabase does. They never
+  // block: a welcome that fails to send is not a reason to fail a
+  // signup, and somebody sitting on a bad connection should not be told
+  // their account did not work because an email did not.
+  const notify = (kind: string, to: string, name?: string) => {
+    supabase.functions.invoke('send-email', { body: { kind, to, name } }).catch(() => {});
+  };
+
   const signUp = async (email: string, password: string, name: string) => {
     const { error } = await supabase.auth.signUp({ email, password, options: { data: { name } } });
+    if (!error) notify('welcome', email.trim(), name.trim());
     return { error: error?.message };
   };
   const signIn = async (email: string, password: string) => {
@@ -77,7 +86,10 @@ export function AuthProvider({ children }: { children: any }) {
   const updatePhone = async (phone: string) => {
     if (!session?.user) return { error: 'Not signed in' };
     const { error } = await supabase.from('profiles').update({ phone }).eq('id', session.user.id);
-    if (!error) await supabase.auth.updateUser({ data: { phone } });
+    if (!error) {
+      await supabase.auth.updateUser({ data: { phone } });
+      if (session.user.email) notify('phone-changed', session.user.email);
+    }
     return { error: error?.message };
   };
   const resetPassword = async (email: string) => {

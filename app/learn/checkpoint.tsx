@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useRef, useEffect, useMemo, useState } from 'react';
+import { Easing, Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { markStepDone } from '@/lib/learn-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
 import { lw } from '@/constants/lang-theme';
 import { STAGES } from '@/constants/journey';
+import { Confetti } from '@/components/stage-complete';
 import { UNITS } from '@/constants/curriculum';
 import { speak, prewarm } from '@/lib/speak';
 import { record } from '@/lib/word-strength';
@@ -95,7 +97,8 @@ export default function CheckpointScreen() {
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
   useLang();
-  const { stage } = useLocalSearchParams<{ stage?: string }>();
+  const { stage, step } = useLocalSearchParams<{ stage?: string; step?: string }>();
+  const endRun = useRef(new Animated.Value(0)).current;
   const stageInfo = STAGES.find((s) => s.key === stage);
   const qs = useMemo(() => questionsFor(stage), [stage]);
 
@@ -117,23 +120,61 @@ export default function CheckpointScreen() {
   const q = qs[i] as any;
   const correct = picked === q.answer;
 
+  // Fired from an effect rather than during render, so it runs once
+  // when the last check is passed rather than on every re-render of the
+  // finished screen.
+  const celebrated = useRef(false);
+  useEffect(() => {
+    if (!done || celebrated.current) return;
+    const pct = Math.round((right / qs.length) * 100);
+    if (pct < 70) return;
+    if (STAGES[STAGES.length - 1]?.key !== stage) return;
+    celebrated.current = true;
+    endRun.setValue(0);
+    Animated.timing(endRun, { toValue: 1, duration: 3200, easing: Easing.linear, useNativeDriver: true }).start();
+  }, [done]);
+
   if (done) {
     const pct = Math.round((right / qs.length) * 100);
     const passed = pct >= 70;
+    // The last check of the last stage. Finishing the whole journey
+    // should not read the same as finishing chapter three.
+    const lastStage = STAGES[STAGES.length - 1]?.key === stage;
+    const finishedAll = passed && lastStage;
     return (
       <SafeAreaView style={s.safe} edges={['top', 'bottom']}>
+        {/* Only here. Every stage gets its own celebration on the map;
+            this is for the end of the whole thing, which happens once. */}
+        {finishedAll ? <Confetti run={endRun} /> : null}
         <View style={s.mid}>
           <Art name="arch" size={96} style={{ opacity: 0.5, marginBottom: 6 }} />
-          <Text style={s.finFa}>{passed ? 'قبول' : 'نزدیک بود'}</Text>
+          <Text style={s.finFa}>
+            {finishedAll ? 'آفرین، به پایان رسیدیم' : passed ? 'قبول' : 'نزدیک بود'}
+          </Text>
           <Text style={s.finT}>{right} of {qs.length}</Text>
           <View style={s.rule} />
           <Text style={s.finX}>
-            {passed
+            {finishedAll
+              ? 'That is the whole journey. Every chapter, every word, from the alphabet to reported speech. Whatever you do next, you can read Persian now, and the review is always here when a word slips.'
+              : passed
               ? 'This chapter is yours. The words you missed will come round again in review.'
               : 'Worth going back through the chapter before moving on. Nothing is lost by rereading.'}
           </Text>
-          <Pressable style={s.cta} onPress={() => { router.replace('/learn/map' as any); }}>
-            <Text style={s.ctaT}>{passed ? 'Carry on' : 'Back to the chapter'}</Text>
+          <Pressable
+            style={s.cta}
+            onPress={() => {
+              // Record it. The checkpoint is the last step of a stage and
+              // never marked itself done, so no stage in the app could
+              // ever complete: no filled circle, no confetti, and a
+              // journey that quietly stopped advancing at the first
+              // check.
+              if (passed && step) markStepDone(String(step), pct);
+              router.replace('/learn/map' as any);
+            }}
+          >
+            <Text style={s.ctaT}>
+              {finishedAll ? 'Back to the beginning' : passed ? 'Carry on' : 'Back to the chapter'}
+            </Text>
           </Pressable>
           <Pressable hitSlop={10} onPress={() => { setI(0); setPicked(null); setRight(0); setDone(false); }}>
             <Text style={s.again}>{tl(LEARN.tryAgain)}</Text>

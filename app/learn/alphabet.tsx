@@ -204,7 +204,10 @@ export default function AlphabetScreen() {
           }).catch(() => {});
         }}
       >
-        <Pressable style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/learn/map' as any))}>
+        {/* Always the map. canGoBack was true but pointed at the Learn
+            tab, since that is where the journey is entered from — so
+            leaving the alphabet skipped the map entirely. */}
+        <Pressable style={styles.backBtn} onPress={() => router.replace('/learn/map' as any)}>
           <Ionicons name="chevron-back" size={20} color={lw.muted} />
           <Text style={styles.backBtnText}>{tl(LEARN.learn) === 'Learn' ? 'Learn' : ''}</Text>
         </Pressable>

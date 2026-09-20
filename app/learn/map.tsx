@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
@@ -131,7 +132,11 @@ export default function MapScreen() {
   // in should not mean twelve steps of scrolling.
   const landed = useRef(false);
   useEffect(() => {
-    if (landed.current) return;
+    // Not if they had a position to come back to. The stage scroll is
+    // for arriving fresh; returning from an exercise should leave you
+    // where you were, and landed is a ref so it could not tell the two
+    // apart.
+    if (landed.current || lastScrollY > 40) return;
     const key = STAGES[activeStage]?.key;
     const y = key ? stageOffsets.current[key] : undefined;
     if (y === undefined) return;   // not measured yet; try again next render
@@ -150,6 +155,29 @@ export default function MapScreen() {
   // the last render rather than checked on mount, so it fires once when it
   // happens rather than every time the map is opened.
   const [celebrating, setCelebrating] = useState<number | null>(null);
+  // Which stages were complete when this device last looked. Stored, so
+  // it survives the map being closed and reopened.
+  const [seenStages, setSeenStages] = useState<Set<number> | null>(null);
+  useEffect(() => {
+    AsyncStorage.getItem('learn:seen-stages')
+      .then((raw) => {
+        if (raw) { setSeenStages(new Set(JSON.parse(raw))); return; }
+        // Nothing stored yet: seed from whatever is already complete, so
+        // somebody who has been using the app does not get confetti for
+        // every stage they finished weeks ago.
+        const already = new Set<number>();
+        STAGES.forEach((st: any, i: number) => {
+          if (st.steps.length > 0 && st.steps.every((x: any) => stepDone(x))) already.add(i);
+        });
+        setSeenStages(already);
+      })
+      .catch(() => setSeenStages(new Set()));
+  }, []);
+  useEffect(() => {
+    if (seenStages) {
+      AsyncStorage.setItem('learn:seen-stages', JSON.stringify([...seenStages])).catch(() => {});
+    }
+  }, [seenStages]);
   const wasDone = useRef<Set<number> | null>(null);
 
   useEffect(() => {
@@ -158,14 +186,16 @@ export default function MapScreen() {
       if (st.steps.length > 0 && st.steps.every((x: any) => stepDone(x))) now.add(i);
     });
 
-    // First run establishes the baseline. Without this, opening the map
-    // for the first time would celebrate everything already done.
-    if (wasDone.current === null) { wasDone.current = now; return; }
+    // The baseline has to outlive the screen. It was a ref, reset every
+    // time the map mounted — and the map mounts precisely when someone
+    // returns from finishing a lesson, so the newly-complete stage was
+    // always already in the baseline and never celebrated.
+    if (seenStages === null) { setSeenStages(now); return; }
 
     for (const i of now) {
-      if (!wasDone.current.has(i)) { setCelebrating(i); break; }
+      if (!seenStages.has(i)) { setCelebrating(i); break; }
     }
-    wasDone.current = now;
+    if (now.size !== seenStages.size) setSeenStages(now);
   });
   const { info } = useLevel();
   const { solid, shaky } = useStrength();
@@ -336,7 +366,9 @@ export default function MapScreen() {
               kind: 'quiz' as const,
               title: 'Chapter check',
               sub: 'Ten questions on everything in this chapter',
-              route: '/learn/checkpoint?stage=' + stage.key,
+              // The step key too. Without it the checkpoint had no idea
+              // which step it was and could not record itself as done.
+              route: '/learn/checkpoint?stage=' + stage.key + '&step=' + stage.key + '-check',
             }].map((st) => {
               n += 1;
               return (
