@@ -1188,7 +1188,7 @@ export default function Profile() {
       <View style={s.header}>
         <View>
           <Text style={s.hello}>{t(PROFILE.welcome)}</Text>
-          <Text style={s.name}>{displayName}</Text>
+          <Text style={s.name}>{session ? displayName : 'Nina'}</Text>
         </View>
         <Pressable hitSlop={10} onPress={() => setSettings(true)}>
           <Ionicons name="settings-outline" size={21} color={colors.textPrimary} />
