@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { supabase } from '@/lib/supabase';
+import { folderLink as siteFolderLink } from '@/lib/links';
 import { isSavedBusiness, toggleSavedBusiness } from '@/lib/saved-businesses';
 
 export type Collection = {
@@ -213,7 +214,7 @@ export async function folderLink(collectionId: string) {
       .eq('id', collectionId);
   }
 
-  return 'https://zand.app/folder?t=' + token;
+  return siteFolderLink(token);
 }
 
 /**
@@ -275,7 +276,27 @@ export async function shareCollection(collectionId: string, userId: string) {
     user_id: userId,
     invited_by: me.user?.id ?? null,
   });
-  return !error;
+  if (error) return false;
+
+  // Being put in a folder is the moment worth hearing about, and it was
+  // the only one of the three that said nothing.
+  (async () => {
+    const [{ data: col }, { data: prof }] = await Promise.all([
+      supabase.from('saved_collections').select('name').eq('id', collectionId).maybeSingle(),
+      supabase.from('profiles').select('name').eq('id', me.user?.id ?? '').maybeSingle(),
+    ]);
+    await supabase.functions.invoke('send-push', {
+      body: {
+        userId,
+        title: `${prof?.name ?? 'Someone'} shared a folder with you`,
+        body: `${col?.name ?? 'A folder'}. Whatever either of you adds, you both see.`,
+        category: 'friends',
+        data: { kind: 'collection', collection_id: collectionId },
+      },
+    });
+  })().catch(() => {});
+
+  return true;
 }
 
 /** Stop keeping it. The folder stays; you leave. */

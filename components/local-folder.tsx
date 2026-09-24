@@ -173,6 +173,10 @@ export function FolderPage() {
                   fa={fa}
                   onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
                   onFile={setFiling}
+                  inFolder={id as string}
+                  // Dropped here rather than reloaded, so the card goes
+                  // the moment it is taken out.
+                  onRemoved={(x) => setItems((v) => v.filter((i) => i.id !== x))}
                 />
               ))}
             </View>
@@ -193,7 +197,7 @@ export function FolderPage() {
         onClose={() => setShare(false)}
         onShared={load}
       />
-      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
+      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => { setFiling(null); load(); }} />
     </SafeAreaView>
   );
 }

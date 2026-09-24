@@ -10,8 +10,10 @@ import { useLang, getLang } from '@/lib/i18n';
 import { router } from 'expo-router';
 
 // Renders a paragraph where {{term-id|visible text}} becomes a tappable link.
-export function GlossaryText({ text, color }: {
+export function GlossaryText({ text, color, style }: {
   text: string;
+  /** For places with their own type size, such as the Nowruz table. */
+  style?: any;
   /** For pages that are not dark. The default suits the education
    *  reader; the Nowruz page is cream, and light-on-cream is invisible
    *  — the paragraph was rendering the whole time and could not be
@@ -42,7 +44,7 @@ export function GlossaryText({ text, color }: {
 
   return (
     <>
-      <Text style={[styles.p, color ? { color } : null]}>
+      <Text style={[styles.p, color ? { color } : null, style]}>
         {segments.map((seg, i) =>
           seg.t === 'text'
             ? <Text key={i}>{seg.s}</Text>

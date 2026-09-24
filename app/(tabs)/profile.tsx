@@ -244,11 +244,15 @@ function DiscoverRow() {
   const discoverToday = (() => {
     const unseen = DISCOVER.filter((d) => !recent.includes(d.key));
     const pool = unseen.length ? unseen : DISCOVER;
-    // rotate the starting point by the day, so the order changes without
-    // being random — a person seeing the same card twice in a day is
-    // fine, seeing it reshuffle every render is not
-    const start = day % pool.length;
-    return [...pool.slice(start), ...pool.slice(0, start)].slice(0, 3);
+    // Shuffled by the date rather than rotated. A rotation walks the
+    // same order forever, so the card that followed Rudaki yesterday
+    // follows it again today; this deals a different hand each morning
+    // and the same hand all day.
+    const ordered = pool
+      .map((d, i) => ({ d, n: ((day + 1) * 9301 + (i + 1) * 49297) % 233280 }))
+      .sort((a, b) => a.n - b.n)
+      .map((x) => x.d);
+    return ordered.slice(0, 3);
   })();
 
   return (
@@ -304,14 +308,21 @@ function YouTab({ onGoFriends, libView, setLibView }: {
       ];
   if (libView) {
     return (
-      <Reanimated.View entering={FadeIn.duration(220)}>
+      <Reanimated.View
+        key={'lib-' + libView}
+        entering={FadeIn.duration(200)}
+        exiting={FadeOut.duration(120)}
+      >
         <LibrarySub view={libView} onBack={() => setLibView(null)} />
       </Reanimated.View>
     );
   }
 
   return (
-    <>
+    // The page fades back the same way it left. Without this the library
+    // faded in over a page that had already vanished, and returning was
+    // a snap in the other direction.
+    <Reanimated.View key="you" entering={FadeIn.duration(200)}>
 
       {pending.length > 0 ? (
         <Pressable style={s.alert} onPress={onGoFriends}>
@@ -346,7 +357,7 @@ function YouTab({ onGoFriends, libView, setLibView }: {
       <KeepReading />
       <LibrarySection onOpen={setLibView} />
       <DiscoverRow />
-    </>
+    </Reanimated.View>
   );
 }
 
@@ -1108,7 +1119,17 @@ function ProgressTab() {
               onPress={st.route ? () => router.navigate(st.route as any) : undefined}
               onLongPress={holdable ? () => setStatSheet({ title: st.kT ? t(st.kT) : st.k, items: list }) : undefined}
             >
-              <Ionicons name={st.i as any} size={16} color="#A65F42" />
+              {/* Gold, with a breath of light behind it. A flat icon at
+                  this size cannot be glossy on its own. */}
+              <View style={s.statIcon}>
+                <LinearGradient
+                  colors={['rgba(224,192,121,0.34)', 'rgba(176,138,70,0.10)']}
+                  start={{ x: 0.2, y: 0 }}
+                  end={{ x: 0.8, y: 1 }}
+                  style={StyleSheet.absoluteFill as any}
+                />
+                <Ionicons name={st.i as any} size={16} color="#A8822F" />
+              </View>
               <Text style={s.statV}>{st.v}</Text>
               <Text style={s.statK}>{st.kT ? t(st.kT) : st.k}</Text>
             </Pressable>
@@ -1151,6 +1172,28 @@ export default function Profile() {
   // switcher can stand down while the library is open — they belong to
   // the profile, not to a page opened from it.
   const [libView, setLibView] = useState<null | 'favourites' | 'saved'>(null);
+
+  // Where the page was when the library was opened. Coming back to the
+  // top of a long page, having gone in from halfway down it, means
+  // finding your place again every time.
+  const scroller = useRef<ScrollView>(null);
+  const atY = useRef(0);
+  const wasLib = useRef<null | 'favourites' | 'saved'>(null);
+  useEffect(() => {
+    const leaving = wasLib.current && !libView;
+    wasLib.current = libView;
+    if (libView) {
+      // Opening: the library starts at its own top.
+      scroller.current?.scrollTo({ y: 0, animated: false });
+      return;
+    }
+    if (leaving) {
+      // Closing: after the fade has put the page back, not during it.
+      requestAnimationFrame(() => {
+        scroller.current?.scrollTo({ y: atY.current, animated: false });
+      });
+    }
+  }, [libView]);
   // As initial state this only worked on a cold mount. Arriving from the
   // home card while Profile was already mounted left you on You.
   useEffect(() => { if (wantTab) setTab(wantTab as Tab); }, [wantTab]);
@@ -1211,7 +1254,18 @@ export default function Profile() {
       </View>
       )}
 
-      <ScrollView contentContainerStyle={s.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scroller}
+        contentContainerStyle={s.container}
+        showsVerticalScrollIndicator={false}
+        onScroll={(e) => {
+          // Only while the page itself is showing. The library scrolls in
+          // the same view, and recording that would send someone back to
+          // a position that belonged to a different page.
+          if (!libView) atY.current = e.nativeEvent.contentOffset.y;
+        }}
+        scrollEventThrottle={64}
+      >
         {tab === 'you' ? <YouTab onGoFriends={() => setTab('friends')} libView={libView} setLibView={setLibView} /> : null}
         {tab === 'friends' ? <FriendsTab /> : null}
         {tab === 'progress' ? <ProgressTab /> : null}
@@ -1410,7 +1464,6 @@ const s = StyleSheet.create({
   avatarSm: { width: 30, height: 30, borderRadius: 15 },
   avatarT: { fontFamily: fonts.persian, fontSize: 15, color: pr.friendA },
   inboxFrom: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.textPrimary },
-  inboxWhen: { fontFamily: fonts.body, fontSize: 10, color: pr.dim },
   newDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: pr.friendA },
   // Horizontal padding as well as vertical: an article title runs to two
   // or three lines and was touching both edges.
@@ -1424,7 +1477,6 @@ const s = StyleSheet.create({
   wordRule: { width: 20, height: 1, backgroundColor: pr.friendA, opacity: 0.5, marginVertical: spacing.sm },
   wordEn: { fontFamily: fonts.body, fontSize: 12, color: pr.dim, fontStyle: 'italic', textAlign: 'center' },
   inboxKindTag: { fontFamily: fonts.bodyStrong, fontSize: 8, letterSpacing: 1.5, color: pr.friendA, marginTop: 4 },
-  inboxNote: { fontFamily: fonts.body, fontSize: 11.5, color: pr.dim, fontStyle: 'italic', textAlign: 'center', marginTop: spacing.md },
   complete: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: pr.friendA, borderRadius: 20, paddingVertical: 9, marginTop: spacing.md },
   completeT: { fontFamily: fonts.bodyStrong, fontSize: 12, color: '#FFF' },
   sendBack: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderWidth: 1, borderColor: pr.friendA, borderRadius: 20, paddingVertical: 8, marginTop: spacing.md },
@@ -1447,6 +1499,12 @@ const s = StyleSheet.create({
   // A warm ground rather than a flat panel, and the icon in clay rather
   // than the blue it borrowed from the save colour.
   statCell: { width: '47%', backgroundColor: colors.surface, borderRadius: 12, borderWidth: 1, borderColor: pr.hair, padding: spacing.lg },
+  // A small warm disc under the icon. Enough to catch the light, not
+  // enough to become a button.
+  statIcon: {
+    width: 28, height: 28, borderRadius: 14, overflow: 'hidden',
+    alignItems: 'center', justifyContent: 'center', marginBottom: 2,
+  },
   statV: { fontFamily: fonts.heading, fontSize: 28, color: colors.textPrimary },
   statK: { fontFamily: fonts.bodyStrong, fontSize: 11, color: colors.textPrimary, marginTop: 2 },
   statS: { fontFamily: fonts.body, fontSize: 10, color: pr.dim, marginTop: 1 },

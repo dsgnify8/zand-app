@@ -4,12 +4,32 @@
 // words. Azure's short-audio endpoint takes up to about sixty seconds,
 // which is far more than a spoken sentence needs.
 
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { callerId, isServiceCall } from '../_shared/caller.ts';
+import { callerKey, overLimit } from '../_shared/limit.ts';
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors() });
 
   try {
+    if (!isServiceCall(req)) {
+      const admin = createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+      );
+      const who = callerKey(req, await callerId(req));
+      if (await overLimit(admin, 'listen', who, 30, 600)) {
+        return json({ error: 'Too many requests. Try again shortly.' }, 429);
+      }
+    }
+
     const { audio, lang = 'fa-IR' } = await req.json();
     if (!audio) return json({ error: 'No audio.' }, 400);
+    // Azure's short-audio endpoint tops out around a minute; base64 of
+    // that is a few megabytes. Anything larger is not a sentence.
+    if (typeof audio !== 'string' || audio.length > 6_000_000) {
+      return json({ error: 'Clip too long.' }, 400);
+    }
 
     const key = Deno.env.get('AZURE_SPEECH_KEY');
     const region = Deno.env.get('AZURE_SPEECH_REGION');

@@ -223,7 +223,14 @@ export function SavedBusinesses() {
         onShared={refreshCols}
       />
 
-      <CollectionSheet businessId={filing} open={filing !== null} onClose={() => setFiling(null)} />
+      {/* Refreshed on close rather than on focus: making a folder never
+          leaves this screen, so nothing was refocused and the new folder
+          waited until the next visit. */}
+      <CollectionSheet
+        businessId={filing}
+        open={filing !== null}
+        onClose={() => { setFiling(null); refreshCols(); }}
+      />
       <LocalDrawer open={drawer} onClose={() => setDrawer(false)} onPick={onDrawerPick} />
     </SafeAreaView>
   );

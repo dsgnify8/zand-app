@@ -22,12 +22,9 @@ import MapView, { Marker, type Region } from 'react-native-maps';
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { useLang, getLang } from '@/lib/i18n';
 import { CATEGORIES, categoryLabel, loadBusinesses, trackBusiness, type Business } from '@/lib/businesses';
-import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
-import { eduImage } from '@/constants/education-images';
+import { BizPhoto } from '@/components/biz-photo';
 
 // A listing photo is either a storage path or a bundled demo image.
-const bizImage = (path: string) =>
-  isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 import { currentPlace, findPlace, hasLocation } from '@/lib/geo';
 
 // Somewhere sensible to open if we know nothing: the middle of Europe,
@@ -51,7 +48,7 @@ export default function LocalMap() {
 
   // Opened from a city page with a centre already worked out, so start
   // there rather than at the fallback and then panning.
-  const { lat: qLat, lng: qLng, z: qZ } = useLocalSearchParams<{ lat?: string; lng?: string; z?: string }>();
+  const { lat: qLat, lng: qLng, z: qZ, focus } = useLocalSearchParams<{ lat?: string; lng?: string; z?: string; focus?: string }>();
   const opened = qLat && qLng
     ? {
         latitude: Number(qLat),
@@ -136,6 +133,22 @@ export default function LocalMap() {
       }
     })();
   }, []);
+
+  // Sent here by a listing's address: once that listing is among the
+  // ones loaded for this region, open it. Once only, so panning away
+  // afterwards does not drag the sheet back.
+  const focused = useRef(false);
+  useEffect(() => {
+    if (!focus || focused.current) return;
+    const hit = items.find((b) => b.id === focus);
+    if (!hit) return;
+    focused.current = true;
+    // Selected, not opened. Arriving from an address, the thing wanted is
+    // the map; the full card in front of it is one dismissal before you
+    // can see anything. The small bar at the foot names the place and
+    // opens the page when tapped.
+    setSel(hit);
+  }, [focus, items]);
 
   /* ---------------- load for what is on screen ---------------- */
 
@@ -336,7 +349,7 @@ export default function LocalMap() {
                   style={s.sheetShotWrap}
                 >
                   {sel.photos.map((p) => (
-                    <Image key={p} source={bizImage(p)} style={{ width: SHEET_W, height: 210 }} />
+                    <BizPhoto key={p} path={p} width={SHEET_W} height={210} style={{ width: SHEET_W, height: 210 }} />
                   ))}
                 </ScrollView>
                 {sel.photos.length > 1 ? (
@@ -407,7 +420,7 @@ export default function LocalMap() {
           onPress={() => router.navigate(('/local/business?id=' + sel.id) as any)}
         >
           {sel.photos?.[0] ? (
-            <Image source={bizImage(sel.photos[0])} style={s.peekShot} />
+            <BizPhoto path={sel.photos[0]} width={76} height={76} style={s.peekShot} />
           ) : (
             <View style={[s.peekShot, s.peekEmpty]}>
               <Ionicons name="storefront-outline" size={18} color={colors.textSecondary} />
@@ -462,7 +475,7 @@ export default function LocalMap() {
               onPress={() => { setShot(0); setSel(b); setSheet(true); }}
             >
               {b.photos?.[0] ? (
-                <Image source={bizImage(b.photos[0])} style={s.railShot} />
+                <BizPhoto path={b.photos[0]} width={76} height={76} style={s.railShot} />
               ) : (
                 <View style={[s.railShot, s.peekEmpty]}>
                   <Ionicons name="storefront-outline" size={18} color={colors.textSecondary} />

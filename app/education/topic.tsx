@@ -47,7 +47,14 @@ export default function TopicScreen() {
           {/* Out to the history thread, not to Explore. Arriving from
               the thread and leaving to the root puts someone further out
               than they came in. */}
-          <Pressable style={styles.close} hitSlop={10} onPress={() => router.replace('/education/history' as any)}>
+          <Pressable style={styles.close} hitSlop={10} onPress={() => {
+            // Back to the history page that is already behind this one,
+            // rather than putting a second copy of it on top. Replacing
+            // left the topic underneath, so a swipe back from history
+            // landed on something that had already been closed.
+            try { router.dismissTo('/education/history' as any); }
+            catch { router.replace('/education/history' as any); }
+          }}>
             <Ionicons name="close" size={24} color={dark.text} />
           </Pressable>
           <View style={styles.coverText}>

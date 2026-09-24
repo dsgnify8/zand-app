@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import { alertAdmin } from '@/lib/admin-alert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setAdminEmail } from '@/lib/admin';
 import { pullAndMerge, syncStop, syncFlush, clearOnSignOut } from '@/lib/cloud-sync';
@@ -48,7 +49,10 @@ export function AuthProvider({ children }: { children: any }) {
 
   const signUp = async (email: string, password: string, name: string) => {
     const { error } = await supabase.auth.signUp({ email, password, options: { data: { name } } });
-    if (!error) notify('welcome', email.trim(), name.trim());
+    if (!error) {
+      notify('welcome', email.trim(), name.trim());
+      alertAdmin('signup', { who: name.trim() || email.trim() });
+    }
     return { error: error?.message };
   };
   const signIn = async (email: string, password: string) => {

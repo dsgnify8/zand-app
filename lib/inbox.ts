@@ -49,9 +49,12 @@ export async function sendItem(payload: {
           : (payload as any).kind === 'business' ? 'a place'
           : (payload as any).kind === 'tpm' ? 'an article'
           : 'something'),
-      body: (payload as any).fa
-        ? (payload as any).fa + ((payload as any).en ? '  ·  ' + (payload as any).en : '')
-        : ((payload as any).title ?? ''),
+      // Latin script, deliberately. A notification carrying Persian
+      // flips the whole line to right-to-left, and a line that is half
+      // English then reads as a mess. The Persian is there in the app,
+      // in its own typeface, where it belongs.
+      body: [(payload as any).tr, (payload as any).en]
+        .filter(Boolean).join('  ·  ') || ((payload as any).title ?? ''),
       category: 'friends',
       data: { tab: 'friends' },
     },

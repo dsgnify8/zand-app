@@ -20,6 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
+import { registerScrollTop } from '@/lib/scroll-top';
 import { useLang, t as tr, getLang } from '@/lib/i18n';
 import { SECTIONS } from '@/constants/i18n/sections';
 import { eduImage } from '@/constants/education-images';
@@ -243,6 +244,12 @@ function WorldCard({ w, index, fa }: { w: World; index: number; fa: boolean }) {
 /* ---------------- the page ---------------- */
 
 export default function Explore() {
+  // Pressing the tab while already here takes you back to the top.
+  const page = useRef<any>(null);
+  useEffect(() => registerScrollTop('explore', () => {
+    page.current?.scrollTo?.({ y: 0, animated: true });
+  }), []);
+
   // Subscribe to the language. Without this the screen only re-renders
   // when something else pushes it, so a switch made elsewhere does not
   // reach it until you navigate away and back.
@@ -313,6 +320,7 @@ export default function Explore() {
       />
 
       <Animated.ScrollView
+        ref={page as any}
         contentContainerStyle={s.body}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}

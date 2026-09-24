@@ -5,6 +5,7 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { HomeIcon, LearnIcon, ExploreIcon, LocalIcon, ProfileIcon } from '@/components/tab-icons';
 
 import { colors, fonts } from '@/constants/zand-theme';
+import { scrollTabToTop } from '@/lib/scroll-top';
 import { getLang, t, useLang } from '@/lib/i18n';
 import { NAV } from '@/constants/i18n/nav';
 import { TpmIcon } from '@/components/tpm-mark';
@@ -89,12 +90,30 @@ export default function TabLayout() {
     >
       <Tabs.Screen name="index" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.home} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <HomeIcon size={size} color={color} /> }} />
       <Tabs.Screen name="learn" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.learn} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <LearnIcon size={size} color={color} /> }} />
-      <Tabs.Screen name="explore" options={{ tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} dark={dark} />, tabBarIcon: ({ color, size }) => <ExploreIcon size={size} color={color} /> }} />
+      {/* Already here? Then the press means the top of the page, which is
+          what a tab press means everywhere else. */}
+      <Tabs.Screen
+        name="explore"
+        options={{
+          tabBarLabel: ({ focused }) => <TabLabel k={NAV.explore} focused={focused} dark={dark} />,
+          tabBarIcon: ({ color, size }) => <ExploreIcon size={size} color={color} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (segments[1] === 'explore') { e.preventDefault(); scrollTabToTop('explore'); }
+          },
+        }}
+      />
       <Tabs.Screen
         name="tpm"
         options={{
           title: 'TPM',
           tabBarIcon: ({ focused, size }) => <TpmIcon size={size - 6} color={focused ? tpm.red : colors.textSecondary} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (segments[1] === 'tpm') { e.preventDefault(); scrollTabToTop('tpm'); }
+          },
         }}
       />
       {/* Pressing the tab always lands on the Local feed. Arriving at a
@@ -109,6 +128,12 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
+            // Standing on the feed already: the press is a request to go
+            // back to the top of it, not to navigate nowhere.
+            if (segments[1] === 'local' && segments.length === 2) {
+              scrollTabToTop('local');
+              return;
+            }
             router.navigate('/local' as any);
           },
         }}

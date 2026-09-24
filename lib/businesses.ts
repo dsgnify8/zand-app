@@ -7,6 +7,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { alertAdmin } from '@/lib/admin-alert';
+import { removePhoto } from '@/lib/business-photos';
 import { expandQuery, buildSearchIndex } from '@/lib/business-search';
 import { categoriesFor } from '@/constants/search-synonyms';
 
@@ -111,6 +113,20 @@ export type Near = { lat: number; lng: number; km?: number };
  * rough distance — good enough over a city, and far cheaper than
  * anything involving trigonometry in the database.
  */
+/**
+ * What a card draws.
+ *
+ * select('*') also carries the Persian search index, the keyword array
+ * and the story pitch, none of which a card reads. On a feed of a
+ * hundred listings that is most of the response, and the feed is the
+ * one query someone waits on.
+ */
+const CARD_COLUMNS =
+  'id, owner_id, name, name_fa, tagline, tagline_fa, description, description_fa, ' +
+  'category, status, country, city, city_fa, address, lat, lng, phone, website, ' +
+  'website_label, socials, hours, photos, badge, badge_fa, featured, opened_year, ' +
+  'show_opened, has_story, created_at';
+
 export async function loadBusinesses(opts: {
   near?: Near;
   city?: string;
@@ -118,8 +134,13 @@ export async function loadBusinesses(opts: {
   category?: string;
   query?: string;
   limit?: number;
+  /** The feed. Full rows are for the listing's own page. */
+  slim?: boolean;
 } = {}): Promise<Business[]> {
-  let q = supabase.from('businesses').select('*').eq('status', 'active');
+  let q = supabase
+    .from('businesses')
+    .select(opts.slim ? CARD_COLUMNS : '*')
+    .eq('status', 'active');
 
   if (opts.category) q = q.eq('category', opts.category);
   if (opts.city) q = q.ilike('city', opts.city);
@@ -156,7 +177,7 @@ export async function loadBusinesses(opts: {
   }
 
   const { data } = await q.limit(opts.limit ?? 100);
-  const rows = (data ?? []) as Business[];
+  const rows = (data ?? []) as unknown as Business[];
 
   if (!opts.near) return rows;
 
@@ -210,6 +231,36 @@ export async function submitBusiness(id: string) {
     .from('businesses')
     .update({ status: 'submitted', submitted_at: new Date().toISOString() })
     .eq('id', id);
+
+  // Somebody is now waiting on a decision, so say so rather than hoping
+  // the admin opens the review screen.
+  if (!error) {
+    loadBusiness(id)
+      .then((b) => alertAdmin('listing-submitted', { name: b?.name, city: b?.city ?? undefined }))
+      .catch(() => {});
+  }
+  return { error: error?.message };
+}
+
+/**
+ * Take a listing out of the directory, photographs and all.
+ *
+ * Files left in the bucket with no row pointing at them are invisible
+ * and permanent, so they go first. Lived in the admin screen until the
+ * alert needed to happen wherever a listing is removed from.
+ */
+export async function deleteBusiness(id: string, opts: { silent?: boolean } = {}) {
+  const b = await loadBusiness(id);
+
+  for (const p of b?.photos ?? []) {
+    if (!p.startsWith('demo:')) await removePhoto(p);
+  }
+  const { error } = await supabase.from('businesses').delete().eq('id', id);
+
+  // The admin doing the removing does not need telling about it.
+  if (!error && !opts.silent) {
+    alertAdmin('listing-removed', { name: b?.name, city: b?.city ?? undefined });
+  }
   return { error: error?.message };
 }
 

@@ -84,6 +84,14 @@ export type StoryLayout = {
   wash: 0 | 1 | 2 | 3;
   /** A capital on the first paragraph. */
   drop: boolean;
+  /**
+   * How the founder's photograph is set, where there is one.
+   *
+   * Small in all three. A face at the top of a story is an introduction,
+   * not an exhibit, and a full-width picture pushed the writing off the
+   * first screen.
+   */
+  portrait: 'beside' | 'above' | 'stamp';
 };
 
 /**
@@ -107,6 +115,7 @@ export function layoutFor(businessId: string): StoryLayout {
     // Rare on purpose: a drop capital on every other story stops being a
     // flourish and becomes a template.
     drop: ((n >> 9) % 5) === 0,
+    portrait: pick(['beside', 'above', 'stamp'] as const, 11),
   };
 }
 

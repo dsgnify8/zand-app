@@ -1,6 +1,10 @@
 // Translate + transliterate via the Anthropic Messages API.
 // The API key lives here as a Supabase secret and never ships in the app.
 
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { callerId, isServiceCall } from '../_shared/caller.ts';
+import { callerKey, overLimit } from '../_shared/limit.ts';
+
 const MODEL = 'claude-haiku-4-5-20251001';
 
 const LANG: Record<string, string> = {
@@ -18,9 +22,26 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Every call here is a paid model call, so it is counted.
+    if (!isServiceCall(req)) {
+      const admin = createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+      );
+      const who = callerKey(req, await callerId(req));
+      if (await overLimit(admin, 'translate', who, 40, 1000)) {
+        return json({ error: 'Too many requests. Try again shortly.' }, 429);
+      }
+    }
+
     const { text, from, to } = await req.json();
     if (!text || !to) {
       return json({ error: 'Missing text or target language.' }, 400);
+    }
+    // A sentence or a short paragraph. Without a ceiling one request can
+    // cost more than a month of ordinary use.
+    if (typeof text !== 'string' || text.length > 2000) {
+      return json({ error: 'Too long to translate.' }, 400);
     }
 
     const key = Deno.env.get('ANTHROPIC_API_KEY');

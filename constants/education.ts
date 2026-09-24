@@ -2377,7 +2377,31 @@ export const HISTORY_ERAS: EraGroup[] = [
   },
 ];
 
-export const TOPICS: Topic[] = [cyrus, zand, mrp, rezaShah, safavid, qajar, sasanian, silence, parthian, afsharid, seljuk, ilkhanate, timurid, modernIran];
+// Chronological, and deliberately so.
+//
+// This was the order the topics happened to be written in, which is why
+// finishing the Achaemenids offered the Zand dynasty next: two thousand
+// three hundred years in one tap. Reading forwards should move forwards,
+// and the timeline on the history page is the order people already have
+// in their heads.
+//
+// Modern Iran is last. There is nothing after the present.
+export const TOPICS: Topic[] = [
+  cyrus,        // 550 BCE
+  parthian,     // 247 BCE
+  sasanian,     // 224
+  silence,      // 651
+  seljuk,       // 1037
+  ilkhanate,    // 1256
+  timurid,      // 1370
+  safavid,      // 1501
+  afsharid,     // 1736
+  zand,         // 1751
+  qajar,        // 1789
+  rezaShah,     // 1925
+  mrp,          // 1941
+  modernIran,   // 1979
+];
 
 export function findTopic(key?: string) {
   return TOPICS.find((t) => t.key === key);

@@ -381,7 +381,14 @@ export default function ReaderScreen() {
                 — further out than they had come from. */}
             <Pressable
               style={styles.endBtn}
-              onPress={() => router.replace(('/education/topic?topic=' + topic.key) as any)}
+              onPress={() => {
+                // The topic page is the one this was opened from, so go
+                // back to it. Replacing put a second copy on the stack,
+                // which is what left a finished topic sitting behind the
+                // history page afterwards.
+                try { router.dismissTo(('/education/topic?topic=' + topic.key) as any); }
+                catch { router.replace(('/education/topic?topic=' + topic.key) as any); }
+              }}
             >
               <Text style={styles.endBtnText}>{t(APP.backToTopic)}</Text>
             </Pressable>

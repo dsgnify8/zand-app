@@ -19,13 +19,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { categoryLabel, trackBusiness, type Business } from '@/lib/businesses';
-import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
-import { eduImage } from '@/constants/education-images';
+import { BizPhoto } from '@/components/biz-photo';
 import { isSavedBusiness, toggleSavedBusiness } from '@/lib/saved-businesses';
-import { removeFromAllCollections } from '@/lib/collections';
+import { removeFromAllCollections, removeFromCollection } from '@/lib/collections';
 
-const bizImage = (path: string) =>
-  isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 
 const DARK = {
   name: '#F6F1EC',
@@ -38,7 +35,7 @@ const GAP = spacing.lg;
 const W = Dimensions.get('window').width - GAP * 2;
 
 export function BusinessCard({
-  b, fa, km, onOpen, onFile, dark, width,
+  b, fa, km, onOpen, onFile, dark, width, inFolder, onRemoved,
 }: {
   b: Business;
   fa: boolean;
@@ -46,6 +43,18 @@ export function BusinessCard({
   onOpen: () => void;
   /** Held rather than tapped: the caller opens the collection sheet. */
   onFile?: (id: string) => void;
+  /**
+   * Shown inside a folder, which changes what the bookmark means.
+   *
+   * On the feed it is a personal save. Inside a folder it is the folder:
+   * a listing someone else put in a folder you share was never in your
+   * own saves, so the bookmark read as empty and tapping it saved the
+   * place to your feed rather than taking it out of the folder, which is
+   * the opposite of what the control looked like it would do.
+   */
+  inFolder?: string;
+  /** Called after it leaves the folder, so the page can drop the card. */
+  onRemoved?: (id: string) => void;
   /** Narrower than the feed, for a horizontal rail. Everything scales with
    *  it — the same card, smaller, rather than a different card. */
   width?: number;
@@ -97,7 +106,7 @@ export function BusinessCard({
             >
               {shots.map((p) => (
                 <Pressable key={p} onPress={onOpen}>
-                  <Image source={bizImage(p)} style={{ width: w, height: small ? 150 : 210 }} />
+                  <BizPhoto path={p} width={w} height={small ? 150 : 210} style={{ width: w, height: small ? 150 : 210 }} />
                 </Pressable>
               ))}
             </ScrollView>
@@ -144,20 +153,30 @@ export function BusinessCard({
           <Pressable
             style={s.save}
             hitSlop={8}
-            onPress={() => {
+            onPress={async () => {
+              if (inFolder) {
+                // In a folder the bookmark is about the folder, and a
+                // folder is shared, so this takes it out for everyone in
+                // it. Personal saves are left alone either way.
+                await removeFromCollection(inFolder, b.id);
+                onRemoved?.(b.id);
+                setTick((n) => n + 1);
+                return;
+              }
               // Unsaving is a removal everywhere, folders included: one
               // control, one meaning.
               if (isSavedBusiness(b.id)) removeFromAllCollections(b.id);
               toggleSavedBusiness(b.id);
               setTick((n) => n + 1);
             }}
-            onLongPress={() => { if (!isSavedBusiness(b.id)) toggleSavedBusiness(b.id); setTick((n) => n + 1); onFile?.(b.id); }}
-            delayLongPress={280}
-            onLongPress={() => { if (!isSavedBusiness(b.id)) toggleSavedBusiness(b.id); setTick((n) => n + 1); onFile?.(b.id); }}
+            // Holding offers the folders. It used to save first, which
+            // filed things on someone's own feed that they only ever
+            // meant to look at.
+            onLongPress={() => { onFile?.(b.id); }}
             delayLongPress={280}
           >
             <Ionicons
-              name={isSavedBusiness(b.id) ? 'bookmark' : 'bookmark-outline'}
+              name={inFolder || isSavedBusiness(b.id) ? 'bookmark' : 'bookmark-outline'}
               size={17}
               color="#FFF"
             />

@@ -80,7 +80,9 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                   <View style={s.avatar}><Text style={s.avatarT}>{(p.name || '?')[0].toUpperCase()}</Text></View>
                   <View style={{ flex: 1 }}>
                     <Text style={s.name}>{p.name}</Text>
-                    <Text style={s.handle}>{p.email}</Text>
+                    {/* No address here. These are people you have not
+                        connected to yet, and a search result is not a
+                        reason to hand out someone's email. */}
                   </View>
                   {friendIds.has(p.id) ? (
                     <Text style={s.pending}>{t(APP.sent)}</Text>
@@ -160,7 +162,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
 
 const s = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'flex-end' },
-  sheet: { maxHeight: '88%', backgroundColor: colors.background, borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingHorizontal: spacing.lg, paddingTop: spacing.sm, maxHeight: '85%' },
+  sheet: { maxHeight: '85%', backgroundColor: colors.background, borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingHorizontal: spacing.lg, paddingTop: spacing.sm },
   grab: { width: 36, height: 4, borderRadius: 2, backgroundColor: colors.border, alignSelf: 'center', marginBottom: spacing.md },
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.md },
   title: { fontFamily: fonts.heading, fontSize: 24, color: colors.textPrimary },

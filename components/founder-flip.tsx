@@ -106,6 +106,17 @@ const WASH = [
   { start: { x: 0.5, y: 0 }, end: { x: 0.5, y: 1 } },
 ] as const;
 
+/**
+ * The year on its own.
+ *
+ * Some stories were written with the word already in them, so the line
+ * read "since Since 1998". Strip whatever the writer put in front and
+ * let the label do its job.
+ */
+function sinceYear(v: string): string {
+  return v.replace(/^\s*(since|from|از)\s+/i, '').trim();
+}
+
 export function FounderFlip({
   children,
   name,
@@ -133,6 +144,8 @@ export function FounderFlip({
 
   const [flipped, setFlipped] = useState(false);
   const layout = layoutFor(motifKey ?? name);
+  // Read once: three settings ask for it and the cast is ugly inline.
+  const photo: string | undefined = (s as any)?.photo;
   const [frontH, setFrontH] = useState(0);
   const [backH, setBackH] = useState(0);
 
@@ -228,26 +241,45 @@ export function FounderFlip({
           {/* Centred or ranged left, by the story's seed. The most
               visible of the variations, so it carries most of the work of
               making two stories look unlike each other. */}
-          <View style={layout.head === 'centre' ? st.headCentre : undefined}>
-            <Text style={[st.eyebrow, fa && st.rtl, layout.head === 'centre' && st.tc]}>
-              {fa ? 'داستان بنیان‌گذار' : 'FOUNDER\u2019S STORY'}
-            </Text>
+          {/* The face, where there is one, at the size an introduction
+              wants: a stamp rather than a picture. Which of the three
+              settings comes from the same seed as everything else, so a
+              story looks the same on every visit and unlike its
+              neighbour. */}
+          {photo && layout.portrait === 'above' ? (
+            <View style={[st.aboveWrap, layout.head === 'centre' && st.headCentre, fa && st.rowRtl]}>
+              <Image source={{ uri: photo }} style={st.circle} resizeMode="cover" />
+            </View>
+          ) : null}
 
-            <Text style={[st.founder, fa && st.rtl, layout.head === 'centre' && st.tc]}>
-              {fa ? s.founderFa ?? s.founder : s.founder}
-            </Text>
-            <Text style={[st.role, fa && st.rtl, layout.head === 'centre' && st.tc]}>
-              {(fa ? s.roleFa ?? s.role : s.role) ?? ''}
-              {s.since ? '  ·  ' + (fa ? 'از ' + s.since : 'since ' + s.since) : ''}
-            </Text>
+          <View style={[
+            layout.head === 'centre' && layout.portrait !== 'beside' ? st.headCentre : undefined,
+            photo && layout.portrait === 'beside' ? [st.headRow, fa && st.rowRtl] : undefined,
+          ]}>
+            {photo && layout.portrait === 'beside' ? (
+              <Image source={{ uri: photo }} style={st.square} resizeMode="cover" />
+            ) : null}
+
+            <View style={layout.portrait === 'beside' ? { flex: 1 } : undefined}>
+              <Text style={[st.eyebrow, fa && st.rtl, layout.head === 'centre' && layout.portrait !== 'beside' && st.tc]}>
+                {fa ? 'داستان بنیان‌گذار' : 'FOUNDER\u2019S STORY'}
+              </Text>
+
+              <Text style={[st.founder, fa && st.rtl, layout.head === 'centre' && layout.portrait !== 'beside' && st.tc]}>
+                {fa ? s.founderFa ?? s.founder : s.founder}
+              </Text>
+              <Text style={[st.role, fa && st.rtl, layout.head === 'centre' && layout.portrait !== 'beside' && st.tc]}>
+                {(fa ? s.roleFa ?? s.role : s.role) ?? ''}
+                {s.since ? '  ·  ' + (fa ? 'از ' + sinceYear(s.since) : 'since ' + sinceYear(s.since)) : ''}
+              </Text>
+            </View>
           </View>
 
-          {/* The founder, where there is one. Above the story rather than
-              inside it: you want to see who is talking before you read
-              what they said. */}
-          {(s as any).photo ? (
-            <View style={st.portrait}>
-              <Image source={{ uri: (s as any).photo }} style={StyleSheet.absoluteFill as any} resizeMode="cover" />
+          {/* The third setting: a small print laid on the page, ranged to
+              the side the language reads from. */}
+          {photo && layout.portrait === 'stamp' ? (
+            <View style={[st.stampWrap, fa && { alignItems: 'flex-end' }]}>
+              <Image source={{ uri: photo }} style={st.stamp} resizeMode="cover" />
             </View>
           ) : null}
 
@@ -484,8 +516,23 @@ const st = StyleSheet.create({
     lineHeight: 40,
     color: colors.textPrimary,
   },
-  portrait: {
-    width: '100%', aspectRatio: 1.3, borderRadius: 12, overflow: 'hidden',
-    backgroundColor: 'rgba(40,28,24,0.06)', marginBottom: spacing.lg,
+  // Three small settings rather than one large one. Sizes are deliberate:
+  // big enough to read a face, small enough that the writing still starts
+  // on the first screen.
+  headRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  rowRtl: { flexDirection: 'row-reverse' },
+  square: {
+    width: 58, height: 58, borderRadius: 10,
+    backgroundColor: 'rgba(40,28,24,0.06)',
+  },
+  aboveWrap: { marginBottom: spacing.sm },
+  circle: {
+    width: 52, height: 52, borderRadius: 26,
+    backgroundColor: 'rgba(40,28,24,0.06)',
+  },
+  stampWrap: { marginTop: spacing.md, marginBottom: spacing.xs },
+  stamp: {
+    width: 64, height: 84, borderRadius: 4,
+    backgroundColor: 'rgba(40,28,24,0.06)',
   },
 });

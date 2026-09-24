@@ -6,6 +6,8 @@
 // Each phrase costs one API call in its entire lifetime.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { callerId, isServiceCall } from '../_shared/caller.ts';
+import { callerKey, overLimit } from '../_shared/limit.ts';
 
 const BUCKET = 'tts';
 // A voice per language. Persian is the point, but the conversation mode
@@ -31,6 +33,10 @@ Deno.serve(async (req) => {
   try {
     const { text, lang = 'fa', slow = false, voice = 'f' } = await req.json();
     if (!text) return json({ error: 'No text.' }, 400);
+    // A spoken phrase, not a chapter.
+    if (typeof text !== 'string' || text.length > 600) {
+      return json({ error: 'Too long to speak.' }, 400);
+    }
 
     const key = Deno.env.get('AZURE_SPEECH_KEY');
     const region = Deno.env.get('AZURE_SPEECH_REGION');
@@ -39,6 +45,17 @@ Deno.serve(async (req) => {
     if (!key || !region || !url || !service) return json({ error: 'Server not configured.' }, 500);
 
     const supabase = createClient(url, service);
+
+    // Signed in or not, nobody needs to hear four hundred phrases a
+    // minute. A cached phrase costs nothing, so this only ever bites on
+    // new ones.
+    if (!isServiceCall(req)) {
+      const who = callerKey(req, await callerId(req));
+      if (await overLimit(supabase, 'speak', who, 60, 1500)) {
+        return json({ error: 'Too many requests. Try again shortly.' }, 429);
+      }
+    }
+
     const v = VOICES[lang] ?? VOICES.fa;
     const voiceName = voice === 'm' ? v.m : v.f;
 

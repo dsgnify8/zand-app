@@ -7,6 +7,7 @@
 
 import { useSyncExternalStore, useEffect, useState } from 'react';
 import { Share } from 'react-native';
+import { businessLink } from '@/lib/links';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { syncTouch } from '@/lib/cloud-sync';
 import type { Business } from '@/lib/businesses';
@@ -68,18 +69,26 @@ export function useSavedBusinesses() {
  */
 export async function shareBusiness(b: Business) {
   const where = [b.city, b.country].filter(Boolean).join(', ');
+  // The listing's page on the site rather than a zand:// link. A custom
+  // scheme is dead text to anyone without the app and shows no preview
+  // to anyone at all; this one opens the app when it is installed, shows
+  // the listing's own photograph in the message, and otherwise opens the
+  // page on the web.
+  const url = businessLink(b.name, b.city);
   const lines = [
     b.name,
     b.tagline ?? '',
     where ? '📍 ' + where : '',
     b.phone ? '☎ ' + b.phone : '',
     '',
-    'zand://local/business?id=' + b.id,
+    url,
   ].filter(Boolean);
 
   try {
     await Share.share({
       message: lines.join('\n'),
+      // iOS reads this one to build the card with the photograph.
+      url,
       title: b.name,
     });
   } catch {

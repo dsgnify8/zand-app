@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fonts, spacing } from '@/constants/zand-theme';
+import { registerScrollTop } from '@/lib/scroll-top';
 import { tpm } from '@/constants/tpm-theme';
 import { TPM_POSTS, TPM_CREATIVES, type TpmPost } from '@/constants/tpm-content';
 import { FramedImage } from '@/components/framed-image';
@@ -93,6 +94,12 @@ function BandPost({ p }: { p: TpmPost }) {
 }
 
 export default function TpmScreen() {
+  // Pressing the tab while already here takes you back to the top.
+  const page = useRef<ScrollView>(null);
+  useEffect(() => registerScrollTop('tpm', () => {
+    page.current?.scrollTo({ y: 0, animated: true });
+  }), []);
+
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
@@ -101,7 +108,18 @@ export default function TpmScreen() {
   const read = readCount();
   const isAdmin = useIsAdmin();
 
-  const posts = filter === 'all' ? TPM_POSTS : TPM_POSTS.filter((p) => p.discipline === filter);
+  const chosen = filter === 'all' ? TPM_POSTS : TPM_POSTS.filter((p) => p.discipline === filter);
+
+  // A different piece in the big slot each day. The rhythm below is
+  // fixed — big, pair, band, pair — so rotating the order moves every
+  // piece through the shapes rather than redesigning the page, and the
+  // one at the top is never the same two days running.
+  const posts = (() => {
+    if (chosen.length < 2) return chosen;
+    const day = Math.floor(Date.now() / 86400000);
+    const start = day % chosen.length;
+    return [...chosen.slice(start), ...chosen.slice(0, start)];
+  })();
 
   // lay the feed out in a repeating rhythm: big, pair, band, pair
   const rows: { kind: 'big' | 'pair' | 'band'; items: TpmPost[] }[] = [];
@@ -132,7 +150,11 @@ export default function TpmScreen() {
 
         <View style={s.rule} />
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl * 2.4 }}>
+        <ScrollView
+          ref={page}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: spacing.xxl * 2.4 }}
+        >
           <Rise>
             <View style={s.intro}>
               <Text style={s.introT}>Curated{'\n'}by TPM</Text>

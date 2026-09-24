@@ -214,7 +214,7 @@ export default function BusinessForm() {
             couple of days. Nothing to pay until it is approved.
           </Text>
           <Pressable style={s.cta} onPress={() => router.replace('/local' as any)}>
-            <Text style={s.ctaT}>{tr(LISTING.backToLocal)}</Text>
+            <Text style={s.ctaT} numberOfLines={1}>{tr(LISTING.backToLocal)}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -682,9 +682,14 @@ const s = StyleSheet.create({
     backgroundColor: 'rgba(140,58,46,0.09)',
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(140,58,46,0.24)',
     borderRadius: radius.lg, paddingVertical: 14, alignItems: 'center',
+    // Room either side. The label is uppercase and widely tracked, and
+    // with no horizontal padding the frame ended a letter short of the
+    // word at both ends.
+    paddingHorizontal: spacing.xxl,
+    justifyContent: 'center',
   },
   ctaOff: { opacity: 0.4 },
-  ctaT: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 1.6, textTransform: 'uppercase', color: colors.accent },
+  ctaT: { fontFamily: fonts.bodyStrong, fontSize: 12, letterSpacing: 1.6, textTransform: 'uppercase', color: colors.accent, textAlign: 'center', marginLeft: 1.6 },
 
   foot: { fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.lg, opacity: 0.85 },
 

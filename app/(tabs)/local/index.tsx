@@ -16,6 +16,9 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
+import { registerScrollTop } from '@/lib/scroll-top';
+import { cachedFeedNow, readCachedFeed, writeCachedFeed } from '@/lib/local-cache';
+import { prefetchBiz } from '@/components/biz-photo';
 import { t, useLang, getLang } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import {
@@ -39,6 +42,12 @@ import { LocalHeroBg } from '@/components/local-hero';
 import { LOCAL } from '@/constants/i18n/local';
 import { suggestCities } from '@/constants/cities';
 export default function Local() {
+  // Pressing the tab while already here takes you back to the top.
+  const list = useRef<any>(null);
+  useEffect(() => registerScrollTop('local', () => {
+    list.current?.scrollToOffset?.({ offset: 0, animated: true });
+  }), []);
+
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
@@ -54,11 +63,13 @@ export default function Local() {
 
   const [cat, setCat] = useState<string[]>([]);
   const [query, setQuery] = useState('');
-  const [items, setItems] = useState<Business[]>([]);
+  // Opens on the last answer rather than on a spinner. Replaced as soon
+  // as the fresh rows land.
+  const [items, setItems] = useState<Business[]>(() => cachedFeedNow() ?? []);
   // Everything, fetched only when the local list is too thin to fill a
   // rail. Empty the rest of the time, which is most of the time.
   const [wider, setWider] = useState<Business[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => (cachedFeedNow()?.length ?? 0) === 0);
 
   // The list fades rather than swapping. Changing location replaces every
   // card at once, and without this the whole page blinks.
@@ -97,6 +108,18 @@ export default function Local() {
   // to their city when the answer arrived — three states on the way to
   // one, which is what the flashing was.
   const [placeReady, setPlaceReady] = useState(false);
+  useEffect(() => {
+    // Disk, once, before anything is asked of the network.
+    (async () => {
+      if (cachedFeedNow()) return;
+      const rows = await readCachedFeed();
+      if (rows?.length) {
+        setItems((v) => (v.length ? v : rows));
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   useEffect(() => {
     (async () => {
       try {
@@ -198,6 +221,7 @@ export default function Local() {
     // on screen — fading for those is a flash, not a transition.
     setLoading((was) => (settled ? false : was));
     const rows = await loadBusinesses({
+      slim: true,
       near: place ? { lat: place.lat, lng: place.lng, km: 60 } : undefined,
       // One category server-side is not enough now that several can be
       // chosen, so the filtering happens below instead.
@@ -209,7 +233,7 @@ export default function Local() {
     // and the page looks broken. So ask again, without the bound, and
     // let the rail offer the nearest places anywhere.
     if (place && rows.length < 3 && !settled) {
-      const wide = await loadBusinesses({});
+      const wide = await loadBusinesses({ slim: true });
       setWider(wide);
     } else {
       setWider([]);
@@ -217,6 +241,18 @@ export default function Local() {
 
     setItems(rows);
     setLoading(false);
+    // Kept for the next visit. Only the plain feed: a search or a
+    // category is this moment's question, not the page someone expects
+    // to see when they come back.
+    if (!settled) writeCachedFeed(rows);
+
+    // And the first screen's photographs, warmed while the page is
+    // still settling. They are the part that arrives last.
+    prefetchBiz(
+      rows.slice(0, 6).map((b) => (b.photos ?? [])[0]).filter(Boolean) as string[],
+      Dimensions.get('window').width,
+      210,
+    );
   }, [place?.lat, place?.lng, settled]);
 
   useEffect(() => {
@@ -279,6 +315,7 @@ export default function Local() {
           and the search bar appear and then everything jumps as the rails
           land underneath them. */}
       <Animated.FlatList
+        ref={list as any}
         style={{ opacity: swap }}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: heroY } } }], { useNativeDriver: true })}
         scrollEventThrottle={16}

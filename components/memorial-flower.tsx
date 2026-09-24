@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, spacing } from '@/constants/zand-theme';
 import { REMEMBERED, type Remembered } from '@/constants/memorial';
 import { DroopingRose } from '@/components/drooping-rose';
+import { Image as Img } from 'expo-image';
+
 import { FramedImage } from '@/components/framed-image';
 import { eduImage } from '@/constants/education-images';
 import { useLang, getLang } from '@/lib/i18n';
@@ -21,6 +23,18 @@ export function Memorial({ dark = true }: { dark?: boolean }) {
   useLang();
   const fa = getLang() === 'fa';
   const [open, setOpen] = useState<Remembered | null>(null);
+
+  // The portraits are uploaded rather than bundled, so each one was a
+  // download that started when the card opened — a grey box for as long
+  // as it took. Fetched here instead, while the flower is being looked
+  // at, and kept on disk afterwards.
+  useEffect(() => {
+    const urls = REMEMBERED
+      .map((r) => eduImage(r.image))
+      .map((src: any) => (typeof src === 'object' && src?.uri ? src.uri : null))
+      .filter((u): u is string => !!u);
+    if (urls.length) Img.prefetch(urls, { cachePolicy: 'memory-disk' });
+  }, []);
 
   const ink = dark ? 'rgba(239,231,220,0.7)' : 'rgba(34,30,26,0.7)';
   const faint = dark ? 'rgba(239,231,220,0.28)' : 'rgba(34,30,26,0.28)';

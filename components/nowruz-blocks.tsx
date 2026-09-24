@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { nz, HAFT_SEEN, SEEN_GUESTS, NOWRUZ_MOMENTS } from '@/constants/nowruz';
 import { useLang, getLang } from '@/lib/i18n';
+import { GlossaryText } from '@/components/glossary-text';
 
 const W = Dimensions.get('window').width;
 
@@ -205,15 +206,26 @@ export function Guests() {
       {SEEN_GUESTS.map((g) => {
         const on = open === g.key;
         return (
-          <Pressable key={g.key} style={[styles.guRow, on && styles.guRowOn]} onPress={() => setOpen(on ? null : g.key)}>
-            <View style={styles.guHead}>
+          <View key={g.key} style={[styles.guRow, on && styles.guRowOn]}>
+            {/* The header opens and closes; the body is outside it, so
+                tapping a name inside the text opens the name rather than
+                shutting the row. */}
+            <Pressable style={styles.guHead} onPress={() => setOpen(on ? null : g.key)}>
               <Text style={styles.guFa}>{g.fa}</Text>
               <Text style={[styles.guEn, fa && styles.faSmall]}>{fa && (g as any).enFa ? (g as any).enFa : g.en}</Text>
               <View style={{ flex: 1 }} />
               <Ionicons name={on ? 'remove' : 'add'} size={14} color={nz.gold} />
-            </View>
-            {on ? <Text style={[styles.guX, fa && styles.faBody]}>{fa && (g as any).xFa ? (g as any).xFa : g.x}</Text> : null}
-          </Pressable>
+            </Pressable>
+            {on ? (
+              // Written with {{hafez|Hafez}} in it, and printed raw until
+              // now: the reader saw the markup instead of the link.
+              <GlossaryText
+                text={fa && (g as any).xFa ? (g as any).xFa : g.x}
+                color={nz.text}
+                style={[styles.guX, fa && styles.faBody]}
+              />
+            ) : null}
+          </View>
         );
       })}
     </View>

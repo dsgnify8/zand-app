@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
-import { CATEGORIES, categoryLabel, loadBusiness, type Business } from '@/lib/businesses';
+import { CATEGORIES, categoryLabel, loadBusiness, type Business, deleteBusiness } from '@/lib/businesses';
 import { bizImage, MAX_PHOTOS, pickPhotos, removePhoto, uploadPhoto } from '@/lib/business-photos';
 import { PhotoRail } from '@/components/photo-rail';
 
@@ -125,12 +125,9 @@ export default function AdminBusiness() {
   const remove = async () => {
     if (!id) return;
     setBusy(true);
-    // The photographs go too. Files left in the bucket with no row
-    // pointing at them are invisible and permanent.
-    for (const p of b?.photos ?? []) {
-      if (!p.startsWith('demo:')) await removePhoto(p);
-    }
-    await supabase.from('businesses').delete().eq('id', id);
+    // Silent: this is the admin, and telling them what they just did is
+    // noise. The photographs go with it.
+    await deleteBusiness(id, { silent: true });
     setBusy(false);
     router.replace('/admin-listings' as any);
   };

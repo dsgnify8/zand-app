@@ -18,6 +18,7 @@ import { InviteSheet } from '@/components/invite-sheet';
 import { SETTINGS } from '@/constants/i18n/settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/lib/supabase';
+import { inviteMessage } from '@/lib/links';
 import { useNotifPrefs, setNotifPref } from '@/lib/notif-prefs';
 import { APP } from '@/constants/i18n/app';
 
@@ -353,12 +354,13 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
 /* ---------------- Add a friend ---------------- */
 
 export function AddFriendSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
 
   const share = async () => {
     try {
       await Share.share({
-        message: 'Learn Persian with me on ZAND. Tap to add me: https://zand.app/add/nojan',
+        message: inviteMessage(user?.id),
       });
     } catch {}
   };

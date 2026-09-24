@@ -52,9 +52,23 @@ export const READING: ReadingItem[] = [
 export type Discover = { key: string; kicker: string; title: string; x: string; image: string; route: string; tint: string };
 
 export const DISCOVER: Discover[] = [
+  // Three of these a day, rotated by the date and skipping whatever has
+  // already been opened. A pool of three meant the same three cards
+  // every day in a different order, which is not a discovery.
   { key: 'd1', kicker: 'YOU HAVE NOT OPENED THIS', title: 'Rudaki', x: 'The first poet. A hundred thousand verses written, about a thousand surviving.', image: 'lit-rudaki-cover', route: '/literature/reader?author=rudaki&page=0', tint: '#8C3A2E' },
   { key: 'd2', kicker: 'NEW', title: 'Typical Persian', x: 'Fourteen cards. The joke on the front, the truth underneath.', image: 'zand-vakil-bazaar', route: '/culture/topic?topic=typical', tint: '#3E6E78' },
   { key: 'd3', kicker: 'WORTH YOUR TIME', title: 'Saadi', x: 'The other poet of Shiraz. They lie within sight of one another.', image: 'lit-saadi-cover', route: '/literature/reader?author=saadi&page=0', tint: '#B08A46' },
+  { key: 'd4', kicker: 'THE ONE EVERYONE QUOTES', title: 'Hafez', x: 'Opened at random for an answer, twice a year, by a whole country.', image: 'lit-hafez-cover', route: '/literature/reader?author=hafez&page=0', tint: '#6E4A7A' },
+  { key: 'd5', kicker: 'FOUR LINES AT A TIME', title: 'Khayyam', x: 'An astronomer who wrote the most translated quatrains in the language.', image: 'lit-khayyam-cover', route: '/literature/reader?author=khayyam&page=0', tint: '#3E6E78' },
+  { key: 'd6', kicker: 'WORTH YOUR TIME', title: 'Rumi', x: 'Read everywhere, claimed by everyone, and Persian all the way through.', image: 'lit-rumi-cover', route: '/literature/reader?author=rumi&page=0', tint: '#417270' },
+  { key: 'd7', kicker: 'A LOVE STORY', title: 'Nizami', x: 'Khosrow and Shirin, Layla and Majnun. He wrote the ones that lasted.', image: 'lit-nizami-cover', route: '/literature/reader?author=nizami&page=0', tint: '#8C3A2E' },
+  { key: 'd8', kicker: 'WHERE IT BEGINS', title: 'Cyrus the Great', x: 'A small kingdom of herders, and then the largest empire the world had seen.', image: 'cyrus-cover', route: '/education/reader?topic=cyrus-the-great&page=0', tint: '#B08A46' },
+  { key: 'd9', kicker: 'THE GOLDEN AGE', title: 'The Safavids', x: 'Isfahan, half the world, and blue tile that still stops people in the street.', image: 'safavid-cover', route: '/education/reader?topic=safavid-empire&page=0', tint: '#3E6E78' },
+  { key: 'd10', kicker: 'BEFORE ISLAM', title: 'The Sasanians', x: 'The last Persian empire of antiquity, and the one Rome could not finish.', image: 'sasanian-cover', route: '/education/reader?topic=sasanian-empire&page=0', tint: '#6E4A7A' },
+  { key: 'd11', kicker: 'THE RULE NOBODY EXPLAINS', title: 'Taarof', x: 'Offering what you will not give, refusing what you want.', image: 'culture-taarof', route: '/culture/topic?topic=taarof', tint: '#8C3A2E' },
+  { key: 'd12', kicker: 'THE SHAPE OF AN EVENING', title: 'Chai', x: 'The samovar, the small glass, the sugar held in the teeth.', image: 'culture-chai', route: '/culture/topic?topic=chai', tint: '#B08A46' },
+  { key: 'd13', kicker: 'THE HOUSE OF STRENGTH', title: 'Javanmardi', x: 'A thousand year old code, and a pit where men swing clubs to Ferdowsi.', image: 'culture-javanmardi', route: '/culture/topic?topic=javanmardi', tint: '#417270' },
+  { key: 'd14', kicker: 'THE OLDEST ONE', title: 'Nowruz', x: 'The table, the fire, the instant the year turns. Older than any of it.', image: 'nowruz-cover', route: '/traditions?t=nowruz', tint: '#6E8C5A' },
 ];
 
 export type SavedItem = { key: string; kind: 'word' | 'topic' | 'verse'; title: string; sub: string; route?: string };

@@ -2,7 +2,7 @@
   "expo": {
     "name": "ZAND",
     "slug": "zand",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "zand",
@@ -18,7 +18,11 @@
         "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.zandapplication.zand",
-      "buildNumber": "1"
+      "buildNumber": "1",
+      "associatedDomains": [
+        "applinks:zandapplication.com",
+        "applinks:www.zandapplication.com"
+      ]
     },
     "android": {
       "adaptiveIcon": {
@@ -50,13 +54,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#FAF7F3",
-          "dark": {
-            "backgroundColor": "#1C1411"
-          }
+          "backgroundColor": "#FAF7F3"
         }
       ],
       "expo-font",

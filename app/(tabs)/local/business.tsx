@@ -17,12 +17,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { t, useLang, getLang } from '@/lib/i18n';
 import { loadBusiness, categoryLabel, type Business } from '@/lib/businesses';
-import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { FounderFlip } from '@/components/founder-flip';
 import { useStory, toCardStory, layoutFor } from '@/lib/founder-stories';
 import { ACT_TINT } from '@/components/local-tints';
 import { BusinessActionBar } from '@/components/business-action-bar';
-import { eduImage } from '@/constants/education-images';
+import { BizPhoto } from '@/components/biz-photo';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NearbyPlaces } from '@/components/nearby-places';
@@ -32,8 +31,6 @@ import { markOpened } from '@/lib/opened-businesses';
 
 import { LOCAL } from '@/constants/i18n/local';
 // A listing photo is either a storage path or a bundled demo image.
-const bizImage = (path: string) =>
-  isBundled(path) ? eduImage(bundledKey(path)) : { uri: photoUrl(path) };
 
 const { width: W } = Dimensions.get('window');
 
@@ -185,7 +182,7 @@ export default function BusinessPage() {
                 onMomentumScrollEnd={(e) => setShot(Math.round(e.nativeEvent.contentOffset.x / W))}
               >
                 {photos.map((p) => (
-                  <Image key={p} source={bizImage(p)} style={{ width: W, height: 420 }} />
+                  <BizPhoto key={p} path={p} width={W} height={420} style={{ width: W, height: 420 }} />
                 ))}
               </ScrollView>
               {photos.length > 1 ? (
@@ -268,7 +265,16 @@ export default function BusinessPage() {
           {b.address || b.lat != null ? (
             <Pressable
               style={s.block}
-              onPress={() => b.lat != null && router.navigate(('/local-map?focus=' + b.id) as any)}
+              // With the coordinates, not just the id. The map centres on
+              // wherever you are unless it is told otherwise, so tapping an
+              // address in Dubai from a sofa in Vancouver showed Vancouver.
+              onPress={() =>
+                b.lat != null &&
+                router.navigate(
+                  ('/local-map?focus=' + b.id +
+                   '&lat=' + b.lat + '&lng=' + b.lng + '&z=0.02') as any,
+                )
+              }
             >
               <Text style={[s.blockL, { color: ACT_TINT.address }]}>{t(LOCAL.addressLabel)}</Text>
               <View style={s.addrRow}>

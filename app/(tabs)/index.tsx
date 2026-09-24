@@ -32,6 +32,8 @@ import { typicalDeck, typicalOfDay, CULTURE_TOPICS } from '@/constants/culture';
 import { GEO_CHAPTERS } from '@/constants/geography';
 import { INBOX, pr } from '@/constants/profile';
 import { APP } from '@/constants/i18n/app';
+import { invitationFor } from '@/constants/invitations';
+import { visitedDays } from '@/lib/stats-store';
 import { useAuth } from '@/lib/auth';
 import { useInbox } from '@/lib/inbox';
 import { useFriends } from '@/lib/friends';
@@ -229,6 +231,10 @@ function BandCard({ card }: { card: Card }) {
 export default function HomeScreen() {
   const fa = getLang() === 'fa';
   useLang();
+  // Which invitation is at the foot of the page today. Counted in days
+  // the app was opened, so it turns over on the second visit rather than
+  // on the second date.
+  const invite = invitationFor(visitedDays().length);
   const fact = getDailyFact();
   useHidden();
   const { learnedLetters, markActivity } = useProgress();
@@ -425,12 +431,23 @@ export default function HomeScreen() {
             </Pressable>
           </FadeIn>
 
+          {/* The same card, something else behind it. Changed every
+              second day the app is opened, rather than every second date,
+              so nobody misses one by staying away. */}
           <FadeIn delay={330}>
-            <Pressable style={styles.fal} onPress={() => router.navigate('/literature/reader?author=hafez&page=6' as any)}>
-              <Text style={styles.falFa}>فال حافظ</Text>
-              <Text style={styles.falT}>{t(APP.askTheBook)}</Text>
-              <Text style={styles.falX}>Hold something in your heart and open it at random. Iranians have been doing this for six hundred years.</Text>
-              <View style={styles.falBtn}><Text style={styles.falBtnT}>{t(APP.openIt)}</Text></View>
+            <Pressable style={styles.fal} onPress={() => router.navigate(invite.route as any)}>
+              <Text style={styles.falFa}>{invite.fa}</Text>
+              <Text style={[styles.falT, fa && { fontFamily: fonts.persian, fontSize: 20 }]}>
+                {fa ? invite.titleFa : invite.title}
+              </Text>
+              <Text style={[styles.falX, fa && { fontFamily: fonts.persian, lineHeight: 22 }]}>
+                {fa ? invite.xFa : invite.x}
+              </Text>
+              <View style={styles.falBtn}>
+                <Text style={styles.falBtnT}>
+                  {invite.cta && !fa ? invite.cta : fa && invite.ctaFa ? invite.ctaFa : t(APP.openIt)}
+                </Text>
+              </View>
             </Pressable>
           </FadeIn>
         </Animated.ScrollView>

@@ -18,6 +18,7 @@
 // Deploy with:  supabase functions deploy send-push
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { callerId, isServiceCall } from '../_shared/caller.ts';
 
 type Category = 'articles' | 'friends';
 
@@ -39,6 +40,30 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
+
+    // Who is asking, and may they.
+    //
+    // This used to take the caller's word for all of it. The anon key
+    // ships inside the app, so anyone holding it could have written any
+    // words onto any phone whose user id they knew — and ids travel, in
+    // invite links among other places. Now a push has to come from our
+    // own server code, or from someone who already has a line to this
+    // person: a friend, or a folder they both keep.
+    if (!isServiceCall(req)) {
+      const from = await callerId(req);
+      if (!from) {
+        return new Response(JSON.stringify({ error: 'Sign in first' }), { status: 401 });
+      }
+      if (from !== userId && !(await mayNotify(admin, from, userId))) {
+        return new Response(JSON.stringify({ error: 'Not allowed' }), { status: 403 });
+      }
+    }
+
+    // Long enough for a sentence about a place. A notification is not a
+    // message box.
+    if (title.length > 120 || body.length > 300) {
+      return new Response(JSON.stringify({ error: 'Too long' }), { status: 400 });
+    }
 
     // Has this person switched this category off? Their preferences live
     // in the same blob as the rest of their state.
@@ -92,3 +117,46 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: String(e) }), { status: 500 });
   }
 });
+
+/**
+ * Is there already a line between these two people?
+ *
+ * A friendship in either direction, accepted or still pending — someone
+ * you have asked to connect may be told that you accepted — or a folder
+ * one of them keeps and the other is in.
+ */
+async function mayNotify(admin: any, from: string, to: string): Promise<boolean> {
+  // The admin writes to owners about their listings, and an owner is
+  // usually nobody's friend here.
+  try {
+    const adminEmail = (Deno.env.get('ADMIN_EMAIL') ?? 'nojan.zandesh@gmail.com').toLowerCase();
+    const { data: who } = await admin.auth.admin.getUserById(from);
+    if ((who?.user?.email ?? '').toLowerCase() === adminEmail) return true;
+  } catch { /* fall through to the ordinary checks */ }
+
+  const { data: friends } = await admin
+    .from('friendships')
+    .select('id')
+    .or(`and(requester.eq.${from},addressee.eq.${to}),and(requester.eq.${to},addressee.eq.${from})`)
+    .limit(1);
+  if (friends && friends.length) return true;
+
+  // Folders: either of them may be the owner, the other a member.
+  const [{ data: mine }, { data: theirs }] = await Promise.all([
+    admin.from('collection_members').select('collection_id').eq('user_id', from),
+    admin.from('collection_members').select('collection_id').eq('user_id', to),
+  ]);
+  const ids = new Set(((mine ?? []) as any[]).map((r) => r.collection_id));
+  for (const r of (theirs ?? []) as any[]) if (ids.has(r.collection_id)) return true;
+
+  const [{ data: ownedByFrom }, { data: ownedByTo }] = await Promise.all([
+    admin.from('saved_collections').select('id').eq('owner_id', from),
+    admin.from('saved_collections').select('id').eq('owner_id', to),
+  ]);
+  const fromOwns = new Set(((ownedByFrom ?? []) as any[]).map((r) => r.id));
+  const toOwns = new Set(((ownedByTo ?? []) as any[]).map((r) => r.id));
+  for (const r of (theirs ?? []) as any[]) if (fromOwns.has(r.collection_id)) return true;
+  for (const r of (mine ?? []) as any[]) if (toOwns.has(r.collection_id)) return true;
+
+  return false;
+}

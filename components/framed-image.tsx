@@ -1,5 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { Image, LayoutChangeEvent, Pressable, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
+// Drawing is expo-image's job; the RN one is kept only for
+// resolveAssetSource, which reads a bundled asset's size without a
+// network request.
+import { Image as Img } from 'expo-image';
 
 import { Ionicons } from '@expo/vector-icons';
 import { useFrame } from '@/lib/image-frames';
@@ -53,21 +57,36 @@ export function FramedImage({
     asked.current = id;
 
     if (frame.uri) {
-      Image.getSize(
-        frame.uri,
-        (w, h) => setImgAR(w && h ? w / h : null),
-        () => setUriBad(true),
-      );
+      // Nothing to do here. A remote picture reports its size through
+      // onLoad below, which arrives with the download we are making
+      // anyway — Image.getSize fetched the whole file a second time,
+      // before the one that gets drawn had even started.
     } else if (source) {
       const r = Image.resolveAssetSource(source as any);
       if (r?.width && r?.height) setImgAR(r.width / r.height);
     }
   }, [src, frame.uri]);
 
+  // The picture reports its own proportions once it is here.
+  const onLoad = (e: any) => {
+    const w = e?.source?.width, h = e?.source?.height;
+    if (w && h) setImgAR(w / h);
+  };
+
   let inner = null;
   if (src && box.w > 0 && !imgAR) {
     // ratio not known yet: fill the box properly rather than distorting
-    inner = <Image source={src} style={StyleSheet.absoluteFill as any} resizeMode={fit} />;
+    inner = (
+      <Img
+        source={src}
+        style={StyleSheet.absoluteFill as any}
+        contentFit={fit}
+        cachePolicy="memory-disk"
+        transition={120}
+        onLoad={onLoad}
+        onError={() => { if (frame.uri) setUriBad(true); }}
+      />
+    );
   } else if (src && box.w > 0 && imgAR) {
     const boxAR = box.w / box.h;
     // Cover scales to the tighter axis so the box is filled and the
@@ -86,10 +105,14 @@ export function FramedImage({
     const ty = (0.5 - frame.fy) * overY;
 
     inner = (
-      <Image
+      <Img
         source={src}
         style={{ width: dispW, height: dispH, transform: [{ translateX: tx }, { translateY: ty }] }}
-        resizeMode="stretch"
+        contentFit="fill"
+        cachePolicy="memory-disk"
+        transition={120}
+        onLoad={onLoad}
+        onError={() => { if (frame.uri) setUriBad(true); }}
       />
     );
   }

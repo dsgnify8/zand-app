@@ -12,13 +12,26 @@ export type FriendRow = {
 };
 
 // Search profiles by name or handle
+/**
+ * Finding someone to add.
+ *
+ * Names match on any part; an address has to be typed in full. A partial
+ * match on email meant that typing "a" returned a page of other people's
+ * addresses, which is a directory of the whole app and nobody's idea of
+ * a search.
+ */
 export async function searchProfiles(q: string, myId: string): Promise<Profile[]> {
   const term = q.trim();
   if (!term) return [];
+
+  const filter = term.includes('@')
+    ? `email.ilike.${term}`
+    : `name.ilike.%${term}%`;
+
   const { data } = await supabase
     .from('profiles')
     .select('id, name, email')
-    .or(`name.ilike.%${term}%,email.ilike.%${term}%`)
+    .or(filter)
     .neq('id', myId)
     .limit(20);
   return (data ?? []) as Profile[];
@@ -29,11 +42,51 @@ export async function findByEmail(email: string): Promise<Profile | null> {
   return (data && data[0]) ? (data[0] as Profile) : null;
 }
 
-export async function sendRequest(myId: string, otherId: string) {
-  return supabase.from('friendships').insert({ requester: myId, addressee: otherId, status: 'pending' });
+/**
+ * A friendship is two moments worth hearing about: being asked, and
+ * being accepted. Both were silent, so a request sat unseen until the
+ * person happened to open the friends sheet, and an acceptance was
+ * never announced at all.
+ *
+ * The name is looked up here rather than passed in, so every caller
+ * gets it right and none of them has to care.
+ */
+async function nameOf(id: string): Promise<string> {
+  const { data } = await supabase.from('profiles').select('name').eq('id', id).maybeSingle();
+  return (data as any)?.name || 'Someone';
 }
+
+function notify(userId: string, title: string, body: string) {
+  // Fire and forget. A notification that fails must never fail the
+  // friendship it is about.
+  supabase.functions.invoke('send-push', {
+    body: { userId, title, body, category: 'friends', data: { tab: 'friends' } },
+  }).catch(() => {});
+}
+
+export async function sendRequest(myId: string, otherId: string) {
+  const res = await supabase.from('friendships').insert({ requester: myId, addressee: otherId, status: 'pending' });
+  if (!res.error) {
+    nameOf(myId).then((n) => notify(otherId, n + ' wants to connect', 'Open ZAND to accept.')).catch(() => {});
+  }
+  return res;
+}
+
 export async function acceptRequest(rowId: number) {
-  return supabase.from('friendships').update({ status: 'accepted' }).eq('id', rowId);
+  // Returning the row tells us who to thank without the caller holding
+  // on to it.
+  const res = await supabase.from('friendships')
+    .update({ status: 'accepted' })
+    .eq('id', rowId)
+    .select('requester, addressee')
+    .maybeSingle();
+  const row = res.data as { requester: string; addressee: string } | null;
+  if (!res.error && row) {
+    nameOf(row.addressee)
+      .then((n) => notify(row.requester, n + ' accepted your invite', 'You are connected on ZAND.'))
+      .catch(() => {});
+  }
+  return res;
 }
 export async function removeFriendship(rowId: number) {
   return supabase.from('friendships').delete().eq('id', rowId);
