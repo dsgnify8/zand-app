@@ -29,7 +29,7 @@ export type DrawerPick = 'home' | 'city' | 'list';
 
 const ROWS: { key: DrawerPick; icon: string; label: any; sub: any }[] = [
   { key: 'home', icon: 'storefront-outline', label: LOCAL.localHome, sub: LOCAL.localHomeX },
-  { key: 'city', icon: 'earth-outline', label: LOCAL.byCityTitle, sub: LOCAL.byCityX },
+  { key: 'city', icon: 'earth-outline', label: LOCAL.byPlaceTitle, sub: LOCAL.byPlaceX },
   { key: 'list', icon: 'add-circle-outline', label: LOCAL.listBusiness, sub: LOCAL.listBusinessX },
 ];
 

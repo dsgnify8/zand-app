@@ -5,6 +5,7 @@ import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme
 import { ACHIEVEMENTS } from '@/constants/achievements';
 import { useReading } from '@/lib/reading-store';
 import { useProgress } from '@/lib/progress-store';
+import { useStats } from '@/lib/stats-store';
 import { PERSIAN_ALPHABET } from '@/constants/persian-alphabet';
 import { TOPICS } from '@/constants/education';
 import { t, useLang } from '@/lib/i18n';
@@ -16,12 +17,16 @@ export function AchievementsGrid() {
   // getLang() or t(), which are always current.
   useLang();
   const { reading, percentFor } = useReading();
-  const { learnedLetters, currentStreak } = useProgress();
+  const { learnedLetters } = useProgress();
+  // The streak on the profile card and the streak behind these badges
+  // were two different numbers kept by two different stores. This is the
+  // one that syncs, so it is the one that counts.
+  const { streakDays } = useStats();
 
   const finishedTopics = TOPICS.filter((t) => t.status === 'ready' && percentFor(t.key) >= 100).length;
   const anyChapterRead = Object.keys(reading).length > 0;
   const alphabetDone = PERSIAN_ALPHABET.every((l) => learnedLetters.includes(l.char));
-  const s = currentStreak ?? 0;
+  const s = streakDays ?? 0;
 
   const earned: Record<string, boolean> = {
     'first-chapter': anyChapterRead,

@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
+import { isSyncing, onSyncChange, syncTouch } from '@/lib/cloud-sync';
+
 const STORAGE_KEY = 'zand:progress:v1';
 const MAX_FREEZES = 2;
 const MAX_HISTORY = 300;
@@ -81,18 +83,36 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ProgressState>(DEFAULT_STATE);
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        if (raw) setState({ ...DEFAULT_STATE, ...JSON.parse(raw) });
-      } catch {}
-      setReady(true);
-    })();
+  const reread = useCallback(async () => {
+    try {
+      const raw = await AsyncStorage.getItem(STORAGE_KEY);
+      setState(raw ? { ...DEFAULT_STATE, ...JSON.parse(raw) } : { ...DEFAULT_STATE });
+    } catch {}
   }, []);
 
   useEffect(() => {
-    if (ready) AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state)).catch(() => {});
+    (async () => { await reread(); setReady(true); })();
+  }, [reread]);
+
+  // Signing in rewrites this key underneath us, and signing out empties
+  // it. Read it again when a sync finishes, or the screen keeps showing
+  // the account that just left.
+  useEffect(() => {
+    let was = isSyncing();
+    return onSyncChange(() => {
+      const now = isSyncing();
+      if (was && !now) reread();
+      was = now;
+    });
+  }, [reread]);
+
+  useEffect(() => {
+    // syncTouch, so letters learned and saved items reach the account
+    // rather than living and dying on one phone.
+    if (ready) {
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state)).catch(() => {});
+      syncTouch();
+    }
   }, [state, ready]);
 
   const markActivity = useCallback(() => setState((p) => applyActivity(p, todayStr())), []);

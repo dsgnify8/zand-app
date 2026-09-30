@@ -1,28 +1,34 @@
 // Every listing, in one place.
 //
 // Built for a hundred rather than for ten: search across name, city and
-// category, a filter by country, and a count so you know what you are
-// looking at. The row itself carries enough to recognise a business
-// without opening it — photo, name, where, and whether anything needs
-// attention.
+// category, then a sheet to narrow by where it is and what it does, with
+// a count so you know what you are looking at. The row itself carries
+// enough to recognise a business without opening it — photo, name,
+// where, and whether anything needs attention.
 //
 // Editing lives on the next screen. This one is for finding.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator, Image, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
-import { categoryLabel, loadBusinesses, type Business } from '@/lib/businesses';
+import { CATEGORIES, categoryLabel, loadBusinesses, type Business } from '@/lib/businesses';
 import { bizImage } from '@/lib/business-photos';
+import { REGIONS, regionOf } from '@/constants/regions';
+import { AdminFilter, useAdminFilter, type FilterGroup } from '@/components/admin-filter';
+
+// Countries arrive as the owner typed them. Capitalised for display,
+// matched in lower case.
+const title = (c: string) =>
+  c.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
 type Row = Business & {
   featured?: boolean;
@@ -37,7 +43,6 @@ export default function AdminBusinesses() {
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState('');
-  const [country, setCountry] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -74,23 +79,62 @@ export default function AdminBusinesses() {
   // Coming back from an edit should show what changed.
   useFocusEffect(useCallback(() => { load(); }, [load]));
 
-  const countries = useMemo(() => {
-    const set = new Set<string>();
-    for (const b of rows) if (b.country) set.add(b.country);
-    return [...set].sort();
+  // Search first, then the sheet narrows what the search found. So the
+  // counts in the sheet describe what you are actually looking at.
+  const found = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    if (!needle) return rows;
+    return rows.filter((b) =>
+      b.name.toLowerCase().includes(needle)
+      || (b.name_fa ?? '').toLowerCase().includes(needle)
+      || (b.city ?? '').toLowerCase().includes(needle)
+      || (b.category ?? '').toLowerCase().includes(needle)
+      || (b.country ?? '').toLowerCase().includes(needle));
+  }, [rows, q]);
+
+  // Two dimensions, the two people actually look along: where it is and
+  // what it does. Countries sit under their region so the list reads as a
+  // map rather than as an alphabet.
+  const groups = useMemo<FilterGroup<Row>[]>(() => {
+    const seen = new Set<string>();
+    for (const b of rows) if (b.country) seen.add(b.country.trim().toLowerCase());
+
+    const where: { value: string; label: string; indent?: boolean }[] = [];
+    for (const r of REGIONS) {
+      where.push({ value: 'region:' + r.key, label: r.en });
+      [...seen]
+        .filter((c) => regionOf(c) === r.key)
+        .sort()
+        .forEach((c) => where.push({ value: 'country:' + c, label: title(c), indent: true }));
+    }
+    // Anything whose country we do not recognise yet, so it is never lost.
+    const loose = [...seen].filter((c) => !regionOf(c)).sort();
+    loose.forEach((c) => where.push({ value: 'country:' + c, label: title(c) }));
+
+    return [
+      {
+        key: 'where',
+        title: 'Where',
+        allLabel: 'Everywhere',
+        options: where,
+        match: (b, v) => {
+          const c = (b.country ?? '').trim().toLowerCase();
+          return v.startsWith('region:')
+            ? regionOf(c) === v.slice(7)
+            : c === v.slice(8);
+        },
+      },
+      {
+        key: 'what',
+        title: 'What it is',
+        allLabel: 'Everything',
+        options: CATEGORIES.map((c) => ({ value: c.key, label: c.en })),
+        match: (b, v) => b.category === v,
+      },
+    ];
   }, [rows]);
 
-  const shown = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return rows.filter((b) => {
-      if (country && b.country !== country) return false;
-      if (!needle) return true;
-      return b.name.toLowerCase().includes(needle)
-        || (b.city ?? '').toLowerCase().includes(needle)
-        || (b.category ?? '').toLowerCase().includes(needle)
-        || (b.country ?? '').toLowerCase().includes(needle);
-    });
-  }, [rows, q, country]);
+  const { shown, props: filterProps } = useAdminFilter(found, groups);
 
   // The ones that want doing something about, first.
   const needsAttention = rows.filter(
@@ -115,7 +159,7 @@ export default function AdminBusinesses() {
           <Ionicons name="chevron-back" size={22} color={colors.textPrimary} />
         </Pressable>
         <Text style={s.topT}>Listings</Text>
-        <Text style={s.count}>{rows.length}</Text>
+        <View style={{ width: 22 }} />
       </View>
 
       <View style={s.searchWrap}>
@@ -135,31 +179,9 @@ export default function AdminBusinesses() {
         ) : null}
       </View>
 
-      {countries.length > 1 ? (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={s.chips}
-        >
-          <Pressable
-            style={[s.chip, !country && s.chipOn]}
-            onPress={() => setCountry(null)}
-          >
-            <Text style={[s.chipT, !country && s.chipTOn]}>All</Text>
-          </Pressable>
-          {countries.map((c) => (
-            <Pressable
-              key={c}
-              style={[s.chip, country === c && s.chipOn]}
-              onPress={() => setCountry(country === c ? null : c)}
-            >
-              <Text style={[s.chipT, country === c && s.chipTOn]}>{c}</Text>
-            </Pressable>
-          ))}
-        </ScrollView>
-      ) : null}
+      <AdminFilter {...filterProps} noun="listing" />
 
-      {needsAttention > 0 && !q && !country ? (
+      {needsAttention > 0 && !q && shown.length === rows.length ? (
         <Text style={s.attention}>
           {needsAttention} {needsAttention === 1 ? 'listing needs' : 'listings need'} attention
         </Text>
@@ -244,7 +266,6 @@ const s = StyleSheet.create({
     paddingHorizontal: spacing.lg, paddingVertical: spacing.md,
   },
   topT: { fontFamily: fonts.heading, fontSize: 19, color: colors.textPrimary, flex: 1, textAlign: 'center' },
-  count: { fontFamily: fonts.body, fontSize: 12.5, color: colors.textSecondary, minWidth: 22, textAlign: 'right' },
   denied: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl },
 
   searchWrap: {
@@ -253,17 +274,6 @@ const s = StyleSheet.create({
     paddingHorizontal: spacing.md, marginHorizontal: spacing.lg,
   },
   search: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary, paddingVertical: 11 },
-
-  // Explicitly a row. A horizontal ScrollView's content container does
-  // not assume one, and without it the chips stacked and clipped.
-  chips: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border,
-    borderRadius: 999, paddingHorizontal: spacing.md, paddingVertical: 6,
-  },
-  chipOn: { backgroundColor: colors.textPrimary, borderColor: colors.textPrimary },
-  chipT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary },
-  chipTOn: { color: '#FFF' },
 
   attention: {
     fontFamily: fonts.body, fontSize: 12, color: colors.accent,

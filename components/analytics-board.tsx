@@ -38,8 +38,10 @@ export function AnalyticsBoard() {
   const load = useCallback(async () => {
     setLoading(true);
     const [{ data: p }, { data: b }, { data: e }] = await Promise.all([
-      supabase.from('profiles').select('id, name, email, created_at')
-        .order('created_at', { ascending: false }),
+      // Through a function rather than the table: addresses are no longer
+      // readable from a phone, and this is the one screen that has a
+      // reason to see them. The function checks that it is us.
+      supabase.rpc('admin_users'),
       supabase.from('businesses').select('status, featured'),
       supabase.from('events').select('kind, item_key'),
     ]);

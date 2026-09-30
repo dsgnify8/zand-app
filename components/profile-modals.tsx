@@ -303,6 +303,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               { k: 'idle', t: tset(PROFILE.notifIdle), x: tset(PROFILE.notifIdleX) },
               { k: 'articles', t: tset(PROFILE.notifNew), x: tset(PROFILE.notifNewX) },
               { k: 'friends', t: tset(PROFILE.notifFriends), x: tset(PROFILE.notifFriendsX) },
+              { k: 'account', t: tset(PROFILE.notifAccount), x: tset(PROFILE.notifAccountX) },
             ].map((n) => (
               <Pressable key={n.k} style={m.notifRow} onPress={() => setNotifPref(n.k as any, !(notif as any)[n.k])}>
                 <View style={{ flex: 1 }}>

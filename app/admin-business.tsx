@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
-import { CATEGORIES, categoryLabel, loadBusiness, type Business, deleteBusiness } from '@/lib/businesses';
+import { CATEGORIES, categoryLabel, loadBusiness, type Business, deleteBusiness, suspendBusiness } from '@/lib/businesses';
 import { bizImage, MAX_PHOTOS, pickPhotos, removePhoto, uploadPhoto } from '@/lib/business-photos';
 import { PhotoRail } from '@/components/photo-rail';
 
@@ -122,6 +122,17 @@ export default function AdminBusiness() {
   // Removing a listing. Two taps, and the second says what goes — the
   // same shape as deleting an account, because this is equally final.
   const [confirmDel, setConfirmDel] = useState(false);
+  // Out of the directory, not out of existence. Tells the owner, and
+  // says the thing Apple will not let us do for them.
+  const takeDown = async () => {
+    if (!id) return;
+    setBusy(true);
+    const res = await suspendBusiness(id);
+    setBusy(false);
+    if (res.error) { setSaid(res.error); return; }
+    router.replace('/admin-listings' as any);
+  };
+
   const remove = async () => {
     if (!id) return;
     setBusy(true);
@@ -302,6 +313,22 @@ export default function AdminBusiness() {
                 <Text style={s.saveT}>{busy ? 'Saving…' : 'Save'}</Text>
               </Pressable>
               {said ? <Text style={s.said}>{said}</Text> : null}
+
+              {/* Taking it down, which is the one to reach for nearly
+                  always: the listing keeps everything and can go back up
+                  in a tap. Deleting is below, and is forever. */}
+              {b.status === 'active' || b.status === 'approved' ? (
+                <Pressable style={s.takeDown} onPress={takeDown} disabled={busy}>
+                  <Text style={s.takeDownT}>Take it out of the directory</Text>
+                </Pressable>
+              ) : null}
+              {b.status === 'active' || b.status === 'approved' ? (
+                <Text style={s.takeDownX}>
+                  It stops being listed and keeps its photographs, story and
+                  messages. Their subscription does not stop by itself, so we
+                  tell them where to cancel.
+                </Text>
+              ) : null}
 
               {/* Quiet, and at the very bottom. Findable when wanted,
                   never hit on the way past. */}
@@ -489,6 +516,16 @@ const s = StyleSheet.create({
   socialRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: 6 },
   socialK: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, width: 68 },
 
+  takeDown: {
+    backgroundColor: 'rgba(140,58,46,0.08)',
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(140,58,46,0.22)',
+    borderRadius: 12, paddingVertical: 13, alignItems: 'center', marginTop: spacing.xl,
+  },
+  takeDownT: { fontFamily: fonts.body, fontSize: 13.5, color: colors.accent },
+  takeDownX: {
+    fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18,
+    color: colors.textSecondary, textAlign: 'center', marginTop: spacing.sm,
+  },
   del: { alignItems: 'center', paddingVertical: spacing.lg, marginTop: spacing.xl },
   delT: { fontFamily: fonts.body, fontSize: 13, color: '#A33A2E' },
   delX: {

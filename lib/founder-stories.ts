@@ -160,14 +160,68 @@ export async function saveStory(story: FounderStory) {
   return { data: data as FounderStory | null, error: error?.message };
 }
 
-/** Listings whose owner said they had something worth telling. */
-export async function pitchedStories() {
-  const { data } = await supabase
-    .from('businesses')
-    .select('id, name, city, story_pitch, has_story')
-    .eq('has_story', true)
-    .order('created_at', { ascending: false });
-  return data ?? [];
+/**
+ * The desk: every listing a story could belong to, and what state it is
+ * in.
+ *
+ * Not the same set as the pitches. A story written by us for a listing
+ * whose owner never ticked the box was invisible here, which meant there
+ * was no way to go back and add a photograph to it. So this is the union:
+ * everyone who offered one, plus everyone who already has one.
+ */
+export type StoryDeskRow = {
+  id: string;
+  name: string;
+  city?: string | null;
+  country?: string | null;
+  category?: string | null;
+  story_pitch?: string | null;
+  /** They ticked the box when they listed. */
+  pitched: boolean;
+  /** A story row exists. */
+  written: boolean;
+  /** And it is on the listing. */
+  approved: boolean;
+  photos: number;
+};
+
+export async function storyDesk(): Promise<StoryDeskRow[]> {
+  const COLS = 'id, name, city, country, category, story_pitch, has_story, created_at';
+
+  const [{ data: stories }, { data: pitched }] = await Promise.all([
+    supabase.from('founder_stories').select('business_id, approved, photos'),
+    supabase.from('businesses').select(COLS)
+      .eq('has_story', true)
+      .order('created_at', { ascending: false }),
+  ]);
+
+  const byBiz: Record<string, { approved: boolean; photos: number }> = {};
+  for (const r of (stories ?? []) as any[]) {
+    byBiz[r.business_id] = { approved: !!r.approved, photos: (r.photos ?? []).length };
+  }
+
+  const rows = [...((pitched ?? []) as any[])];
+  const have = new Set(rows.map((r) => r.id));
+
+  // The ones with a story but no pitch. One query, only if there are any.
+  const missing = Object.keys(byBiz).filter((id) => !have.has(id));
+  if (missing.length) {
+    const { data: extra } = await supabase.from('businesses').select(COLS).in('id', missing);
+    rows.push(...((extra ?? []) as any[]));
+  }
+
+  return rows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    city: r.city,
+    country: r.country,
+    category: r.category,
+    story_pitch: r.story_pitch,
+    pitched: !!r.has_story,
+    written: r.id in byBiz,
+    approved: byBiz[r.id]?.approved ?? false,
+    photos: byBiz[r.id]?.photos ?? 0,
+  }));
 }
 
 /**

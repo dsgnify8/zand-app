@@ -19,6 +19,7 @@ export const LISTING: Record<string, T> = {
 
   // what happens after
   sent: { en: 'Sent for review', fa: 'برای بررسی ارسال شد.' },
+  savedAsDraft: { en: 'Saved as a draft. Submit whenever you are ready.', fa: 'به‌صورت پیش‌نویس ذخیره شد. هر وقت خواستی بفرستش.' },
   backToLocal: { en: 'Back to Local', fa: 'بازگشت به محلی' },
   couldNotSave: { en: 'Could not save.', fa: 'ذخیره نشد.' },
 
@@ -99,4 +100,16 @@ export const LISTING: Record<string, T> = {
   // the button
   saveChanges: { en: 'Save changes', fa: 'ذخیرهٔ تغییرات' },
   sendForReview: { en: 'Send for review', fa: 'بفرست برای بررسی' },
+  nameTaken: {
+    en: 'This name is already listed in this city. If it is a second branch, add the neighbourhood to tell them apart.',
+    fa: 'این نام از قبل در همین شهر ثبت شده است. اگر شعبهٔ دومی است، نام محله را اضافه کن تا از هم جدا شوند.',
+  },
+  nameLike: {
+    en: 'Close to something already listed. That is fine — we will check whether it is a branch.',
+    fa: 'شبیه چیزی است که از قبل ثبت شده. مشکلی نیست؛ بررسی می‌کنیم که شعبه است یا نه.',
+  },
+  notYours: {
+    en: 'That listing belongs to someone else.',
+    fa: 'آن کسب‌وکار به شخص دیگری تعلق دارد.',
+  },
 };

@@ -9,6 +9,12 @@
 // unlocks payment; it goes live only once the subscription is active.
 // Keeping those two gates separate means an unpaid listing can never
 // appear, whatever happens to a webhook.
+//
+// The last tab is the other half of the same job. A queue of things
+// arriving is only half a directory: listings also leave it, and they
+// leave through Apple rather than through here. Somebody cancelling, or
+// deleting a listing while still being charged, never shows up as a
+// submission, so it would otherwise not be seen at all.
 
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -23,6 +29,7 @@ import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 import { loadForReview, decide, categoryLabel, type Business } from '@/lib/businesses';
+import { subscriptionWatch, type SubWatch, type SubWatchKind } from '@/lib/billing';
 import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
 
@@ -37,7 +44,36 @@ const FILTERS = [
   { k: 'active', label: 'Live' },
   { k: 'rejected', label: 'Declined' },
   { k: 'lapsed', label: 'Lapsed' },
+  // Not a status. Everything on the way out.
+  { k: 'leaving', label: 'Leaving' },
 ] as const;
+
+// What each case is called, and how loudly.
+const WATCH: Record<SubWatchKind, { label: string; note: string; warm: boolean }> = {
+  gone: {
+    label: 'Listing deleted',
+    note: 'Deleted by the owner and still being charged. Worth a word.',
+    warm: true,
+  },
+  down: {
+    label: 'Paying, not up',
+    note: 'The subscription is running but the listing is not in the directory.',
+    warm: true,
+  },
+  ending: {
+    label: 'Cancelled',
+    note: 'Renewal is off. It stays up until the date, then comes down on its own.',
+    warm: false,
+  },
+  ended: {
+    label: 'Ended',
+    note: 'Over. The listing is down.',
+    warm: false,
+  },
+};
+
+const when = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : null;
 
 export default function AdminBusinesses() {
   // Subscribe to the language so a switch elsewhere reaches this screen
@@ -46,13 +82,16 @@ export default function AdminBusinesses() {
   useLang();
   const isAdmin = useIsAdmin();
   const [all, setAll] = useState<Business[]>([]);
+  const [leaving, setLeaving] = useState<SubWatch[]>([]);
   const [filter, setFilter] = useState<string>('submitted');
   const [open, setOpen] = useState<Business | null>(null);
   const [note, setNote] = useState('');
   const [busy, setBusy] = useState(false);
 
   const refresh = useCallback(async () => {
-    setAll(await loadForReview());
+    const [rows, subs] = await Promise.all([loadForReview(), subscriptionWatch()]);
+    setAll(rows);
+    setLeaving(subs);
   }, []);
 
   useEffect(() => { if (isAdmin) refresh(); }, [isAdmin, refresh]);
@@ -83,7 +122,7 @@ export default function AdminBusinesses() {
         body: approve
           ? `${open.name} passed review. Start the subscription and it goes live.`
           : `${open.name} needs a change before it can go up.`,
-        category: 'friends',
+        category: 'account',
         data: { businessId: open.id },
       },
     }).catch(() => {});
@@ -197,9 +236,13 @@ export default function AdminBusinesses() {
         <View style={{ width: 22 }} />
       </View>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={s.filters} contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: 7 }}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={s.filters} contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: 7, alignItems: 'center' }}>
         {FILTERS.map((f) => {
-          const n = all.filter((b) => b.status === f.k).length;
+          // The count is what wants attention, not the size of the list:
+          // a cancellation that will run its course is not a to-do.
+          const n = f.k === 'leaving'
+            ? leaving.filter((r) => r.kind === 'gone' || r.kind === 'down').length
+            : all.filter((b) => b.status === f.k).length;
           const on = filter === f.k;
           return (
             <Pressable key={f.k} style={[s.filter, on && s.filterOn]} onPress={() => setFilter(f.k)}>
@@ -210,7 +253,38 @@ export default function AdminBusinesses() {
       </ScrollView>
 
       <ScrollView contentContainerStyle={s.body}>
-        {rows.length === 0 ? (
+        {filter === 'leaving' ? (
+          leaving.length === 0 ? (
+            <Text style={s.dim}>Nobody on the way out.</Text>
+          ) : leaving.map((r) => {
+            const w = WATCH[r.kind];
+            const date = when(r.expiresAt);
+            return (
+              <Pressable
+                key={r.id}
+                style={s.leaveRow}
+                disabled={!r.businessId || !r.businessName}
+                onPress={() => r.businessId && r.businessName
+                  && router.navigate(('/admin-business?id=' + r.businessId) as any)}
+              >
+                <View style={s.leaveTop}>
+                  <Text style={s.rowT} numberOfLines={1}>
+                    {r.businessName ?? 'A deleted listing'}
+                  </Text>
+                  <View style={[s.tag, w.warm && s.tagWarm]}>
+                    <Text style={[s.tagT, w.warm && s.tagTWarm]}>{w.label}</Text>
+                  </View>
+                </View>
+                <Text style={s.leaveX}>{w.note}</Text>
+                <Text style={s.leaveMeta}>
+                  {r.isTrial ? 'Free week' : 'Paying'}
+                  {'  ·  ' + r.state}
+                  {date ? (r.kind === 'ended' ? '  ·  ended ' : '  ·  through ') + date : ''}
+                </Text>
+              </Pressable>
+            );
+          })
+        ) : rows.length === 0 ? (
           <Text style={s.dim}>Nothing here.</Text>
         ) : rows.map((b) => (
           <Pressable key={b.id} style={s.row} onPress={() => { setOpen(b); setNote(b.review_note ?? ''); }}>
@@ -241,11 +315,29 @@ const s = StyleSheet.create({
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(0,0,0,0.08)' },
   headT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: colors.textPrimary, textTransform: 'capitalize' },
 
-  filters: { maxHeight: 52, paddingVertical: spacing.sm },
-  filter: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 15, backgroundColor: 'rgba(0,0,0,0.04)' },
+  // A fixed height, with pills that centre inside it. maxHeight on a
+  // horizontal scroller does not stop the content being taller than the
+  // box, which is what cut the top off the row.
+  filters: { flexGrow: 0, height: 52 },
+  filter: {
+    height: 32, paddingHorizontal: 12, borderRadius: 16,
+    justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.04)',
+  },
   filterOn: { backgroundColor: colors.accent },
-  filterT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary },
+  filterT: { fontFamily: fonts.body, fontSize: 12, color: colors.textSecondary, includeFontPadding: false },
   filterTOn: { color: '#FFF' },
+
+  leaveRow: {
+    paddingVertical: spacing.md, gap: 5,
+    borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(0,0,0,0.06)',
+  },
+  leaveTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  leaveX: { fontFamily: fonts.body, fontSize: 12, lineHeight: 18, color: colors.textSecondary },
+  leaveMeta: { fontFamily: fonts.body, fontSize: 10.5, color: colors.textSecondary, opacity: 0.8 },
+  tag: { paddingHorizontal: 7, paddingVertical: 3, borderRadius: 8, backgroundColor: 'rgba(0,0,0,0.05)' },
+  tagWarm: { backgroundColor: 'rgba(179,38,30,0.10)' },
+  tagT: { fontFamily: fonts.bodyStrong, fontSize: 9.5, letterSpacing: 0.4, color: colors.textSecondary },
+  tagTWarm: { color: '#B3261E' },
 
   body: { padding: spacing.lg, paddingBottom: spacing.xxl },
 

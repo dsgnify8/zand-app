@@ -16,9 +16,9 @@
 // language they happen to be using.
 
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
 
 import { notifPrefs } from '@/lib/notif-prefs';
+import { inSeconds } from '@/lib/notif-trigger';
 import { getLang } from '@/lib/i18n';
 import type { SentItem } from '@/lib/inbox';
 
@@ -121,9 +121,7 @@ export async function syncNudges(inbox: SentItem[]) {
           body: (fa ? line.fa : line.en).replace('{name}', name),
           data: { tab: 'friends' },
         },
-        trigger: Platform.OS === 'ios'
-          ? ({ seconds: fire, repeats: false } as any)
-          : ({ seconds: fire, repeats: false, channelId: 'default' } as any),
+        trigger: inSeconds(fire),
       });
     } catch {}
   }

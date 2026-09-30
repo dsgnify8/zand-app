@@ -44,6 +44,7 @@ import { loadOverrides } from '@/lib/content-overrides';
 import { loadUsage } from '@/lib/usage';
 import { LangSwitchOverlay } from '@/components/lang-switch-overlay';
 import { loadNotifPrefs } from '@/lib/notif-prefs';
+import { ensureAndroidChannel } from '@/lib/notif-trigger';
 import { loadSavedBusinesses } from '@/lib/saved-businesses';
 import { loadOpened } from '@/lib/opened-businesses';
 import { loadImageOverrides } from '@/lib/image-overrides';
@@ -141,6 +142,9 @@ export default function RootLayout() {
   useEffect(() => {
     (async () => {
       try { await resetForDemo(); } catch (e) { console.log('[boot] resetForDemo', e); }
+      // Before anything schedules a notification: on Android the channel
+      // has to exist or the notification is dropped without a word.
+      try { await ensureAndroidChannel(); } catch {}
       // Awaited together rather than fired and forgotten. Any screen
       // that reads a store as it mounts was racing these — the lesson
       // resume lost, which is why a half-finished lesson restarted.

@@ -12,6 +12,7 @@ import { forgetMend } from '@/lib/streak-mend';
 import * as Notifications from 'expo-notifications';
 import { notifDebug } from '@/lib/notif-schedule';
 import { notifCopy } from '@/lib/notif-copy';
+import { inSeconds } from '@/lib/notif-trigger';
 import { refreshStreakFromDays } from '@/lib/stats-store';
 import { AnalyticsBoard } from '@/components/analytics-board';
 import { supabase } from '@/lib/supabase';
@@ -69,17 +70,34 @@ export default function AdminScreen() {
 
             {/* What the scheduler would send next, sent now. The real
                 thing waits for evening and for the daily limit, neither
-                of which is useful when you are trying to see it. */}
+                of which is useful when you are trying to see it.
+
+                Failures are reported rather than thrown. A test that dies
+                on an unhandled promise tells you nothing about why. */}
             <Pressable style={s.editRow} onPress={async () => {
               const d = notifDebug();
               const next = d.next;
-              if (!next) { alert('Nothing to send: ' + JSON.stringify(d, null, 1)); return; }
+              if (!next) { Alert.alert('Nothing to send', JSON.stringify(d, null, 1)); return; }
               const { title, body } = notifCopy(next.kind, next.fill, 0);
-              await Notifications.scheduleNotificationAsync({
-                content: { title, body },
-                trigger: { seconds: 3 } as any,
-              });
-              alert('Sending in 3s: ' + next.kind + '\n\n' + title + '\n' + body);
+              try {
+                // Without permission nothing arrives, and the failure is
+                // silent on the device, so ask before blaming the code.
+                const perm = await Notifications.getPermissionsAsync();
+                if (!perm.granted) {
+                  const asked = await Notifications.requestPermissionsAsync();
+                  if (!asked.granted) {
+                    Alert.alert('Notifications are off', 'Turn them on for Zand in Settings, then try again.');
+                    return;
+                  }
+                }
+                await Notifications.scheduleNotificationAsync({
+                  content: { title, body },
+                  trigger: inSeconds(3),
+                });
+                Alert.alert('Sending in 3s  ·  ' + next.kind, title + '\n' + body);
+              } catch (e: any) {
+                Alert.alert('It did not send', String(e?.message ?? e));
+              }
             }}>
               <Ionicons name="notifications-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Test the next notification</Text>
@@ -107,6 +125,14 @@ export default function AdminScreen() {
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-listings' as any)}>
               <Ionicons name="storefront-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>Business listings</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+
+            {/* Who is paying, and the one case worth acting on: a
+                subscription still running with no listing up. */}
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-billing' as any)}>
+              <Ionicons name="card-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Subscriptions</Text>
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 

@@ -23,6 +23,7 @@ import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { TOPICS } from '@/constants/education';
 import { AUTHORS } from '@/constants/literature';
 import { useAuth } from '@/lib/auth';
+import { useIsAdmin } from '@/lib/admin';
 import { contentHash, listOverrides, saveOverride, clearOverride, loadOverrides } from '@/lib/content-overrides';
 import { useLang, getLang } from '@/lib/i18n';
 
@@ -81,6 +82,7 @@ export default function AdminContent() {
   useLang();
   const fa = getLang() === 'fa';
   const { user } = useAuth();
+  const admin = useIsAdmin();
   const [section, setSection] = useState<Row['section']>('education');
   const [topicKey, setTopicKey] = useState<string | null>(null);
   const [edited, setEdited] = useState<Record<string, { x?: string; fa?: string }>>({});
@@ -208,6 +210,17 @@ export default function AdminContent() {
 
   /* ---------------- the list ---------------- */
 
+  // This screen rewrites the words everybody reads, so it needs the same
+  // gate as the rest of the admin. It had none, and it is a file route,
+  // so a deep link reached it.
+  if (!admin) {
+    return (
+      <SafeAreaView style={s.safe} edges={['top']}>
+        <Text style={s.denied}>Admins only.</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
       <View style={s.head}>
@@ -278,6 +291,10 @@ export default function AdminContent() {
 
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
+  denied: {
+    fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary,
+    textAlign: 'center', marginTop: spacing.xxl,
+  },
 
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(0,0,0,0.08)' },
   headT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: colors.textPrimary },

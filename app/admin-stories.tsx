@@ -1,7 +1,12 @@
 // Founder stories, for the admin.
 //
-// Two halves. A list of everyone who said they had something worth
-// telling, and an editor for turning one of those into a page.
+// Two halves. A list of every listing a story could belong to, and an
+// editor for turning one of those into a page.
+//
+// The list is searchable and can be narrowed, because it is long: a
+// story written for a listing whose owner never asked for one used to be
+// unreachable from here, which meant a finished story could not be gone
+// back to and given a photograph.
 //
 // The story is typed as prose, not as blocks. A blank line starts a
 // paragraph, a line in quotation marks becomes a pull-quote, three dashes
@@ -11,7 +16,7 @@
 // Nothing appears on a listing until Approved is on — the flip button does
 // not even show. So a half-written story is safe to leave.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -30,18 +35,16 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin } from '@/lib/admin';
+import { CATEGORIES } from '@/lib/businesses';
+import { REGIONS, regionOf } from '@/constants/regions';
+import { AdminFilter, useAdminFilter, type FilterGroup } from '@/components/admin-filter';
 import {
-  loadStory, parseBody, pickStoryPhotos, pitchedStories, saveStory,
+  loadStory, parseBody, pickStoryPhotos, saveStory, storyDesk,
   storyPhotoUrl, unparseBody, uploadStoryPhoto,
-  type FounderStory,
+  type FounderStory, type StoryDeskRow,
 } from '@/lib/founder-stories';
 
-type Pitched = {
-  id: string;
-  name: string;
-  city?: string | null;
-  story_pitch?: string | null;
-};
+type Pitched = StoryDeskRow;
 
 const EMPTY = (businessId: string): FounderStory => ({
   business_id: businessId,
@@ -59,24 +62,64 @@ export default function AdminStories() {
   const admin = useIsAdmin();
 
   const [rows, setRows] = useState<Pitched[]>([]);
-  const [has, setHas] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState<Pitched | null>(null);
+  const [q, setQ] = useState('');
 
   const refresh = async () => {
-    const list = (await pitchedStories()) as Pitched[];
-    setRows(list);
-    // Which of them already have a story written.
-    const m: Record<string, boolean> = {};
-    await Promise.all(list.map(async (r) => {
-      const s = await loadStory(r.id);
-      if (s) m[r.id] = s.approved;
-    }));
-    setHas(m);
+    // One pass. It used to load every story separately to find out which
+    // were approved, which was a query per listing.
+    setRows(await storyDesk());
     setLoading(false);
   };
 
   useEffect(() => { refresh(); }, []);
+
+  const found = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    if (!needle) return rows;
+    return rows.filter((r) =>
+      r.name.toLowerCase().includes(needle)
+      || (r.city ?? '').toLowerCase().includes(needle)
+      || (r.country ?? '').toLowerCase().includes(needle)
+      || (r.category ?? '').toLowerCase().includes(needle)
+      || (r.story_pitch ?? '').toLowerCase().includes(needle));
+  }, [rows, q]);
+
+  const groups = useMemo<FilterGroup<Pitched>[]>(() => [
+    {
+      key: 'state',
+      title: 'Where it stands',
+      allLabel: 'Any state',
+      options: [
+        { value: 'live', label: 'On the listing' },
+        { value: 'draft', label: 'Written, not approved' },
+        { value: 'blank', label: 'Nothing written' },
+        { value: 'nophoto', label: 'Written, no photograph' },
+      ],
+      match: (r, v) =>
+        v === 'live' ? r.approved
+          : v === 'draft' ? r.written && !r.approved
+          : v === 'blank' ? !r.written
+          : r.written && r.photos === 0,
+    },
+    {
+      key: 'what',
+      title: 'What it is',
+      allLabel: 'Everything',
+      options: CATEGORIES.map((c) => ({ value: c.key, label: c.en })),
+      match: (r, v) => r.category === v,
+    },
+    {
+      key: 'where',
+      title: 'Where',
+      allLabel: 'Everywhere',
+      options: REGIONS.map((r) => ({ value: r.key, label: r.en })),
+      match: (r, v) => regionOf(r.country) === v,
+    },
+  ], []);
+
+  const { shown, props: filterProps } = useAdminFilter(found, groups);
 
   if (!admin) {
     return (
@@ -100,23 +143,51 @@ export default function AdminStories() {
         <View style={{ width: 22 }} />
       </View>
 
+      <View style={s.searchWrap}>
+        <Ionicons name="search" size={15} color={colors.textSecondary} />
+        <TextInput
+          style={s.search}
+          value={q}
+          onChangeText={setQ}
+          placeholder="Name, city, category or what they wrote"
+          placeholderTextColor={colors.textSecondary}
+          autoCorrect={false}
+        />
+        {q ? (
+          <Pressable hitSlop={10} onPress={() => setQ('')}>
+            <Ionicons name="close-circle" size={16} color={colors.textSecondary} />
+          </Pressable>
+        ) : null}
+      </View>
+
+      <AdminFilter {...filterProps} noun="listing" />
+
       {loading ? (
         <ActivityIndicator style={{ marginTop: spacing.xxl }} color={colors.accent} />
       ) : (
-        <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={s.body}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
           <Text style={s.lead}>
-            Everyone who ticked the box when they listed. What they wrote is
-            their pitch, not the story — the story is what you make of it.
+            Everyone who offered a story, and everyone who already has one.
+            What they wrote is their pitch, not the story — the story is what
+            you make of it.
           </Text>
 
-          {rows.length === 0 ? (
-            <Text style={s.none}>Nobody has offered one yet.</Text>
+          {shown.length === 0 ? (
+            <Text style={s.none}>
+              {rows.length === 0 ? 'Nobody has offered one yet.' : 'Nothing matches that.'}
+            </Text>
           ) : null}
 
-          {rows.map((r) => {
-            const state = r.id in has
-              ? (has[r.id] ? 'live' : 'written, not approved')
-              : 'nothing written';
+          {shown.map((r) => {
+            const state = r.approved
+              ? (r.photos ? 'on the listing' : 'on the listing, no photograph')
+              : r.written
+                ? (r.photos ? 'written, not approved' : 'written, no photograph')
+                : 'nothing written';
             return (
               <Pressable key={r.id} style={s.row} onPress={() => setOpen(r)}>
                 <View style={s.rowTop}>
@@ -126,17 +197,21 @@ export default function AdminStories() {
                       {r.city ? r.city + '  ·  ' : ''}{state}
                     </Text>
                   </View>
+                  {/* Written but with nothing to look at is its own state.
+                      A tick beside it would say finished. */}
                   <Ionicons
-                    name={has[r.id] ? 'checkmark-circle' : 'ellipse-outline'}
+                    name={r.approved
+                      ? (r.photos ? 'checkmark-circle' : 'image-outline')
+                      : r.written ? 'create-outline' : 'ellipse-outline'}
                     size={18}
-                    color={has[r.id] ? colors.accent : colors.textSecondary}
+                    color={r.approved && r.photos ? colors.accent : colors.textSecondary}
                   />
                 </View>
                 {r.story_pitch ? (
                   <Text style={s.pitch} numberOfLines={4}>{r.story_pitch}</Text>
                 ) : (
                   <Text style={[s.pitch, { fontStyle: 'italic' }]}>
-                    Ticked the box but left it blank.
+                    {r.pitched ? 'Ticked the box but left it blank.' : 'They never asked for one.'}
                   </Text>
                 )}
               </Pressable>
@@ -349,6 +424,13 @@ const s = StyleSheet.create({
   },
   topT: { fontFamily: fonts.heading, fontSize: 19, color: colors.textPrimary, flex: 1, textAlign: 'center' },
   denied: { fontFamily: fonts.body, fontSize: 14, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.xxl },
+
+  searchWrap: {
+    flexDirection: 'row', alignItems: 'center', gap: spacing.sm,
+    backgroundColor: 'rgba(0,0,0,0.04)', borderRadius: 10,
+    paddingHorizontal: spacing.md, marginHorizontal: spacing.lg,
+  },
+  search: { flex: 1, fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary, paddingVertical: 11 },
 
   body: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxl * 2 },
   lead: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: colors.textSecondary, marginBottom: spacing.lg },

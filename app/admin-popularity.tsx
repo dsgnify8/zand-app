@@ -9,6 +9,11 @@
 // Reads content_popularity, a view over every user's synced liked and
 // saved lists. Keys resolve through the same function the profile rails
 // use, so a row shows a title rather than `topic-cyrus-the-great`.
+//
+// A key that no longer resolves is something that was removed while
+// people still had it saved. It is not a finding about what people keep,
+// it is a leftover, so it is dropped rather than listed: an admin reading
+// this page is asking what is working, not which ids went out of date.
 
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -48,7 +53,10 @@ export default function AdminPopularity() {
       .from('content_popularity')
       .select('key, likes, saves')
       .limit(300);
-    setRows((data as Row[]) ?? []);
+    // Only things that still exist. The articles that were taken down are
+    // still in whoever saved them, and they were showing up here as rows
+    // that led nowhere.
+    setRows(((data as Row[]) ?? []).filter((r) => !!resolveSavedKey(r.key)));
     setBusy(false);
   }, []);
 
@@ -107,22 +115,17 @@ export default function AdminPopularity() {
             <View key={g.id} style={s.group}>
               <Text style={s.groupT}>{g.label}</Text>
               {g.items.map((r) => {
-                // A key that no longer resolves is content that was
-                // renamed or removed while someone still had it saved.
-                // Worth showing rather than hiding: it is a loose end.
                 const card = resolveSavedKey(r.key);
                 return (
                   <Pressable
                     key={r.key}
                     style={s.row}
-                    disabled={!card}
                     onPress={() => card && router.navigate(card.route as any)}
                   >
                     <View style={{ flex: 1 }}>
-                      <Text style={[s.rowT, !card && s.rowGone]} numberOfLines={1}>
+                      <Text style={s.rowT} numberOfLines={1}>
                         {card ? card.title : r.key}
                       </Text>
-                      {!card ? <Text style={s.rowX}>no longer resolves</Text> : null}
                     </View>
                     <View style={s.counts}>
                       {r.likes > 0 ? (
@@ -190,8 +193,6 @@ const s = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border,
   },
   rowT: { fontFamily: fonts.body, fontSize: 14, color: colors.textPrimary },
-  rowGone: { color: colors.textSecondary, fontStyle: 'italic' },
-  rowX: { fontFamily: fonts.body, fontSize: 10.5, color: colors.textSecondary, marginTop: 1 },
 
   counts: { flexDirection: 'row', gap: spacing.md },
   count: { flexDirection: 'row', alignItems: 'center', gap: 3 },

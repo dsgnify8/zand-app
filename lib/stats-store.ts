@@ -38,6 +38,13 @@ export async function loadStats() {
   try {
     const v = await AsyncStorage.getItem(KEY);
     state = v ? { ...EMPTY, ...JSON.parse(v) } : { ...EMPTY };
+    // The baseline of "already earned" belongs to whoever this state
+    // belongs to. Left alone across an account switch it still held the
+    // previous person's milestones, so the new account's first genuine
+    // one passed without a word.
+    seen = null;
+    lastVisitDay = '';
+    lastLearnDay = '';
 
   // Two things here are readings rather than records, and both are
   // recomputed on every load for the same reason: a stored count has to be
@@ -88,10 +95,30 @@ export async function loadStats() {
 }
 async function persist() { try { await AsyncStorage.setItem(KEY, JSON.stringify(state)); syncTouch(); } catch {} }
 
+/**
+ * Today, as the reader's calendar has it.
+ *
+ * This used to be toISOString().slice(0, 10), which is UTC. In Dubai that
+ * means anyone opening the app between midnight and four in the morning
+ * was recorded as having come yesterday: the streak never advanced for a
+ * night reader, and the week's pips lit the wrong column until dawn. Every
+ * other place that builds a day string in this app builds it from local
+ * parts, so this is the one that was out of step.
+ *
+ * The strings are still parsed as UTC midnight (see asDate) so that the
+ * difference between two consecutive days is exactly one day whatever the
+ * clocks do.
+ */
+export function dayKey(d: Date = new Date()) {
+  return d.getFullYear()
+    + '-' + String(d.getMonth() + 1).padStart(2, '0')
+    + '-' + String(d.getDate()).padStart(2, '0');
+}
+
 // Counts a day only once, and only when a lesson was finished on it.
 let lastLearnDay = '';
 export async function markLearnDay() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = dayKey();
   if (lastLearnDay === today) return;
   lastLearnDay = today;
   try {
@@ -120,7 +147,7 @@ const MODULE_ID = Math.random().toString(36).slice(2, 7);
 
 let lastVisitDay = '';
 export async function markVisitDay() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = dayKey();
   if (lastVisitDay === today) return;
   lastVisitDay = today;
   try {
@@ -138,9 +165,6 @@ export async function markVisitDay() {
       // Or it stays on this phone. Being in KEYS only matters if
       // something tells the sync that the key has moved.
       syncTouch();
-      // And in memory, or the week's pips keep reading the list as it was
-      // at boot — without today in it, which is one pip short every time.
-      visitDays = next;
       setField('visitDays', next.length);
     }
     const v = analyseVisits(next);
@@ -200,7 +224,7 @@ function streakFrom(days: string[]) {
   const seen = new Set(days);
   const d = new Date();
   let n = 0;
-  while (seen.has(d.toISOString().slice(0, 10))) {
+  while (seen.has(dayKey(d))) {
     n += 1;
     d.setDate(d.getDate() - 1);
   }

@@ -20,11 +20,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { LISTING } from '@/constants/i18n/listing';
 import { useAuth } from '@/lib/auth';
+import { useIsAdmin } from '@/lib/admin';
 import { t as tr, useLang, getLang } from '@/lib/i18n';
 import {
-  CATEGORIES, loadBusiness, saveBusiness, submitBusiness, type Business,
+  CATEGORIES, checkName, loadBusiness, saveBusiness, submitBusiness, type Business,
 } from '@/lib/businesses';
 import { MAX_PHOTOS, pickPhotos, uploadPhoto, photoUrl, removePhoto, isBundled, bundledKey } from '@/lib/business-photos';
+import { listingIsPaid } from '@/lib/billing';
+import { alertAdmin } from '@/lib/admin-alert';
+import type { NameMatch } from '@/lib/listing-names';
+import { ListingPaywall } from '@/components/listing-paywall';
 import { eduImage } from '@/constants/education-images';
 
 const bizImage = (path: string) =>
@@ -51,6 +56,7 @@ export default function BusinessForm() {
   // getLang() or t(), which are always current.
   useLang();
   const { user } = useAuth();
+  const isAdmin = useIsAdmin();
   // Editing and creating are the same screen: same fields, same rules.
   // With an id we load the row first; without one we start empty.
   const { id: editId } = useLocalSearchParams<{ id?: string }>();
@@ -60,6 +66,8 @@ export default function BusinessForm() {
     name: '', category: '', socials: {}, hours: {}, photos: [],
   });
   const [saving, setSaving] = useState(false);
+  // The listing waiting on a subscription, if there is one.
+  const [payFor, setPayFor] = useState<string | null>(null);
   const [locating, setLocating] = useState(false);
   const [placeText, setPlaceText] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -80,6 +88,29 @@ export default function BusinessForm() {
   const [sent, setSent] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Is this name already in the directory?
+  //
+  // Checked as it is typed rather than at the end. Being told a name is
+  // taken while you are still writing it is a correction; being told after
+  // review is a rejection, and it wastes a week of somebody's time.
+  const [taken, setTaken] = useState<NameMatch | null>(null);
+  const [like, setLike] = useState<NameMatch[]>([]);
+  const nameTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const raw = (b.name ?? '').trim();
+    if (nameTimer.current) clearTimeout(nameTimer.current);
+    if (raw.length < 2) { setTaken(null); setLike([]); return; }
+    nameTimer.current = setTimeout(async () => {
+      try {
+        const res = await checkName(raw, b.city, b.id);
+        setTaken(res.taken);
+        setLike(res.similar);
+      } catch {}
+    }, 600);
+    return () => { if (nameTimer.current) clearTimeout(nameTimer.current); };
+  }, [b.name, b.city, b.id]);
+
   const set = (patch: Partial<Business>) => {
     setB((v) => ({ ...v, ...patch }));
     if (saveTimer.current) clearTimeout(saveTimer.current);
@@ -97,13 +128,30 @@ export default function BusinessForm() {
     if (data?.id && !b.id) setB((v) => ({ ...v, id: data.id }));
   };
 
+  // Somebody else's listing is not yours to open.
+  //
+  // This form loads by id and autosaves what it is holding, so opening it
+  // on an id that is not yours and touching one key was enough to write
+  // over that listing. The database has to refuse it as well, but the
+  // form should not put a stranger's business on the screen in the first
+  // place — the stats tab alone shows their views, calls and directions.
+  // The admin edits through here too, so they are let through.
   useEffect(() => {
     if (!editId) return;
+    let alive = true;
     (async () => {
       const row = await loadBusiness(String(editId));
-      if (row) setB(row);
+      if (!alive) return;
+      if (!row) return;
+      if (row.owner_id && user?.id && row.owner_id !== user.id && !isAdmin) {
+        setErr(tr(LISTING.notYours));
+        router.replace('/my-businesses' as any);
+        return;
+      }
+      setB(row);
     })();
-  }, [editId]);
+    return () => { alive = false; };
+  }, [editId, user?.id, isAdmin]);
 
   useEffect(() => () => { if (saveTimer.current) clearTimeout(saveTimer.current); }, []);
 
@@ -172,6 +220,10 @@ export default function BusinessForm() {
   // directory looks abandoned.
   const missing: string[] = [];
   if (!b.name?.trim()) missing.push('a name');
+  // A name already in the directory is not a thing we can fix for them,
+  // and two identical rows would leave anyone reading the list with no way
+  // of telling which is which.
+  if (taken) missing.push('a name that is not already taken');
   if (!b.category) missing.push('a category');
   if (b.lat == null && !b.city?.trim()) missing.push('a location');
   if (!(b.photos?.length)) missing.push('at least one photo');
@@ -182,12 +234,33 @@ export default function BusinessForm() {
   else if (dlen < 40) missing.push('a longer description (at least 40 characters)');
   const ready = missing.length === 0;
 
+  // Sending it in, once there is something to send it with.
+  const finishSubmit = async (id: string) => {
+    const { error: e2 } = await submitBusiness(id, user?.id);
+    setSaving(false);
+    if (e2) { setErr(e2); return; }
+    setSent(true);
+  };
+
   const submit = async () => {
     if (!ready || !user?.id) return;
     setSaving(true);
     setErr(null);
     const { data, error } = await saveBusiness({ ...(b as any), owner_id: user.id });
     if (error || !data?.id) { setSaving(false); setErr(error ?? tr(LISTING.couldNotSave)); return; }
+
+    // Close to something already here. Allowed, because a second branch
+    // and a franchise both look exactly like this, but not silently: it
+    // goes to the admin to be told apart.
+    if (like.length) {
+      alertAdmin('listing-similar', {
+        name: b.name ?? undefined,
+        city: b.city ?? undefined,
+        like: like.slice(0, 3)
+          .map((m) => m.name + (m.city ? ' (' + m.city + ')' : ''))
+          .join(', '),
+      });
+    }
     // Something already live or approved is being edited, not submitted;
     // pushing it back through review would take it down for no reason.
     if (b.status === 'active' || b.status === 'approved') {
@@ -195,10 +268,17 @@ export default function BusinessForm() {
       router.replace('/my-businesses' as any);
       return;
     }
-    const { error: e2 } = await submitBusiness(data.id);
-    setSaving(false);
-    if (e2) { setErr(e2); return; }
-    setSent(true);
+
+    // The one moment money is mentioned. A listing already covered — a
+    // resubmission, or one of the founding listings — goes straight
+    // through without being asked again.
+    const covered = await listingIsPaid(data.id);
+    if (!covered) {
+      setPayFor(data.id);
+      setSaving(false);
+      return;
+    }
+    await finishSubmit(data.id);
   };
 
   /* ---------------- sent ---------------- */
@@ -225,8 +305,28 @@ export default function BusinessForm() {
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
+      <ListingPaywall
+        open={payFor !== null}
+        businessId={payFor}
+        onDone={() => {
+          const id = payFor;
+          setPayFor(null);
+          setSaving(true);
+          if (id) finishSubmit(id);
+        }}
+        // Dismissed. The listing is saved as a draft and waiting in My
+        // listings, so nothing anybody typed is lost.
+        onClose={() => { setPayFor(null); setErr(tr(LISTING.savedAsDraft)); }}
+      />
+
       <View style={s.head}>
-        <Pressable hitSlop={12} onPress={() => router.replace('/local' as any)}>
+        {/* Back, not onward. Replacing pushed a new copy of Local on
+            top, so leaving the form slid in from the right as though it
+            were somewhere new. */}
+        <Pressable
+          hitSlop={12}
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/local' as any))}
+        >
           <Ionicons name="close" size={22} color={colors.textPrimary} />
         </Pressable>
         <Text style={s.headT}>{editId ? tr(LISTING.titleEdit) : tr(LISTING.titleNew)}</Text>
@@ -267,6 +367,18 @@ export default function BusinessForm() {
             {...(fa ? { textAlign: "right" as const, writingDirection: "rtl" as const } : {})}
             placeholderTextColor={colors.textSecondary}
           />
+
+          {taken ? (
+            <Text style={s.nameBad}>
+              {tr(LISTING.nameTaken)}
+              {taken.city ? '  ·  ' + taken.name + ', ' + taken.city : '  ·  ' + taken.name}
+            </Text>
+          ) : like.length ? (
+            <Text style={s.nameNote}>
+              {tr(LISTING.nameLike)}
+              {'  ·  ' + like.map((m) => m.name + (m.city ? ', ' + m.city : '')).join('  ·  ')}
+            </Text>
+          ) : null}
 
           <Text style={[s.label, s.labelFa]}>نام فارسی</Text>
           <TextInput
@@ -601,6 +713,15 @@ export default function BusinessForm() {
 
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
+  // Said once, under the field, in the colour of the thing it is.
+  nameBad: {
+    fontFamily: fonts.body, fontSize: 11.5, lineHeight: 17,
+    color: '#B3261E', marginTop: 6,
+  },
+  nameNote: {
+    fontFamily: fonts.body, fontSize: 11.5, lineHeight: 17,
+    color: colors.textSecondary, marginTop: 6,
+  },
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(0,0,0,0.08)' },
   headT: { fontFamily: fonts.bodyStrong, fontSize: 14, color: colors.textPrimary },
 
@@ -648,8 +769,11 @@ const s = StyleSheet.create({
     marginTop: spacing.xxl,
   },
   check: {
-    width: 20, height: 20, borderRadius: 6, marginTop: 1,
-    borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border,
+    width: 22, height: 22, borderRadius: 6, marginTop: 1,
+    // A hairline in the border colour was invisible against cream, so
+    // the one control on this page that has to be found was the hardest
+    // thing on it to see.
+    borderWidth: 1.5, borderColor: 'rgba(40,28,24,0.38)',
     alignItems: 'center', justifyContent: 'center',
   },
   checkOn: { backgroundColor: colors.textPrimary, borderColor: colors.textPrimary },
@@ -658,7 +782,10 @@ const s = StyleSheet.create({
     fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19,
     color: colors.textSecondary, marginTop: spacing.md,
   },
-  storyBox: { marginTop: spacing.sm, minHeight: 130, paddingTop: 12 },
+  storyBox: {
+    marginTop: spacing.sm, minHeight: 130, paddingTop: 12,
+    borderWidth: 1, borderColor: 'rgba(40,28,24,0.16)',
+  },
   photoWrap: { width: 88, height: 88, borderRadius: 12, overflow: 'hidden' },
   photo: { width: '100%', height: '100%' },
   photoX: { position: 'absolute', top: 4, right: 4, width: 20, height: 20, borderRadius: 10, backgroundColor: 'rgba(0,0,0,0.55)', alignItems: 'center', justifyContent: 'center' },

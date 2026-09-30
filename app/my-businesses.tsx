@@ -10,7 +10,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  ActivityIndicator, Image, Pressable, ScrollView,
+  ActivityIndicator, Image, Linking, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,9 +18,11 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
+import { ListingPaywall } from '@/components/listing-paywall';
+import { BILLING } from '@/constants/i18n/billing';
 import { useAuth } from '@/lib/auth';
 import { useIsAdmin } from '@/lib/admin';
-import { useLang, getLang } from '@/lib/i18n';
+import { useLang, getLang, t as tr } from '@/lib/i18n';
 import {
   categoryLabel, loadForReview, myBusinesses,
   type Business, type BusinessStatus,
@@ -48,6 +50,8 @@ const FILTERS = [
 ] as const;
 
 export default function MyBusinesses() {
+  // The listing waiting on a subscription, if any.
+  const [payFor, setPayFor] = useState<string | null>(null);
   // Subscribe to the language so a switch elsewhere reaches this screen
   // where it stands. The value is deliberately unused: read with
   // getLang() or t(), which are always current.
@@ -83,6 +87,13 @@ export default function MyBusinesses() {
   if (!session) {
     return (
       <SafeAreaView style={s.safe} edges={['top']}>
+      <ListingPaywall
+        open={payFor !== null}
+        businessId={payFor}
+        onDone={() => { setPayFor(null); refresh(); }}
+        onClose={() => setPayFor(null)}
+      />
+
         <Head onBack={() => router.back()} title="Your business" />
         <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }}>
           <Pitch onStart={() => router.navigate('/onboarding?step=2&next=/my-businesses' as any)} cta="Sign in to start" />
@@ -224,9 +235,14 @@ export default function MyBusinesses() {
                     </View>
                   ) : null}
 
-                  {b.status === 'approved' ? (
-                    <Pressable style={s.pay} onPress={() => router.navigate(('/business-billing?id=' + b.id) as any)}>
-                      <Text style={s.payT}>Start subscription</Text>
+                  {/* A listing that lapsed, or one approved before the
+                      money arrived. The sheet is the same one Submit
+                      shows, so there is one place this is ever explained. */}
+                  {(b.status === 'approved' || b.status === 'lapsed') && !b.billing_exempt ? (
+                    <Pressable style={s.pay} onPress={() => setPayFor(b.id)}>
+                      <Text style={s.payT}>
+                        {b.status === 'lapsed' ? 'Put it back up' : 'Start subscription'}
+                      </Text>
                     </Pressable>
                   ) : null}
 
@@ -238,6 +254,14 @@ export default function MyBusinesses() {
                       <Pressable onPress={() => router.navigate(('/local/business-new?id=' + b.id) as any)}>
                         <Text style={s.liveLink}>Edit or see how it is doing</Text>
                       </Pressable>
+                      {/* Straight to Apple's own screen. Cancelling is
+                          theirs to do and nobody should have to hunt for
+                          it. Exempt listings have nothing to manage. */}
+                      {!b.billing_exempt ? (
+                        <Pressable onPress={() => Linking.openURL('itms-apps://apps.apple.com/account/subscriptions')}>
+                          <Text style={s.liveLink}>{tr(BILLING.manage)}</Text>
+                        </Pressable>
+                      ) : null}
                     </View>
                   ) : null}
                 </View>

@@ -104,7 +104,6 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                         <View style={s.avatar}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
                         <View style={{ flex: 1 }}>
                           <Text style={s.name}>{r.profile.name}</Text>
-                          <Text style={s.handle}>{r.profile.email}</Text>
                         </View>
                         <Pressable style={s.addBtn} onPress={async () => { await acceptRequest(r.id); refresh(); }}>
                           <Text style={s.addT}>{t(APP.accept)}</Text>
@@ -126,7 +125,6 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                     <View style={s.avatar}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
                     <View style={{ flex: 1 }}>
                       <Text style={s.name}>{r.profile.name}</Text>
-                      <Text style={s.handle}>{r.profile.email}</Text>
                     </View>
                     <Pressable hitSlop={8} onPress={async () => { await removeFriendship(r.id); refresh(); }}>
                       <Ionicons name="ellipsis-horizontal" size={18} color={colors.textSecondary} />
@@ -142,7 +140,6 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
                         <View style={s.avatar}><Text style={s.avatarT}>{(r.profile.name || '?')[0].toUpperCase()}</Text></View>
                         <View style={{ flex: 1 }}>
                           <Text style={s.name}>{r.profile.name}</Text>
-                          <Text style={s.handle}>{r.profile.email}</Text>
                         </View>
                         <Text style={s.pending}>{t(APP.sent)}</Text>
                       </View>

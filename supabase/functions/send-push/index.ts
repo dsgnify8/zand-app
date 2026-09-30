@@ -6,6 +6,11 @@
 //
 // Two things it deliberately does not do:
 //
+//   * It does not trust the caller about the words either, where the
+//     caller is a stranger. A pending friend request is something anyone
+//     can create, so it earns a fixed line rather than whatever text they
+//     sent.
+//
 //   * It does not trust the caller about who to send to beyond the id.
 //     Only the service role can invoke it, so it is called from other
 //     server code — when an article publishes, when an item is sent —
@@ -19,8 +24,10 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { callerId, isServiceCall } from '../_shared/caller.ts';
+import { callerKey, overLimit } from '../_shared/limit.ts';
 
-type Category = 'articles' | 'friends';
+type Category = 'articles' | 'friends' | 'account';
+const CATEGORIES: Category[] = ['articles', 'friends', 'account'];
 
 Deno.serve(async (req) => {
   try {
@@ -36,6 +43,13 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: 'userId, title and body are required' }), { status: 400 });
     }
 
+    // The category is what the preference check hangs on, so it is not
+    // optional. Left out, a push went to someone who had switched
+    // everything off, which is the one thing a preference has to mean.
+    if (!category || !CATEGORIES.includes(category)) {
+      return new Response(JSON.stringify({ error: 'category must be one of ' + CATEGORIES.join(', ') }), { status: 400 });
+    }
+
     const admin = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
@@ -49,19 +63,48 @@ Deno.serve(async (req) => {
     // invite links among other places. Now a push has to come from our
     // own server code, or from someone who already has a line to this
     // person: a friend, or a folder they both keep.
+    let outTitle = title;
+    let outBody = body;
+
     if (!isServiceCall(req)) {
       const from = await callerId(req);
       if (!from) {
         return new Response(JSON.stringify({ error: 'Sign in first' }), { status: 401 });
       }
-      if (from !== userId && !(await mayNotify(admin, from, userId))) {
-        return new Response(JSON.stringify({ error: 'Not allowed' }), { status: 403 });
+
+      // A ceiling on everyone who is not our own server. Without one, a
+      // single account could write to a friend's lock screen all day.
+      if (await overLimit(admin, 'send-push', callerKey(req, from), 20, 200)) {
+        return new Response(JSON.stringify({ error: 'Too many' }), { status: 429 });
+      }
+
+      if (from !== userId) {
+        const rel = await relation(admin, from, userId);
+        if (rel === 'none') {
+          return new Response(JSON.stringify({ error: 'Not allowed' }), { status: 403 });
+        }
+
+        // A friend request you sent is the one case where a stranger can
+        // make a notification appear. Anyone can insert a pending row, so
+        // taking their words for the contents let them write whatever they
+        // liked onto the screen of anybody whose id they knew. They get a
+        // fixed line instead, with their own name as the server has it.
+        if (rel === 'asked') {
+          if (await overLimit(admin, 'send-push-request', callerKey(req, from), 3, 20)) {
+            return new Response(JSON.stringify({ error: 'Too many' }), { status: 429 });
+          }
+          const { data: who } = await admin
+            .from('profiles').select('name').eq('id', from).maybeSingle();
+          const name = String((who as any)?.name ?? '').trim().slice(0, 40) || 'Someone';
+          outTitle = name + ' wants to connect';
+          outBody = 'Open ZAND to accept.';
+        }
       }
     }
 
     // Long enough for a sentence about a place. A notification is not a
     // message box.
-    if (title.length > 120 || body.length > 300) {
+    if (outTitle.length > 120 || outBody.length > 300) {
       return new Response(JSON.stringify({ error: 'Too long' }), { status: 400 });
     }
 
@@ -74,7 +117,7 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     const prefs = (state?.payload as any)?.['notif:v1'];
-    if (prefs && category && prefs[category] === false) {
+    if (prefs && prefs[category] === false) {
       return new Response(JSON.stringify({ skipped: 'category off' }), {
         headers: { 'Content-Type': 'application/json' },
       });
@@ -94,8 +137,8 @@ Deno.serve(async (req) => {
 
     const messages = tokens.map((to: string) => ({
       to,
-      title,
-      body,
+      title: outTitle,
+      body: outBody,
       sound: 'default',
       data: data ?? {},
     }));
@@ -118,28 +161,44 @@ Deno.serve(async (req) => {
   }
 });
 
+type Relation = 'admin' | 'friend' | 'asked' | 'none';
+
 /**
- * Is there already a line between these two people?
+ * What line there is between these two people.
  *
- * A friendship in either direction, accepted or still pending — someone
- * you have asked to connect may be told that you accepted — or a folder
- * one of them keeps and the other is in.
+ *   admin   us, writing to an owner about their listing
+ *   friend  an accepted friendship, or a folder one keeps and the other
+ *           is in, or a request this person sent to the caller
+ *   asked   the caller has a request outstanding to them, and nothing
+ *           else. Anyone can create that, so it buys a fixed line and
+ *           nothing more
+ *   none    no business notifying them at all
  */
-async function mayNotify(admin: any, from: string, to: string): Promise<boolean> {
+async function relation(admin: any, from: string, to: string): Promise<Relation> {
   // The admin writes to owners about their listings, and an owner is
   // usually nobody's friend here.
   try {
     const adminEmail = (Deno.env.get('ADMIN_EMAIL') ?? 'nojan.zandesh@gmail.com').toLowerCase();
     const { data: who } = await admin.auth.admin.getUserById(from);
-    if ((who?.user?.email ?? '').toLowerCase() === adminEmail) return true;
+    if ((who?.user?.email ?? '').toLowerCase() === adminEmail) return 'admin';
   } catch { /* fall through to the ordinary checks */ }
 
   const { data: friends } = await admin
     .from('friendships')
-    .select('id')
+    .select('status, requester, addressee')
     .or(`and(requester.eq.${from},addressee.eq.${to}),and(requester.eq.${to},addressee.eq.${from})`)
-    .limit(1);
-  if (friends && friends.length) return true;
+    .limit(2);
+
+  let asked = false;
+  for (const f of (friends ?? []) as any[]) {
+    // Settled both ways, so either of them may write to the other.
+    if (f.status === 'accepted') return 'friend';
+    // They asked the caller. Answering someone who reached out first is
+    // theirs to expect.
+    if (f.requester === to) return 'friend';
+    // The caller asked them. Unilateral, and free to create.
+    if (f.requester === from) asked = true;
+  }
 
   // Folders: either of them may be the owner, the other a member.
   const [{ data: mine }, { data: theirs }] = await Promise.all([
@@ -147,7 +206,7 @@ async function mayNotify(admin: any, from: string, to: string): Promise<boolean>
     admin.from('collection_members').select('collection_id').eq('user_id', to),
   ]);
   const ids = new Set(((mine ?? []) as any[]).map((r) => r.collection_id));
-  for (const r of (theirs ?? []) as any[]) if (ids.has(r.collection_id)) return true;
+  for (const r of (theirs ?? []) as any[]) if (ids.has(r.collection_id)) return 'friend';
 
   const [{ data: ownedByFrom }, { data: ownedByTo }] = await Promise.all([
     admin.from('saved_collections').select('id').eq('owner_id', from),
@@ -155,8 +214,8 @@ async function mayNotify(admin: any, from: string, to: string): Promise<boolean>
   ]);
   const fromOwns = new Set(((ownedByFrom ?? []) as any[]).map((r) => r.id));
   const toOwns = new Set(((ownedByTo ?? []) as any[]).map((r) => r.id));
-  for (const r of (theirs ?? []) as any[]) if (fromOwns.has(r.collection_id)) return true;
-  for (const r of (mine ?? []) as any[]) if (toOwns.has(r.collection_id)) return true;
+  for (const r of (theirs ?? []) as any[]) if (fromOwns.has(r.collection_id)) return 'friend';
+  for (const r of (mine ?? []) as any[]) if (toOwns.has(r.collection_id)) return 'friend';
 
-  return false;
+  return asked ? 'asked' : 'none';
 }

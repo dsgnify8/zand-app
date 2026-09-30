@@ -3,10 +3,10 @@
 // message is chosen from what the learner is actually doing.
 
 import { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { getLang } from '@/lib/i18n';
+import { everyDayAt } from '@/lib/notif-trigger';
 
 const K_ON = 'remind:on';
 const K_HOUR = 'remind:hour';
@@ -17,9 +17,13 @@ let hour = 19;            // early evening by default
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 
+// What happens to a notification that arrives while the app is open.
+// shouldShowAlert was replaced by the banner and the list, and a handler
+// that only sets the old name shows nothing at all.
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
@@ -118,9 +122,7 @@ export async function schedule() {
       // notification with it.
       identifier: DAILY_ID,
       content: { title, body },
-      trigger: Platform.OS === 'ios'
-        ? ({ hour, minute: 0, repeats: true } as any)
-        : ({ hour, minute: 0, repeats: true, channelId: 'default' } as any),
+      trigger: everyDayAt(hour, 0),
     });
   } catch {}
 }

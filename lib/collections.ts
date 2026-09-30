@@ -368,5 +368,26 @@ export function useCollections(ownerId: string | undefined) {
  * was unsaved would make the folder disagree with the bookmark.
  */
 export async function removeFromAllCollections(businessId: string) {
-  await supabase.from('saved_collection_items').delete().eq('business_id', businessId);
+  // Scoped to folders this person actually has a hand in. Unqualified,
+  // this asked the database to strip the place out of every folder
+  // belonging to everybody, and whether it did so was left entirely to a
+  // policy — one place where being wrong deletes other people's work.
+  const { data: me } = await supabase.auth.getUser();
+  const uid = me?.user?.id;
+  if (!uid) return;
+
+  const [{ data: mine }, { data: memberOf }] = await Promise.all([
+    supabase.from('saved_collections').select('id').eq('owner_id', uid),
+    supabase.from('collection_members').select('collection_id').eq('user_id', uid),
+  ]);
+  const ids = [
+    ...((mine ?? []) as any[]).map((r) => r.id),
+    ...((memberOf ?? []) as any[]).map((r) => r.collection_id),
+  ].filter(Boolean);
+  if (ids.length === 0) return;
+
+  await supabase.from('saved_collection_items')
+    .delete()
+    .eq('business_id', businessId)
+    .in('collection_id', [...new Set(ids)]);
 }

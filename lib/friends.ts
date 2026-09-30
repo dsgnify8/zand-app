@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
-export type Profile = { id: string; name: string; email: string };
+// No email. Addresses are no longer readable from a phone: any signed-in
+// person could read the whole table, which is an export of every user's
+// address. Search goes through find_profile on the server, which answers
+// an exact address and returns a name.
+export type Profile = { id: string; name: string; email?: string };
 export type FriendRow = {
   id: number;
   requester: string;
@@ -24,22 +28,27 @@ export async function searchProfiles(q: string, myId: string): Promise<Profile[]
   const term = q.trim();
   if (!term) return [];
 
-  const filter = term.includes('@')
-    ? `email.ilike.${term}`
-    : `name.ilike.%${term}%`;
+  // An address goes to the server, which matches it whole and hands back
+  // a name. Nothing about it can be used to browse.
+  if (term.includes('@')) {
+    const { data } = await supabase.rpc('find_profile', { addr: term });
+    const rows = (data ?? []) as Profile[];
+    return rows.filter((r) => r.id !== myId);
+  }
 
   const { data } = await supabase
     .from('profiles')
-    .select('id, name, email')
-    .or(filter)
+    .select('id, name')
+    .ilike('name', '%' + term + '%')
     .neq('id', myId)
     .limit(20);
   return (data ?? []) as Profile[];
 }
 
 export async function findByEmail(email: string): Promise<Profile | null> {
-  const { data } = await supabase.from('profiles').select('id, name, email').ilike('email', email.trim()).limit(1);
-  return (data && data[0]) ? (data[0] as Profile) : null;
+  const { data } = await supabase.rpc('find_profile', { addr: email.trim() });
+  const rows = (data ?? []) as Profile[];
+  return rows[0] ?? null;
 }
 
 /**
@@ -54,6 +63,23 @@ export async function findByEmail(email: string): Promise<Profile | null> {
 async function nameOf(id: string): Promise<string> {
   const { data } = await supabase.from('profiles').select('name').eq('id', id).maybeSingle();
   return (data as any)?.name || 'Someone';
+}
+
+/**
+ * An address, shortened to the part that identifies without exposing.
+ *
+ * An incoming request comes from somebody you may not know, and the sheet
+ * was printing their whole address under their name before any
+ * relationship existed. The first letter and the domain are enough to
+ * tell two people of the same name apart, which is all it was there for.
+ */
+export function maskEmail(email?: string | null) {
+  const v = (email ?? '').trim();
+  const at = v.lastIndexOf('@');
+  if (at < 1) return '';
+  const local = v.slice(0, at);
+  const domain = v.slice(at);
+  return local.slice(0, 1) + '•••' + domain;
 }
 
 function notify(userId: string, title: string, body: string) {
@@ -101,12 +127,12 @@ export async function loadFriendships(myId: string): Promise<FriendRow[]> {
   const rows = (data ?? []) as any[];
   if (rows.length === 0) return [];
   const otherIds = rows.map((r) => (r.requester === myId ? r.addressee : r.requester));
-  const { data: profs } = await supabase.from('profiles').select('id, name, email').in('id', otherIds);
+  const { data: profs } = await supabase.from('profiles').select('id, name').in('id', otherIds);
   const byId: Record<string, Profile> = {};
   for (const p of (profs ?? []) as Profile[]) byId[p.id] = p;
   return rows.map((r) => {
     const otherId = r.requester === myId ? r.addressee : r.requester;
-    return { ...r, profile: byId[otherId] ?? { id: otherId, name: 'Someone', email: '' }, incoming: r.addressee === myId };
+    return { ...r, profile: byId[otherId] ?? { id: otherId, name: 'Someone' }, incoming: r.addressee === myId };
   });
 }
 

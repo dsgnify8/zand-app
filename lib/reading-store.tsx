@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 
+import { isSyncing, onSyncChange, syncTouch } from '@/lib/cloud-sync';
+
 const KEY = 'zand:reading:v1';
 
 export type ReadingEntry = {
@@ -32,15 +34,34 @@ export function ReadingProvider({ children }: { children: ReactNode }) {
   const [store, setStore] = useState<Store>({ reading: {}, achievements: [] });
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try { const raw = await AsyncStorage.getItem(KEY); if (raw) setStore(JSON.parse(raw)); } catch {}
-      setReady(true);
-    })();
+  const reread = useCallback(async () => {
+    try {
+      const raw = await AsyncStorage.getItem(KEY);
+      setStore(raw ? JSON.parse(raw) : { reading: {}, achievements: [] });
+    } catch {}
   }, []);
 
   useEffect(() => {
-    if (ready) AsyncStorage.setItem(KEY, JSON.stringify(store)).catch(() => {});
+    (async () => { await reread(); setReady(true); })();
+  }, [reread]);
+
+  // Same reason as progress-store: a sign-in or sign-out rewrites this
+  // key, and without re-reading it the reading bars and the achievements
+  // belong to whoever was here before.
+  useEffect(() => {
+    let was = isSyncing();
+    return onSyncChange(() => {
+      const now = isSyncing();
+      if (was && !now) reread();
+      was = now;
+    });
+  }, [reread]);
+
+  useEffect(() => {
+    if (ready) {
+      AsyncStorage.setItem(KEY, JSON.stringify(store)).catch(() => {});
+      syncTouch();
+    }
   }, [store, ready]);
 
   const recordReading = useCallback((topicKey: string, page: number, totalPages: number) => {

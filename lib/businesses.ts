@@ -8,6 +8,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { alertAdmin } from '@/lib/admin-alert';
+import { compareNames, nameKey, type NameMatch } from '@/lib/listing-names';
+import { listingIsPaid } from '@/lib/billing';
 import { removePhoto } from '@/lib/business-photos';
 import { expandQuery, buildSearchIndex } from '@/lib/business-search';
 import { categoriesFor } from '@/constants/search-synonyms';
@@ -43,6 +45,8 @@ export type Business = {
   city_fa?: string | null;
   search_fa?: string | null;
   paid_until?: string | null;
+  /** Listed before any of this, and never asked to pay. */
+  billing_exempt?: boolean;
   created_at?: string;
   // Set by an admin, not by owners. Fills the top of the feed when there
   // is no location to sort by.
@@ -215,10 +219,52 @@ export async function myBusinesses(ownerId: string): Promise<Business[]> {
   return (data ?? []) as Business[];
 }
 
+/**
+ * Write a listing.
+ *
+ * Both the update and the delete below name the owner as well as the id.
+ * The database has to enforce this — a phone can be told anything — but
+ * saying it here too means a bug that hands this function somebody
+ * else's id writes nothing instead of writing over them, and it is one
+ * line.
+ *
+ * owner_id and status are stripped from an update. Ownership is not a
+ * field anybody edits, and letting a client set the status is letting it
+ * publish itself: those moves go through submitBusiness and decide.
+ */
+/**
+ * Is this name free?
+ *
+ * Asked as the name is typed and again on submit, because the form is
+ * where this is useful: being told at the top of the page is a correction,
+ * being told after a review is a rejection.
+ *
+ * Only listings that are somewhere in the directory count. A draft nobody
+ * ever sent is not a claim on a name.
+ */
+export async function checkName(name: string, city?: string | null, excludeId?: string) {
+  const key = nameKey(name);
+  if (!key || key.length < 2) return { taken: null, similar: [] as NameMatch[] };
+
+  const { data } = await supabase
+    .from('businesses')
+    .select('id, name, name_fa, city, country, status')
+    .in('status', ['submitted', 'approved', 'active', 'lapsed'])
+    .limit(2000);
+
+  return compareNames(name, city, (data ?? []) as any[], excludeId);
+}
+
 export async function saveBusiness(b: Partial<Business> & { owner_id: string }) {
-  const row = { ...b, updated_at: new Date().toISOString() };
+  const row: Record<string, any> = { ...b, updated_at: new Date().toISOString() };
+  if (b.id) {
+    delete row.owner_id;
+    delete row.status;
+  }
   const { data, error } = b.id
-    ? await supabase.from('businesses').update(row).eq('id', b.id).select().maybeSingle()
+    ? await supabase.from('businesses').update(row)
+        .eq('id', b.id).eq('owner_id', b.owner_id)
+        .select().maybeSingle()
     : await supabase.from('businesses').insert(row).select().maybeSingle();
   // Rebuild the Persian index in the background. Never awaited: a slow
   // translation must not make saving feel slow.
@@ -226,11 +272,15 @@ export async function saveBusiness(b: Partial<Business> & { owner_id: string }) 
   return { data: data as Business | null, error: error?.message };
 }
 
-export async function submitBusiness(id: string) {
-  const { error } = await supabase
+export async function submitBusiness(id: string, ownerId?: string) {
+  let q = supabase
     .from('businesses')
     .update({ status: 'submitted', submitted_at: new Date().toISOString() })
     .eq('id', id);
+  // Submitting is a status change, so it is scoped to the owner like the
+  // rest of them.
+  if (ownerId) q = q.eq('owner_id', ownerId);
+  const { error } = await q;
 
   // Somebody is now waiting on a decision, so say so rather than hoping
   // the admin opens the review screen.
@@ -249,13 +299,18 @@ export async function submitBusiness(id: string) {
  * and permanent, so they go first. Lived in the admin screen until the
  * alert needed to happen wherever a listing is removed from.
  */
-export async function deleteBusiness(id: string, opts: { silent?: boolean } = {}) {
+export async function deleteBusiness(
+  id: string,
+  opts: { silent?: boolean; ownerId?: string } = {},
+) {
   const b = await loadBusiness(id);
 
   for (const p of b?.photos ?? []) {
     if (!p.startsWith('demo:')) await removePhoto(p);
   }
-  const { error } = await supabase.from('businesses').delete().eq('id', id);
+  let q = supabase.from('businesses').delete().eq('id', id);
+  if (opts.ownerId) q = q.eq('owner_id', opts.ownerId);
+  const { error } = await q;
 
   // The admin doing the removing does not need telling about it.
   if (!error && !opts.silent) {
@@ -284,6 +339,16 @@ export async function loadForReview(): Promise<Business[]> {
  * itself stays a single transition.
  */
 export async function decide(id: string, approve: boolean, note?: string) {
+  // Yes means live, and live means paid for. Somebody who cancelled
+  // between submitting and being read would otherwise be published for
+  // nothing, and the listing would sit there until the next sweep.
+  if (approve) {
+    const paid = await listingIsPaid(id);
+    if (!paid) {
+      return { error: 'Not subscribed. The listing stays in the queue until it is.' };
+    }
+  }
+
   const { error } = await supabase
     .from('businesses')
     .update({
@@ -293,6 +358,37 @@ export async function decide(id: string, approve: boolean, note?: string) {
     })
     .eq('id', id);
   return { error: error?.message };
+}
+
+/**
+ * Take a listing out of the directory without deleting it.
+ *
+ * The listing keeps everything it had and can go back up. Whoever owns
+ * it is told, because they are still being charged until they cancel and
+ * we cannot do that for them.
+ */
+export async function suspendBusiness(id: string, reason?: string) {
+  const b = await loadBusiness(id);
+  const { error } = await supabase
+    .from('businesses')
+    .update({ status: 'lapsed', review_note: reason ?? null })
+    .eq('id', id);
+  if (error) return { error: error.message };
+
+  if (b?.owner_id) {
+    supabase.functions.invoke('send-push', {
+      body: {
+        userId: b.owner_id,
+        title: (b.name ?? 'Your listing') + ' has come down',
+        body: 'It is no longer in the directory. Your subscription does not stop by itself, so cancel it in Settings to avoid another charge.',
+        // Their own business, not a friend. Filed under 'friends' this was
+        // silenced by a switch that has nothing to do with it.
+        category: 'account',
+        data: { businessId: id, kind: 'suspended' },
+      },
+    }).catch(() => {});
+  }
+  return {};
 }
 
 /* ---------------- hooks ---------------- */
@@ -379,27 +475,13 @@ export async function insightsFor(businessId: string, days = 30): Promise<Insigh
  * Returned as a percentile rather than a rank, because "better than 80%
  * of salons in Gothenburg" is useful to an owner and "seventh" is not.
  */
-export async function percentileFor(b: Business, myViews: number): Promise<number | null> {
-  const { data } = await supabase
-    .from('businesses')
-    .select('id')
-    .eq('status', 'active')
-    .eq('category', b.category)
-    .eq('city', b.city ?? '');
-  const ids = (data ?? []).map((x: any) => x.id).filter((id: string) => id !== b.id);
-  if (ids.length < 3) return null;   // too few to say anything honest
-
-  const since = new Date(Date.now() - 30 * 86400000).toISOString();
-  const { data: ev } = await supabase
-    .from('business_events')
-    .select('business_id')
-    .in('business_id', ids)
-    .eq('kind', 'view')
-    .gte('created_at', since);
-
-  const per = new Map<string, number>();
-  (ev ?? []).forEach((r: any) => per.set(r.business_id, (per.get(r.business_id) ?? 0) + 1));
-  const others = ids.map((id: string) => per.get(id) ?? 0);
-  const below = others.filter((n) => n < myViews).length;
-  return Math.round((below / others.length) * 100);
+export async function percentileFor(b: Business, _myViews: number): Promise<number | null> {
+  // Done on the server now. A listing's view counts belong to whoever owns
+  // it, so reading every competitor's events from a phone in order to work
+  // out a ranking meant every listing's numbers were readable by anyone.
+  // The function answers with the ranking and nothing else, and only to
+  // the owner.
+  const { data, error } = await supabase.rpc('business_view_percentile', { b: b.id });
+  if (error) return null;
+  return typeof data === 'number' ? data : null;
 }

@@ -3,6 +3,7 @@ import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { alertAdmin } from '@/lib/admin-alert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { cancelAllScheduledNotificationsAsync } from 'expo-notifications';
 import { setAdminEmail } from '@/lib/admin';
 import { pullAndMerge, syncStop, syncFlush, clearOnSignOut } from '@/lib/cloud-sync';
 
@@ -75,6 +76,14 @@ export function AuthProvider({ children }: { children: any }) {
         }
       }
     } catch {}
+
+    // And cancel everything already scheduled. A friend nudge names a
+    // real person and a mid-chapter nudge names what they were reading,
+    // so a notification booked for the outgoing account arriving on the
+    // next person's lock screen is a leak, not an annoyance. They are
+    // rebooked from the new account's own data on sign-in.
+    try { await cancelAllScheduledNotificationsAsync(); } catch {}
+
     await supabase.auth.signOut();
   };
   const updateName = async (name: string) => {
@@ -112,10 +121,22 @@ export function AuthProvider({ children }: { children: any }) {
       const uid = session?.user?.id;
       if (uid) {
         const changed = await pullAndMerge(uid);
-        // Register this device for push. Returns null in Expo Go, which
-        // is fine — it will register on the first launch of a real build.
+        // Re-read the notification preferences before anything else uses
+        // them. They are synced per account, but the copy held in memory
+        // is whatever was loaded at boot, so without this the settings
+        // screen shows the previous account's switches and the next
+        // change writes them into this account.
         try {
-          const { registerForPush } = await import('@/lib/notif-prefs');
+          const [{ loadNotifPrefs, registerForPush }, { loadReminders }] = await Promise.all([
+            import('@/lib/notif-prefs'),
+            import('@/lib/reminders'),
+          ]);
+          // Sign-out cancelled everything that was booked, so both the
+          // idle nudge (inside loadNotifPrefs) and the daily reminder are
+          // put back here, from this account's own settings.
+          await Promise.all([loadNotifPrefs(), loadReminders()]);
+          // Register this device for push. Returns null in Expo Go, which
+          // is fine — it will register on the first launch of a real build.
           registerForPush(uid);
         } catch {}
         if (changed && !cancelled) {
@@ -154,6 +175,15 @@ export function AuthProvider({ children }: { children: any }) {
             loadLearnProgress(), loadPartial(), loadStrength(),
             loadStats(), loadSaved(), loadLevel(),
           ]);
+        } catch {}
+        // And put the device's own reminders back, since signing out
+        // cancelled every scheduled notification including those.
+        try {
+          const [{ loadNotifPrefs }, { loadReminders }] = await Promise.all([
+            import('@/lib/notif-prefs'),
+            import('@/lib/reminders'),
+          ]);
+          await Promise.all([loadNotifPrefs(), loadReminders()]);
         } catch {}
       }
     })();

@@ -58,9 +58,10 @@ export default function TabLayout() {
         // Local, its cities, its folders — and snapping between them makes
         // each feel like somewhere else entirely.
         animation: 'fade',
-        // And a swipe back, since several of these are reached from one
-        // another rather than from the bar.
-        gestureEnabled: true,
+        // No gestureEnabled here: a bottom-tab navigator has no gesture to
+        // enable, and it was never doing anything. The edge swipe inside
+        // Local comes from the Stack in app/(tabs)/local/_layout.tsx, which
+        // is where the history actually lives.
         // A real difference, not a shade. The active tab was a slightly
         // darker version of the inactive one, which reads as a rendering
         // artefact rather than as an answer to "where am I".
@@ -116,9 +117,19 @@ export default function TabLayout() {
           },
         }}
       />
-      {/* Pressing the tab always lands on the Local feed. Arriving at a
-          listing from the map leaves you outside the Local stack, and
-          without this the tab had nowhere to return to and did nothing. */}
+      {/* Pressing the tab always lands on the Local feed, and Local is the
+          one tab that is a stack, so there are three different things that
+          press can mean.
+
+          A tab press on the tab you are already on does nothing at all by
+          default: react-navigation only acts when the tab is not focused.
+          So this used to send everyone to /local by name, which pushes —
+          and a push animates forwards. Coming back to the feed from saved,
+          or from a listing, slid in from the right as though you were going
+          further in rather than back out.
+
+          Popping the stack is the honest move: same destination, and the
+          animation runs the way the journey does. */}
       <Tabs.Screen
         name="local"
         options={{
@@ -128,12 +139,23 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
-            // Standing on the feed already: the press is a request to go
-            // back to the top of it, not to navigate nowhere.
-            if (segments[1] === 'local' && segments.length === 2) {
+
+            if (segments[1] === 'local') {
+              // Deeper in than the feed: saved, a folder, a city, a
+              // listing. Wind the stack back, which animates as coming
+              // out rather than going in.
+              if (segments.length > 2 && router.canDismiss()) {
+                router.dismissAll();
+                return;
+              }
+              // Standing on the feed already: the press is a request for
+              // the top of the page.
               scrollTabToTop('local');
               return;
             }
+
+            // Outside the Local stack altogether — the map, or a listing
+            // opened from it. There is nothing to pop, so go there.
             router.navigate('/local' as any);
           },
         }}

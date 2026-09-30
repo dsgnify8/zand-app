@@ -49,13 +49,20 @@ export default function LocalMap() {
   // Opened from a city page with a centre already worked out, so start
   // there rather than at the fallback and then panning.
   const { lat: qLat, lng: qLng, z: qZ, focus } = useLocalSearchParams<{ lat?: string; lng?: string; z?: string; focus?: string }>();
-  const opened = qLat && qLng
-    ? {
-        latitude: Number(qLat),
-        longitude: Number(qLng),
-        latitudeDelta: Number(qZ) || 0.35,
-        longitudeDelta: Number(qZ) || 0.35,
-      }
+
+  // Number('null') is NaN, and a link built from a listing with a latitude
+  // and no longitude spells exactly that. A NaN in a region is an
+  // assertion failure inside MKMapView rather than a wrong view, so
+  // nothing that is not a real number gets through here.
+  const num = (v?: string, lo = -Infinity, hi = Infinity) => {
+    const x = Number(v);
+    return Number.isFinite(x) && x >= lo && x <= hi ? x : null;
+  };
+  const oLat = num(qLat, -90, 90);
+  const oLng = num(qLng, -180, 180);
+  const oZ = num(qZ, 0.001, 90) ?? 0.35;
+  const opened = oLat != null && oLng != null
+    ? { latitude: oLat, longitude: oLng, latitudeDelta: oZ, longitudeDelta: oZ }
     : null;
   const [region, setRegion] = useState<Region>(opened ?? FALLBACK);
   const [items, setItems] = useState<Business[]>([]);
@@ -152,7 +159,13 @@ export default function LocalMap() {
 
   /* ---------------- load for what is on screen ---------------- */
 
+  // Which request is the current one. Pan quickly and a slow answer for a
+  // region you have left was arriving after a fast one for the region you
+  // are looking at, leaving pins from somewhere else on the screen.
+  const reqId = useRef(0);
+
   const loadHere = useCallback(async (r: Region) => {
+    const mine = ++reqId.current;
     setLoading(true);
     // half the visible span, in km, is a fair radius for the box query
     // Bounded at both ends. Zoomed all the way out this was asking for a
@@ -169,11 +182,19 @@ export default function LocalMap() {
     // continent-wide view is both unreadable and enough native views to
     // take the app down — which is what a silent crash on zooming out is.
     const cap = r.latitudeDelta > 20 ? 40 : r.latitudeDelta > 5 ? 90 : 300;
+    if (mine !== reqId.current) return;
     setItems(rows.filter((b) => b.lat != null && b.lng != null).slice(0, cap));
     setLoading(false);
   }, [cat]);
 
   useEffect(() => { loadHere(region); }, [cat]);
+
+  // Leaving the map with a pan still pending fired one more load 450ms
+  // later, against a screen that had gone.
+  useEffect(() => () => {
+    reqId.current += 1;
+    if (timer.current) { clearTimeout(timer.current); timer.current = null; }
+  }, []);
 
   const onRegion = (r: Region) => {
     setRegion(r);
@@ -223,7 +244,11 @@ export default function LocalMap() {
       <MapView
         ref={map}
         style={StyleSheet.absoluteFill}
-        initialRegion={FALLBACK}
+        // Opened from an address or a region page, this is where they meant
+        // to be. It was ignored, so every one of those links landed in the
+        // middle of Europe with the pin offscreen and the counter reading
+        // the wrong place.
+        initialRegion={opened ?? FALLBACK}
         onRegionChangeComplete={onRegion}
         onPress={() => { setSel(null); setListOpen(false); setSheet(false); }}
         showsUserLocation

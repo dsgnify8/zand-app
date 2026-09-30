@@ -2,7 +2,7 @@
   "expo": {
     "name": "ZAND",
     "slug": "zand",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "zand",
@@ -67,6 +67,7 @@
           "isIosBackgroundLocationEnabled": false
         }
       ],
+      "expo-iap",
       "expo-asset"
     ],
     "experiments": {

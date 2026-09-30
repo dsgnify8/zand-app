@@ -38,6 +38,7 @@ import { photoUrl, isBundled, bundledKey } from '@/lib/business-photos';
 import { eduImage } from '@/constants/education-images';
 import { cityCoverSource, cityCoverBlurb, useCityCovers } from '@/lib/city-covers';
 import { isDestination } from '@/constants/cities';
+import { REGIONS, regionOf } from '@/constants/regions';
 import { getLang, t, useLang } from '@/lib/i18n';
 import { LOCAL } from '@/constants/i18n/local';
 
@@ -75,24 +76,26 @@ function useLocalDrawer() {
 }
 
 
-/** city is free text on the row, so group case-insensitively. */
-function groupCities(items: Business[]) {
-  const by = new Map<string, { label: string; list: Business[] }>();
-  for (const b of items) {
-    const raw = (b.city ?? '').trim();
-    // Somewhere with one listing is not somewhere to browse to.
-    if (!raw || !isDestination(raw)) continue;
-    const key = raw.toLowerCase();
-    const prev = by.get(key);
-    if (prev) prev.list.push(b);
-    else by.set(key, { label: raw, list: [b] });
-  }
-  // Three or more. A city with one or two listings is a page someone
-  // opens once and does not return to, and a long list of those makes
-  // the cities worth visiting harder to find.
-  return [...by.entries()]
-    .map(([key, v]) => ({ key, ...v }))
-    .filter((c) => c.list.length >= 3)
+/**
+ * The regions, in a fixed order, with what is in each.
+ *
+ * Fixed rather than sorted by size: this is a map of where the directory
+ * reaches, and a map that rearranges itself as listings arrive is not a
+ * map. Empty ones are dropped, so nothing promises a page with nothing
+ * behind it.
+ */
+/** Enough to be worth opening. Below this the page reads as empty. */
+const ENOUGH = 5;
+
+function groupRegions(items: Business[], fa: boolean) {
+  return REGIONS.map((r) => ({
+    key: r.key,
+    label: fa ? r.fa : r.en,
+    list: items.filter((b) => regionOf(b.country) === r.key),
+  }))
+    .filter((r) => r.list.length >= ENOUGH)
+    // Fullest first. Where the directory is deepest is the most useful
+    // thing this page can say.
     .sort((a, b) => b.list.length - a.list.length);
 }
 
@@ -127,12 +130,12 @@ export function CityList() {
 
   useEffect(() => {
     (async () => {
-      try { setItems(await loadBusinesses({})); } catch {}
+      try { setItems(await loadBusinesses({ limit: 2000 })); } catch {}
       setLoading(false);
     })();
   }, []);
 
-  const cities = useMemo(() => groupCities(items), [items]);
+  const regions = useMemo(() => groupRegions(items, fa), [items, fa]);
 
   // The name nearest this line is the one that grows.
   const focus = H * 0.42;
@@ -154,7 +157,7 @@ export function CityList() {
           <Pressable hitSlop={12} onPress={() => drawer.setOpen(true)}>
             <Ionicons name="menu-outline" size={22} color={D.text} />
           </Pressable>
-          <Text style={[st.topT, st.topTRight]}>{t(LOCAL.byCityTitle)}</Text>
+          <Text style={[st.topT, st.topTRight]}>{t(LOCAL.byPlaceTitle)}</Text>
           <View style={{ width: 22 }} />
         </View>
 
@@ -169,7 +172,12 @@ export function CityList() {
             // reach it: without both pads the ends are never selectable.
             contentContainerStyle={{ paddingTop: focus - ROW, paddingBottom: H - focus }}
           >
-            {cities.map((c, i) => (
+            {regions.length === 0 ? (
+              // No region has enough behind it yet. Without this the page
+              // was a photograph, a title, and nothing at all, which reads
+              // as broken rather than as early.
+              <Text style={st.none}>{fa ? LOCAL.byPlaceEmpty.fa : LOCAL.byPlaceEmpty.en}</Text>
+            ) : regions.map((c, i) => (
               <CityName
                 key={c.key}
                 label={c.label}
@@ -178,7 +186,7 @@ export function CityList() {
                 scrollY={y}
                 focus={focus}
                 onPress={() =>
-                  router.navigate(('/local/city?c=' + encodeURIComponent(c.key) +
+                  router.navigate(('/local/city?region=' + encodeURIComponent(c.key) +
                     '&label=' + encodeURIComponent(c.label)) as any)
                 }
               />
@@ -298,7 +306,7 @@ export function CityPage() {
     }).start();
   }, []);
   const fa = getLang() === 'fa';
-  const { c, label } = useLocalSearchParams<{ c?: string; label?: string }>();
+  const { c, region, label } = useLocalSearchParams<{ c?: string; region?: string; label?: string }>();
   const { width: W, height: H } = useWindowDimensions();
 
   const [items, setItems] = useState<Business[]>([]);
@@ -311,16 +319,20 @@ export function CityPage() {
   useEffect(() => {
     (async () => {
       try {
-        const all = await loadBusinesses({});
-        setItems(all.filter((b) => (b.city ?? '').trim().toLowerCase() === (c ?? '').toLowerCase()));
+        const all = await loadBusinesses({ limit: 2000 });
+        // A region, or a single city. The city route is still reached
+        // from search and from a listing's own page.
+        setItems(region
+          ? all.filter((b) => regionOf(b.country) === region)
+          : all.filter((b) => (b.city ?? '').trim().toLowerCase() === (c ?? '').toLowerCase()));
       } catch {}
       setLoading(false);
     })();
-  }, [c]);
+  }, [c, region]);
 
   const name = (label ?? c ?? '').toUpperCase();
-  const cover = coverFor(c ?? '', items);
-  const blurb = cityCoverBlurb(c ?? '', fa);
+  const cover = coverFor(region ?? c ?? '', items);
+  const blurb = region ? null : cityCoverBlurb(c ?? '', fa);
   const counts = items.reduce((m: Record<string, number>, b) => {
     if (b.category) m[b.category] = (m[b.category] ?? 0) + 1;
     return m;
@@ -357,7 +369,11 @@ export function CityPage() {
 
           <SafeAreaView edges={['top']} style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
             <View style={[st.heroTop, fa && { flexDirection: 'row-reverse' }]}>
-              <Pressable hitSlop={12} onPress={() => router.navigate('/local/cities' as any)}>
+              {/* The list of cities is already behind this one. */}
+              <Pressable
+                hitSlop={12}
+                onPress={() => (router.canGoBack() ? router.back() : router.navigate('/local/cities' as any))}
+              >
                 <Ionicons name={fa ? 'chevron-forward' : 'chevron-back'} size={22} color={D.text} />
               </Pressable>
               <Pressable
@@ -366,9 +382,20 @@ export function CityPage() {
                 onPress={() => {
                   const pts = items.filter((b) => b.lat != null && b.lng != null);
                   if (pts.length === 0) { router.navigate('/local-map' as any); return; }
-                  const lat = pts.reduce((n, b) => n + (b.lat ?? 0), 0) / pts.length;
-                  const lng = pts.reduce((n, b) => n + (b.lng ?? 0), 0) / pts.length;
-                  router.navigate(('/local-map?lat=' + lat + '&lng=' + lng + '&z=0.35') as any);
+                  // The middle of the box they all sit in, and a zoom wide
+                  // enough to hold it. Averaging the points and opening at
+                  // a fixed third of a degree put "Europe" in open water
+                  // with nothing in the window.
+                  const lats = pts.map((b) => b.lat as number);
+                  const lngs = pts.map((b) => b.lng as number);
+                  const lat = (Math.min(...lats) + Math.max(...lats)) / 2;
+                  const lng = (Math.min(...lngs) + Math.max(...lngs)) / 2;
+                  const spread = Math.max(
+                    Math.max(...lats) - Math.min(...lats),
+                    Math.max(...lngs) - Math.min(...lngs),
+                  );
+                  const z = Math.min(80, Math.max(0.05, spread * 1.3));
+                  router.navigate(('/local-map?lat=' + lat + '&lng=' + lng + '&z=' + z) as any);
                 }}
               >
                 <Ionicons name="map-outline" size={16} color={D.text} />
@@ -405,7 +432,6 @@ export function CityPage() {
                 b={b}
                 fa={fa}
                 onOpen={() => router.navigate(('/local/business?id=' + b.id) as any)}
-              onFile={setFiling}
                 onFile={setFiling}
               />
             ))}
@@ -434,6 +460,11 @@ export function CityPage() {
 
 const st = StyleSheet.create({
   dark: { flex: 1, backgroundColor: D.bg },
+  none: {
+    fontFamily: fonts.body, fontSize: 14, lineHeight: 22,
+    color: 'rgba(255,255,255,0.62)', textAlign: 'center',
+    paddingHorizontal: spacing.xl,
+  },
   // The city page: dark only where the photograph is.
   light: { flex: 1, backgroundColor: colors.background },
 

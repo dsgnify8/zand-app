@@ -42,6 +42,7 @@ export default function AdminReview() {
   const [loading, setLoading] = useState(true);
   const [note, setNote] = useState('');
   const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
   const [tab, setTab] = useState<'review' | 'stats'>('review');
 
   useEffect(() => {
@@ -73,11 +74,10 @@ export default function AdminReview() {
     if (!approve && !note.trim()) return;
     setBusy(true);
 
-    // Approving charges the saved card and publishes. Until Stripe is
-    // wired the charge is a no-op, so this goes straight to active —
-    // when billing lands, a failed charge moves it to payment_failed
-    // instead, and the owner is asked to fix the card.
-    await decide(b.id, approve, note.trim() || undefined);
+    // Approving publishes, and publishing needs a live subscription.
+    // decide() refuses otherwise and says why.
+    const res = await decide(b.id, approve, note.trim() || undefined);
+    if (res.error) { setBusy(false); setErr(res.error); return; }
 
     supabase.functions.invoke('send-push', {
       body: {
@@ -86,7 +86,7 @@ export default function AdminReview() {
         body: approve
           ? `${b.name} is now on Local.`
           : `${b.name} needs a change before it can go up.`,
-        category: 'friends',
+        category: 'account',
         data: { businessId: b.id },
       },
     }).catch(() => {});
@@ -212,8 +212,10 @@ export default function AdminReview() {
                       : <Text style={[s.actT, { color: '#FFF' }]}>Approve and publish</Text>}
                   </Pressable>
                 </View>
+                {err ? <Text style={s.reviewErr}>{err}</Text> : null}
                 <Text style={s.chargeNote}>
-                  Approving charges their saved card and puts the listing live.
+                  Approving publishes the listing. The free week has already
+                  started, so the first charge lands when it ends.
                 </Text>
               </>
             ) : b.status === 'rejected' && b.review_note ? (
@@ -277,6 +279,7 @@ const s = StyleSheet.create({
   act: { flex: 1, paddingVertical: 13, borderRadius: radius.lg, alignItems: 'center' },
   decline: { borderWidth: StyleSheet.hairlineWidth, borderColor: '#B3261E' },
   approve: { flex: 1.4, backgroundColor: colors.accent },
+  reviewErr: { fontFamily: fonts.body, fontSize: 12.5, lineHeight: 19, color: '#B3261E', marginTop: spacing.md },
   actT: { fontFamily: fonts.bodyStrong, fontSize: 13 },
   chargeNote: { fontFamily: fonts.body, fontSize: 11.5, color: colors.textSecondary, textAlign: 'center', marginTop: spacing.md },
   pitch: {

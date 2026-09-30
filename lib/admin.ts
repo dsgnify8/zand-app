@@ -56,13 +56,19 @@ export async function loadHidden() {
 export function isHidden(key: string) { return hiddenCache.includes(key); }
 export function getHidden() { return hiddenCache; }
 
+// Hiding an article takes it off everybody's screen, so it is the admin's
+// to do and nobody else's. The check belongs in the policy as well, but
+// these are called from shared components and a guard at the source costs
+// nothing.
 export async function hideArticle(key: string) {
+  if (!isAdmin()) return;
   try {
     await supabase.from('hidden_articles').insert({ article_key: key });
     hiddenCache = [...hiddenCache, key]; listeners.forEach((l) => l());
   } catch {}
 }
 export async function unhideArticle(key: string) {
+  if (!isAdmin()) return;
   try {
     await supabase.from('hidden_articles').delete().eq('article_key', key);
     hiddenCache = hiddenCache.filter((k) => k !== key); listeners.forEach((l) => l());

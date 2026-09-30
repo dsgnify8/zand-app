@@ -92,7 +92,11 @@ export default function LessonScreen() {
   const advance = () => {
     if (i + 1 >= l.steps.length) {
       bump('pagesRead');
-      bump('lessonsFinished');
+      // No bump for lessonsFinished. markLessonDone below recounts it
+      // from the list of finished lessons, so bumping first meant
+      // replaying a lesson you had already done nudged the count up,
+      // fired a milestone that was not real, and then had it silently
+      // corrected back down.
       markLearnDay();
       refreshTomorrow();
       const pct = score.total ? Math.round((score.right / score.total) * 100) : 100;

@@ -49,15 +49,33 @@ export async function currentPlace(): Promise<Place | null> {
       const ok = await askLocation();
       if (!ok) return null;
     }
-    const pos = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Balanced,
-    });
+    // Bounded. getCurrentPositionAsync never returns on a simulator with
+    // no location set, and it can hang for a very long time on a handset
+    // that cannot get a fix — indoors, in a lift, somewhere with the sky
+    // blocked. Two screens awaited it with a spinner up and nothing else,
+    // so a stuck fix was a stuck screen. Giving up after eight seconds and
+    // saying so is the honest answer.
+    const pos = await withTimeout(
+      Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced }),
+      8000,
+    );
+    if (!pos) return null;
     const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-    const named = await describe(coords);
+    // Never let a failing reverse geocode lose a good fix: the
+    // coordinates are the useful part, the name is decoration.
+    const named = (await withTimeout(describe(coords), 4000)) ?? {};
     return { ...coords, ...named };
   } catch {
     return null;
   }
+}
+
+function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
+  return new Promise((resolve) => {
+    const t = setTimeout(() => resolve(null), ms);
+    p.then((v) => { clearTimeout(t); resolve(v); },
+           () => { clearTimeout(t); resolve(null); });
+  });
 }
 
 /** Turn "central Gothenburg" into coordinates. */

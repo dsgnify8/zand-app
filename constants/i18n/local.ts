@@ -67,6 +67,12 @@ export const LOCAL: Record<string, T> = {
   localHomeX: { en: 'back to the feed', fa: 'برگرد به صفحهٔ اصلی' },
   byCityTitle: { en: 'By city', fa: 'بر اساس شهر' },
   byCityX: { en: 'every place, gathered by where it is', fa: 'همه‌جا، بر اساس شهر' },
+  byPlaceTitle: { en: 'By location', fa: 'بر اساس منطقه' },
+  byPlaceEmpty: {
+    en: 'Nowhere has enough places yet. Open the map, or browse by category.',
+    fa: 'هنوز هیچ منطقه‌ای به اندازهٔ کافی کسب‌وکار ندارد. نقشه را باز کن یا بر اساس دسته بگرد.',
+  },
+  byPlaceX: { en: 'every place, gathered by where it is', fa: 'همه‌جا، بر اساس جایی که هست' },
   byCountryTitle: { en: 'By country', fa: 'بر اساس کشور' },
   byCountryX: { en: 'every place, gathered by where it is', fa: 'همه‌جا، بر اساس کشور' },
   pickACategory: { en: 'Pick a category to see everywhere it exists.', fa: 'یک دسته انتخاب کن تا همه‌جای دنیا را ببینی.' },

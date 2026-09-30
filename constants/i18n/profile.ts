@@ -178,4 +178,9 @@ export const PROFILE: Record<string, T> = {
   notifNewX: { en: 'When a new piece or topic goes up', fa: 'وقتی مطلب یا موضوع تازه‌ای منتشر می‌شود' },
   notifFriends: { en: 'From friends', fa: 'از دوستان' },
   notifFriendsX: { en: 'When someone sends you a word or topic', fa: 'وقتی کسی واژه یا موضوعی برایت می‌فرستد' },
+  notifAccount: { en: 'Your listing', fa: 'کسب‌وکار تو' },
+  notifAccountX: {
+    en: 'When your business is approved, needs a change, or comes down',
+    fa: 'وقتی کسب‌وکارت تأیید می‌شود، به اصلاح نیاز دارد یا از فهرست برداشته می‌شود',
+  },
 };

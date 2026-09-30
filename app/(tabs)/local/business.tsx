@@ -268,12 +268,16 @@ export default function BusinessPage() {
               // With the coordinates, not just the id. The map centres on
               // wherever you are unless it is told otherwise, so tapping an
               // address in Dubai from a sofa in Vancouver showed Vancouver.
+              // Both coordinates or neither. A listing with a latitude and
+              // no longitude was putting "&lng=null" into the link, which
+              // the map then read as a number.
               onPress={() =>
-                b.lat != null &&
-                router.navigate(
-                  ('/local-map?focus=' + b.id +
-                   '&lat=' + b.lat + '&lng=' + b.lng + '&z=0.02') as any,
-                )
+                b.lat != null && b.lng != null
+                  ? router.navigate(
+                      ('/local-map?focus=' + b.id +
+                       '&lat=' + b.lat + '&lng=' + b.lng + '&z=0.02') as any,
+                    )
+                  : router.navigate('/local-map' as any)
               }
             >
               <Text style={[s.blockL, { color: ACT_TINT.address }]}>{t(LOCAL.addressLabel)}</Text>

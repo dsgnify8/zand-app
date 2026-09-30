@@ -21,6 +21,12 @@
 //                       avoids a stale device rolling someone back.
 //       saved:v1        union of liked and saved sets.
 //       learn:level     last write wins; it is a single choice.
+//       visit:days      union. A day someone came is a fact and two
+//                       devices can only add to it. Anything shaped like
+//                       a record of days must be listed explicitly in
+//                       mergeOne: the default is last-write-wins, and
+//                       for these that means a new phone erasing a
+//                       year.
 //
 //   * Writes are debounced. A lesson can touch three stores in a second
 //     and we do not want three round trips.
@@ -61,6 +67,11 @@ const KEYS = [
   'learn:asked',
   'usage:v1',
   'notif:v1',
+  // Letters learned, reading positions, saved items. These two stores
+  // were outside sync entirely: a reinstall lost them, and an account
+  // switch inherited them, because nothing here knew they existed.
+  'zand:progress:v1',
+  'zand:reading:v1',
 ] as const;
 type StoreKey = (typeof KEYS)[number];
 
@@ -161,6 +172,66 @@ function mergeOne(key: StoreKey, local: any, cloud: any) {
     case 'scroll:articles':
       // per-article scroll offsets; keep whichever is further in
       return { ...(cloud ?? {}), ...(local ?? {}) };
+
+    // Days, and how far through things. These were falling through to
+    // "local wins", which meant a new phone pushed its single day of
+    // history over an account's real record and the streak was gone for
+    // good. A day someone was here is a fact; two devices can only ever
+    // add to it, so the union is the only safe answer.
+    case 'visit:days':
+    case 'learn:days':
+      return [...new Set([...(cloud ?? []), ...(local ?? [])])].sort();
+    case 'local:opened':
+      return [...new Set([...(cloud ?? []), ...(local ?? [])])];
+    case 'read:progress': {
+      // Furthest read per topic. Reading does not un-happen.
+      const out: any = { ...(cloud ?? {}) };
+      Object.entries(local ?? {}).forEach(([k, v]: any) => {
+        const a = typeof v === 'number' ? v : (v?.pct ?? 0);
+        const b = typeof out[k] === 'number' ? out[k] : (out[k]?.pct ?? 0);
+        if (a >= b) out[k] = v;
+      });
+      return out;
+    }
+    case 'streak:mended':
+      // A date string. The later mend is the one that counts.
+      return String(local) > String(cloud) ? local : cloud;
+
+    case 'zand:progress:v1': {
+      // Counters only go up, sets only grow, and the later day wins.
+      const set = (a: any[] = [], b: any[] = []) => [...new Set([...a, ...b])];
+      const refs = (a: any[] = [], b: any[] = []) => {
+        const by = new Map<string, any>();
+        [...b, ...a].forEach((r) => { if (r?.id) by.set(r.type + '|' + r.id, r); });
+        return [...by.values()].sort((x, y) => (y.ts ?? 0) - (x.ts ?? 0)).slice(0, 300);
+      };
+      return {
+        ...cloud, ...local,
+        currentStreak: Math.max(local?.currentStreak ?? 0, cloud?.currentStreak ?? 0),
+        longestStreak: Math.max(local?.longestStreak ?? 0, cloud?.longestStreak ?? 0),
+        // Freezes are spent, so the lower count is the honest one.
+        freezes: Math.min(local?.freezes ?? 2, cloud?.freezes ?? 2),
+        lastActiveDate: String(local?.lastActiveDate ?? '') > String(cloud?.lastActiveDate ?? '')
+          ? local?.lastActiveDate : cloud?.lastActiveDate,
+        activeDates: set(cloud?.activeDates, local?.activeDates).sort().slice(-30),
+        learnedLetters: set(cloud?.learnedLetters, local?.learnedLetters),
+        saved: refs(local?.saved, cloud?.saved),
+        history: refs(local?.history, cloud?.history),
+      };
+    }
+    case 'zand:reading:v1': {
+      // Furthest page per topic, and every achievement ever earned.
+      const reading: any = { ...(cloud?.reading ?? {}) };
+      Object.entries(local?.reading ?? {}).forEach(([k, v]: any) => {
+        const seen = reading[k];
+        if (!seen || (v?.maxPageReached ?? 0) >= (seen?.maxPageReached ?? 0)) reading[k] = v;
+      });
+      return {
+        reading,
+        achievements: [...new Set([...(cloud?.achievements ?? []), ...(local?.achievements ?? [])])],
+      };
+    }
+
     default: return local; // learn:level, learn:asked — last write wins
   }
 }
@@ -324,11 +395,24 @@ export function syncTouch() {
 export async function clearOnSignOut() {
   try {
     await AsyncStorage.multiRemove([
-      'learn:done', 'learn:partial', 'learn:strength', 'learn:level', 'learn:asked',
+      'learn:done', 'learn:partial', 'learn:partial-step', 'learn:strength',
+      'learn:level', 'learn:asked',
       'stats:v1', 'saved:articles', 'liked:articles', 'recent:articles',
       'scroll:articles', 'saved:businesses', 'usage:v1',
+      // The days. These were being left behind, so the next person to
+      // sign in on the phone inherited the streak, the week pips and the
+      // reading bars — and their first sync pushed all of it up to their
+      // own account.
+      'visit:days', 'learn:days', 'streak:mended', 'local:opened', 'read:progress',
+      // What has already been sent tonight. Per device, so without this
+      // the incoming account is silenced by the outgoing one's quota.
+      'notif:log',
+      'zand:progress:v1', 'zand:reading:v1',
     ]);
-    await AsyncStorage.removeItem('sync:lastUser');
+    // sync:lastUser is NOT cleared. It is the marker that says whose data
+    // is on this phone, and deleting it here was the reason the switch
+    // check never fired: the next account signed in, found no previous
+    // user, and kept everything.
   } catch {}
 }
 

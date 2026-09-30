@@ -19,9 +19,9 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
 
 import { notifCopy, type Kind } from '@/lib/notif-copy';
+import { inSeconds } from '@/lib/notif-trigger';
 import { notifPrefs } from '@/lib/notif-prefs';
 import { readRecent, readReached } from '@/lib/read-progress';
 import { resolveSavedKey } from '@/lib/resolve-saved';
@@ -165,9 +165,7 @@ export async function considerNotification() {
       content: { title, body },
       // Tomorrow evening. Sending the instant someone closes the app is
       // a notification about what they were just doing.
-      trigger: Platform.OS === 'ios'
-        ? ({ seconds: hoursUntilEvening() * 3600, repeats: false } as any)
-        : ({ seconds: hoursUntilEvening() * 3600, repeats: false, channelId: 'default' } as any),
+      trigger: inSeconds(hoursUntilEvening() * 3600),
     });
     await record(choice.kind);
   } catch {}
