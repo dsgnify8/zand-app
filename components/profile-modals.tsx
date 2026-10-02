@@ -19,6 +19,7 @@ import { SETTINGS } from '@/constants/i18n/settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/lib/supabase';
 import { inviteMessage } from '@/lib/links';
+import { myInviteToken } from '@/lib/friends';
 import { useNotifPrefs, setNotifPref } from '@/lib/notif-prefs';
 import { APP } from '@/constants/i18n/app';
 
@@ -360,8 +361,9 @@ export function AddFriendSheet({ open, onClose }: { open: boolean; onClose: () =
 
   const share = async () => {
     try {
+      const token = await myInviteToken();
       await Share.share({
-        message: inviteMessage(user?.id),
+        message: inviteMessage(token),
       });
     } catch {}
   };

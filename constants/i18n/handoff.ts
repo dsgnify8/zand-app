@@ -44,6 +44,12 @@ export const HANDOFF = {
   lost:  { en: 'Nothing here', fa: 'اینجا چیزی نیست' },
   lostX: { en: 'Taking you back.', fa: 'برمی‌گردانیمت.' },
 
+  staleLink:  { en: 'That invitation has expired', fa: 'این دعوت دیگر معتبر نیست' },
+  staleLinkX: {
+    en: 'Ask them to send you a new one.',
+    fa: 'از او بخواه یکی تازه برایت بفرستد.',
+  },
+
   someone:  { en: 'they', fa: 'او' },
 
   goOn:     { en: 'Go on', fa: 'برو' },

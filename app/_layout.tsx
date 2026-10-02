@@ -71,7 +71,18 @@ function AuthGate() {
     if (loading) return;
     const inAuth = segments[0] === 'auth';
     if (onboarded === null) return;               // still reading storage
-    if (!onboarded) {
+
+    // A link is not somewhere we send people away from.
+    //
+    // Somebody who installs ZAND because a friend sent them an invitation
+    // taps that link again on a fresh install, and this used to replace it
+    // with onboarding — losing the invitation at the last step of exactly
+    // the journey it was meant to serve. These screens handle being
+    // signed out themselves, and they hand onboarding a `next` so the
+    // person comes back and the friendship lands.
+    const onLink = ['add', 'folder', 'en', 'fa'].includes(segments[0] ?? '');
+
+    if (!onboarded && !onLink) {
       router.replace('/onboarding' as any); return;
     }
     // Signed out is a supported state: the whole app is browsable and

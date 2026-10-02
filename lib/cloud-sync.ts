@@ -407,6 +407,9 @@ export async function clearOnSignOut() {
       // What has already been sent tonight. Per device, so without this
       // the incoming account is silenced by the outgoing one's quota.
       'notif:log',
+      // An invitation waiting for a session belongs to whoever tapped the
+      // link, not to the next person to sign in on this phone.
+      'invite:pending',
       'zand:progress:v1', 'zand:reading:v1',
     ]);
     // sync:lastUser is NOT cleared. It is the marker that says whose data

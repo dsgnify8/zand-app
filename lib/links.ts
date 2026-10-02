@@ -11,8 +11,17 @@
 export const SITE = 'https://zandapplication.com';
 export const APP_STORE = 'https://apps.apple.com/app/id6807573204';
 
-export function inviteLink(fromId?: string): string {
-  return `${SITE}/add${fromId ? `?from=${encodeURIComponent(fromId)}` : ''}`;
+/**
+ * An invitation.
+ *
+ * Carries a token rather than the inviter's user id. An id is not a secret
+ * — any signed-in person can read the profiles table — so it could never
+ * be the thing that proves somebody was invited. A token only ever exists
+ * in a link its owner chose to send, which is exactly what we need it to
+ * mean. invite_token() on the server mints it.
+ */
+export function inviteLink(token?: string | null): string {
+  return `${SITE}/add${token ? `?i=${encodeURIComponent(token)}` : ''}`;
 }
 
 export function folderLink(token: string): string {
@@ -20,8 +29,8 @@ export function folderLink(token: string): string {
 }
 
 /** What a friend receives. */
-export function inviteMessage(fromId?: string): string {
-  return `Join my Iranian world on ZAND. ${inviteLink(fromId)}`;
+export function inviteMessage(token?: string | null): string {
+  return `Join my Iranian world on ZAND. ${inviteLink(token)}`;
 }
 
 /**

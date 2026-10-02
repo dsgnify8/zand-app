@@ -10,6 +10,7 @@ import { findByEmail, sendRequest } from '@/lib/friends';
 import { getLang, t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
 import { inviteMessage } from '@/lib/links';
+import { myInviteToken } from '@/lib/friends';
 
 export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { user } = useAuth();
@@ -40,7 +41,11 @@ export function InviteSheet({ open, onClose }: { open: boolean; onClose: () => v
 
   const shareLink = async () => {
     try {
-      await Share.share({ message: inviteMessage(user?.id) });
+      // The token, not the user id. Fetched at the moment of sharing so
+      // that it is minted the first time somebody invites anyone, rather
+      // than for every account whether they ever share or not.
+      const token = await myInviteToken();
+      await Share.share({ message: inviteMessage(token) });
     } catch {}
   };
 

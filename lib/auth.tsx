@@ -156,6 +156,16 @@ export function AuthProvider({ children }: { children: any }) {
             await Promise.all([loadLearnProgress(), loadPartial(), loadStrength(), loadStats(), loadSaved(), loadLevel()]);
           } catch {}
         }
+
+        // An invitation they tapped before they had an account. Spent here
+        // rather than on the screen that read the link, because the route
+        // back from confirming an email address does not pass through it:
+        // sign-up sends people to check their mail, and they return through
+        // a sign-in screen that knows nothing about where they were going.
+        try {
+          const { spendStashedInvite } = await import('@/lib/friends');
+          await spendStashedInvite(uid);
+        } catch {}
       } else {
         syncStop();
         // Signed out means the journey goes with the account. Clear the

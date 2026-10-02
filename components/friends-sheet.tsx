@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useAuth } from '@/lib/auth';
-import { searchProfiles, sendRequest, acceptRequest, removeFriendship, useFriends, type Profile } from '@/lib/friends';
+import { searchProfiles, sendRequest, acceptRequest, removeFriendship, looksLikeEmail, useFriends, type Profile } from '@/lib/friends';
 import { InviteSheet } from '@/components/invite-sheet';
 import { t, useLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
@@ -24,7 +24,7 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
   }, [open]);
 
   useEffect(() => {
-    if (!myId || q.trim().length < 2) { setResults([]); return; }
+    if (!myId || !looksLikeEmail(q)) { setResults([]); setSearching(false); return; }
     let alive = true;
     setSearching(true);
     const t = setTimeout(async () => {
@@ -59,8 +59,17 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
 
           <View style={s.searchBar}>
             <Ionicons name="search" size={17} color={colors.textSecondary} />
-            <TextInput style={s.searchInput} placeholder="Find people by name or handle"
-              placeholderTextColor={colors.textSecondary} autoCapitalize="none" value={q} onChangeText={setQ} />
+            <TextInput
+              style={s.searchInput}
+              placeholder={t(APP.findByEmail)}
+              placeholderTextColor={colors.textSecondary}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              value={q}
+              onChangeText={setQ}
+            />
             {searching ? <ActivityIndicator size="small" /> : null}
           </View>
 
@@ -72,9 +81,14 @@ export function FriendsSheet({ open, onClose }: { open: boolean; onClose: () => 
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xxl }}>
             {/* search results */}
-            {q.trim().length >= 2 ? (
-              results.length === 0 && !searching ? (
-                <Text style={s.empty}>No one found for "{q}".</Text>
+            {q.trim().length > 0 ? (
+              // Three states, and the middle one used to read as a
+              // failure: half an address typed said "no one found", which
+              // is not true yet.
+              !looksLikeEmail(q) ? (
+                <Text style={s.empty}>{t(APP.needFullEmail)}</Text>
+              ) : results.length === 0 && !searching ? (
+                <Text style={s.empty}>{t(APP.noOneWithThat)}</Text>
               ) : results.map((p) => (
                 <View key={p.id} style={s.row}>
                   <View style={s.avatar}><Text style={s.avatarT}>{(p.name || '?')[0].toUpperCase()}</Text></View>

@@ -82,6 +82,18 @@ export const APP: Record<string, T> = {
   addSomeone: { en: 'Add someone', fa: 'یکی را اضافه کن' },
   inviteFriends: { en: 'Invite friends', fa: 'دعوت دوستان' },
   inviteByLink: { en: 'Invite by link or email', fa: 'دعوت با لینک یا ایمیل' },
+  // Searching by name was offering a page of strangers who happen to
+  // share one, which is no use for finding a particular person and hands
+  // out the shape of the whole directory. An address is exact.
+  findByEmail: { en: 'Find a friend by their email', fa: 'دوستت را با ایمیلش پیدا کن' },
+  needFullEmail: {
+    en: 'Type their whole email address. Or send them the link below, which is easier.',
+    fa: 'ایمیل کاملشان را بنویس. یا پیوند پایین را برایشان بفرست، که آسان‌تر است.',
+  },
+  noOneWithThat: {
+    en: 'Nobody on ZAND uses that address.',
+    fa: 'هیچ‌کس در زند از این نشانی استفاده نمی‌کند.',
+  },
   shareYourLink: { en: 'Share your invite link', fa: 'لینک دعوتت را بفرست' },
   sendToFriend: { en: 'Send to a friend', fa: 'برای یک دوست بفرست' },
   sendTo: { en: 'SEND TO', fa: 'بفرست به' },

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/lib/supabase';
 
 // No email. Addresses are no longer readable from a phone: any signed-in
@@ -15,7 +16,7 @@ export type FriendRow = {
   incoming: boolean;     // true if they sent to me
 };
 
-// Search profiles by name or handle
+// Find someone by their address
 /**
  * Finding someone to add.
  *
@@ -26,23 +27,23 @@ export type FriendRow = {
  */
 export async function searchProfiles(q: string, myId: string): Promise<Profile[]> {
   const term = q.trim();
-  if (!term) return [];
+  // An address, whole, or nothing.
+  //
+  // Searching by name used to be offered as well, and it was the wrong
+  // tool twice over. A hundred people called Ali is not an answer to
+  // "which Ali", so nobody could use it to find the person they meant;
+  // and a partial match over every profile is a way of reading out the
+  // directory to anyone who signs up. An address you have to be told.
+  if (!looksLikeEmail(term)) return [];
 
-  // An address goes to the server, which matches it whole and hands back
-  // a name. Nothing about it can be used to browse.
-  if (term.includes('@')) {
-    const { data } = await supabase.rpc('find_profile', { addr: term });
-    const rows = (data ?? []) as Profile[];
-    return rows.filter((r) => r.id !== myId);
-  }
+  const { data } = await supabase.rpc('find_profile', { addr: term });
+  const rows = (data ?? []) as Profile[];
+  return rows.filter((r) => r.id !== myId);
+}
 
-  const { data } = await supabase
-    .from('profiles')
-    .select('id, name')
-    .ilike('name', '%' + term + '%')
-    .neq('id', myId)
-    .limit(20);
-  return (data ?? []) as Profile[];
+/** Enough of an address to be worth asking the server about. */
+export function looksLikeEmail(v: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 }
 
 export async function findByEmail(email: string): Promise<Profile | null> {
@@ -88,6 +89,91 @@ function notify(userId: string, title: string, body: string) {
   supabase.functions.invoke('send-push', {
     body: { userId, title, body, category: 'friends', data: { tab: 'friends' } },
   }).catch(() => {});
+}
+
+/* ---------------- invitations ---------------- */
+
+/**
+ * This person's invite token, minted on the server on first use.
+ *
+ * Null when it cannot be had — signed out, or offline. The caller should
+ * fall back to a link with no token, which still shows the invitation page
+ * and the App Store; it simply cannot connect anybody.
+ */
+export async function myInviteToken(): Promise<string | null> {
+  try {
+    const { data, error } = await supabase.rpc('invite_token');
+    if (error) return null;
+    return (data as string | null) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Spend an invitation. Connects the two of you outright.
+ *
+ * Accepted rather than pending, because the inviter made the link and the
+ * person tapping it went looking: both have said yes already. The work is
+ * done by accept_invite on the server, which is the only thing that can
+ * write an accepted friendship, and it returns who invited them so the
+ * screen can say the name and the inviter can be told.
+ */
+export async function acceptInvite(token: string): Promise<{ id: string; name: string } | null> {
+  try {
+    const { data, error } = await supabase.rpc('accept_invite', { t: token });
+    if (error) return null;
+    const row = (data as any[] | null)?.[0];
+    if (!row?.inviter) return null;
+    return { id: row.inviter as string, name: (row.inviter_name as string) || 'Someone' };
+  } catch {
+    return null;
+  }
+}
+
+/* ---------------- an invitation that waits ---------------- */
+
+const PENDING = 'invite:pending';
+
+/**
+ * Hold an invitation until there is somebody to accept it.
+ *
+ * Threading the link through the screens does not survive the one journey
+ * that matters most: install the app, tap the link, make an account. Making
+ * an account means confirming an address, which means leaving ZAND and
+ * coming back, possibly much later, through a sign-in screen that knows
+ * nothing about where you were going. So the token is put down here
+ * instead, and spent the moment a session exists, whatever route brought
+ * it about.
+ */
+export async function stashInvite(token: string) {
+  try { await AsyncStorage.setItem(PENDING, token); } catch {}
+}
+
+/**
+ * Spend one, if one is waiting. Called when a session appears.
+ *
+ * Cleared before the attempt rather than after, so a token that will never
+ * work cannot be retried on every sign-in for the life of the install.
+ * Tapping the link again is always available.
+ */
+export async function spendStashedInvite(myId: string) {
+  let token: string | null = null;
+  try {
+    token = await AsyncStorage.getItem(PENDING);
+    if (token) await AsyncStorage.removeItem(PENDING);
+  } catch {}
+  if (!token) return null;
+
+  const inviter = await acceptInvite(token);
+  if (inviter) tellInviter(inviter.id, myId).catch(() => {});
+  return inviter;
+}
+
+/** Tell the person whose link it was. */
+export async function tellInviter(inviterId: string, myId: string) {
+  const n = await nameOf(myId);
+  notify(inviterId, n + ' accepted your invite', 'You are connected on ZAND.');
 }
 
 export async function sendRequest(myId: string, otherId: string) {
