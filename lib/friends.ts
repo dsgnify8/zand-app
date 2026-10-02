@@ -60,7 +60,7 @@ export async function findByEmail(email: string): Promise<Profile | null> {
  * The name is looked up here rather than passed in, so every caller
  * gets it right and none of them has to care.
  */
-async function nameOf(id: string): Promise<string> {
+export async function nameOf(id: string): Promise<string> {
   const { data } = await supabase.from('profiles').select('name').eq('id', id).maybeSingle();
   return (data as any)?.name || 'Someone';
 }

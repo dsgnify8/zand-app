@@ -13,7 +13,6 @@ import { loadStrength } from '@/lib/word-strength';
 import { loadLearnProgress, loadPartial } from '@/lib/learn-progress';
 import { loadMend } from '@/lib/streak-mend';
 import { loadLevel } from '@/lib/learn-level';
-import { useFriendDeepLink } from '@/lib/deep-links';
 import { loadHidden } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { loadStats, markVisitDay } from '@/lib/stats-store';
@@ -68,7 +67,6 @@ function AuthGate() {
   }, []);
   const { session, loading } = useAuth();
   const segments = useSegments();
-  useFriendDeepLink(session?.user?.id);
   useEffect(() => {
     if (loading) return;
     const inAuth = segments[0] === 'auth';
@@ -216,6 +214,14 @@ export default function RootLayout() {
             }}
           >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            {/* The link screens. Registered so they arrive without a
+                header, and animated in from below: each one is a handoff
+                from outside the app rather than a step deeper into it. */}
+            <Stack.Screen name="add" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+            <Stack.Screen name="folder" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+            <Stack.Screen name="en/local/[slug]" options={{ headerShown: false, animation: 'fade' }} />
+            <Stack.Screen name="fa/local/[slug]" options={{ headerShown: false, animation: 'fade' }} />
+            <Stack.Screen name="+not-found" options={{ headerShown: false, animation: 'fade' }} />
             <Stack.Screen name="auth/sign-in" options={{ headerShown: false }} />
             <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
             <Stack.Screen name="auth/forgot" options={{ headerShown: false }} />

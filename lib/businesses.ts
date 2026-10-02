@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { alertAdmin } from '@/lib/admin-alert';
 import { compareNames, nameKey, type NameMatch } from '@/lib/listing-names';
+import { businessSlug } from '@/lib/links';
 import { listingIsPaid } from '@/lib/billing';
 import { removePhoto } from '@/lib/business-photos';
 import { expandQuery, buildSearchIndex } from '@/lib/business-search';
@@ -242,6 +243,24 @@ export async function myBusinesses(ownerId: string): Promise<Business[]> {
  * Only listings that are somewhere in the directory count. A draft nobody
  * ever sent is not a claim on a name.
  */
+/**
+ * Which listing a slug belongs to.
+ *
+ * The website builds its URLs from the name and the city, so the match is
+ * made the same way here rather than by adding a column that two codebases
+ * would have to keep in step. Active only: a link to something that has
+ * come down should say so rather than open it.
+ */
+export async function businessIdForSlug(slug: string): Promise<string | null> {
+  const { data } = await supabase
+    .from('businesses')
+    .select('id, name, city')
+    .eq('status', 'active')
+    .limit(2000);
+  const hit = ((data ?? []) as any[]).find((b) => businessSlug(b.name, b.city) === slug);
+  return hit?.id ?? null;
+}
+
 export async function checkName(name: string, city?: string | null, excludeId?: string) {
   const key = nameKey(name);
   if (!key || key.length < 2) return { taken: null, similar: [] as NameMatch[] };
