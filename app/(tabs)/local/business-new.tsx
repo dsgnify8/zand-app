@@ -410,6 +410,9 @@ export default function BusinessForm() {
 
           {/* location */}
           <Text style={[s.label, { marginTop: spacing.xl }]}>{tr(LISTING.whereItIs)}</Text>
+          {/* Why, before the button rather than on it. The system asks the
+              actual question; this only explains what it is for. */}
+          <Text style={s.locWhy}>{tr(LISTING.locationWhy)}</Text>
           <Pressable style={s.locBtn} onPress={useMyLocation} disabled={locating}>
             {locating
               ? <ActivityIndicator size="small" color={colors.accent} />
@@ -714,6 +717,10 @@ export default function BusinessForm() {
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   // Said once, under the field, in the colour of the thing it is.
+  locWhy: {
+    fontFamily: fonts.body, fontSize: 11.5, lineHeight: 18,
+    color: colors.textSecondary, marginBottom: spacing.sm,
+  },
   nameBad: {
     fontFamily: fonts.body, fontSize: 11.5, lineHeight: 17,
     color: '#B3261E', marginTop: 6,

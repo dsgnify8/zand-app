@@ -95,7 +95,14 @@ export const LOCAL: Record<string, T> = {
   nearYou: { en: 'Near you', fa: 'نزدیک تو' },
   everywhere: { en: 'Everywhere', fa: 'همه‌جا' },
   showEverywhere: { en: 'Show everywhere', fa: 'همه‌جا را نشان بده' },
-  useMyLocation: { en: 'Use my location', fa: 'از موقعیت من استفاده کن' },
+  // Neutral, for the same reason as the one in i18n/listing.ts: a button
+  // that argues for granting a permission is what guideline 5.1.1(iv) is
+  // about.
+  useMyLocation: { en: 'Continue', fa: 'ادامه' },
+  locationWhy: {
+    en: 'ZAND can use where you are to show what is near you.',
+    fa: 'زند می‌تواند از جایی که هستی استفاده کند تا نزدیک‌ترین‌ها را نشان دهد.',
+  },
   cityPlaceholder: { en: 'Stockholm, Dubai, Gothenburg…', fa: 'استکهلم، دبی، یوتبوری…' },
   searchPlaceholder: { en: 'What are you looking for?', fa: 'دنبال چه می‌گردی؟' },
 

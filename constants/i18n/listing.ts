@@ -25,7 +25,19 @@ export const LISTING: Record<string, T> = {
 
   // where
   whereItIs: { en: 'WHERE IT IS', fa: 'کجاست' },
-  useMyLocation: { en: 'Use my current location', fa: 'از موقعیت فعلی‌ام استفاده کن' },
+  // Not "Use my current location".
+  //
+  // App Review reads a button like that as the app pressing somebody
+  // towards granting a permission, under guideline 5.1.1(iv): a custom
+  // message followed by a button that argues for yes. The explanation can
+  // stay — people deserve to know why they are being asked — but the
+  // button itself has to be neutral, and Apple names "Continue" and "Next"
+  // as the words they want.
+  useMyLocation: { en: 'Continue', fa: 'ادامه' },
+  locationWhy: {
+    en: 'ZAND can fill this in from where you are now, or you can type it yourself.',
+    fa: 'زند می‌تواند این را از جایی که الان هستی پر کند، یا خودت بنویسش.',
+  },
   areaPlaceholder: { en: 'Central Gothenburg, Dubai Marina…', fa: 'مرکز یوتبوری، دبی مارینا…' },
   pinned: { en: 'Pinned', fa: 'روی نقشه ثبت شد' },
   streetAddress: { en: 'Street address (optional)', fa: 'نشانی خیابان (اختیاری)' },

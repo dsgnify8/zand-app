@@ -383,6 +383,7 @@ export default function Local() {
 
         {placeOpen ? (
           <View style={s.placeBox}>
+            <Text style={s.mineWhy}>{t(LOCAL.locationWhy)}</Text>
             <Pressable style={s.mineBtn} onPress={useMine} disabled={locating}>
               {locating
                 ? <ActivityIndicator size="small" color={colors.accent} />
@@ -628,6 +629,10 @@ const s = StyleSheet.create({
     marginTop: 6, marginBottom: 2,
   },
   mineT: { fontFamily: fonts.bodyStrong, fontSize: 12.5, color: colors.accent },
+  mineWhy: {
+    fontFamily: fonts.body, fontSize: 11.5, lineHeight: 17,
+    color: colors.textSecondary, marginBottom: spacing.sm,
+  },
   row: { flexDirection: 'row', gap: 7 },
   input: { fontFamily: fonts.body, fontSize: 13.5, color: colors.textPrimary, backgroundColor: 'rgba(0,0,0,0.035)', borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: 10 },
   go: { width: 42, borderRadius: radius.md, backgroundColor: 'rgba(34,30,26,0.9)', alignItems: 'center', justifyContent: 'center' },
