@@ -17,6 +17,7 @@ const EXPLORE_SECTIONS = [
   { label: 'Poets', fa: 'شاعران', route: '/literature', icon: 'book-outline' },
   { label: 'Culture', fa: 'فرهنگ', route: '/culture', icon: 'color-palette-outline' },
   { label: 'Language', fa: 'زبان', route: '/language', icon: 'chatbubbles-outline' },
+  { label: 'Hand in Hand', fa: 'همدلی', route: '/hamdeli', icon: 'heart-outline' },
 ] as const;
 
 const LINKS = [

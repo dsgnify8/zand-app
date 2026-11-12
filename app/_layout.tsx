@@ -251,6 +251,9 @@ export default function RootLayout() {
             <Stack.Screen name="admin-listings" options={{ headerShown: false }} />
             <Stack.Screen name="admin-business" options={{ headerShown: false }} />
             <Stack.Screen name="admin-content" options={{ headerShown: false }} />
+            <Stack.Screen name="admin-hamdeli" options={{ headerShown: false }} />
+            <Stack.Screen name="hamdeli/index" options={{ headerShown: false }} />
+            <Stack.Screen name="hamdeli/profile" options={{ headerShown: false }} />
             <Stack.Screen name="learn/level" options={{ headerShown: false, gestureEnabled: true }} />
             <Stack.Screen name="learn/lesson" options={{ headerShown: false }} />
             <Stack.Screen name="learn/map" options={{ headerShown: false }} />

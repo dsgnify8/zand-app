@@ -23,6 +23,7 @@ export const APP: Record<string, T> = {
   done: { en: 'Done', fa: 'تمام' },
   save: { en: 'Save', fa: 'ذخیره' },
   soon: { en: 'SOON', fa: 'به‌زودی' },
+  mostLiked: { en: 'MOST LIKED', fa: 'محبوب‌ترین' },
   seeAll: { en: 'All saved', fa: 'همهٔ ذخیره‌ها' },
   profile: { en: 'Profile', fa: 'حساب' },
   explore: { en: 'Explore', fa: 'کشف' },

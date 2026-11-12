@@ -23,6 +23,7 @@ import { colors, fonts, radius, spacing } from '@/constants/zand-theme';
 import { registerScrollTop } from '@/lib/scroll-top';
 import { useLang, t as tr, getLang } from '@/lib/i18n';
 import { SECTIONS } from '@/constants/i18n/sections';
+import { HamdeliBand } from '@/components/hamdeli-band';
 import { eduImage } from '@/constants/education-images';
 import { TOPICS as HISTORY_TOPICS } from '@/constants/education';
 import { AUTHORS } from '@/constants/literature';
@@ -376,6 +377,13 @@ export default function Explore() {
 
         <Rise index={6}>
           <LanguageCard />
+        </Rise>
+
+        {/* Hamdeli sits last and quietest, after everything the app has
+            to show off. A reader reaches it having already been given
+            something, which is the right order for being asked. */}
+        <Rise index={7}>
+          <HamdeliBand />
         </Rise>
 
 

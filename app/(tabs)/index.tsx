@@ -16,6 +16,7 @@ import { useProgress } from '@/lib/progress-store';
 import { ZandHeader } from '@/components/zand-header';
 import { ContinueReading } from '@/components/continue-reading';
 import { ContinueLearning } from '@/components/continue-learning';
+import { HamdeliHome } from '@/components/hamdeli-home';
 import { TOPICS } from '@/constants/education';
 import { TRADITIONS } from '@/constants/traditions';
 import { LITERATURE_FIGURES, AUTHORS } from '@/constants/literature';
@@ -409,6 +410,12 @@ export default function HomeScreen() {
           <FadeIn delay={270}>
             <Text style={[styles.sectionLabel, fa && styles.faRight]}>{t(HOME.jumpBackIn)}</Text>
             <ContinueLearning />
+          </FadeIn>
+
+          {/* Between picking up where you left off and the daily card:
+              the one place on the home page that points outward. */}
+          <FadeIn delay={285}>
+            <HamdeliHome />
           </FadeIn>
 
           <FadeIn delay={300}>

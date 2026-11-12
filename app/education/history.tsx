@@ -2,6 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts, fontSize, radius, spacing } from '@/constants/zand-theme';
 import { ZandHeader } from '@/components/zand-header';
@@ -9,6 +10,16 @@ import { HISTORY_ERAS } from '@/constants/education';
 import { HistoryTimeline } from '@/components/history-timeline';
 import { t, useLang, getLang } from '@/lib/i18n';
 import { APP } from '@/constants/i18n/app';
+
+// The four people open and keep coming back to. Read off the popularity
+// board rather than guessed, and set here by hand: a pill that claims
+// something about readers should only change when someone has looked.
+const MOST_LIKED = new Set([
+  'safavid-empire',
+  'qajar-dynasty',
+  'mohammad-reza-shah',
+  'modern-iran',
+]);
 
 export default function HistoryHub() {
   // Subscribe to the language so a switch elsewhere reaches this screen
@@ -53,6 +64,22 @@ export default function HistoryHub() {
                         <Text style={styles.cardTitle}>{e.name}</Text>
                         {e.status === 'priority' && <Text style={styles.tagNew}>NEW</Text>}
                         {e.status === 'soon' && <Text style={styles.tagSoon}>{t(APP.soon)}</Text>}
+                        {e.topicKey && MOST_LIKED.has(e.topicKey) && (
+                          <View style={styles.liked}>
+                            {/* A pearl rather than a stamp: white at the top
+                                warming into the faintest garnet, with a light
+                                band across the upper half catching the shine. */}
+                            <LinearGradient
+                              colors={['#FFFFFF', colors.accent + '24']}
+                              start={{ x: 0, y: 0 }}
+                              end={{ x: 0, y: 1 }}
+                              style={StyleSheet.absoluteFill as any}
+                              pointerEvents="none"
+                            />
+                            <View style={styles.likedShine} pointerEvents="none" />
+                            <Text style={[styles.likedText, getLang() === 'fa' && styles.likedTextFa]}>{t(APP.mostLiked)}</Text>
+                          </View>
+                        )}
                       </View>
                       <Text style={styles.cardYears}>{e.years}{e.persian ? '  ·  ' + e.persian : ''}</Text>
                     </View>
@@ -92,4 +119,12 @@ const styles = StyleSheet.create({
   cardYears: { fontFamily: fonts.body, fontSize: fontSize.sm, color: colors.textSecondary, marginTop: 2 },
   tagNew: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1, color: colors.surface, backgroundColor: colors.accent, borderRadius: radius.sm, paddingHorizontal: 6, paddingVertical: 2, overflow: 'hidden' },
   tagSoon: { fontFamily: fonts.bodyStrong, fontSize: 10, letterSpacing: 1, color: colors.textSecondary, borderWidth: 1, borderColor: colors.border, borderRadius: radius.sm, paddingHorizontal: 6, paddingVertical: 2, overflow: 'hidden' },
+  // Quieter than NEW, which is filled: this one states a fact about
+  // readers rather than announcing something, so it only outlines.
+  // Smaller than NEW and SOON: it is a note about readers, not a status.
+  liked: { borderRadius: 999, borderWidth: 0.75, borderColor: colors.accent + '66', paddingHorizontal: 6, paddingVertical: 2, overflow: 'hidden', backgroundColor: '#FFFFFF' },
+  likedShine: { position: 'absolute', left: 1, right: 1, top: 1, height: '45%', borderTopLeftRadius: 999, borderTopRightRadius: 999, backgroundColor: 'rgba(255,255,255,0.75)' },
+  likedText: { fontFamily: fonts.bodyStrong, fontSize: 7.5, letterSpacing: 0.9, color: colors.accent },
+  // Persian is set, not spaced out: letterSpacing breaks the joins.
+  likedTextFa: { fontFamily: fonts.persian, fontSize: 9, letterSpacing: 0 },
 });

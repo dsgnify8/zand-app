@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, spacing } from '@/constants/zand-theme';
 import { useIsAdmin, useHidden, hideArticle, unhideArticle, isHidden } from '@/lib/admin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Updates from 'expo-updates';
 import { forgetMend } from '@/lib/streak-mend';
 import * as Notifications from 'expo-notifications';
 import { notifDebug } from '@/lib/notif-schedule';
@@ -104,18 +103,6 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
-            {/* Back to a first launch. Clears the onboarding flag and the
-                level answer so the welcome sequence runs again — for
-                seeing what a new person sees, on this device only. */}
-            <Pressable style={s.editRow} onPress={async () => {
-              await AsyncStorage.multiRemove(['onboarded', 'learn:asked', 'learn:level']);
-              await Updates.reloadAsync();
-            }}>
-              <Ionicons name="refresh-circle-outline" size={16} color={colors.accent} />
-              <Text style={s.editRowT}>Replay onboarding</Text>
-              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
-            </Pressable>
-
             <Pressable style={s.editRow} onPress={() => router.navigate('/admin-popularity' as any)}>
               <Ionicons name="heart-outline" size={16} color={colors.accent} />
               <Text style={s.editRowT}>What people keep</Text>
@@ -157,9 +144,9 @@ export default function AdminScreen() {
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 
-            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-cities' as any)}>
-              <Ionicons name="business-outline" size={16} color={colors.accent} />
-              <Text style={s.editRowT}>City covers</Text>
+            <Pressable style={s.editRow} onPress={() => router.navigate('/admin-hamdeli' as any)}>
+              <Ionicons name="heart-outline" size={16} color={colors.accent} />
+              <Text style={s.editRowT}>Hand in Hand</Text>
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>
 

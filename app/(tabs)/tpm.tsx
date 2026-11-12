@@ -11,8 +11,7 @@ import { TPM_POSTS, TPM_CREATIVES, type TpmPost } from '@/constants/tpm-content'
 import { FramedImage } from '@/components/framed-image';
 import { eduImage } from '@/constants/education-images';
 import { TpmMark } from '@/components/tpm-mark';
-import { readCount, resetTpm } from '@/lib/tpm-access';
-import { useIsAdmin } from '@/lib/admin';
+import { readCount } from '@/lib/tpm-access';
 import { useLang, getLang } from '@/lib/i18n';
 
 const W = Dimensions.get('window').width;
@@ -106,7 +105,6 @@ export default function TpmScreen() {
   useLang();
   const [filter, setFilter] = useState('all');
   const read = readCount();
-  const isAdmin = useIsAdmin();
 
   const chosen = filter === 'all' ? TPM_POSTS : TPM_POSTS.filter((p) => p.discipline === filter);
 
@@ -207,11 +205,6 @@ export default function TpmScreen() {
             <TpmMark size={14} />
             <Text style={s.footT}>THE PERSIAN MAG</Text>
             {read > 0 ? <Text style={s.footRead}>{read} read</Text> : null}
-            {isAdmin ? (
-              <Pressable hitSlop={10} onPress={() => resetTpm()}>
-                <Text style={s.footReset}>reset demo</Text>
-              </Pressable>
-            ) : null}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -264,6 +257,5 @@ const s = StyleSheet.create({
 
   foot: { alignItems: 'center', gap: 6, paddingTop: spacing.xl, borderTopWidth: 1, borderTopColor: tpm.hair, marginHorizontal: spacing.lg },
   footT: { fontFamily: fonts.bodyStrong, fontSize: 8.5, letterSpacing: 2.5, color: tpm.faint },
-  footReset: { fontFamily: fonts.body, fontSize: 10.5, color: tpm.red, marginTop: 4 },
   footRead: { fontFamily: fonts.body, fontSize: 10.5, color: tpm.faint },
 });
